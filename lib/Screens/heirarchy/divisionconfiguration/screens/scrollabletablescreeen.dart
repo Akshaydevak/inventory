@@ -265,6 +265,8 @@ setState(() {
 
 
                           child:textPadding(uomList[i].name??"",
+                            padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                            height: 48,
                             color: upDate[i]
                                 ? Colors.white
                                 : Colors.transparent,
@@ -496,8 +498,8 @@ setState(() {
           widths: {
             0: FlexColumnWidth(3),
             1: FlexColumnWidth(3),
-            2: FlexColumnWidth(2),
-            3: FlexColumnWidth(2),
+            2: FlexColumnWidth(1),
+            3: FlexColumnWidth(1),
 
 
 
@@ -765,6 +767,8 @@ class _GroupTableState extends State<GroupTable> {
 
 
                         child:textPadding(groupList[i].name??"",
+                          height: 48,
+                          padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                             color: upDate[i]
                                 ? Colors.white
                                 : Colors.transparent,
@@ -996,8 +1000,8 @@ class _GroupTableState extends State<GroupTable> {
           widths: {
             0: FlexColumnWidth(3),
             1: FlexColumnWidth(3),
-            2: FlexColumnWidth(2),
-            3: FlexColumnWidth(2),
+            2: FlexColumnWidth(1),
+            3: FlexColumnWidth(1),
 
 
 
@@ -1267,6 +1271,8 @@ class _CategoryTableState extends State<CategoryTable> {
 
 
                         child:textPadding(categoryList[i].name??"",
+                          padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                            height: 48,
                             color: upDate[i]
                                 ? Colors.white
                                 : Colors.transparent,
@@ -1498,8 +1504,8 @@ class _CategoryTableState extends State<CategoryTable> {
           widths: {
             0: FlexColumnWidth(3),
             1: FlexColumnWidth(3),
-            2: FlexColumnWidth(2),
-            3: FlexColumnWidth(2),
+            2: FlexColumnWidth(1),
+            3: FlexColumnWidth(1),
 
 
 

@@ -78,6 +78,10 @@ mixin _$VariantPost {
   String? get arabicDescription => throw _privateConstructorUsedError;
   @JsonKey(name: "additional_description")
   String? get additionalDescription => throw _privateConstructorUsedError;
+  @JsonKey(name: "manufacture_id")
+  int? get manuFacturedId => throw _privateConstructorUsedError;
+  @JsonKey(name: "manufacture_name")
+  String? get manuFacturedName => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
   double? get unitCost => throw _privateConstructorUsedError;
   @JsonKey(name: "weight_unit")
@@ -254,6 +258,10 @@ abstract class $VariantPostCopyWith<$Res> {
           String? arabicDescription,
       @JsonKey(name: "additional_description")
           String? additionalDescription,
+      @JsonKey(name: "manufacture_id")
+          int? manuFacturedId,
+      @JsonKey(name: "manufacture_name")
+          String? manuFacturedName,
       @JsonKey(name: "unit_cost")
           double? unitCost,
       @JsonKey(name: "weight_unit")
@@ -423,6 +431,8 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
     Object? producedCountry = freezed,
     Object? arabicDescription = freezed,
     Object? additionalDescription = freezed,
+    Object? manuFacturedId = freezed,
+    Object? manuFacturedName = freezed,
     Object? unitCost = freezed,
     Object? weightUnit = freezed,
     Object? lengthUnit = freezed,
@@ -636,6 +646,14 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
       additionalDescription: freezed == additionalDescription
           ? _value.additionalDescription
           : additionalDescription // ignore: cast_nullable_to_non_nullable
+              as String?,
+      manuFacturedId: freezed == manuFacturedId
+          ? _value.manuFacturedId
+          : manuFacturedId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      manuFacturedName: freezed == manuFacturedName
+          ? _value.manuFacturedName
+          : manuFacturedName // ignore: cast_nullable_to_non_nullable
               as String?,
       unitCost: freezed == unitCost
           ? _value.unitCost
@@ -1022,6 +1040,10 @@ abstract class _$$_VariantPostCopyWith<$Res>
           String? arabicDescription,
       @JsonKey(name: "additional_description")
           String? additionalDescription,
+      @JsonKey(name: "manufacture_id")
+          int? manuFacturedId,
+      @JsonKey(name: "manufacture_name")
+          String? manuFacturedName,
       @JsonKey(name: "unit_cost")
           double? unitCost,
       @JsonKey(name: "weight_unit")
@@ -1198,6 +1220,8 @@ class __$$_VariantPostCopyWithImpl<$Res>
     Object? producedCountry = freezed,
     Object? arabicDescription = freezed,
     Object? additionalDescription = freezed,
+    Object? manuFacturedId = freezed,
+    Object? manuFacturedName = freezed,
     Object? unitCost = freezed,
     Object? weightUnit = freezed,
     Object? lengthUnit = freezed,
@@ -1411,6 +1435,14 @@ class __$$_VariantPostCopyWithImpl<$Res>
       additionalDescription: freezed == additionalDescription
           ? _value.additionalDescription
           : additionalDescription // ignore: cast_nullable_to_non_nullable
+              as String?,
+      manuFacturedId: freezed == manuFacturedId
+          ? _value.manuFacturedId
+          : manuFacturedId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      manuFacturedName: freezed == manuFacturedName
+          ? _value.manuFacturedName
+          : manuFacturedName // ignore: cast_nullable_to_non_nullable
               as String?,
       unitCost: freezed == unitCost
           ? _value.unitCost
@@ -1684,6 +1716,10 @@ class _$_VariantPost implements _VariantPost {
           this.arabicDescription,
       @JsonKey(name: "additional_description")
           this.additionalDescription,
+      @JsonKey(name: "manufacture_id")
+          this.manuFacturedId,
+      @JsonKey(name: "manufacture_name")
+          this.manuFacturedName,
       @JsonKey(name: "unit_cost")
           this.unitCost,
       @JsonKey(name: "weight_unit")
@@ -1914,6 +1950,12 @@ class _$_VariantPost implements _VariantPost {
   @JsonKey(name: "additional_description")
   final String? additionalDescription;
   @override
+  @JsonKey(name: "manufacture_id")
+  final int? manuFacturedId;
+  @override
+  @JsonKey(name: "manufacture_name")
+  final String? manuFacturedName;
+  @override
   @JsonKey(name: "unit_cost")
   final double? unitCost;
   @override
@@ -2079,7 +2121,7 @@ class _$_VariantPost implements _VariantPost {
 
   @override
   String toString() {
-    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
+    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, unitCost: $unitCost, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
   }
 
   @override
@@ -2151,6 +2193,10 @@ class _$_VariantPost implements _VariantPost {
                 other.arabicDescription == arabicDescription) &&
             (identical(other.additionalDescription, additionalDescription) ||
                 other.additionalDescription == additionalDescription) &&
+            (identical(other.manuFacturedId, manuFacturedId) ||
+                other.manuFacturedId == manuFacturedId) &&
+            (identical(other.manuFacturedName, manuFacturedName) ||
+                other.manuFacturedName == manuFacturedName) &&
             (identical(other.unitCost, unitCost) ||
                 other.unitCost == unitCost) &&
             (identical(other.weightUnit, weightUnit) ||
@@ -2177,10 +2223,8 @@ class _$_VariantPost implements _VariantPost {
             (identical(other.excessTax, excessTax) ||
                 other.excessTax == excessTax) &&
             (identical(other.retailSellingPricePercentage, retailSellingPricePercentage) ||
-                other.retailSellingPricePercentage ==
-                    retailSellingPricePercentage) &&
-            (identical(other.wholeSellingPricePercentage, wholeSellingPricePercentage) ||
-                other.wholeSellingPricePercentage == wholeSellingPricePercentage) &&
+                other.retailSellingPricePercentage == retailSellingPricePercentage) &&
+            (identical(other.wholeSellingPricePercentage, wholeSellingPricePercentage) || other.wholeSellingPricePercentage == wholeSellingPricePercentage) &&
             (identical(other.onlineSellingPercenage, onlineSellingPercenage) || other.onlineSellingPercenage == onlineSellingPercenage) &&
             (identical(other.safetyStock, safetyStock) || other.safetyStock == safetyStock) &&
             (identical(other.salesUom, salesUom) || other.salesUom == salesUom) &&
@@ -2263,6 +2307,8 @@ class _$_VariantPost implements _VariantPost {
         producedCountry,
         arabicDescription,
         additionalDescription,
+        manuFacturedId,
+        manuFacturedName,
         unitCost,
         weightUnit,
         lengthUnit,
@@ -2389,6 +2435,10 @@ abstract class _VariantPost implements VariantPost {
           final String? arabicDescription,
       @JsonKey(name: "additional_description")
           final String? additionalDescription,
+      @JsonKey(name: "manufacture_id")
+          final int? manuFacturedId,
+      @JsonKey(name: "manufacture_name")
+          final String? manuFacturedName,
       @JsonKey(name: "unit_cost")
           final double? unitCost,
       @JsonKey(name: "weight_unit")
@@ -2593,6 +2643,12 @@ abstract class _VariantPost implements VariantPost {
   @override
   @JsonKey(name: "additional_description")
   String? get additionalDescription;
+  @override
+  @JsonKey(name: "manufacture_id")
+  int? get manuFacturedId;
+  @override
+  @JsonKey(name: "manufacture_name")
+  String? get manuFacturedName;
   @override
   @JsonKey(name: "unit_cost")
   double? get unitCost;

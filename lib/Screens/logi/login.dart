@@ -169,18 +169,18 @@ List<  InventoryListModel> inventoryList=[];
                 children: [
                   SizedBox(height: height/10,),
                   Container(
-                    margin: EdgeInsets.only(left: 15),
-                      child: Text('Sign in',style: TextStyle(color: Colors.black,fontWeight:FontWeight.w600,fontSize: height*0.03),)),
-                  SizedBox(height: 9,),
+                    margin: EdgeInsets.only(left: width*.015),
+                      child: Text('Sign In',style: TextStyle(color: Colors.black,fontWeight:FontWeight.w600,fontSize: height*0.035),)),
+                  SizedBox(height: height*.03,),
                   NewInputCard(controller: emailController, title: "EMAIL ID"),
-                  SizedBox(height: 9,),
+                  SizedBox(height: height*.02,),
                   NewInputCard(controller: passwordController, title: "PASSWORD",password: true),
 
-                  SizedBox(height: 9,),
+                  SizedBox(height: height*.02,),
                   NewInputCard(controller: empCode, title: "Employee Code",password: true),
-                  SizedBox(height: 9,),
+                  SizedBox(height: height*.03,),
                   LoginButton(
-                    label: "sign in",
+                    label: "Sign In",
                     onpress: (){
                       context.read<LogincubitCubit>().getLogin(emailController.text,passwordController.text,empCode.text);
 
@@ -223,8 +223,8 @@ class _LoginButtonState extends State<LoginButton> {
         widget.onpress();
       },
       child: Container(
-        width: 320,
-        margin:  EdgeInsets.symmetric(horizontal: 13),
+        width: 300,
+        margin:  EdgeInsets.symmetric(horizontal: width*.019),
         color: Colors.black,
         height: widget.height,
         child: Center(child: Text(widget.label,style: TextStyle(color: widget.labelColor),)),

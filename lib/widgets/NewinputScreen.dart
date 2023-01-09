@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart'as http;
@@ -37,6 +38,7 @@ class NewInputCard extends StatefulWidget {
   final Function? onChange;
   final Function? ontap;
   final int? textLimit;
+  final EdgeInsetsGeometry? paddings;
 
   final String title;
   final String? hint;
@@ -48,6 +50,7 @@ class NewInputCard extends StatefulWidget {
     Key? key,
     this.onChange,
     this.ontap,
+    this.paddings,
     this.textLimit=100,
     required this.controller,
     this.label,
@@ -91,7 +94,7 @@ class _NewInputCardState extends State<NewInputCard> {
     widget.controller?.text=='null'|| widget.controller?.text==null?widget.controller?.text="":widget.controller?.text;
 
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
+      padding:  widget.paddings!=null?widget.paddings!:EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
       child:
       widget.direction==false?
       Column(
@@ -246,10 +249,13 @@ class _NewInputCardState extends State<NewInputCard> {
                     setState(() {});
                   },
                 )
-                    : widget.icondrop?IconButton(onPressed:(){
+                    : widget.icondrop?Transform.scale(
+                  scale: 0.5,
+                      child: IconButton(onPressed:(){
                   widget.ontap!=null?widget.ontap!():null;
 
-                }, icon: Icon(Icons.more_horiz_rounded)):null,
+                }, icon: Icon(Icons.more_horiz_rounded)),
+                    ):null,
                 labelStyle: const TextStyle(
                   fontSize: 13,
                   //fontStyle: FontStyle.italic,
@@ -330,6 +336,108 @@ class _NewInputCardState extends State<NewInputCard> {
       ));
   }
 }
+
+
+class NewInputPopupField extends StatefulWidget {
+  final String label;
+  final TextEditingController contrroller;
+  final TextEditingController contrrollerUnit;
+  final String type;
+  final Function(String?) onChange;
+  NewInputPopupField({ required this.label, required this.contrroller, required this.type, required this.onChange, required this.contrrollerUnit,});
+
+
+
+  @override
+  State<NewInputPopupField> createState() => _NewInputPopupFieldState();
+}
+
+class _NewInputPopupFieldState extends State<NewInputPopupField> {
+  @override
+  Widget build(BuildContext context) {
+    return   Container(
+      padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
+      // height: 100,
+      // width: 300,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.label,
+            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+          ),
+          Container(
+            // height: 70,
+            width: 300,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Container(
+                    // height: 70,
+                    // width:150,
+                    child: TextFormField(
+                      controller: widget.contrroller,
+                      keyboardType:TextInputType.number,
+                      inputFormatters:
+                      <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ]
+                      ,
+                      decoration:  InputDecoration(
+                        labelStyle: const TextStyle(
+                          fontSize: 13,
+                          //fontStyle: FontStyle.italic,
+                        ),
+                        // label: Text(
+                        //   widget.label,
+                        // ),
+                        hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+
+                        // hintText: widget.label,
+                        enabledBorder:OutlineInputBorder(
+                            borderRadius:BorderRadius.circular(2),
+
+                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        focusedBorder:   OutlineInputBorder(
+                            borderRadius:BorderRadius.circular(2),
+
+                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                      ),
+                      // contentPadding: EdgeInsets.all(20)
+                    ),
+
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    // height: 70,
+                    // width: 100,
+                    child: PopUpCall(
+
+                      type:widget.type,
+                      value: widget.contrrollerUnit.text,
+                      onSelection: (String? va) {
+                       widget.onChange(va);
+                      },
+
+
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
 class CustomScrollBar extends StatefulWidget {
   final Widget childs;
   final AutoScrollController controller;

@@ -1629,7 +1629,9 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                           else{
                             values1.add("");
                           }
-                          // setState(() {
+                          // setState(() {if(
+                          if(name.text!=
+                          '')
                             table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: List.from(values),attributeId: attributeid));
                             print(table.length);
 

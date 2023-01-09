@@ -66,6 +66,7 @@ class PopUpCall extends StatefulWidget {
   final String? bindType;
   final VoidCallback? onAddNew;
   final Function onSelection;
+  final EdgeInsetsGeometry? contentPadding;
   final String type;
   final String? inventory;
   final String? vendorId;
@@ -81,6 +82,8 @@ class PopUpCall extends StatefulWidget {
         this.listOfList,
       this.id,
       this.bindType,
+        this.contentPadding,
+
       this.value,
       this.vendorId,
       this.enable = false,
@@ -125,7 +128,7 @@ class _PopUpCallState extends State<PopUpCall> {
       case "Length_unit":
         {
           data = CustomMessureentPopUpCall(
-              onSelection: widget.onSelection,
+                          onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
               enable: widget.enable,
@@ -217,6 +220,7 @@ class _PopUpCallState extends State<PopUpCall> {
         {
           data = VariantHeightunitPopupCall(
             id: widget.id,
+              contentPadding:widget.contentPadding,
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -716,7 +720,10 @@ class _SellingPriceBasedPopUpCallState
                         ],
                         controller: _controller,
                         decoration: InputDecoration(
+                            hintText: "Select One",
+                            hintStyle: TextStyle(fontSize: 14),
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -856,7 +863,9 @@ class _CustomMessureentPopUpCallState
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
+                            hintText: "Select One",
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -998,7 +1007,9 @@ class _CustomHeightPopUpCallState
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
+                            hintText: "Select One",
                             isDense: true,
+                            contentPadding:EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1060,6 +1071,7 @@ class CustomWeightPopUpCall extends StatefulWidget {
   final String? value;
   final VoidCallback? onAddNew;
   final Function onSelection;
+  final  EdgeInsetsGeometry? contentPadding;
   final String type;
   final bool enable;
   final List<String>? list;
@@ -1067,6 +1079,7 @@ class CustomWeightPopUpCall extends StatefulWidget {
       {Key? key,
       this.value,
       this.onAddNew,
+        this.contentPadding,
       required this.onSelection,
       required this.type,
       required this.enable,
@@ -1139,7 +1152,9 @@ class _CustomWeightPopUpCallState
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
+                            hintText: "Select One",
                             isDense: true,
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1278,7 +1293,9 @@ class _CustomWidthPopUpCallState
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
+                            hintText: "Select One",
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1415,7 +1432,9 @@ class _CreateAttributeListPopUpCallState
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _controller,
                         decoration: InputDecoration(
+                            hintText: "Select One",
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1565,7 +1584,9 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
+                            hintText: "Select One",
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1625,6 +1646,7 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
 class VariantLengthunitPopupCall extends StatefulWidget {
   final String? value;
   final int? id;
+  final  EdgeInsetsGeometry? contentPadding;
   final VoidCallback? onAddNew;
   final Function onSelection;
   final String type;
@@ -1634,6 +1656,7 @@ class VariantLengthunitPopupCall extends StatefulWidget {
       {Key? key,
         this.value,
         this.onAddNew,
+        this.contentPadding,
         required this.id,
         required this.onSelection,
         required this.type,
@@ -1708,6 +1731,8 @@ class _VariantLengthunitPopupCallState extends State<VariantLengthunitPopupCall>
                         ],
                         decoration: InputDecoration(
                             isDense: true,
+                            hintText: "Select One",
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1768,6 +1793,7 @@ class _VariantLengthunitPopupCallState extends State<VariantLengthunitPopupCall>
 class VariantWidthunitPopupCall extends StatefulWidget {
   final String? value;
   final int? id;
+  final  EdgeInsetsGeometry? contentPadding;
   final VoidCallback? onAddNew;
   final Function onSelection;
   final String type;
@@ -1778,6 +1804,7 @@ class VariantWidthunitPopupCall extends StatefulWidget {
         this.value,
         this.onAddNew,
         required this.id,
+        this.contentPadding,
         required this.onSelection,
         required this.type,
         required this.enable,
@@ -1851,6 +1878,8 @@ class _VariantWidthunitPopupCallState extends State<VariantWidthunitPopupCall> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
+                            hintText: "Select One",
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1913,6 +1942,7 @@ class VariantWeightunitPopupCall extends StatefulWidget {
   final String? value;
   final int? id;
   final VoidCallback? onAddNew;
+  final  EdgeInsetsGeometry? contentPadding;
   final Function onSelection;
   final String type;
   final bool enable;
@@ -1922,6 +1952,7 @@ class VariantWeightunitPopupCall extends StatefulWidget {
         this.value,
         this.onAddNew,
         required this.id,
+        this.contentPadding,
         required this.onSelection,
         required this.type,
         required this.enable,
@@ -1995,6 +2026,9 @@ class _VariantWeightunitPopupCallState extends State<VariantWeightunitPopupCall>
                         ],
                         decoration: InputDecoration(
                             isDense: true,
+                            hintText: "Select One",
+
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2055,6 +2089,7 @@ class _VariantWeightunitPopupCallState extends State<VariantWeightunitPopupCall>
 class VariantHeightunitPopupCall extends StatefulWidget {
   final String? value;
   final int? id;
+ final  EdgeInsetsGeometry? contentPadding;
   final VoidCallback? onAddNew;
   final Function onSelection;
   final String type;
@@ -2064,6 +2099,7 @@ class VariantHeightunitPopupCall extends StatefulWidget {
       {Key? key,
         this.value,
         this.onAddNew,
+        this.contentPadding,
         required this.id,
         required this.onSelection,
         required this.type,
@@ -2137,7 +2173,8 @@ class _VariantHeightunitPopupCallState extends State<VariantHeightunitPopupCall>
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
-                            isDense: true,
+                            hintText: "Select One",
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2282,6 +2319,7 @@ class _CustomReturnTypePopupCallState extends State<CustomReturnTypePopupCall> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2425,6 +2463,7 @@ class _PgTypePopUpCallState extends State<PgTypePopUpCall> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2564,6 +2603,7 @@ class _VirtualStockTypePopupCallState extends State<VirtualStockTypePopupCall> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2699,9 +2739,9 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                   print("value" + value.toString());
                   // print("value"+list.toString());
 
-                  // PurchaseOrdertype? newData;
+                  // VariantId? newDataS;
                   // list.forEach((element) {
-                  //   newData?.orderTypes?.add(element);
+                  //   newDataS?.a;
                   // });
                   return newData;
                 } // });
@@ -2709,8 +2749,10 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                 if (widget.onAddNew != null) list.add("");
                 _controller = TextEditingController(text: label);
                 return Container(
-                  margin: EdgeInsets.only(top: 14, left: 9),
+                  margin: EdgeInsets.only(top: 16, left: 9),
                   child: TypeAheadFormField(
+                    hideOnEmpty: true,
+
                     // hideKeyboard: true,
                     enabled: widget.enable,
                     validator: (value) {
@@ -2727,9 +2769,14 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         controller: _controller,
+
                         decoration: InputDecoration(
+
                             border: InputBorder.none,
                             isDense: true,
+                            hintText: "Select One",
+                            hintStyle: TextStyle(fontSize: 14),
+                            // contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             // border: OutlineInputBorder(),
                             suffixIcon: Container(
                               margin: EdgeInsets.only(bottom: 20),
@@ -2906,6 +2953,7 @@ class _AttributeListPopUpCallState extends State<AttributeListPopUpCall> {
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         controller: _controller,
+
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             isDense: true,
@@ -3049,6 +3097,7 @@ class _RequestFoemOrderState extends State<RequestFoemOrder> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -3359,6 +3408,7 @@ class _VendorCodesSelectionState extends State<VendorCodesSelection> {
                       decoration: InputDecoration(
                           // border: InputBorder.none,
                           isDense: true,
+                          contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
@@ -3512,6 +3562,7 @@ class _PurchaseInvoiceState extends State<PurchaseInvoices> {
                       decoration: InputDecoration(
                           // border: InputBorder.none,
                           isDense: true,
+                          contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
@@ -3655,6 +3706,7 @@ class _SalesOrderTypePopUpCallState extends State<SalesOrderTypePopUpCall> {
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
@@ -3798,6 +3850,7 @@ class _SalesOrderModePopUpCallState extends State<SalesOrderModePopUpCall> {
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
@@ -3942,6 +3995,7 @@ class _PriceTypePopUpCallState extends State<PriceTypePopUpCall> {
                           ],
                           decoration: InputDecoration(
                               isDense: true,
+                              contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                               border: InputBorder.none,
                               suffixIcon: Icon(Icons.keyboard_arrow_down))),
                       onSuggestionSelected: (suggestion) {
@@ -4381,6 +4435,7 @@ class _InvoiceCodePopUpCallState extends State<InvoiceCodePopUpCall> {
                     ],
                     decoration: InputDecoration(
                         isDense: true,
+                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -4825,6 +4880,7 @@ class _BrandListPopUpCallState extends State<BrandListPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -4979,6 +5035,7 @@ class _MaterialListPopUpCall extends State<MaterialListPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -5140,6 +5197,7 @@ class _CostingMethodeTypePopUpCallPopUpCall
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -5459,6 +5517,7 @@ class _PricingGroupPopUpCall extends State<PricingGroupPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -5620,6 +5679,7 @@ class _PricingPopUpCall extends State<PricingPopUpCall> {
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
+                          contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
@@ -5789,6 +5849,7 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         // border: OutlineInputBorder(),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
@@ -5988,6 +6049,7 @@ class _VariantSerachPopUpCall extends State<VariantSerachPopUpCall> {
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
+                          contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                           // border: OutlineInputBorder(),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
@@ -6164,6 +6226,7 @@ class _CategoryListPopUpCall extends State<CategoryListPopUpCall> {
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
+                          contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                           // border: OutlineInputBorder(),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
@@ -6327,6 +6390,7 @@ class _GroupPopUpCall extends State<GroupPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -6487,6 +6551,7 @@ class _StaticListPopUpCall extends State<StaticListPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         // border: OutlineInputBorder(),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
@@ -6807,6 +6872,7 @@ class _UomgroupPopUpCall extends State<UomgroupPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -6966,6 +7032,7 @@ class _UomPopUpCall extends State<UomPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -7144,6 +7211,7 @@ class _SalesUomPopUpCall extends State<SalesUomPopUpCall> {
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
+                          contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
@@ -7247,7 +7315,7 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
             orElse: () => Center(
               child: CircularProgressIndicator(),
             ),
-            // error: () => TextFormField(
+            // error: () => TextFormField(P
             //   controller: TextEditingController(text: widget.value),
             //   onTap: () {},
             //   decoration: InputDecoration(
@@ -7313,13 +7381,14 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
-                    keyboardType: TextInputType.phone,
-                    inputFormatters:  <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp(r" "))
-                    ],
+                    // keyboardType: TextInputType.phone,
+                    // inputFormatters:  <TextInputFormatter>[
+                    //   FilteringTextInputFormatter.allow(RegExp(r" "))
+                    // ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -7515,6 +7584,7 @@ class _StatePopUpCall extends State<StatePopUpCall> {
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
+                          contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
@@ -7699,6 +7769,7 @@ class _SeblingUomPopUpCall extends State<SeblingUomPopUpCall> {
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
+                          contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
@@ -7859,6 +7930,7 @@ class _SubcategoryPopUpCall extends State<SubcategoryPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
+                        contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
                         // border: OutlineInputBorder(),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),

@@ -974,10 +974,13 @@ bool  recievlinequantityCheck=false;
                     SizedBox(height: 34,),
   
                     Row(mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
   
                       children: [
   
-                        TextWidget(text: "Recieving Lines"),
+                        Container(
+                        margin: EdgeInsets.only(top: height*.026),
+                            child: TextWidget(text: "Receiving Lines")),
   
                         SizedBox(width: 10,),
   
@@ -1622,29 +1625,11 @@ bool  recievlinequantityCheck=false;
   
   
                                             tableHeadtext(
-  
-  
-  
+
                                               'Actual Cost',
-  
-  
-  
-  
-  
-  
-  
+
                                               size: 13,
-  
-  
-  
-                                              // color: Palette.containerDarknew,
-  
-  
-  
-                                              // textColor: Palette.white
-  
-  
-  
+
                                             ),
   
   
@@ -1899,7 +1884,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding((i + 1).toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding((i + 1).toString(),
+                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -1907,7 +1894,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding(recievingLisnes[i].orderLineCode.toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding(recievingLisnes[i].orderLineCode.toString(),
+
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -1985,7 +1974,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding(recievingLisnes[i].variantName ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding(recievingLisnes[i].variantName ?? "",
+                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -1995,7 +1986,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding(recievingLisnes[i].barcode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding(recievingLisnes[i].barcode ?? "",
+                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -2007,7 +2000,8 @@ bool  recievlinequantityCheck=false;
   
                                                  currentStock.length!=recievingLisnes.length?"": currentStock[i]?.toString()??"",
   
-                                                  fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -2015,7 +2009,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding(recievingLisnes[i].purchaseUom ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding(recievingLisnes[i].purchaseUom ?? "",
+                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -3185,7 +3181,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding(recievingLisnes[i].vatableAmount.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding(recievingLisnes[i].vatableAmount.toString() ?? "",
+
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -3193,7 +3191,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding(recievingLisnes[i].vat.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding(recievingLisnes[i].vat.toString() ?? "",
+                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -3365,7 +3365,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding(recievingLisnes[i].actualCost.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding(recievingLisnes[i].actualCost.toString() ?? "",
+                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -3373,7 +3375,9 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: textPadding(recievingLisnes[i].grandTotal.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                              child: textPadding(recievingLisnes[i].grandTotal.toString() ?? "",
+                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                  fontWeight: FontWeight.w500),
   
                                             ),
   
@@ -3589,10 +3593,10 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: TableTextButton(label:recievingLisnes[i].updateCheck==true? 'Update':"",
-  
-  
-  
+                                              child: TableTextButton(label:recievingLisnes[i].updateCheck==true? 'Update':"Update",
+
+
+                                                textColor:recievingLisnes[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
                                                 onPress: (){
   
   
@@ -4319,7 +4323,9 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding((i + 1).toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding((i + 1).toString(),
+                                                        // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
   
   
   
@@ -4397,7 +4403,9 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding(additionalVariants[i].variantName ?? "",
+                                                        // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
   
                                                   ),
   
@@ -4415,7 +4423,9 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding(additionalVariants[i].currentStock?.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding(additionalVariants[i].currentStock?.toString() ?? "",
+                                                        // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
   
                                                   ),
   
@@ -4423,7 +4433,9 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "",
+                                                        // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
   
                                                   ),
   
@@ -5315,7 +5327,9 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding(additionalVariants[i].vatableAmount.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding(additionalVariants[i].vatableAmount.toString() ?? "",
+                                                        // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
   
                                                   ),
   
@@ -5323,7 +5337,9 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding(additionalVariants[i].vat.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding(additionalVariants[i].vat.toString() ?? "",
+                                                        // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
   
                                                   ),
   
@@ -5485,7 +5501,9 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding(additionalVariants[i].actualCost.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding(additionalVariants[i].actualCost.toString() ?? "",
+                                                        // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
   
                                                   ),
   
@@ -5493,7 +5511,9 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding(additionalVariants[i].grandTotal.toString() ?? "",
+                                                        // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
   
                                                   ),
   
@@ -5783,11 +5803,13 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: textPadding(varinatname??"", fontSize: 12, padding: EdgeInsets.only(
-  
-                                                        left: 11.5,
-  
-                                                        top: 11.5), fontWeight: FontWeight.w500),
+                                                    child: textPadding(varinatname??"",
+                                                        // fontSize: 12, padding: EdgeInsets.only(
+                                                        //
+                                                        // left: 11.5,
+                                                        //
+                                                        // top: 11.5),
+                                                        fontWeight: FontWeight.w500),
   
                                                   ),
   
@@ -5799,9 +5821,9 @@ bool  recievlinequantityCheck=false;
   
                                                     child: textPadding(barcode??"",
   
-                                                        fontSize: 12,
-  
-                                                        padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        // fontSize: 12,
+                                                        //
+                                                        // padding: EdgeInsets.only(left: 11.5, top: 1.5),
   
                                                         fontWeight: FontWeight.w500),
   
@@ -5813,9 +5835,9 @@ bool  recievlinequantityCheck=false;
   
                                                     child: textPadding(stock.toString()??"",
   
-                                                        fontSize: 12,
-  
-                                                        padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        // fontSize: 12,
+                                                        //
+                                                        // padding: EdgeInsets.only(left: 11.5, top: 1.5),
   
                                                         fontWeight: FontWeight.w500),
   
@@ -5827,9 +5849,9 @@ bool  recievlinequantityCheck=false;
   
                                                     child: textPadding(purchaseUomName??"",
   
-                                                        fontSize: 12,
-  
-                                                        padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        // fontSize: 12,
+                                                        //
+                                                        // padding: EdgeInsets.only(left: 11.5, top: 1.5),
   
                                                         fontWeight: FontWeight.w500),
   
@@ -6769,9 +6791,9 @@ bool  recievlinequantityCheck=false;
   
                                                     child: textPadding(actualCost1.toString()??"",
   
-                                                        fontSize: 12,
-  
-                                                        padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        // fontSize: 12,
+                                                        //
+                                                        // padding: EdgeInsets.only(left: 11.5, top: 1.5),
   
                                                         fontWeight: FontWeight.w500),
   
@@ -6783,9 +6805,9 @@ bool  recievlinequantityCheck=false;
   
                                                     child: textPadding(grandTotal1.toString()??"",
   
-                                                        fontSize: 12,
-  
-                                                        padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                        // fontSize: 12,
+                                                        //
+                                                        // padding: EdgeInsets.only(left: 11.5, top: 1.5),
   
                                                         fontWeight: FontWeight.w500),
   
@@ -7051,7 +7073,7 @@ bool  recievlinequantityCheck=false;
   
                                           5: FlexColumnWidth(3),
   
-                                          6: FlexColumnWidth(3),
+                                          6: FlexColumnWidth(4),
   
                                           7: FlexColumnWidth(3),
   
@@ -7073,7 +7095,7 @@ bool  recievlinequantityCheck=false;
   
                                           16: FlexColumnWidth(3),
   
-                                          17: FlexColumnWidth(3),
+                                          17: FlexColumnWidth(2),
   
                                           18: FlexColumnWidth(4),
   
@@ -7222,144 +7244,229 @@ bool  recievlinequantityCheck=false;
   
   
                     SizedBox(height: 20,),
-  
-  
-  
-  
-  
-                    Row(
-  
-  
-  
-                      mainAxisAlignment: MainAxisAlignment.end,
-  
-  
-  
-                      children: [
-  
-  
-  
-                        Buttons(
-  
-  
-  
-  
-  
-                          onApply: (){
-  
-                            List<RecievingLines>recieve=[];
-  
-                            if(recievingLisnes.isNotEmpty){           for(var i=0;i<recievingLisnes.length;i++){
-  
-                              if(recievingLisnes[i].isReceived==true){
-  
-                                recieve.add(recievingLisnes[i]);
-  
-                                setState(() {
-  
-  
-  
-                                });
-  
-                              }
-  
-                            }}
-  
-                            if(updateCheck==true){
-  
-                              context.showSnackBarError(
-  
-                                  "please press update");
-  
-                            }
-  
-                            else{
-  
-  
-  
-                              RequestReceivingPatch model = RequestReceivingPatch(
-  
-                                  note: noteController.text??"",
-  
-                                  id:veritiaclid,
-  
-                                  receivedBy: "",
-  
-                                  unitCost:double.tryParse( unitCostController.text),
-  
-                                  foc:double.tryParse( focController.text),
-  
-                                  discount:double.tryParse( discountController.text),
-  
-                                  grandTotal:double.tryParse( grandtotalCostController.text) ,
-  
-                                  vatableAmount: double.tryParse( vatController.text) ,
-  
-                                  excessTax:double.tryParse( excessTaxController.text) ,
-  
-                                  actualCost:double.tryParse( actualCostController.text) ,
-  
-                                  vat:double.tryParse( vatController.text) ,
-  
-  
-  
-                                  remarks: remarksController.text ?? "",
-  
-                                  receivingLines: recieve??[]);
-  
-                              print(model);
-  
-                              context
-  
-                                  .read<PatchreceiveCubit>()
-  
-                                  .requestFormReceivingPatch(
-  
-                                  receivingId,
-  
-                                  model);
-  
-                            }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-                          },
-  
-  
-  
-                          icon: Icons.check,iconColor: Colors.white,
-  
-  
-  
-                          text: "SAVE",
-  
-                         height: 32,width: 90,labelcolor: Colors.white,),
-  
-  
-  
-                      ],
-  
-  
-  
-                    )
+                    SaveUpdateResponsiveButton(label: "SAVE",
+                      isDelete: true,
+
+                      saveFunction: (){
+
+                        List<RecievingLines>recieve=[];
+
+                        if(recievingLisnes.isNotEmpty){           for(var i=0;i<recievingLisnes.length;i++){
+
+                          if(recievingLisnes[i].isReceived==true){
+
+                            recieve.add(recievingLisnes[i]);
+
+                            setState(() {
+
+
+
+                            });
+
+                          }
+
+                        }}
+
+                        if(updateCheck==true){
+
+                          context.showSnackBarError(
+
+                              "please press update");
+
+                        }
+
+                        else{
+
+
+
+                          RequestReceivingPatch model = RequestReceivingPatch(
+
+                              note: noteController.text??"",
+
+                              id:veritiaclid,
+
+                              receivedBy: "",
+
+                              unitCost:double.tryParse( unitCostController.text),
+
+                              foc:double.tryParse( focController.text),
+
+                              discount:double.tryParse( discountController.text),
+
+                              grandTotal:double.tryParse( grandtotalCostController.text) ,
+
+                              vatableAmount: double.tryParse( vatController.text) ,
+
+                              excessTax:double.tryParse( excessTaxController.text) ,
+
+                              actualCost:double.tryParse( actualCostController.text) ,
+
+                              vat:double.tryParse( vatController.text) ,
+
+
+
+                              remarks: remarksController.text ?? "",
+
+                              receivingLines: recieve??[]);
+
+                          print(model);
+
+                          context
+
+                              .read<PatchreceiveCubit>()
+
+                              .requestFormReceivingPatch(
+
+                              receivingId,
+
+                              model);
+
+                        }
+
+                      },
+                      discardFunction: (){
+
+                      },
+
+                    ),
+  
+  
+  
+  
+  
+                    // Row(
+                    //
+                    //
+                    //
+                    //   mainAxisAlignment: MainAxisAlignment.end,
+                    //
+                    //
+                    //
+                    //   children: [
+                    //
+                    //
+                    //
+                    //     Buttons(
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //       onApply: (){
+                    //
+                    //         List<RecievingLines>recieve=[];
+                    //
+                    //         if(recievingLisnes.isNotEmpty){           for(var i=0;i<recievingLisnes.length;i++){
+                    //
+                    //           if(recievingLisnes[i].isReceived==true){
+                    //
+                    //             recieve.add(recievingLisnes[i]);
+                    //
+                    //             setState(() {
+                    //
+                    //
+                    //
+                    //             });
+                    //
+                    //           }
+                    //
+                    //         }}
+                    //
+                    //         if(updateCheck==true){
+                    //
+                    //           context.showSnackBarError(
+                    //
+                    //               "please press update");
+                    //
+                    //         }
+                    //
+                    //         else{
+                    //
+                    //
+                    //
+                    //           RequestReceivingPatch model = RequestReceivingPatch(
+                    //
+                    //               note: noteController.text??"",
+                    //
+                    //               id:veritiaclid,
+                    //
+                    //               receivedBy: "",
+                    //
+                    //               unitCost:double.tryParse( unitCostController.text),
+                    //
+                    //               foc:double.tryParse( focController.text),
+                    //
+                    //               discount:double.tryParse( discountController.text),
+                    //
+                    //               grandTotal:double.tryParse( grandtotalCostController.text) ,
+                    //
+                    //               vatableAmount: double.tryParse( vatController.text) ,
+                    //
+                    //               excessTax:double.tryParse( excessTaxController.text) ,
+                    //
+                    //               actualCost:double.tryParse( actualCostController.text) ,
+                    //
+                    //               vat:double.tryParse( vatController.text) ,
+                    //
+                    //
+                    //
+                    //               remarks: remarksController.text ?? "",
+                    //
+                    //               receivingLines: recieve??[]);
+                    //
+                    //           print(model);
+                    //
+                    //           context
+                    //
+                    //               .read<PatchreceiveCubit>()
+                    //
+                    //               .requestFormReceivingPatch(
+                    //
+                    //               receivingId,
+                    //
+                    //               model);
+                    //
+                    //         }
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //
+                    //       },
+                    //
+                    //
+                    //
+                    //       icon: Icons.check,iconColor: Colors.white,
+                    //
+                    //
+                    //
+                    //       text: "SAVE",
+                    //
+                    //      height: 32,width: 90,labelcolor: Colors.white,),
+                    //
+                    //
+                    //
+                    //   ],
+                    //
+                    //
+                    //
+                    // )
   
   
   

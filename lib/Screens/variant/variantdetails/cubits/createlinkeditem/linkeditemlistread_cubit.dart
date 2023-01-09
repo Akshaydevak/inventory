@@ -12,6 +12,7 @@ class LinkeditemlistreadCubit extends Cubit<LinkeditemlistreadState> {
   Future getLinkedItemListRead(
     String? code,
   ) async {
+    emit(LinkeditemlistreadState.initial());
     final result = await repo.getLinkedItemListRead(code);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

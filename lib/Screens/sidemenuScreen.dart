@@ -93,10 +93,11 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
 
             },selected: selected5, size: .03,),
             MenuIcon(iconurl: "asset/menuicon6.png",ontap: (){
-              setState(() async {
+
                 showDailogPopUp(
                     context,
                     LogoutPopup(
+                      message: "Are you sure you want to logout from the app?",
                       // table:table,
                       // clear:clear(),
 
@@ -124,7 +125,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                     ));
 
 
-              });
+
 
             },selected: selected6, size: .03,),
 

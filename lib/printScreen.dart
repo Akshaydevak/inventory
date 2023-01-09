@@ -595,7 +595,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          padding: pw.EdgeInsets.only(top:height*.019),
                          alignment:pw. Alignment.center,
                          child:pw. Text(
-                             actualCost?.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                             table[i].actualCost?.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
 
                        ),
 

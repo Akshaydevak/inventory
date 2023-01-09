@@ -766,7 +766,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                             children: [
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding((i + 1).toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding((i + 1).toString(),
+                                                                    fontSize: 12,
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500),
 
                                                               ),
                                                               // TableCell(

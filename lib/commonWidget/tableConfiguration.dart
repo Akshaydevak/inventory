@@ -711,6 +711,25 @@ class _SearchTabalePopup extends State<SearchTabalePopup> {
                   //     .read<MaterialdeleteCubit>()
                   //     .materialDelete(veritiaclid,"material");
                 },
+                paginated: list1 != null?
+                tablePagination(
+                () => context.read<VariantsearchCubit>().refresh(),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<VariantsearchCubit>()
+                .previuosslotSectionPageList();
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<VariantsearchCubit>()
+                .nextslotSectionPageList();
+            },
+            ):SizedBox(),
                 onAddNew: (v) {
                   print("Akshay" + v.toString());
                   // changeAddNew(v);
@@ -864,25 +883,25 @@ class _SearchTabalePopup extends State<SearchTabalePopup> {
                       SizedBox(
                         height: h * .004,
                       ),
-                      if (list1 != null)
-                        tablePagination(
-                          () => context.read<VariantsearchCubit>().refresh(),
-                          back: list1?.previousUrl == null
-                              ? null
-                              : () {
-                                  context
-                                      .read<VariantsearchCubit>()
-                                      .previuosslotSectionPageList();
-                                },
-                          next: list1.nextPageUrl == null
-                              ? null
-                              : () {
-                                  // print(data.nextPageUrl);
-                                  context
-                                      .read<VariantsearchCubit>()
-                                      .nextslotSectionPageList();
-                                },
-                        )
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<VariantsearchCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<VariantsearchCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<VariantsearchCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
                     ],
                   ),
                 ),
@@ -2561,6 +2580,25 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
                   //
                   // setState(() {});
                 },
+                paginated: list1!=null?
+                tablePagination(
+                      () => context.read<PricinglistCubit>().refresh(),
+                  back: list1?.previousUrl == null
+                      ? null
+                      : () {
+                    context
+                        .read<PricinglistCubit>()
+                        .previuosslotSectionPageList();
+                  },
+                  next: list1.nextPageUrl == null
+                      ? null
+                      : () {
+                    // print(data.nextPageUrl);
+                    context
+                        .read<PricinglistCubit>()
+                        .nextslotSectionPageList();
+                  },
+                ):null,
                 dataField: Container(
                   // height: 500,
                   child: Column(
@@ -2718,25 +2756,8 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
                       SizedBox(
                         height: h * .004,
                       ),
-                      if (list1 != null)
-                        tablePagination(
-                          () => context.read<PricinglistCubit>().refresh(),
-                          back: list1?.previousUrl == null
-                              ? null
-                              : () {
-                                  context
-                                      .read<PricinglistCubit>()
-                                      .previuosslotSectionPageList();
-                                },
-                          next: list1.nextPageUrl == null
-                              ? null
-                              : () {
-                                  // print(data.nextPageUrl);
-                                  context
-                                      .read<PricinglistCubit>()
-                                      .nextslotSectionPageList();
-                                },
-                        )
+
+
                     ],
                   ),
                 ),
@@ -4945,7 +4966,7 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
             return AlertDialog(
               content: PopUpHeader(
                 functionChane: true,
-                buttonVisible: false,
+
                 buttonCheck: true,
                 buttonName: "ADD NEW",
                 onTap: () {},
@@ -4953,12 +4974,12 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
                 addNew: false,
                 label: "",
                 onApply: () {
-                  // showDailogPopUp(
-                  //   context,
-                  //   ConfigurePopup(
-                  //     type: "base_uom",
-                  //   ),
-                  // );
+                  showDailogPopUp(
+                    context,
+                    ConfigurePopup(
+                      type: "uomgroup",
+                    ),
+                  );
                   // widget.onTap();
                   setState(() {});
                 },
@@ -5556,7 +5577,7 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "",
+                label: "UOM",
                 onApply: () {
                   // showDailogPopUp(
                   //   context,
@@ -5898,7 +5919,7 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "",
+                label: "Group",
                 onApply: () {
                   // showDailogPopUp(
                   //   context,
@@ -6228,7 +6249,7 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "",
+                label: "Category",
                 onApply: () {
                   // showDailogPopUp(
                   //   context,
@@ -6280,7 +6301,7 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                         height: h * .004,
                       ),
                       Container(
-                        height: h / 2,
+                        height: h /1.9,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),

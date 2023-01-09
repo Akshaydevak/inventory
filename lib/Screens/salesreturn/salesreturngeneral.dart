@@ -562,10 +562,11 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                         discardFunction: (){
                                           showDailogPopUp(
                                               context,
-                                              ConfirmationPopup(
+                                              LogoutPopup(
+                                                message: "Do you want to delete the order?",
                                                 // table:table,
                                                 // clear:clear(),
-                                                verticalId: veritiaclid,
+                                                // verticalId: veritiaclid,
                                                 onPressed: () {
                                                   print("akshay");
                                                   Navigator.pop(context);
@@ -940,17 +941,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
 
                                 });
                               },
-                              onAddNew: () {
 
-                                // showDailogPopUp(
-                                //     context,
-                                //     WarrantyDetailsPopUp(
-                                //       // indexValue: temp,
-                                //       // changeActive: onChangeActive,
-                                //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                                //       // changeExtendedWarranty: onChangeExtendedWarranty,
-                                //     ));
-                              },
                             ):NewInputCard(
                                 controller: widget.salesInvoiceCode, title: "Sales Invoice Code"),
 

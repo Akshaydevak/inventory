@@ -16,7 +16,7 @@ _$_VariantPatch _$$_VariantPatchFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       name: json['name'] as String?,
       status: json['status'] as String?,
-      image1: json['image1'] as int?,
+      image1: json['image1'] as String?,
       image2: json['image2'] as String?,
       height: (json['height'] as num?)?.toDouble(),
       width: (json['width'] as num?)?.toDouble(),

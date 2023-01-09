@@ -40,11 +40,12 @@ import '../Screens/variant/stock/models/stockverticallist.dart';
 class VerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
   final Widget? child;
+  final bool select;
   final   List<PurchaseOrder> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  VerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox()});
+  VerticalList({ required this.itemsearch,this.select=false,required this.result, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox()});
   @override
   _VerticalListState createState() => _VerticalListState();
 }
@@ -224,9 +225,11 @@ class _VerticalListState extends State<VerticalList> {
                                       return AutoScrollTag(
                                           highlightColor: Colors.red,
                                           controller: controller,
+
                                           key: ValueKey(index),
                                           index: index,
                                           child: ItemCard(
+                                            select: widget.select,
                                             index: index,
                                             selectedVertical:widget. selectedVertical,
                                             item: widget.result[index].orderCode,
@@ -269,10 +272,11 @@ class DivisionConfigVerticalList extends StatefulWidget {
   final   List<BrandListModel> result ;
   final String? tab;
   final bool suffixIconCheck;
+  final bool select;
   int selectedVertical;
   final Function(int) ontap;
   final Function(String) search;
-  DivisionConfigVerticalList({ required this.itemsearch,required this.result,this.suffixIconCheck=false, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox(), required this.search});
+  DivisionConfigVerticalList({ required this.itemsearch,this.select=false,required this.result,this.suffixIconCheck=false, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox(), required this.search});
   @override
   _DivisionConfigVerticalListState createState() => _DivisionConfigVerticalListState();
 }
@@ -440,6 +444,7 @@ class _DivisionConfigVerticalListState extends State<DivisionConfigVerticalList>
                                           index: index,
                                           child: ItemCard(
                                             index: index,
+                                            select: widget.select,
                                             selectedVertical:widget. selectedVertical,
                                             item: widget.result[index].name,
                                             id:widget.result[index]
@@ -479,11 +484,12 @@ class _DivisionConfigVerticalListState extends State<DivisionConfigVerticalList>
 class PurchaseVerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
   final Widget child;
+  final bool select;
   final   List<PurchaseOrder> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  PurchaseVerticalList({ required this.itemsearch,this.child=const SizedBox(),required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  PurchaseVerticalList({ required this.itemsearch,this.select=false,this.child=const SizedBox(),required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _PurchaseVerticalListState createState() => _PurchaseVerticalListState();
 }
@@ -665,6 +671,7 @@ class _PurchaseVerticalListState extends State<PurchaseVerticalList> {
                                           index: index,
                                           child: ItemCard(
                                             index: index,
+                                            select: widget.select,
                                             selectedVertical:widget. selectedVertical,
                                             item: widget.result[index].returnOrderCode,
                                             id:widget. result[index]
@@ -702,9 +709,10 @@ class SalesGeneralVerticalList extends StatefulWidget {
   final   List<salesOrderTypeModel> result ;
   final String? tab;
   int selectedVertical;
+  final bool select;
   final Widget child;
   final Function(int) ontap;
-  SalesGeneralVerticalList({ this.child=const SizedBox(),required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  SalesGeneralVerticalList({ this.child=const SizedBox(),this.select=false,required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _SalesGeneralVerticalListState createState() => _SalesGeneralVerticalListState();
 }
@@ -889,6 +897,7 @@ class _SalesGeneralVerticalListState extends State<SalesGeneralVerticalList> {
                                           index: index,
                                           child: ItemCard(
                                             index: index,
+                                            select:widget. select,
                                             selectedVertical:widget. selectedVertical,
                                             item: widget.result[index].salesOrderCode,
                                             id:widget. result[index]
@@ -3923,9 +3932,10 @@ class ItemVerticalList extends StatefulWidget {
   final  PaginatedResponse<dynamic>? list;
   final   List<BrandListModel> result ;
   final String? tab;
+  final bool select;
   int selectedVertical;
   final Function(int) ontap;
-  ItemVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  ItemVerticalList({ required this.itemsearch,this.select=false,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _ItemVerticalListState createState() => _ItemVerticalListState();
 }
@@ -4040,6 +4050,7 @@ class _ItemVerticalListState extends State<ItemVerticalList> {
                                           index: index,
                                           child: ItemCard(
                                             index: index,
+                                            select: widget.select,
                                             selectedVertical:widget. selectedVertical,
                                             item: widget.result[index].name,
                                             id:widget. result[index]
@@ -4100,9 +4111,10 @@ class VariantVerticalList extends StatefulWidget {
   final String? tab;
   int selectedVertical;
   final bool suffixIconCheck;
+  final bool select;
   final Function(int) ontap;
   final Function(String) search;
-  VariantVerticalList({ required this.itemsearch,this.suffixIconCheck=false,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
+  VariantVerticalList({ required this.itemsearch,this.select=false,this.suffixIconCheck=false,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
   @override
   _VariantVerticalListState createState() => _VariantVerticalListState();
 }
@@ -4232,6 +4244,7 @@ class _VariantVerticalListState extends State<VariantVerticalList> {
                                           child: ItemCard(
                                             index: index,
                                             selectedVertical:widget. selectedVertical,
+                                            select: widget.select,
                                             item: widget.result[index].name==null? widget.result[index].code: widget.result[index].name,
                                             id:widget. result[index]
                                                 .id
@@ -4293,10 +4306,11 @@ class CustomIseVerticalList extends StatefulWidget {
   final   List<BrandListModel> result ;
   final String? tab;
   final bool suffixIconCheck;
+  final bool select;
   int selectedVertical;
   final Function(int) ontap;
   final Function(String) search;
-  CustomIseVerticalList({ required this.itemsearch,this.suffixIconCheck =false,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
+  CustomIseVerticalList({ required this.itemsearch,this.select=false,this.suffixIconCheck =false,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
   @override
   _CustomIseVerticalListState createState() => _CustomIseVerticalListState();
 }
@@ -4425,6 +4439,8 @@ class _CustomIseVerticalListState extends State<CustomIseVerticalList> {
                                           index: index,
                                           child: ItemCard(
                                             index: index,
+                                            select: widget.select
+                                            ,
                                             selectedVertical:widget. selectedVertical,
                                             item: widget.result[index].name==null? widget.result[index].code: widget.result[index].name,
                                             id:widget. result[index]

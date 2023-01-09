@@ -424,6 +424,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                         SalesGeneralVerticalList(
                           selectedVertical: selectedVertical,
                           itemsearch: itemsearch,
+                          select: select,
                           ontap: (int index) {
                             setState(() {
                               clears();
@@ -592,10 +593,11 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                     }
                                     showDailogPopUp(
                                         context,
-                                        ConfirmationPopup(
+                                        LogoutPopup(
+                                          message: "Do you want to delete the order?",
                                           // table:table,
                                           // clear:clear(),
-                                          verticalId: veritiaclid,
+                                          // verticalId: veritiaclid,
                                           onPressed: () {
                                             print("akshay");
                                             Navigator.pop(context);
@@ -1292,7 +1294,7 @@ class _StableTableState extends State<StableTable> {
                               maxLines: 3,
                             ),
                             SizedBox(
-                              height: height * .025,
+                              height: height * .044,
                             ),
 
                           ],

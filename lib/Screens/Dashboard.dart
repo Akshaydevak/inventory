@@ -266,7 +266,7 @@ class _TitleScreenState extends State<TitleScreen> {
                 width: size.width * .024,
               ),
               Container(
-                  margin: EdgeInsets.only(top: height * .0334
+                  margin: EdgeInsets.only(top: height * .026
                       //size.height*.003,
                       ),
                   child: Image.asset(
@@ -281,7 +281,7 @@ class _TitleScreenState extends State<TitleScreen> {
               ),
               searchField(context),
               SizedBox(
-                width: size.width * .054,
+                width: size.width * .1,
               ),
               TitleIcon(
                 image: "asset/icon1.png",
@@ -325,14 +325,19 @@ class _TitleScreenState extends State<TitleScreen> {
               //   image: "asset/setting.png",
               // ),
               SizedBox(
-                width: size.width * .03,
+                width: size.width * .01,
               ),
+
+
               Container(
+
+              width: size.width / 20 ,
+                  alignment: Alignment.topRight,
                   margin: EdgeInsets.only(
                     top: height * .035,
                   ),
                   child: Text(
-                    Variable.username,
+                  Variable.username,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: size.width * .01,
@@ -351,11 +356,12 @@ class _TitleScreenState extends State<TitleScreen> {
                     ),
                     radius: size.width * .01),
               ),
-              SizedBox(
-                width: size.width * .03,
-              ),
+              Spacer(),
               TitleIcon(
                 image: "asset/menu.png",
+              ),
+              SizedBox(
+                width: size.width * .0123,
               ),
             ],
           ),
@@ -507,9 +513,9 @@ class _RihtDrawerState extends State<RihtDrawer> {
     return ConfigureDesign(
      childs: Column(
         children: [
-          SizedBox(
-            height: 20,
-          ),
+          // SizedBox(
+          //   height: 20,
+          // ),
           DrawerCared(
             label: "Uom Group",
             ontap: () {
@@ -520,6 +526,10 @@ class _RihtDrawerState extends State<RihtDrawer> {
                 ),
               );
             },
+          ),
+          Container(
+            height: 1,
+            color: Colors.grey,
           ),
           greyDivider(),
           DrawerCared(
@@ -533,7 +543,11 @@ class _RihtDrawerState extends State<RihtDrawer> {
             },
             label: "Base UOM",
           ),
-          greyDivider(),
+          Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          // gr
           DrawerCared(
               ontap: () {
                 showDailogPopUp(
@@ -544,7 +558,11 @@ class _RihtDrawerState extends State<RihtDrawer> {
                 );
               },
               label: "Division"),
-          greyDivider(),
+          Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          // gr
           DrawerCared(
               ontap: () {
                 showDailogPopUp(
@@ -566,7 +584,11 @@ class _RihtDrawerState extends State<RihtDrawer> {
           //       );
           //     },
           //     label: "Sub Category"),
-          greyDivider(),
+          Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          // gr
           DrawerCared(
               ontap: () {
                 showDailogPopUp(
@@ -577,7 +599,11 @@ class _RihtDrawerState extends State<RihtDrawer> {
                 );
               },
               label: "Group"),
-          greyDivider(),
+          Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          // gr
           DrawerCared(
               ontap: () {
                 showDailogPopUp(
@@ -588,7 +614,11 @@ class _RihtDrawerState extends State<RihtDrawer> {
                 );
               },
               label: "Material"),
-          greyDivider(),
+          Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          // gr
           DrawerCared(
               ontap: () {
                 showDailogPopUp(
@@ -599,7 +629,11 @@ class _RihtDrawerState extends State<RihtDrawer> {
                 );
               },
               label: "Static Group"),
-          greyDivider(),
+          Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          // gr
           DrawerCared(
               ontap: () {
                 showDailogPopUp(
@@ -610,7 +644,11 @@ class _RihtDrawerState extends State<RihtDrawer> {
                 );
               },
               label: "Brand"),
-          greyDivider(),
+          Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          // gr
           DrawerCared(
               ontap: () {
                 showDailogPopUp(
@@ -620,7 +658,11 @@ class _RihtDrawerState extends State<RihtDrawer> {
                   ),
                 );
               },
-              label: "Frame Work"), greyDivider(),
+              label: "Frame Work"),   Container(
+            height: 1,
+            color: Colors.grey,
+          ),
+          // gr,
           DrawerCared(
               ontap: () {
                 showDailogPopUp(
@@ -668,13 +710,23 @@ class DrawerCared extends StatefulWidget {
 }
 
 class _DrawerCaredState extends State<DrawerCared> {
+  bool onHover=false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         widget.ontap();
       },
+      onHover: (val){
+        print("ssssssssssssssssssssssssssssss$val");
+
+        setState(() {
+          onHover=val;
+
+        });
+      },
       child: Container(
+        color: onHover?Colors.grey:Colors.transparent,
         height: 30,
         child: Row(
           children: [

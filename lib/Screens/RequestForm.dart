@@ -220,12 +220,15 @@ var  paginatedList;
 
   }
   actualAndgrandTotal(double? vatableAmount,double? vat){
-
-    actualCost1 = double.parse((vatableAmount! +
-        ((vatableAmount *
-            vat!) /
-            100)).toStringAsFixed(2));
-    grandTotal1=actualCost1;
+    if(vat==0 ||vat==null){
+      grandTotal1=actualCost1=vatableAmount;
+    }else {
+      actualCost1 = double.parse((vatableAmount! +
+          ((vatableAmount *
+              vat!) /
+              100)).toStringAsFixed(2));
+      grandTotal1 = actualCost1;
+    }
 
   }
   clear(){
@@ -616,6 +619,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
           children: [
             VerticalList(
               tab:"RF",
+              select: select,
               selectedVertical: selectedVertical,
               itemsearch: itemsearch,ontap: (int index){
                 setState(() {
@@ -1175,13 +1179,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           child: textPadding(
                                                               (i + 1)
                                                                   .toString(),
-                                                              fontSize: 12,
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                  left:
-                                                                  11.5,
-                                                                  top:
-                                                                  1.5),
+
                                                               fontWeight:
                                                               FontWeight
                                                                   .w500),
@@ -1286,13 +1284,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           child: textPadding(
                                                               table[i]
                                                                   .variantName??"",
-                                                              fontSize: 12,
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                  left:
-                                                                  11.5,
-                                                                  top:
-                                                                  1.5),
+
                                                               fontWeight:
                                                               FontWeight
                                                                   .w500),
@@ -1302,27 +1294,20 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: textPadding(
                                                               table[i].barcode??"",
-                                                              fontSize: 12,
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                  left: 11.5, top: 11.5),
+
                                                               fontWeight: FontWeight.w500),),
 
                                                         TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
-                                                              padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+
+                                                              fontWeight: FontWeight.w500),
                                                         ),
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: textPadding(
                                                               table[i]
                                                                   .purchaseuom??"",
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                  left:
-                                                                  11.5,
-                                                                  top:
-                                                                  11.5),
+
                                                               fontWeight:
                                                               FontWeight
                                                                   .w500),
@@ -1721,12 +1706,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               table[i]
                                                                   .variableAmount
                                                                   .toString(),
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                  left:
-                                                                  11.5,
-                                                                  top:
-                                                                  11.5),
+
                                                               fontWeight:
                                                               FontWeight
                                                                   .w500),
@@ -1737,12 +1717,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               table[i]
                                                                   .vat
                                                                   .toString(),
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                  left:
-                                                                  11.5,
-                                                                  top:
-                                                                  11.5),
+
                                                               fontWeight:
                                                               FontWeight
                                                                   .w500),
@@ -1816,12 +1791,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               table[i]
                                                                   .actualCost
                                                                   .toString(),
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                  left:
-                                                                  11.5,
-                                                                  top:
-                                                                  11.5),
+
                                                               fontWeight:
                                                               FontWeight
                                                                   .w500),
@@ -1832,12 +1802,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               table[i]
                                                                   .grandTotal
                                                                   .toString(),
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                  left:
-                                                                  11.5,
-                                                                  top:
-                                                                  11.5),
+
                                                               fontWeight:
                                                               FontWeight
                                                                   .w500),
@@ -2025,29 +1990,25 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(varinatname??"",
-                                                          fontSize: 12,
-                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
                                                           fontWeight: FontWeight.w500),
                                                     ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(barcode??"",
-                                                          fontSize: 12,
-                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
                                                           fontWeight: FontWeight.w500),
                                                     ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(stock.toString(),
-                                                          fontSize: 12,
-                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
                                                           fontWeight: FontWeight.w500),
                                                     ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(purchaseUomName.toString(),
-                                                          fontSize: 12,
-                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
                                                           fontWeight: FontWeight.w500),
                                                     ),
                                                     TableCell(
@@ -2400,15 +2361,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(vatableAmount1.toString()??"",
-                                                          fontSize: 12,
-                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
                                                           fontWeight: FontWeight.w500),
                                                     ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(vat1.toString()??"",
-                                                          fontSize: 12,
-                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
                                                           fontWeight: FontWeight.w500),
                                                     ),
                                                     // TableCell(
@@ -2458,15 +2417,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(actualCost1.toString()??"",
-                                                          fontSize: 12,
-                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
                                                           fontWeight: FontWeight.w500),
                                                     ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(grandTotal1.toString()??"",
-                                                          fontSize: 12,
-                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
                                                           fontWeight: FontWeight.w500),
                                                     ),
                                                     TableCell(
@@ -2660,6 +2617,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                 context.showSnackBarError("please click the update button ");
                               }
                               else{
+                                var table1=[
+                                  for(var em in table)
+                                    if(em.isActive==true)
+                                      em
+                                ];
                                 PurchaseOrderPost model =
                                 PurchaseOrderPost(
                                     purchaseOrderType: orderType.text??"",
@@ -2682,7 +2644,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                     createdBy: "12",
                                     edited_by: "anvar",
 
-                                    orderLines: table
+                                    orderLines: table1
 
                                 );
                                 print("sPBHSSMODEL"+model.toString());
@@ -2705,10 +2667,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                               else{
                                 showDailogPopUp(
                                     context,
-                                    ConfirmationPopup(
+                                    LogoutPopup(
+                                      message: "Do you want to delete the order",
                                       // table:table,
-                                      // clear:clear(),
-                                      verticalId:veritiaclid ,
+                                      // // clear:clear(),
+                                      // verticalId:veritiaclid ,
                                       onPressed:(){
                                         print("akshay");
                                         Navigator.pop(context);

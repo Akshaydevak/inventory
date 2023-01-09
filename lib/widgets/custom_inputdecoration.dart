@@ -44,10 +44,7 @@ Widget smallText(String text, {double fontSize = 10, bool isBold = false}) =>
       ),
     );
 
-Widget greyDivider() => const Divider(
-  color: Colors.black,
-  thickness: 0.1,
-  // height: 1,
-  // endIndent: 2,
-  // indent: 2,
+Widget greyDivider() =>   Container(
+  height: .5,
+  color: Colors.grey,
 );

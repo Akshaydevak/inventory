@@ -226,339 +226,402 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                         // NewInputCard(
                         //   formatter: true,
                         //     controller: widget.weightUomId, title: "Weight(Kg)"),
-                        Container(
-                          margin: EdgeInsets.only(left: 20),
-                          // height: 100,
-                          // width: 300,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Weight",
-                                style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                              ),
-                              Container(
-                                // height: 70,
-                                // width: 300,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                  Container(
-                                    // height: 70,
-                                    width:150,
-                                    child: TextFormField(
-                                      controller: widget.weightUomId,
-                                      keyboardType:TextInputType.number,
-                                      inputFormatters:
-                                      <TextInputFormatter>[
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ]
-                                      ,
-                                      decoration:  InputDecoration(
-                                        labelStyle: const TextStyle(
-                                          fontSize: 13,
-                                          //fontStyle: FontStyle.italic,
-                                        ),
-                                        // label: Text(
-                                        //   widget.label,
-                                        // ),
-                                        hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                        NewInputPopupField(label: 'Weight',contrroller:widget.weightUomId ,contrrollerUnit:widget.weightUnit ,onChange: (va){
+                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                          print(
+                              "+++++++++++++++++++++++");
+                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                          setState(() {
+                            widget.weightUnit.text = va??"";
 
-                                        // hintText: widget.label,
-                                        enabledBorder:OutlineInputBorder(
-                                            borderRadius:BorderRadius.circular(2),
+                            // onChange = true;
+                            // orderType = va!;
+                          });
 
-                                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                        focusedBorder:   OutlineInputBorder(
-                                            borderRadius:BorderRadius.circular(2),
-
-                                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                      ),
-                                      // contentPadding: EdgeInsets.all(20)
-                                    ),
-
-                                  ),
-                                  Container(
-                                    // height: 70,
-                                    width: 100,
-                                    child: PopUpCall(
-
-                                      type:"Weight_unit_popup",
-                                      value: widget.weightUnit.text,
-                                      onSelection: (String? va) {
-                                        print(
-                                            "+++++++++++++++++++++++");
-                                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                        setState(() {
-                                          widget.weightUnit.text = va??"";
-
-                                          // onChange = true;
-                                          // orderType = va!;
-                                        });
-                                      },
-
-
-                                    ),
-                                  ),
-
-                                ],
-                                ),
-                              )
-                            ],
-                          ),
+                        },
+                          type:"Weight_unit_popup" ,
                         ),
+                        // Container(
+                        //   margin: EdgeInsets.only(left: 20),
+                        //   // height: 100,
+                        //   // width: 300,
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text(
+                        //         "Weight",
+                        //         style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                        //       ),
+                        //       Container(
+                        //         // height: 70,
+                        //         // width: 300,
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.start,
+                        //           children: [
+                        //           Container(
+                        //             // height: 70,
+                        //             width:150,
+                        //             child: TextFormField(
+                        //               controller: widget.weightUomId,
+                        //               keyboardType:TextInputType.number,
+                        //               inputFormatters:
+                        //               <TextInputFormatter>[
+                        //                 FilteringTextInputFormatter.digitsOnly
+                        //               ]
+                        //               ,
+                        //               decoration:  InputDecoration(
+                        //                 labelStyle: const TextStyle(
+                        //                   fontSize: 13,
+                        //                   //fontStyle: FontStyle.italic,
+                        //                 ),
+                        //                 // label: Text(
+                        //                 //   widget.label,
+                        //                 // ),
+                        //                 hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                        //
+                        //                 // hintText: widget.label,
+                        //                 enabledBorder:OutlineInputBorder(
+                        //                     borderRadius:BorderRadius.circular(2),
+                        //
+                        //                     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        //                 focusedBorder:   OutlineInputBorder(
+                        //                     borderRadius:BorderRadius.circular(2),
+                        //
+                        //                     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        //               ),
+                        //               // contentPadding: EdgeInsets.all(20)
+                        //             ),
+                        //
+                        //           ),
+                        //           Container(
+                        //             // height: 70,
+                        //             width: 100,
+                        //             child: PopUpCall(
+                        //
+                        //               type:"Weight_unit_popup",
+                        //               value: widget.weightUnit.text,
+                        //               onSelection: (String? va) {
+                        //                 print(
+                        //                     "+++++++++++++++++++++++");
+                        //                 //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                        //                 setState(() {
+                        //                   widget.weightUnit.text = va??"";
+                        //
+                        //                   // onChange = true;
+                        //                   // orderType = va!;
+                        //                 });
+                        //               },
+                        //
+                        //
+                        //             ),
+                        //           ),
+                        //
+                        //         ],
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         SizedBox(
                           height: height * .030,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20),
-                          // height: 100,
-                          // width: 300,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Height",
-                                style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                              ),
-                              Container(
-                                // height: 70,
-                                // width: 300,
-                                child: Row(children: [
-                                  Container(
-                                    // height: 70,
-                                    width:150,
-                                    child: TextFormField(
-                                      controller: widget.height,
-                                      keyboardType:TextInputType.number,
-                                      inputFormatters:
-                                      <TextInputFormatter>[
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ]
-                                      ,
-                                      decoration:  InputDecoration(
-                                        labelStyle: const TextStyle(
-                                          fontSize: 13,
-                                          //fontStyle: FontStyle.italic,
-                                        ),
-                                        // label: Text(
-                                        //   widget.label,
-                                        // ),
-                                        hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                        NewInputPopupField(label: 'Height',contrroller:widget.height ,contrrollerUnit:widget.heightUnit,
+                          onChange: (va){
+                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            print(
+                                "+++++++++++++++++++++++");
+                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            setState(() {
+                              widget.  heightUnit.text = va??"";
 
-                                        // hintText: widget.label,
-                                        enabledBorder:OutlineInputBorder(
-                                            borderRadius:BorderRadius.circular(2),
+                              // onChange = true;
+                              // orderType = va!;
+                            });
 
-                                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                        focusedBorder:   OutlineInputBorder(
-                                            borderRadius:BorderRadius.circular(2),
-
-                                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                      ),
-                                      // contentPadding: EdgeInsets.all(20)
-                                    ),
-
-                                  ),
-                                  Container(
-                                    // height: 70,
-                                    width: 100,
-                                    child: PopUpCall(
-
-                                      type:"Height_unit_popup",
-                                      value: widget.heightUnit.text,
-                                      onSelection: (String? va) {
-                                        print(
-                                            "+++++++++++++++++++++++");
-                                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                        setState(() {
-                                        widget.  heightUnit.text = va??"";
-
-                                          // onChange = true;
-                                          // orderType = va!;
-                                        });
-                                      },
-
-
-                                    ),
-                                  ),
-
-                                ],
-                                ),
-                              )
-                            ],
-                          ),
+                        },
+                          type:"Height_unit_popup" ,
                         ),
+                        // Container(
+                        //   margin: EdgeInsets.only(left: 20),
+                        //   // height: 100,
+                        //   // width: 300,
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text(
+                        //         "Height",
+                        //         style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                        //       ),
+                        //       Container(
+                        //         // height: 70,
+                        //         // width: 300,
+                        //         child: Row(children: [
+                        //           Container(
+                        //             // height: 70,
+                        //             width:150,
+                        //             child: TextFormField(
+                        //               controller: widget.height,
+                        //               keyboardType:TextInputType.number,
+                        //               inputFormatters:
+                        //               <TextInputFormatter>[
+                        //                 FilteringTextInputFormatter.digitsOnly
+                        //               ]
+                        //               ,
+                        //               decoration:  InputDecoration(
+                        //                 labelStyle: const TextStyle(
+                        //                   fontSize: 13,
+                        //                   //fontStyle: FontStyle.italic,
+                        //                 ),
+                        //                 // label: Text(
+                        //                 //   widget.label,
+                        //                 // ),
+                        //                 hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                        //
+                        //                 // hintText: widget.label,
+                        //                 enabledBorder:OutlineInputBorder(
+                        //                     borderRadius:BorderRadius.circular(2),
+                        //
+                        //                     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        //                 focusedBorder:   OutlineInputBorder(
+                        //                     borderRadius:BorderRadius.circular(2),
+                        //
+                        //                     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        //               ),
+                        //               // contentPadding: EdgeInsets.all(20)
+                        //             ),
+                        //
+                        //           ),
+                        //           Container(
+                        //             // height: 70,
+                        //             width: 100,
+                        //             child: PopUpCall(
+                        //
+                        //               type:"Height_unit_popup",
+                        //               value: widget.heightUnit.text,
+                        //               onSelection: (String? va) {
+                        //                 print(
+                        //                     "+++++++++++++++++++++++");
+                        //                 //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                        //                 setState(() {
+                        //                 widget.  heightUnit.text = va??"";
+                        //
+                        //                   // onChange = true;
+                        //                   // orderType = va!;
+                        //                 });
+                        //               },
+                        //
+                        //
+                        //             ),
+                        //           ),
+                        //
+                        //         ],
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         // NewInputCard(
                         //     formatter: true,
                         //     controller: widget.height, title: "Height(meter)"),
                         SizedBox(
                           height: height * .030,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20),
-                          // height: 100,
-                          // width: 300,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "width",
-                                style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                              ),
-                              Container(
-                                // height: 70,
-                                // width: 300,
-                                child: Row(children: [
-                                  Container(
-                                    // height: 70,
-                                    width:150,
-                                    child: TextFormField(
-                                      controller: widget.width,
-                                      keyboardType:TextInputType.number,
-                                    inputFormatters:
-                                    <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ]
-                                      ,
-                                      decoration:  InputDecoration(
-                                      labelStyle: const TextStyle(
-                                        fontSize: 13,
-                                        //fontStyle: FontStyle.italic,
-                                      ),
-                                      // label: Text(
-                                      //   widget.label,
-                                      // ),
-                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                        NewInputPopupField(label: 'width',contrroller:widget.width ,contrrollerUnit:widget.widthUnit,
+                          onChange: (va){
+                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            print(
+                                "+++++++++++++++++++++++");
+                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            setState(() {
+                              widget.  widthUnit.text = va??"";
 
-                                      // hintText: widget.label,
-                                      enabledBorder:OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
+                              // onChange = true;
+                              // orderType = va!;
+                            });
 
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                      focusedBorder:   OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
-
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                    ),
-                                      // contentPadding: EdgeInsets.all(20)
-                                    ),
-
-                                  ),
-                                  Container(
-                                    // height: 70,
-                                    width: 100,
-                                    child: PopUpCall(
-
-                                      type:"Width_unit_popup",
-                                      value: widget.widthUnit.text,
-                                      onSelection: (String? va) {
-                                        print(
-                                            "+++++++++++++++++++++++");
-                                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                        setState(() {
-                                          widget.widthUnit .text= va??"";
-
-                                          // onChange = true;
-                                          // orderType = va!;
-                                        });
-                                      },
-
-
-                                    ),
-                                  ),
-
-                                ],
-                                ),
-                              )
-                            ],
-                          ),
+                          },
+                          type:"Width_unit_popup" ,
                         ),
+                        // Container(
+                        //   margin: EdgeInsets.only(left: 20),
+                        //   // height: 100,
+                        //   // width: 300,
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text(
+                        //         "width",
+                        //         style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                        //       ),
+                        //       Container(
+                        //         // height: 70,
+                        //         // width: 300,
+                        //         child: Row(children: [
+                        //           Container(
+                        //             // height: 70,
+                        //             width:150,
+                        //             child: TextFormField(
+                        //               controller: widget.width,
+                        //               keyboardType:TextInputType.number,
+                        //             inputFormatters:
+                        //             <TextInputFormatter>[
+                        //               FilteringTextInputFormatter.digitsOnly
+                        //             ]
+                        //               ,
+                        //               decoration:  InputDecoration(
+                        //               labelStyle: const TextStyle(
+                        //                 fontSize: 13,
+                        //                 //fontStyle: FontStyle.italic,
+                        //               ),
+                        //               // label: Text(
+                        //               //   widget.label,
+                        //               // ),
+                        //               hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                        //
+                        //               // hintText: widget.label,
+                        //               enabledBorder:OutlineInputBorder(
+                        //                   borderRadius:BorderRadius.circular(2),
+                        //
+                        //                   borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        //               focusedBorder:   OutlineInputBorder(
+                        //                   borderRadius:BorderRadius.circular(2),
+                        //
+                        //                   borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        //             ),
+                        //               // contentPadding: EdgeInsets.all(20)
+                        //             ),
+                        //
+                        //           ),
+                        //           Container(
+                        //             // height: 70,
+                        //             width: 100,
+                        //             child: PopUpCall(
+                        //
+                        //               type:"Width_unit_popup",
+                        //               value: widget.widthUnit.text,
+                        //               onSelection: (String? va) {
+                        //                 print(
+                        //                     "+++++++++++++++++++++++");
+                        //                 //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                        //                 setState(() {
+                        //                   widget.widthUnit .text= va??"";
+                        //
+                        //                   // onChange = true;
+                        //                   // orderType = va!;
+                        //                 });
+                        //               },
+                        //
+                        //
+                        //             ),
+                        //           ),
+                        //
+                        //         ],
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         // NewInputCard(
                         //     formatter: true,
                         //     controller: widget.width, title: "Width(meter)"),
                         SizedBox(
                           height: height * .030,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20),
-                          // height: 100,
-                          // width: 300,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Length",
-                                style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                              ),
-                              Container(
-                                // height: 70,
-                                // width: 300,
-                                child: Row(children: [
-                                  Container(
-                                    // height: 70,
-                                    width:150,
-                                    child: TextFormField(
-                                      controller: widget.length,
-                                      keyboardType:TextInputType.number,
-                                      inputFormatters:
-                                      <TextInputFormatter>[
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ]
-                                      ,
-                                      decoration:  InputDecoration(
-                                        labelStyle: const TextStyle(
-                                          fontSize: 13,
-                                          //fontStyle: FontStyle.italic,
-                                        ),
-                                        // label: Text(
-                                        //   widget.label,
-                                        // ),
-                                        hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                        NewInputPopupField(label: 'Length',contrroller:widget.length ,contrrollerUnit:widget.lengthUnit,
+                          onChange: (va){
+                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            print(
+                                "+++++++++++++++++++++++");
+                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            setState(() {
+                              widget.  lengthUnit.text = va??"";
 
-                                        // hintText: widget.label,
-                                        enabledBorder:OutlineInputBorder(
-                                            borderRadius:BorderRadius.circular(2),
+                              // onChange = true;
+                              // orderType = va!;
+                            });
 
-                                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                        focusedBorder:   OutlineInputBorder(
-                                            borderRadius:BorderRadius.circular(2),
-
-                                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                      ),
-                                      // contentPadding: EdgeInsets.all(20)
-                                    ),
-
-                                  ),
-                                  Container(
-                                    // height: 70,
-                                    width: 100,
-                                    child: PopUpCall(
-
-                                      type:"Length_unit",
-                                      value: widget.lengthUnit.text,
-                                      onSelection: (String? va) {
-                                        print(
-                                            "+++++++++++++++++++++++");
-                                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                        setState(() {
-                                          widget.lengthUnit.text = va??"";
-
-                                          // onChange = true;
-                                          // orderType = va!;
-                                        });
-                                      },
-
-
-                                    ),
-                                  ),
-
-                                ],
-                                ),
-                              )
-                            ],
-                          ),
+                          },
+                          type:"Length_unit" ,
                         ),
+                        // Container(
+                        //   margin: EdgeInsets.only(left: 20),
+                        //   // height: 100,
+                        //   // width: 300,
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text(
+                        //         "Length",
+                        //         style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                        //       ),
+                        //       Container(
+                        //         // height: 70,
+                        //         // width: 300,
+                        //         child: Row(children: [
+                        //           Container(
+                        //             // height: 70,
+                        //             width:150,
+                        //             child: TextFormField(
+                        //               controller: widget.length,
+                        //               keyboardType:TextInputType.number,
+                        //               inputFormatters:
+                        //               <TextInputFormatter>[
+                        //                 FilteringTextInputFormatter.digitsOnly
+                        //               ]
+                        //               ,
+                        //               decoration:  InputDecoration(
+                        //                 labelStyle: const TextStyle(
+                        //                   fontSize: 13,
+                        //                   //fontStyle: FontStyle.italic,
+                        //                 ),
+                        //                 // label: Text(
+                        //                 //   widget.label,
+                        //                 // ),
+                        //                 hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                        //
+                        //                 // hintText: widget.label,
+                        //                 enabledBorder:OutlineInputBorder(
+                        //                     borderRadius:BorderRadius.circular(2),
+                        //
+                        //                     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        //                 focusedBorder:   OutlineInputBorder(
+                        //                     borderRadius:BorderRadius.circular(2),
+                        //
+                        //                     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                        //               ),
+                        //               // contentPadding: EdgeInsets.all(20)
+                        //             ),
+                        //
+                        //           ),
+                        //           Container(
+                        //             // height: 70,
+                        //             width: 100,
+                        //             child: PopUpCall(
+                        //
+                        //               type:"Length_unit",
+                        //               value: widget.lengthUnit.text,
+                        //               onSelection: (String? va) {
+                        //                 print(
+                        //                     "+++++++++++++++++++++++");
+                        //                 //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                        //                 setState(() {
+                        //                   widget.lengthUnit.text = va??"";
+                        //
+                        //                   // onChange = true;
+                        //                   // orderType = va!;
+                        //                 });
+                        //               },
+                        //
+                        //
+                        //             ),
+                        //           ),
+                        //
+                        //         ],
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         // NewInputCard(
                         //     formatter: true,
                         //     controller: widget.length, title: "Length(meter)"),

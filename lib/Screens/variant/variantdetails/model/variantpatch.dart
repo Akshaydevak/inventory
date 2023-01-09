@@ -17,7 +17,7 @@ class VariantPatch with _$VariantPatch {
     final String? description,
     final String? name,
     final String? status,
-    final int? image1,
+    final String? image1,
     final String? image2,
     final double? height,
     final double? width,

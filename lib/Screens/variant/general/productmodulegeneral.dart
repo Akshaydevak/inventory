@@ -711,11 +711,14 @@ print("the list is"+variantList.toString());
                                     height: height / 14,
                                   ),
                                   Container(
-                                    width: width / 2,
+                                    // color: Colors.red,
+                                    width: width ,
                                     child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Expanded(
                                           child: NewInputCard(
+                                            paddings:EdgeInsets.zero ,
                                             controller: variantNameController,
                                             icondrop: true,
                                             title: "Variant",
@@ -782,7 +785,7 @@ print("the list is"+variantList.toString());
                                     ),
                                   ),
                                   SizedBox(
-                                    height: height / 7,
+                                    height: height / 19,
                                   ),
                                   // TextButton.icon(
                                   //     label: Text(
@@ -907,9 +910,7 @@ print("the list is"+variantList.toString());
                                   //     ),
                                   //   ],
                                   // ),
-                                  SizedBox(
-                                    height: height / 12,
-                                  ),
+
                                 ],
                             ),
                           ),

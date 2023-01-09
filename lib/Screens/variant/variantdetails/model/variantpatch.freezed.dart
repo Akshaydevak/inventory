@@ -28,7 +28,7 @@ mixin _$VariantPatch {
   String? get description => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
-  int? get image1 => throw _privateConstructorUsedError;
+  String? get image1 => throw _privateConstructorUsedError;
   String? get image2 => throw _privateConstructorUsedError;
   double? get height => throw _privateConstructorUsedError;
   double? get width => throw _privateConstructorUsedError;
@@ -215,7 +215,7 @@ abstract class $VariantPatchCopyWith<$Res> {
       String? description,
       String? name,
       String? status,
-      int? image1,
+      String? image1,
       String? image2,
       double? height,
       double? width,
@@ -536,7 +536,7 @@ class _$VariantPatchCopyWithImpl<$Res, $Val extends VariantPatch>
       image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
@@ -1022,7 +1022,7 @@ abstract class _$$_VariantPatchCopyWith<$Res>
       String? description,
       String? name,
       String? status,
-      int? image1,
+      String? image1,
       String? image2,
       double? height,
       double? width,
@@ -1350,7 +1350,7 @@ class __$$_VariantPatchCopyWithImpl<$Res>
       image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
@@ -1909,7 +1909,7 @@ class _$_VariantPatch implements _VariantPatch {
   @override
   final String? status;
   @override
-  final int? image1;
+  final String? image1;
   @override
   final String? image2;
   @override
@@ -2467,7 +2467,7 @@ abstract class _VariantPatch implements VariantPatch {
       final String? description,
       final String? name,
       final String? status,
-      final int? image1,
+      final String? image1,
       final String? image2,
       final double? height,
       final double? width,
@@ -2649,7 +2649,7 @@ abstract class _VariantPatch implements VariantPatch {
   @override
   String? get status;
   @override
-  int? get image1;
+  String? get image1;
   @override
   String? get image2;
   @override

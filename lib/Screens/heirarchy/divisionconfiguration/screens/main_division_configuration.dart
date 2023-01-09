@@ -273,6 +273,7 @@ ismixed=false;
           children: [
             DivisionConfigVerticalList(selectedVertical: selectedVertical,
               suffixIconCheck:suffixIconCheck ,
+              select: select,
 
               itemsearch: itemsearch,ontap: (int index){
                 setState(() {
@@ -468,10 +469,11 @@ ismixed=false;
                       else{
                         showDailogPopUp(
                             context,
-                            ConfirmationPopup(
+                            LogoutPopup(
+                              message: "Do you need to delete the order",
                               // table:table,
                               // clear:clear(),
-                              verticalId:veritiaclid ,
+                              // verticalId:veritiaclid ,
                               onPressed:(){
 
                                 Navigator.pop(context);

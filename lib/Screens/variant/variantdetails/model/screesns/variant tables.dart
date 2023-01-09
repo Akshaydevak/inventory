@@ -81,6 +81,11 @@ class ProductTableState extends State<ProductTable> {
       aboutProducts = widget.aboutProducts;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
         keys =List.from( aboutProducts?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em["name"]!=null)
+              em
+        ]);
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
           upDateButton.add(false);
@@ -425,6 +430,12 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
         keys =List.from( productDetails?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em.key!=null)
+              em
+        ]);
+
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -853,6 +864,12 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
         keys = List.from(productDetails?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em.key!=null)
+              em
+        ]);
+
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -1279,6 +1296,12 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
         keys =List.from( productDetails?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em.key!=null)
+              em
+        ]);
+
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -1703,6 +1726,12 @@ class NeutrialFactsState extends State<NeutrialFacts> {
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
         keys =List.from( productDetails?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em.key!=null)
+              em
+        ]);
+
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -2127,6 +2156,13 @@ class IngrediansState extends State<Ingredians> {
       aboutProducts = widget.ingredians;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
         keys =List.from( aboutProducts?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em["name"]!=null)
+              em
+        ]);
+
+
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
           upDateButton.add(false);
@@ -2469,6 +2505,12 @@ class _UsageDirectionState extends State<UsageDirection> {
       aboutProducts = widget.usageDirection;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
         keys = List.from(aboutProducts?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em["name"]!=null)
+              em
+        ]);
+
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
           upDateButton.add(false);
@@ -2810,6 +2852,12 @@ class _StoragesWidgetState extends State<StoragesWidget> {
       aboutProducts = widget.storage;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
         keys =List.from( aboutProducts?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em["name"]!=null)
+              em
+        ]);
+
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
           upDateButton.add(false);
@@ -3152,6 +3200,12 @@ class _ImportantInfoState extends State<ImportantInfo> {
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
         keys = List.from(productDetails?.keyValues ?? []);
+        keys=  List.from([
+          for(var em in keys)
+            if(em.key!=null)
+              em
+        ]);
+
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);

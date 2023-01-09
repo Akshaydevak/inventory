@@ -495,6 +495,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                     PurchaseVerticalList(
 
                       selectedVertical: selectedVertical,
+                      select: select,
+
                       itemsearch: itemsearch,ontap: (int index){
                       setState(() {
                         selectedVertical=index;
@@ -967,17 +969,22 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                       children: [
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: textPadding((i + 1).toString(), fontSize: 12,
-                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                              1.5), fontWeight: FontWeight.w500),
+                                                          child: textPadding((i + 1).toString(),
+                                                              // fontSize: 12,
+                                                              // padding: EdgeInsets.only(left: 11.5, top:
+                                                              // 1.5),
+                                                              fontWeight: FontWeight.w500),
                                                         ),    TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: textPadding(lines?[i].variantId??"", fontSize: 12,
-                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                              1.5), fontWeight: FontWeight.w500),
+                                                          child: textPadding(lines?[i].variantId??"",
+                                                              // fontSize: 12,
+                                                              // padding: EdgeInsets.only(left: 11.5, top:
+                                                              // 1.5),
+                                                              fontWeight: FontWeight.w500),
                                                         ),    TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: textPadding(lines?[i].variantName??"", fontSize: 12,
+                                                          child: textPadding(lines?[i].variantName??"",
+                                                              fontSize: 12,
                                                               padding: EdgeInsets.only(left: 11.5, top:
                                                               1.5), fontWeight: FontWeight.w500),
                                                         ),    TableCell(
@@ -1075,9 +1082,11 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                               1.5), fontWeight: FontWeight.w500),
                                                         ),    TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: textPadding(lines?[i].foc.toString()??"", fontSize: 12,
-                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                              1.5), fontWeight: FontWeight.w500),
+                                                          child: textPadding(lines?[i].foc.toString()??"",
+                                                              // fontSize: 12,
+                                                              // padding: EdgeInsets.only(left: 11.5, top:
+                                                              // 1.5),
+                                                              fontWeight: FontWeight.w500),
                                                         ),    TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: textPadding(lines?[i].vatableAmount.toString()??"", fontSize: 12,
@@ -1218,10 +1227,11 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                   else{
                                     showDailogPopUp(
                                         context,
-                                        ConfirmationPopup(
+                                        LogoutPopup(
+                                          message: "Do you want to delete the order?",
                                           // table:table,
                                           // clear:clear(),
-                                          verticalId:veritiaclid ,
+                                          // verticalId:veritiaclid ,
                                           onPressed:(){
 
                                             Navigator.pop(context);

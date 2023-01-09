@@ -126,6 +126,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   bool active = false;
   bool needMultipleIntegration = false;
   int? veritiaclid = 0;
+  String? veritiaclString = "";
   int? baseUomId = 0;
   int? checkIdid = 0;
   bool select=false;
@@ -490,6 +491,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
       itmcatelog=false;
       itmImage=false;
       active=false;
+      needMultipleIntegration=false;
+      haveWrapOption=false;
+      haveGiftOption=false;
+
       seblingController.clear();
       linkedItemController.clear();
       videoUrlController.clear();
@@ -540,6 +545,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   @override
   void initState() {
     context.read<ListvraiantCubit>().getVariantList();
+      lengthUnit.text="Centimeter";
+      widthUnit.text="Centimeter";
+      heightUnit.text="Centimeter";
+      weightUnit.text= "Killogram";
     super.initState();
   }
 
@@ -553,13 +562,13 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
         .of(context)
         .size
         .width;
-    if(onChange==false){
-      lengthUnit.text="meter";
-      widthUnit.text="centimeter";
-      heightUnit.text="centimeter";
-      weightUnit.text= "kilo gram";
-    }
-    onChange=false;
+    // if(onChange==false){
+    //   lengthUnit.text="Centimeter";
+    //   widthUnit.text="Centimeter";
+    //   heightUnit.text="Centimeter";
+    //   weightUnit.text= "Killogram";
+    // }
+    // onChange=false;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -634,6 +643,9 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                           variantNameController.text=data.name??"";
                           itemCodeController.text=data.itemData?.itemName??"";
                           variantNameController.text=data.name??"";
+                            haveGiftOption=data.haveGiftOption??false;
+                            haveWrapOption=data.haveWrapOption??false;
+                            needMultipleIntegration=data.needMultipleIntegration??false;
                           shelfTypeController.text=data.shelfType??"";
                           shelfTimeController.text=data.shelfTime?.toString()??"";
                           minSalesOrderLimitController.text=data?.minSaleOrderLimit?.toString()??"";
@@ -842,6 +854,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
                         if (result.isNotEmpty) {
                           veritiaclid = result[0].id;
+                          veritiaclString = result[0].code;
                           Variable.variantCode=result[0].code.toString();
 
                           // Variable.verticalid=result[0].id;
@@ -871,6 +884,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                     children: [
                                       VariantVerticalList(
                                         list: list,
+                                        select: select,
                                         suffixIconCheck: suffixIconCheck,
 
 
@@ -884,7 +898,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                             selectedVertical = index;
 
                                             select=false;
-                                            // clear();
+                                            clear();
                                             exportCheck=false;
                                             // addNew=true;
 
@@ -893,6 +907,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
 
                                             veritiaclid = result[index].id;
+                                            veritiaclString = result[index].code;
                                             Variable.variantCode=result[index].code.toString();
                                             // clear();
                                             // select=true;
@@ -957,6 +972,8 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                             setState(() {
 
                                                               checkIdid = va.id;
+                                                              veritiaclString = va.code;
+                                                              print("SSSSSSSSSSS$checkIdid");
                                                               exportCheck = true;
                                                               searchController.text=va.name??"";
 
@@ -1039,8 +1056,9 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                               lengthUnit: lengthUnit,
                                               weightUnit: weightUnit,
                                               widthUnit: widthUnit,
+                                              veritiaclid: select?checkIdid:veritiaclid,
                                               seblingNameController: seblingNameController, height: heightController, width: widthController, length: lengthController, baseGroupName: baseUomNameController, purchaseUomName: purchaseUomNameController, salesUomName: salesUomNameController,
-                                              uomGroupName: uomGroupNameController, veritiaclid:veritiaclid, catalog1: catalog1,catalog2: catalog2,
+                                              uomGroupName: uomGroupNameController, veritiaclCode:veritiaclString, catalog1: catalog1,catalog2: catalog2,
                                               catalog3: catalog3,
                                               catalog4: catalog4,
                                               catalog5: catalog5,
@@ -1411,10 +1429,11 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
                                                       showDailogPopUp(
                                                           context,
-                                                          ConfirmationPopup(
+                                                          LogoutPopup(
+                                                            message: "Do you need to delete the order?",
                                                             // table:table,
                                                             // clear:clear(),
-                                                            verticalId:veritiaclid ,
+                                                            // verticalId:veritiaclid ,
                                                             onPressed:(){
                                                               print("akshay");
                                                               Navigator.pop(context);
@@ -1461,6 +1480,8 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                         VariantPost model = VariantPost(
                                                           weight:double.tryParse( weightController.text),
                                                           inventoryId: Variable.inventory_ID,
+
+
                                                           height: double.tryParse(heightController.text),
                                                           width: double.tryParse(widthController.text),
                                                           length: double.tryParse(lengthController.text),
@@ -1512,11 +1533,12 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           vedioUrl: videoUrlController.text.isEmpty?null:videoUrlController.text,
                                                           alternativeBarcode:alternativeBarcode,
                                                           alternativeQrCodeBarcode: alternativeQrCode,
-                                                          returnType: returnTypeController.text,
+                                                          returnType: returnTypeController.text.isEmpty?null:returnTypeController.text,
                                                           shelfTime: shelfTimeController.text.isEmpty?null:int.tryParse(shelfTimeController.text),
                                                           shelfType: shelfTypeController.text.isEmpty?null:shelfTypeController.text,
                                                           haveWrapOption: haveWrapOption,
-                                                          haveGiftOption: haveGiftOption,
+                                                          haveGiftOption: haveGiftOption, manuFacturedId:int.tryParse( manuFactreIdController?.text??""),
+                                                            manuFacturedName: manuFactreNameController.text.isEmpty?null:manuFactreNameController?.text,
                                                           landingCost:double.tryParse( landingCostController?.text??""),
                                                           returnTime: int.tryParse(returnTimeController.text),
                                                           variantStatus: "va",
@@ -1526,14 +1548,14 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           image3:img3?Variable.img3.toString():image3Controller?.text??null,
                                                           image4:img4?Variable.img4.toString().toString(): image4Controller?.text??null,
                                                           image5:img5?Variable.img5.toString(): image5Controller?.text??null,
-                                                          catalog1:cata1?Variable.catalog1.toString(): group.variantMeta?.catelog?.keyValues?.catelog1??null,
-                                                          catalog2:cata2?Variable.catalog2.toString(): group.variantMeta?.catelog?.keyValues?.catelog2??null,
-                                                          catalog3:cata3?Variable.catalog3.toString():group.variantMeta?.catelog?.keyValues?.catelog3??null,
-                                                          catalog4:cata4?Variable.catalog4.toString(): group.variantMeta?.catelog?.keyValues?.catelog4??null,
-                                                          catalog5:cata5?Variable.catalog5.toString():group.variantMeta?.catelog?.keyValues?.catelog5??null,
-                                                          catalog6:cata6?Variable.catalog6.toString(): group.variantMeta?.catelog?.keyValues?.catelog6??null,
-                                                          catalog7:cata7?Variable.catalog7.toString():group.variantMeta?.catelog?.keyValues?.catelog7??null,
-                                                          catalog8:cata8?Variable.catalog8.toString(): group.variantMeta?.catelog?.keyValues?.catelog8??null,
+                                                          catalog1:cata1?Variable.catalog1.toString():catalog1?.text??null,
+                                                          catalog2:cata2?Variable.catalog2.toString(): catalog2?.text??null,
+                                                          catalog3:cata3?Variable.catalog3.toString():catalog3?.text??null,
+                                                          catalog4:cata4?Variable.catalog4.toString(): catalog4?.text??null,
+                                                          catalog5:cata5?Variable.catalog5.toString():catalog5?.text??null,
+                                                          catalog6:cata6?Variable.catalog6.toString(): catalog6?.text??null,
+                                                          catalog7:cata7?Variable.catalog7.toString():catalog7?.text??null,
+                                                          catalog8:cata8?Variable.catalog8.toString(): catalog8?.text??null,
                                                           netWeight: netWeightController.text.isEmpty?null:double.tryParse(netWeightController?.text??""),
                                                           aboutProducts: aboutProducts?.name==""?Storage(name:"About Products",keyValues: aboutProducts?.keyValues):aboutProducts,
                                                           productDetails: productDetails?.name==""?ProductFeatures(name:"Product Detailsls",keyValues:productDetails?.keyValues  ):productDetails,
@@ -1623,18 +1645,19 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           vedioUrl: videoUrlController!.text.isEmpty?null:videoUrlController?.text,
                                                           returnType: returnTypeController!.text.isEmpty?null:returnTypeController?.text,
                                                           status: statusController.text.isEmpty?null:statusController?.text,
+                                                          image1: img1?Variable.img1.toString().isEmpty?null:Variable.img1.toString():  image1Controller.text.isEmpty?null:image1Controller.text,
                                                           image2:img2?Variable.img2.toString().isEmpty?null:Variable.img2.toString():  image2Controller.text.isEmpty?null:image2Controller.text,
                                                           image3:img3?Variable.img3.toString():image3Controller?.text,
                                                           image4:img4?Variable.img4.toString(): image4Controller?.text,
                                                           image5:img5?Variable.img5.toString():image5Controller?.text,
-                                                          catalog1:cata1?Variable.catalog1.toString(): group.variantMeta?.catelog?.keyValues?.catelog1,
-                                                          catalog2:cata2?Variable.catalog2.toString(): group.variantMeta?.catelog?.keyValues?.catelog2,
-                                                          catalog3:cata3?Variable.catalog3.toString(): group.variantMeta?.catelog?.keyValues?.catelog3,
-                                                          catalog4:cata4?Variable.catalog4.toString():group.variantMeta?.catelog?.keyValues?.catelog4,
-                                                          catalog5:cata5?Variable.catalog5.toString(): group.variantMeta?.catelog?.keyValues?.catelog5,
-                                                          catalog6:cata6?Variable.catalog6.toString(): group.variantMeta?.catelog?.keyValues?.catelog6,
-                                                          catalog7:cata7?Variable.catalog7.toString(): group.variantMeta?.catelog?.keyValues?.catelog7,
-                                                          catalog8:cata8?Variable.catalog8.toString(): group.variantMeta?.catelog?.keyValues?.catelog8,
+                                                          catalog1:cata1?Variable.catalog1.toString(): catalog1?.text??null,
+                                                          catalog2:cata2?Variable.catalog2.toString(): catalog2?.text??null,
+                                                          catalog3:cata3?Variable.catalog3.toString(): catalog3?.text??null,
+                                                          catalog4:cata4?Variable.catalog4.toString():catalog4?.text??null,
+                                                          catalog5:cata5?Variable.catalog5.toString(): catalog5?.text??null,
+                                                          catalog6:cata6?Variable.catalog6.toString(): catalog6?.text??null,
+                                                          catalog7:cata7?Variable.catalog7.toString(): catalog7?.text??null,
+                                                          catalog8:cata8?Variable.catalog8.toString(): catalog8?.text??null,
 
                                                           variantStatus:null,
                                                           stockWarning: stockWarning,

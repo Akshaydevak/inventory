@@ -170,6 +170,8 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
 
               DateTimeField(
               initialValue: widget.initialValue,
+
+
                // controller: widget.controller,
                 enabled: widget.enable,
                 validator: (value) => value == null ? "* required" : null,
@@ -194,7 +196,7 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.001))),
                 ),
                 format: mFormat,
-                style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
+                style: TextStyle(fontSize: 14), onChanged: widget.onSaved,
                 //  onFieldSubmitted: widget.onSaved,
                 onShowPicker: (context, currentValue) async {
                   DateTime? date;
@@ -250,7 +252,7 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
                   borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.001))),
             ),
             format: mFormat,
-            style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
+            style: TextStyle(fontSize: 17), onChanged: widget.onSaved,
             //  onFieldSubmitted: widget.onSaved,
             onShowPicker: (context, currentValue) async {
               DateTime? date;

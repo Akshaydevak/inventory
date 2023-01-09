@@ -51,6 +51,8 @@ class VariantPost with _$VariantPost {
     @JsonKey(name: "arabic_description") final String? arabicDescription,
     @JsonKey(name: "additional_description")
         final String? additionalDescription,
+    @JsonKey(name: "manufacture_id") final int? manuFacturedId,
+    @JsonKey(name: "manufacture_name") final String? manuFacturedName,
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "weight_unit") final String? weightUnit,
     @JsonKey(name: "length_unit") final String? lengthUnit,

@@ -666,9 +666,10 @@ class _ConfirmationPopupState extends State<ConfirmationPopup> {
   final Function? onPressed;
   final List<OrderLines>? table;
   final int? verticalId;
+  final String message;
 
   LogoutPopup(
-      {this.verticalId, this.table, this.clear, required this.onPressed});
+      {this.verticalId, this.table, this.clear, required this.onPressed,required this.message});
 
   @override
   State<LogoutPopup> createState() => _LogoutPopup();
@@ -686,22 +687,81 @@ class _LogoutPopup extends State<LogoutPopup> {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      return AlertDialog(actions: [
-        TextButton(
-            child: Text("Confirm"),
-            onPressed: () {
-              widget.onPressed!();
-            }
-            // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(widget.verticalId);
+      return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+      //     actions: [
+      //   TextButtonLarge(
+      //     text: "Cancel",
+      //     labelcolor:Colors.grey ,
+      //
+      //     clr: Colors.white,
+      //     onPress: () {
+      //       Navigator.pop(context);
+      //     },
+      //   ),
+      //   TextButtonLarge(
+      //       text: "Confirm",
+      //       onPress: () {
+      //         widget.onPressed!();
+      //       }
+      //       // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(widget.verticalId);
+      //
+      //       ),
+      //
+      // ],
+          content: Container(
+              height: 150,
+              child: Column(
+            children: [
+              Container(
+                // height: 80,
+                margin: EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    Text(widget.message),
+                  ],
+                ),
+              ),
+              Spacer(),
 
-            ),
-        TextButton(
-          child: Text("Cancel"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )
-      ], content: Text("Are you sure you want to logout from the app ?"));
+              Container(
+                  height: 60,
+                // d
+                color:  Color(0xffF8F8F8),
+                  child:Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                      children:[
+                          Container(
+                            margin: EdgeInsets.only(bottom: 5),
+                            child: TextButtonLarge(
+                              text: "Cancel",
+                              labelcolor:Colors.grey ,
+
+                              clr: Colors.white,
+                              onPress: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),   Container(
+          margin: EdgeInsets.only(bottom: 5),
+                        child:  TextButtonLarge(
+                              text: "Confirm",
+                              onPress: () {
+                                widget.onPressed!();
+                              }
+                              // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(widget.verticalId);
+
+                              ),
+                        ),
+
+                        // ],
+
+
+                      ]
+                  )
+              )
+            ],
+          )));
     });
   }
 }
@@ -822,6 +882,7 @@ class CommonIcon extends StatelessWidget {
 // ignore: must_be_immutable
 class ConfigurePopup extends StatelessWidget {
   final String type;
+  final String? code;
   final Function? listAssign;
   final List<LinkedItemListModel>?linkedListItemTable;
 
@@ -836,6 +897,7 @@ class ConfigurePopup extends StatelessWidget {
 
       required this.type,
       this.onBack,
+        this.code,
       this.onAddNew = false,
       this.listAssign,
       this.veritiaclid})
@@ -867,6 +929,7 @@ class ConfigurePopup extends StatelessWidget {
         {
 
           data = CreateSearchLinkedItem(
+            veritcalCode:code,
             linkedListItemTable:linkedListItemTable,
             listAssign: listAssign,
             type: type,
@@ -1060,8 +1123,9 @@ class ConfigurePopup extends StatelessWidget {
       case "LinkedItemCreatePopUp":
         {
           data = LinkedItemCreatePopUp(
-            linkedListItemTable:linkedListItemTable,
             veritiaclid: veritiaclid,
+            linkedListItemTable:linkedListItemTable,
+            veritiacalCode: code,
             type: type,
             linkedListAssign: listAssign!,
           );
@@ -2203,11 +2267,13 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
 
 class CreateSearchLinkedItem extends StatefulWidget {
   final String type;
+  final String? veritcalCode;
   final Function? listAssign;
   final List<LinkedItemListModel>?linkedListItemTable;
 
   CreateSearchLinkedItem({
     Key? key,
+  this.veritcalCode,
     required this.linkedListItemTable,
     required this.type,
     required this.listAssign,
@@ -2276,7 +2342,7 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
         ),
         BlocProvider(
           create: (context) =>
-              LinkeditemlistreadCubit()..getLinkedItemListRead("code"),
+              LinkeditemlistreadCubit()..getLinkedItemListRead(widget.veritcalCode),
         ),
         BlocProvider(
           create: (context) => MaterialdeleteCubit(),
@@ -2477,17 +2543,17 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
                             // width: w/7,
                             // margin: EdgeInsets.symmetric(horizontal: w*.02),
                             child: customTable(
-                              border: const TableBorder(
-                                verticalInside: BorderSide(
-                                    width: .5,
-                                    color: Colors.black45,
-                                    style: BorderStyle.solid),
-                                horizontalInside: BorderSide(
-                                    width: .3,
-                                    color: Colors.black45,
-                                    // color: Colors.blue,
-                                    style: BorderStyle.solid),
-                              ),
+                              // border: const TableBorder(
+                              //   verticalInside: BorderSide(
+                              //       width: .5,
+                              //       color: Colors.black45,
+                              //       style: BorderStyle.solid),
+                              //   horizontalInside: BorderSide(
+                              //       width: .3,
+                              //       color: Colors.black45,
+                              //       // color: Colors.blue,
+                              //       style: BorderStyle.solid),
+                              // ),
                               tableWidth: .5,
                               childrens: [
                                 TableRow(
@@ -2503,9 +2569,9 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
                                     tableHeadtext(
                                       '',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
+                                      // padding: EdgeInsets.all(7),
+                                      //
+                                      // height: 46,
                                       // textColor: Colors.black,
                                       // color: Color(0xffE5E5E5),
 
@@ -2515,8 +2581,8 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
                                     tableHeadtext(
                                       'Item Name',
                                       // textColor: Colors.black,
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+                                      // padding: EdgeInsets.all(7),
+                                      // height: 46,
                                       size: 13,
                                       // color: Color(0xffE5E5E5),
                                     ),
@@ -2534,20 +2600,22 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
                                   for (var i = 0; i < table.length; i++)
                                     TableRow(
                                         decoration: BoxDecoration(
-                                            color: Colors.grey.shade200,
+                                            color: Pellet.tableRowColor,
                                             shape: BoxShape.rectangle,
-                                            border: const Border(
+                                            border:  Border(
                                                 left: BorderSide(
-                                                    width: .5,
-                                                    color: Colors.grey,
+
+                                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
                                                     style: BorderStyle.solid),
                                                 bottom: BorderSide(
-                                                    width: .5,
-                                                    color: Colors.grey,
+
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
                                                     style: BorderStyle.solid),
                                                 right: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: .5,
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+
                                                     style: BorderStyle.solid))),
                                         children: [
                                           TableCell(
@@ -2582,7 +2650,7 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
                                                       .middle,
                                               child: textPadding(
                                                   table[i].name ?? "",
-                                                  height: 45)
+                                                 )
                                               // Text(keys[i].value??"",)
 
                                               ),
@@ -5628,9 +5696,9 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                                 ],
                                               )),
                                           Container(
-                                            margin: EdgeInsets.only(left: 13),
+                                            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*.023),
                                             alignment: Alignment.topLeft,
-                                            child: CreateTextButton(
+                                            child: TextButtonLarge(
                                               onPress:(){
                                                 costingTypeMethodeCheck = true; showDailogPopUp(
                                                   context,
@@ -5639,15 +5707,16 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                                   ),
                                                 );
                                               },
-                                              label: "Create Attribute",
+                                              text: "Create Attribute",
                                             ),
                                           ),
+                                          SizedBox(height: 10,),
                                           SingleChildScrollView(
                                             child: Column(
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                    height: 180,
+                                                    height: 220,
 
 
                                                     child: VariantFrameWorkBottomTable(
@@ -8535,11 +8604,12 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
 
 class LinkedItemCreatePopUp extends StatefulWidget {
   final String type;
+  final String? veritiacalCode;
   final int? veritiaclid;
   final List<LinkedItemListModel>?linkedListItemTable;
   final Function linkedListAssign;
 
-  LinkedItemCreatePopUp({Key? key, required this.linkedListItemTable,required this.type, this.veritiaclid,required this.linkedListAssign})
+  LinkedItemCreatePopUp({Key? key,this.veritiaclid ,required this.linkedListItemTable,required this.type, this.veritiacalCode,required this.linkedListAssign})
       : super(key: key);
 
   @override
@@ -8877,15 +8947,16 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                             Expanded(
                                                 child: Column(
                                               children: [
+
                                                 NewInputCard(
                                                     controller: titleController,
-                                                    title: "title"),
+                                                    title: "Title"),
                                                 SizedBox(
                                                   height: 10,
                                                 ),
                                                 PopUpSwitchTile(
                                                     value: active ?? false,
-                                                    title: "isActive",
+                                                    title: "is Active",
                                                     onClick: (gg) {
                                                       onChange = true;
                                                       if (costingTypeMethodeCheck==false)
@@ -8901,6 +8972,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                             Expanded(
                                                 child: Column(
                                               children: [
+                                                SizedBox(height: 10,),
                                                 NewInputCard(
                                                   controller:
                                                       descriptionContollercontroller,
@@ -8914,6 +8986,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                     showDailogPopUp(
                                                       context,
                                                       ConfigurePopup(
+                                                        code: widget.veritiacalCode,
                                                         linkedListItemTable: table,
                                                         listAssign: listAssign,
                                                         type:
@@ -8921,7 +8994,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                       ),
                                                     );
                                                   },
-                                                  text: "choose",
+                                                  text: "CHOOSE",
                                                 )
                                               ],
                                             )),
@@ -8944,17 +9017,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                         // width: w/7,
                                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                                         child: customTable(
-                                          border: const TableBorder(
-                                            verticalInside: BorderSide(
-                                                width: .5,
-                                                color: Colors.black45,
-                                                style: BorderStyle.solid),
-                                            horizontalInside: BorderSide(
-                                                width: .3,
-                                                color: Colors.black45,
-                                                // color: Colors.blue,
-                                                style: BorderStyle.solid),
-                                          ),
+
                                           tableWidth: .5,
                                           childrens: [
                                             TableRow(
@@ -8970,17 +9033,17 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                 tableHeadtext(
                                                   'Item Name',
                                                   // textColor: Colors.black,
-                                                  padding: EdgeInsets.all(7),
-                                                  height: 46,
+                                                  // padding: EdgeInsets.all(7),
+                                                  // height: 46,
                                                   size: 13,
                                                   // color: Color(0xffE5E5E5),
                                                 ),
                                                 tableHeadtext(
                                                   '',
 
-                                                  padding: EdgeInsets.all(7),
-
-                                                  height: 46,
+                                                  // padding: EdgeInsets.all(7),
+                                                  //
+                                                  // height: 46,
                                                   // textColor: Colors.black,
                                                   // color: Color(0xffE5E5E5),
 
@@ -8998,29 +9061,24 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                             ),
                                             if (table!.isEmpty) ...[
                                               TableRow(
-                                                  decoration: BoxDecoration(
-                                                      color:
-                                                          Colors.grey.shade200,
-                                                      shape: BoxShape.rectangle,
-                                                      border: const Border(
-                                                          left: BorderSide(
-                                                              width: .5,
-                                                              color:
-                                                                  Colors.grey,
-                                                              style: BorderStyle
-                                                                  .solid),
-                                                          bottom: BorderSide(
-                                                              width: .5,
-                                                              color:
-                                                                  Colors.grey,
-                                                              style: BorderStyle
-                                                                  .solid),
-                                                          right: BorderSide(
-                                                              color:
-                                                                  Colors.grey,
-                                                              width: .5,
-                                                              style: BorderStyle
-                                                                  .solid))),
+                decoration: BoxDecoration(
+                color: Pellet.tableRowColor,
+                    shape: BoxShape.rectangle,
+                    border:  Border(
+                        left: BorderSide(
+
+                            color: Color(0xff3E4F5B).withOpacity(.1),
+                            width: .4,
+                            style: BorderStyle.solid),
+                        bottom: BorderSide(
+
+                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                            style: BorderStyle.solid),
+                        right: BorderSide(
+                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                            width: .4,
+
+                            style: BorderStyle.solid))),
                                                   children: [
                                                     TableCell(
                                                         verticalAlignment:
@@ -9068,31 +9126,23 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                   i++)
                                                 TableRow(
                                                     decoration: BoxDecoration(
-                                                        color: Colors
-                                                            .grey.shade200,
-                                                        shape:
-                                                            BoxShape.rectangle,
-                                                        border: const Border(
+                                                        color: Pellet.tableRowColor,
+                                                        shape: BoxShape.rectangle,
+                                                        border:  Border(
                                                             left: BorderSide(
-                                                                width: .5,
-                                                                color:
-                                                                    Colors.grey,
-                                                                style:
-                                                                    BorderStyle
-                                                                        .solid),
+
+                                                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                width: .4,
+                                                                style: BorderStyle.solid),
                                                             bottom: BorderSide(
-                                                                width: .5,
-                                                                color:
-                                                                    Colors.grey,
-                                                                style:
-                                                                    BorderStyle
-                                                                        .solid),
+
+                                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                style: BorderStyle.solid),
                                                             right: BorderSide(
-                                                                color:
-                                                                    Colors.grey,
-                                                                width: .5,
-                                                                style: BorderStyle
-                                                                    .solid))),
+                                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                width: .4,
+
+                                                                style: BorderStyle.solid))),
                                                     children: [
                                                       TableCell(
                                                           verticalAlignment:
@@ -9101,7 +9151,8 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                           child: textPadding(
                                                               table?[i].name ??
                                                                   "",
-                                                              height: 45)
+                                                              // height: 45
+                                                          )
                                                           // Text(keys[i].value??"",)
 
                                                           ),

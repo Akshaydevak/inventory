@@ -125,6 +125,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   @override
   void initState() {
     context.read<ListcustomverticalCubit>().getCustomVerticalList();
+    lengthUnit.text="Centimeter";
+    widthUnit.text="Centimeter";
+    heightUnit.text="Centimeter";
+    weightUnit.text= "Killogram";
     super.initState();
   }
 
@@ -286,13 +290,13 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
         });
   },
   builder: (context, state) {
-    if(onChange==false){
-      lengthUnit.text="meter";
-      widthUnit.text="centimeter";
-      heightUnit.text="centimeter";
-       weightUnit.text= "kilo gram";
-    }
-    onChange=false;
+    // if(onChange==false){
+    //   lengthUnit.text="meter";
+    //   widthUnit.text="centimeter";
+    //   heightUnit.text="centimeter";
+    //    weightUnit.text= "kilo gram";
+    // }
+    // onChange=false;
 
     return Scaffold(
                 backgroundColor: Pellet.bagroundColor,
@@ -303,6 +307,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                     children: [
                       CustomIseVerticalList(
                         list: list1,
+                        select: select,
 
 
                         selectedVertical: selectedVertical,
@@ -420,10 +425,11 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                                 else{
                                   showDailogPopUp(
                                       context,
-                                      ConfirmationPopup(
+                                      LogoutPopup(
+                                        message: "Do you need to delete the order",
                                         // table:table,
                                         // clear:clear(),
-                                        verticalId:veritiaclid ,
+                                        // verticalId:veritiaclid ,
                                         onPressed:(){
                                           print("akshay");
                                           Navigator.pop(context);

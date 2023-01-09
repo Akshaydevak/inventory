@@ -13,6 +13,7 @@ class VariantreadCubit extends Cubit<VariantreadState> {
   Future getVariantRead(
     int? id,
   ) async {
+    emit(VariantreadState.initial());
     final result = await repo.getVariantRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

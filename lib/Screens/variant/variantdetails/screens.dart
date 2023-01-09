@@ -294,7 +294,8 @@ class _IdentificationState extends State<Identification> {
                                         color: upDate[i]
                                             ? Colors.white
                                             : Colors.transparent,
-                                        height: 48),
+
+                                    ),
                                     // UnderLinedInput(),
                                   ),
                                   TableCell(
@@ -1490,6 +1491,7 @@ class VariantStabletable extends StatefulWidget {
 
   final bool purchaseBlock;
   final int? veritiaclid;
+  final String? veritiaclCode;
   final bool stockWarning;
   final bool itmCatelog;
   final bool haveGiftOption;
@@ -1504,6 +1506,7 @@ class VariantStabletable extends StatefulWidget {
 
   VariantStabletable({
     required this.weightUom,
+    required this.veritiaclCode,
     required this.imagePostCheck,
     required this.itemId,
     required this.select,
@@ -1678,6 +1681,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
+                      readOnly: true,
                         controller: widget.description, title: "Description"),
                     SizedBox(
                       height: height * .030,
@@ -1957,172 +1961,200 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      // height: 100,
-                      // width: 300,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Length",
-                            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                          ),
-                          Container(
-                            // height: 70,
-                            // width: 300,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // height: 70,
-                                  width:150,
-                                  child: TextFormField(
-                                    controller: widget.length,
-                                    keyboardType:TextInputType.number,
-                                    inputFormatters:
-                                    <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ]
-                                    ,
-                                    decoration:  InputDecoration(
-                                      labelStyle: const TextStyle(
-                                        fontSize: 13,
-                                        //fontStyle: FontStyle.italic,
-                                      ),
-                                      // label: Text(
-                                      //   widget.label,
-                                      // ),
-                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                    NewInputPopupField(label: 'Length',contrroller:widget.length ,contrrollerUnit:widget.lengthUnit ,onChange: (va){
+                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                      setState(() {
+                        widget.lengthUnit.text = va??"";
 
-                                      // hintText: widget.label,
-                                      enabledBorder:OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
+                        // onChange = true;
+                        // orderType = va!;
+                      });
 
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                      focusedBorder:   OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
-
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                    ),
-                                    // contentPadding: EdgeInsets.all(20)
-                                  ),
-
-                                ),
-                                Container(
-                                  // height: 70,
-                                  width: 100,
-                                  child: PopUpCall(
-
-                                    type:"VariantLengthunitPopupCall",
-                                    value: widget.lengthUnit.text,
-                                    onSelection: (String? va) {
-                                      print(
-                                          "+++++++++++++++++++++++");
-                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                      setState(() {
-                                        widget.lengthUnit.text = va??"";
-
-                                        // onChange = true;
-                                        // orderType = va!;
-                                      });
-                                    },
-
-
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                    },
+                      type:"VariantLengthunitPopupCall" ,
                     ),
+
+                    // Container(
+                    //   margin: EdgeInsets.only(left: 20),
+                    //   // height: 100,
+                    //   // width: 300,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "Length",
+                    //         style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                    //       ),
+                    //       Container(
+                    //         // height: 70,
+                    //         // width: 300,
+                    //         child: Row(
+                    //           mainAxisAlignment: MainAxisAlignment.start,
+                    //           children: [
+                    //             Container(
+                    //               // height: 70,
+                    //               width:150,
+                    //               child: TextFormField(
+                    //                 controller: widget.length,
+                    //                 keyboardType:TextInputType.number,
+                    //                 inputFormatters:
+                    //                 <TextInputFormatter>[
+                    //                   FilteringTextInputFormatter.digitsOnly
+                    //                 ]
+                    //                 ,
+                    //                 decoration:  InputDecoration(
+                    //                   labelStyle: const TextStyle(
+                    //                     fontSize: 13,
+                    //                     //fontStyle: FontStyle.italic,
+                    //                   ),
+                    //                   // label: Text(
+                    //                   //   widget.label,
+                    //                   // ),
+                    //                   hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                    //
+                    //                   // hintText: widget.label,
+                    //                   enabledBorder:OutlineInputBorder(
+                    //                       borderRadius:BorderRadius.circular(2),
+                    //
+                    //                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                    //                   focusedBorder:   OutlineInputBorder(
+                    //                       borderRadius:BorderRadius.circular(2),
+                    //
+                    //                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                    //                 ),
+                    //                 // contentPadding: EdgeInsets.all(20)
+                    //               ),
+                    //
+                    //             ),
+                    //             Container(
+                    //               // height: 70,
+                    //               width: 100,
+                    //               child: PopUpCall(
+                    //
+                    //                 type:"VariantLengthunitPopupCall",
+                    //                 value: widget.lengthUnit.text,
+                    //                 onSelection: (String? va) {
+                    //                   print(
+                    //                       "+++++++++++++++++++++++");
+                    //                   //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                    //                   setState(() {
+                    //                     widget.lengthUnit.text = va??"";
+                    //
+                    //                     // onChange = true;
+                    //                     // orderType = va!;
+                    //                   });
+                    //                 },
+                    //
+                    //
+                    //               ),
+                    //             ),
+                    //
+                    //           ],
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     // NewInputCard(controller: widget.length, title: "Length"),
                     SizedBox(
                       height: height * .030,
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      // height: 100,
-                      // width: 300,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Height",
-                            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                          ),
-                          Container(
-                            // height: 70,
-                            // width: 300,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // height: 70,
-                                  width:150,
-                                  child: TextFormField(
-                                    controller: widget.height,
-                                    keyboardType:TextInputType.number,
-                                    inputFormatters:
-                                    <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ]
-                                    ,
-                                    decoration:  InputDecoration(
-                                      labelStyle: const TextStyle(
-                                        fontSize: 13,
-                                        //fontStyle: FontStyle.italic,
-                                      ),
-                                      // label: Text(
-                                      //   widget.label,
-                                      // ),
-                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
 
-                                      // hintText: widget.label,
-                                      enabledBorder:OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
+                    NewInputPopupField(
+                      label:"Height" ,
+                      type:"VariantHeightunitPopupCall" ,
+                      onChange: (va){
+                        setState(() {
+                          widget.heightUnit.text = va??"";
 
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                      focusedBorder:   OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
+                          // onChange = true;
+                          // orderType = va!;
+                        });
 
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                    ),
-                                    // contentPadding: EdgeInsets.all(20)
-                                  ),
-
-                                ),
-                                Container(
-                                  // height: 70,
-                                  width: 100,
-                                  child: PopUpCall(
-
-                                    type:"VariantHeightunitPopupCall",
-                                    value: widget.heightUnit.text,
-                                    onSelection: (String? va) {
-                                      print(
-                                          "+++++++++++++++++++++++");
-                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                      setState(() {
-                                        widget.heightUnit.text = va??"";
-
-                                        // onChange = true;
-                                        // orderType = va!;
-                                      });
-                                    },
-
-
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      },contrroller: widget.height,
+                      contrrollerUnit: widget.heightUnit,
                     ),
+                    // Container(
+                    //   margin: EdgeInsets.only(left: 20),
+                    //   // height: 100,
+                    //   // width: 300,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "Height",
+                    //         style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                    //       ),
+                    //       Container(
+                    //         // height: 70,
+                    //         // width: 300,
+                    //         child: Row(
+                    //           mainAxisAlignment: MainAxisAlignment.start,
+                    //           children: [
+                    //             Container(
+                    //               // height: 70,
+                    //               width:150,
+                    //               child: TextFormField(
+                    //                 controller: widget.height,
+                    //                 keyboardType:TextInputType.number,
+                    //                 inputFormatters:
+                    //                 <TextInputFormatter>[
+                    //                   FilteringTextInputFormatter.digitsOnly
+                    //                 ]
+                    //                 ,
+                    //                 decoration:  InputDecoration(
+                    //                   labelStyle: const TextStyle(
+                    //                     fontSize: 13,
+                    //                     //fontStyle: FontStyle.italic,
+                    //                   ),
+                    //                   // label: Text(
+                    //                   //   widget.label,
+                    //                   // ),
+                    //                   hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                    //
+                    //                   // hintText: widget.label,
+                    //                   enabledBorder:OutlineInputBorder(
+                    //                       borderRadius:BorderRadius.circular(2),
+                    //
+                    //                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                    //                   focusedBorder:   OutlineInputBorder(
+                    //                       borderRadius:BorderRadius.circular(2),
+                    //
+                    //                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                    //                 ),
+                    //                 // contentPadding: EdgeInsets.all(20)
+                    //               ),
+                    //
+                    //             ),
+                    //             Container(
+                    //               // height: 70,
+                    //               width: 100,
+                    //               child: PopUpCall(
+                    //
+                    //                 type:"VariantHeightunitPopupCall",
+                    //                 value: widget.heightUnit.text,
+                    //                 onSelection: (String? va) {
+                    //                   print(
+                    //                       "+++++++++++++++++++++++");
+                    //                   //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                    //                   setState(() {
+                    //                     widget.heightUnit.text = va??"";
+                    //
+                    //                     // onChange = true;
+                    //                     // orderType = va!;
+                    //                   });
+                    //                 },
+                    //
+                    //
+                    //               ),
+                    //             ),
+                    //
+                    //           ],
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     // NewInputCard(
                     //     formatter: true,
                     //     controller: widget.height,
@@ -2137,87 +2169,105 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      // height: 100,
-                      // width: 300,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Width",
-                            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                          ),
-                          Container(
-                            // height: 70,
-                            // width: 300,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // height: 70,
-                                  width:150,
-                                  child: TextFormField(
-                                    controller: widget.width,
-                                    keyboardType:TextInputType.number,
-                                    inputFormatters:
-                                    <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ]
-                                    ,
-                                    decoration:  InputDecoration(
-                                      labelStyle: const TextStyle(
-                                        fontSize: 13,
-                                        //fontStyle: FontStyle.italic,
-                                      ),
-                                      // label: Text(
-                                      //   widget.label,
-                                      // ),
-                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
 
-                                      // hintText: widget.label,
-                                      enabledBorder:OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
+                    NewInputPopupField(
+                      label:"Width" ,
+                      type:"VariantWidthunitPopupCall" ,
+                      onChange: (va){
+                        print(
+                            "+++++++++++++++++++++++");
+                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                        setState(() {
+                          widget.widthUnit.text = va??"";
 
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                      focusedBorder:   OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
+                          // onChange = true;
+                          // orderType = va!;
+                        });
 
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                    ),
-                                    // contentPadding: EdgeInsets.all(20)
-                                  ),
-
-                                ),
-                                Container(
-                                  // height: 70,
-                                  width: 100,
-                                  child: PopUpCall(
-
-                                    type:"VariantWidthunitPopupCall",
-                                    value: widget.widthUnit.text,
-                                    onSelection: (String? va) {
-                                      print(
-                                          "+++++++++++++++++++++++");
-                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                      setState(() {
-                                        widget.widthUnit.text = va??"";
-
-                                        // onChange = true;
-                                        // orderType = va!;
-                                      });
-                                    },
-
-
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      },contrroller: widget.width,
+                      contrrollerUnit: widget.widthUnit,
                     ),
+                    // Container(
+                    //   margin: EdgeInsets.only(left: 20),
+                    //   // height: 100,
+                    //   // width: 300,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "Width",
+                    //         style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                    //       ),
+                    //       Container(
+                    //         // height: 70,
+                    //         // width: 300,
+                    //         child: Row(
+                    //           mainAxisAlignment: MainAxisAlignment.start,
+                    //           children: [
+                    //             Container(
+                    //               // height: 70,
+                    //               width:150,
+                    //               child: TextFormField(
+                    //                 controller: widget.width,
+                    //                 keyboardType:TextInputType.number,
+                    //                 inputFormatters:
+                    //                 <TextInputFormatter>[
+                    //                   FilteringTextInputFormatter.digitsOnly
+                    //                 ]
+                    //                 ,
+                    //                 decoration:  InputDecoration(
+                    //                   labelStyle: const TextStyle(
+                    //                     fontSize: 13,
+                    //                     //fontStyle: FontStyle.italic,
+                    //                   ),
+                    //                   // label: Text(
+                    //                   //   widget.label,
+                    //                   // ),
+                    //                   hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                    //
+                    //                   // hintText: widget.label,
+                    //                   enabledBorder:OutlineInputBorder(
+                    //                       borderRadius:BorderRadius.circular(2),
+                    //
+                    //                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                    //                   focusedBorder:   OutlineInputBorder(
+                    //                       borderRadius:BorderRadius.circular(2),
+                    //
+                    //                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                    //                 ),
+                    //                 // contentPadding: EdgeInsets.all(20)
+                    //               ),
+                    //
+                    //             ),
+                    //             Container(
+                    //               // height: 70,
+                    //               width: 100,
+                    //               child: PopUpCall(
+                    //
+                    //                 type:"VariantWidthunitPopupCall",
+                    //                 value: widget.widthUnit.text,
+                    //                 onSelection: (String? va) {
+                    //                   print(
+                    //                       "+++++++++++++++++++++++");
+                    //                   //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                    //                   setState(() {
+                    //                     widget.widthUnit.text = va??"";
+                    //
+                    //                     // onChange = true;
+                    //                     // orderType = va!;
+                    //                   });
+                    //                 },
+                    //
+                    //
+                    //               ),
+                    //             ),
+                    //
+                    //           ],
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
 
                     // NewInputCard(
                     //     formatter: true,
@@ -2228,87 +2278,107 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      // height: 100,
-                      // width: 300,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Weight",
-                            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                          ),
-                          Container(
-                            // height: 70,
-                            // width: 300,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  // height: 70,
-                                  width:150,
-                                  child: TextFormField(
-                                    controller: widget.weight,
-                                    keyboardType:TextInputType.number,
-                                    inputFormatters:
-                                    <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ]
-                                    ,
-                                    decoration:  InputDecoration(
-                                      labelStyle: const TextStyle(
-                                        fontSize: 13,
-                                        //fontStyle: FontStyle.italic,
-                                      ),
-                                      // label: Text(
-                                      //   widget.label,
-                                      // ),
-                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
-
-                                      // hintText: widget.label,
-                                      enabledBorder:OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
-
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                      focusedBorder:   OutlineInputBorder(
-                                          borderRadius:BorderRadius.circular(2),
-
-                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                                    ),
-                                    // contentPadding: EdgeInsets.all(20)
-                                  ),
-
-                                ),
-                                Container(
-                                  // height: 70,
-                                  width: 100,
-                                  child: PopUpCall(
-
-                                    type:"VariantWeightunitPopupCall",
-                                    value: widget.weightUnit.text,
-                                    onSelection: (String? va) {
-                                      print(
-                                          "+++++++++++++++++++++++");
-                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                      setState(() {
-                                        widget.weightUnit.text = va??"";
-
-                                        // onChange = true;
-                                        // orderType = va!;
-                                      });
-                                    },
 
 
-                                  ),
-                                ),
+                    NewInputPopupField(
+                      label:"Weight" ,
+                      type:"VariantWeightunitPopupCall" ,
+                      onChange: (va){
+                        print(
+                            "+++++++++++++++++++++++");
+                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                        setState(() {
+                          widget.weightUnit.text = va??"";
 
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                          // onChange = true;
+                          // orderType = va!;
+                        });
+
+                      },contrroller: widget.weight,
+                      contrrollerUnit: widget.weightUnit,
                     ),
+
+                    // Container(
+                    //   margin: EdgeInsets.only(left: 20),
+                    //   // height: 100,
+                    //   // width: 300,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "Weight",
+                    //         style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                    //       ),
+                    //       Container(
+                    //         // height: 70,
+                    //         // width: 300,
+                    //         child: Row(
+                    //           mainAxisAlignment: MainAxisAlignment.start,
+                    //           children: [
+                    //             Container(
+                    //               // height: 70,
+                    //               width:150,
+                    //               child: TextFormField(
+                    //                 controller: widget.weight,
+                    //                 keyboardType:TextInputType.number,
+                    //                 inputFormatters:
+                    //                 <TextInputFormatter>[
+                    //                   FilteringTextInputFormatter.digitsOnly
+                    //                 ]
+                    //                 ,
+                    //                 decoration:  InputDecoration(
+                    //                   labelStyle: const TextStyle(
+                    //                     fontSize: 13,
+                    //                     //fontStyle: FontStyle.italic,
+                    //                   ),
+                    //                   // label: Text(
+                    //                   //   widget.label,
+                    //                   // ),
+                    //                   hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                    //
+                    //                   // hintText: widget.label,
+                    //                   enabledBorder:OutlineInputBorder(
+                    //                       borderRadius:BorderRadius.circular(2),
+                    //
+                    //                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                    //                   focusedBorder:   OutlineInputBorder(
+                    //                       borderRadius:BorderRadius.circular(2),
+                    //
+                    //                       borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                    //                 ),
+                    //                 // contentPadding: EdgeInsets.all(20)
+                    //               ),
+                    //
+                    //             ),
+                    //             Container(
+                    //               // height: 70,
+                    //               width: 100,
+                    //               child: PopUpCall(
+                    //
+                    //                 type:"VariantWeightunitPopupCall",
+                    //                 value: widget.weightUnit.text,
+                    //                 onSelection: (String? va) {
+                    //                   print(
+                    //                       "+++++++++++++++++++++++");
+                    //                   //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                    //                   setState(() {
+                    //                     widget.weightUnit.text = va??"";
+                    //
+                    //                     // onChange = true;
+                    //                     // orderType = va!;
+                    //                   });
+                    //                 },
+                    //
+                    //
+                    //               ),
+                    //             ),
+                    //
+                    //           ],
+                    //         ),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     // NewInputCard(
                     //     formatter: true,
                     //     controller: widget.weight,
@@ -2534,6 +2604,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         showDailogPopUp(
                           context,
                           ConfigurePopup(
+                            code: widget.veritiaclCode,
                             veritiaclid: widget.veritiaclid,
                             type: "LinkedItemCreatePopUp",
                             listAssign: (String va) {
@@ -3653,10 +3724,15 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
 
       print("welcome to the entire place");
       vendorDetails=List.from(widget.vendorDetails??[]);
+      vendorDetails=  List.from([
+        for(var em in vendorDetails)
+          if(em.vendorReerenceCode!=null)
+            em
+      ]);
 
 
-        if (widget.vendorDetails?.isNotEmpty == true) {
-          for (var i = 0; i < widget.vendorDetails!.length; i++) {
+        if (vendorDetails.isNotEmpty == true) {
+          for (var i = 0; i < vendorDetails!.length; i++) {
 
               upDate.add(false);
               upDateButton.add(false);
@@ -3762,7 +3838,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: textPadding(
                         (i + 1).toString(),
-                        height: 50,
+
                         color: upDate[i] ? Colors.white : Colors.transparent,
                       ),
                     ),
@@ -3884,7 +3960,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: textPadding(
                     (vendorDetails.length + 1).toString(),
-                    height: 50,
+
                   ),
                 ),
                 TableCell(

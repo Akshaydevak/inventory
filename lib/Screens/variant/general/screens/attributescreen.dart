@@ -136,23 +136,23 @@ class _AttributeScreenState extends State<AttributeScreen> {
             });
       },
       child: Container(
-        height: 200,
+        height: 250,
         alignment: Alignment.topRight,
         width: MediaQuery.of(context).size.width - 60,
         child: attribute.isNotEmpty == true
-            ? GridView.builder(
+            ? ListView.builder(
+            //
+            //      gridDelegate: const Sli(
+            //
+            // maxCrossAxisExtent: 200,
+            // childAspectRatio:1 / 1.1,
+            // crossAxisSpacing: 20,
+            //
+            // mainAxisSpacing: 20),
 
-                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-
-            maxCrossAxisExtent: 200,
-            childAspectRatio:1 / 1.1,
-            crossAxisSpacing: 20,
-
-            mainAxisSpacing: 20),
 
 
-
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 itemCount: attribute.length,
                 itemBuilder: (context, index) {
                   return Container(
@@ -169,7 +169,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
                         ),
                         if (graphArray[index].isNotEmpty == true)
                           Container(
-                            height: 150,
+                            height: 50,
 
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,

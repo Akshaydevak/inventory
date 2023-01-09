@@ -74,11 +74,11 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
               width: 70,
               child: Text.rich(TextSpan(
                   text: widget.label,
-                  style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                  style: GoogleFonts.roboto(fontSize:12,fontWeight: FontWeight.w600),
                   children: widget.required
                       ? [
                     TextSpan(
-                        text: "*", style: TextStyle(color:Colors.grey))
+                        text: "*", style: TextStyle(color:Colors.black))
                   ]
                       : []))),
           title: widget.isTile
@@ -381,6 +381,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
         setState(() {});
       },
       child: Container(
+        height: 46,
         alignment: Alignment.center,
         padding: EdgeInsets.only(top: 0),
         child: Center(

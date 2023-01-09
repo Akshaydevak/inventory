@@ -20,7 +20,7 @@ class CustomeridlistCubit extends Cubit<CustomeridlistState> {
   }
   Future getSearchCustomerList(String filter) async {
     emit(CustomeridlistState.initial());
-    final result = await repo.getCustomerId("name=" + filter);
+    final result = await repo.getCustomerId("search_key=" + filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

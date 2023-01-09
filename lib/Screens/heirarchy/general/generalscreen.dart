@@ -423,6 +423,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                       children: [
                         ItemVerticalList(
                           list: list,
+                          select: select,
                           selectedVertical: selectedVertical,
                           itemsearch: itemsearch,
                           ontap: (int index) {
@@ -508,24 +509,12 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                 SizedBox(
                                   height: 40,
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      right: w * .02, left: w * .02),
-                                  color: Colors.white,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Item Heirarchy",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ],
-                                  ),
+                                Row(
+                                  children: [
+                                    TextWidget(text: "Item Heirarchy"),
+                                  ],
                                 ),
+
                                 ItemHeirarchyStableTable(
                                   categoryid: categoryId,
                                   subCategoryId: subCategoryId,
@@ -573,10 +562,11 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                   discardFunction: (){
                                     showDailogPopUp(
                                         context,
-                                        ConfirmationPopup(
+                                        LogoutPopup(
+                                          message: "Do you want to delete the order",
                                           // table:table,
                                           // clear:clear(),
-                                          verticalId: veritiaclid,
+                                          // verticalId: veritiaclid,
                                           onPressed: () {
                                             print("akshay");
                                             Navigator.pop(context);

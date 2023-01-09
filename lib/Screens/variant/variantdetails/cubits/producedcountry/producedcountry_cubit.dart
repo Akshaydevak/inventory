@@ -11,7 +11,7 @@ class ProducedcountryCubit extends Cubit<ProducedcountryState> {
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getProducedCountry(String? code) async {
   emit(  ProducedcountryState.initial());
-    final result = await repo.getProducedCountry( code);
+    final result = await repo.getProducedCountry(code);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
 }

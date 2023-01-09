@@ -278,7 +278,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   }
   assignCall(GenerateMissing model){
     print("aaaaaaaaaaaaaaa");
-    context.read<PurchasegeneratingCubit>().generatePost(model!);
+    // context.read<PurchasegeneratingCubit>().generatePost(model!);
 
   }
 
@@ -411,35 +411,35 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                         });
                   },
                 ),
-                BlocListener<PurchasegeneratingCubit, PurchasegeneratingState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("Rijinaaaaaa");
-                        context.showSnackBarSuccess(data.data2);
-                        context.read<InventorysearchCubit>().getInventorySearch("code");
-                        context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
-                        setState(() {
-
-                        });
-
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
+                // BlocListener<PurchasegeneratingCubit, PurchasegeneratingState>(
+                //   listener: (context, state) {
+                //     print("postssssssss" + state.toString());
+                //     state.maybeWhen(orElse: () {
+                //       // context.
+                //       context.showSnackBarError("Loadingg");
+                //     }, error: () {
+                //       context.showSnackBarError(Variable.errorMessege);
+                //     }, success: (data) {
+                //       if (data.data1) {
+                //         print("Rijinaaaaaa");
+                //         context.showSnackBarSuccess(data.data2);
+                //         context.read<InventorysearchCubit>().getInventorySearch("code");
+                //         context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
+                //         setState(() {
+                //
+                //         });
+                //
+                //
+                //
+                //       }
+                //       else {
+                //         context.showSnackBarError(data.data2);
+                //         print(data.data1);
+                //       }
+                //       ;
+                //     });
+                //   },
+                // ),
                 BlocListener<PurchaserecievingpatchCubit,
                     PurchaserecievingpatchState>(
                   listener: (context, state) {
@@ -601,6 +601,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                         result = list.data;
                         setState(() {
                           if(result.isNotEmpty){ veritiaclid=result[0].id;
+                            selectedVertical=0;
                           context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
                           Variable.verticalid=result[0].id;
                           print("Variable.ak"+Variable.verticalid.toString());
@@ -1242,11 +1243,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           children: [
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding((i + 1).toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding((i + 1).toString(),
+                                                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(recievingLisnes[i].orderLineCode.toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(recievingLisnes[i].orderLineCode.toString(),
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1285,19 +1290,27 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             // ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(recievingLisnes[i].variantName ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(recievingLisnes[i].variantName ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(recievingLisnes[i].supplierCode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(recievingLisnes[i].supplierCode ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(recievingLisnes[i].barcode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(recievingLisnes[i].barcode ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(currentStock.length!=recievingLisnes.length?"":currentStock[i].toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(currentStock.length!=recievingLisnes.length?"":currentStock[i].toString(),
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1749,11 +1762,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             //     fontWeight: FontWeight.w500),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(recievingLisnes[i].vatableAmount.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(recievingLisnes[i].vatableAmount.toString() ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(recievingLisnes[i].vat.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(recievingLisnes[i].vat.toString() ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                   fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             // TableCell(
                                                                                             //   verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1838,11 +1855,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(recievingLisnes[i].actualCost.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(recievingLisnes[i].actualCost.toString() ?? "", fontSize: 12,
+                                                                                                  // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(recievingLisnes[i].grandTotal.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(recievingLisnes[i].grandTotal.toString() ?? "",
+                                                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1995,7 +2016,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
                                                                                                   },
-                                                                                                  label: recievingLisnes[i].updateCheck==true?"Update":"",
+                                                                                                textColor:recievingLisnes[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
+                                                                                                  label: recievingLisnes[i].updateCheck==true?"Update":"Update",
 
                                                                                               ),
                                                                                             ),
@@ -2413,23 +2435,34 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(additionalVariants[i].variantName ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(additionalVariants[i].supplierCode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(additionalVariants[i].supplierCode ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(additionalVariants[i].barcode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(additionalVariants[i].barcode ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(additionalVariants[i].currentStock.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(additionalVariants[i].currentStock.toString() ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                               fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(
+                                                                                                  additionalVariants[i].purchaseUom.toString() ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2871,7 +2904,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(additionalVariants[i].vatableAmount.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(additionalVariants[i].vatableAmount.toString() ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2961,11 +2996,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(additionalVariants[i].actualCost.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(additionalVariants[i].actualCost.toString() ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                              child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                              child: textPadding(additionalVariants[i].grandTotal.toString() ?? "",
+                                                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                                  fontWeight: FontWeight.w500),
                                                                                             ),
                                                                                             CheckedBoxs(
                                                                                               valueChanger: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
@@ -3099,8 +3138,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding((1).toString(),
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         PopUpCall(
@@ -3149,36 +3188,39 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                          child: textPadding(varinatname??"", fontSize: 12, padding: EdgeInsets.only(
-                                                                                              left: 11.5,
-                                                                                              top: 11.5), fontWeight: FontWeight.w500),
+                                                                                          child: textPadding(varinatname??"",
+                                                                                              // fontSize: 12, padding: EdgeInsets.only(
+                                                                                              // left: 11.5,
+                                                                                              // top: 11.5),
+                                                                                              fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(supplierRefCode.toString()??"",
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(barcode??"",
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(stock.toString()??"",
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),  // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(purchaseUomName??"",
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
@@ -3499,15 +3541,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(vatableAmount1.toString()??"",
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(vat1.toString()??"",
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         // TableCell(
@@ -3584,15 +3626,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(actualCost1.toString()??"",
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(grandTotal1.toString()??"",
-                                                                                              fontSize: 12,
-                                                                                              padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                              // fontSize: 12,
+                                                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                               fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
@@ -3779,104 +3821,163 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                               )),
                                                         ),
 
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                          children: [
-                                                            TextButtonLarge(
-                                                              onPress: () {
+                                                        Container(
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment.end,
+                                                            children: [
+                                                              TextButtonLarge(
+                                                                onPress: () {
 
-                                                                List<RecievingLines>additionalVariants1=[];
-                                                                for(var i=0;i<additionalVariants.length;i++){
-                                                                  if(additionalVariants[i].isReceived==true){
-                                                                    additionalVariants1.add(additionalVariants[i]);
+                                                                  List<RecievingLines>additionalVariants1=[];
+                                                                  for(var i=0;i<additionalVariants.length;i++){
+                                                                    if(additionalVariants[i].isReceived==true){
+                                                                      additionalVariants1.add(additionalVariants[i]);
+                                                                    }
                                                                   }
-                                                                }
-                                                                print("rohit"+additionalVariants1.toString());
-                                                                print("rohit2"+additionalVariants1.length.toString());
-                                                                AdditionalGenerateModel model=AdditionalGenerateModel(
-                                                                  receivingId: receivingId,
-                                                                  createdBy: 12,
-                                                                  purchaseOrderId:Variable.verticalid,
-                                                                  orderLines: additionalVariants1,
-                                                                );
-                                                                print("avan"+model.toString());
-                                                                 context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
-                                                              },
-                                                              icon: Icons.check,
-                                                              // iconColor: Colors.white,
-                                                              text: "GNENERATE ORDER",
+                                                                  print("rohit"+additionalVariants1.toString());
+                                                                  print("rohit2"+additionalVariants1.length.toString());
+                                                                  AdditionalGenerateModel model=AdditionalGenerateModel(
+                                                                    receivingId: receivingId,
+                                                                    createdBy: 12,
+                                                                    purchaseOrderId:Variable.verticalid,
+                                                                    orderLines: additionalVariants1,
+                                                                  );
+                                                                  print("avan"+model.toString());
+                                                                   context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
+                                                                },
+                                                                icon: Icons.check,
+                                                                // iconColor: Colors.white,
+                                                                text: "GNENERATE ORDER",
 
-                                                              // height: 30,
-                                                              // width: 152,
-                                                              // labelcolor: Colors.white,
-                                                            ),
-                                                          ],
+                                                                // height: 30,
+                                                                // width: 152,
+                                                                // labelcolor: Colors.white,
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                         SizedBox(height: height/30,),
-                                                        CustomDivider(),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                          children: [
-                                                            Buttons(
-                                                              onApply: () {
-                                                                print("akkkakkaa");
-                                                                if(recievingLisnes.isNotEmpty==true){
-                                                                  for(var i=0;i<recievingLisnes.length-1;i++){
-                                                                    print("ssssssssss"+ currentStock[i].toString());
-                                                                    recievingLisnes[i]= recievingLisnes[i].copyWith(currentStock: currentStock[i]);
-                                                                    setState(() {
+                                                        SaveUpdateResponsiveButton(label: "SAVE",
+                                                          isDelete: true,
 
-                                                                    });
-                                                                  }
-                                                                }
+                                                          saveFunction: (){
+
+                                                            print("akkkakkaa");
+                                                            if(recievingLisnes.isNotEmpty==true){
+                                                              for(var i=0;i<recievingLisnes.length-1;i++){
+                                                                print("ssssssssss"+ currentStock[i].toString());
+                                                                recievingLisnes[i]= recievingLisnes[i].copyWith(currentStock: currentStock[i]);
+                                                                setState(() {
+
+                                                                });
+                                                              }
+                                                            }
 
 
-                                                                PurchaseRecievingRead model = PurchaseRecievingRead(
-                                                                    orderCode: orderCodeController.text ?? "",
-                                                                    receivingCode: recievingCodeController.text ?? "",
-                                                                    orderCreatedDate: orederDateController.text ?? "",
-                                                                    orderStatus:
-                                                                    orderStatusController
-                                                                        .text ??
-                                                                        "",
-                                                                    invoiceStatus:
-                                                                    invoiceStausController
-                                                                        .text ??
-                                                                        "",
-                                                                    foc: double.tryParse(
-                                                                        focController.text ?? ""),
+                                                            PurchaseRecievingRead model = PurchaseRecievingRead(
+                                                                orderCode: orderCodeController.text ?? "",
+                                                                receivingCode: recievingCodeController.text ?? "",
+                                                                orderCreatedDate: orederDateController.text ?? "",
+                                                                orderStatus:
+                                                                orderStatusController
+                                                                    .text ??
+                                                                    "",
+                                                                invoiceStatus:
+                                                                invoiceStausController
+                                                                    .text ??
+                                                                    "",
+                                                                foc: double.tryParse(
+                                                                    focController.text ?? ""),
 
-                                                                    discount: double.tryParse(discountController.text ?? ""),
-                                                                    unitCost: int.tryParse(unitCostController.text ?? ""),
-                                                                    vatableAmount: double.tryParse(vatableAmountController.text ?? ""),
-                                                                    excessTax: double.tryParse(excessTaxController.text ?? ""),
-                                                                    vat: double.tryParse(vatController.text ?? ""),
-                                                                    actualCost: double.tryParse(actualCostController.text ?? ""),
-                                                                    grandTotal: double.tryParse(grandTotalController.text ?? ""),
-                                                                    inventoryId: inventoryId ?? "",
-                                                                    note: noteController.text ?? "",
-                                                                    receivedBy: Variable.username,
-                                                                    remarks: remarksController.text ?? "",
-                                                                    receivingLines: recievingLisnes);
-                                                                context
-                                                                    .read<
-                                                                    PurchaserecievingpatchCubit>()
-                                                                    .getPurchaseRecievePatch(
-                                                                    receivingId,
-                                                                    model);
-                                                              },
-                                                              icon: Icons.check,
-                                                              iconColor: Colors.white,
-                                                              text: "SAVE",
-                                                              // clr: Color(0xff53A9F9),
-                                                              height: 32,
-                                                              width: 90,
-                                                              labelcolor: Colors.white,
-                                                            ),
-                                                          ],
+                                                                discount: double.tryParse(discountController.text ?? ""),
+                                                                unitCost: int.tryParse(unitCostController.text ?? ""),
+                                                                vatableAmount: double.tryParse(vatableAmountController.text ?? ""),
+                                                                excessTax: double.tryParse(excessTaxController.text ?? ""),
+                                                                vat: double.tryParse(vatController.text ?? ""),
+                                                                actualCost: double.tryParse(actualCostController.text ?? ""),
+                                                                grandTotal: double.tryParse(grandTotalController.text ?? ""),
+                                                                inventoryId: inventoryId ?? "",
+                                                                note: noteController.text ?? "",
+                                                                receivedBy: Variable.username,
+                                                                remarks: remarksController.text ?? "",
+                                                                receivingLines: recievingLisnes);
+                                                            context
+                                                                .read<
+                                                                PurchaserecievingpatchCubit>()
+                                                                .getPurchaseRecievePatch(
+                                                                receivingId,
+                                                                model);
+
+                                                          },
+                                                          discardFunction: (){
+
+                                                          },
+
                                                         ),
+                                                        // CustomDivider(),
+                                                        // Row(
+                                                        //   mainAxisAlignment:
+                                                        //   MainAxisAlignment.end,
+                                                        //   children: [
+                                                        //     Buttons(
+                                                        //       onApply: () {
+                                                        //         print("akkkakkaa");
+                                                        //         if(recievingLisnes.isNotEmpty==true){
+                                                        //           for(var i=0;i<recievingLisnes.length-1;i++){
+                                                        //             print("ssssssssss"+ currentStock[i].toString());
+                                                        //             recievingLisnes[i]= recievingLisnes[i].copyWith(currentStock: currentStock[i]);
+                                                        //             setState(() {
+                                                        //
+                                                        //             });
+                                                        //           }
+                                                        //         }
+                                                        //
+                                                        //
+                                                        //         PurchaseRecievingRead model = PurchaseRecievingRead(
+                                                        //             orderCode: orderCodeController.text ?? "",
+                                                        //             receivingCode: recievingCodeController.text ?? "",
+                                                        //             orderCreatedDate: orederDateController.text ?? "",
+                                                        //             orderStatus:
+                                                        //             orderStatusController
+                                                        //                 .text ??
+                                                        //                 "",
+                                                        //             invoiceStatus:
+                                                        //             invoiceStausController
+                                                        //                 .text ??
+                                                        //                 "",
+                                                        //             foc: double.tryParse(
+                                                        //                 focController.text ?? ""),
+                                                        //
+                                                        //             discount: double.tryParse(discountController.text ?? ""),
+                                                        //             unitCost: int.tryParse(unitCostController.text ?? ""),
+                                                        //             vatableAmount: double.tryParse(vatableAmountController.text ?? ""),
+                                                        //             excessTax: double.tryParse(excessTaxController.text ?? ""),
+                                                        //             vat: double.tryParse(vatController.text ?? ""),
+                                                        //             actualCost: double.tryParse(actualCostController.text ?? ""),
+                                                        //             grandTotal: double.tryParse(grandTotalController.text ?? ""),
+                                                        //             inventoryId: inventoryId ?? "",
+                                                        //             note: noteController.text ?? "",
+                                                        //             receivedBy: Variable.username,
+                                                        //             remarks: remarksController.text ?? "",
+                                                        //             receivingLines: recievingLisnes);
+                                                        //         context
+                                                        //             .read<
+                                                        //             PurchaserecievingpatchCubit>()
+                                                        //             .getPurchaseRecievePatch(
+                                                        //             receivingId,
+                                                        //             model);
+                                                        //       },
+                                                        //       icon: Icons.check,
+                                                        //       iconColor: Colors.white,
+                                                        //       text: "SAVE",
+                                                        //       // clr: Color(0xff53A9F9),
+                                                        //       height: 32,
+                                                        //       width: 90,
+                                                        //       labelcolor: Colors.white,
+                                                        //     ),
+                                                        //   ],
+                                                        // ),
                                                       ],
                                                     ))
                                               ],
@@ -3964,13 +4065,58 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
 
-    return Builder(
+    return BlocProvider(
+  create: (context) => PurchasegeneratingCubit(),
+  child: MultiBlocListener(
+  listeners: [
+    BlocListener<PurchasegeneratingCubit, PurchasegeneratingState>(
+      listener: (context, state) {
+        print("postssssssss" + state.toString());
+        state.maybeWhen(orElse: () {
+          // context.
+          context.showSnackBarError("Loading");
+        }, error: () {
+          context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+          if (data.data1) {
+
+            showDailogPopUp(
+                context,
+                SuccessPopup(
+                  content: data.data2,
+                  // table:table,
+                ));
+            context.read<InventorysearchCubit>().getInventorySearch("code");
+            // context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
+            setState(() {
+
+            });
+
+
+
+          }
+          else {
+            context.showSnackBarError(data.data2);
+            showDailogPopUp(
+                context,
+                FailiurePopup(
+                  content: data.data2,
+                  // table:table,
+                ));
+          }
+          ;
+        });
+      },
+    ),
+
+  ],
+  child: Builder(
         builder: (context) {
           return AlertDialog(
             content: PopUpHeader(
 
 
-              label: "Create system generated Po",
+              label: "Create system generated LPO",
               onApply: () {
                 print( "aaa"+widget.model.toString());
                 GenerateMissing? model=widget.model;
@@ -3979,7 +4125,8 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                 print( "asap"+model.toString());
 
                 widget.assign(model);
-                Navigator.pop(context);
+                context.read<PurchasegeneratingCubit>().generatePost(model!);
+                // Navigator.pop(context);
 
               },
               isDirectCreate: true,
@@ -3997,150 +4144,218 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                 child: SingleChildScrollView(
                   child:
                   Container(
-                    height: 300,
+                    height: 400,
+
                     // width: MediaQuery.of(context).size.width-20,
                     child:Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          "purchase order",
-                        ),
-                        Divider(
-                          color: Colors.grey,
-                          height: 4.0,
-                        ),
+
                         SizedBox(height: 15,),
+                        Container(
+
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(child: Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    NewInputCard(
+                                      controller: vendorCodeName,
+                                      icondrop: true,
+                                      title: "Vendor Code",
+                                      readOnly: true,
+                                      ontap: () {
+                                        showDailogPopUp(
+                                          context,
+                                          TableConfigurePopup(type: "VendorDetails_Popup",
+                                            valueSelect: (VendorDetailsModel va) {
+                                              setState(() {
+
+
+                                                vendorCode.text=va.manuFactureuserCode ?? "";
+                                                vendorCodeName.text=va.manuFactureName ?? "";
+                                                // vendoraddress.text=va.address.;
+                                                vendortrnnumber.text=va.trnNumber.toString();
+
+                                                //                           setState(() {});ge = true;
+                                                // orderType.text = va!;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: MediaQuery.of(context).size.height * .035,
+                                    ),
+                                    // PopUpInputField(
+                                    //     controller: reason, label: "vendor id"),
+                                    // PopUpInputField(
+                                    //   // direction:true ,
+                                    //   controller: vendorCodeName,
+                                    //   icondrop: true,
+                                    //   label: "Vendor Code",
+                                    //   readOnly: true,
+                                    //   ontap: () {
+                                    //     showDailogPopUp(
+                                    //       context,
+                                    //       TableConfigurePopup(type: "VendorDetails_Popup",
+                                    //         valueSelect: (VendorDetailsModel va) {
+                                    //           setState(() {
+                                    //
+                                    //
+                                    //             vendorCode.text=va.manuFactureuserCode ?? "";
+                                    //             vendorCodeName.text=va.manuFactureName ?? "";
+                                    //             // vendoraddress.text=va.address.;
+                                    //             vendortrnnumber.text=va.trnNumber.toString();
+                                    //
+                                    //             //                           setState(() {});ge = true;
+                                    //             // orderType.text = va!;
+                                    //           });
+                                    //         },
+                                    //       ),
+                                    //     );
+                                    //   },
+                                    // ),
+                                    // SelectableDropDownpopUp(
+                                    //   row: true,
+                                    //   label: "Vendor Code",
+                                    //   type:"VendorCodeGeneral",
+                                    //   value: vendorCode.text,
+                                    //   onSelection: (Result? va) {
+                                    //
+                                    //     print(
+                                    //         "+++++++++++++++++++++++"+va.toString());
+                                    //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                    //     // setState(() {
+                                    //     vendorCode.text=va?.partnerCode??"";
+                                    //     var id=va?.partnerCode;
+                                    //     print(vendorCode.text);
+                                    //     setState(() {
+                                    //       context
+                                    //           .read<
+                                    //           VendordetailsCubit>()
+                                    //           .getVendorDetails(
+                                    //           id);
+                                    //
+                                    //     });
+                                    //     showDailogPopUp(
+                                    //         context,
+                                    //         VendorPopup(
+                                    //         assign: assigniningDetails,
+                                    //
+                                    //         ));
+                                    //
+                                    //
+                                    //
+                                    //
+                                    //
+                                    //
+                                    //   },
+                                    //   onAddNew: () {},
+                                    //   restricted: true,
+                                    // ),
+
+
+                                    PopUpDateFormField(
+
+                                        format:DateFormat('yyyy-MM-dd'),
+                                        controller: widget.promised,
+                                        // initialValue:
+                                        //     DateTime.parse(fromDate!),
+                                        label: "Promised Receipt Date",
+                                        onSaved: (newValue) {
+                                          print("newValue"+newValue.toString());
+                                          widget.promised?.text = newValue
+                                              ?.toIso8601String()
+                                              .split("T")[0] ??
+                                              "";
+                                          print("promised_receipt_date.text"+ widget.promised!.text.toString());
+                                        },
+                                        enable: true),
+
+
+
+
+                                    // PopUpDateFormField(
+                                    //     row: true,
+                                    //
+                                    //     format:DateFormat('yyyy-MM-dd'),
+                                    //     controller:  widget.promised,
+                                    //     // initialValue:
+                                    //     //     DateTime.parse(fromDate!),
+                                    //     label: "Promised Recipt Date",
+                                    //     onSaved: (newValue) {
+                                    //       print("newValue"+newValue.toString());
+                                    //       widget.promised?.text = newValue
+                                    //           ?.toIso8601String()
+                                    //           .split("T")[0] ??
+                                    //           "";
+                                    //       print("promised_receipt_date.text"+ widget.promised!.text.toString());
+                                    //     },
+                                    //     enable: true),
+
+                                    // PopUpInputField(
+                                    //     controller: widget.promised, label: "promisdedRecieptdate"),
+
+                                  ],
+                                ),
+                              )),
+                              SizedBox(width: 10,),
+                              Expanded(child: Container(
+                                child: Column(
+                                  children: [
+                                    PopUpDateFormField(
+                                        // row: true,
+
+                                        format:DateFormat('yyyy-MM-dd'),
+                                        controller:  widget.plannded,
+                                        // initialValue:
+                                        //     DateTime.parse(fromDate!),
+                                        label: "Planned Reciept Date",
+                                        onSaved: (newValue) {
+                                          widget.plannded?.text = newValue
+                                              ?.toIso8601String()
+                                              .split("T")[0] ??
+                                              "";
+                                          print("promised_receipt_date.text"+  widget.plannded!.text.toString());
+                                        },
+                                        enable: true),
+                                    // PopUpInputField(
+                                    //     controller: widget.plannded, label: "planned reciept date"),
+
+
+                                  ],
+                                ),
+                              ))
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .035,
+                        ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Expanded(child: Container(
-                              child: Column(
-                                children: [
-                                  // PopUpInputField(
-                                  //     controller: reason, label: "vendor id"),
-                                  PopUpInputField(
-                                    // direction:true ,
-                                    controller: vendorCodeName,
-                                    icondrop: true,
-                                    label: "Vendor Code",
-                                    readOnly: true,
-                                    ontap: () {
-                                      showDailogPopUp(
-                                        context,
-                                        TableConfigurePopup(type: "VendorDetails_Popup",
-                                          valueSelect: (VendorDetailsModel va) {
-                                            setState(() {
+                            Expanded(
+                              child: NewInputCard(
 
-
-                                              vendorCode.text=va.manuFactureuserCode ?? "";
-                                              vendorCodeName.text=va.manuFactureName ?? "";
-                                              // vendoraddress.text=va.address.;
-                                              vendortrnnumber.text=va.trnNumber.toString();
-
-                                              //                           setState(() {});ge = true;
-                                              // orderType.text = va!;
-                                            });
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  // SelectableDropDownpopUp(
-                                  //   row: true,
-                                  //   label: "Vendor Code",
-                                  //   type:"VendorCodeGeneral",
-                                  //   value: vendorCode.text,
-                                  //   onSelection: (Result? va) {
-                                  //
-                                  //     print(
-                                  //         "+++++++++++++++++++++++"+va.toString());
-                                  //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                  //     // setState(() {
-                                  //     vendorCode.text=va?.partnerCode??"";
-                                  //     var id=va?.partnerCode;
-                                  //     print(vendorCode.text);
-                                  //     setState(() {
-                                  //       context
-                                  //           .read<
-                                  //           VendordetailsCubit>()
-                                  //           .getVendorDetails(
-                                  //           id);
-                                  //
-                                  //     });
-                                  //     showDailogPopUp(
-                                  //         context,
-                                  //         VendorPopup(
-                                  //         assign: assigniningDetails,
-                                  //
-                                  //         ));
-                                  //
-                                  //
-                                  //
-                                  //
-                                  //
-                                  //
-                                  //   },
-                                  //   onAddNew: () {},
-                                  //   restricted: true,
-                                  // ),
-                                  PopUpDateFormField(
-                                      row: true,
-
-                                      format:DateFormat('yyyy-MM-dd'),
-                                      controller:  widget.promised,
-                                      // initialValue:
-                                      //     DateTime.parse(fromDate!),
-                                      label: "Promised Recipt Date",
-                                      onSaved: (newValue) {
-                                        print("newValue"+newValue.toString());
-                                        widget.promised?.text = newValue
-                                            ?.toIso8601String()
-                                            .split("T")[0] ??
-                                            "";
-                                        print("promised_receipt_date.text"+ widget.promised!.text.toString());
-                                      },
-                                      enable: true),
-                                  SizedBox(height: 40,),
-                                  SizedBox(height: 40,)
-                                  // PopUpInputField(
-                                  //     controller: widget.promised, label: "promisdedRecieptdate"),
-
-                                ],
-                              ),
-                            )),
-                            SizedBox(width: 10,),
-                            Expanded(child: Container(
-                              child: Column(
-                                children: [
-                                  PopUpDateFormField(
-                                      row: true,
-
-                                      format:DateFormat('yyyy-MM-dd'),
-                                      controller:  widget.plannded,
-                                      // initialValue:
-                                      //     DateTime.parse(fromDate!),
-                                      label: "Planned Reciept Date",
-                                      onSaved: (newValue) {
-                                        widget.plannded?.text = newValue
-                                            ?.toIso8601String()
-                                            .split("T")[0] ??
-                                            "";
-                                        print("promised_receipt_date.text"+  widget.plannded!.text.toString());
-                                      },
-                                      enable: true),
-                                  // PopUpInputField(
-                                  //     controller: widget.plannded, label: "planned reciept date"),
-                                  PopUpInputField(
-                                    height: 60,
-                                    maxLines: 3,
-                                      controller: remarks, label: "Remarks"),
-                                  PopUpInputField(
-                                      height: 60,
-                                    maxLines: 3,
-                                      controller: note, label: "Note"),
-
-                                ],
-                              ),
-                            ))
+                                  height: 60,
+                                  maxLines: 3,
+                                  controller: remarks, title: "Remarks"),
+                            ),
+                            Expanded(
+                              child: NewInputCard(
+                                  height: 60,
+                                  maxLines: 3,
+                                  controller: note, title: "Note"),
+                            ),
                           ],
                         )
 
@@ -4153,7 +4368,9 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
             ),
           );
         }
-    );
+    ),
+),
+);
 
   }
 }
@@ -4278,11 +4495,12 @@ class GeneralSavePage extends StatelessWidget {
 
     print("wwww"+onCreate.toString());
     return Container(
-      height: MediaQuery.of(context).size.height * 58,
+      height: MediaQuery.of(context).size.height * 60,
       width: 100,
       child: Stack(
         children: [
           Container(
+            // color: Colors.red,
               height: MediaQuery.of(context).size.height * 58,
               margin: EdgeInsets.only(
                   bottom: onCreate
@@ -4364,23 +4582,35 @@ class GeneralSavePage extends StatelessWidget {
         children: [
 
           SizedBox( height: 10,),
-          SizedBox(
+          TextButtonLarge(
 
-            height: 30,
-            child: CommonButtonCustom(
-                onPressed: onApply,
-                child: Row(
-                  children: [
-                    // Icon(
-                    //   Icons.check,
-                    // ),
-                    SizedBox(width: 3),
-                    Text(
-                      buttonName.toString(),
-                    )
-                  ],
-                )),
-          )
+              text:buttonName.toString(),
+              marginAvoid: true,
+
+
+
+              labelcolor: Colors.white,
+
+              onPress: () {
+                onApply!();
+              }),
+          // SizedBox(
+          //
+          //   height: 30,
+          //   child: CommonButtonCustom(
+          //       onPressed: onApply,
+          //       child: Row(
+          //         children: [
+          //           // Icon(
+          //           //   Icons.check,
+          //           // ),
+          //           SizedBox(width: 3),
+          //           Text(
+          //             buttonName.toString(),
+          //           )
+          //         ],
+          //       )),
+          // )
         ],
       ),
     );

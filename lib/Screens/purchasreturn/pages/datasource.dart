@@ -3560,7 +3560,7 @@ catch(e){
             "shelf_time":model.shelfTime,
             "display_name": model.displayName,
             "arabic_description": model.arabicDescription,
-            "additional_description": model.additionalInfo,
+            "additional_description": model.additionalDescription,
             "sales_uom": model.salesUom,
             "item_catalog": model.itemCatelog,
             "item_image": model.itemImage,
@@ -5941,7 +5941,7 @@ catch(e){
   @override
   Future<List<LinkedItemListIdModel>> getLinkedItemListRead(
       String? code) async {
-    String path = listLinkedItemApi + Variable.variantCode.toString();
+    String path = listLinkedItemApi + code.toString();
     try {
       print("ppppath" + path.toString());
       print(path);

@@ -143,7 +143,7 @@ Widget searchField(BuildContext context) {
   final _controller = TextEditingController();
 
   return Container(
-      margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*.030,),
+      margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*.022,),
       width:MediaQuery.of(context).size.width*.4,
       height: MediaQuery.of(context).size.height*.051,
       // color: Palette.white,

@@ -103,6 +103,12 @@ class _VariantChannelAllocationScreenState
   tableAssign(List<ChannelTypeModel>table1) {
     setState(() {
       table = table1;
+      // if(table.isNotEmpty)
+      //   {
+      //     for(var em in table)
+      //       if(em.isActive==true)
+      //         em
+      //   }
     });
   }
 
@@ -349,7 +355,8 @@ class _VariantChannelAllocationScreenState
                                                 items: items,
                                               ),
                                             ),
-                                      Spacer(),
+                                      SizedBox(width:w*.38 ,),
+                                      // Spacer(),
                                       Container(
                                         margin: EdgeInsets.only(top: h*.022,right:w *.0198),
                                         child: Row(
@@ -370,7 +377,7 @@ class _VariantChannelAllocationScreenState
                                             ),
 
                                             Text(selectAll?"Unselect All":"Select All"),
-                                            SizedBox(width: w *.0198,)
+                                            // SizedBox(width: w *.0198,)
 
                                           ],
                                         ),
@@ -421,138 +428,198 @@ class _VariantChannelAllocationScreenState
                                       tableAssign:tableAssign,
                                   ),
                                   SizedBox(height: 8,),
-                                  tablePagination(
-                                        () {
-                                      apiChecking ?
-                                      context
-                                          .read<ChanneltypelistCubit>()
-                                          .refresh() : context
-                                          .read<ChannelfilterCubit>()
-                                          .refresh();
-                                    },
-                                    back:
-                                    paginated?.previousUrl == null
-                                        ? null
-                                        :
-                                        () {
-                                      apiChecking ? context.read<
-                                          ChanneltypelistCubit>()
-                                          .previuosslotSectionPageList() :
-                                      context
-                                          .read<ChannelfilterCubit>()
-                                          .previuosslotSectionPageList();
-                                      // context
-                                      //     .read<Listbrand2Cubit>()
-                                      //     .previuosslotSectionPageList();
-                                    },
-                                    next:
-                                    paginated?.nextPageUrl == null
-                                        ? null
-                                        :
-                                        () {
-                                      apiChecking ? context.read<
-                                          ChanneltypelistCubit>()
-                                          .nextslotSectionPageList() :
-                                      context
-                                          .read<ChannelfilterCubit>()
-                                          .nextslotSectionPageList(
-                                          channelCodeList, Variable.inventory_ID,
-                                          choosenValue);
-                                    },
-                                  ),
+                                  // tablePagination(
+                                  //       () {
+                                  //     apiChecking ?
+                                  //     context
+                                  //         .read<ChanneltypelistCubit>()
+                                  //         .refresh() : context
+                                  //         .read<ChannelfilterCubit>()
+                                  //         .refresh();
+                                  //   },
+                                  //   back:
+                                  //   paginated?.previousUrl == null
+                                  //       ? null
+                                  //       :
+                                  //       () {
+                                  //     apiChecking ? context.read<
+                                  //         ChanneltypelistCubit>()
+                                  //         .previuosslotSectionPageList() :
+                                  //     context
+                                  //         .read<ChannelfilterCubit>()
+                                  //         .previuosslotSectionPageList();
+                                  //     // context
+                                  //     //     .read<Listbrand2Cubit>()
+                                  //     //     .previuosslotSectionPageList();
+                                  //   },
+                                  //   next:
+                                  //   paginated?.nextPageUrl == null
+                                  //       ? null
+                                  //       :
+                                  //       () {
+                                  //     apiChecking ? context.read<
+                                  //         ChanneltypelistCubit>()
+                                  //         .nextslotSectionPageList() :
+                                  //     context
+                                  //         .read<ChannelfilterCubit>()
+                                  //         .nextslotSectionPageList(
+                                  //         channelCodeList, Variable.inventory_ID,
+                                  //         choosenValue);
+                                  //   },
+                                  // ),
                                   SizedBox(height: h * .11,),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(horizontal: w * .02),
+                                  SaveUpdateResponsiveButton(
+                                    label: "SAVE",
+                                    saveFunction: (){
+                                      List<ChannelDatas>? channelDatas=[];
+                                      List<SelectedData>? selectedData=[];
+                                      if(channels1.isNotEmpty==true){
 
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Button(Icons.delete, Colors.red,
-                                            ctx: context,
-                                            text: "DISCARD",
-                                            onApply: () {
-                                              // if(updateCheck){
-                                              //   // clears();
-                                              //
-                                              //
-                                              // }
+                                        for(var i=0;i<channels1.length;i++) {
 
-                                            },
-                                            height: 29,
-                                            width: 90,
-                                            labelcolor: Colors.red,
-                                            iconColor: Colors.red,
-                                            bdr: true),
-                                        SizedBox(
-                                          width: w * .008,
-                                        ),
-                                        Button(Icons.check, Colors.grey,
-                                            ctx: context,
-                                            text:"SAVE",
-                                            height: 29,
-                                            Color: Color(0xff3E4F5B),
-                                            width: 90,
-                                            labelcolor: Colors.white,
-                                            iconColor: Colors.white,
-                                            onApply: () {
-                                              List<ChannelDatas>? channelDatas=[];
-                                              List<SelectedData>? selectedData=[];
-                                              if(channels1.isNotEmpty==true){
+                                          channelDatas.add(ChannelDatas(
 
-                                                for(var i=0;i<channels1.length;i++) {
+                                            channelId: channels1[i].id
+                                                .toString(),
+                                            channelCode:channels1[i].channelCode ,
+                                            channelName: channels1[i].name,
+                                            priority: 1,
+                                            channelStockType: channels1[i]
+                                                .channelStockType,
 
-                                                  channelDatas.add(ChannelDatas(
+                                          ));
+                                        }
 
-                                                    channelId: channels1[i].id
-                                                        .toString(),
-                                                    channelCode:channels1[i].channelCode ,
-                                                    channelName: channels1[i].name,
-                                                    priority: 1,
-                                                    channelStockType: channels1[i]
-                                                        .channelStockType,
+                                      }
+                                      if(table.isNotEmpty==true){
+                                        for(var i=0;i<table.length;i++) {
+                                          if(table[i].isActive==true){
+                                            selectedData.add(SelectedData(
 
-                                                  ));
-                                                }
+                                                code: table[i].code
+                                                    .toString(),
+                                                id: table[i].id
 
-                                              }
-                                              if(table.isNotEmpty==true){
-                                                for(var i=0;i<table.length;i++) {
-                                                  if(table[i].isActive==true)
-                                                  selectedData.add(SelectedData(
+                                            ));
+                                          }}
+                                      }
+                                      ChannelPostModel model=ChannelPostModel(
+                                          inventoryId: Variable.inventory_ID,
+                                          selectionType:apiChecking?choosenValue2: choosenValue,
+                                          channelTypeCode: channelTypeCode,
+                                          channelTypeName: channelTypeName,
 
-                                                      code: table[i].code
-                                                          .toString(),
-                                                      id: table[i].id
-
-                                                  ));
-                                                }}
-                                              ChannelPostModel model=ChannelPostModel(
-                                                inventoryId: Variable.inventory_ID,
-                                                selectionType:apiChecking?choosenValue2: choosenValue,
-                                                channelTypeCode: channelTypeCode,
-                                                channelTypeName: channelTypeName,
-
-                                                channelTypeId: group.channelTypeId.toString(),
-                                                priority: 1,
-                                                channelDatas:channelDatas??[],
-                                                selectedData:selectedData??[]
+                                          channelTypeId: group.channelTypeId.toString(),
+                                          priority: 1,
+                                          channelDatas:channelDatas??[],
+                                          selectedData:selectedData??[]
 
 
 
-                                              );
-                                              print(model);
-                                              context.read<ChannelpostCubit>().postSChannelPosts(model);
+                                      );
+                                      print(model);
+                                      context.read<ChannelpostCubit>().postSChannelPosts(model);
 
 
+                                    },
+                                    discardFunction: (){
 
-                                              }
-                                             ),
-                                        SizedBox(
-                                          // width: width * .008,
-                                        ),
-                                      ],
-                                    ),
+                                    },
                                   ),
+        //                           Container(
+        //                             margin: EdgeInsets.symmetric(horizontal: w * .02),
+        //
+        //                             child: Row(
+        //                               mainAxisAlignment: MainAxisAlignment.end,
+        //                               children: [
+        //                                 Button(Icons.delete, Colors.red,
+        //                                     ctx: context,
+        //                                     text: "DISCARD",
+        //                                     onApply: () {
+        //                                       // if(updateCheck){
+        //                                       //   // clears();
+        //                                       //
+        //                                       //
+        //                                       // }
+        //
+        //                                     },
+        //                                     height: 29,
+        //                                     width: 90,
+        //                                     labelcolor: Colors.red,
+        //                                     iconColor: Colors.red,
+        //                                     bdr: true),
+        //                                 SizedBox(
+        //                                   width: w * .008,
+        //                                 ),
+        //
+        //                                 Button(Icons.check, Colors.grey,
+        //                                     ctx: context,
+        //                                     text:"SAVE",
+        //                                     height: 29,
+        //                                     Color: Color(0xff3E4F5B),
+        //                                     width: 90,
+        //                                     labelcolor: Colors.white,
+        //                                     iconColor: Colors.white,
+        //                                     onApply: () {
+        // List<ChannelDatas>? channelDatas=[];
+        // List<SelectedData>? selectedData=[];
+        // if(channels1.isNotEmpty==true){
+        //
+        // for(var i=0;i<channels1.length;i++) {
+        //
+        // channelDatas.add(ChannelDatas(
+        //
+        // channelId: channels1[i].id
+        //     .toString(),
+        // channelCode:channels1[i].channelCode ,
+        // channelName: channels1[i].name,
+        // priority: 1,
+        // channelStockType: channels1[i]
+        //     .channelStockType,
+        //
+        // ));
+        // }
+        //
+        // }
+        // if(table.isNotEmpty==true){
+        // for(var i=0;i<table.length;i++) {
+        // if(table[i].isActive==true){
+        // selectedData.add(SelectedData(
+        //
+        // code: table[i].code
+        //     .toString(),
+        // id: table[i].id
+        //
+        // ));
+        // }}
+        // }
+        //                                       ChannelPostModel model=ChannelPostModel(
+        //                                         inventoryId: Variable.inventory_ID,
+        //                                         selectionType:apiChecking?choosenValue2: choosenValue,
+        //                                         channelTypeCode: channelTypeCode,
+        //                                         channelTypeName: channelTypeName,
+        //
+        //                                         channelTypeId: group.channelTypeId.toString(),
+        //                                         priority: 1,
+        //                                         channelDatas:channelDatas??[],
+        //                                         selectedData:selectedData??[]
+        //
+        //
+        //
+        //                                       );
+        //                                       print(model);
+        //                                       context.read<ChannelpostCubit>().postSChannelPosts(model);
+        //
+        //
+        //
+        //                                       }
+        //                                      ),
+        //                                 SizedBox(
+        //                                   // width: width * .008,
+        //                                 ),
+        //                               ],
+        //                             ),
+        //                           ),
 
                                 ],
                               ),

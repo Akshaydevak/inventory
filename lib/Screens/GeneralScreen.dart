@@ -828,6 +828,7 @@ else{
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       VerticalList(selectedVertical: selectedVertical,
+                        select: select,
                         itemsearch: itemsearch,ontap: (int index){
                           setState(() {
                             print("taped");
@@ -885,6 +886,7 @@ else{
 
                                             onPress: () {
                                                 select=true;
+
                                                 updateCheck=false;//for table edit check when edtied the editing fields
                                                 currentStock.clear();
                                                 clear();
@@ -1109,7 +1111,7 @@ else{
                                                     SizedBox(
                                                       height: height * .065,
                                                     ),    SizedBox(
-                                                      height: height * .18,
+                                                      height: height * .17,
                                                     ),
 
 
@@ -1176,7 +1178,7 @@ else{
                                                       maxLines: 3,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .110,
+                                                      height: height * .13,
                                                     ),
 
 
@@ -1495,9 +1497,9 @@ else{
                                                                 children: [
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: textPadding((i + 1).toString(), fontSize: 12,
-                                                                        padding: EdgeInsets.only(left: 11.5, top:
-                                                                        1.5), fontWeight: FontWeight.w500),
+                                                                    child: textPadding((i + 1).toString(),
+                                                                        padding: EdgeInsets.only(left: 11.5,
+                                                                       ), fontWeight: FontWeight.w500),
                                                                   ),
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1531,24 +1533,24 @@ else{
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(
                                                                         table[i].variantName??"",
-                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:1.5), fontWeight: FontWeight.w500),
+                                                                         padding: EdgeInsets.only(left: 11.5,), fontWeight: FontWeight.w500),
                                                                   ),
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(table[i].supplierCode.toString(),
-                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                        padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                   ),
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(table[i].barcode??"",
-                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                   ),
 
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
-                                                                        padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                        padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                   ),
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(table[i].purchaseuom??"",
-                                                                        padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                        padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                   ),
                                                                   //88888888888888888888                                   //**********************************************
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2040,12 +2042,11 @@ else{
                                                                         table[i]
                                                                             .variableAmount
                                                                             .toString(),
-                                                                        padding: EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                            11.5,
-                                                                            top:
-                                                                            11.5),
+                                                                        // padding: EdgeInsets
+                                                                        //     .only(
+                                                                        //     left:
+                                                                        //     11.5,
+                                                                        //     ),
                                                                         fontWeight:
                                                                         FontWeight
                                                                             .w500),
@@ -2056,12 +2057,11 @@ else{
                                                                         table[i]
                                                                             .vat
                                                                             .toString(),
-                                                                        padding: EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                            11.5,
-                                                                            top:
-                                                                            11.5),
+                                                                        // padding: EdgeInsets
+                                                                        //     .only(
+                                                                        //     left:
+                                                                        //     11.5,
+                                                                        //     ),
                                                                         fontWeight:
                                                                         FontWeight
                                                                             .w500),
@@ -2138,8 +2138,7 @@ else{
                                                                             .only(
                                                                             left:
                                                                             11.5,
-                                                                            top:
-                                                                            11.5),
+                                                                           ),
                                                                         fontWeight:
                                                                         FontWeight
                                                                             .w500),
@@ -2154,8 +2153,7 @@ else{
                                                                             .only(
                                                                             left:
                                                                             11.5,
-                                                                            top:
-                                                                            11.5),
+                                                                         ),
                                                                         fontWeight:
                                                                         FontWeight
                                                                             .w500),
@@ -2308,24 +2306,24 @@ else{
                                                                   ),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(varinatname??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                  child: textPadding(varinatname??"",  padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(vendorRefCode??"", fontSize: 12,
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                  child: textPadding(vendorRefCode??"",
+                                                                      padding: EdgeInsets.only(left: 11.5,), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(Vbarcode.toString(), fontSize: 12,
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                                  child: textPadding(Vbarcode.toString(),
+                                                                      padding: EdgeInsets.only(left: 11.5, ),
                                                                       fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(stockQty.toString(),
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(check1!,
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(controller:requestedtTestContoller ,
@@ -2519,11 +2517,11 @@ else{
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(Vamount.toString(),
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(vvat!=0?vvat.toString():"",
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 // TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 //   child: UnderLinedInput(controller:vatTestContoller,
@@ -2563,12 +2561,12 @@ else{
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(vactualCost.toString(),
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(Vgrnadtotal.toString()??"",
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                                      padding: EdgeInsets.only(left: 11.5, ),
                                                                       fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(
@@ -2769,10 +2767,11 @@ else{
                                     else {
                                       showDailogPopUp(
                                           context,
-                                          ConfirmationPopup(
+                                          LogoutPopup(
+                                            message: "Do you want to delete the order?",
                                             // table:table,
                                             // clear:clear(),
-                                            verticalId:veritiaclid ,
+
                                             onPressed:(){
                                               print("akshay");
                                               Navigator.pop(context);

@@ -6,6 +6,7 @@ class ItemCard<T> extends StatefulWidget {
   final String id;
   final int selectedVertical;
   final int index;
+  final bool select;
   //final String name;
   final T item;
  final VoidCallback onClick;
@@ -14,6 +15,7 @@ class ItemCard<T> extends StatefulWidget {
   const ItemCard(
       {Key? key,
         required  this.index,
+        this.select=false,
      required  this.selectedVertical,
        required this.onClick,
         required this.item,
@@ -65,11 +67,11 @@ class _ItemCardState extends State<ItemCard> {
             //         : null),
             child: Container(
 
-              decoration: BoxDecoration(
-                border:widget.selectedVertical==widget.index? Border(
+              decoration:BoxDecoration(
+                border: widget.select?Border(left:  BorderSide(width:0, color:Colors.transparent),):widget.selectedVertical==widget.index? Border(
                   left:  BorderSide(width: 4.0, color: Color(0xff3E4F5B)),
                 ):  Border(left:  BorderSide(width:0, color:Colors.transparent),),
-                color: widget.selectedVertical==widget.index?Color(0xff3E4F5B).withOpacity(.1):isHover?Colors.grey.shade300:Color(0xffEDF1F2),
+                color:widget.select?Color(0xffEDF1F2): widget.selectedVertical==widget.index?Color(0xff3E4F5B).withOpacity(.1):isHover?Colors.grey.shade300:Color(0xffEDF1F2),
               ),
 
               child: Center(

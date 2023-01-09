@@ -62,14 +62,18 @@ class Buttons extends StatelessWidget {
 class TextButtonLarge extends StatelessWidget {
   final String? images;
   final String text;
+  final bool bdr;
   final IconData? icon;
   final Function  onPress;
   final double  W;
   final double  H;
   Color clr;
-  final bool  marginCheck;
+  final Color border;
+  final Color  labelcolor ;
+  final bool marginCheck;
+  final bool marginAvoid;
 
-   TextButtonLarge({Key? key,this.marginCheck=false,this.W=80,this.H=43, this.clr=Pellet.tableBlueHeaderPrint, this.images, required this.text,this.icon,required this.onPress}) : super(key: key);
+   TextButtonLarge({Key? key,this.marginCheck=false,this.W=80,this.H=43,this.labelcolor=Colors.white,this.marginAvoid=false, this.clr=Pellet.tableBlueHeaderPrint, this.images, required this.text,this.icon,required this.onPress,  this.bdr=false,  this.border=Colors.red}) : super(key: key);
   @override
   Widget build(BuildContext context) {
  double h=MediaQuery.of(context).size.height;
@@ -81,13 +85,23 @@ class TextButtonLarge extends StatelessWidget {
          onPress();
        },
        child: Container(
+        width:marginAvoid?100:null ,
          // alignment: Alignment.center,
 
-         margin: marginCheck?EdgeInsets.only(top: h*.022,right:w *.0048):EdgeInsets.only(right:w *.018,top: h*.022),
-         color: clr,
+         margin: marginAvoid?null:marginCheck?EdgeInsets.only(top: h*.022,right:w *.0048):EdgeInsets.only(right:w *.018,top: h*.022),
+         decoration: BoxDecoration(
+           color: clr,
+             border: bdr
+                 ? Border.all(
+               color: border, //color of border
+               width: 1,
+             )
+                 : Border()
+
+         ),
          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
 
-         child: Text(text,textAlign:TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 12),),
+         child: Text(text,textAlign:TextAlign.center,style: TextStyle(color: labelcolor,fontSize: 12),),
        ),
      ),
      // Container(
@@ -145,7 +159,8 @@ class _TableTextButtonState extends State<TableTextButton> {
 
       color: widget.buttonBagroundColor,
 
-      child: widget.designCheck?InkWell(
+      child: widget.designCheck?
+      InkWell(
         onTap: (){ widget.onPress();},
         child: Center(
           child: Icon(widget.actionCheck?Icons.add:Icons.delete,color:widget.actionCheck?Colors.blue: widget.textColor,size: 17,),
@@ -199,35 +214,40 @@ SaveUpdateResponsiveButton({required this.label,this.isDelete=false,required thi
         CustomDivider(),
         SizedBox(height: 10,),
         Container(
+
           margin:EdgeInsets.only(right: width*.011) ,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
 
 
-            if(isDelete==false)  Button(Icons.delete, Colors.red,
-                  ctx: context,
+            if(isDelete==false)  TextButtonLarge(
+
                   text: "DISCARD",
-                  onApply: (){
+                  onPress: (){
                 discardFunction();
                   },
-                  height: 29,
-                  width: 90,
-                  labelcolor: Colors.red,
-                  iconColor: Colors.red,
+                marginAvoid: true,
+                labelcolor: Colors.red,
+                clr: Colors.white,
+                  // height: 29,
+                  // width: 90,
+                  // labelcolor: Colors.red,
+                  // iconColor: Colors.red,
                   bdr: true),
               SizedBox(
                 width: width * .008,
               ),
-              Button(Icons.check, Colors.grey,
-                  ctx: context,
+              TextButtonLarge(
+
                   text:label,
-                  height: 29,
-                  Color: Color(0xff3E4F5B),
-                  width: 90,
+                  marginAvoid: true,
+
+
+
                   labelcolor: Colors.white,
-                  iconColor: Colors.white,
-                  onApply: () {
+
+                  onPress: () {
                 saveFunction();
                   }),
               SizedBox(
@@ -236,7 +256,7 @@ SaveUpdateResponsiveButton({required this.label,this.isDelete=false,required thi
             ],
           ),
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: 20,),
       ],
     );
   }

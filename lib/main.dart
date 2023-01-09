@@ -94,9 +94,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => InventorysearchCubit(),
         ),
-        BlocProvider(
-          create: (context) => PurchasegeneratingCubit(),
-        ),
+        // BlocProvider(
+        //   create: (context) => PurchasegeneratingCubit(),
+        // ),
         BlocProvider(
           create: (context) => SalesgeneralverticalCubit(),
         ),
@@ -229,7 +229,9 @@ class _MyHomeState extends State<MyHome> {
 
     print(
         "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" +
-            Variable.inventory_Name.toString());
+            prefs.getString("inventory_name").toString()); print(
+        "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" +
+            Variable.inventory_ID.toString());
 
     index = prefs.getInt('index') ?? 1;
     print("index after caching $index");
