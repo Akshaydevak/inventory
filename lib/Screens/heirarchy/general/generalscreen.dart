@@ -402,9 +402,11 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
                         context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                        select = false;
                       } else {
                         print("common");
                         select = true;
+                        clear();
                         setState(() {});
                       }
 
@@ -511,7 +513,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                 ),
                                 Row(
                                   children: [
-                                    TextWidget(text: "Item Heirarchy"),
+                                    TextWidget(text: "Item Hierarchy"),
                                   ],
                                 ),
 
@@ -1012,6 +1014,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               // ),
               NewInputCard(
                 controller: widget.divisionName,
+
                 icondrop: true,
                 title: "Division",
                 readOnly: true,
@@ -1053,27 +1056,22 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 height: height * .030,
               ),
 
+
               NewInputCard(
-                controller: widget.categoryName,
+                controller: widget.groupName,
                 icondrop: true,
-                title: "Category",
+                title: "Group",
                 readOnly: true,
                 ontap: () {
                   showDailogPopUp(
                     context,
                     TableConfigurePopup(
-                      id: widget.divisionId,
-                      type: "category-TablePopup",
+                      id:widget.subCategoryId!=0?widget.subCategoryId:widget.categoryid,
+                      type: "GroupTabalePopup",
                       valueSelect: (BrandListModel va) {
                         setState(() {
-                          widget.category.text = va?.code ?? "";
-                          widget.categoryName.text = va?.name ?? "";
-                          widget.categoryid = va?.id;
-                          widget.subCategory.clear();
-                          widget.subCategoryName.clear();
-                          widget.group.clear();
-                          widget.groupName.clear();
-                          widget.subCategoryId=0;
+                          widget.group.text = va?.code ?? "";
+                          widget.groupName.text = va?.name ?? "";
                           setState(() {});
 
                           // onChange = true;
@@ -1084,6 +1082,35 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                   );
                 },
               ),
+              SizedBox(
+                height: height * .030,
+              ),
+              NewInputCard(
+                controller: widget.staticName,
+                icondrop: true,
+                readOnly: true,
+                title: "Static Group",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "StaticTabalePopup",
+                      valueSelect: (BrandListModel va) {
+                        setState(() {
+                          widget.static.text = va?.code ?? "";
+                          widget.staticName.text = va?.name ?? "";
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+
+
 
               // SelectableDropDownpopUp(
               //   id:divisionid,
@@ -1124,37 +1151,8 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               //     );
               //   },
               // ),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                controller: widget.subCategoryName,
-                icondrop: true,
-                readOnly: true,
-                title: "Sub Category",
-                ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      id:widget.categoryid,
-                      type: "SubcategoryTabalePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.subCategory.text = va?.code ?? "";
-                          widget.subCategoryName.text = va?.name ?? "";
-                          widget.subCategoryId = va?.id;
-                          widget.group.clear();
-                          widget.groupName.clear();
-                          setState(() {});
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
-                },
-              ),
+
 
               //   SelectableDropDownpopUp(
               //   id:divisionid,
@@ -1204,6 +1202,37 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
           Expanded(
               child: Column(
             children: [
+              NewInputCard(
+                controller: widget.categoryName,
+                icondrop: true,
+                title: "Category",
+                readOnly: true,
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      id: widget.divisionId,
+                      type: "category-TablePopup",
+                      valueSelect: (BrandListModel va) {
+                        setState(() {
+                          widget.category.text = va?.code ?? "";
+                          widget.categoryName.text = va?.name ?? "";
+                          widget.categoryid = va?.id;
+                          widget.subCategory.clear();
+                          widget.subCategoryName.clear();
+                          widget.group.clear();
+                          widget.groupName.clear();
+                          widget.subCategoryId=0;
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
               //   SelectableDropDownpopUp(
               //
               //   controller:widget.groupName,
@@ -1242,31 +1271,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               //   },
               // ),
 
-              NewInputCard(
-                controller: widget.groupName,
-                icondrop: true,
-                title: "Group",
-                readOnly: true,
-                ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      id:widget.subCategoryId!=0?widget.subCategoryId:widget.categoryid,
-                      type: "GroupTabalePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.group.text = va?.code ?? "";
-                          widget.groupName.text = va?.name ?? "";
-                          setState(() {});
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
-                },
-              ),
 
               SizedBox(
                 height: height * .030,
@@ -1335,21 +1340,20 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               SizedBox(
                 height: height * .030,
               ),
-
               NewInputCard(
-                controller: widget.variantFrameworkName,
+                controller: widget.brandName,
                 icondrop: true,
                 readOnly: true,
-                title: "Variant Framework",
+                title: "Brand",
                 ontap: () {
                   showDailogPopUp(
                     context,
                     TableConfigurePopup(
-                      type: "FrameWorkTabalePopup",
-                      valueSelect: (FrameWorkListModel va) {
+                      type: "BrandTabalePopup",
+                      valueSelect: (BrandListModel va) {
                         setState(() {
-                          widget.variantFramework.text = va?.code ?? "";
-                          widget.variantFrameworkName.text = va?.name ?? "";
+                          widget.brand.text = va?.code ?? "";
+                          widget.brandName.text = va?.name ?? "";
                           setState(() {});
 
                           // onChange = true;
@@ -1360,6 +1364,8 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                   );
                 },
               ),
+
+
               // SelectableDropDownpopUp(
               //
               //   controller:widget.variantFrameworkName,
@@ -1411,19 +1417,23 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               child: Column(
             children: [
               NewInputCard(
-                controller: widget.staticName,
+                controller: widget.subCategoryName,
                 icondrop: true,
                 readOnly: true,
-                title: "Static Group",
+                title: "Sub Category",
                 ontap: () {
                   showDailogPopUp(
                     context,
                     TableConfigurePopup(
-                      type: "StaticTabalePopup",
+                      id:widget.categoryid,
+                      type: "SubcategoryTabalePopup",
                       valueSelect: (BrandListModel va) {
                         setState(() {
-                          widget.static.text = va?.code ?? "";
-                          widget.staticName.text = va?.name ?? "";
+                          widget.subCategory.text = va?.code ?? "";
+                          widget.subCategoryName.text = va?.name ?? "";
+                          widget.subCategoryId = va?.id;
+                          widget.group.clear();
+                          widget.groupName.clear();
                           setState(() {});
 
                           // onChange = true;
@@ -1434,6 +1444,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                   );
                 },
               ),
+
               // SelectableDropDownpopUp(
               //   bindType: "static",
               //   controller:widget.staticName,
@@ -1473,6 +1484,30 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               SizedBox(
                 height: height * .030,
               ),
+              NewInputCard(
+                controller: widget.variantFrameworkName,
+                icondrop: true,
+                readOnly: true,
+                title: "Variant Framework",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "FrameWorkTabalePopup",
+                      valueSelect: (FrameWorkListModel va) {
+                        setState(() {
+                          widget.variantFramework.text = va?.code ?? "";
+                          widget.variantFrameworkName.text = va?.name ?? "";
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
               // GestureDetector(
               //   onTap: (){
               //     showDailogPopUp(
@@ -1486,30 +1521,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               //       controller: controller, title: "Brand"),
               // ),
 
-              NewInputCard(
-                controller: widget.brandName,
-                icondrop: true,
-                readOnly: true,
-                title: "Brand",
-                ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      type: "BrandTabalePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.brand.text = va?.code ?? "";
-                          widget.brandName.text = va?.name ?? "";
-                          setState(() {});
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
-                },
-              ),
               // SelectableDropDownpopUp(
               //   controller:widget.brandName,
               //   label: "Brand",
@@ -1556,7 +1568,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               //   },
               // ),
               SizedBox(
-                height: height * .148,
+                height: height * .156,
               ),
             ],
           )),

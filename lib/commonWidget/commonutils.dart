@@ -90,6 +90,7 @@ import '../Screens/variant/channel_costing_allocation/cubits/pricinggrouppatch/p
 import '../Screens/variant/channel_costing_allocation/cubits/pricinggroupread/readpricingroupread_cubit.dart';
 import '../Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
 import '../Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
+import '../Screens/variant/variantdetails/cubits/stockpartition/stockpartitionpost_cubit.dart';
 import '../Screens/variant/variantdetails/cubits/vendordetailslist/vendordetailslist_cubit.dart';
 import '../Screens/variant/variantdetails/model/vendormodel.dart';
 
@@ -231,7 +232,7 @@ class _OpenSettingsState extends State<OpenSettings> {
                                     new MaterialPageRoute(
                                         builder: (context) =>
                                             DashBoard(
-                                              index: val??1,
+                                              index: val??0,
                                             )));
 
 
@@ -1116,6 +1117,13 @@ class ConfigurePopup extends StatelessWidget {
       case "PricingCreatePopUp":
         {
           data = PricingCreatePopUp(
+            type: type,
+          );
+        }
+        break;
+      case "StockPartitionPopUp":
+        {
+          data = StockPartitionPopUp(
             type: type,
           );
         }
@@ -6838,6 +6846,7 @@ class CreateCostingState extends State<CreateCosting> {
                 }, success: (data) {
                   if (data.data1) {
                     setState(() {});
+                    context.read<CostingtypelistCubit>().getCostingTypeList();
 
                     Navigator.pop(context);
                     showDailogPopUp(
@@ -6928,7 +6937,7 @@ class CreateCostingState extends State<CreateCosting> {
                       context.read<CostingtypeCubit>().postCreateCostingType(
                             namecontroller.text,
                             descriptionContollercontroller.text,
-                            "afy",
+                            Variable.created_by,
                           );
 
                       // widget.onTap();
@@ -8396,6 +8405,7 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                           .CostingDelete(veritiaclid, type: "4");
                     },
 
+
                     onAddNew: (v) {},
                     dataField: Expanded(
                       // height: MediaQuery.of(context).size.height * .6,
@@ -8586,6 +8596,399 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                             SizedBox(
                               height: 10,
                             ),
+                            // VariantFrameWorkBottomTable(listAssign:listAssign),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+
+
+
+class StockPartitionPopUp extends StatefulWidget {
+  final String type;
+
+  StockPartitionPopUp({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  @override
+  _StockPartitionPopUp createState() => _StockPartitionPopUp();
+}
+
+class _StockPartitionPopUp extends State<StockPartitionPopUp> {
+  bool? active = costingTypeMethodeCheck != true ? false : true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  PricingTypeListModel? group;
+  int? veritiaclid = 0;
+  int? typeId;
+  List<PricingTypeListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  var list;
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+
+  TextEditingController costingMethodcontroller = TextEditingController();
+  TextEditingController customerGroupcontroller = TextEditingController();
+  TextEditingController pricingTypecontroller = TextEditingController();
+  TextEditingController pricingTypeNamecontroller = TextEditingController();
+
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel> table = [];
+
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = tables;
+    });
+  }
+  clear(){
+    codeController.clear();
+    namecontroller.clear();
+    pricingTypecontroller.clear();
+    pricingTypeNamecontroller.clear();
+
+    descriptionContollercontroller.clear();
+
+    active = false;
+  }
+
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+
+  void initState() {
+    if (costingTypeMethodeCheck != true)
+      context.read<PricinglistCubit>().getPricingList();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CostingtypeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => StockpartitionpostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PricinggrouppatchCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PricingreadCubit(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<PricingreadCubit, PricingreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.pricingCroupCode ?? "";
+                        namecontroller.text = data.pricingGroupName ?? "";
+                        pricingTypecontroller.text =
+                            data.pricingTypeId.toString() ?? "";
+                        pricingTypeNamecontroller.text =
+                            data.pricingGroupName.toString() ?? "";
+
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
+
+                        active = data.isActive ?? false;
+                      });
+                    });
+              },
+            ),
+            BlocListener<StockpartitionpostCubit, StockpartitionpostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context.read<PricinglistCubit>().getPricingList(); context.showSnackBarSuccess(data.data2);
+                    // Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
+                    // Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<PricinglistCubit, PricinglistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].pricingTypeId;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        if (costingTypeMethodeCheck != true)  context
+                            .read<PricingreadCubit>()
+                            .getPricingGroupRead(veritiaclid);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
+
+                    label: "Stock  Partition Group Idf",
+                    onApply: () {
+                      print("save");
+
+                      context
+                          .read<StockpartitionpostCubit>()
+                          .postStockPartion(namecontroller.text,descriptionContollercontroller.text);
+
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      PricingTypeListModel model = PricingTypeListModel(
+                        pricingTypeId: int.tryParse(pricingTypecontroller.text),
+                        pricingGroupName: namecontroller.text,
+                        customerGrouCode: customerGroupcontroller.text,
+                        description: descriptionContollercontroller.text,
+                        createdBy: Variable.created_by,
+                        isActive: active,
+                      );
+                      context
+                          .read<PricinggrouppatchCubit>()
+                          .patchPricingGroup(model, veritiaclid);
+                    },
+                    onCancel: () {
+                      context
+                          .read<DeletioncostingCubit>()
+                          .CostingDelete(veritiaclid, type: "4");
+                    },
+
+
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (costingTypeMethodeCheck != true)
+                                  Container(
+                                    // width: width * .112,
+                                    height: 400,
+                                    child: PricingVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
+                                          // clear();
+
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
+
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid =
+                                              result[index].pricingTypeId;
+                                          // clear();
+                                          // select=true;
+                                          //
+                                          //
+
+                                          setState(() {
+                                            context
+                                                .read<PricingreadCubit>()
+                                                .getPricingGroupRead(
+                                                    veritiaclid);
+                                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+                                          });
+                                        });
+                                      },
+                                      search: (String va) {
+                                        print(va);
+                                        context
+                                            .read<PricinglistCubit>()
+                                            .searchCostingTypeList(va);
+                                        if (va == "") {
+                                          context
+                                              .read<PricinglistCubit>()
+                                              .getPricingList();
+                                        }
+                                      },
+                                      result: result,
+                                    ),
+                                  ),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController,
+                                        title: "Code"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                        // readOnly: true,
+                                        controller: namecontroller,
+                                        title: "Name"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+
+                                        controller: descriptionContollercontroller,
+                                        title: "Description"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+
+
+                                    PopUpSwitchTile(
+                                        value: active ?? false,
+                                        title: "is active",
+                                        onClick: (gg) {
+                                          onChange = true;
+                                          if (costingTypeMethodeCheck != true)
+                                            active = !active!;
+
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+                                  ],
+                                )),
+                              ],
+                            ),
+
                             // VariantFrameWorkBottomTable(listAssign:listAssign),
                           ],
                         ),
@@ -13495,6 +13898,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
                                 NewInputCard(
                                   controller: categoryNameController,
                                   icondrop: true,
+                                  readOnly: true,
                                   title: "Category Code",
                                   ontap: () {
                                     showDailogPopUp(
@@ -13569,6 +13973,21 @@ class _GroupPopUpState extends State<GroupPopUp> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class GroupPatchPopUp extends StatefulWidget {
   final String type;
@@ -15407,12 +15826,17 @@ class PopUpHeader extends StatefulWidget {
   final bool isDirectCreate;
   final bool changer;
   final bool buttonVisible;
+  final double? height;
+  final double? width;
+
 
   const PopUpHeader({
     Key? key,
     this.buttonNameOption = false,
     this.buttonName = "SAVE",
     this.paginated ,
+    this.height,
+    this.width,
     this.buttonCheck = false,
     this.buttonVisible=true,
     this.functionChane = false,
@@ -15444,7 +15868,7 @@ class _PopUpHeaderState extends State<PopUpHeader> {
 
     return Container(
 
-      // height:100,
+      // height:h,
 
       padding: EdgeInsets.all(10),
       width: width/2,

@@ -56,9 +56,42 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   int selectedVertical = 0;
   bool select=false;
   bool onChange=false;
+  String? newWeight;
+  String? newLength;
+  String? newWidth;
+  String? newHeight;
+
+
+  nameChange({int? type,String? value})
+  {
+
+    switch(type){
+
+      case 1 :
+        newLength  =value;
+        break;
+
+      case 2 :
+        newHeight=value;
+        break;
+
+      case 3 :
+        newWidth=value;
+        break;
+      case 4 :
+        newWeight=value;
+        break;
 
 
 
+
+
+    }
+
+    setState(() {
+
+    });
+  }
 
   clear(){
     codeController.clear();
@@ -82,6 +115,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
     haveWrapOption=false;
     shelfType.clear();
     shelfTime.clear();
+    newWeight=null;
+    newWidth=null;
+    newHeight=null;
+    newLength=null;
    lengthUnit.text="";
      widthUnit.text="";
    heightUnit.text="";
@@ -128,12 +165,13 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
     lengthUnit.text="Centimeter";
     widthUnit.text="Centimeter";
     heightUnit.text="Centimeter";
-    weightUnit.text= "Killogram";
+    weightUnit.text= "Kilogram";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    weightUnit= TextEditingController(text: "Kilo Gram");
     double height = MediaQuery
         .of(context)
         .size
@@ -142,6 +180,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
         .of(context)
         .size
         .width;
+    newWeight==null?   weightUnit= TextEditingController(text: "Kilogram"):newWeight;
+    newWidth==null?   widthUnit= TextEditingController(text: "Centimeter"):newWidth;
+    newHeight==null?   heightUnit= TextEditingController(text: "Centimeter"):newHeight;
+    newLength==null?   lengthUnit= TextEditingController(text: "Centimeter"):newLength;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -214,7 +256,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                     print("postssssssss" + state.toString());
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loading");
+                      // context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
@@ -277,6 +319,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
               // Variable.verticalid=result[0].id;
               // print("Variable.ak"+Variable.verticalid.toString());
               context.read<ReadcustomCubit>().getCustomRead(veritiaclid!);
+              select = false;
             }
             else {
               print("common");
@@ -320,6 +363,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
 
                             select=false;
                             clear();
+                            newWeight==null?   weightUnit= TextEditingController(text: "Kilogram"):newWeight;
+                            newWidth==null?   widthUnit= TextEditingController(text: "Centimeter"):newWidth;
+                            newHeight==null?   heightUnit= TextEditingController(text: "Centimeter"):newHeight;
+                            newLength==null?   lengthUnit= TextEditingController(text: "Centimeter"):newLength;
 
                             // addNew=true;
 
@@ -412,7 +459,8 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                               activeChange: activeChange,
                               code: codeController,
                               group: groupController,
-                              targetedGp: targetedGpController,
+                              targetedGp: targetedGpController, nameChanege:   nameChange
+      ,
 
                             );
   },
@@ -426,7 +474,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                                   showDailogPopUp(
                                       context,
                                       LogoutPopup(
-                                        message: "Do you need to delete the order",
+                                        message: "Do you need to delete the order?",
                                         // table:table,
                                         // clear:clear(),
                                         // verticalId:veritiaclid ,
@@ -467,10 +515,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                                   shelfTime:int.tryParse(shelfTime.text),
                                   shelfType:shelfType.text,
 
-                                  height: heightController.text.isEmpty?null:double.tryParse(heightController.text),
-                                  width : widthController.text.isEmpty?null:double.tryParse(widthController.text),
-                                  length : lengthController.text.isEmpty?null:double.tryParse(lengthController.text),
-                                  weight : weightUOMController.text.isEmpty?null:double.tryParse(weightUOMController.text),
+                                  height: heightController.text.isEmpty?0:double.tryParse(heightController.text),
+                                  width : widthController.text.isEmpty?0:double.tryParse(widthController.text),
+                                  length : lengthController.text.isEmpty?0:double.tryParse(lengthController.text),
+                                  weight : weightUOMController.text.isEmpty?0:double.tryParse(weightUOMController.text),
 
 
                                 );

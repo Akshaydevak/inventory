@@ -115,11 +115,14 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController weightController = TextEditingController();
   TextEditingController shelfTypeController = TextEditingController();
   TextEditingController shelfTimeController = TextEditingController();
+  TextEditingController stockPartitionGroupId = TextEditingController();
   bool salesBolock = false;
   bool purchaseBolock = false;
   bool stockWarning = false;
   bool haveGiftOption = false;
   bool haveWrapOption = false;
+  bool haveStockPartitionGroup = false;
+  bool haveStockPriority = false;
   bool onChange = false;
   bool itmcatelog = false;
   bool itmImage = false;
@@ -157,6 +160,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
   var list;
+  String? newWeight;
+  String? newLength;
+  String? newWidth;
+  String? newHeight;
   bool img1=false;
   bool img2=false;
   bool img3=false;
@@ -180,6 +187,18 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
       case 'Sales' :
         salesBolock=val;
+        setState(() {
+
+        });
+        break;
+        case '1' :
+        haveStockPartitionGroup=val;
+        setState(() {
+
+        });
+        break;
+        case '2' :
+        haveStockPriority=val;
         setState(() {
 
         });
@@ -350,6 +369,36 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
     }
   }
 
+  nameChange({int? type,String? value})
+  {
+
+    switch(type){
+
+      case 1 :
+      newLength  =value;
+        break;
+
+      case 2 :
+        newHeight=value;
+        break;
+
+      case 3 :
+        newWidth=value;
+        break;
+      case 4 :
+        newWeight=value;
+        break;
+
+
+
+
+
+    }
+
+    setState(() {
+
+    });
+  }
   imagePostCheck({String? type}){
 
 
@@ -436,10 +485,8 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
       catalog6.clear();
       catalog7.clear();
       catalog8.clear();
-      lengthUnit.text="";
-      widthUnit.text="";
-      heightUnit.text="";
-      weightUnit.text="";
+
+
       searchNAmeController.clear();
       image2Controller.clear();
       image3Controller.clear();
@@ -453,6 +500,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
       reorederPointController.clear();
       saftyStockController.clear();
       salesBolock=false;
+      weightUnit.clear();
       weightUomIdController.clear();
       variantCodeController.clear();
       variantFrameWorkController.clear();
@@ -510,6 +558,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
       returnTimeController.clear();
       weightController.clear();
       seblingNameController.clear();
+      newWeight=null;
+      newWidth=null;
+      newHeight=null;
+      newLength=null;
 
 
       img1=false;
@@ -548,7 +600,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
       lengthUnit.text="Centimeter";
       widthUnit.text="Centimeter";
       heightUnit.text="Centimeter";
-      weightUnit.text= "Killogram";
+      weightUnit.text= "Kilogram";
     super.initState();
   }
 
@@ -562,6 +614,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
         .of(context)
         .size
         .width;
+ newWeight==null?   weightUnit= TextEditingController(text: "Kilogram"):newWeight;
+ newWidth==null?   widthUnit= TextEditingController(text: "Centimeter"):newWidth;
+ newHeight==null?   heightUnit= TextEditingController(text: "Centimeter"):newHeight;
+ newLength==null?   lengthUnit= TextEditingController(text: "Centimeter"):newLength;
     // if(onChange==false){
     //   lengthUnit.text="Centimeter";
     //   widthUnit.text="Centimeter";
@@ -909,6 +965,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                             veritiaclid = result[index].id;
                                             veritiaclString = result[index].code;
                                             Variable.variantCode=result[index].code.toString();
+                                            newWeight==null?   weightUnit= TextEditingController(text: "Kilogram"):newWeight;
+                                            newWidth==null?   widthUnit= TextEditingController(text: "Centimeter"):newWidth;
+                                            newHeight==null?   heightUnit= TextEditingController(text: "Centimeter"):newHeight;
+                                            newLength==null?   lengthUnit= TextEditingController(text: "Centimeter"):newLength;
                                             // clear();
                                             // select=true;
                                             //
@@ -1052,6 +1112,9 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                               weightUom:weightUomIdController, weight:weightController,
                                               baseUomId:baseUomId,
                                               select:select,
+                                              haveStockPartitionGroup: haveStockPartitionGroup,
+                                              haveStockPriority: haveStockPriority,
+                                              stockPartitionGroupId: stockPartitionGroupId,
                                               heightUnit: heightUnit,
                                               lengthUnit: lengthUnit,
                                               weightUnit: weightUnit,
@@ -1129,6 +1192,8 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                               haveGiftOption:haveGiftOption,
                                               haveWrapOption:haveWrapOption,
                                               imagePostCheck:imagePostCheck,
+                                              nameChanege:   nameChange
+                                              ,
                                               trueOrFalseChange:trueOrFalseChange),
                                           SizedBox(height: height * .07,),
                                           Row(mainAxisAlignment: MainAxisAlignment.start,
@@ -1478,13 +1543,13 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
                                                       if(select){
                                                         VariantPost model = VariantPost(
-                                                          weight:double.tryParse( weightController.text),
+                                                          weight:double.tryParse( weightController.text)??0,
                                                           inventoryId: Variable.inventory_ID,
 
 
-                                                          height: double.tryParse(heightController.text),
-                                                          width: double.tryParse(widthController.text),
-                                                          length: double.tryParse(lengthController.text),
+                                                          height: double.tryParse(heightController.text)??0,
+                                                          width: double.tryParse(widthController.text)??0,
+                                                          length: double.tryParse(lengthController.text)??0,
                                                           inventoryName: Variable.inventory_Name,
                                                           weightUomId: int.tryParse(weightUomIdController.text),
                                                           searchName:searchNAmeController.text.isEmpty?null:searchNAmeController?.text,
@@ -1567,10 +1632,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           usageDirection: usageDirection?.name==""?Storage(name: "Usage Direction",keyValues: usageDirection?.keyValues):usageDirection,
                                                           storage:storage?.name==""?Storage(name: "Storage",keyValues: storage?.keyValues):storage,
                                                           importantInfo:importantInfo?.name==""?ProductFeatures(name: "ImportanT Info",keyValues:importantInfo?.keyValues ):importantInfo,
-                                                          productBehavior:   inforMationList,
+                                                          productBehavior:   inforMationList??[],
 
                                                         );
-                                                        print("shifasssss"+  model.productBehavior.toString());
+                                                        print("shifasssss"+  model.toString());
                                                         context.read<VariantpostCubit>().postVariant(checkIdid, model);
                                                         onChange=true;
                                                         setState(() {
@@ -1583,10 +1648,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           heightUnit: heightUnit.text.isEmpty?null:heightUnit.text,
                                                           lengthUnit: lengthUnit.text.isEmpty?null:lengthUnit.text,
                                                           widthUnit: widthUnit.text.isEmpty?null:widthUnit.text,
-                                                          weight:double.tryParse( weightController.text),
-                                                          length: double.tryParse(lengthController.text),
-                                                          width: double.tryParse(widthController.text),
-                                                          height: double.tryParse(heightController.text),
+                                                          weight:double.tryParse( weightController.text)??0,
+                                                          length: double.tryParse(lengthController.text)??0,
+                                                          width: double.tryParse(widthController.text)??0,
+                                                          height: double.tryParse(heightController.text)??0,
                                                           variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
                                                           salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
                                                           // "1",
@@ -1671,7 +1736,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           usageDirection: usageDirection?.name==""?Storage(name: "Usage Direction",keyValues: usageDirection?.keyValues):usageDirection,
                                                           storage:storage?.name==""?Storage(name: "Storage",keyValues: storage?.keyValues):storage,
                                                           importantInfo:importantInfo?.name==""?ProductFeatures(name: "ImportanT Info",keyValues:importantInfo?.keyValues ):importantInfo,
-                                                          productBehavior:   inforMationList,
+                                                          productBehavior:   inforMationList??[],
 
                                                         );
                                                         print("the searching model is here"+model.toString());
@@ -1690,6 +1755,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                               ],
                                             ),
                                           ),
+                                          SizedBox(height: 20,)
 
                                         ],
                                       ))

@@ -342,7 +342,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                       print("checkingdata"+data.data1.toString());
                       if (data.data1) {
                         context.showSnackBarSuccess(data.data2);
-                        // clear();
+                        clear();
                         _myWidgetState.currentState?.table1=[];
                         context.read<SalesreturnverticalCubit>().getSalesReturnGeneralVertical();
 
@@ -380,11 +380,12 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                             context
                                 .read<SalesgeneralreadCubit>()
                                 .getSalesReturnGeneralRead(veritiaclid!);
+                            select = false;
                           } else {
                             print("common");
                             select = true;
-                            // setState(() {
-                            // });
+                            setState(() {
+                            });
 
                           }
 
@@ -604,8 +605,8 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                                 vat: double.tryParse(vatController?.text ?? ""),
                                                 sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
                                                 totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
-                                                createdBy: "akaka",
-                                                // editedBy: "",
+                                                createdBy: Variable.created_by,
+                                                editedBy: Variable.created_by,
                                                 orderLines: table);
                                             print("modelllls" + model.toString());
                                             select
@@ -815,7 +816,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
               success: (data) {
                 setState(() {
                   print("Akshay real "+data.toString());
-                  if(data.invoicedData?.lines?.isNotEmpty==true){
+                  if(data.invoicedData!=null){
                     data?.invoicedData?.lines != null
                         ? table = data?.invoicedData?.lines ?? []
                         : table = [];
@@ -914,7 +915,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.returnOrderCode,
-                                title: " Return Order Code"),
+                                title: "Return Order Code"),
                             SizedBox(
                               height: height * .030,
                             ),
@@ -943,12 +944,14 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                               },
 
                             ):NewInputCard(
+                                readOnly: true,
                                 controller: widget.salesInvoiceCode, title: "Sales Invoice Code"),
 
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
+                                readOnly: true,
                                 controller: widget.customerId, title: "Customer Id"),
                             // SelectableDropDownpopUp(
                             //   label: "shipping address id",
@@ -1035,7 +1038,8 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             // ),
 
 
-                            NewInputCard(controller: widget.billingAddresName,
+                            NewInputCard(controller: widget.billingAddressId,
+                              readOnly: true,
                               icondrop:true,title: "Billing Address Id",ontap: (){
                                 showDailogPopUp(
                                   context,
@@ -1066,7 +1070,8 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             SizedBox(
                               height: height * .030,
                             ),
-                            NewInputCard(controller: widget.shippingName,
+                            NewInputCard(controller: widget.shipping,
+                              readOnly: true,
                               icondrop:true,title: "Shipping Address Id",ontap: (){
                                 showDailogPopUp(
                                   context,
@@ -1278,6 +1283,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
   int? stockId ;
   String? discountPrice = "price";
   PurchaseCureentStockQty? purchaseCurrentStock;
+  var unitcostListControllers = <TextEditingController>[];
 
   bool? invoiced = false;
   bool? isActive1 = false;
@@ -1345,6 +1351,22 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
     setState(() {});
     return totalPrice1;
   }
+  valueAddingTextEdingController(){
+    unitcostListControllers.clear();
+    if(table1.isNotEmpty){
+      print("checking case");
+      for(var i=0;i<table1.length;i++){
+
+        var unitcost = new TextEditingController(text: table1[i].unitCost.toString()??"");
+        unitcostListControllers.add(unitcost);
+
+        setState(() {
+
+        });
+
+      }
+    }
+  }
 
   void initState() {
     recieveController = AutoScrollController(
@@ -1374,8 +1396,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
         return MultiBlocListener(
           listeners: [
 
-            BlocListener<GeneralinvoicereadCubit,
-                GeneralinvoicereadState>(
+            BlocListener<GeneralinvoicereadCubit, GeneralinvoicereadState>(
               listener: (context, state) {
                 state.maybeWhen(
                     orElse: () {},
@@ -1385,10 +1406,11 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                     success: (data) {
                       print("checkin Case");
                       table1.clear();
-                      if(data.invoicedData?.lines?.isNotEmpty==true){
+                      if(data.invoicedData!=null){
                         data?.invoicedData?.lines != null
                             ? table1 =List.from( data?.invoicedData?.lines ?? [])
                             : table1 = [];
+
 
 
                       }
@@ -1399,7 +1421,8 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
 
                       }
                       setState(() {
-                        table1[0]=table1[0].copyWith(unitCost: 3);
+                        // table1[0]=table1[0].copyWith(unitCost: 3);
+                        valueAddingTextEdingController();
                       });
 
                       print("thee table"+table1.toString());
@@ -1434,6 +1457,48 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                       "",
                                   returnTime: purchaseTable?.returnTime,
                                   returnType: purchaseTable?.returnType);
+                          unitcostListControllers[Variable.tableindex]=TextEditingController(text:purchaseTable?.unitCost.toString() );
+                          var qty = table1[Variable.tableindex].quantity ?? 0;
+                          var vat = table1[Variable.tableindex].vat ?? 0;
+                          var unitcost =
+                              table1[Variable.tableindex].unitCost ?? 0;
+                          var Vdiscount = table1[Variable.tableindex].discount ?? 0;
+                          var excess = table1[Variable.tableindex].excessTax ?? 0;
+
+                          if (qty == 0 || unitcost == 0) {
+                            table1[Variable.tableindex] = table1[Variable.tableindex].copyWith(
+                                taxableAmount: 0,
+                                sellingPrice: 0,
+                                totalPrice: 0,
+                                excessTax: excess);
+                            setState(() {});
+                          } else {
+                            var taxableAmount =
+                            taxableUpdateMethod(
+                                qty,
+                                unitcost,
+                                excess!,
+                                Vdiscount,
+                                table1[Variable.tableindex].discountType);
+
+                            var sellingPrice =
+                            sellingPriceUpdation(
+                                taxableAmount, vat);
+                            var totalprice =
+                            totalPriceUpdation(
+                                sellingPrice,
+                                table1[Variable.tableindex]
+                                    .warrentyPrice ??
+                                    0);
+
+                            table1[Variable.tableindex] = table1[Variable.tableindex].copyWith(
+                                taxableAmount:
+                                taxableAmount,
+                                sellingPrice: sellingPrice,
+                                totalPrice: totalprice,
+                                excessTax: excess);
+                            setState(() {});
+                          }
                           setState(() {});
                         } else {
                           varinatname = purchaseTable?.name ?? "";
@@ -1627,13 +1692,13 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                       // textColor: Palette.white
                                     ),
 
-                                    tableHeadtext(
-                                      'Warranty Price',
-
-                                      size: 13,
-                                      // color: Palette.containerDarknew,
-                                      // textColor: Palette.white
-                                    ),
+                                    // tableHeadtext(
+                                    //   'Warranty Price',
+                                    //
+                                    //   size: 13,
+                                    //   // color: Palette.containerDarknew,
+                                    //   // textColor: Palette.white
+                                    // ),
                                     tableHeadtext(
                                       'Total Price',
                                       size: 13,
@@ -1689,7 +1754,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                       textPadding(""),
                                       textPadding(""),
                                       textPadding(""),
-                                      textPadding(""),
+
                                       textPadding(""),
                                       textPadding(""),
                                       textPadding(""),
@@ -1730,47 +1795,101 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: PopUpCall(
-                                            inventory: Variable.inventory_ID,
+                                          child:
+                                          table1[i].isInvoiced!=true?
+        VariantIdTAble(
+        text:variantId.toString(),
+        onTap: (){
+        showDailogPopUp(
+        context,
+        TableConfigurePopup(
+        inventory: Variable.inventory_ID,
+        type: "variantTabalePopup",
+        valueSelect: (VariantId? va) {
+        assignCheck = true;
+        // widget.updateCheck(true);
+        table1[i] = table1[i].copyWith(updatecheck: true);
+        setState(() {});
+        table1[i] = table1[i].copyWith(
+        variantId: va?.code);
 
-                                            type: "cost-method-list",
-                                            value: table1[i].variantId??"",
-                                            onSelection: (VariantId? va) {
-                                              assignCheck = true;
-                                              // widget.updateCheck(true);
-                                              table1[i] = table1[i].copyWith(updatecheck: true);
-                                              setState(() {});
-                                              table1[i] = table1[i].copyWith(
-                                                  variantId: va?.code);
+        // table1.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
+        //     variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+        //     ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+        // )]);
+        setState(() {
+        // variantId =
+        //     va?.code;
+        int? id = va!.id;
+        Variable.tableindex = i;
+        Variable.tableedit = true;
 
-                                              // table1.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
-                                              //     variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
-                                              //     ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
-                                              // )]);
-                                              setState(() {
-                                                // variantId =
-                                                //     va?.code;
-                                                int? id = va!.id;
-                                                Variable.tableindex = i;
-                                                Variable.tableedit = true;
+        // onChange = true;
+        context
+            .read<
+        TableDetailsCubitDartCubit>()
+            .getTableDetails(id);
+        // context
+        //     .read<
+        //     PurchaseStockCubit>()
+        //     .getCurrentStock(
+        //     varia.text, variantId);
 
-                                                // onChange = true;
-                                                context
-                                                    .read<
-                                                    TableDetailsCubitDartCubit>()
-                                                    .getTableDetails(id);
-                                                // context
-                                                //     .read<
-                                                //     PurchaseStockCubit>()
-                                                //     .getCurrentStock(
-                                                //     varia.text, variantId);
-
-                                                // orderType = va!;
-                                              });
-                                            },
-                                            onAddNew: () {},
-                                            // restricted: true,
-                                          ),
+        // orderType = va!;
+        });
+        },
+        ),
+        );
+        },
+        )
+                                          // PopUpCall(
+                                          //   inventory: Variable.inventory_ID,
+                                          //
+                                          //   type: "cost-method-list",
+                                          //   value: table1[i].variantId??"",
+                                          //   onSelection: (VariantId? va) {
+                                          //     assignCheck = true;
+                                          //     // widget.updateCheck(true);
+                                          //     table1[i] = table1[i].copyWith(updatecheck: true);
+                                          //     setState(() {});
+                                          //     table1[i] = table1[i].copyWith(
+                                          //         variantId: va?.code);
+                                          //
+                                          //     // table1.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
+                                          //     //     variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                          //     //     ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                          //     // )]);
+                                          //     setState(() {
+                                          //       // variantId =
+                                          //       //     va?.code;
+                                          //       int? id = va!.id;
+                                          //       Variable.tableindex = i;
+                                          //       Variable.tableedit = true;
+                                          //
+                                          //       // onChange = true;
+                                          //       context
+                                          //           .read<
+                                          //           TableDetailsCubitDartCubit>()
+                                          //           .getTableDetails(id);
+                                          //       // context
+                                          //       //     .read<
+                                          //       //     PurchaseStockCubit>()
+                                          //       //     .getCurrentStock(
+                                          //       //     varia.text, variantId);
+                                          //
+                                          //       // orderType = va!;
+                                          //     });
+                                          //   },
+                                          //   onAddNew: () {},
+                                          //   // restricted: true,
+                                          // )
+            :
+                                          textPadding(
+                                              table1?[i].variantId ?? "",
+                                              fontSize: 12,
+                                              padding: EdgeInsets.only(
+                                                  left: 11.5, top: 1.5),
+                                              fontWeight: FontWeight.w500)
                                         ),
                                         //   TableCell(
                                         //   verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1880,6 +1999,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             initialCheck: true,
+                                            readOnly: table1[i].isInvoiced==true?true:false,
                                             // controller: requestedListControllers[i],
                                             last: table1?[i]
                                                 .quantity
@@ -1965,6 +2085,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             initialCheck: true,
+                                            readOnly: table1[i].isInvoiced==true?true:false,
                                             //controller: unitcostListControllers[i],
                                             last: table1?[i]
                                                 .unitCost
@@ -2045,6 +2166,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             initialCheck: true,
+                                            readOnly: table1[i].isInvoiced==true?true:false,
 
                                             // controller: excesstListControllers[i],
                                             last: table1?[i]
@@ -2110,7 +2232,8 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: PopUpCall(
+                                          child:
+                                          table1[i].isInvoiced!=true?PopUpCall(
                                             apiType: "1",
                                             type: "PriceTypePopUpCall",
                                             value: table1[i].discountType??"",
@@ -2179,12 +2302,19 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                                 // orderType = va!;
                                               });
                                             },
-                                          ),
+                                          ):textPadding(
+                                              table1[i].discountType ?? "",
+                                              fontSize: 12,
+                                              // height: 42,
+                                              padding: EdgeInsets.only(
+                                                  left: 11.5, top: 1.5),
+                                              fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            readOnly: table1[i].isInvoiced==true?true:false,
                                             initialCheck: true,
                                             last:
                                             table1?[i].discount.toString() ??
@@ -2282,19 +2412,19 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                                   left: 11.5, top: 1.5),
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        TableCell(
-                                          verticalAlignment:
-                                          TableCellVerticalAlignment.middle,
-                                          child: textPadding(
-                                              table1?[i]
-                                                  .warrentyPrice
-                                                  .toString() ??
-                                                  "",
-                                              fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                                        // TableCell(
+                                        //   verticalAlignment:
+                                        //   TableCellVerticalAlignment.middle,
+                                        //   child: textPadding(
+                                        //       table1?[i]
+                                        //           .warrentyPrice
+                                        //           .toString() ??
+                                        //           "",
+                                        //       fontSize: 12,
+                                        //       padding: EdgeInsets.only(
+                                        //           left: 11.5, top: 1.5),
+                                        //       fontWeight: FontWeight.w500),
+                                        // ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
@@ -2317,19 +2447,22 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                                   ? false
                                                   : table1?[i].isActive,
                                               onSelection: (bool? value) {
-                                                bool? isActive =
-                                                    table1[i].isActive;
-                                                setState(() {
-                                                  // widget.updateCheck(true);
-                                                  table1[i] = table1[i].copyWith(updatecheck: true);
-                                                  // table1[i] = table1[i].copyWith(updateCheck: true);
-                                                  setState(() {});
-                                                  isActive = !isActive!;
-                                                  table1[i] = table1[i]
-                                                      .copyWith(
-                                                      isActive: isActive);
-                                                });
-                                              }),
+                                                if( table1[i].isInvoiced!=true) {
+                                                  bool? isActive =
+                                                      table1[i].isActive;
+                                                  setState(() {
+                                                    // widget.updateCheck(true);
+                                                    table1[i] =
+                                                        table1[i].copyWith(
+                                                            updatecheck: true);
+                                                    // table1[i] = table1[i].copyWith(updateCheck: true);
+                                                    setState(() {});
+                                                    isActive = !isActive!;
+                                                    table1[i] = table1[i]
+                                                        .copyWith(
+                                                        isActive: isActive);
+                                                  });
+                                                } }),
                                         ),
                                         TableCell(
                                           verticalAlignment:

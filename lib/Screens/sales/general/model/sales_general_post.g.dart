@@ -27,6 +27,7 @@ _$_SalesGeneralPostModel _$$_SalesGeneralPostModelFromJson(
       sellingPriceTotal: (json['selling_price_total'] as num?)?.toDouble(),
       totalPrice: (json['total_price'] as num?)?.toDouble(),
       createdBy: json['created_by'] as String?,
+      editedBy: json['edited_by'] as String?,
       orderLines: (json['order_lines'] as List<dynamic>?)
           ?.map((e) => SalesOrderLines.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -53,6 +54,7 @@ Map<String, dynamic> _$$_SalesGeneralPostModelToJson(
       'selling_price_total': instance.sellingPriceTotal,
       'total_price': instance.totalPrice,
       'created_by': instance.createdBy,
+      'edited_by': instance.editedBy,
       'order_lines': instance.orderLines,
     };
 

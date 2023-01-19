@@ -137,7 +137,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
     double excessTAxValue=0;
     if(lines.isNotEmpty)
       for (var i = 0; i < lines.length; i++) {
-        if (lines?[i].isActive == true) {
+        if (lines?[i].isActive == true && lines?[i].upDateCheck == false) {
           var unicost1= lines?[i].unitCost??0;
           var vatValue1= lines?[i].vat??0;
           var grands1= lines?[i].grandTotal??0;
@@ -149,15 +149,15 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
           unitcost = unitcost +unicost1;
 
-          grands = grands + grands1;
-          actualValue = actualValue + actualValue1;
-          vatValue = vatValue + vatValue1;
-          discountValue = discountValue + discountValue1;
-          focValue = focValue + focValue1;
+          grands = double.parse((grands + grands1).toStringAsFixed(2));
+          actualValue =double.parse( (actualValue + actualValue1).toStringAsFixed(2));
+          vatValue = double.parse((vatValue + vatValue1).toStringAsFixed(2));
+          discountValue = double.parse((discountValue + discountValue1).toStringAsFixed(2));
+          focValue = double.parse((focValue + focValue1).toStringAsFixed(2));
 
-          VatableValue = VatableValue + VatableValue1;
-          print("excessTaxvalue"+excessTAxValue.toString());
-          excessTAxValue = excessTAxValue + excessTAxValue1;
+          VatableValue = double.parse((VatableValue + VatableValue1).toStringAsFixed(2));
+
+          excessTAxValue =double.parse( (excessTAxValue + excessTAxValue1).toStringAsFixed(2));
         }
       }
     unitCostController.text = unitcost == 0 ? "" : unitcost.toString();
@@ -185,6 +185,27 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
       }
       setState(() {});
     }
+  }
+  double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,double? discount){
+    double vatableAmountupdation=0;
+    vatableAmountupdation =double.parse( (((unitCost! *
+        qty!) +
+        excessTax!) -
+        discount!).toStringAsFixed(2));
+    return vatableAmountupdation;
+
+
+  }
+
+
+  double actualAndgrandTotalUpdation(double? vatableAmount,double? vat){
+    double actualCost=0;
+    actualCost = double.parse((vatableAmount! +
+        ((vatableAmount *
+            vat!) /
+            100)).toStringAsFixed(2));
+    return actualCost;
+
   }
 
   // double vatCalcutatingMethod(int reqQty,double unitCst,double exTaxx,int disct){
@@ -412,7 +433,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
         state.maybeWhen(
             orElse: () {},
             error: () {
-              print("error");
+              currentStock.add(0);
+              setState(() {});
             },
             success: (data) {
               print("Akshayaaaaa" + data.toString());
@@ -466,6 +488,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
               Variable.verticalid=result[0].id;
               print("Variable.ak"+Variable.verticalid.toString());
               context.read<GeneralreadCubit>().getGeneralPurchaseReturnRead(veritiaclid!);
+                select = false;
               }
               else{
                 print("common");
@@ -721,9 +744,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       size: 13,
 
-                                                      // color: Palette.containerDarknew,
-
-                                                      // textColor: Palette.white
 
                                                     ),
 
@@ -771,9 +791,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       size: 13,
 
-                                                      // color: Palette.containerDarknew,
 
-                                                      // textColor: Palette.white
 
                                                     ),
 
@@ -783,9 +801,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       size: 13,
 
-                                                      // color: Palette.containerDarknew,
-
-                                                      // textColor: Palette.white
 
                                                     ),
 
@@ -795,8 +810,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
 
                                                       size: 13,
-                                                      // color: Palette.containerDarknew,
-                                                      // textColor: Palette.white
+
                                                     ),
                                                     tableHeadtext(
                                                       'Excess Tax',
@@ -810,9 +824,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       size: 13,
 
-                                                      // color: Palette.containerDarknew,
-
-                                                      // textColor: Palette.white
 
                                                     ),
 
@@ -825,9 +836,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       size: 13,
 
-                                                      // color: Palette.containerDarknew,
-
-                                                      // textColor: Palette.white
 
                                                     ),
 
@@ -838,9 +846,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       size: 13,
 
-                                                      // color: Palette.containerDarknew,
-
-                                                      // textColor: Palette.white
 
                                                     ),
 
@@ -851,9 +856,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       size: 13,
 
-                                                      // color: Palette.containerDarknew,
-
-                                                      // textColor: Palette.white
 
                                                     ),
 
@@ -1006,10 +1008,14 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: UnderLinedInput(
                                                             initialCheck:true,
+                                                            integerOnly: true,
+                                                            readOnly:lines[i].isInvoiced==true?true:false ,
+
                                                             // controller: requestedListControllers[i],
                                                             last: lines?[i].totalQty.toString()??"",
                                                             onChanged: (va) {
                                                               updateCheck=true;
+                                                              lines[i]=lines[i].copyWith(upDateCheck: true);
                                                               print(va);
                                                               if (va == "") {
                                                                 print("entered");
@@ -1027,19 +1033,21 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                   var Vamount;
                                                                   var vactualCost;
 
-                                                                  Vamount  = (((unitcost! *
-                                                                      qty!) +
-                                                                      excess!) -
-                                                                      dis!)
-                                                                      .toDouble();
+                                                                  Vamount  =vatableAmountUpdation(unitcost,qty,excess,dis);
+                                                                      // (((unitcost! *
+                                                                      // qty!) +
+                                                                      // excess!) -
+                                                                      // // dis!)
+                                                                      // .toDouble();
                                                                   if(vat==0 ||vat==""){
                                                                     vactualCost=Vamount;
                                                                   }
                                                                   else{
-                                                                    vactualCost  = (Vamount! +
-                                                                        ((Vamount! *
-                                                                            vat!) /
-                                                                            100));
+                                                                    vactualCost  =actualAndgrandTotalUpdation(Vamount,vat);
+                                                                    // (Vamount! +
+                                                                    //     ((Vamount! *
+                                                                    //         vat!) /
+                                                                    //         100));
                                                                   }
 
 
@@ -1154,25 +1162,31 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                               valueChanger:lines?[i].isActive==null?false:lines?[i].isActive,
 
                                                               onSelection:(bool ? value){
-                                                                updateCheck=true;
-                                                                bool? isActive = lines?[i].isActive??false;
-                                                                setState(() {
+                                                                if(lines[i].isInvoiced!=true){
+                                                                  updateCheck=true;
 
-                                                                  isActive = !isActive!;
-                                                                  print(isActive);
-                                                                  // widget.updation(i,isActive);
-                                                                  lines[i] = lines[i].copyWith(isActive: isActive);
-                                                                  addition();
+                                                                  lines[i]=lines[i].copyWith(upDateCheck: true);
+                                                                  bool? isActive = lines?[i].isActive??false;
+                                                                  setState(() {
 
-                                                                  setState(() {});
-                                                                });}),
+                                                                    isActive = !isActive!;
+                                                                    print(isActive);
+                                                                    // widget.updation(i,isActive);
+                                                                    lines[i] = lines[i].copyWith(isActive: isActive);
+                                                                    addition();
+
+                                                                    setState(() {});
+                                                                  });
+                                                                }
+                                     }),
                                                         ),
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: TableTextButton(
-                                                            label:updateCheck? "update":"",
+                                                            label:lines[i].upDateCheck==true? "update":"",
                                                             onPress: (){
                                                               updateCheck=false;
+                                                              lines[i]=lines[i].copyWith(upDateCheck: false);
                                                               addition();
                                                               setState(() {
 
@@ -1311,7 +1325,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
 
                                       foc: double.tryParse(focController.text),
-                                      editedBy: "",
+                                      editedBy: Variable.created_by,
                                       lines: patchLists??[],
 
 
@@ -1322,7 +1336,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                       orderType: orderTypeController?.text??"",
                                       inventoryId: inventory?.text??"",
                                       purchaseInvoiceId: purchaseInvoiceIdController?.text??"",
-                                      vendorAddress: vendorAddressController?.text??"",
+                                      vendorAddress: "Aksjjj",
                                       vendorCode: vendorCodeController?.text??"",
                                       vendorMailId: vendorMailId?.text??"",
                                       vendorTrnNumber: vendorTrnNumberController?.text??"",
@@ -1695,21 +1709,26 @@ widget.currentUser();
                   SizedBox(
                     height: height * .030,
                   ),
-                  PopUpDateFormField(
+                  NewInputCard(
+                      readOnly: true,
 
-                      format:DateFormat('yyyy-MM-dd'),
-                      controller: widget.orderDate,
-                      // initialValue:
-                      //     DateTime.parse(fromDate!),
-                      label: "Promised Reciept Date",
-                      onSaved: (newValue) {
-                        widget.orderDate.text = newValue
-                            ?.toIso8601String()
-                            .split("T")[0] ??
-                            "";
-                        print("promised_receipt_date.text"+widget.orderDate.text.toString());
-                      },
-                      enable: true),
+                      controller: widget.orderDate, title: "Order Date"),
+                  // PopUpDateFormField(
+                  //
+                  //
+                  //     format:DateFormat('yyyy-MM-dd'),
+                  //     controller: widget.orderDate,
+                  //     // initialValue:
+                  //     //     DateTime.parse(fromDate!),
+                  //     label: "Order Date",
+                  //     onSaved: (newValue) {
+                  //       widget.orderDate.text = newValue
+                  //           ?.toIso8601String()
+                  //           .split("T")[0] ??
+                  //           "";
+                  //       print("promised_receipt_date.text"+widget.orderDate.text.toString());
+                  //     },
+                  //     enable: true),
                   // NewInputCard(
                   //     controller: widget.orderDate, title: "order date"),
                   SizedBox(
@@ -1818,7 +1837,7 @@ widget.currentUser();
                   height: height * .065,
                 ),
                 SizedBox(
-                  height: height * .068,
+                  height: height * .078,
                 ),
 
 
@@ -2285,6 +2304,8 @@ class _GrowableTableState extends State<GrowableTable> {
                                           // controller: requestedListControllers[i],
                                           last: lines?[i].totalQty.toString()??"",
                                           onChanged: (va) {
+                                            lines[i]=lines[i].copyWith(upDateCheck: true);
+
                                             // updateCheck=true;
                                             print(va);
                                             if (va == "") {
@@ -2404,6 +2425,7 @@ class _GrowableTableState extends State<GrowableTable> {
                                             onSelection:(bool ? value){
                                               bool? isActive = lines?[i].isActive??false;
                                               setState(() {
+                                                lines[i]=lines[i].copyWith(upDateCheck: true);
 
                                                 isActive = !isActive!;
                                                 print(isActive);
@@ -2415,8 +2437,9 @@ class _GrowableTableState extends State<GrowableTable> {
                                               });}),
                                       ),
                                       TableTextButton(
-                                        label: "update",
+                                        label: lines[i].upDateCheck==true?"update":"",
                                         onPress: (){
+                                          lines[i]=lines[i].copyWith(upDateCheck: false);
                                          widget.updation(lines);
                                           setState(() {
 

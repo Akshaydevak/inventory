@@ -2880,7 +2880,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
+                                    child:pw.Text(  'Excess tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
@@ -3014,7 +3014,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            sellingPirce.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                            table[i].sellingPrice.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
 
                                       ),
 

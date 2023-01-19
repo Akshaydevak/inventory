@@ -64,8 +64,9 @@ mixin _$SalesReturnGeneralPostModel {
   @JsonKey(name: "total_price")
   double? get totalPrice => throw _privateConstructorUsedError;
   @JsonKey(name: "created_by")
-  String? get createdBy =>
-      throw _privateConstructorUsedError; // @JsonKey(name: "edited_by") final String? editedBy,/
+  String? get createdBy => throw _privateConstructorUsedError;
+  @JsonKey(name: "edited_by")
+  String? get editedBy => throw _privateConstructorUsedError;
   @JsonKey(name: "order_lines")
   List<SalesReturnOrderLines>? get orderLines =>
       throw _privateConstructorUsedError;
@@ -109,6 +110,7 @@ abstract class $SalesReturnGeneralPostModelCopyWith<$Res> {
       @JsonKey(name: "selling_price_total") double? sellingPriceTotal,
       @JsonKey(name: "total_price") double? totalPrice,
       @JsonKey(name: "created_by") String? createdBy,
+      @JsonKey(name: "edited_by") String? editedBy,
       @JsonKey(name: "order_lines") List<SalesReturnOrderLines>? orderLines});
 }
 
@@ -150,6 +152,7 @@ class _$SalesReturnGeneralPostModelCopyWithImpl<$Res,
     Object? sellingPriceTotal = freezed,
     Object? totalPrice = freezed,
     Object? createdBy = freezed,
+    Object? editedBy = freezed,
     Object? orderLines = freezed,
   }) {
     return _then(_value.copyWith(
@@ -249,6 +252,10 @@ class _$SalesReturnGeneralPostModelCopyWithImpl<$Res,
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
+      editedBy: freezed == editedBy
+          ? _value.editedBy
+          : editedBy // ignore: cast_nullable_to_non_nullable
+              as String?,
       orderLines: freezed == orderLines
           ? _value.orderLines
           : orderLines // ignore: cast_nullable_to_non_nullable
@@ -291,6 +298,7 @@ abstract class _$$_SalesReturnGeneralPostModelCopyWith<$Res>
       @JsonKey(name: "selling_price_total") double? sellingPriceTotal,
       @JsonKey(name: "total_price") double? totalPrice,
       @JsonKey(name: "created_by") String? createdBy,
+      @JsonKey(name: "edited_by") String? editedBy,
       @JsonKey(name: "order_lines") List<SalesReturnOrderLines>? orderLines});
 }
 
@@ -331,6 +339,7 @@ class __$$_SalesReturnGeneralPostModelCopyWithImpl<$Res>
     Object? sellingPriceTotal = freezed,
     Object? totalPrice = freezed,
     Object? createdBy = freezed,
+    Object? editedBy = freezed,
     Object? orderLines = freezed,
   }) {
     return _then(_$_SalesReturnGeneralPostModel(
@@ -430,6 +439,10 @@ class __$$_SalesReturnGeneralPostModelCopyWithImpl<$Res>
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
+      editedBy: freezed == editedBy
+          ? _value.editedBy
+          : editedBy // ignore: cast_nullable_to_non_nullable
+              as String?,
       orderLines: freezed == orderLines
           ? _value._orderLines
           : orderLines // ignore: cast_nullable_to_non_nullable
@@ -486,6 +499,8 @@ class _$_SalesReturnGeneralPostModel implements _SalesReturnGeneralPostModel {
           this.totalPrice,
       @JsonKey(name: "created_by")
           this.createdBy,
+      @JsonKey(name: "edited_by")
+          this.editedBy,
       @JsonKey(name: "order_lines")
           final List<SalesReturnOrderLines>? orderLines})
       : _orderLines = orderLines;
@@ -561,9 +576,10 @@ class _$_SalesReturnGeneralPostModel implements _SalesReturnGeneralPostModel {
   @override
   @JsonKey(name: "created_by")
   final String? createdBy;
-// @JsonKey(name: "edited_by") final String? editedBy,/
+  @override
+  @JsonKey(name: "edited_by")
+  final String? editedBy;
   final List<SalesReturnOrderLines>? _orderLines;
-// @JsonKey(name: "edited_by") final String? editedBy,/
   @override
   @JsonKey(name: "order_lines")
   List<SalesReturnOrderLines>? get orderLines {
@@ -575,7 +591,7 @@ class _$_SalesReturnGeneralPostModel implements _SalesReturnGeneralPostModel {
 
   @override
   String toString() {
-    return 'SalesReturnGeneralPostModel(discount: $discount, vat: $vat, reason: $reason, remarks: $remarks, orderType: $orderType, orderMode: $orderMode, salesReturnOrderCode: $salesReturnOrderCode, returnOrderDate: $returnOrderDate, inventoryid: $inventoryid, payementId: $payementId, paymentStatus: $paymentStatus, orderStatus: $orderStatus, invoiceStatus: $invoiceStatus, customerId: $customerId, trnNumber: $trnNumber, salesInvoiceId: $salesInvoiceId, shippingAddressId: $shippingAddressId, billingAddressId: $billingAddressId, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, createdBy: $createdBy, orderLines: $orderLines)';
+    return 'SalesReturnGeneralPostModel(discount: $discount, vat: $vat, reason: $reason, remarks: $remarks, orderType: $orderType, orderMode: $orderMode, salesReturnOrderCode: $salesReturnOrderCode, returnOrderDate: $returnOrderDate, inventoryid: $inventoryid, payementId: $payementId, paymentStatus: $paymentStatus, orderStatus: $orderStatus, invoiceStatus: $invoiceStatus, customerId: $customerId, trnNumber: $trnNumber, salesInvoiceId: $salesInvoiceId, shippingAddressId: $shippingAddressId, billingAddressId: $billingAddressId, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, createdBy: $createdBy, editedBy: $editedBy, orderLines: $orderLines)';
   }
 
   @override
@@ -628,6 +644,8 @@ class _$_SalesReturnGeneralPostModel implements _SalesReturnGeneralPostModel {
                 other.totalPrice == totalPrice) &&
             (identical(other.createdBy, createdBy) ||
                 other.createdBy == createdBy) &&
+            (identical(other.editedBy, editedBy) ||
+                other.editedBy == editedBy) &&
             const DeepCollectionEquality()
                 .equals(other._orderLines, _orderLines));
   }
@@ -660,6 +678,7 @@ class _$_SalesReturnGeneralPostModel implements _SalesReturnGeneralPostModel {
         sellingPriceTotal,
         totalPrice,
         createdBy,
+        editedBy,
         const DeepCollectionEquality().hash(_orderLines)
       ]);
 
@@ -725,6 +744,8 @@ abstract class _SalesReturnGeneralPostModel
               final double? totalPrice,
           @JsonKey(name: "created_by")
               final String? createdBy,
+          @JsonKey(name: "edited_by")
+              final String? editedBy,
           @JsonKey(name: "order_lines")
               final List<SalesReturnOrderLines>? orderLines}) =
       _$_SalesReturnGeneralPostModel;
@@ -800,7 +821,10 @@ abstract class _SalesReturnGeneralPostModel
   @override
   @JsonKey(name: "created_by")
   String? get createdBy;
-  @override // @JsonKey(name: "edited_by") final String? editedBy,/
+  @override
+  @JsonKey(name: "edited_by")
+  String? get editedBy;
+  @override
   @JsonKey(name: "order_lines")
   List<SalesReturnOrderLines>? get orderLines;
   @override

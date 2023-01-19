@@ -26,6 +26,8 @@ mixin _$SalesReturnInvoiceReadModel2 {
   double? get vat => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_return_order_code")
   String? get salesReturnOrderCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "returned_date")
+  String? get returnedDate => throw _privateConstructorUsedError;
   @JsonKey(name: "inventory_id")
   String? get inventoryId => throw _privateConstructorUsedError;
   @JsonKey(name: "payment_id")
@@ -77,6 +79,8 @@ abstract class $SalesReturnInvoiceReadModel2CopyWith<$Res> {
       double? vat,
       @JsonKey(name: "sales_return_order_code")
           String? salesReturnOrderCode,
+      @JsonKey(name: "returned_date")
+          String? returnedDate,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
       @JsonKey(name: "payment_id")
@@ -127,6 +131,7 @@ class _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res,
     Object? discount = freezed,
     Object? vat = freezed,
     Object? salesReturnOrderCode = freezed,
+    Object? returnedDate = freezed,
     Object? inventoryId = freezed,
     Object? paymentId = freezed,
     Object? paymentStatus = freezed,
@@ -158,6 +163,10 @@ class _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res,
       salesReturnOrderCode: freezed == salesReturnOrderCode
           ? _value.salesReturnOrderCode
           : salesReturnOrderCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      returnedDate: freezed == returnedDate
+          ? _value.returnedDate
+          : returnedDate // ignore: cast_nullable_to_non_nullable
               as String?,
       inventoryId: freezed == inventoryId
           ? _value.inventoryId
@@ -247,6 +256,8 @@ abstract class _$$_SalesReturnInvoiceReadModel2CopyWith<$Res>
       double? vat,
       @JsonKey(name: "sales_return_order_code")
           String? salesReturnOrderCode,
+      @JsonKey(name: "returned_date")
+          String? returnedDate,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
       @JsonKey(name: "payment_id")
@@ -297,6 +308,7 @@ class __$$_SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
     Object? discount = freezed,
     Object? vat = freezed,
     Object? salesReturnOrderCode = freezed,
+    Object? returnedDate = freezed,
     Object? inventoryId = freezed,
     Object? paymentId = freezed,
     Object? paymentStatus = freezed,
@@ -328,6 +340,10 @@ class __$$_SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
       salesReturnOrderCode: freezed == salesReturnOrderCode
           ? _value.salesReturnOrderCode
           : salesReturnOrderCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      returnedDate: freezed == returnedDate
+          ? _value.returnedDate
+          : returnedDate // ignore: cast_nullable_to_non_nullable
               as String?,
       inventoryId: freezed == inventoryId
           ? _value.inventoryId
@@ -398,6 +414,8 @@ class _$_SalesReturnInvoiceReadModel2 implements _SalesReturnInvoiceReadModel2 {
       this.vat,
       @JsonKey(name: "sales_return_order_code")
           this.salesReturnOrderCode,
+      @JsonKey(name: "returned_date")
+          this.returnedDate,
       @JsonKey(name: "inventory_id")
           this.inventoryId,
       @JsonKey(name: "payment_id")
@@ -440,6 +458,9 @@ class _$_SalesReturnInvoiceReadModel2 implements _SalesReturnInvoiceReadModel2 {
   @override
   @JsonKey(name: "sales_return_order_code")
   final String? salesReturnOrderCode;
+  @override
+  @JsonKey(name: "returned_date")
+  final String? returnedDate;
   @override
   @JsonKey(name: "inventory_id")
   final String? inventoryId;
@@ -492,7 +513,7 @@ class _$_SalesReturnInvoiceReadModel2 implements _SalesReturnInvoiceReadModel2 {
 
   @override
   String toString() {
-    return 'SalesReturnInvoiceReadModel2(id: $id, discount: $discount, vat: $vat, salesReturnOrderCode: $salesReturnOrderCode, inventoryId: $inventoryId, paymentId: $paymentId, paymentStatus: $paymentStatus, customerId: $customerId, trnNumber: $trnNumber, orderStatus: $orderStatus, invoiceStatus: $invoiceStatus, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, returnOrrder: $returnOrrder, invoicedData: $invoicedData)';
+    return 'SalesReturnInvoiceReadModel2(id: $id, discount: $discount, vat: $vat, salesReturnOrderCode: $salesReturnOrderCode, returnedDate: $returnedDate, inventoryId: $inventoryId, paymentId: $paymentId, paymentStatus: $paymentStatus, customerId: $customerId, trnNumber: $trnNumber, orderStatus: $orderStatus, invoiceStatus: $invoiceStatus, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, returnOrrder: $returnOrrder, invoicedData: $invoicedData)';
   }
 
   @override
@@ -506,6 +527,8 @@ class _$_SalesReturnInvoiceReadModel2 implements _SalesReturnInvoiceReadModel2 {
             (identical(other.vat, vat) || other.vat == vat) &&
             (identical(other.salesReturnOrderCode, salesReturnOrderCode) ||
                 other.salesReturnOrderCode == salesReturnOrderCode) &&
+            (identical(other.returnedDate, returnedDate) ||
+                other.returnedDate == returnedDate) &&
             (identical(other.inventoryId, inventoryId) ||
                 other.inventoryId == inventoryId) &&
             (identical(other.paymentId, paymentId) ||
@@ -538,26 +561,28 @@ class _$_SalesReturnInvoiceReadModel2 implements _SalesReturnInvoiceReadModel2 {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      discount,
-      vat,
-      salesReturnOrderCode,
-      inventoryId,
-      paymentId,
-      paymentStatus,
-      customerId,
-      trnNumber,
-      orderStatus,
-      invoiceStatus,
-      unitCost,
-      excessTax,
-      taxableAmount,
-      sellingPriceTotal,
-      totalPrice,
-      const DeepCollectionEquality().hash(_returnOrrder),
-      invoicedData);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        discount,
+        vat,
+        salesReturnOrderCode,
+        returnedDate,
+        inventoryId,
+        paymentId,
+        paymentStatus,
+        customerId,
+        trnNumber,
+        orderStatus,
+        invoiceStatus,
+        unitCost,
+        excessTax,
+        taxableAmount,
+        sellingPriceTotal,
+        totalPrice,
+        const DeepCollectionEquality().hash(_returnOrrder),
+        invoicedData
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -582,6 +607,8 @@ abstract class _SalesReturnInvoiceReadModel2
           final double? vat,
           @JsonKey(name: "sales_return_order_code")
               final String? salesReturnOrderCode,
+          @JsonKey(name: "returned_date")
+              final String? returnedDate,
           @JsonKey(name: "inventory_id")
               final String? inventoryId,
           @JsonKey(name: "payment_id")
@@ -624,6 +651,9 @@ abstract class _SalesReturnInvoiceReadModel2
   @override
   @JsonKey(name: "sales_return_order_code")
   String? get salesReturnOrderCode;
+  @override
+  @JsonKey(name: "returned_date")
+  String? get returnedDate;
   @override
   @JsonKey(name: "inventory_id")
   String? get inventoryId;

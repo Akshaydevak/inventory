@@ -226,6 +226,9 @@ abstract class PurchaseReturnRepoAbstract {
       searchVariantList(String? code, {String? type, int? id});
   Future<Either<Failure, DoubleResponse>> postVariant(
       VariantPost model, int? id);
+
+  Future<Either<Failure, DoubleResponse>> postStockPartion(
+      String? name,String? description);
   Future<Either<Failure, DoubleResponse>> patchVariant(
       VariantPatch model, int? id);
   //variantcreation++++++++++++++++++++++++++++++++++++
@@ -426,38 +429,40 @@ abstract class PurchaseReturnRepoAbstract {
 
 class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   PurchaseSourceImpl remoteDataSource = PurchaseSourceImpl();
+
   @override
   Future<Either<Failure, List<PurchaseInvoice>>> getPurchaseInvoice() {
     return repoExecute<List<PurchaseInvoice>>(
-        () async => remoteDataSource.getPurchaseInvoice());
+            () async => remoteDataSource.getPurchaseInvoice());
   }
 
   @override
   Future<Either<Failure, PurchaseReturnGeneralRead>> getGeneralInvoiceRead(
       int? id) {
     return repoExecute<PurchaseReturnGeneralRead>(
-        () async => remoteDataSource.getGeneralInvoiceRead(id));
+            () async => remoteDataSource.getGeneralInvoiceRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postGeneral(
       PurchaseReturnGeneralPost model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postGeneral(model));
+            () async => remoteDataSource.postGeneral(model));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>>
-      getGeneralVertical() {
+  getGeneralVertical() {
     return repoExecute<PaginatedResponse<List<PurchaseOrder>>>(
-        () async => remoteDataSource.getGeneralVertical());
+            () async => remoteDataSource.getGeneralVertical());
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>> getSearch(
       String? code) {
     return repoExecute<PaginatedResponse<List<PurchaseOrder>>>(
-        () async => remoteDataSource.getSearch(
+            () async =>
+            remoteDataSource.getSearch(
               code,
             ));
   }
@@ -466,54 +471,57 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, ReturnGeneralRead>> getGeneralPurchaseReturnRead(
       int id) {
     return repoExecute<ReturnGeneralRead>(
-        () async => remoteDataSource.getGeneralPurchaseReturnRead(id));
+            () async => remoteDataSource.getGeneralPurchaseReturnRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> getGeneralFormPatch(
       ReturnGeneralPatchModel model, int? id) {
-    return repoExecute<DoubleResponse>(() async => remoteDataSource
-        .getGeneralFormPatch(model, id)); // TODO: implement getGeneralFormPatch
+    return repoExecute<DoubleResponse>(() async =>
+        remoteDataSource
+            .getGeneralFormPatch(
+            model, id)); // TODO: implement getGeneralFormPatch
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> returnGeneralDelete(int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.returnGeneralDelete(id));
+            () async => remoteDataSource.returnGeneralDelete(id));
   }
 
   @override
   Future<Either<Failure, PurchaseInvoiceReadModel>> getInvoiceRead(int id) {
     return repoExecute<PurchaseInvoiceReadModel>(
-        () async => remoteDataSource.getInvoiceRead(id));
+            () async => remoteDataSource.getInvoiceRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> invoicePost(
       PurchaseReturnInvoicePostModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.invoicePost(model));
+            () async => remoteDataSource.invoicePost(model));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postSalesGeneral(
       SalesGeneralPostModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postSalesGeneral(model));
+            () async => remoteDataSource.postSalesGeneral(model));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>>
-      getSalesGeneralVertical() {
+  getSalesGeneralVertical() {
     return repoExecute<PaginatedResponse<List<salesOrderTypeModel>>>(
-        () async => remoteDataSource.getSalesGeneralVertical());
+            () async => remoteDataSource.getSalesGeneralVertical());
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>>
-      getSalesSearch(String? code) {
+  getSalesSearch(String? code) {
     return repoExecute<PaginatedResponse<List<salesOrderTypeModel>>>(
-        () async => remoteDataSource.getSalesSearch(
+            () async =>
+            remoteDataSource.getSalesSearch(
               code,
             ));
   }
@@ -521,104 +529,109 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, PurchaseOrdertype>> getSalesOrdertype({String? type}) {
     return repoExecute<PurchaseOrdertype>(
-        () async => remoteDataSource.getSalesOrdertype(type: type));
+            () async => remoteDataSource.getSalesOrdertype(type: type));
   }
 
   @override
   Future<Either<Failure, SalesGeneralReadModel>> getSalesGenralRead(int id) {
     return repoExecute<SalesGeneralReadModel>(
-        () async => remoteDataSource.getSalesGenralRead(id));
+            () async => remoteDataSource.getSalesGenralRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> salesGeneralDelete(int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.salesGeneralDelete(id));
+            () async => remoteDataSource.salesGeneralDelete(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> getSalesGeneralPatch(
       SalesGeneralPostModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.getSalesGeneralPatch(model, id));
+            () async => remoteDataSource.getSalesGeneralPatch(model, id));
   }
 
   @override
   Future<Either<Failure, SalesReturnInvoiceReadModel>> getSalesInvoiceRead(
       int id) {
     return repoExecute<SalesReturnInvoiceReadModel>(
-        () async => remoteDataSource.getSalesInvoiceRead(id));
+            () async => remoteDataSource.getSalesInvoiceRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> signUp(RegisterModel model) {
     return repoExecute<DoubleResponse>(
-      () async => remoteDataSource.signUp(model),
+          () async => remoteDataSource.signUp(model),
     );
     ;
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> otpReg(
-      String email, String mobile, String key, String cratedCode) {
+  Future<Either<Failure, DoubleResponse>> otpReg(String email, String mobile,
+      String key, String cratedCode) {
     return repoExecute<DoubleResponse>(
-      () async => remoteDataSource.otpReg(email, mobile, key, cratedCode),
+          () async => remoteDataSource.otpReg(email, mobile, key, cratedCode),
     );
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> getLogin(
-      String username, String password, String empCode) {
+  Future<Either<Failure, DoubleResponse>> getLogin(String username,
+      String password, String empCode) {
     return repoExecute<DoubleResponse>(
-      () async => remoteDataSource.getLogin(username, password, empCode),
+          () async => remoteDataSource.getLogin(username, password, empCode),
     );
   }
 
   @override
-  Future<Either<Failure,PaginatedResponse< List<ShippingAddressModel>>>> getShippingId(String? code,{String ? id}) {
+  Future<Either<Failure,
+      PaginatedResponse<List<ShippingAddressModel>>>> getShippingId(
+      String? code, {String ? id}) {
     return repoExecute<PaginatedResponse<List<ShippingAddressModel>>>(
-        () async => remoteDataSource.getShippingId(code,id:id));
+            () async => remoteDataSource.getShippingId(code, id: id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postShippinAddress(
       ShippingAddressCreationModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postShippinAddress(model));
+            () async => remoteDataSource.postShippinAddress(model));
   }
 
   @override
-  Future<Either<Failure,PaginatedResponse<List<CustomerIdListModel>>>> getCustomerId(String? code) {
+  Future<Either<Failure,
+      PaginatedResponse<List<CustomerIdListModel>>>> getCustomerId(
+      String? code) {
     return repoExecute<PaginatedResponse<List<CustomerIdListModel>>>(
-        () async => remoteDataSource.getCustomerId(code));
+            () async => remoteDataSource.getCustomerId(code));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCustomerIdCreation(
       CustomerIdCreationUpdateModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCustomerIdCreation(model));
+            () async => remoteDataSource.postCustomerIdCreation(model));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postSalesInvoice(
       SalesReturnInvoicePostModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postSalesInvoice(model));
+            () async => remoteDataSource.postSalesInvoice(model));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>>
-      getSalesReturnGeneralVertical() {
+  getSalesReturnGeneralVertical() {
     return repoExecute<PaginatedResponse<List<salesOrderTypeModel>>>(
-        () async => remoteDataSource.getSalesReturnGeneralVertical());
+            () async => remoteDataSource.getSalesReturnGeneralVertical());
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>>
-      getSalesReturnSearch(String? code) {
+  getSalesReturnSearch(String? code) {
     return repoExecute<PaginatedResponse<List<salesOrderTypeModel>>>(
-        () async => remoteDataSource.getSalesReturnSearch(
+            () async =>
+            remoteDataSource.getSalesReturnSearch(
               code,
             ));
   }
@@ -627,47 +640,48 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postSalesReturnGeneral(
       SalesReturnGeneralPostModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postSalesReturnGeneral(model));
+            () async => remoteDataSource.postSalesReturnGeneral(model));
   }
 
   @override
   Future<Either<Failure, List<SalesInvoiceCodeModel>>> getInvoiceCode() {
     return repoExecute<List<SalesInvoiceCodeModel>>(
-        () async => remoteDataSource.getInvoiceCode());
+            () async => remoteDataSource.getInvoiceCode());
   }
 
   @override
   Future<Either<Failure, SalesReturnGeneralInvoiceReadModel>>
-      getSalesReturnGeneralInvoiceRead(int? id) {
+  getSalesReturnGeneralInvoiceRead(int? id) {
     return repoExecute<SalesReturnGeneralInvoiceReadModel>(
-        () async => remoteDataSource.getSalesReturnGeneralInvoiceRead(id));
+            () async => remoteDataSource.getSalesReturnGeneralInvoiceRead(id));
   }
 
   @override
   Future<Either<Failure, SalesReturnGeneralPostModel>>
-      getSalesReturnGeneralRead(int? id) {
+  getSalesReturnGeneralRead(int? id) {
     return repoExecute<SalesReturnGeneralPostModel>(
-        () async => remoteDataSource.getSalesReturnGeneralRead(id));
+            () async => remoteDataSource.getSalesReturnGeneralRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> salesreturnGeneralDelete(int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.salesreturnGeneralDelete(id));
+            () async => remoteDataSource.salesreturnGeneralDelete(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postSalesRequestGeneralPatch(
       SalesReturnGeneralPostModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postSalesRequestGeneralPatch(model, id));
+            () async =>
+            remoteDataSource.postSalesRequestGeneralPatch(model, id));
   }
 
   @override
   Future<Either<Failure, SalesReturnInvoiceReadModel2>>
-      getSalesReturnInvoiceRead(int? id) {
+  getSalesReturnInvoiceRead(int? id) {
     return repoExecute<SalesReturnInvoiceReadModel2>(
-        () async => remoteDataSource.getSalesReturnInvoiceRead(id));
+            () async => remoteDataSource.getSalesReturnInvoiceRead(id));
   }
 
   @override
@@ -675,28 +689,28 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
       SalesReturnInvoicePostModel2 model) {
     // TODO: implement postSalesReturnInvoice
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postSalesReturnInvoice(model));
+            () async => remoteDataSource.postSalesReturnInvoice(model));
   }
 
   @override
   Future<Either<Failure, List<BrandListModel>>> getBrandList() {
     return repoExecute<List<BrandListModel>>(
-        () async => remoteDataSource.getBrandList());
+            () async => remoteDataSource.getBrandList());
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateBrand(
       BrandCreationtModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateBrand(model));
+            () async => remoteDataSource.postCreateBrand(model));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> postImage(
-      String? imageNmae, String ImageEncode,
+  Future<Either<Failure, DoubleResponse>> postImage(String? imageNmae,
+      String ImageEncode,
       {String? type}) {
     return repoExecute<DoubleResponse>(
-      () async =>
+          () async =>
           remoteDataSource.postImage(imageNmae, ImageEncode, type: type),
     );
   }
@@ -706,139 +720,142 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
       String? code) {
     print("avavava");
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getlistBrand(code));
+            () async => remoteDataSource.getlistBrand(code));
   }
 
   @override
   Future<Either<Failure, BrandReadModel>> getBrandRead(int? id) {
     return repoExecute<BrandReadModel>(
-        () async => remoteDataSource.getBrandRead(id));
+            () async => remoteDataSource.getBrandRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> brandDelete(int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.brandDelete(id));
+            () async => remoteDataSource.brandDelete(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postBrandPatch(
       BrandCreationtModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postBrandPatch(model, id));
+            () async => remoteDataSource.postBrandPatch(model, id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      searchMaterialList(String? code, {String? page}) {
+  searchMaterialList(String? code, {String? page}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.searchMaterialList(code, page: page));
+            () async => remoteDataSource.searchMaterialList(code, page: page));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateMaterial(
       MaterialCreationtModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateMaterial(model));
+            () async => remoteDataSource.postCreateMaterial(model));
   }
 
   @override
   Future<Either<Failure, MaterialReadModel>> getMaterialRead(int? id) {
     // TODO: implement getMaterialRead
     return repoExecute<MaterialReadModel>(
-        () async => remoteDataSource.getMaterialRead(id));
+            () async => remoteDataSource.getMaterialRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postmaterialPatch(
       MaterialReadModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postmaterialPatch(model, id));
+            () async => remoteDataSource.postmaterialPatch(model, id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> materialDelete(int? id, String type) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.materialDelete(id, type));
+            () async => remoteDataSource.materialDelete(id, type));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getDevisionList(String? code) {
+  getDevisionList(String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getDevisionList(code));
+            () async => remoteDataSource.getDevisionList(code));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateDevision(
       MaterialCreationtModel model, String type) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateDevision(model, type));
+            () async => remoteDataSource.postCreateDevision(model, type));
   }
 
   @override
-  Future<Either<Failure, DevisionReadModel>> getDivisionRead(
-      int? id, String type) {
+  Future<Either<Failure, DevisionReadModel>> getDivisionRead(int? id,
+      String type) {
     // TODO: implement getDivisionRead
     return repoExecute<DevisionReadModel>(
-        () async => remoteDataSource.getDivisionRead(id, type));
+            () async => remoteDataSource.getDivisionRead(id, type));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postDivisionPatch(
       DevisionReadModel model, int? id, String type) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postDivisionPatch(model, id, type));
+            () async => remoteDataSource.postDivisionPatch(model, id, type));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getStaticList(String? code) {
+  getStaticList(String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getStaticList(code));
+            () async => remoteDataSource.getStaticList(code));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> postCreateUomGroup(
-      String description, String name, String shortName) {
+  Future<Either<Failure, DoubleResponse>> postCreateUomGroup(String description,
+      String name, String shortName) {
     return repoExecute<DoubleResponse>(() async =>
         remoteDataSource.postCreateUomGroup(description, name, shortName));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getUomGroupist(String? code) {
+  getUomGroupist(String? code) {
     print("filter2" + code.toString());
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getUomGroupist(code));
+            () async => remoteDataSource.getUomGroupist(code));
   }
 
   @override
   Future<Either<Failure, DevisionReadModel>> getUomGroupRead(int? id) {
     return repoExecute<DevisionReadModel>(
-        () async => remoteDataSource.getUomGroupRead(
+            () async =>
+            remoteDataSource.getUomGroupRead(
               id,
             ));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getCategoryist(String? code, {String? type, int? id}) {
+  getCategoryist(String? code, {String? type, int? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getCategoryist(code, type: type, id: id));
+            () async =>
+            remoteDataSource.getCategoryist(code, type: type, id: id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateCategory(
       CategoryCreationtModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateCategory(model));
+            () async => remoteDataSource.postCreateCategory(model));
   }
 
   @override
   Future<Either<Failure, CategoryReadModel>> getCategoryRead(int? id) {
     return repoExecute<CategoryReadModel>(
-        () async => remoteDataSource.getCategoryRead(
+            () async =>
+            remoteDataSource.getCategoryRead(
               id,
             ));
   }
@@ -847,37 +864,40 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postcategoryPatch(
       CategoryCreationtModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postcategoryPatch(model, id));
+            () async => remoteDataSource.postcategoryPatch(model, id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getSubCategoryList(String? code,{int ? id}) {
+  getSubCategoryList(String? code, {int ? id}) {
     print("enterdAAAAAAAAAAAAAAA");
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getSubCategoryList(code,id:id));
+            () async => remoteDataSource.getSubCategoryList(code, id: id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateGroup(
       MaterialCreationtModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateGroup(
+            () async =>
+            remoteDataSource.postCreateGroup(
               model,
             ));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getGroupListList(String? code, {String? type,int ? id}) {
+  getGroupListList(String? code, {String? type, int ? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getGroupListList(code, type: type,id: id));
+            () async =>
+            remoteDataSource.getGroupListList(code, type: type, id: id));
   }
 
   @override
   Future<Either<Failure, MaterialReadModel>> getGroupRead(int? id) {
     return repoExecute<MaterialReadModel>(
-        () async => remoteDataSource.getGroupRead(
+            () async =>
+            remoteDataSource.getGroupRead(
               id,
             ));
   }
@@ -886,28 +906,29 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postGroupPatch(
       MaterialCreationtModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postGroupPatch(model, id));
+            () async => remoteDataSource.postGroupPatch(model, id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateBaseUom(
       BaseUomCreationtModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateBaseUom(model));
+            () async => remoteDataSource.postCreateBaseUom(model));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getUomist(
       String? code,
-      {String? type,int ? id}) {
+      {String? type, int ? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getUomist(code, type: type,id: id));
+            () async => remoteDataSource.getUomist(code, type: type, id: id));
   }
 
   @override
   Future<Either<Failure, BaseUomCreationtModel>> getBaseUomRead(int? id) {
     return repoExecute<BaseUomCreationtModel>(
-        () async => remoteDataSource.getBaseUomRead(
+            () async =>
+            remoteDataSource.getBaseUomRead(
               id,
             ));
   }
@@ -916,7 +937,8 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postUomPatch(
       BaseUomCreationtModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postUomPatch(
+            () async =>
+            remoteDataSource.postUomPatch(
               model,
               id,
             ));
@@ -924,30 +946,32 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getItemListList(String? code) {
+  getItemListList(String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getItemListList(code));
+            () async => remoteDataSource.getItemListList(code));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateItem(
       ItemCreationModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateItem(model));
+            () async => remoteDataSource.postCreateItem(model));
   }
 
   @override
   Future<Either<Failure, ItemReadModel>> getItemRead(int? id) {
-    return repoExecute<ItemReadModel>(() async => remoteDataSource.getItemRead(
+    return repoExecute<ItemReadModel>(() async =>
+        remoteDataSource.getItemRead(
           id,
         ));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> postItemPatch(
-      ItemReadModel model, int? id) {
+  Future<Either<Failure, DoubleResponse>> postItemPatch(ItemReadModel model,
+      int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postItemPatch(
+            () async =>
+            remoteDataSource.postItemPatch(
               model,
               id,
             ));
@@ -955,15 +979,16 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getVariantList(String? code, {String? type}) {
+  getVariantList(String? code, {String? type}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getVariantList(code, type: type));
+            () async => remoteDataSource.getVariantList(code, type: type));
   }
 
   @override
   Future<Either<Failure, VariantReadModel>> getVariantRead(int? id) {
     return repoExecute<VariantReadModel>(
-        () async => remoteDataSource.getVariantRead(
+            () async =>
+            remoteDataSource.getVariantRead(
               id,
             ));
   }
@@ -972,32 +997,35 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getSalesList(
       String? code,
       {String? type,
-      int? id}) {
+        int? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getSalesList(code, type: type, id: id));
+            () async =>
+            remoteDataSource.getSalesList(code, type: type, id: id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      searchVariantList(String? code, {String? type, int? id}) {
+  searchVariantList(String? code, {String? type, int? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.searchVariantList(code, type: type));
+            () async => remoteDataSource.searchVariantList(code, type: type));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> postVariant(
-      VariantPost model, int? id) {
-    return repoExecute<DoubleResponse>(() async => remoteDataSource.postVariant(
+  Future<Either<Failure, DoubleResponse>> postVariant(VariantPost model,
+      int? id) {
+    return repoExecute<DoubleResponse>(() async =>
+        remoteDataSource.postVariant(
           model,
           id,
         ));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> patchVariant(
-      VariantPatch model, int? id) {
+  Future<Either<Failure, DoubleResponse>> patchVariant(VariantPatch model,
+      int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.patchVariant(
+            () async =>
+            remoteDataSource.patchVariant(
               model,
               id,
             ));
@@ -1005,70 +1033,72 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getVariantCreationList(String? code) {
+  getVariantCreationList(String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getVariantCreationList(code));
+            () async => remoteDataSource.getVariantCreationList(code));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getVariantSelectionList(String? code, int? item) {
+  getVariantSelectionList(String? code, int? item) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getVariantSelectionList(code, item));
+            () async => remoteDataSource.getVariantSelectionList(code, item));
   }
 
   @override
   Future<Either<Failure, VariantCreationReadModel>> getVariantCreationRead(
       int? id) {
     return repoExecute<VariantCreationReadModel>(
-        () async => remoteDataSource.getVariantCreationRead(id));
+            () async => remoteDataSource.getVariantCreationRead(id));
   }
 
   @override
   Future<Either<Failure, List<VariantCreationRead2Model>>>
-      getVariantCreationRead2(String? id) {
+  getVariantCreationRead2(String? id) {
     return repoExecute<List<VariantCreationRead2Model>>(
-        () async => remoteDataSource.getVariantCreationRead2(id));
+            () async => remoteDataSource.getVariantCreationRead2(id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
-      getChannelTypeList(String? code, String type) {
+  getChannelTypeList(String? code, String type) {
     return repoExecute<PaginatedResponse<List<ChannelTypeModel>>>(
-        () async => remoteDataSource.getChannelTypeList(code, type));
+            () async => remoteDataSource.getChannelTypeList(code, type));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
-      getChannelFilterList(List<String> code, String id, String option) {
+  getChannelFilterList(List<String> code, String id, String option) {
     return repoExecute<PaginatedResponse<List<ChannelTypeModel>>>(
-        () async => remoteDataSource.getChannelFilterList(code, id, option));
+            () async =>
+            remoteDataSource.getChannelFilterList(code, id, option));
   }
 
   @override
   Future<Either<Failure, StockReadModel>> getStockRead(int? id) {
     return repoExecute<StockReadModel>(
-        () async => remoteDataSource.getStockRead(id));
+            () async => remoteDataSource.getStockRead(id));
   }
 
   @override
   Future<Either<Failure, List<StockTableReadModel>>> getStockTableRead(
       String? code) {
     return repoExecute<List<StockTableReadModel>>(
-        () async => remoteDataSource.getStockTableRead(code));
+            () async => remoteDataSource.getStockTableRead(code));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<StockVerticalReadModel>>>>
-      getStockList(String? code) {
+  getStockList(String? code) {
     return repoExecute<PaginatedResponse<List<StockVerticalReadModel>>>(
-        () async => remoteDataSource.getStockList(code));
+            () async => remoteDataSource.getStockList(code));
   }
 
   @override
   Future<Either<Failure, channelAllocatesRead>> getChannelRead(int? id) {
     return repoExecute<channelAllocatesRead>(
-        () async => remoteDataSource.getChannelRead(
+            () async =>
+            remoteDataSource.getChannelRead(
               id,
             ));
   }
@@ -1077,19 +1107,19 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postSChannelPosts(
       ChannelPostModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postSChannelPosts(model));
+            () async => remoteDataSource.postSChannelPosts(model));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<ChanmneStockListModelModel>>>>
-      getChannelAllocationList(int? code) {
+  getChannelAllocationList(int? code) {
     return repoExecute<PaginatedResponse<List<ChanmneStockListModelModel>>>(
-        () async => remoteDataSource.getChannelAllocationList(code));
+            () async => remoteDataSource.getChannelAllocationList(code));
   }
 
   @override
   Future<Either<Failure, ChannelAllocationStockStockReadModel>>
-      getChannelStockAllocationRead(int? id, int? channelId) {
+  getChannelStockAllocationRead(int? id, int? channelId) {
     return repoExecute<ChannelAllocationStockStockReadModel>(() async =>
         remoteDataSource.getChannelStockAllocationRead(id, channelId));
   }
@@ -1098,61 +1128,62 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> channelStockAllocationPatch(
       ChannelAllocationStockStockReadModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.channelStockAllocationPatch(model, id));
+            () async =>
+            remoteDataSource.channelStockAllocationPatch(model, id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<ChannelListModel>>>>
-      getChannelList(
-    String? channelType,
-    int? id,
-  ) {
+  getChannelList(String? channelType,
+      int? id,) {
     return repoExecute<PaginatedResponse<List<ChannelListModel>>>(
-        () async => remoteDataSource.getChannelList(channelType, id));
+            () async => remoteDataSource.getChannelList(channelType, id));
   }
 
   @override
-  Future<Either<Failure, ChannelListModel>> getChannelAllocationRead(
-      int? id, int? channelId) {
+  Future<Either<Failure, ChannelListModel>> getChannelAllocationRead(int? id,
+      int? channelId) {
     return repoExecute<ChannelListModel>(
-        () async => remoteDataSource.getChannelAllocationRead(id, channelId));
+            () async =>
+            remoteDataSource.getChannelAllocationRead(id, channelId));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<FrameWorkListModel>>>>
-      getFrameWorklist(String? filter) {
+  getFrameWorklist(String? filter) {
     return repoExecute<PaginatedResponse<List<FrameWorkListModel>>>(
-        () async => remoteDataSource.getFrameWorklist(filter));
+            () async => remoteDataSource.getFrameWorklist(filter));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> channel2StockAllocationPatch(
       ChannelListModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.channel2StockAllocationPatch(model, id));
+            () async =>
+            remoteDataSource.channel2StockAllocationPatch(model, id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateFrameWork(
-    VariantFrameWorkPostModel model,
-  ) {
+      VariantFrameWorkPostModel model,) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateFrameWork(model));
+            () async => remoteDataSource.postCreateFrameWork(model));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> postCreateCostingType(
-      String typeName, String description, String createdBy,
+  Future<Either<Failure, DoubleResponse>> postCreateCostingType(String typeName,
+      String description, String createdBy,
       {int? id}) {
-    return repoExecute<DoubleResponse>(() async => remoteDataSource
-        .postCreateCostingType(typeName, description, createdBy, id: id));
+    return repoExecute<DoubleResponse>(() async =>
+        remoteDataSource
+            .postCreateCostingType(typeName, description, createdBy, id: id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<CostingMetodTypePostModel>>>>
-      getCostingTypeList(String? code) {
+  getCostingTypeList(String? code) {
     return repoExecute<PaginatedResponse<List<CostingMetodTypePostModel>>>(
-        () async => remoteDataSource.getCostingTypeList(code));
+            () async => remoteDataSource.getCostingTypeList(code));
   }
 
   @override
@@ -1169,14 +1200,14 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> CostingDelete(int? id,
       {String? type}) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.CostingDelete(id, type: type));
+            () async => remoteDataSource.CostingDelete(id, type: type));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<CostingCreatePostModel>>>>
-      getCostingCreateList(String? code) {
+  getCostingCreateList(String? code) {
     return repoExecute<PaginatedResponse<List<CostingCreatePostModel>>>(
-        () async => remoteDataSource.getCostingCreateList(code));
+            () async => remoteDataSource.getCostingCreateList(code));
   }
 
   @override
@@ -1188,7 +1219,8 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
       String createdBy,
       bool? isActive) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postPatchpostPatchCostingCreateCostingType(
+            () async =>
+            remoteDataSource.postPatchpostPatchCostingCreateCostingType(
               verticalId,
               typeId,
               typeName,
@@ -1200,22 +1232,22 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<PricingGroupListModel>>>>
-      getPricingGroupList(String? code) {
+  getPricingGroupList(String? code) {
     return repoExecute<PaginatedResponse<List<PricingGroupListModel>>>(
-        () async => remoteDataSource.getPricingGroupList(code));
+            () async => remoteDataSource.getPricingGroupList(code));
   }
 
   @override
   Future<Either<Failure, CostingCreatePostModel>> getCostMethodRead(int? id) {
     return repoExecute<CostingCreatePostModel>(
-        () async => remoteDataSource.getCostMethodRead(id));
+            () async => remoteDataSource.getCostMethodRead(id));
   }
 
   @override
   Future<Either<Failure, CostingMetodTypePostModel>> getCostMethodTypeRead(
       int? id) {
     return repoExecute<CostingMetodTypePostModel>(
-        () async => remoteDataSource.getCostMethodTypeRead(id));
+            () async => remoteDataSource.getCostMethodTypeRead(id));
   }
 
   @override
@@ -1223,7 +1255,8 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
       PricingGroupListModel model,
       {int? type}) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postPricingGroupType(model, type: type));
+            () async =>
+            remoteDataSource.postPricingGroupType(model, type: type));
   }
 
   @override
@@ -1237,20 +1270,20 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, PricingGroupListModel>> getPricingRead(int? id) {
     return repoExecute<PricingGroupListModel>(
-        () async => remoteDataSource.getPricingRead(id));
+            () async => remoteDataSource.getPricingRead(id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<PricingTypeListModel>>>>
-      getPricingList(String? code) {
+  getPricingList(String? code) {
     return repoExecute<PaginatedResponse<List<PricingTypeListModel>>>(
-        () async => remoteDataSource.getPricingList(code));
+            () async => remoteDataSource.getPricingList(code));
   }
 
   @override
   Future<Either<Failure, PricingTypeListModel>> getPricingGroupRead(int? id) {
     return repoExecute<PricingTypeListModel>(
-        () async => remoteDataSource.getPricingGroupRead(id));
+            () async => remoteDataSource.getPricingGroupRead(id));
     ;
   }
 
@@ -1258,7 +1291,8 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> patchPricingGroup(
       PricingTypeListModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.patchPricingGroup(
+            () async =>
+            remoteDataSource.patchPricingGroup(
               model,
               id,
             ));
@@ -1268,22 +1302,24 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postPricingGroup(
       PricingTypeListModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postPricingGroup(
+            () async =>
+            remoteDataSource.postPricingGroup(
               model,
             ));
   }
 
   @override
   Future<Either<Failure, List<ListingChnanelTableModel>>>
-      getChannelStockTableRead(int? id) {
+  getChannelStockTableRead(int? id) {
     return repoExecute<List<ListingChnanelTableModel>>(
-        () async => remoteDataSource.getChannelStockTableRead(id));
+            () async => remoteDataSource.getChannelStockTableRead(id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCosting(
       CostingPageCreationPostModel model) {
-    return repoExecute<DoubleResponse>(() async => remoteDataSource.postCosting(
+    return repoExecute<DoubleResponse>(() async =>
+        remoteDataSource.postCosting(
           model,
         ));
   }
@@ -1292,41 +1328,42 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, CostingPageCreationPostModel>> getCostingRead(
       int? id) {
     return repoExecute<CostingPageCreationPostModel>(
-        () async => remoteDataSource.getCostingRead(id));
+            () async => remoteDataSource.getCostingRead(id));
   }
 
   @override
   Future<Either<Failure, PurchaseOrdertype>> getPricingPgtype() {
     return repoExecute<PurchaseOrdertype>(
-        () async => remoteDataSource.getPricingPgtype());
+            () async => remoteDataSource.getPricingPgtype());
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> percentageGp(
-      int? id, String? gpType) {
+  Future<Either<Failure, DoubleResponse>> percentageGp(int? id,
+      String? gpType) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.percentageGp(id, gpType));
+            () async => remoteDataSource.percentageGp(id, gpType));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> patchCosting(
       CostingPageCreationPostModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.patchCosting(model, id));
+            () async => remoteDataSource.patchCosting(model, id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postFrameWorkCreate(
       VariantFrameworkPostModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postFrameWorkCreate(model));
+            () async => remoteDataSource.postFrameWorkCreate(model));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<AttributeListModel>>>>
-      getAttributeList(String? code) {
+  getAttributeList(String? code) {
     return repoExecute<PaginatedResponse<List<AttributeListModel>>>(
-        () async => remoteDataSource.getAttributeList(
+            () async =>
+            remoteDataSource.getAttributeList(
               code,
             ));
   }
@@ -1335,15 +1372,15 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postPatchFrameWork(
       VariantFrameWorkPostModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postPatchFrameWork(model, id));
+            () async => remoteDataSource.postPatchFrameWork(model, id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCombinationFrameWork(
       {String? itemCode,
-      String? variantCode,
-      String? uomCode,
-        List< dynamic>? variantlist}) {
+        String? variantCode,
+        String? uomCode,
+        List<dynamic>? variantlist}) {
     return repoExecute<DoubleResponse>(() async =>
         remoteDataSource.postCombinationFrameWork(
             itemCode: itemCode,
@@ -1355,20 +1392,21 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, PurchaseOrdertype>> getVirtualStiocktype() {
     return repoExecute<PurchaseOrdertype>(
-        () async => remoteDataSource.getVirtualStiocktype());
+            () async => remoteDataSource.getVirtualStiocktype());
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postStock(StockData model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postStock(model));
+            () async => remoteDataSource.postStock(model));
   }
 
   @override
   Future<Either<Failure, List<LinkedItemListIdModel>>> getLinkedItemListRead(
       String? code) {
     return repoExecute<List<LinkedItemListIdModel>>(
-        () async => remoteDataSource.getLinkedItemListRead(
+            () async =>
+            remoteDataSource.getLinkedItemListRead(
               code,
             ));
   }
@@ -1377,29 +1415,31 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postLinkedItem(
       LinkedItemPostModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postLinkedItem(model));
+            () async => remoteDataSource.postLinkedItem(model));
   }
 
   @override
   Future<Either<Failure, LinkedItemPostModel>> getLinkedItem(int? id) {
     return repoExecute<LinkedItemPostModel>(
-        () async => remoteDataSource.getLinkedItem(
+            () async =>
+            remoteDataSource.getLinkedItem(
               id,
             ));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<LinkedItemListIdModel>>>>
-      getLinkedItemList(String? filter) {
+  getLinkedItemList(String? filter) {
     return repoExecute<PaginatedResponse<List<LinkedItemListIdModel>>>(
-        () async => remoteDataSource.getLinkedItemList(filter));
+            () async => remoteDataSource.getLinkedItemList(filter));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> patchLinkedItem(
       LinkedItemPostModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.patchLinkedItem(
+            () async =>
+            remoteDataSource.patchLinkedItem(
               model,
               id,
             ));
@@ -1408,7 +1448,8 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, VariantFrameWorkPostModel>> getFrameWorkRead(int? id) {
     return repoExecute<VariantFrameWorkPostModel>(
-        () async => remoteDataSource.getFrameWorkRead(
+            () async =>
+            remoteDataSource.getFrameWorkRead(
               id,
             ));
   }
@@ -1416,38 +1457,42 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, DoubleResponse>> getQrCodeRead(int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.getQrCodeRead(
+            () async =>
+            remoteDataSource.getQrCodeRead(
               id,
             ));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<VendorDetailsModel>>>>
-      getVendorDetailList(String? code) {
+  getVendorDetailList(String? code) {
     return repoExecute<PaginatedResponse<List<VendorDetailsModel>>>(
-        () async => remoteDataSource.getVendorDetailList(
+            () async =>
+            remoteDataSource.getVendorDetailList(
               code,
             ));
   }
 
   @override
-  Future<Either<Failure, List<VariantReadModel>>> getProducedCountry(String? code) {
+  Future<Either<Failure, List<VariantReadModel>>> getProducedCountry(
+      String? code) {
     return repoExecute<List<VariantReadModel>>(
-        () async => remoteDataSource.getProducedCountry(code));
+            () async => remoteDataSource.getProducedCountry(code));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateCustom(
       CustomCreationtModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateCustom(model));
+            () async => remoteDataSource.postCreateCustom(model));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getCustomVerticalList(String? code) {
+  getCustomVerticalList(String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getCustomVerticalList(
+            () async =>
+            remoteDataSource.getCustomVerticalList(
               code,
             ));
   }
@@ -1455,7 +1500,8 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, ReadCustomModel>> getCustomRead(int? id) {
     return repoExecute<ReadCustomModel>(
-        () async => remoteDataSource.getCustomRead(
+            () async =>
+            remoteDataSource.getCustomRead(
               id,
             ));
   }
@@ -1463,28 +1509,29 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, ReadCustomModel>> getReturnRead() {
     return repoExecute<ReadCustomModel>(
-        () async => remoteDataSource.getReturnRead());
+            () async => remoteDataSource.getReturnRead());
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> patchCreateCustom(
       CustomCreationtModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.patchCreateCustom(model, id));
+            () async => remoteDataSource.patchCreateCustom(model, id));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCreateDivisionConfig(
       DivisionCreationtModel model) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.postCreateDivisionConfig(model));
+            () async => remoteDataSource.postCreateDivisionConfig(model));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getDivisionVerticalList(String? code) {
+  getDivisionVerticalList(String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getDivisionVerticalList(
+            () async =>
+            remoteDataSource.getDivisionVerticalList(
               code,
             ));
   }
@@ -1492,7 +1539,8 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, DivisionReadModel>> getDivisionConfigRead(int? id) {
     return repoExecute<DivisionReadModel>(
-        () async => remoteDataSource.getDivisionConfigRead(
+            () async =>
+            remoteDataSource.getDivisionConfigRead(
               id,
             ));
   }
@@ -1501,12 +1549,12 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> patchDivisionConfig(
       DivisionCreationtModel model, int? id) {
     return repoExecute<DoubleResponse>(
-        () async => remoteDataSource.patchDivisionConfig(model, id));
+            () async => remoteDataSource.patchDivisionConfig(model, id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getUomDivisionList(String? code, {String? type, int? id}) {
+  getUomDivisionList(String? code, {String? type, int? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(() async =>
         remoteDataSource.getUomDivisionList(code, type: type, id: id));
   }
@@ -1515,14 +1563,15 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getGroupList(
       String? code,
       {String? type,
-      int? id}) {
+        int? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getGroupList(code, type: type, id: id));
+            () async =>
+            remoteDataSource.getGroupList(code, type: type, id: id));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getCategoryList(String? code, {String? type, int? id}) {
+  getCategoryList(String? code, {String? type, int? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(() async =>
         remoteDataSource.getCategoryList(code, type: type, id: id));
   }
@@ -1534,13 +1583,16 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, CostingPageCreationPostModel>> getChannelCostingRead(int? id) {
+  Future<Either<Failure, CostingPageCreationPostModel>> getChannelCostingRead(
+      int? id) {
     return repoExecute<CostingPageCreationPostModel>(
             () async => remoteDataSource.getChannelCostingRead(id));
   }
 
   @override
-  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getAllCategoryist(String? code) {
+  Future<Either<Failure,
+      PaginatedResponse<List<BrandListModel>>>> getAllCategoryist(
+      String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
             () async => remoteDataSource.getAllCategoryist(code));
   }
@@ -1548,46 +1600,65 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, Returntypemodel>> getReturnType() {
     return repoExecute<Returntypemodel>(
-            () async => remoteDataSource.getReturnType(
+            () async =>
+            remoteDataSource.getReturnType(
 
-        ));
+            ));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> getAttributePost(String? attributeType, String? attributeName, bool? isActive) {
+  Future<Either<Failure, DoubleResponse>> getAttributePost(
+      String? attributeType, String? attributeName, bool? isActive) {
     return repoExecute<DoubleResponse>(
-            () async => remoteDataSource.getAttributePost(attributeType,attributeName,isActive));
+            () async => remoteDataSource.getAttributePost(
+            attributeType, attributeName, isActive));
   }
 
   @override
-  Future<Either<Failure, PaginatedResponse<List<AttributeListModel>>>> getAttributePatchList(String? code) {
+  Future<Either<Failure,
+      PaginatedResponse<List<AttributeListModel>>>> getAttributePatchList(
+      String? code) {
     return repoExecute<PaginatedResponse<List<AttributeListModel>>>(
             () async => remoteDataSource.getAttributePatchList(code));
   }
 
   @override
-  Future<Either<Failure, AttributeListModel>> getAttributeCreationRead(int? id) {
+  Future<Either<Failure, AttributeListModel>> getAttributeCreationRead(
+      int? id) {
     return repoExecute<AttributeListModel>(
             () async => remoteDataSource.getAttributeCreationRead(id));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> getAttributePatch(String? attributeType, String? attributeName, bool? isActive, int? id) {
+  Future<Either<Failure, DoubleResponse>> getAttributePatch(
+      String? attributeType, String? attributeName, bool? isActive, int? id) {
     return repoExecute<DoubleResponse>(
-            () async => remoteDataSource.getAttributePatch(attributeType,attributeName,isActive,id));
+            () async => remoteDataSource.getAttributePatch(
+            attributeType, attributeName, isActive, id));
   }
 
   @override
   Future<Either<Failure, AttributeListModel>> getAttributeTypeList() {
     return repoExecute<AttributeListModel>(
-            () async => remoteDataSource.getAttributeTypeList(
+            () async =>
+            remoteDataSource.getAttributeTypeList(
 
-        ));
+            ));
   }
 
   @override
   Future<Either<Failure, ReadMessuremnetModel>> getMessurementRead() {
     return repoExecute<ReadMessuremnetModel>(
             () async => remoteDataSource.getMessurementRead());
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postStockPartion(String? name,
+      String? description) {
+    return repoExecute<DoubleResponse>(() async =>
+        remoteDataSource.postStockPartion(
+          name,
+          description,
+        ));
   }
 }

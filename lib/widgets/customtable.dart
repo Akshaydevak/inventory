@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/common.dart';
 
 import 'custom_inputdecoration.dart';
 import 'custom_outlinebitton.dart';
@@ -89,9 +90,30 @@ Widget textPadding(String label,
       child:label=="0"||label=="null"?Text(''):Text(
         label,
         textAlign: TextAlign.left,
-        style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
+        style: CommonTextStyle.normalTableFieldStyle,
       ),
     );
+class VariantIdTAble extends StatelessWidget {
+  final String? text;
+  final VoidCallback onTap;
+  VariantIdTAble({required this.text,required this.onTap});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: (){
+        onTap();
+      },
+      child: ListTile(
+        title:Text(text=="null"?"": text??""),
+        trailing: Icon(Icons.arrow_drop_down,size: 15,),
+
+      ),
+    );
+  }
+}
+
 
 
 class textOnclickPadding extends StatefulWidget {

@@ -637,6 +637,8 @@ mixin _$Order {
   bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: "is_free", defaultValue: false)
   bool? get isFree => throw _privateConstructorUsedError;
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  bool? get updateCheck => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "supplier_code")
@@ -677,6 +679,7 @@ abstract class $OrderCopyWith<$Res> {
       @JsonKey(name: "is_invoiced", defaultValue: false) bool? isInvoiced,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "is_free", defaultValue: false) bool? isFree,
+      @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck,
       @JsonKey(name: "created_at") String? createdAt,
       @JsonKey(name: "supplier_code") String? suppliercode,
       @JsonKey(name: "purchase_uom") String? purchaseUom,
@@ -715,6 +718,7 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
     Object? isInvoiced = freezed,
     Object? isActive = freezed,
     Object? isFree = freezed,
+    Object? updateCheck = freezed,
     Object? createdAt = freezed,
     Object? suppliercode = freezed,
     Object? purchaseUom = freezed,
@@ -794,6 +798,10 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
           ? _value.isFree
           : isFree // ignore: cast_nullable_to_non_nullable
               as bool?,
+      updateCheck: freezed == updateCheck
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -843,6 +851,7 @@ abstract class _$$_OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       @JsonKey(name: "is_invoiced", defaultValue: false) bool? isInvoiced,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "is_free", defaultValue: false) bool? isFree,
+      @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck,
       @JsonKey(name: "created_at") String? createdAt,
       @JsonKey(name: "supplier_code") String? suppliercode,
       @JsonKey(name: "purchase_uom") String? purchaseUom,
@@ -877,6 +886,7 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res, _$_Order>
     Object? isInvoiced = freezed,
     Object? isActive = freezed,
     Object? isFree = freezed,
+    Object? updateCheck = freezed,
     Object? createdAt = freezed,
     Object? suppliercode = freezed,
     Object? purchaseUom = freezed,
@@ -956,6 +966,10 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res, _$_Order>
           ? _value.isFree
           : isFree // ignore: cast_nullable_to_non_nullable
               as bool?,
+      updateCheck: freezed == updateCheck
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1002,6 +1016,7 @@ class _$_Order implements _Order {
       @JsonKey(name: "is_invoiced", defaultValue: false) this.isInvoiced,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive,
       @JsonKey(name: "is_free", defaultValue: false) this.isFree,
+      @JsonKey(name: "updateCheck", defaultValue: false) this.updateCheck,
       @JsonKey(name: "created_at") this.createdAt,
       @JsonKey(name: "supplier_code") this.suppliercode,
       @JsonKey(name: "purchase_uom") this.purchaseUom,
@@ -1061,6 +1076,9 @@ class _$_Order implements _Order {
   @JsonKey(name: "is_free", defaultValue: false)
   final bool? isFree;
   @override
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  final bool? updateCheck;
+  @override
   @JsonKey(name: "created_at")
   final String? createdAt;
   @override
@@ -1078,7 +1096,7 @@ class _$_Order implements _Order {
 
   @override
   String toString() {
-    return 'Order(id: $id, vat: $vat, foc: $foc, discount: $discount, barcode: $barcode, returnOrderLineCode: $returnOrderLineCode, variantId: $variantId, variantName: $variantName, purchaseInvoiceId: $purchaseInvoiceId, totalQty: $totalQty, unitCost: $unitCost, vatableAmount: $vatableAmount, grandTotal: $grandTotal, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, createdAt: $createdAt, suppliercode: $suppliercode, purchaseUom: $purchaseUom, invoiceId: $invoiceId, vendorRefCode: $vendorRefCode)';
+    return 'Order(id: $id, vat: $vat, foc: $foc, discount: $discount, barcode: $barcode, returnOrderLineCode: $returnOrderLineCode, variantId: $variantId, variantName: $variantName, purchaseInvoiceId: $purchaseInvoiceId, totalQty: $totalQty, unitCost: $unitCost, vatableAmount: $vatableAmount, grandTotal: $grandTotal, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, updateCheck: $updateCheck, createdAt: $createdAt, suppliercode: $suppliercode, purchaseUom: $purchaseUom, invoiceId: $invoiceId, vendorRefCode: $vendorRefCode)';
   }
 
   @override
@@ -1117,6 +1135,8 @@ class _$_Order implements _Order {
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.isFree, isFree) || other.isFree == isFree) &&
+            (identical(other.updateCheck, updateCheck) ||
+                other.updateCheck == updateCheck) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.suppliercode, suppliercode) ||
@@ -1151,6 +1171,7 @@ class _$_Order implements _Order {
         isInvoiced,
         isActive,
         isFree,
+        updateCheck,
         createdAt,
         suppliercode,
         purchaseUom,
@@ -1205,6 +1226,8 @@ abstract class _Order implements Order {
           final bool? isActive,
       @JsonKey(name: "is_free", defaultValue: false)
           final bool? isFree,
+      @JsonKey(name: "updateCheck", defaultValue: false)
+          final bool? updateCheck,
       @JsonKey(name: "created_at")
           final String? createdAt,
       @JsonKey(name: "supplier_code")
@@ -1267,6 +1290,9 @@ abstract class _Order implements Order {
   @override
   @JsonKey(name: "is_free", defaultValue: false)
   bool? get isFree;
+  @override
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  bool? get updateCheck;
   @override
   @JsonKey(name: "created_at")
   String? get createdAt;

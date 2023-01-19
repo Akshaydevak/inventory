@@ -71,7 +71,7 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                   children: [
 
                     Container(
-                      height: width*.045,
+                      height: height/10,
                       decoration:BoxDecoration(   border: Border(bottom: BorderSide(color:Color(0xffF2F3F5), width:5))),
 
                       width: double.infinity,
@@ -81,15 +81,15 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
 
 
                           Container(
-                            width:MediaQuery.of(context).size.width*.74,
-                            height: width*.052,
-                            margin: EdgeInsets.only(top:22),
+                            width:MediaQuery.of(context).size.width/1.8,
+                            padding: EdgeInsets.only(top: height*.04),
+                            height: height*.18,
 
                             child: TabBar(
 
                                 labelStyle: TextStyle(color: Color(0xff000000,),fontWeight: FontWeight.bold),
                                 unselectedLabelStyle: TextStyle(color: Color(0xff000000,)),
-                                padding: EdgeInsets.only(left: 13),
+                                // padding: EdgeInsets.only(left: 4),
                                 isScrollable: true,
                                 onTap: (val) async {
                                   final SharedPreferences prefs =
@@ -119,18 +119,18 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                                 // padding: EdgeInsets.only(bottom: 10),
 
                                 controller: _tabController,
-                                tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Variant detail",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Channel Allocation",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Stock",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Channel Type Stock Allocation",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Channel Stock Allocation",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Channel Costing Allocation",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                  Text("Variant Detail",style:TextStyle(color: Colors.black,fontSize: width*.011),),
+                                  Text("Channel Allocation",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                  Text("Stock",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                  Text("Channel Type Stock Allocation",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                  Text("Channel Stock Allocation",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                  Text("Channel Costing Allocation",style: TextStyle(color: Colors.black,fontSize: width*.011),),
                                 ]),
                           ),
                           Spacer(),
                           Container(
-                            margin: EdgeInsets.only(right: 10,top: 12),
+                            margin: EdgeInsets.only(right: width*.01,top: height*.019),
                             child: TextButton.icon(onPressed: (){
 
                               // print( widget.isClossed);
@@ -140,7 +140,7 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                                 costingTypeMethodeCheck=false;
 
                               });
-                            }, icon:Icon(Icons.code), label: Text("Configuration")),
+                            }, icon:Icon(Icons.code,size: height*.034,), label: Text("Configuration",style: TextStyle(fontSize:height*.024 ),)),
                           )
 
                         ],

@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PopUpInputField extends StatefulWidget {
@@ -107,11 +108,12 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
                 enabled: !widget.restricted,
                 onChanged: widget.onChanged,
 
-                keyboardType: TextInputType.number,
-                // inputFormatters: <TextInputFormatter>[
-                //
-                //   FilteringTextInputFormatter.digitsOnly
-                // ],
+                keyboardType:
+                widget.boarType=="int"? TextInputType.number:null ,
+                inputFormatters: widget.boarType=="int"?
+                <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ]:null,
 
 
 
@@ -160,11 +162,17 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
                 controller: widget.controller,
                 enabled: !widget.restricted,
                 onChanged: widget.onChanged,
+                keyboardType:
+                widget.boarType=="int"? TextInputType.number:null ,
+                inputFormatters: widget.boarType=="int"?
+                <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ]:null,
                 // keyboardType: widget.boarType=="int"?TextInputType.number:TextInputType.text,
                 //  inputFormatters: <TextInputFormatter>[
-                // //   widget.boarType=="int"?
-                // //   FilteringTextInputFormatter.digitsOnly: ""
-                // // ],
+                //   widget.boarType=="int"?
+                //   FilteringTextInputFormatter.digitsOnly: null
+                // ],
 
 
 

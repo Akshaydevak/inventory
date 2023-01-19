@@ -1488,11 +1488,14 @@ class VariantStabletable extends StatefulWidget {
   final TextEditingController weightUnit;
   final TextEditingController heightUnit;
   final TextEditingController widthUnit;
+  final TextEditingController stockPartitionGroupId;
 
   final bool purchaseBlock;
   final int? veritiaclid;
   final String? veritiaclCode;
   final bool stockWarning;
+  final bool haveStockPartitionGroup;
+  final bool haveStockPriority;
   final bool itmCatelog;
   final bool haveGiftOption;
   final bool haveWrapOption;
@@ -1503,12 +1506,15 @@ class VariantStabletable extends StatefulWidget {
   final bool needMultipleIntegration;
   final Function({String type}) imagePostCheck;
   final Function({String type, bool val}) trueOrFalseChange;
+  final Function? nameChanege;
 
   VariantStabletable({
+
     required this.weightUom,
     required this.veritiaclCode,
     required this.imagePostCheck,
     required this.itemId,
+    this.nameChanege,
     required this.select,
     required this.weight,
     required this.baseUomId,
@@ -1588,7 +1594,7 @@ class VariantStabletable extends StatefulWidget {
     required this.purchaseUomName,
     required this.length,
     required this.width,
-    required this.height, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption, required this.lengthUnit, required this.weightUnit, required this.heightUnit, required this.widthUnit,
+    required this.height, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption, required this.lengthUnit, required this.weightUnit, required this.heightUnit, required this.widthUnit, required this.stockPartitionGroupId, required this.haveStockPartitionGroup, required this.haveStockPriority,
   });
 
   @override
@@ -1965,6 +1971,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                       setState(() {
                         widget.lengthUnit.text = va??"";
+                        widget.nameChanege!(type:1, value:va??"");
 
                         // onChange = true;
                         // orderType = va!;
@@ -2066,6 +2073,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       onChange: (va){
                         setState(() {
                           widget.heightUnit.text = va??"";
+                          widget.nameChanege!(type:2, value:va??"");
 
                           // onChange = true;
                           // orderType = va!;
@@ -2179,6 +2187,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                         setState(() {
                           widget.widthUnit.text = va??"";
+                          widget.nameChanege!(type:3, value:va??"");
 
                           // onChange = true;
                           // orderType = va!;
@@ -2289,6 +2298,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                         setState(() {
                           widget.weightUnit.text = va??"";
+                          widget.nameChanege!(type:4, value:va??"");
 
                           // onChange = true;
                           // orderType = va!;
@@ -3510,6 +3520,81 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 ))
               ],
             ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child:PopUpSwitchTile(
+                    paddingCheck: false,
+                    value: widget?.haveStockPartitionGroup ?? false,
+                    title: "Have Stock Partition Group",
+                    onClick: (gg) {
+                      bool val = widget.haveStockPartitionGroup;
+                      val = !val;
+                      widget.trueOrFalseChange(type: "1", val: val);
+
+                      // widget.activeChange(!widget.active);
+
+                      // extendedWarranty = gg;
+                      // widget.changeExtendedWarranty(gg);
+                      // onChangeExtWarranty = gg;
+                      setState(() {});
+                    }),
+              ),
+
+              Expanded(
+                child: Visibility(
+                  visible:widget?.haveStockPartitionGroup==true?true:false ,
+                  child: NewInputCard(
+                    controller: widget.stockPartitionGroupId,
+                    icondrop: true,
+                    title: "Stock Partition Group Id",
+                    readOnly: true,
+                    ontap: () {
+                      showDailogPopUp(
+                        context,
+                        TableConfigurePopup(
+                          // id:widget.subCategoryId!=0?widget.subCategoryId:widget.categoryid,
+                          type: "StockPartitionGroupPopup",
+                          valueSelect: (BrandListModel va) {
+                            setState(() {
+                              // widget.group.text = va?.code ?? "";
+                              // widget.groupName.text = va?.name ?? "";
+                              setState(() {});
+
+                              // onChange = true;
+                              // orderType.text = va!;
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Visibility(
+                  visible:widget?.haveStockPartitionGroup==true?true:false ,
+                  child: PopUpSwitchTile(
+                      paddingCheck: false,
+                      value: widget?.haveStockPriority ?? false,
+                      title: "Have Stock Priority",
+                      onClick: (gg) {
+                        bool val = widget.haveStockPriority;
+                        val = !val;
+                        widget.trueOrFalseChange(type: "2", val: val);
+
+                        // widget.activeChange(!widget.active);
+
+                        // extendedWarranty = gg;
+                        // widget.changeExtendedWarranty(gg);
+                        // onChangeExtWarranty = gg;
+                        setState(() {});
+                      }),
+                ),
+              ),
+
+            ],
           ),
           SizedBox(
             height: 10,

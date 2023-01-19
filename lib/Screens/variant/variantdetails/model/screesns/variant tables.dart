@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
 import 'package:inventory/Screens/variant/variantdetails/screens.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
@@ -45,7 +46,8 @@ class ProductTableState extends State<ProductTable> {
     print(key);
 
     onChange=true;
-    if(name!="" ){
+    name=(name.replaceAll(' ', ''));
+    if(name.isNotEmpty==true ){
       setState(() {
         onSaveActive=true;
       });
@@ -324,7 +326,9 @@ class ProductTableState extends State<ProductTable> {
                           onChange = true;
 
                           setState(() {
-                            if (name.text.isNotEmpty == true) {
+                            var empatySpace=name.text;
+                            empatySpace=(empatySpace.replaceAll(' ', ''));
+                            if (empatySpace.isNotEmpty == true) {
                               Map map = {
                                 "name": name.text,
                               };
@@ -393,7 +397,9 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
     print(key);
     print(val);
     onChange=true;
-    if(key!="" && val!=""){
+    key=(key.replaceAll(' ', ''));
+    val=(val.replaceAll(' ', ''));
+    if(key.isNotEmpty==true && val.isNotEmpty==true){
       setState(() {
         onSaveActive=true;
       });
@@ -755,7 +761,12 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                           label: "Save",
                           onPress: () {
                             onChange = true;
-                            if (key.text.isNotEmpty && value.text.isNotEmpty) {
+                            var keyText=key.text;
+                            keyText=(keyText.replaceAll(' ', ''));
+                            
+                            var valueText=value.text;
+                            valueText=(valueText.replaceAll(' ', ''));
+                            if (keyText.isNotEmpty && valueText.isNotEmpty) {
                               Keys model = Keys(
                                 key: key.text ?? "",
                                 value: value.text ?? '',
@@ -827,7 +838,9 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
     print(key);
     print(val);
     onChange=true;
-    if(key!="" && val!=""){
+    key=(key.replaceAll(' ', ''));
+    val=(val.replaceAll(' ', ''));
+    if(key.isNotEmpty==true && val.isNotEmpty==true){
       setState(() {
         onSaveActive=true;
       });
@@ -1187,7 +1200,12 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                           label: "Save",
                           onPress: () {
                             onChange = true;
-                            if (key.text.isNotEmpty && value.text.isNotEmpty) {
+                            var keyText=key.text;
+                            keyText=(keyText.replaceAll(' ', ''));
+
+                            var valueText=value.text;
+                            valueText=(valueText.replaceAll(' ', ''));
+                            if (keyText.isNotEmpty && valueText.isNotEmpty) {
                               Keys model = Keys(
                                 key: key.text ?? "",
                                 value: value.text ?? '',
@@ -1259,7 +1277,9 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
     print(key);
     print(val);
     onChange=true;
-    if(key!="" && val!=""){
+    key=(key.replaceAll(' ', ''));
+    val=(val.replaceAll(' ', ''));
+    if(key.isNotEmpty==true && val.isNotEmpty==true){
       setState(() {
         onSaveActive=true;
       });
@@ -1619,7 +1639,12 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
                           label: "Save",
                           onPress: () {
                             onChange = true;
-                            if (key.text.isNotEmpty && value.text.isNotEmpty) {
+                            var keyText=key.text;
+                            keyText=(keyText.replaceAll(' ', ''));
+
+                            var valueText=value.text;
+                            valueText=(valueText.replaceAll(' ', ''));
+                            if (keyText.isNotEmpty && valueText.isNotEmpty) {
                               Keys model = Keys(
                                 key: key.text ?? "",
                                 value: value.text ?? '',
@@ -1689,7 +1714,9 @@ class NeutrialFactsState extends State<NeutrialFacts> {
     print(key);
     print(val);
     onChange=true;
-    if(key!="" && val!=""){
+    key=(key.replaceAll(' ', ''));
+    val=(val.replaceAll(' ', ''));
+    if(key.isNotEmpty==true && val.isNotEmpty==true){
       setState(() {
         onSaveActive=true;
       });
@@ -2049,7 +2076,12 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                           label: "Save",
                           onPress: () {
                             onChange = true;
-                            if (key.text.isNotEmpty && value.text.isNotEmpty) {
+                            var keyText=key.text;
+                            keyText=(keyText.replaceAll(' ', ''));
+
+                            var valueText=value.text;
+                            valueText=(valueText.replaceAll(' ', ''));
+                            if (keyText.isNotEmpty && valueText.isNotEmpty) {
                               Keys model = Keys(
                                 key: key.text ?? "",
                                 value: value.text ?? '',
@@ -2121,7 +2153,8 @@ class IngrediansState extends State<Ingredians> {
     print(key);
 
     onChange=true;
-    if(name!="" ){
+    name=(name.replaceAll(' ', ''));
+    if(name.isNotEmpty==true ){
       setState(() {
         onSaveActive=true;
       });
@@ -2399,9 +2432,11 @@ class IngrediansState extends State<Ingredians> {
                         bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
                         onPress: () {
                           onChange = true;
+                          var empatySpace=name.text;
+                          empatySpace=(empatySpace.replaceAll(' ', ''));
 
                           setState(() {
-                            if (name.text.isNotEmpty == true) {
+                            if (empatySpace.isNotEmpty == true) {
                               Map map = {
                                 "name": name.text,
                               };
@@ -2471,7 +2506,8 @@ class _UsageDirectionState extends State<UsageDirection> {
     print(key);
 
     onChange=true;
-    if(name!="" ){
+    name=(name.replaceAll(' ', ''));
+    if(name.isNotEmpty==true ){
       setState(() {
         onSaveActive=true;
       });
@@ -2747,9 +2783,11 @@ class _UsageDirectionState extends State<UsageDirection> {
                         bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
                         onPress: () {
                           onChange = true;
+                          var empatySpace=name.text;
+                          empatySpace=(empatySpace.replaceAll(' ', ''));
 
                           setState(() {
-                            if (name.text.isNotEmpty == true) {
+                            if (empatySpace.isNotEmpty == true) {
                               Map map = {
                                 "name": name.text,
                               };
@@ -2818,7 +2856,8 @@ class _StoragesWidgetState extends State<StoragesWidget> {
     print(key);
 
     onChange=true;
-    if(name!="" ){
+    name=(name.replaceAll(' ', ''));
+    if(name.isNotEmpty==true ){
       setState(() {
         onSaveActive=true;
       });
@@ -3095,7 +3134,11 @@ class _StoragesWidgetState extends State<StoragesWidget> {
                         onPress: () {
                           onChange = true;
                           setState(() {
-                            if (name.text.isNotEmpty == true) {
+                            var empatySpace=name.text;
+                            empatySpace=(empatySpace.replaceAll(' ', ''));
+
+
+                            if (empatySpace.isNotEmpty == true) {
                               Map map = {
                                 "name": name.text,
                               };
@@ -3163,7 +3206,9 @@ class _ImportantInfoState extends State<ImportantInfo> {
     print(key);
     print(val);
     onChange=true;
-    if(key!="" && val!=""){
+    key=(key.replaceAll(' ', ''));
+    val=(val.replaceAll(' ', ''));
+    if(key.isNotEmpty==true && val.isNotEmpty==true){
       setState(() {
         onSaveActive=true;
       });
@@ -3175,6 +3220,7 @@ class _ImportantInfoState extends State<ImportantInfo> {
 
     }
   }
+
   ProductFeatures? productDetails;
   List<Keys> keys = [];
   @override
@@ -3523,7 +3569,12 @@ class _ImportantInfoState extends State<ImportantInfo> {
                           label: "Save",
                           onPress: () {
                             onChange = true;
-                            if (key.text.isNotEmpty && value.text.isNotEmpty) {
+                            var keyText=key.text;
+                            keyText=(keyText.replaceAll(' ', ''));
+
+                            var valueText=value.text;
+                            valueText=(valueText.replaceAll(' ', ''));
+                            if (keyText.isNotEmpty && valueText.isNotEmpty) {
                               Keys model = Keys(
                                 key: key.text ?? "",
                                 value: value.text ?? '',
@@ -3632,83 +3683,365 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
     return Container(
       width: w / 2.5,
       margin: EdgeInsets.symmetric(horizontal: w * .02),
-      child: customTable(
-        border: const TableBorder(
-          verticalInside: BorderSide(
-              width: .5, color: Colors.black45, style: BorderStyle.solid),
-          horizontalInside: BorderSide(
-              width: .3,
-              color: Colors.black45,
-              // color: Colors.blue,
-              style: BorderStyle.solid),
-        ),
-        tableWidth: .5,
-        childrens: [
-          TableRow(
-            // decoration: BoxDecoration(
-
-            //     color: Colors.green.shade200,
-
-            //     shape: BoxShape.rectangle,
-
-            //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              tableHeadtext(
-                'Gender Group',
 
-                padding: EdgeInsets.all(7),
-
-                height: 41,
-                textColor: Colors.white,
-                // color: Color(0xffE5E5E5),
-
-                size: 13,
-              ),
-              tableHeadtext(
-                'Age Group',
-                textColor: Colors.white,
-                padding: EdgeInsets.all(7),
-                height: 41,
-                size: 13,
-                // color: Color(0xffE5E5E5),
-              ),
-              tableHeadtext(
-                'Ethinik',
-                textColor: Colors.white,
-                padding: EdgeInsets.all(7),
-                height: 41,
-                size: 13,
-                // color: Color(0xffE5E5E5),
-              ),
-              tableHeadtext(
-                'Countries',
-                // textColor: Colors.white,
-                padding: EdgeInsets.all(7),
-                height: 41,
-                size: 13,
-                // color: Color(0xffE5E5E5),
-              ),
-              tableHeadtext(
-                'Purpose',
-                textColor: Colors.white,
-                padding: EdgeInsets.all(7),
-                height: 41,
-                size: 13,
-                // color: Color(0xffE5E5E5),
-              ),
-              tableHeadtext(
-                '',
-                textColor: Colors.white,
-                padding: EdgeInsets.all(7),
-                height: 41,
-                size: 13,
-                // color: Color(0xffE5E5E5),
-              ),
+              TextWidget(text: "Product Behaviour",marginCheck: true,),
             ],
           ),
-          if (inforMationList?.isNotEmpty == true) ...[
-            for (var i = 0; i < inforMationList!.length; i++)
+          SizedBox(height: MediaQuery.of(context).size.height*.01,),
+          customTable(
+            border: const TableBorder(
+              verticalInside: BorderSide(
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
+              horizontalInside: BorderSide(
+                  width: .3,
+                  color: Colors.black45,
+                  // color: Colors.blue,
+                  style: BorderStyle.solid),
+            ),
+            tableWidth: .5,
+            childrens: [
+              TableRow(
+                // decoration: BoxDecoration(
+
+                //     color: Colors.green.shade200,
+
+                //     shape: BoxShape.rectangle,
+
+                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                children: [
+                  tableHeadtext(
+                    'Gender Group',
+
+                    padding: EdgeInsets.all(7),
+
+                    height: 41,
+                    textColor: Colors.white,
+                    // color: Color(0xffE5E5E5),
+
+                    size: 13,
+                  ),
+                  tableHeadtext(
+                    'Age Group',
+                    textColor: Colors.white,
+                    padding: EdgeInsets.all(7),
+                    height: 41,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
+                  tableHeadtext(
+                    'Ethinik',
+                    textColor: Colors.white,
+                    padding: EdgeInsets.all(7),
+                    height: 41,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
+                  tableHeadtext(
+                    'Countries',
+                    // textColor: Colors.white,
+                    padding: EdgeInsets.all(7),
+                    height: 41,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
+                  tableHeadtext(
+                    'Purpose',
+                    textColor: Colors.white,
+                    padding: EdgeInsets.all(7),
+                    height: 41,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
+                  tableHeadtext(
+                    '',
+                    textColor: Colors.white,
+                    padding: EdgeInsets.all(7),
+                    height: 41,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
+                ],
+              ),
+              if (inforMationList?.isNotEmpty == true) ...[
+                for (var i = 0; i < inforMationList!.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Pellet.tableRowColor,
+                          shape: BoxShape.rectangle,
+                          border:  Border(
+                              left: BorderSide(
+
+                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                  width: .4,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+
+                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                  width: .4,
+
+                                  style: BorderStyle.solid))),
+                      children: [
+                        upDate[i]?  TableCell(
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+                            child:CustomDropDown(
+                                clr: upDate[i]?Colors.white:Colors.transparent,
+
+                                choosenValue: inforMationList?[i].genderGroup ?? "",
+                                onChange: (val) {
+                                  onChange=true;
+
+                                  setState(() {
+                                    upDateButton[i]=true;
+                                  });
+
+                                  inforMationList?[i]=inforMationList[i].copyWith(genderGroup: val);
+                                  print(inforMationList);
+                                  widget.productFeaturesableAssign(
+                                      list: inforMationList);
+                                },
+                                items: items)
+                        ):  textPadding(inforMationList?[i].genderGroup ?? "",),
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: UnderLinedInput(
+                            readOnly: !upDate[i],
+                            filledColour: upDate[i]?Colors.white:Colors.transparent,
+                            controller: ageListTextEditingController[i],
+
+                            onChanged: (val) {
+                              onChange=true;
+
+                              setState(() {
+                                upDateButton[i]=true;
+                              });
+
+                              inforMationList?[i]=inforMationList[i].copyWith(ageGroup: val);
+                              print(inforMationList);
+                              widget.productFeaturesableAssign(
+                                  list: inforMationList);
+                            },
+                          ),
+                        ),
+                        upDate[i]? TableCell(
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+                            child:CustomDropDown(
+                                clr: upDate[i]?Colors.white:Colors.transparent,
+                                choosenValue:inforMationList[i].ethinik,
+                                onChange: (val) {
+                                  onChange=true;
+                                  setState(() {
+                                    onChange=true;
+
+                                    upDateButton[i]=true;
+
+
+
+
+                                    inforMationList?[i]=inforMationList[i].copyWith(ethinik: val);
+                                    print(inforMationList);
+                                    widget.productFeaturesableAssign(
+                                        list: inforMationList);
+                                  });
+                                },
+                                items: ethinikItem)
+
+
+                          // UnderLinedInput(
+                          //   formatter: false,
+                          //   initialCheck: true,
+                          //   last: inforMationList[i].ethinik,
+                          //   onChanged: (val) {
+                          //     onChange=true;
+                          //
+                          //     inforMationList?[i]=inforMationList[i].copyWith(ethinik: val);
+                          //     print(inforMationList);
+                          //     widget.productFeaturesableAssign(
+                          //         list: inforMationList);
+                          //   },
+                          // ),
+                        ):textPadding(inforMationList?[i].ethinik ?? "",),
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child:
+                          upDate[i]?        Container(
+                            height: 50,
+                            color:upDate[i]?Colors.white:Colors.transparent,
+                            child: PopUpCall(
+
+
+                              type: "ProducedCountryPopUpCall",
+
+                              value: inforMationList[i].countries ?? "",
+                              onchange: (vale) {
+                                // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                              },
+                              enable: true,
+                              onSelection: (VariantReadModel? va) {
+
+                                print(va);
+                                onChange=true;
+
+                                setState(() {
+                                  upDateButton[i]=true;
+                                });
+
+                                inforMationList?[i]=inforMationList[i].copyWith(countries: va?.name??"");
+                                print(inforMationList);
+                                widget.productFeaturesableAssign(
+                                    list: inforMationList);
+                              },
+                            ),
+                          ):textPadding(inforMationList?[i].countries ?? "",),
+                          // Container(
+                          //   height: 48,
+                          //   color:upDate[i]?Colors.white:Colors.transparent,
+                          //
+                          //   // width: 100,
+                          //   child:upDate[i]? DropdownSearch<String>(
+                          //
+                          //     dropdownSearchDecoration: InputDecoration(
+                          //
+                          //       border: InputBorder.none,
+                          //     ),
+                          //
+                          //     // mode of dropdown
+                          //     mode: Mode.DIALOG,
+                          //     //to show search box
+                          //     showSearchBox: true,
+                          //     showSelectedItem: true,
+                          //
+                          //     //list of dropdown items
+                          //     items: [
+                          //       "India",
+                          //       "USA",
+                          //       "Brazil",
+                          //       "Canada",
+                          //       "Australia",
+                          //       "Singapore"
+                          //     ],
+                          //     // label: "Country",
+                          //     onChanged: (String? va) {
+                          //       print(va);
+                          //       onChange=true;
+                          //
+                          //       setState(() {
+                          //         upDateButton[i]=true;
+                          //       });
+                          //
+                          //       inforMationList?[i]=inforMationList[i].copyWith(countries: va);
+                          //       print(inforMationList);
+                          //       widget.productFeaturesableAssign(
+                          //           list: inforMationList);
+                          //     },
+                          //     //show selected item
+                          //     selectedItem: inforMationList[i].countries ?? "",
+                          //   ):  textPadding(inforMationList?[i].countries ?? "",height: 48),
+                          // ),
+                        ),
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: UnderLinedInput(
+                            formatter: false,
+                            readOnly: !upDate[i],
+                            filledColour: upDate[i]?Colors.white:Colors.transparent,
+                            controller: purposeListTextEditingController[i],
+
+                            onChanged: (val) {
+                              onChange=true;
+
+                              setState(() {
+                                upDateButton[i]=true;
+                              });
+
+                              inforMationList?[i]=inforMationList[i].copyWith(purpose: val);
+                              print(inforMationList);
+                              widget.productFeaturesableAssign(
+                                  list: inforMationList);
+                            },
+                          ),
+                        ),
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child: Row(
+                            children: [                TableTextButton(
+                              buttonBagroundColor: upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
+                              textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
+                              bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
+                              label: upDateButton[i]==true?"Update":"Edit",
+
+                              // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
+
+                              onPress: () {
+                                onChange=true;
+
+
+                                setState(() {
+                                  upDate[i]=!upDate[i];
+
+                                  if( upDateButton[i]==true){
+                                    widget.productFeaturesableAssign(
+                                        list: inforMationList);
+                                    upDateButton[i]=false;
+
+
+
+
+
+                                  }
+
+
+                                });
+                                setState(() {
+
+                                });
+
+                              },
+                            ),
+                              SizedBox(width: 3,),
+                              TableIconTextButton(
+                                label: "",
+                                icon: Icons.delete,
+                                onPress: () {
+                                  onChange=true;
+
+
+
+                                  inforMationList?.removeWhere(
+                                          (element) =>
+                                      element ==
+                                          inforMationList?[
+                                          i]);
+                                  upDate.removeAt(i);
+                                  upDateButton.removeAt(i);
+                                  purposeListTextEditingController.removeAt(i);
+                                  ageListTextEditingController.removeAt(i);
+                                  widget.productFeaturesableAssign(
+                                      list: inforMationList);
+                                  // inforMationList?.add(InformationClass(
+                                  //   gender: choosenValue,
+                                  //   age: ageGroupController.text,
+                                  //    ,
+                                  //   countries:countryController.text,
+                                  //   purpose: purposeController.text,
+                                  //
+                                  // ));
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
+              ],
               TableRow(
                   decoration: BoxDecoration(
                       color: Pellet.tableRowColor,
@@ -3729,416 +4062,144 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
 
                               style: BorderStyle.solid))),
                   children: [
-                    upDate[i]?  TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child:CustomDropDown(
-                            clr: upDate[i]?Colors.white:Colors.transparent,
-
-                            choosenValue: inforMationList?[i].genderGroup ?? "",
-                            onChange: (val) {
-                              onChange=true;
-
-                              setState(() {
-                                upDateButton[i]=true;
-                              });
-
-                              inforMationList?[i]=inforMationList[i].copyWith(genderGroup: val);
-                              print(inforMationList);
-                              widget.productFeaturesableAssign(
-                                  list: inforMationList);
-                            },
-                            items: items)
-                    ):  TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: textPadding(inforMationList?[i].genderGroup ?? "",height: 48)),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: CustomDropDown(
+                          choosenValue: choosenValue,
+                          onChange: (val) {
+                            choosenValue = val;
+                          },
+                          items: items),
+                    ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
-                        readOnly: !upDate[i],
-                        filledColour: upDate[i]?Colors.white:Colors.transparent,
-                        controller: ageListTextEditingController[i],
 
-                        onChanged: (val) {
-                          onChange=true;
-
-                          setState(() {
-                            upDateButton[i]=true;
-                          });
-
-                          inforMationList?[i]=inforMationList[i].copyWith(ageGroup: val);
-                          print(inforMationList);
-                          widget.productFeaturesableAssign(
-                              list: inforMationList);
-                        },
+                        controller: ageGroupController,
                       ),
                     ),
-                    upDate[i]? TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-                        child:CustomDropDown(
-                            clr: upDate[i]?Colors.white:Colors.transparent,
-                            choosenValue:inforMationList[i].ethinik,
-                            onChange: (val) {
-                              onChange=true;
-                              setState(() {
-                                onChange=true;
-
-                                upDateButton[i]=true;
-
-
-
-
-                                inforMationList?[i]=inforMationList[i].copyWith(ethinik: val);
-                                print(inforMationList);
-                                widget.productFeaturesableAssign(
-                                    list: inforMationList);
-                              });
-                            },
-                            items: ethinikItem)
-
-
-                      // UnderLinedInput(
-                      //   formatter: false,
-                      //   initialCheck: true,
-                      //   last: inforMationList[i].ethinik,
-                      //   onChanged: (val) {
-                      //     onChange=true;
-                      //
-                      //     inforMationList?[i]=inforMationList[i].copyWith(ethinik: val);
-                      //     print(inforMationList);
-                      //     widget.productFeaturesableAssign(
-                      //         list: inforMationList);
-                      //   },
-                      // ),
-                    ):textPadding(inforMationList?[i].ethinik ?? "",height: 48),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child:
-                      upDate[i]?        Container(
-                        height: 50,
-                        color:upDate[i]?Colors.white:Colors.transparent,
-                        child: PopUpCall(
-
-
-                          type: "ProducedCountryPopUpCall",
-
-                          value: inforMationList[i].countries ?? "",
-                          onchange: (vale) {
-                            // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                      child: CustomDropDown(
+                          choosenValue: ethlinkController.text,
+                          onChange: (val) {
+                            ethlinkController.text = val;
                           },
-                          enable: true,
-                          onSelection: (VariantReadModel? va) {
-
-                            print(va);
-                            onChange=true;
-
-                            setState(() {
-                              upDateButton[i]=true;
-                            });
-
-                            inforMationList?[i]=inforMationList[i].copyWith(countries: va?.name??"");
-                            print(inforMationList);
-                            widget.productFeaturesableAssign(
-                                list: inforMationList);
-                          },
-                        ),
-                      ):textPadding(inforMationList?[i].countries ?? "",height: 48),
-                      // Container(
-                      //   height: 48,
-                      //   color:upDate[i]?Colors.white:Colors.transparent,
-                      //
-                      //   // width: 100,
-                      //   child:upDate[i]? DropdownSearch<String>(
-                      //
-                      //     dropdownSearchDecoration: InputDecoration(
-                      //
-                      //       border: InputBorder.none,
-                      //     ),
-                      //
-                      //     // mode of dropdown
-                      //     mode: Mode.DIALOG,
-                      //     //to show search box
-                      //     showSearchBox: true,
-                      //     showSelectedItem: true,
-                      //
-                      //     //list of dropdown items
-                      //     items: [
-                      //       "India",
-                      //       "USA",
-                      //       "Brazil",
-                      //       "Canada",
-                      //       "Australia",
-                      //       "Singapore"
-                      //     ],
-                      //     // label: "Country",
-                      //     onChanged: (String? va) {
-                      //       print(va);
-                      //       onChange=true;
-                      //
-                      //       setState(() {
-                      //         upDateButton[i]=true;
-                      //       });
-                      //
-                      //       inforMationList?[i]=inforMationList[i].copyWith(countries: va);
-                      //       print(inforMationList);
-                      //       widget.productFeaturesableAssign(
-                      //           list: inforMationList);
-                      //     },
-                      //     //show selected item
-                      //     selectedItem: inforMationList[i].countries ?? "",
-                      //   ):  textPadding(inforMationList?[i].countries ?? "",height: 48),
-                      // ),
+                          items: ethinikItem),
                     ),
+                    /* TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+
+                      child:  UnderLinedInput(
+                        formatter: false,
+                        controller: ethlinkController,
+
+                      ),
+
+
+                    ),*/
+
+
+                    PopUpCall(
+
+
+                      type: "ProducedCountryPopUpCall",
+
+                      value: countryController.text,
+                      onchange: (vale) {
+                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                      },
+                      enable: true,
+                      onSelection: (VariantReadModel? va) {
+                        onChange=true;
+                        setState(() {
+                          countryController?.text = va?.name ?? "";
+
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                    // TableCell(
+                    //   verticalAlignment: TableCellVerticalAlignment.middle,
+                    //   child: Container(
+                    //     // width: 100,
+                    //     child:
+                    //     DropdownSearch<String>(
+                    //       dropdownSearchDecoration: InputDecoration(
+                    //         border: InputBorder.none,
+                    //       ),
+                    //
+                    //       // mode of dropdown
+                    //       mode: Mode.DIALOG,
+                    //       //to show search box
+                    //       showSearchBox: true,
+                    //       showSelectedItem: true,
+                    //
+                    //       //list of dropdown items
+                    //       items: [
+                    //         "India",
+                    //         "USA",
+                    //         "Brazil",
+                    //         "Canada",
+                    //         "Australia",
+                    //         "Singapore"
+                    //       ],
+                    //       // label: "Country",
+                    //       onChanged: (String? va) {
+                    //         onChange = true;
+                    //         setState(() {
+                    //           countryController?.text = va ?? "";
+                    //           print("weldone ");
+                    //           print(
+                    //               " countryController?.text${countryController?.text}");
+                    //         });
+                    //       },
+                    //       //show selected item
+                    //       // selectedItem: "India",
+                    //     ),
+                    //   ),
+                    // ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
                         formatter: false,
-                        readOnly: !upDate[i],
-                        filledColour: upDate[i]?Colors.white:Colors.transparent,
-                        controller: purposeListTextEditingController[i],
-
-                        onChanged: (val) {
-                          onChange=true;
-
-                          setState(() {
-                            upDateButton[i]=true;
-                          });
-
-                          inforMationList?[i]=inforMationList[i].copyWith(purpose: val);
-                          print(inforMationList);
-                          widget.productFeaturesableAssign(
-                              list: inforMationList);
-                        },
+                        controller: purposeController,
                       ),
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Row(
-                        children: [                TableTextButton(
-                          buttonBagroundColor: upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
-                          textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
-                          bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
-                          label: upDateButton[i]==true?"Update":"Edit",
+                      child: TableTextButton(
+                        label: "Save",
+                        onPress: () {
+                          setState(() {
+                            upDate.add(false);
+                            upDateButton.add(false);
+                            var ageValue = new TextEditingController(text: ageGroupController.text);
+                            var purposeValue = new TextEditingController(text: purposeController.text);
 
-                          // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
+                            ageListTextEditingController.add(ageValue);
+                            purposeListTextEditingController.add(purposeValue);
 
-                          onPress: () {
-                            onChange=true;
+                            inforMationList?.add(productBehaviour(
+                              genderGroup: choosenValue,
+                              ageGroup: ageGroupController.text ?? '',
+                              ethinik: ethlinkController.text,
+                              countries: countryController.text,
+                              purpose: purposeController.text,
+                            ));
+                            print("the list is" + inforMationList.toString());
+                            widget.productFeaturesableAssign(list: inforMationList);
 
-
-                            setState(() {
-                              upDate[i]=!upDate[i];
-
-                              if( upDateButton[i]==true){
-                                widget.productFeaturesableAssign(
-                                    list: inforMationList);
-                                upDateButton[i]=false;
-
-
-
-
-
-                              }
-
-
-                            });
-                            setState(() {
-
-                            });
-
-                          },
-                        ),
-                          SizedBox(width: 3,),
-                          TableIconTextButton(
-                            label: "",
-                            icon: Icons.delete,
-                            onPress: () {
-                              onChange=true;
-
-
-
-                              inforMationList?.removeWhere(
-                                      (element) =>
-                                  element ==
-                                      inforMationList?[
-                                      i]);
-                              upDate.removeAt(i);
-                              upDateButton.removeAt(i);
-                              purposeListTextEditingController.removeAt(i);
-                              ageListTextEditingController.removeAt(i);
-                              widget.productFeaturesableAssign(
-                                  list: inforMationList);
-                              // inforMationList?.add(InformationClass(
-                              //   gender: choosenValue,
-                              //   age: ageGroupController.text,
-                              //    ,
-                              //   countries:countryController.text,
-                              //   purpose: purposeController.text,
-                              //
-                              // ));
-                              setState(() {});
-                            },
-                          ),
-                        ],
+                          });
+                        },
                       ),
                     ),
                   ]),
-          ],
-          TableRow(
-              decoration: BoxDecoration(
-                  color: Pellet.tableRowColor,
-                  shape: BoxShape.rectangle,
-                  border:  Border(
-                      left: BorderSide(
-
-                          color: Color(0xff3E4F5B).withOpacity(.1),
-                          width: .4,
-                          style: BorderStyle.solid),
-                      bottom: BorderSide(
-
-                          color:   Color(0xff3E4F5B).withOpacity(.1),
-                          style: BorderStyle.solid),
-                      right: BorderSide(
-                          color:   Color(0xff3E4F5B).withOpacity(.1),
-                          width: .4,
-
-                          style: BorderStyle.solid))),
-              children: [
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: CustomDropDown(
-                      choosenValue: choosenValue,
-                      onChange: (val) {
-                        choosenValue = val;
-                      },
-                      items: items),
-                ),
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: UnderLinedInput(
-
-                    controller: ageGroupController,
-                  ),
-                ),
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: CustomDropDown(
-                      choosenValue: ethlinkController.text,
-                      onChange: (val) {
-                        ethlinkController.text = val;
-                      },
-                      items: ethinikItem),
-                ),
-                /* TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child:  UnderLinedInput(
-                    formatter: false,
-                    controller: ethlinkController,
-
-                  ),
-
-
-                ),*/
-
-
-                PopUpCall(
-
-
-                  type: "ProducedCountryPopUpCall",
-
-                  value: countryController.text,
-                  onchange: (vale) {
-                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                  },
-                  enable: true,
-                  onSelection: (VariantReadModel? va) {
-                    onChange=true;
-                    setState(() {
-                      countryController?.text = va?.name ?? "";
-
-                      setState(() {});
-
-                      // onChange = true;
-                      // orderType.text = va!;
-                    });
-                  },
-                ),
-                // TableCell(
-                //   verticalAlignment: TableCellVerticalAlignment.middle,
-                //   child: Container(
-                //     // width: 100,
-                //     child:
-                //     DropdownSearch<String>(
-                //       dropdownSearchDecoration: InputDecoration(
-                //         border: InputBorder.none,
-                //       ),
-                //
-                //       // mode of dropdown
-                //       mode: Mode.DIALOG,
-                //       //to show search box
-                //       showSearchBox: true,
-                //       showSelectedItem: true,
-                //
-                //       //list of dropdown items
-                //       items: [
-                //         "India",
-                //         "USA",
-                //         "Brazil",
-                //         "Canada",
-                //         "Australia",
-                //         "Singapore"
-                //       ],
-                //       // label: "Country",
-                //       onChanged: (String? va) {
-                //         onChange = true;
-                //         setState(() {
-                //           countryController?.text = va ?? "";
-                //           print("weldone ");
-                //           print(
-                //               " countryController?.text${countryController?.text}");
-                //         });
-                //       },
-                //       //show selected item
-                //       // selectedItem: "India",
-                //     ),
-                //   ),
-                // ),
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: UnderLinedInput(
-                    formatter: false,
-                    controller: purposeController,
-                  ),
-                ),
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: TableTextButton(
-                    label: "Save",
-                    onPress: () {
-                      setState(() {
-                        upDate.add(false);
-                        upDateButton.add(false);
-                        var ageValue = new TextEditingController(text: ageGroupController.text);
-                        var purposeValue = new TextEditingController(text: purposeController.text);
-
-                        ageListTextEditingController.add(ageValue);
-                        purposeListTextEditingController.add(purposeValue);
-
-                        inforMationList?.add(productBehaviour(
-                          genderGroup: choosenValue,
-                          ageGroup: ageGroupController.text ?? '',
-                          ethinik: ethlinkController.text,
-                          countries: countryController.text,
-                          purpose: purposeController.text,
-                        ));
-                        print("the list is" + inforMationList.toString());
-                        widget.productFeaturesableAssign(list: inforMationList);
-
-                      });
-                    },
-                  ),
-                ),
-              ]),
+            ],
+          ),
         ],
       ),
     );

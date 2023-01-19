@@ -12,6 +12,7 @@ import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoicere
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -54,6 +55,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
   TextEditingController sellingPriceController=TextEditingController();
   TextEditingController totalPriceController=TextEditingController();
   TextEditingController inventoryId=TextEditingController();
+  String salesReturnOrderCode="";
   List<SalesReturnLinesOrderLines> table = [];
   bool updateCheck=false;
   tableAssign(List<SalesReturnLinesOrderLines> table1 ) {
@@ -160,6 +162,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
             //     ? table =  data.invoicedData?.lines ?? []
             //     : table = [];
             inventoryId.text=data.invoicedData?.inventoryId??"";
+            salesReturnOrderCode=data.invoicedData?.salesReturnOrderCode??"";
             invoiceCodeController.text=data.invoicedData?.salesReturnInvoiceCode??"";
             invoicedDateController.text=data.invoicedData?.createdDate??"";
             paymentIdController.text=data.invoicedData?.paymentCode??"";
@@ -199,6 +202,10 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
             //     : table = [];
             paymentIdController.text=data.paymentId??"";
             inventoryId.text=data.inventoryId??"";
+            salesReturnOrderCode=data.salesReturnOrderCode??"";
+            invoicedDateController.text=data.returnedDate??"";
+
+            // remarksController.text=data.rema??"";
 
 
             inventoryId.text=data.inventoryId??"";
@@ -240,7 +247,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
         print("postssssssss" + state.toString());
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loadingggg");
+          context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -427,35 +434,97 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                 ),
                                 SizedBox(height: 20,),
                                 SaveUpdateResponsiveButton(
+                                  isDelete:true ,
+
+
                                   saveFunction: (){
-                                    SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
-                                      inventoryid: inventoryId?.text??"",
-                                      customerId:customerIdController?.text??"",
-                                      customerTrnNumber: trnController.text??"",
-                                      inVoicedBy: "baba",
-                                      notes: noteController.text??"",
-                                      remarks: remarksController.text??"",
-                                      discount: double.tryParse(discountController.text??""),
-                                      unitCost: double.tryParse(unitCostController.text??""),
-                                      excessTax: double.tryParse(exciseTaxController.text??""),
-                                      taxableAmount: double.tryParse(taxableController.text??""),
-                                      vat: double.tryParse(vatController.text??""),
-                                      sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
-                                      totalPrice: double.tryParse(totalPriceController.text??""),
-                                      assignTo: assignToController.text??"",
-                                      orderLines: table??[],
+                  List<SalesReturnLinesOrderLines>? result;
+                  bool confirmationCheck=false;
+                  for(var i=0;i<table.length;i++) {
+                    if (table[i].isInvoiced == false) {
+                      confirmationCheck = true;
+                    }
+                    result =
+                        table.where((o) => o.isInvoiced == true)
+                            .toList();
+                  }
+                  if(confirmationCheck){
+                    showDailogPopUp(
+                        context,
+                        LogoutPopup(
+                          message: "Some of lines are not confirmed. Do you want to continue?",
+                          // table:table,
+                          // // clear:clear(),
+                          // verticalId:veritiaclid ,
+                          onPressed:(){
+                            SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
+                              inventoryid: inventoryId?.text??"",
+                              salesReturnOrderCode: salesReturnOrderCode,
+                              customerId:customerIdController?.text??"",
+                              customerTrnNumber: trnController.text??"",
+                              inVoicedBy: Variable.created_by,
+                              notes: noteController.text??"",
+                              remarks: remarksController.text??"",
+                              discount: double.tryParse(discountController.text??""),
+                              unitCost: double.tryParse(unitCostController.text??""),
+                              excessTax: double.tryParse(exciseTaxController.text??""),
+                              taxableAmount: double.tryParse(taxableController.text??""),
+                              vat: double.tryParse(vatController.text??""),
+                              sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
+                              totalPrice: double.tryParse(totalPriceController.text??""),
+                              assignTo: assignToController.text??"",
+                              orderLines: result??[],
 
 
 
 
 
-                                    );
+                            );
+                            print(model);
 
 
-                                    context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
-                                  },
+                            context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
+                            Navigator.pop(context);
+
+                          },
+
+
+                        ));
+
+                  }
+                  else {
+                    SalesReturnInvoicePostModel2 model = SalesReturnInvoicePostModel2(
+                      inventoryid: inventoryId?.text ?? "",
+                      salesReturnOrderCode: salesReturnOrderCode,
+                      customerId: customerIdController?.text ?? "",
+                      customerTrnNumber: trnController.text ?? "",
+                      inVoicedBy: Variable.created_by,
+                      notes: noteController.text ?? "",
+                      remarks: remarksController.text ?? "",
+                      discount: double.tryParse(discountController.text ?? ""),
+                      unitCost: double.tryParse(unitCostController.text ?? ""),
+                      excessTax: double.tryParse(
+                          exciseTaxController.text ?? ""),
+                      taxableAmount: double.tryParse(
+                          taxableController.text ?? ""),
+                      vat: double.tryParse(vatController.text ?? ""),
+                      sellingPriceTotal: double.tryParse(
+                          sellingPriceController.text ?? ""),
+                      totalPrice: double.tryParse(
+                          totalPriceController.text ?? ""),
+                      assignTo: assignToController.text ?? "",
+                      orderLines: result ?? [],
+
+
+                    );
+                    print(model);
+
+
+                    context.read<SalesreturninvoicepostCubit>()
+                        .postSalesReturnInvoice(model);
+                  } },
                                   discardFunction: (){
-                                    print("Akkk");
+
 
                                   },
                                   label: "SAVE",
@@ -642,12 +711,14 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                           SizedBox(
                             height: height * .030,
                           ),NewInputCard(
+                              readOnly: true,
                               controller: widget.paymentMethod, title: "Payment Method"),
 
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                              readOnly: true,
                               controller: widget.customerId, title: "Customer Id"),
                           SizedBox(
                             height: height * .090,
@@ -697,7 +768,7 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                             height: height * .030,
                           ),
                           NewInputCard(
-                              readOnly: true,
+                              // readOnly: true,
                               maxLines: 3,
                               height: 90,
                               controller: widget.remarks,

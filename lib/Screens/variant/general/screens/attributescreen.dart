@@ -273,8 +273,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
                                               // );
 
                                             }
-                                            print("garray  0" + graphArray[0].toString());
-                                            print("garray   1" + graphArray[1].toString());
+
                                           }
 
 

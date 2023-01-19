@@ -20,9 +20,9 @@ class ShippingadreesCubit extends Cubit<ShippingadreesState> {
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
 
-  Future getSearchCustomList(String filter) async {
+  Future getSearchCustomList(String filter,String? id) async {
     emit(ShippingadreesState.initial());
-    final result = await repo.getShippingId("name=" + filter);
+    final result = await repo.getShippingId("name=" + filter,id: id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

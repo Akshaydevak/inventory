@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'orderedperson_cubit.dart';
+part of 'stockpartitionpost_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,13 +15,13 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$OrderedpersonState {
+mixin _$StockpartitionpostState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PaginatedResponse<dynamic> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +29,7 @@ mixin _$OrderedpersonState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(PaginatedResponse<dynamic> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,7 +37,7 @@ mixin _$OrderedpersonState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PaginatedResponse<dynamic> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,16 +69,17 @@ mixin _$OrderedpersonState {
 }
 
 /// @nodoc
-abstract class $OrderedpersonStateCopyWith<$Res> {
-  factory $OrderedpersonStateCopyWith(
-          OrderedpersonState value, $Res Function(OrderedpersonState) then) =
-      _$OrderedpersonStateCopyWithImpl<$Res, OrderedpersonState>;
+abstract class $StockpartitionpostStateCopyWith<$Res> {
+  factory $StockpartitionpostStateCopyWith(StockpartitionpostState value,
+          $Res Function(StockpartitionpostState) then) =
+      _$StockpartitionpostStateCopyWithImpl<$Res, StockpartitionpostState>;
 }
 
 /// @nodoc
-class _$OrderedpersonStateCopyWithImpl<$Res, $Val extends OrderedpersonState>
-    implements $OrderedpersonStateCopyWith<$Res> {
-  _$OrderedpersonStateCopyWithImpl(this._value, this._then);
+class _$StockpartitionpostStateCopyWithImpl<$Res,
+        $Val extends StockpartitionpostState>
+    implements $StockpartitionpostStateCopyWith<$Res> {
+  _$StockpartitionpostStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +96,7 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$OrderedpersonStateCopyWithImpl<$Res, _$_Initial>
+    extends _$StockpartitionpostStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
@@ -108,7 +109,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'OrderedpersonState.initial()';
+    return 'StockpartitionpostState.initial()';
   }
 
   @override
@@ -126,7 +127,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PaginatedResponse<dynamic> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) {
     return initial();
   }
@@ -137,7 +138,7 @@ class _$_Initial implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(PaginatedResponse<dynamic> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return initial?.call();
   }
@@ -148,7 +149,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PaginatedResponse<dynamic> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -195,7 +196,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements OrderedpersonState {
+abstract class _Initial implements StockpartitionpostState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -208,7 +209,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$OrderedpersonStateCopyWithImpl<$Res, _$_Loading>
+    extends _$StockpartitionpostStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -221,7 +222,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'OrderedpersonState.loading()';
+    return 'StockpartitionpostState.loading()';
   }
 
   @override
@@ -239,7 +240,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PaginatedResponse<dynamic> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) {
     return loading();
   }
@@ -250,7 +251,7 @@ class _$_Loading implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(PaginatedResponse<dynamic> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return loading?.call();
   }
@@ -261,7 +262,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PaginatedResponse<dynamic> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -308,7 +309,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements OrderedpersonState {
+abstract class _Loading implements StockpartitionpostState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -320,7 +321,7 @@ abstract class _$$_Error1CopyWith<$Res> {
 
 /// @nodoc
 class __$$_Error1CopyWithImpl<$Res>
-    extends _$OrderedpersonStateCopyWithImpl<$Res, _$_Error1>
+    extends _$StockpartitionpostStateCopyWithImpl<$Res, _$_Error1>
     implements _$$_Error1CopyWith<$Res> {
   __$$_Error1CopyWithImpl(_$_Error1 _value, $Res Function(_$_Error1) _then)
       : super(_value, _then);
@@ -333,7 +334,7 @@ class _$_Error1 implements _Error1 {
 
   @override
   String toString() {
-    return 'OrderedpersonState.error()';
+    return 'StockpartitionpostState.error()';
   }
 
   @override
@@ -351,7 +352,7 @@ class _$_Error1 implements _Error1 {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PaginatedResponse<dynamic> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) {
     return error();
   }
@@ -362,7 +363,7 @@ class _$_Error1 implements _Error1 {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(PaginatedResponse<dynamic> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return error?.call();
   }
@@ -373,7 +374,7 @@ class _$_Error1 implements _Error1 {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PaginatedResponse<dynamic> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -420,7 +421,7 @@ class _$_Error1 implements _Error1 {
   }
 }
 
-abstract class _Error1 implements OrderedpersonState {
+abstract class _Error1 implements StockpartitionpostState {
   const factory _Error1() = _$_Error1;
 }
 
@@ -430,12 +431,12 @@ abstract class _$$_SuccessCopyWith<$Res> {
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   @useResult
-  $Res call({PaginatedResponse<dynamic> data});
+  $Res call({DoubleResponse<dynamic, dynamic> data});
 }
 
 /// @nodoc
 class __$$_SuccessCopyWithImpl<$Res>
-    extends _$OrderedpersonStateCopyWithImpl<$Res, _$_Success>
+    extends _$StockpartitionpostStateCopyWithImpl<$Res, _$_Success>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
       : super(_value, _then);
@@ -449,7 +450,7 @@ class __$$_SuccessCopyWithImpl<$Res>
       null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as PaginatedResponse<dynamic>,
+              as DoubleResponse<dynamic, dynamic>,
     ));
   }
 }
@@ -460,11 +461,11 @@ class _$_Success implements _Success {
   const _$_Success(this.data);
 
   @override
-  final PaginatedResponse<dynamic> data;
+  final DoubleResponse<dynamic, dynamic> data;
 
   @override
   String toString() {
-    return 'OrderedpersonState.success(data: $data)';
+    return 'StockpartitionpostState.success(data: $data)';
   }
 
   @override
@@ -490,7 +491,7 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PaginatedResponse<dynamic> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) {
     return success(data);
   }
@@ -501,7 +502,7 @@ class _$_Success implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(PaginatedResponse<dynamic> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return success?.call(data);
   }
@@ -512,7 +513,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PaginatedResponse<dynamic> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -559,10 +560,11 @@ class _$_Success implements _Success {
   }
 }
 
-abstract class _Success implements OrderedpersonState {
-  const factory _Success(final PaginatedResponse<dynamic> data) = _$_Success;
+abstract class _Success implements StockpartitionpostState {
+  const factory _Success(final DoubleResponse<dynamic, dynamic> data) =
+      _$_Success;
 
-  PaginatedResponse<dynamic> get data;
+  DoubleResponse<dynamic, dynamic> get data;
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;

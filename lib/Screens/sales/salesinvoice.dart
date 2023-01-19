@@ -67,6 +67,28 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
       addition();
     });
   }
+  final GlobalKey< _SalesInvoiceGrowableTableState> _myWidgetState = GlobalKey< _SalesInvoiceGrowableTableState>();
+  clear(){
+     totalPricePriceController.clear();
+    sellingPriceController.clear();
+    paymentStatusController.clear();
+     invoiceStatusController.clear();
+     unitCostController.clear();
+   paymentIdController.clear();
+     customerIdController.clear();
+    orderStatusController.clear();
+   remarksController.clear();
+  noteController.clear();
+    discountController.clear();
+    paymentMethodController.clear;
+    invoiceDateController.clear();
+     invoiceCodeController.clear();
+     vatController.clear();
+   assignToController.clear();
+     exciseTaxController.clear();
+     taxableController.clear();
+     trnController.clear();
+  }
   addition() {
     print("enterd");
     print("+==" + table.toString());
@@ -81,7 +103,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
     double excessTAxValue = 0;
     if (table.isNotEmpty)
       for (var i = 0; i < table.length; i++) {
-        if (table[i].isActive == true) {
+        if (table[i].isInvoiced == true && table[i].updatecheck == false) {
           var unicost1 = table[i].unitCost ?? 0;
           var vatValue1 = table[i].vat ?? 0;
           var discountValue1 = table[i].discount ?? 0;
@@ -174,13 +196,14 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                   },
                   success: (data) {
                     print("data" + data.toString());
-                    if(data.invoicedData?.lines?.isNotEmpty==true)
+                    if(data.invoicedData!=null)
                     {
                       data.invoicedData?.lines != null
                           ? table =  data.invoicedData?.lines ?? []
                           : table = [];
                       inventoryId.text=data.invoicedData?.inventoryId??"";
                       invoiceCodeController.text=data.invoicedData?.invoiceCode??"";
+                      invoiceDateController.text=data.invoicedData?.createdDate??"";
                       noteController.text=data.invoicedData?.notes??"";
                       remarksController.text=data.invoicedData?.remarks??"";
                       invoiceStatusController.text=data.invoicedData?.invoiceStatus??"";
@@ -203,6 +226,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
 
                       inventoryId.text=data.inventoryId??"";
                       paymentStatusController.text=data.paymentStatus??"";
+
                       customerIdController.text=data.customerId??"";
                       trnController.text=data.trnNumber??"";
                       orderStatusController.text=data.orderStatus??"";
@@ -288,6 +312,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
 
 
                               veritiaclid = result[index].id;
+                              clear();
+                              _myWidgetState.currentState?.table1=[];
                               // currentStock.clear();
                               //
                               context.read<InvoicereadCubit>().getSalesInvoiceRead(veritiaclid!);
@@ -399,6 +425,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                   SalesInvoiceGrowableTable(
                                     table:table,
                                     updateCheck: updateCheckFucction,
+                                    key: _myWidgetState,
                                     // table: table,
                                     // select:select,
                                     updation: tableAssign,
@@ -414,20 +441,23 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                         List<Postlines>  table1=[];
                                         if(table.isNotEmpty){
                                           for(var i=0;i<table.length;i++)
-                                            table1.add(Postlines(
-                                              isInvoiced: table[i].isInvoiced??false,
-                                              quantity: table[i].quantity ,
-                                              isActive: table[i].isInvoiced??false,
-                                              totalPrice: table[i].totalPrice,
-                                              warrentyPrice: table[i].warrentyPrice,
-                                              sellingPrice: table[i].sellingPriceTotal,
-                                              vat: table[i].vat,
-                                              taxableAmoubt: table[i].taxableAmount,
-                                              unitCost: table[i].unitCost,
-                                              excessTax: table[i].excessTax,
-                                              salesOrderLineCode: table[i].salesOrderLineCode,
+                                            if(table[i].isInvoiced==true){
+                                              table1.add(Postlines(
+                                                isInvoiced: table[i].isInvoiced??false,
+                                                quantity: table[i].quantity ,
+                                                isActive: table[i].isInvoiced??false,
+                                                totalPrice: table[i].totalPrice,
+                                                warrentyPrice: table[i].warrentyPrice,
+                                                sellingPrice: table[i].sellingPriceTotal,
+                                                vat: table[i].vat,
+                                                taxableAmoubt: table[i].taxableAmount,
+                                                unitCost: table[i].unitCost,
+                                                excessTax: table[i].excessTax,
+                                                salesOrderLineCode: table[i].salesOrderLineCode,
 
-                                            ));
+                                              ));
+                                            }
+
 
                                         }
                                         else{
@@ -436,7 +466,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                         SalesReturnInvoicePostModel model = SalesReturnInvoicePostModel(
                                             salesOrderId: veritiaclid,
                                             inventoryId: inventoryId?.text??"",
-                                            invoicedBy: "inv",
+                                            invoicedBy: Variable.created_by,
                                             notes: noteController?.text??'',
                                             remarks: remarksController?.text??"",
                                             assignedTo: assignToController?.text??"",
@@ -579,7 +609,7 @@ class SalesInvoiceGrowableTable extends StatefulWidget {
   final Function updation;
   final Function updateCheck;
   // final Function updation;
-  SalesInvoiceGrowableTable({required this.table,required this.updation,required this.updateCheck});
+  SalesInvoiceGrowableTable({required Key key,required this.table,required this.updation,required this.updateCheck});
 
   @override
   _SalesInvoiceGrowableTableState createState() => _SalesInvoiceGrowableTableState();
@@ -588,6 +618,40 @@ class SalesInvoiceGrowableTable extends StatefulWidget {
 class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
   late AutoScrollController recieveController;
   bool editionchek=false;
+  var unitcostListControllers = <TextEditingController>[];
+  valueAddingTextEdingController(){
+    unitcostListControllers.clear();
+
+    if(table1.isNotEmpty){
+      print("checking case");
+      for(var i=0;i<table1.length;i++){
+        // var requsted = new TextEditingController(text: table[i].requestedQty.toString()??"");
+        // requestedListControllers.add(requsted);
+        // print(requestedListControllers.length);
+        // var min = new TextEditingController(text: table[i].minimumQty.toString()??"");
+        // minListControllers.add(min);
+        // print("mazzzzz"+table[i].maximumQty.toString());
+        // var max = new TextEditingController(text: table[i].maximumQty.toString()??"");
+        // print("max"+max.toString());
+        // maxListControllers.add(max);
+        // print("maxlength"+maxListControllers.toString());
+        var unitcost = new TextEditingController(text: table1[i].quantity.toString()??"");
+        unitcostListControllers.add(unitcost);
+        // var excess = new TextEditingController(text: table[i].excessTax.toString()??"");
+        // excesstListControllers.add(excess);
+        // var disc = new TextEditingController(text: table[i].discount.toString()??"");
+        // discounttListControllers.add(disc);
+        // var foc = new TextEditingController(text: table[i].foc.toString()??"");
+        // focListControllers.add(foc);
+        // var vat = new TextEditingController(text: table[i].vat.toString()??"");
+        // vatListControllers.add(vat);
+        setState(() {
+
+        });
+
+      }
+    }
+  }
 
 
   double taxableUpdateMethod(
@@ -597,7 +661,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
       taxableAmounts =double.parse (((((reqQty * unitCst) + exTaxx) - disct)).toStringAsFixed(2));
     } else if (type == "percentage") {
       double total = 0;
-      total = (reqQty * unitCst) + exTaxx;
+      total = double.parse(((reqQty * unitCst) + exTaxx).toStringAsFixed(2));
       taxableAmounts = double.parse((total - ((total * disct) / 100)).toStringAsFixed(2));
     }
     return taxableAmounts;
@@ -647,23 +711,27 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
               },
               success: (data) {
                 print("algorithm" + data.toString());
-                if(data.invoicedData?.lines?.isNotEmpty==true)
+                if(data.invoicedData!=null)
                 {
                   print("algorithm1" + data.toString());
                   print(data?.invoicedData?.lines.toString());
+                  table1 = [];
                   data.invoicedData?.lines != null
                       ? table1 =List.from(  data.invoicedData?.lines ?? [])
                       : table1 = [];
+                  valueAddingTextEdingController();
 
 
                 }
                 else{
+                  table1 = [];
                   print("algorithm2" + data.toString());
                   print(  data.lines.toString());
                   data.lines != null
                       ? table1 = List.from( data.lines ?? [])
                       : table1 = [];
-                  print("algorithm2" + table1[0].quantity.toString());
+                  valueAddingTextEdingController();
+
 
 
 
@@ -961,7 +1029,8 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                                         onSelection:(bool ? value){
                                                           editionchek=true;
-                                                          // widget.updateCheck(true);
+                                                          widget.updateCheck(true);
+                                                          table1[i] = table1[i].copyWith(updatecheck: true);
                                                           bool isinvoiced =table1[i].isInvoiced??false;
                                                           setState(() {
                                                             isinvoiced = !isinvoiced!;
@@ -980,15 +1049,15 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                     verticalAlignment:
                                                     TableCellVerticalAlignment.middle,
                                                     child: UnderLinedInput(
-                                                      initialCheck:true,
-                                                      // controller: requestedListControllers[i],
-                                                      last: table1[0]?.totalQuantity
-                                                          .toString() ??
-                                                          "",
+                                                      // initialCheck:true,
+                                                      controller: unitcostListControllers[i],
+                                                      // last: table1[i]?.totalQuantity
+                                                      //     .toString() ??
+                                                      //     "",
                                                       onChanged: (va) {
                                                         widget.updateCheck(true);
-                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
-                                                        // // table[i] = table[i].copyWith(updateCheck: true);
+                                                        table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        // table[i] = table[i].copyWith(updateCheck: true);
                                                         // setState(() {
                                                         //
                                                         // });
@@ -1070,7 +1139,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                           "",
                                                       onChanged: (va) {
                                                         widget.updateCheck(true);
-                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        table1[i] = table1[i].copyWith(updatecheck: true);
                                                         // table1[i] = table[i].copyWith(updateCheck: true);
                                                         // setState(() {
                                                         //
@@ -1089,7 +1158,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                           setState(() {});
                                                         }
                                                         unitcost = double.tryParse(va);
-                                                        var qty = table1[i].quantity ?? 0;
+                                                        var qty = table1[i].totalQuantity ?? 0;
                                                         var excess =
                                                             table1[i].excessTax ?? 0;
                                                         var disc =
@@ -1145,11 +1214,11 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                       print("+++++++++++++++++++++++");
 
                                                       setState(() {
-                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        table1[i] = table1[i].copyWith(updatecheck: true);
                                                         table1[i] = table1[i]
                                                             .copyWith(discountType: va);
                                                         widget.updateCheck(true);
-                                                        var qty = table1[i].quantity ?? 0;
+                                                        var qty = table1[i].totalQuantity ?? 0;
                                                         var unitcost =
                                                             table1[i].unitCost ?? 0;
                                                         var excess =
@@ -1159,13 +1228,17 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                         var disc =
                                                             table1[i].discount ?? 0;
                                                         var vat = table1[i].vat ?? 0;
+                                                        print(unitcost);
+                                                        print(qty);
                                                         if (unitcost == 0 || qty == 0) {
+                                                          print("0th case");
                                                           table1[i] = table1[i].copyWith(
                                                               taxableAmount: 0,
                                                               sellingPriceTotal: 0,
                                                               totalPrice: 0);
                                                         } else {
                                                           if (qty == 0 || unitcost == 0) {
+                                                            print("0th case222");
                                                             table1[i] =
                                                                 table1[i].copyWith(
                                                                   taxableAmount: 0,
@@ -1174,6 +1247,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                                 );
                                                             setState(() {});
                                                           } else {
+                                                            print("orginal case");
                                                             var taxableAmount =
                                                             taxableUpdateMethod(
                                                                 qty,
@@ -1217,7 +1291,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                           ,
                                                       onChanged: (va) {
                                                         widget.updateCheck(true);
-                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        table1[i] = table1[i].copyWith(updatecheck: true);
                                                         // table[i] = table[i].copyWith(updateCheck: true);
                                                         setState(() {});
                                                         var disc;
@@ -1285,7 +1359,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                           "",
                                                       onChanged: (va) {
                                                         widget.updateCheck(true);
-                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        table1[i] = table1[i].copyWith(updatecheck: true);
                                                         // table[i] = table[i].copyWith(updateCheck: true);
                                                         setState(() {});
                                                         double? excess;
@@ -1414,7 +1488,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                               table1[i].isActive;
                                                           setState(() {
                                                             widget.updateCheck(true);
-                                                            // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                            table1[i] = table1[i].copyWith(updatecheck: true);
                                                             // table1[i] = table1[i].copyWith(updateCheck: true);
                                                             setState(() {});
                                                             isActive = !isActive!;
@@ -1430,10 +1504,11 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                     child: TableTextButton(
                                                       onPress: () {
                                                         widget.updateCheck(false);
+                                                        table1[i]= table1[i].copyWith(updatecheck: false);
                                                         widget.updation(table1);
-                                                        // table1[i].copyWith(updatecheck: false);
+
                                                       },
-                                                      label: "UPDATE",
+                                                      label: table1[i].updatecheck==true?"UPDATE":"",
                                                     ),
                                                   )
 
@@ -1552,32 +1627,38 @@ class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
               children: [
 
                 NewInputCard(
+                  readOnly: true,
                     controller: widget.invoiceCode
                     , title: "Invoice Code"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
+                    readOnly: true,
                     controller: widget.invoiceDate, title: "Invoice Date"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
+                    readOnly: true,
                     controller: widget.paymentId, title: "Payment Id"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
+                    readOnly: true,
                     controller: widget.paymentStatus, title: "Payment Status"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
+                    readOnly: true,
                     controller: widget.paymentMethod, title: "Payment Method"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
+                    readOnly: true,
                     controller: widget.customerId, title: "Customer Id"),
                 SizedBox(
                   height: height * .119,
@@ -1592,27 +1673,32 @@ class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
                 height: height * .015,
               ),
               NewInputCard(
+                  readOnly: true,
                   controller: widget.trn, title: "TRN Number"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
+                  readOnly: true,
                   controller: widget.orderStatus, title: "Order Status"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
+                  readOnly: true,
                   controller: widget.invoiceStatus, title: "Invoice Status"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  controller: widget.assignedto, title: "Assigned To"),
+              // SizedBox(
+              //   height: height * .030,
+              // ),
+              // NewInputCard(
+              //     readOnly: true,
+              //     controller: widget.assignedto, title: "Assigned To"),
               SizedBox(
                 height: height * .030,
               ),
 
               NewInputCard(
+
                 controller: widget.note, title: "Note",
                 height: 90,
                 maxLines: 3,),
@@ -1623,6 +1709,9 @@ class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
                 controller: widget.remarks, title: "Remarks",
                 height: 90,
                 maxLines: 3,),
+              SizedBox(
+                height: height * .15,
+              ),
 
 
 
@@ -1636,37 +1725,44 @@ class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
 
 
               NewInputCard(
+                  readOnly: true,
                   controller: widget.unitCost, title: "Unit Cost"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
+                  readOnly: true,
                   controller: widget.discount, title: "Discount"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  controller: widget.excise, title: "Exccess Tax"),
+                  readOnly: true,
+                  controller: widget.excise, title: "Excess Tax"),
               SizedBox(
                 height: height * .030,
               ),
 
               NewInputCard(
+                  readOnly: true,
                   controller: widget.taxable, title: "Taxable  Amount"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
+                  readOnly: true,
                   controller: widget.vat, title: "VAT"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
+                  readOnly: true,
                   controller: widget.sellingPrice, title: "Selling Price Total"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
+                  readOnly: true,
                   controller: widget.totalPrice, title: "Total Price"),
 
             ],))

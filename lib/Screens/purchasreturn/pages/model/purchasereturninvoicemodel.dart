@@ -52,6 +52,7 @@ class Order with _$Order {
     @JsonKey(name: "is_invoiced",defaultValue: false) final bool? isInvoiced,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
     @JsonKey(name: "is_free",defaultValue: false) final bool? isFree,
+    @JsonKey(name: "updateCheck",defaultValue: false) final bool? updateCheck,
     @JsonKey(name: "created_at") final String? createdAt,
     @JsonKey(name: "supplier_code") final String? suppliercode,
     @JsonKey(name: "purchase_uom") final String? purchaseUom,

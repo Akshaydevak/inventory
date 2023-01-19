@@ -193,6 +193,7 @@ abstract class PurchaseSourceAbstract {
       String? code,
       {String? type});
   Future<DoubleResponse> postVariant(VariantPost model, int? id);
+  Future<DoubleResponse> postStockPartion(String? name,String? descriptio);
   Future<DoubleResponse> patchVariant(VariantPatch model, int? id);
   Future<PaginatedResponse<List<BrandListModel>>> getVariantCreationList(
       String? code);
@@ -361,7 +362,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     String path =
         purchaseReturnPurchaseInvoiceidReadApi + Variable.inventory_ID;
 
-    print(path);
+    print("Gassalllllllllllliiiiiiii"+path.toString());
 
     try {
       final response = await client.get(
@@ -1153,7 +1154,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String? code,{String ? id}) async {
+  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String? code,{String ? id=null}) async {
     print("token" + Variable.token.toString());
 
     UserPreferences().getUser().then((value) {
@@ -1166,7 +1167,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = shippingListUrl+"?customer_id=$id";
     else
-      path = shippingListUrl+"?customer_id=$id && name=$code";
+      path = shippingListUrl+"?customer_id=$id"+"&&"+ code.toString();
     print(path);
 
 try{
@@ -1419,39 +1420,40 @@ catch(e){
     print("invoice" + model.toString());
     print(salesInvoicePostApi);
     List<Postlines> table = [];
-    if (model.ivoiceLines?.isNotEmpty == true)
-      for (var i = 0; i < model.ivoiceLines!.length; i++)
-        table.add(Postlines(
-            unitCost: model.ivoiceLines?[i].unitCost ?? 0,
-            quantity: model.ivoiceLines?[i].quantity ?? 0,
-            warrentyPrice: model.ivoiceLines?[i].warrentyPrice ?? 0,
-            excessTax: model.ivoiceLines?[i].excessTax ?? 0,
-            vat: model.ivoiceLines?[i].vat ?? 0,
-            sellingPrice: model.ivoiceLines?[i].sellingPrice ?? 0,
-            totalPrice: model.ivoiceLines?[i].totalPrice ?? 0,
-            isInvoiced: model.ivoiceLines?[i].isInvoiced ?? false,
-            isActive: model.ivoiceLines?[i].isActive ?? false,
-            salesOrderLineCode: model.ivoiceLines?[i].salesOrderLineCode,
-            taxableAmoubt: model.ivoiceLines?[i].taxableAmoubt ?? 0));
+    // if (model.ivoiceLines?.isNotEmpty == true)
+    //   for (var i = 0; i < model.ivoiceLines!.length; i++)
+    //     table.add(Postlines(
+    //         unitCost: model.ivoiceLines?[i].unitCost ?? 0,
+    //         quantity: model.ivoiceLines?[i].quantity ?? 0,
+    //         warrentyPrice: model.ivoiceLines?[i].warrentyPrice ?? 0,
+    //         excessTax: model.ivoiceLines?[i].excessTax ?? 0,
+    //         vat: model.ivoiceLines?[i].vat ?? 0,
+    //         sellingPrice: model.ivoiceLines?[i].sellingPrice ?? 0,
+    //         totalPrice: model.ivoiceLines?[i].totalPrice ?? 0,
+    //         isInvoiced: model.ivoiceLines?[i].isInvoiced ?? false,
+    //         isActive: model.ivoiceLines?[i].isActive ?? false,
+    //         salesOrderLineCode: model.ivoiceLines?[i].salesOrderLineCode,
+    //         taxableAmoubt: model.ivoiceLines?[i].taxableAmoubt ?? 0));
     try {
       final response = await client.post(
-          "https://invtry-sales-order-staging.rgcdynamics.org/sales-invoice/create-sales-invoice",
-          data: {
-            "sales_order_id": model.salesOrderId,
-            "inventory_id": model.inventoryId,
-            "invoiced_by": " kj c",
-            "notes": model.notes,
-            "remarks": model.remarks,
-            "assigned_to": model.assignedTo,
-            "discount": model.discount,
-            "unit_cost": model.unitCost,
-            "excess_tax": model.excessTax,
-            "taxable_amount": model.taxableAmount,
-            "vat": model.vat,
-            "selling_price_total": model.sellingPriceTotal,
-            "total_price": model.totalPrice,
-            "invoice_lines": table
-          },
+          salesOrderBaseUrl+"sales-invoice/create-sales-invoice",
+          data: model.toJson(),
+          // data: {
+          //   "sales_order_id": model.salesOrderId,
+          //   "inventory_id": model.inventoryId,
+          //   "invoiced_by": model.invoicedBy,
+          //   "notes": model.notes,
+          //   "remarks": model.remarks,
+          //   "assigned_to": model.assignedTo,
+          //   "discount": model.discount,
+          //   "unit_cost": model.unitCost,
+          //   "excess_tax": model.excessTax,
+          //   "taxable_amount": model.taxableAmount,
+          //   "vat": model.vat,
+          //   "selling_price_total": model.sellingPriceTotal,
+          //   "total_price": model.totalPrice,
+          //   "invoice_lines": model.ivoiceLines,
+          // },
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -1467,23 +1469,24 @@ catch(e){
     }
 
     final response = await client.post(
-        "https://invtry-sales-order-staging.rgcdynamics.org/sales-invoice/create-sales-invoice",
-        data: {
-          "sales_order_id": model.salesOrderId,
-          "inventory_id": model.inventoryId,
-          "invoiced_by": " kj c",
-          "notes": model.notes,
-          "remarks": model.remarks,
-          "assigned_to": model.assignedTo,
-          "discount": model.discount,
-          "unit_cost": model.unitCost,
-          "excess_tax": model.excessTax,
-          "taxable_amount": model.taxableAmount,
-          "vat": model.vat,
-          "selling_price_total": model.sellingPriceTotal,
-          "total_price": model.totalPrice,
-          "invoice_lines": table
-        },
+        salesOrderBaseUrl+"sales-invoice/create-sales-invoice",
+        data: model.toJson(),
+        // data: {
+        //   "sales_order_id": model.salesOrderId,
+        //   "inventory_id": model.inventoryId,
+        //   "invoiced_by": model.invoicedBy,
+        //   "notes": model.notes,
+        //   "remarks": model.remarks,
+        //   "assigned_to": model.assignedTo,
+        //   "discount": model.discount,
+        //   "unit_cost": model.unitCost,
+        //   "excess_tax": model.excessTax,
+        //   "taxable_amount": model.taxableAmount,
+        //   "vat": model.vat,
+        //   "selling_price_total": model.sellingPriceTotal,
+        //   "total_price": model.totalPrice,
+        //   "invoice_lines": table
+        // },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -1725,6 +1728,61 @@ catch(e){
     try {
       final response = await client.patch(path,
           data: model.toJson(),
+     // data:     {
+     //
+     //        "shipping_address_id": "sxs",
+     //
+     //        "billing_address_id": "sa",
+     //
+     //        "reason": "sa",
+     //
+     //        "remarks": "jsdv",
+     //
+     //        "discount": 100,
+     //
+     //        "unit_cost": 100,
+     //
+     //        "excess_tax": 100,
+     //
+     //        "taxable_amount": 100,
+     //
+     //        "vat": 100,
+     //
+     //        "selling_price_total": 100,
+     //
+     //        "total_price": 100,
+     //
+     //        "edited_by":"dcv",
+     //
+     //        "order_lines":[{
+     //
+     //          "id":5,
+     //
+     //          "quantity":15,
+     //
+     //          "invoice_line_code":"SLSINVCLN124",
+     //
+     //          "variant_id":"testing",
+     //
+     //          "is_active":true,
+     //
+     //          "discount":100,
+     //
+     //          "unit_cost":100,
+     //
+     //          "excess_tax":100,
+     //
+     //          "taxable_amount":100,
+     //
+     //          "warranty_price":100,
+     //
+     //          "selling_price":100,
+     //
+     //          "total_price":100
+     //
+     //        }]
+     //
+     //      },
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -1742,6 +1800,61 @@ catch(e){
     }
     final response = await client.patch(path,
         data: model.toJson(),
+        // data:     {
+        //
+        //   "shipping_address_id": "sxs",
+        //
+        //   "billing_address_id": "sa",
+        //
+        //   "reason": "sa",
+        //
+        //   "remarks": "jsdv",
+        //
+        //   "discount": 100,
+        //
+        //   "unit_cost": 100,
+        //
+        //   "excess_tax": 100,
+        //
+        //   "taxable_amount": 100,
+        //
+        //   "vat": 100,
+        //
+        //   "selling_price_total": 100,
+        //
+        //   "total_price": 100,
+        //
+        //   "edited_by":"dcv",
+        //
+        //   "order_lines":[{
+        //
+        //     "id":5,
+        //
+        //     "quantity":15,
+        //
+        //     "invoice_line_code":"SLSINVCLN124",
+        //
+        //     "variant_id":"testing",
+        //
+        //     "is_active":true,
+        //
+        //     "discount":100,
+        //
+        //     "unit_cost":100,
+        //
+        //     "excess_tax":100,
+        //
+        //     "taxable_amount":100,
+        //
+        //     "warranty_price":100,
+        //
+        //     "selling_price":100,
+        //
+        //     "total_price":100
+        //
+        //   }]
+        //
+        // },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -3627,15 +3740,15 @@ catch(e){
             "catalog6": model.catalog6,
             "catalog7": model.catalog7,
             "catalog8": model.catalog8,
-            "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[{}]}:model.Ingrediants,
-            "important_info": model.importantInfo==null?{"name":"important info","key_values":[{}]}:model.importantInfo,
-            "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[{}]}:model.additionalInfo,
-            "Nutriants_facts": model.nutriantsFacts==null?{"name":"Nutriants facts","key_values":[{}]}:model.nutriantsFacts,
-            "product_details": model.productDetails==null?{"name":"product details","key_values":[{}]}:model.productDetails,
-            "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[{}]}:model.usageDirection,
-            "product_features": model.productFeatures==null?{"name":"product features","key_values":[{}]}:model.productFeatures,
+            "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[]}:model.Ingrediants,
+            "important_info": model.importantInfo==null?{"name":"important info","key_values":[]}:model.importantInfo,
+            "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[]}:model.additionalInfo,
+            "Nutriants_facts": model.nutriantsFacts==null?{"name":"Nutriants facts","key_values":[]}:model.nutriantsFacts,
+            "product_details": model.productDetails==null?{"name":"product details","key_values":[]}:model.productDetails,
+            "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[]}:model.usageDirection,
+            "product_features": model.productFeatures==null?{"name":"product features","key_values":[]}:model.productFeatures,
             "product_behaviour": model.productBehavior,
-            "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[{}]}:model.aboutProducts,
+            "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[]}:model.aboutProducts,
             "storage": model.storage==null?{"name":"storage","key_values":[{}]}: model.storage,
 
 
@@ -3736,15 +3849,15 @@ catch(e){
         "catalog6": model.catalog6,
         "catalog7": model.catalog7,
         "catalog8": model.catalog8,
-        "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[{}]}:model.Ingrediants,
-        "important_info": model.importantInfo==null?{"name":"important info","key_values":[{}]}:model.importantInfo,
-        "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[{}]}:model.additionalInfo,
-        "Nutriants_facts": model.nutriantsFacts==null?{"name":"Nutriants facts","key_values":[{}]}:model.nutriantsFacts,
-        "product_details": model.productDetails==null?{"name":"product details","key_values":[{}]}:model.productDetails,
-        "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[{}]}:model.usageDirection,
-        "product_features": model.productFeatures==null?{"name":"product features","key_values":[{}]}:model.productFeatures,
+        "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[]}:model.Ingrediants,
+        "important_info": model.importantInfo==null?{"name":"important info","key_values":[]}:model.importantInfo,
+        "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[]}:model.additionalInfo,
+        "Nutriants_facts": model.nutriantsFacts==null?{"name":"Nutriants facts","key_values":[]}:model.nutriantsFacts,
+        "product_details": model.productDetails==null?{"name":"product details","key_values":[]}:model.productDetails,
+        "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[]}:model.usageDirection,
+        "product_features": model.productFeatures==null?{"name":"product features","key_values":[]}:model.productFeatures,
           "product_behaviour": model.productBehavior,
-        "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[{}]}:model.aboutProducts,
+        "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[]}:model.aboutProducts,
         "storage": model.storage==null?{"name":"storage","key_values":[{}]}: model.storage,
 
 
@@ -3860,9 +3973,9 @@ catch(e){
           "variant_status": model.variantStatus,
           "status": model.status,
           "vendor_details": model.vendorDetails,
-          "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[{}]}:model.Ingrediants,
-          "important_info": model.importantInfo==null?{"name":"important info","key_values":[{}]}:model.importantInfo,
-          "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[{}]}:model.additionalInfo,
+          "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[]}:model.Ingrediants,
+          "important_info": model.importantInfo==null?{"name":"important info","key_values":[]}:model.importantInfo,
+          "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[]}:model.additionalInfo,
           "Nutriants_facts": model.nutriantsFacts==null?{"name":"Nutriants facts","key_values":[{}]}:model.nutriantsFacts,
           "product_details": model.productDetails==null?{"name":"product details","key_values":[{}]}:model.productDetails,
           "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[{}]}:model.usageDirection,
@@ -4051,7 +4164,25 @@ catch(e){
         "&selection_type=" +
         type.toString();
     print(path);
+try{
+  final response = await client.get(path,
+      options: Options(headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }));
 
+  List<ChannelTypeModel> items = [];
+  (response.data['data']['results'] as List).forEach((element) {
+    items.add(ChannelTypeModel.fromJson(element));
+    print("itemsAk" + items.toString());
+  });
+  return PaginatedResponse<List<ChannelTypeModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString());
+}catch(e){
+  print("the searching error is"+e.toString());
+}
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -4067,6 +4198,7 @@ catch(e){
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString());
+
   }
 
   @override
@@ -7224,5 +7356,57 @@ print(attributePostApi);
     ReadMessuremnetModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> postStockPartion(String? name, String? descriptio) async {
+    String path = stockPartition;
+    print(path);
+    // print("sasasaassss"+model.inventoryName.toString());
+    try {
+      final response = await client.post(path,
+          // data: model.toJson(),
+
+          data:{
+            "inventory_id": Variable.inventory_ID,
+            "description": descriptio,
+            "name": name,
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("+++++++++++");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("erroe" + e.toString());
+    }
+    final response = await client.post(path,
+        // data: model.toJson(),
+
+        data:{
+          "inventory_id": Variable.inventory_ID,
+          "description": descriptio,
+          "name": name,
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+
   }
 }

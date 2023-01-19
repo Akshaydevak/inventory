@@ -10,6 +10,7 @@ class InvoicereadCubit extends Cubit<InvoicereadState> {
   InvoicereadCubit() : super(InvoicereadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getSalesInvoiceRead(int id) async {
+    emit(InvoicereadState.initial());
     print("idddidd" + id.toString());
     final result = await repo.getSalesInvoiceRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

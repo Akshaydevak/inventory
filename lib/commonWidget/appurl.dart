@@ -14,7 +14,7 @@ const salesReturnBaseUrl = "https://api-invtry-sales-return.hilalcart.com/";
 
 const postPurchaseurl = stagingUrl + "purchase-order/create-purchase-order";
 const generalVerticalList =
-    stagingUrl + "purchase-order/list-purchase-order-for-invoice-posting/";
+    stagingUrl + "purchase-order/list-purchase-order/";
 const purchaseOrderType = stagingUrl + "purchase-order/create-purchase-order";
 
 const purchaseOrdertype = baseUrl + "purchase-order/create-purchase-order";
@@ -39,6 +39,7 @@ const requestFormCreate = stagingUrl + "purchase-order/create-request-form";
 const requestFormOrderType = stagingUrl + "purchase-order/create-request-form";
 const requestFormPatch = stagingUrl + "purchase-order/patch-request-form/";
 const requestVerticalList = stagingUrl + "purchase-order/list-request-form/";
+const requestFormOderPerson = userBaseUrl + "user-employee_employeeuser";
 //*********************request receiving form*******************
 const rqstReceivingRead =
     stagingUrl + "purchase-order/read-receiving-by-request-form/";
@@ -202,8 +203,9 @@ const salesListApi = inventoryBaseUrl +
     "inventory-product/list-sales-or-purchase-uom-by-base-uom/";
 const variantSearchListApi =
     inventoryBaseUrl + "inventory-product/list-variants";
-const variantCreatetApi =
-    inventoryBaseUrl + "inventory-product/create-variant-new/";
+const variantCreatetApi = inventoryBaseUrl + "inventory-product/create-variant-new/";
+const stockPartition = inventoryBaseUrl + "inventory-product/create-partition-stock-group";
+
 const variantPatchApi = inventoryBaseUrl + "inventory-product/variant-update/";
 //variant creation Apisssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const variantCreationListApi = inventoryBaseUrl + "inventory-product/list-item";

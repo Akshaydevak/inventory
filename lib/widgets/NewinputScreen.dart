@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/common.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
@@ -103,7 +104,7 @@ class _NewInputCardState extends State<NewInputCard> {
         children: [
           Text(
             widget.title,
-            style: GoogleFonts.roboto(fontSize: widget.fontsize,fontWeight: FontWeight.w600),
+            style: GoogleFonts.roboto(fontSize: widget.fontsize,fontWeight: FontWeight.w500),
           ),
           SizedBox(height:3),
           widget.keyboardType=="int"?
@@ -174,7 +175,7 @@ class _NewInputCardState extends State<NewInputCard> {
           ):
           Container(
             alignment: Alignment.center,
-            // height: widget.height,
+            height: widget.height,
 
 
             // color: widget.colors,
@@ -251,10 +252,14 @@ class _NewInputCardState extends State<NewInputCard> {
                 )
                     : widget.icondrop?Transform.scale(
                   scale: 0.5,
-                      child: IconButton(onPressed:(){
+                      child: Material(
+
+
+                        child: InkWell(onTap:(){
                   widget.ontap!=null?widget.ontap!():null;
 
-                }, icon: Icon(Icons.more_horiz_rounded)),
+                }, child: Icon(Icons.more_horiz_rounded)),
+                      ),
                     ):null,
                 labelStyle: const TextStyle(
                   fontSize: 13,
@@ -342,9 +347,11 @@ class NewInputPopupField extends StatefulWidget {
   final String label;
   final TextEditingController contrroller;
   final TextEditingController contrrollerUnit;
+  final String initialvalue;
   final String type;
   final Function(String?) onChange;
-  NewInputPopupField({ required this.label, required this.contrroller, required this.type, required this.onChange, required this.contrrollerUnit,});
+  NewInputPopupField({ required this.label, required this.contrroller, required this.type,this.initialvalue="",
+    required this.onChange, required this.contrrollerUnit,});
 
 
 
@@ -414,8 +421,11 @@ class _NewInputPopupFieldState extends State<NewInputPopupField> {
                     // height: 70,
                     // width: 100,
                     child: PopUpCall(
+                      initialValue: widget.initialvalue,
+
 
                       type:widget.type,
+
                       value: widget.contrrollerUnit.text,
                       onSelection: (String? va) {
                        widget.onChange(va);
@@ -845,6 +855,7 @@ class UnderLinedInput extends StatefulWidget {
   final VoidCallback? onClick;
   final bool enable;
   final bool  initialCheck;
+  final bool  integerOnly;
   final  String  initial;
   final String ? last;
   final bool restricted;
@@ -864,6 +875,7 @@ class UnderLinedInput extends StatefulWidget {
       {Key? key,
         this.last="",
         this.readOnly=false,
+        this.integerOnly=false,
         this.filledColour=const Color(0xffF2F3F5),
         this.suffixIconEnable=false,
         this.enable = true,
@@ -900,6 +912,8 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
           child:widget.initialCheck?
           Center(
             child: TextFormField(
+              readOnly: widget.readOnly,
+              style:CommonTextStyle.normalTableFieldStyle,
 
               initialValue:widget.last=="0"||widget.last==null||widget.last=="null"?"":widget.last,
               onTap: () {
@@ -915,7 +929,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
               inputFormatters:widget.formatter?
 
               <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
+              widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
               ]:null,
               onEditingComplete: widget.onComplete,
               onChanged: widget.onChanged,
@@ -939,6 +953,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
             child: Center(
               child: TextFormField(
                 readOnly: widget.readOnly,
+                style: CommonTextStyle.normalTableFieldStyle,
 
 
 
@@ -957,7 +972,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                 inputFormatters:widget.formatter?
 
                 <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
+                  widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
                 ]:null,
                 onEditingComplete: widget.onComplete,
                 onChanged: widget.onChanged,
@@ -1564,7 +1579,8 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
         children: [
           Container(
 
-              padding: EdgeInsets.only(top: 3,left: 22),
+
+              padding: EdgeInsets.only(top: 3,left:MediaQuery.of(context).size.width*.009),
               child: Text(
                 widget.title,
                 style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),

@@ -53,7 +53,7 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
               children: [
 
                 Container(
-                  height: width*.045,
+                  height: height/10,
                   decoration:BoxDecoration(   border: Border(bottom: BorderSide(color:Color(0xffF2F3F5), width:5))),
 
                   width: double.infinity,
@@ -63,9 +63,9 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
 
 
                       Container(
-                        width:MediaQuery.of(context).size.width*.48,
-                        height: width*.052,
-                        margin: EdgeInsets.only(top:22),
+                        width:MediaQuery.of(context).size.width/1.8,
+                        padding: EdgeInsets.only(top: height*.04),
+                        height: height*.18,
 
                         child: TabBar(
 
@@ -101,8 +101,8 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
                             // padding: EdgeInsets.only(bottom: 10),
 
                             controller: _tabController,
-                            tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
-                              Text("Sales Invoice",style: TextStyle(color: Colors.black,fontSize: 13),),
+                            tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: width*.011)),
+                              Text("Sales Invoice",style:TextStyle(color: Colors.black,fontSize: width*.011,)),
                             ]),
                       ),
                       Container(

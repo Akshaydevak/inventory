@@ -616,6 +616,7 @@ OrderLinesInvoice _$OrderLinesInvoiceFromJson(Map<String, dynamic> json) {
 mixin _$OrderLinesInvoice {
   int? get id => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
+  bool? get updatecheck => throw _privateConstructorUsedError;
   String? get barcode => throw _privateConstructorUsedError;
   double? get discount => throw _privateConstructorUsedError;
   double? get vat => throw _privateConstructorUsedError;
@@ -665,6 +666,7 @@ abstract class $OrderLinesInvoiceCopyWith<$Res> {
   $Res call(
       {int? id,
       int? quantity,
+      bool? updatecheck,
       String? barcode,
       double? discount,
       double? vat,
@@ -700,6 +702,7 @@ class _$OrderLinesInvoiceCopyWithImpl<$Res, $Val extends OrderLinesInvoice>
   $Res call({
     Object? id = freezed,
     Object? quantity = freezed,
+    Object? updatecheck = freezed,
     Object? barcode = freezed,
     Object? discount = freezed,
     Object? vat = freezed,
@@ -728,6 +731,10 @@ class _$OrderLinesInvoiceCopyWithImpl<$Res, $Val extends OrderLinesInvoice>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
+      updatecheck: freezed == updatecheck
+          ? _value.updatecheck
+          : updatecheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
       barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
@@ -815,6 +822,7 @@ abstract class _$$_OrderLinesInvoiceCopyWith<$Res>
   $Res call(
       {int? id,
       int? quantity,
+      bool? updatecheck,
       String? barcode,
       double? discount,
       double? vat,
@@ -848,6 +856,7 @@ class __$$_OrderLinesInvoiceCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? quantity = freezed,
+    Object? updatecheck = freezed,
     Object? barcode = freezed,
     Object? discount = freezed,
     Object? vat = freezed,
@@ -876,6 +885,10 @@ class __$$_OrderLinesInvoiceCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
+      updatecheck: freezed == updatecheck
+          ? _value.updatecheck
+          : updatecheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
       barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
@@ -958,6 +971,7 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
   const _$_OrderLinesInvoice(
       {this.id,
       this.quantity,
+      this.updatecheck,
       this.barcode,
       this.discount,
       this.vat,
@@ -984,6 +998,8 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
   final int? id;
   @override
   final int? quantity;
+  @override
+  final bool? updatecheck;
   @override
   final String? barcode;
   @override
@@ -1038,7 +1054,7 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
 
   @override
   String toString() {
-    return 'OrderLinesInvoice(id: $id, quantity: $quantity, barcode: $barcode, discount: $discount, vat: $vat, variantId: $variantId, salesOrderLineCode: $salesOrderLineCode, salesUom: $salesUom, returnType: $returnType, returnTime: $returnTime, totalQuantity: $totalQuantity, isInvoiced: $isInvoiced, isActive: $isActive, discountType: $discountType, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice)';
+    return 'OrderLinesInvoice(id: $id, quantity: $quantity, updatecheck: $updatecheck, barcode: $barcode, discount: $discount, vat: $vat, variantId: $variantId, salesOrderLineCode: $salesOrderLineCode, salesUom: $salesUom, returnType: $returnType, returnTime: $returnTime, totalQuantity: $totalQuantity, isInvoiced: $isInvoiced, isActive: $isActive, discountType: $discountType, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice)';
   }
 
   @override
@@ -1049,6 +1065,8 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
+            (identical(other.updatecheck, updatecheck) ||
+                other.updatecheck == updatecheck) &&
             (identical(other.barcode, barcode) || other.barcode == barcode) &&
             (identical(other.discount, discount) ||
                 other.discount == discount) &&
@@ -1091,6 +1109,7 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
         runtimeType,
         id,
         quantity,
+        updatecheck,
         barcode,
         discount,
         vat,
@@ -1130,6 +1149,7 @@ abstract class _OrderLinesInvoice implements OrderLinesInvoice {
   const factory _OrderLinesInvoice(
       {final int? id,
       final int? quantity,
+      final bool? updatecheck,
       final String? barcode,
       final double? discount,
       final double? vat,
@@ -1171,6 +1191,8 @@ abstract class _OrderLinesInvoice implements OrderLinesInvoice {
   int? get id;
   @override
   int? get quantity;
+  @override
+  bool? get updatecheck;
   @override
   String? get barcode;
   @override

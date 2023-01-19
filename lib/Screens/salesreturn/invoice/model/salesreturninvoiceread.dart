@@ -12,6 +12,7 @@ class SalesReturnInvoiceReadModel2 with _$SalesReturnInvoiceReadModel2{
     final double? vat,
 
     @JsonKey(name: "sales_return_order_code") final String? salesReturnOrderCode,
+    @JsonKey(name: "returned_date") final String? returnedDate,
     @JsonKey(name: "inventory_id") final String? inventoryId,
     @JsonKey(name: "payment_id") final String? paymentId,
     @JsonKey(name: "payment_status") final String? paymentStatus,

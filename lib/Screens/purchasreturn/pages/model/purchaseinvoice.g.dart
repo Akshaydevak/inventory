@@ -77,6 +77,7 @@ _$_Liness _$$_LinessFromJson(Map<String, dynamic> json) => _$_Liness(
       isFree: json['is_free'] as bool? ?? false,
       isActive: json['is_active'] as bool? ?? false,
       isInvoiced: json['is_invoiced'] as bool? ?? false,
+      upDateCheck: json['updateCheck'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_LinessToJson(_$_Liness instance) => <String, dynamic>{
@@ -104,6 +105,7 @@ Map<String, dynamic> _$$_LinessToJson(_$_Liness instance) => <String, dynamic>{
       'is_free': instance.isFree,
       'is_active': instance.isActive,
       'is_invoiced': instance.isInvoiced,
+      'updateCheck': instance.upDateCheck,
     };
 
 _$_ReturnGeneralRead _$$_ReturnGeneralReadFromJson(Map<String, dynamic> json) =>

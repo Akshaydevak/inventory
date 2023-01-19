@@ -60,6 +60,7 @@ class Liness with _$Liness {
     @JsonKey(name:"is_free",defaultValue: false) final bool? isFree,
     @JsonKey(name:"is_active",defaultValue: false) final bool? isActive,
     @JsonKey(name:"is_invoiced",defaultValue: false) final bool? isInvoiced,
+    @JsonKey(name:"updateCheck",defaultValue: false) final bool? upDateCheck,
 
 
 

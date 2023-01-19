@@ -11,6 +11,7 @@ import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_
 
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -88,7 +89,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
     double excessTAxValue=0;
     if(lines!.isNotEmpty)
       for (var i = 0; i < lines!.length; i++) {
-        if (lines?[i].isInvoiced == true) {
+        if (lines?[i].isInvoiced == true && lines?[i].updateCheck == false) {
           var unicost1= lines?[i].unitCost??0;
           var vatValue1= lines?[i].vat??0;
           var grands1= lines?[i].grandTotal??0;
@@ -151,14 +152,13 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                   },
                   success: (data) {
                     setState(() {
-                      print("datass" + data.toString());
-                      print(data.invoicedata?.orderLiness?.length.toString());
 
-                      if (data.invoicedata?.orderLiness?.isNotEmpty==true) {
+
+                      if (data.invoicedata!=null) {
                         print("aaaaaaaaa");
                         data.invoicedata?.orderLiness != null
                             ? lines =List.from( data.invoicedata?.orderLiness ?? [])
-                            : lines = [];
+                            : lines =List.from( []);
 
                         purchaseReturnOrderCodeController.text = data.invoicedata?.returnOrderCode ?? "";
                         orderDateController.text = data.invoicedata?.invoicedDate ?? "";
@@ -187,8 +187,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                       } else {
                         print("aaaaaaaaa2");
                         data?.orderLiness != null
-                            ? lines = data?.orderLiness ?? []
-                            : lines = [];
+                            ? lines =List.from( data?.orderLiness ?? [])
+                            : lines = List.from([]);
                         purchaseReturnOrderCodeController.text = data.returnOrderCode ?? "";
                         unitCostController.text =
                             data.unitCost.toString() ?? "";
@@ -372,6 +372,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                           setState(() {
                             updateCheck=false;
                             selectedVertical = index;
+                            lines.clear();
+
 
                             veritiaclid = result[index].id;
 
@@ -894,10 +896,12 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: UnderLinedInput(
                                                                   initialCheck:true,
+                                                                  integerOnly: true,
                                                                   // controller: requestedListControllers[i],
                                                                   last: lines?[i].totalQty.toString()??"",
                                                                   onChanged: (va) {
                                                                     updateCheck=true;
+                                                                    lines[i]=lines[i].copyWith(updateCheck: true);
                                                                     print(va);
                                                                     if (va == "") {
                                                                       print("entered");
@@ -1138,6 +1142,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
                                                                     onSelection:(bool ? value){
                                                                       updateCheck=true;
+                                                                      lines[i]=lines[i].copyWith(updateCheck: true);
                                                                       bool? isInvoiced = lines?[i].isInvoiced??false;
                                                                       setState(() {
 
@@ -1166,17 +1171,23 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                                         (bool?
                                                                             value) {}),
                                                               ),
-                                                              TableTextButton(
-                                                                label:updateCheck? "update":"",
-                                                                onPress: (){
-                                                                  updateCheck=false;
-                                                                  addition();
-                                                                  setState(() {
+                                                              TableCell(
+                                                                verticalAlignment:
+                                                                TableCellVerticalAlignment
+                                                                    .middle,
+                                                                child: TableTextButton(
+                                                                  label:lines[i].updateCheck==true? "UPDATE":"",
+                                                                  onPress: (){
+                                                                    updateCheck=false;
+                                                                    lines[i]=lines[i].copyWith(updateCheck: false);
+                                                                    addition();
+                                                                    setState(() {
 
-                                                                  });
+                                                                    });
 
 
-                                                                },
+                                                                  },
+                                                                ),
                                                               ),
                                                             ])
                                                     ]
@@ -1203,50 +1214,101 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                   saveFunction: (){
                                     print("apppa"+lines.toString());
                                     if(updateCheck)  context.showSnackBarError("please click the update button");
-                                    else{ PurchaseReturnInvoicePostModel model =
-                                    PurchaseReturnInvoicePostModel(
-                                        purchaseInvoiceId:purchaseInvoiceidController.text??"",
-                                        returnOrderCode:purchaseReturnOrderCodeController?.text??"",
-                                        inventoryId: inventoryContoller?.text??"",
-                                        invoicedBy: 'test',
-                                        venderId: vendoridContoller?.text??"",
-                                        notes:noteController?.text??"",
-                                        remarks: remarksController?.text??"",
-                                        unitCost: double.tryParse( unitCostController?.text??""),
-                                        foc: double.tryParse( focController?.text??""),
-                                        discount: double.tryParse( discountController?.text??""),
-                                        grandTotal: double.tryParse( grandTotalCostController?.text??""),
-                                        vatableAmount: double.tryParse( vatableAmountController?.text??""),
-                                        excessTax: double.tryParse( excessTaxController?.text??""),
-                                        actualCost:  double.tryParse( actualCostController?.text??""),
-                                        vat:  double.tryParse( vatController?.text??""),
-                                        vendorTrnNumber: vendorTrnnumberController?.text??"",
-                                        lines: lines
-                                      // purchaseReturnOrderId: 1,
-                                      // lines:[
-                                      //
-                                      // Order(
-                                      //   returnOrderLineCode: "SZ6VTDTEOH",
-                                      //   purchaseInvoiceId:"977FWCJCYP",
-                                      //   isInvoiced: true,
-                                      //   variantId:"gcvd" ,
-                                      //   variantName: "test",
-                                      //   totalQty: 1,
-                                      //   unitCost: 100.0,
-                                      //   isFree: true,
-                                      //   purchaseUom: "akskk",
-                                      //   suppliercode: "djhcb",
-                                      //   barcode: "dchjbdhj",
-                                      //   grandTotal: 100.0,
-                                      //   vat: 100.0,
-                                      //   vatableAmount: 100.0,
-                                      //   actualCost: 100.0,
-                                      //   excessTax: 100.0,
-                                      //   discount: 100.0,
-                                      //   foc: 100.0
-                                      // )]
-                                    );
-                                    context.read<InvoicepostCubit>().invoicePost(model);}
+                                    else{
+                                      List<Order>? result;
+                                      bool confirmationCheck=false;
+                                      for(var i=0;i<lines.length;i++){
+                                        if(lines[i].isInvoiced==false){
+                                          confirmationCheck=true;
+                                        }
+                                        result = lines.where((o) => o.isInvoiced == true).toList();
+
+
+                                      }
+                                      if(confirmationCheck){
+                                        showDailogPopUp(
+                                            context,
+                                            LogoutPopup(
+                                              message: "Some of lines are not confirmed. Do you want to continue?",
+                                              // table:table,
+                                              // // clear:clear(),
+                                              // verticalId:veritiaclid ,
+                                              onPressed:(){
+                                                PurchaseReturnInvoicePostModel model =
+                                                PurchaseReturnInvoicePostModel(
+                                                    purchaseInvoiceId:purchaseInvoiceidController.text??"",
+                                                    returnOrderCode:purchaseReturnOrderCodeController?.text??"",
+                                                    inventoryId: inventoryContoller?.text??"",
+                                                    invoicedBy: Variable.created_by,
+                                                    venderId: vendoridContoller?.text??"",
+                                                    notes:noteController?.text??"",
+                                                    remarks: remarksController?.text??"",
+                                                    unitCost: double.tryParse( unitCostController?.text??""),
+                                                    foc: double.tryParse( focController?.text??""),
+                                                    discount: double.tryParse( discountController?.text??""),
+                                                    grandTotal: double.tryParse( grandTotalCostController?.text??""),
+                                                    vatableAmount: double.tryParse( vatableAmountController?.text??""),
+                                                    excessTax: double.tryParse( excessTaxController?.text??""),
+                                                    actualCost:  double.tryParse( actualCostController?.text??""),
+                                                    vat:  double.tryParse( vatController?.text??""),
+                                                    vendorTrnNumber: vendorTrnnumberController?.text??"",
+                                                    lines: result
+
+                                                );
+                                                print("model"+model.toString());
+                                                context.read<InvoicepostCubit>().invoicePost(model);
+                                                Navigator.pop(context);
+
+                                              },
+
+
+                                            ));
+
+                                      }
+                                      else {
+                                        PurchaseReturnInvoicePostModel model =
+                                        PurchaseReturnInvoicePostModel(
+                                            purchaseInvoiceId: purchaseInvoiceidController
+                                                .text ?? "",
+                                            returnOrderCode: purchaseReturnOrderCodeController
+                                                ?.text ?? "",
+                                            inventoryId: inventoryContoller
+                                                ?.text ?? "",
+                                            invoicedBy: Variable.created_by,
+                                            venderId: vendoridContoller?.text ??
+                                                "",
+                                            notes: noteController?.text ?? "",
+                                            remarks: remarksController?.text ??
+                                                "",
+                                            unitCost: double.tryParse(
+                                                unitCostController?.text ?? ""),
+                                            foc: double.tryParse(
+                                                focController?.text ?? ""),
+                                            discount: double.tryParse(
+                                                discountController?.text ?? ""),
+                                            grandTotal: double.tryParse(
+                                                grandTotalCostController
+                                                    ?.text ?? ""),
+                                            vatableAmount: double.tryParse(
+                                                vatableAmountController?.text ??
+                                                    ""),
+                                            excessTax: double.tryParse(
+                                                excessTaxController?.text ??
+                                                    ""),
+                                            actualCost: double.tryParse(
+                                                actualCostController?.text ??
+                                                    ""),
+                                            vat: double.tryParse(
+                                                vatController?.text ?? ""),
+                                            vendorTrnNumber: vendorTrnnumberController
+                                                ?.text ?? "",
+                                            lines: result
+
+                                        );
+                                        print("model"+model.toString());
+                                        context.read<InvoicepostCubit>()
+                                            .invoicePost(model);
+                                      } }
 
                                   },
                                   discardFunction: (){
@@ -1423,11 +1485,14 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
               SizedBox(
                 height: height * .030,
               ),
-              NewInputCard(controller: widget.orderDate, title: "Ordered Date"),
+              NewInputCard(
+                readOnly: true,
+                  controller: widget.orderDate, title: "Ordered Date"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
+                  readOnly: true,
                   controller: widget.paymentCode, title: "Payment Code"),
               SizedBox(
                 height: height * .030,

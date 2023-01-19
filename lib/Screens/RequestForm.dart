@@ -11,6 +11,7 @@ import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
@@ -77,14 +78,14 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   TextEditingController vatTestContoller = TextEditingController();
   TextEditingController unitCostCheck = TextEditingController();//
   late AutoScrollController scontroller;
-  var requestedListControllers = <TextEditingController>[];
-  var minListControllers = <TextEditingController>[];
-  var maxListControllers = <TextEditingController>[];
+  // var requestedListControllers = <TextEditingController>[];
+  // var minListControllers = <TextEditingController>[];
+  // var maxListControllers = <TextEditingController>[];
   var unitcostListControllers = <TextEditingController>[];
-  var excesstListControllers = <TextEditingController>[];
-  var discounttListControllers = <TextEditingController>[];
-  var focListControllers = <TextEditingController>[];
-  var vatListControllers = <TextEditingController>[];
+  // var excesstListControllers = <TextEditingController>[];
+  // var discounttListControllers = <TextEditingController>[];
+  // var focListControllers = <TextEditingController>[];
+  // var vatListControllers = <TextEditingController>[];
 
   int? veritiaclid=0;
   List<OrderLines> table = [];
@@ -133,19 +134,30 @@ var  paginatedList;
   addition() {
     print("enterd");
     print("+==" + table.toString());
-    for (var i = 0; i < table.length; i++) {
-      if (table[i].isActive == true) {
-        unitcost2 = unitcost2 + table[i].unitCost!;
 
-        grands = grands + table[i].grandTotal!;
-        actualValue = actualValue + table[i].actualCost!;
-        vatValue = vatValue + table[i].vat!;
-        discountValue = discountValue + table[i].discount!;
-        focValue = focValue + table[i].foc!;
+    if(table.isNotEmpty==true) {
+      for (var i = 0; i < table.length; i++) {
+        if (table[i].isActive == true && table[i].updateCheck == false) {
+          var unicost1= table[i].unitCost??0;
+          var vatValue1= table[i].vat??0;
+          var grands1= table[i].grandTotal??0;
+          var actualValue1= table[i].actualCost??0;
+          var discountValue1= table[i].discount??0;
+          var focValue1= table[i].foc??0;
+          var VatableValue1= table[i].variableAmount??0;
+          var excessTAxValue1= table[i].excessTax??0;
+          unitcost2 = unitcost2 + unicost1;
 
-        VatableValue = VatableValue + table[i].variableAmount!;
-        print("excessTaxvalue"+excessTAxValue.toString());
-        excessTAxValue = excessTAxValue + table[i].excessTax!;
+          grands = double.parse((grands + grands1).toStringAsFixed(2));
+          actualValue =double.parse( (actualValue + actualValue1).toStringAsFixed(2));
+          vatValue = double.parse((vatValue +vatValue1).toStringAsFixed(2));
+          discountValue =double.parse(( discountValue + discountValue1).toStringAsFixed(2));
+          focValue = double.parse((focValue + focValue1).toStringAsFixed(2));
+
+          VatableValue = double.parse((VatableValue + VatableValue1).toStringAsFixed(2));
+
+          excessTAxValue = double.parse((excessTAxValue + excessTAxValue1).toStringAsFixed(2));
+        }
       }
     }
     unitCostController.text = unitcost2 == 0 ? "" : unitcost2.toString();
@@ -160,37 +172,39 @@ var  paginatedList;
     vatableAmountController.text = VatableValue.toString();
     // _value=false;
   }
-  // valueAddingTextEdingController(){
-  //   if(table.isNotEmpty){
-  //     print("checking case");
-  //     for(var i=0;i<table.length;i++){
-  //       var requsted = new TextEditingController(text: table[i].requestedQty.toString()??"");
-  //       requestedListControllers.add(requsted);
-  //       print(requestedListControllers.length);
-  //       var min = new TextEditingController(text: table[i].minimumQty.toString()??"");
-  //       minListControllers.add(min);
-  //       print("mazzzzz"+table[i].maximumQty.toString());
-  //       var max = new TextEditingController(text: table[i].maximumQty.toString()??"");
-  //       print("max"+max.toString());
-  //       maxListControllers.add(max);
-  //       print("maxlength"+maxListControllers.toString());
-  //       var unitcost = new TextEditingController(text: table[i].unitCost.toString()??"");
-  //       unitcostListControllers.add(unitcost);
-  //       var excess = new TextEditingController(text: table[i].excessTax.toString()??"");
-  //       excesstListControllers.add(excess);
-  //       var disc = new TextEditingController(text: table[i].discount.toString()??"");
-  //       discounttListControllers.add(disc);
-  //       var foc = new TextEditingController(text: table[i].foc.toString()??"");
-  //       focListControllers.add(foc);
-  //       var vat = new TextEditingController(text: table[i].vat.toString()??"");
-  //       vatListControllers.add(vat);
-  //       setState(() {
-  //
-  //       });
-  //
-  //     }
-  //   }
-  // }
+  valueAddingTextEdingController(){
+    unitcostListControllers.clear();
+
+    if(table.isNotEmpty){
+      print("checking case");
+      for(var i=0;i<table.length;i++){
+        // var requsted = new TextEditingController(text: table[i].requestedQty.toString()??"");
+        // requestedListControllers.add(requsted);
+        // print(requestedListControllers.length);
+        // var min = new TextEditingController(text: table[i].minimumQty.toString()??"");
+        // minListControllers.add(min);
+        // print("mazzzzz"+table[i].maximumQty.toString());
+        // var max = new TextEditingController(text: table[i].maximumQty.toString()??"");
+        // print("max"+max.toString());
+        // maxListControllers.add(max);
+        // print("maxlength"+maxListControllers.toString());
+        var unitcost = new TextEditingController(text: table[i].unitCost.toString()??"");
+        unitcostListControllers.add(unitcost);
+        // var excess = new TextEditingController(text: table[i].excessTax.toString()??"");
+        // excesstListControllers.add(excess);
+        // var disc = new TextEditingController(text: table[i].discount.toString()??"");
+        // discounttListControllers.add(disc);
+        // var foc = new TextEditingController(text: table[i].foc.toString()??"");
+        // focListControllers.add(foc);
+        // var vat = new TextEditingController(text: table[i].vat.toString()??"");
+        // vatListControllers.add(vat);
+        setState(() {
+
+        });
+
+      }
+    }
+  }
 
 
   vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,int? discount){
@@ -235,6 +249,7 @@ var  paginatedList;
     print("shammmma"+table.toString());
     orderTypeController.text="";
     orderType.text="";
+    unitcostListControllers.clear();
     ordereCodeController.text="";
     orderDateController.text="";
     inventoryIdController.text="";
@@ -446,7 +461,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
             actualCostController.text=data.data?.actualCost.toString()??"";
             grandTotalController.text=data.data?.grandTotal.toString()??"";
             _getCurrentUser();
-           // valueAddingTextEdingController();
+           valueAddingTextEdingController();
 
 
           });
@@ -467,8 +482,41 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
 
                 if(Variable.tableedit==true) {
+                  print("thre error cae");
                   table[Variable.tableindex] =
                       table[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",vat:purchaseTable?.vat,unitCost:purchaseTable?.unitCost,purchaseuom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                  unitcostListControllers[Variable.tableindex]=TextEditingController(text:purchaseTable?.unitCost.toString() );
+                  var qty = table[Variable.tableindex].requestedQty;
+                  var vat = table[Variable.tableindex].vat;
+                  var excess = table[Variable.tableindex].excessTax;
+                  // var foc = table[i].foc;
+
+                  var unitcost = table[Variable.tableindex].unitCost;
+                  // print("unitcost" + unitcost.toString());
+                  var Vdiscount = table[Variable.tableindex].discount;
+                  if(qty==0 || unitcost==0){
+                    table[Variable.tableindex] = table[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                    setState(() {
+
+                    });
+
+                  }else {
+                    var Vamount;
+
+                    Vamount =         vatableAmountUpdation(unitcost,qty,excess,Vdiscount);
+
+
+                    var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
+                    table[Variable.tableindex] =
+                        table[Variable.tableindex]
+                            .copyWith(
+                            actualCost: vactualCost,
+                            grandTotal: vactualCost,
+                            variableAmount: Vamount,
+                            excessTax: excess);
+                    setState(() {});
+                  }
                   setState(() {
 
                   });
@@ -496,6 +544,17 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                     //
                     barcode =
                         purchaseTable?.barCode?.barcodeNumber.toString()??"";
+
+    if(unitcost==0 ||recievedQty==0){
+    actualCost1=0;
+    vatableAmount1=0;
+    grandTotal1=0;
+    }
+    else {
+      vatableAmountCalculation(unitcost, recievedQty, excess1, discount);
+
+      actualAndgrandTotal(vatableAmount1, vat1);
+    }
                   });
 
                 }
@@ -514,7 +573,26 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
         state.maybeWhen(
             orElse: () {},
             error: () {
-              print("error");
+              if(stockCheck==false){
+                print("AKSKKSKSKSK");
+                currentStock.add(0);
+                setState(() {
+
+                });
+              }
+
+              else if(Variable.tableedit==false){
+                print("AKSKKSKSKSK1");
+                stock =0;
+                setState(() {});
+
+              }
+              else{
+                currentStock[Variable.tableindex]=0;
+                // currentStock.cop(Variable.tableindex,  purchaseCurrentStock?.StockQty??0);
+                print(currentStock.length);
+                setState(() {});
+              }
             },
             success: (data) {
               print("Akshayaaaaa" + data.toString());
@@ -596,6 +674,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                     context
                         .read<RequestformreadCubit>().getRequestFormRead(veritiaclid!);
                     selectedVertical=0;
+                    select=false;
 
                   }
                   else{
@@ -627,8 +706,12 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                   select=false;
                   clear();
                   selectedVertical=index;
+
                   updateCheck=false;
                   currentStock.clear();
+                  table.clear();
+                  // unitcostListControllers.clear();
+
 
                   veritiaclid =
                       result[index].id;
@@ -637,7 +720,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                       .read<
                       RequestformreadCubit>()
                       .getRequestFormRead(
-                      veritiaclid!);
+                      veritiaclid);
                 });
               },result: result,
               child:                    tablePagination(
@@ -803,24 +886,52 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     // NewInputCard(
                                                     //     controller: inventoryIdController, title: "Inventory  id"),
                                                     SizedBox(height: height*.030,),
-                                                    SelectableDropDownpopUp(
-                                                      label: "Order Person",
-                                                      type:"RequestFormOrderPerson",
-                                                      value: orderedPersonController.text,
-                                                      onSelection: (OrderedPersonModel? va) {
-                                                        print(
-                                                            "+++++++++++++++++++++++"+va.toString());
-                                                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                                        setState(() {
-                                                          orderedPersonController.text = va!.organisationCode.toString();
+                                                    NewInputCard(
+                                                      controller: orderedPersonController,
+                                                      icondrop: true,
+                                                      title: "Ordered Person",
+                                                      readOnly: true,
+                                                      ontap: () {
+                                                        showDailogPopUp(
+                                                          context,
+                                                          TableConfigurePopup(
 
-                                                          // onChange = true;
+                                                            type: "RequestFormCstomGroupListPopup",
+                                                            valueSelect: (OrderedPersonModel va) {
+                                                              print(
+                                                                  "+++++++++++++++++++++++"+va.toString());
+                                                              //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                                              setState(() {
+                                                                orderedPersonController.text = va!.organisationCode.toString();
 
-                                                        });
+                                                                // onChange = true;
+
+                                                              });
+                                                            },
+                                                          ),
+                                                        );
                                                       },
-                                                      onAddNew: () {},
-                                                      restricted: true,
                                                     ),
+
+
+                                                    // SelectableDropDownpopUp(
+                                                    //   label: "Ordered Person",
+                                                    //   type:"RequestFormOrderPerson",
+                                                    //   value: orderedPersonController.text,
+                                                    //   onSelection: (OrderedPersonModel? va) {
+                                                    //     print(
+                                                    //         "+++++++++++++++++++++++"+va.toString());
+                                                    //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                                    //     setState(() {
+                                                    //       orderedPersonController.text = va!.organisationCode.toString();
+                                                    //
+                                                    //       // onChange = true;
+                                                    //
+                                                    //     });
+                                                    //   },
+                                                    //   onAddNew: () {},
+                                                    //   restricted: true,
+                                                    // ),
                                                     SizedBox(height: height*.030,),
                                                     PopUpDateFormField(
 
@@ -1054,7 +1165,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                       // textColor: Palette.white
                                                     ),
                                                     tableHeadtext(
-                                                      'Is Recieved',
+                                                      'Is Received',
 
                                                       size: 13,
                                                       // color: Palette.containerDarknew,
@@ -1125,13 +1236,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                       // color: Palette.containerDarknew,
                                                       // textColor: Palette.white
                                                     ),
-                                                    tableHeadtext(
-                                                      'Is Free',
-
-                                                      size: 13,
-                                                      // color: Palette.containerDarknew,
-                                                      // textColor: Palette.white
-                                                    ),
+                                                    // tableHeadtext(
+                                                    //   'Is Free',
+                                                    //
+                                                    //   size: 13,
+                                                    //   // color: Palette.containerDarknew,
+                                                    //   // textColor: Palette.white
+                                                    // ),
                                                     tableHeadtext(
                                                       'Is Active',
 
@@ -1189,95 +1300,187 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child:
-                                                          PopUpCall(
-                                                            inventory: Variable.inventory_ID,
+                                                                VariantIdTAble(
+                                                            text:table[i].variantId.toString(),
+                                                            onTap: (){
+                                                              showDailogPopUp(
+                                                                context,
+                                                                TableConfigurePopup(
+                                                                  inventory: Variable.inventory_ID,
+                                                                  type: "variantTabalePopup",
+                                                                  valueSelect: (VariantId? va) {
+                                                                    updateCheck=true;
+                                                                    stockCheck=true;
+                                                                    table[i] = table[i].copyWith(updateCheck: true);
+                                                                    setState(() {
 
-                                                            type:"cost-method-list",
-                                                            value: table[i].variantId,
-                                                            onSelection:
-                                                                (VariantId? va) {
-                                                                  updateCheck=true;
-                                                                  stockCheck=true;
-                                                                  table[i] = table[i].copyWith(updateCheck: true);
-                                                                  setState(() {
+                                                                    });
 
-                                                                  });
-
-                                                              table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
-                                                                  variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
-                                                                  ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
-                                                              )]);
-                                                              setState(() {
-
-
-                                                                int? id = va!.id;
-                                                                Variable.tableindex =i;
-                                                                Variable.tableedit=true;
-                                                                stockCheck==true;
+                                                                    table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                        variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                        ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                    )]);
+                                                                    setState(() {
 
 
-                                                                // onChange = true;
-                                                                context
-                                                                    .read<
-                                                                    TableDetailsCubitDartCubit>()
-                                                                    .getTableDetails(
-                                                                    id);
-                                                                context
-                                                                    .read<
-                                                                    PurchaseStockCubit>()
-                                                                    .getCurrentStock(
-                                                                   inventoryIdController.text, va?.code);
-                                                                var qty = table[i]
-                                                                    .requestedQty;
-
-                                                                var excess = table[i]
-                                                                    .excessTax;
-
-                                                                var unitcost = table[i]
-                                                                    .unitCost;
-
-                                                                var vat = table[i].vat;
-                                                                var disc = table[i].discount;
+                                                                      int? id = va!.id;
+                                                                      Variable.tableindex =i;
+                                                                      Variable.tableedit=true;
+                                                                      stockCheck==true;
 
 
-                                                                if (unitcost ==
-                                                                    0 ||
-                                                                    qty ==
-                                                                        0) {
-                                                                  table[i] =
-                                                                      table[i]
-                                                                          .copyWith(
-                                                                          variableAmount: 0,
-                                                                          actualCost: 0,
-                                                                          grandTotal: 0,
-                                                                          discount: disc);
-                                                                }
+                                                                      // onChange = true;
+                                                                      context
+                                                                          .read<
+                                                                          TableDetailsCubitDartCubit>()
+                                                                          .getTableDetails(
+                                                                          id);
+                                                                      context
+                                                                          .read<
+                                                                          PurchaseStockCubit>()
+                                                                          .getCurrentStock(
+                                                                          inventoryIdController.text, va?.code);
+                                                                      var qty = table[i]
+                                                                          .requestedQty;
 
-                                                                else {
-                                                                  var Vamount =         vatableAmountUpdation(unitcost,qty,excess,disc);
+                                                                      var excess = table[i]
+                                                                          .excessTax;
 
+                                                                      var unitcost = table[i]
+                                                                          .unitCost;
 
-                                                                  var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
-
-
-                                                                  table[i] =
-                                                                      table[i]
-                                                                          .copyWith(
-                                                                          variableAmount: Vamount,
-                                                                          actualCost: vactualCost,
-                                                                          grandTotal: vactualCost,
-                                                                          discount: disc);
-                                                                  setState(() {});
-
-                                                                }
+                                                                      var vat = table[i].vat;
+                                                                      var disc = table[i].discount;
 
 
-                                                                // orderType = va!;
-                                                              });
+                                                                      if (unitcost ==
+                                                                          0 ||
+                                                                          qty ==
+                                                                              0) {
+                                                                        table[i] =
+                                                                            table[i]
+                                                                                .copyWith(
+                                                                                variableAmount: 0,
+                                                                                actualCost: 0,
+                                                                                grandTotal: 0,
+                                                                                discount: disc);
+                                                                      }
+
+                                                                      else {
+                                                                        var Vamount =         vatableAmountUpdation(unitcost,qty,excess,disc);
+
+
+                                                                        var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
+
+                                                                        table[i] =
+                                                                            table[i]
+                                                                                .copyWith(
+                                                                                variableAmount: Vamount,
+                                                                                actualCost: vactualCost,
+                                                                                grandTotal: vactualCost,
+                                                                                discount: disc);
+                                                                        setState(() {});
+
+                                                                      }
+
+
+                                                                      // orderType = va!;
+                                                                    });
+                                                                  },
+                                                                ),
+                                                              );
                                                             },
-                                                            onAddNew: () {},
-                                                            // restricted: true,
-                                                          ),
+                                                          )
+                                                          // PopUpCall(
+                                                          //   inventory: Variable.inventory_ID,
+                                                          //
+                                                          //   type:"cost-method-list",
+                                                          //   value: table[i].variantId,
+                                                          //   onSelection:
+                                                          //       (VariantId? va) {
+                                                          //         updateCheck=true;
+                                                          //         stockCheck=true;
+                                                          //         table[i] = table[i].copyWith(updateCheck: true);
+                                                          //         setState(() {
+                                                          //
+                                                          //         });
+                                                          //
+                                                          //     table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                          //         variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                          //         ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                          //     )]);
+                                                          //     setState(() {
+                                                          //
+                                                          //
+                                                          //       int? id = va!.id;
+                                                          //       Variable.tableindex =i;
+                                                          //       Variable.tableedit=true;
+                                                          //       stockCheck==true;
+                                                          //
+                                                          //
+                                                          //       // onChange = true;
+                                                          //       context
+                                                          //           .read<
+                                                          //           TableDetailsCubitDartCubit>()
+                                                          //           .getTableDetails(
+                                                          //           id);
+                                                          //       context
+                                                          //           .read<
+                                                          //           PurchaseStockCubit>()
+                                                          //           .getCurrentStock(
+                                                          //          inventoryIdController.text, va?.code);
+                                                          //       var qty = table[i]
+                                                          //           .requestedQty;
+                                                          //
+                                                          //       var excess = table[i]
+                                                          //           .excessTax;
+                                                          //
+                                                          //       var unitcost = table[i]
+                                                          //           .unitCost;
+                                                          //
+                                                          //       var vat = table[i].vat;
+                                                          //       var disc = table[i].discount;
+                                                          //
+                                                          //
+                                                          //       if (unitcost ==
+                                                          //           0 ||
+                                                          //           qty ==
+                                                          //               0) {
+                                                          //         table[i] =
+                                                          //             table[i]
+                                                          //                 .copyWith(
+                                                          //                 variableAmount: 0,
+                                                          //                 actualCost: 0,
+                                                          //                 grandTotal: 0,
+                                                          //                 discount: disc);
+                                                          //       }
+                                                          //
+                                                          //       else {
+                                                          //         var Vamount =         vatableAmountUpdation(unitcost,qty,excess,disc);
+                                                          //
+                                                          //
+                                                          //         var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                          //
+                                                          //
+                                                          //         table[i] =
+                                                          //             table[i]
+                                                          //                 .copyWith(
+                                                          //                 variableAmount: Vamount,
+                                                          //                 actualCost: vactualCost,
+                                                          //                 grandTotal: vactualCost,
+                                                          //                 discount: disc);
+                                                          //         setState(() {});
+                                                          //
+                                                          //       }
+                                                          //
+                                                          //
+                                                          //       // orderType = va!;
+                                                          //     });
+                                                          //   },
+                                                          //   onAddNew: () {},
+                                                          //   // restricted: true,
+                                                          // ),
                                                         ),
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1319,6 +1522,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: UnderLinedInput(
                                                               initialCheck:true,
+                                                            integerOnly: true,
                                                      // controller: requestedListControllers[i],
                                                       last: table[i].requestedQty.toString() ?? "",
                                                             onChanged: (va) {
@@ -1331,7 +1535,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               if (va == "") {
                                                                 print("entered");
                                                                 table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
-                                                              } else {
+                                                              }
+                                                              else {
                                                                 var qty = int.tryParse(va);
                                                                 var dis = table[i].discount;
                                                                 var excess = table[i].excessTax;
@@ -1471,9 +1676,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: UnderLinedInput(
-                                                              initialCheck:true,
-                                                            //controller: unitcostListControllers[i],
-                                                            last: table[i].unitCost.toString() ?? "",
+                                                              // initialCheck:true,
+                                                            controller: unitcostListControllers[i],
+                                                            // last: table[i].unitCost.toString() ?? "",
                                                             onChanged: (va) {
                                                               updateCheck=true;
                                                               table[i] = table[i].copyWith(updateCheck: true);
@@ -1817,29 +2022,29 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                               }),
                                                         ),
-                                                        TableCell(
-                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: CheckedBoxs(
-                                                              valueChanger:table[i]
-                                                                  .isFree==null?false:table[i].isFree,
-
-                                                              onSelection:(bool ? value){
-                                                                bool? isFree = table[i].isFree;
-                                                                setState(() {
-                                                                  updateCheck=true;
-                                                                  table[i] = table[i].copyWith(updateCheck: true);
-                                                                  setState(() {
-
-                                                                  });
-                                                                  isFree = !isFree!;
-                                                                  table[i] = table[i].copyWith(isFree: isFree);
-
-
-
-                                                                });
-
-                                                              }),
-                                                        ),
+                                                        // TableCell(
+                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                        //   child: CheckedBoxs(
+                                                        //       valueChanger:table[i]
+                                                        //           .isFree==null?false:table[i].isFree,
+                                                        //
+                                                        //       onSelection:(bool ? value){
+                                                        //         bool? isFree = table[i].isFree;
+                                                        //         setState(() {
+                                                        //           updateCheck=true;
+                                                        //           table[i] = table[i].copyWith(updateCheck: true);
+                                                        //           setState(() {
+                                                        //
+                                                        //           });
+                                                        //           isFree = !isFree!;
+                                                        //           table[i] = table[i].copyWith(isFree: isFree);
+                                                        //
+                                                        //
+                                                        //
+                                                        //         });
+                                                        //
+                                                        //       }),
+                                                        // ),
 
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1881,25 +2086,26 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             var qty = table[i].requestedQty??0;
                                                             var foc = table[i].foc??0;
                                                             var dis = table[i].discount??0;
-                                                            if(variant=="null"||qty==0||unitcosts==0||foc==0||vat==0){
+                                                            if(variant=="null"||unitcosts==0){
                                                               context.showSnackBarError("please fill all the fields");
                                                             }
                                                             else if(qty==0||qty==""){
                                                               context.showSnackBarError(
-                                                                  "the requested quantity not be 0 or empty");
+                                                                  "The requested quantity not be 0 or empty");
 
                                                             }
                                                             else if(qty!<foc!){
-                                                              context.showSnackBarError("the received qty allways greater than  foc");
+                                                              context.showSnackBarError("the received qty all ways greater than  foc");
 
                                                             }
                                                             else if(mins>maxs){
-                                                              context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
+                                                              context.showSnackBarError("the minimum qty  all ways less than than  maximum qty");
                                                             }
                                                             else{
                                                               updateCheck=false;
-                                                              addition();
                                                               table[i] = table[i].copyWith(updateCheck: false);
+                                                              addition();
+
                                                               setState(() {
 
                                                               });
@@ -1949,44 +2155,87 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                           fontWeight: FontWeight.w500),
                                                     ),
-                                                    PopUpCall(
-                                                      inventory: Variable.inventory_ID,
-                                                      // label: "purchase UOM",
-                                                      type:
-                                                      "cost-method-list",
-                                                      value: variantId,
-                                                      onSelection:
-                                                          (VariantId? va) {
-                                                        print(va!.id
-                                                            .toString());
-                                                        print("code" +
-                                                            va!.code
-                                                                .toString());
+                                                    VariantIdTAble(
+                                                      text:variantId.toString(),
+                                                      onTap: (){
+                                                        showDailogPopUp(
+                                                          context,
+                                                          TableConfigurePopup(
+                                                            inventory: Variable.inventory_ID,
+                                                            type: "variantTabalePopup",
+                                                            valueSelect: (VariantId? va) {
 
-                                                        setState(() {
-                                                          // stockCheck=true;
-                                                          variantId =
-                                                              va?.code;
-                                                          int? id = va!.id;
-                                                          print("is is"+id.toString());
-                                                          Variable.tableedit=false;
-                                                          stockCheck=true;
+                                                              print(va!.id
+                                                                  .toString());
+                                                              print("code" +
+                                                                  va!.code
+                                                                      .toString());
 
-                                                          // onChange = true;
-                                                          context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
-                                                          setState(() {
+                                                              setState(() {
+                                                                // stockCheck=true;
+                                                                variantId =
+                                                                    va?.code;
+                                                                int? id = va!.id;
+                                                                print("is is"+id.toString());
+                                                                Variable.tableedit=false;
+                                                                stockCheck=true;
 
-                                                          });
-                                                          context
-                                                              .read<PurchaseStockCubit>()
-                                                              .getCurrentStock(inventoryIdController.text,variantId);
-                                                          vatableAmountCalculation(unitcost, recievedQty, excessTax, discount);
-                                                          actualAndgrandTotal(vatableAmount1,vat1);
+                                                                // onChange = true;
+                                                                context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+                                                                setState(() {
 
-                                                          // orderType = va!;
-                                                        });
+                                                                });
+                                                                context
+                                                                    .read<PurchaseStockCubit>()
+                                                                    .getCurrentStock(inventoryIdController.text,variantId);
+                                                                vatableAmountCalculation(unitcost, recievedQty, excessTax, discount);
+                                                                actualAndgrandTotal(vatableAmount1,vat1);
+
+                                                                // orderType = va!;
+                                                              });
+                                                            },
+                                                          ),
+                                                        );
                                                       },
                                                     ),
+                                                    // PopUpCall(
+                                                    //   inventory: Variable.inventory_ID,
+                                                    //   // label: "purchase UOM",
+                                                    //   type:
+                                                    //   "cost-method-list",
+                                                    //   value: variantId,
+                                                    //   onSelection:
+                                                    //       (VariantId? va) {
+                                                    //     print(va!.id
+                                                    //         .toString());
+                                                    //     print("code" +
+                                                    //         va!.code
+                                                    //             .toString());
+                                                    //
+                                                    //     setState(() {
+                                                    //       // stockCheck=true;
+                                                    //       variantId =
+                                                    //           va?.code;
+                                                    //       int? id = va!.id;
+                                                    //       print("is is"+id.toString());
+                                                    //       Variable.tableedit=false;
+                                                    //       stockCheck=true;
+                                                    //
+                                                    //       // onChange = true;
+                                                    //       context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+                                                    //       setState(() {
+                                                    //
+                                                    //       });
+                                                    //       context
+                                                    //           .read<PurchaseStockCubit>()
+                                                    //           .getCurrentStock(inventoryIdController.text,variantId);
+                                                    //       vatableAmountCalculation(unitcost, recievedQty, excessTax, discount);
+                                                    //       actualAndgrandTotal(vatableAmount1,vat1);
+                                                    //
+                                                    //       // orderType = va!;
+                                                    //     });
+                                                    //   },
+                                                    // ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(varinatname??"",
@@ -2015,6 +2264,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: UnderLinedInput(
                                                       controller: receivedTestContoller,
+                                                        integerOnly: true,
 
                                                         onChanged: (p0) {
                                                           if (p0 == '') {
@@ -2440,19 +2690,19 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                       ),
                                                     ),
-                                                    TableCell(
-                                                      verticalAlignment: TableCellVerticalAlignment.middle,
-                                                      child: CheckedBoxs(
-                                                        // color:Color(0xff3E4F5B) ,
-                                                        valueChanger:  isFree1,
-                                                        onSelection: (bool? value ) {
-                                                        setState(() {
-                                                            isFree1 = !isFree1!;
-                                                          });
-                                                        },
-
-                                                      ),
-                                                    ),
+                                                    // TableCell(
+                                                    //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                    //   child: CheckedBoxs(
+                                                    //     // color:Color(0xff3E4F5B) ,
+                                                    //     valueChanger:  isFree1,
+                                                    //     onSelection: (bool? value ) {
+                                                    //     setState(() {
+                                                    //         isFree1 = !isFree1!;
+                                                    //       });
+                                                    //     },
+                                                    //
+                                                    //   ),
+                                                    // ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: CheckedBoxs(
@@ -2463,9 +2713,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             if (minQty! >
                                                                 maxQty!) {
                                                               print("enterd");
-                                                              if(minQty!=0 &&maxQty!=0){
+
                                                                 context.showSnackBarError(
-                                                                    "the minimum order is always less than maximum order");}
+                                                                    "the minimum order is always less than maximum order");
                                                             }
                                                             else {
                                                               isActive1 = !isActive1!;
@@ -2479,7 +2729,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                       child: TableTextButton(label: "Save", onPress: (){
                                                         foc1=foc1??0;
                                                         recievedQty=recievedQty??0;
-                                                        if(variantId=="null"||recievedQty==0||unitcost==0||vat1==0){
+                                                        if(variantId=="null"||recievedQty==0||unitcost==0){
                                                           context.showSnackBarError("please fill all the fields");
                                                         }
                                                         else if(recievedQty==0||recievedQty==""){
@@ -2493,7 +2743,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         }
                                                         else {
                                                           setState(() {
-                                                            currentStock.add(stock);
+                                                            currentStock.add(stock??0);
                                                             table.add(
                                                                 OrderLines(
                                                                   variantId: variantId ?? "",
@@ -2517,6 +2767,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   isInvoiced: isInvoiced1,
                                                                   isFree: isFree1,
                                                                   isActive: isActive1,
+                                                                   updateCheck: false
                                                                 ));
                                                           });
                                                           addition();
@@ -2542,6 +2793,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           purchaseUomName = "";
                                                           recievedQty = 0;
                                                           excess1 = 0;
+                                                          unitcostListControllers.clear();
+                                                          valueAddingTextEdingController();
                                                           unitCostCheck.clear();
                                                           isReceived1 = false;
                                                           discount = 0;
@@ -2561,6 +2814,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         } }),
                                                     ),
 
+                                                    
 
 
                                                   ]
@@ -2596,8 +2850,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                               17: FlexColumnWidth(3),
                                               18: FlexColumnWidth(2),
                                               19: FlexColumnWidth(2),
-                                              20: FlexColumnWidth(2),
-                                              21: FlexColumnWidth(3),
+                                              20: FlexColumnWidth(3),
+                                              // 21: FlexColumnWidth(3),
 
                                             },
                                           ),
@@ -2641,10 +2895,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                     grandTotal: double.tryParse(grandTotalController.text),
                                     variableAmount: double.tryParse(vatableAmountController.text),
                                     foc: double.tryParse(focController.text),
-                                    createdBy: "12",
-                                    edited_by: "anvar",
+                                    createdBy: Variable.created_by,
+                                    edited_by: Variable.created_by,
 
-                                    orderLines: table1
+                                    orderLines:select? table1:table
 
                                 );
                                 print("sPBHSSMODEL"+model.toString());

@@ -43,7 +43,7 @@ import 'logi/login.dart';
 
 class DashBoard extends StatefulWidget {
   final int index;
-  const DashBoard({Key? key, this.index = 1}) : super(key: key);
+  const DashBoard({Key? key, this.index = 0}) : super(key: key);
   @override
   State<DashBoard> createState() => _DashBoardState();
 }
@@ -79,7 +79,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     TabController _tabController =
-        TabController(length: 8, vsync: this, initialIndex: widget.index);
+        TabController(length: 6, vsync: this, initialIndex: widget.index);
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -173,7 +173,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                                 NeverScrollableScrollPhysics(),
                                             controller: _tabController,
                                             children: [
-                                              RegisterScreen(),
+                                              // RegisterScreen(),
+                                              // Text(""),
                                               // PrintScreen(),
                                               PurchaseScreen(isCollapsed),
                                               PurchaseReturn(),
@@ -181,7 +182,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                               SalesReturnScreen(isCollapsed),
                                               HeirarchyTabScreen(isCollapsed),
                                               ProductModuleTab(isCollapsed),
-                                              PromotionTabScreenTab(isCollapsed)
+                                              // PromotionTabScreenTab(isCollapsed)
                                             ],
                                           ),
                                         ),
@@ -408,79 +409,84 @@ class _TitleScreenState extends State<TitleScreen> {
               SizedBox(
                 width: size.width * .002,
               ),
-              Container(
-                // width: size.width * .298,
-                height: size.height * .0455,
-                child: TabBar(
-                    onTap: (val) async {
-                      print("valueeeeee is $val");
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setInt('index', val);
-                    },
-                    isScrollable: true,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    // labelPadding: EdgeInsets.only(left:size.width * .024,),
-                    // indicatorPadding: EdgeInsets.only(left:size.width * .014,),
-                    padding: EdgeInsets.zero,
-                    labelColor: Colors.white,
-                    labelStyle: TextStyle(
-                      fontSize: height * 00.022,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    unselectedLabelColor: Color(0xffEDF1F2),
-                    unselectedLabelStyle: TextStyle(
-                        fontSize: height * 00.022, fontStyle: FontStyle.normal),
-                    indicator: UnderlineTabIndicator(
-                      borderSide: BorderSide(
-                        width: height * .008,
-                        color: Colors.white,
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                // physics: ,
+                child: Container(
+                  width: size.width * .75,
+                  height: size.height * .0455,
+                  // color: Colors.red,
+                  child: TabBar(
+                      onTap: (val) async {
+                        print("valueeeeee is $val");
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setInt('index', val);
+                      },
+                      isScrollable: true,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      // labelPadding: EdgeInsets.only(left:size.width * .024,),
+                      // indicatorPadding: EdgeInsets.only(left:size.width * .014,),
+                      padding: EdgeInsets.zero,
+                      labelColor: Colors.white,
+                      labelStyle: TextStyle(
+                        fontSize: height * 00.022,
+                        fontWeight: FontWeight.w600,
                       ),
-                      // insets: EdgeInsets.only(
-                      //     left: size.width * .015,
-                      //     top: size.width * .023,
-                      //     right: size.width * .03),
-                    ),
-                    indicatorColor: Colors.white,
-                    indicatorWeight: height * .001,
-                    // padding: EdgeInsets.only(bottom: 10),
+                      unselectedLabelColor: Color(0xffEDF1F2),
+                      unselectedLabelStyle: TextStyle(
+                          fontSize: height * 00.022, fontStyle: FontStyle.normal),
+                      indicator: UnderlineTabIndicator(
+                        borderSide: BorderSide(
+                          width: height * .008,
+                          color: Colors.white,
+                        ),
+                        // insets: EdgeInsets.only(
+                        //     left: size.width * .015,
+                        //     top: size.width * .023,
+                        //     right: size.width * .03),
+                      ),
+                      indicatorColor: Colors.white,
+                      indicatorWeight: height * .001,
+                      // padding: EdgeInsets.only(bottom: 10),
 
-                    controller: widget.tabController,
-                    physics: NeverScrollableScrollPhysics(),
-                    tabs: [
-                      Text(
-                        "Dashboard",
-                        style: TextStyle(fontSize: height * 00.022),
-                      ),
-                      Text(
-                        "Purchase",
-                        style: TextStyle(fontSize: height * 00.022),
-                      ),
-                      Text(
-                        "Purchase Return",
-                        style: TextStyle(fontSize: height * 00.022),
-                      ),
-                      Text(
-                        "Sales",
-                        style: TextStyle(fontSize: height * 00.022),
-                      ),
-                      Text(
-                        "Sales Return",
-                        style: TextStyle(fontSize: height * 00.022),
-                      ),
-                      Text(
-                        "Heirarchy",
-                        style: TextStyle(fontSize: height * 00.022),
-                      ),
-                      Text(
-                        "Variant",
-                        style: TextStyle(fontSize: height * 00.022),
-                      ),
-                      Text(
-                        "Promotion",
-                        style: TextStyle(fontSize: height * 00.022),
-                      ),
-                    ]),
+                      controller: widget.tabController,
+                      physics: NeverScrollableScrollPhysics(),
+                      tabs: [
+                        // Text(
+                        //   "Dashboard",
+                        //   style: TextStyle(fontSize: height * 00.022),
+                        // ),
+                        Text(
+                          "Purchase",
+                          style: TextStyle(fontSize: height * 00.022),
+                        ),
+                        Text(
+                          "Purchase Return",
+                          style: TextStyle(fontSize: height * 00.022),
+                        ),
+                        Text(
+                          "Sales",
+                          style: TextStyle(fontSize: height * 00.022),
+                        ),
+                        Text(
+                          "Sales Return",
+                          style: TextStyle(fontSize: height * 00.022),
+                        ),
+                        Text(
+                          "Heirarchy",
+                          style: TextStyle(fontSize: height * 00.022),
+                        ),
+                        Text(
+                          "Variant",
+                          style: TextStyle(fontSize: height * 00.022),
+                        ),
+                        // Text(
+                        //   "Promotion",
+                        //   style: TextStyle(fontSize: height * 00.022),
+                        // ),
+                      ]),
+                ),
               ),
               // Spacer(),
               // TextButton.icon(onPressed: (){

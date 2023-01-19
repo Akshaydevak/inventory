@@ -10,6 +10,7 @@ import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
@@ -63,6 +64,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   TextEditingController excessClearController = TextEditingController();
   TextEditingController discountClearController = TextEditingController();
   TextEditingController focClearController = TextEditingController();
+  var unitcostAdditionalListControllers = <TextEditingController>[];
+  var unitcostReceivingListControllers = <TextEditingController>[];
   var expirydateControllerList = <TextEditingController>[];
   var expirydateControllerList2 = <TextEditingController>[];
   late AutoScrollController recieveController;
@@ -156,7 +159,25 @@ bool  recievlinequantityCheck=false;
 
   }
 
-
+  valueAddingTextEdingController(){
+    if(additionalVariants.isNotEmpty){
+      for(var i=0;i<additionalVariants.length;i++){
+        var unitcost = new TextEditingController(text:additionalVariants [i].unitCost.toString()??"");
+        unitcostAdditionalListControllers.add(unitcost);
+        setState(() {
+        });
+      }
+    }
+  }  valueAddingRecievingTextEdingController(){
+    if(recievingLisnes.isNotEmpty){
+      for(var i=0;i<recievingLisnes.length;i++){
+        var unitcost = new TextEditingController(text:recievingLisnes [i].unitCost.toString()??"");
+        unitcostReceivingListControllers.add(unitcost);
+        setState(() {
+        });
+      }
+    }
+  }
   vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
     vatableAmount1 =double.parse( (((unitCost! *
         qty!) +
@@ -164,6 +185,8 @@ bool  recievlinequantityCheck=false;
         discount!).toStringAsFixed(2));
   }
   vatableFocAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount,double? foc ){
+
+
     vatableAmount1=double.parse(((((qty!*unitCost!)-(foc!*unitCost!))+excessTax!)-discount!).toStringAsFixed(2));
   }
   actualAndgrandTotal(double? vatableAmount,double? vat){
@@ -177,6 +200,7 @@ bool  recievlinequantityCheck=false;
   }
 
   double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,double? discount){
+
  double   vatableAmount =double.parse( (((unitCost! *
         qty!) +
         excessTax!) -
@@ -222,8 +246,9 @@ bool  recievlinequantityCheck=false;
     }
   }
   addition() {
+    if(recievingLisnes.isNotEmpty==true){
     for (var i = 0; i < recievingLisnes.length; i++) {
-      if (recievingLisnes[i].isActive == true) {
+      if (recievingLisnes[i].isActive == true &&recievingLisnes[i].updateCheck == false) {
         var unicosts= recievingLisnes[i].unitCost??0;
         var vatValue1= recievingLisnes[i].vat??0;
         var grands1= recievingLisnes[i].grandTotal??0;
@@ -245,7 +270,7 @@ bool  recievlinequantityCheck=false;
         print("excessTaxvalue"+excessTAxValue.toString());
         excessTAxValue = excessTAxValue + excessTAxValue1;
       }
-    }
+    }}
     unitCostController.text =  unitcost1.toString();
     grandtotalCostController.text = grands.toString();
     vatController.text = vatValue?.toString()??"";
@@ -357,6 +382,7 @@ bool  recievlinequantityCheck=false;
                     ? recievingLisnes = List.from(data?.receivingLines ?? [])
                     : recievingLisnes = [];
                 print("tablsssssssssssssssssse"+recievingLisnes.toString());
+                valueAddingRecievingTextEdingController();
                 setState(() {
                 });  for(var i=0;i<recievingLisnes.length;i++){
                   var date = new TextEditingController(text:recievingLisnes[i].expiryDate??"");
@@ -407,14 +433,199 @@ bool  recievlinequantityCheck=false;
 
 
                 if(Variable.tableedit==true) {
+                  print("additional case");
                   additionalVariants[Variable.tableindex] =
                       additionalVariants[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,vat:purchaseTable?.vat,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                  unitcostAdditionalListControllers[Variable.tableindex]=TextEditingController(text:purchaseTable?.unitCost.toString() );
+
+
+                  var qty = additionalVariants[Variable.tableindex].receivedQty;
+
+                  var vat = additionalVariants[Variable.tableindex].vat;
+
+                  var foc = additionalVariants[Variable.tableindex].foc;
+                  var excess = additionalVariants[Variable.tableindex].excessTax;
+
+
+
+
+
+                  var unitcost = additionalVariants[Variable.tableindex].unitCost;
+
+                  print("unitcost" + unitcost.toString());
+                  print("unitcost" + qty.toString());
+
+                  var Vdiscount = additionalVariants[Variable.tableindex].discount;
+
+                  if(qty==0 || unitcost==0){
+
+                    additionalVariants[Variable.tableindex] = additionalVariants[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
+
+                    setState(() {
+
+
+
+                    });
+
+
+
+                  }else {
+                    print("enterd in eldse case");
+
+                    var Vamount;
+
+
+
+                    if(foc==0 ||foc=="") {
+                      print("enterd in foc case");
+
+                      Vamount =vatableAmountUpdation(unitcost,qty,excess,Vdiscount);
+                      print("vamount$Vamount");
+
+
+
+                    }else{
+                      print("enterd in no foc case");
+
+                      Vamount=vatableAmountFocUpdation(unitcost,qty,excess,Vdiscount,foc);
+                      print(Vamount);
+
+
+
+                    }
+                    print("vat$vat");
+
+                    var vactualCost = actualAndgrandTotalUpdation(Vamount,vat);
+                    print("vatableAmount$Vamount");
+                    print("vatableAmount$vactualCost");
+                    print("vatableAmount${Variable.tableindex}");
+
+
+
+
+                    additionalVariants[Variable.tableindex] =
+
+                        additionalVariants[Variable.tableindex]
+
+                            .copyWith(
+
+                            actualCost: vactualCost,
+
+                            grandTotal: vactualCost,
+
+                            vatableAmount: Vamount,
+
+                            excessTax: excess);
+
+                    setState(() {});
+
+                  }
                   setState(() {
 
                   });
                 }
+
                 else if( variantIdcheck==true){
                   recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,vat:purchaseTable?.vat,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                  unitcostReceivingListControllers[Variable.tableindex]=TextEditingController(text:purchaseTable?.unitCost.toString() );
+
+
+                  var qty = recievingLisnes[Variable.tableindex].receivedQty;
+
+                  var vat = recievingLisnes[Variable.tableindex].vat;
+
+                  var foc = recievingLisnes[Variable.tableindex].foc;
+
+
+
+
+
+                  var unitcost = recievingLisnes[Variable.tableindex].unitCost;
+
+
+
+                  var Vdiscount = recievingLisnes[Variable.tableindex].discount;
+                  var excess = recievingLisnes[Variable.tableindex].excessTax;
+
+                  if(qty==0 || unitcost==0){
+
+                    recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0,);
+
+                    setState(() {
+
+
+
+                    });
+
+
+
+                  }else {
+
+                    var Vamount;
+
+
+
+                    if(foc==0 ||foc=="") {
+
+                      Vamount =vatableAmountUpdation(unitcost,qty,excess,Vdiscount);
+
+                      // (((unitcost! *
+
+                      //     qty!) +
+
+                      //     excess!) -
+
+                      //     Vdiscount!)
+
+                      //     .toDouble();
+
+                    }else{
+
+                      Vamount=vatableAmountFocUpdation(unitcost,qty,excess,Vdiscount,foc);
+
+                      // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
+
+
+
+                    }
+
+                    var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
+                    // (Vamount! +
+
+                    //     ((Vamount! *
+
+                    //         vat!) /
+
+                    //         100));
+
+                    var Vgrnadtotal = actualAndgrandTotalUpdation(Vamount,vat);
+
+                    // (Vamount! +
+
+                    //     ((Vamount! *
+
+                    //         vat!) /
+
+                    //         100));
+
+                    recievingLisnes[Variable.tableindex] =
+
+                        recievingLisnes[Variable.tableindex]
+
+                            .copyWith(
+
+                            actualCost: vactualCost,
+
+                            grandTotal: Vgrnadtotal,
+
+                            vatableAmount: Vamount,
+
+                            );
+
+                    setState(() {});
+
+                  }
                   setState(() {
 
                   });
@@ -441,6 +652,48 @@ bool  recievlinequantityCheck=false;
                   //
                   barcode =
                       purchaseTable?.barCode?.barcodeNumber.toString()??"";
+
+                  if(unitcost==0 ||recievedQty==0){
+
+                    actualCost1=0;
+
+                    vatableAmount1=0;
+
+                    grandTotal1=0;
+
+                  }
+
+                  else{
+
+                    if(foc1==0 ||foc1==""){
+
+                      vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+
+                      actualAndgrandTotal(vatableAmount1,vat1);
+
+
+
+
+
+
+
+                    }
+
+                    else{
+
+
+
+                      vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+
+                      actualAndgrandTotal(vatableAmount1,vat1);
+
+
+
+                    }
+
+
+
+                  }
                 }
 
                 //
@@ -480,7 +733,28 @@ bool  recievlinequantityCheck=false;
         state.maybeWhen(
             orElse: () {},
             error: () {
-              print("error");
+              if(stockCheck==false){
+                print("Stockcheck==false");
+                currentStock.add(0);
+                setState(() {
+                });
+              }
+              else if(recievlinequantityCheck){
+                print("recievlinequantityCheck==true");
+                currentStock[Variable.tableindex]=0;
+              }
+              else{
+                print("enterd in this..case ");
+                if(Variable.tableedit==false){
+                  print("Variable==false");
+                  print("findinf");
+                  stock=0;
+                }
+                else if(Variable.tableedit==true){
+                  print("Variable==true");
+                  additionalVariants[Variable.tableindex] = additionalVariants[Variable.tableindex].copyWith(currentStock:0  );
+                }
+              }
             },
             success: (data) {
               print("Akshayaaaaa" + data.toString());
@@ -1246,7 +1520,7 @@ bool  recievlinequantityCheck=false;
   
                                             tableHeadtext(
   
-                                              'Orderline Id',
+                                              'Order line Id',
   
   
   
@@ -1432,7 +1706,7 @@ bool  recievlinequantityCheck=false;
   
                                             tableHeadtext(
   
-                                              'Is Recieved',
+                                              'Is Received',
   
                                               size: 13,
   
@@ -1904,61 +2178,115 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: PopUpCall(
-  
-                                                inventory: Variable.inventory_ID,
-  
-  
-  
-                                                type:"cost-method-list",
-  
-                                                value: recievingLisnes[i].variantId,
-  
-                                                onSelection: (VariantId? va) {
-  
-                                                  updateCheck=true;
-  
-                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
-  
-                                                  setState(() {
-  
-  
-  
-                                                  });
-  
-                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
-  
-                                                  setState(() {
-  
-                                                    var  variant= va?.code;
-  
-                                                    int? id = va!.id;
-  
-                                                    Variable.tableindex =i;
-  
-                                                    recievlinequantityCheck=true;
-  
-                                                    stockCheck=true;
-  
-                                                    Variable.tableedit=false;
-  
-  
-  
-                                                    variantIdcheck=true;
-  
-                                                    context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
-  
-                                                    context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
-  
-  
-  
-                                                    // orderType = va!;
-  
-                                                  });
-  
-                                                }, // restricted: true,
-  
-                                              ),
+                                              child:
+                                              VariantIdTAble(
+                                                text:recievingLisnes[i].variantId.toString(),
+                                                onTap: (){
+                                                  showDailogPopUp(
+                                                    context,
+                                                    TableConfigurePopup(
+                                                      inventory: Variable.inventory_ID,
+                                                      type: "variantTabalePopup",
+                                                      valueSelect: (VariantId? va) {
+                                                        updateCheck=true;
+
+                                                        recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+
+                                                        setState(() {
+
+
+
+                                                        });
+
+                                                        recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
+
+                                                        setState(() {
+
+                                                          var  variant= va?.code;
+
+                                                          int? id = va!.id;
+
+                                                          Variable.tableindex =i;
+
+                                                          recievlinequantityCheck=true;
+
+                                                          stockCheck=true;
+
+                                                          Variable.tableedit=false;
+
+
+
+                                                          variantIdcheck=true;
+
+                                                          context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+
+                                                          context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
+
+
+
+                                                          // orderType = va!;
+
+                                                        });
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              )
+                                              // PopUpCall(
+                                              //
+                                              //   inventory: Variable.inventory_ID,
+                                              //
+                                              //
+                                              //
+                                              //   type:"cost-method-list",
+                                              //
+                                              //   value: recievingLisnes[i].variantId,
+                                              //
+                                              //   onSelection: (VariantId? va) {
+                                              //
+                                              //     updateCheck=true;
+                                              //
+                                              //     recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              //
+                                              //     setState(() {
+                                              //
+                                              //
+                                              //
+                                              //     });
+                                              //
+                                              //     recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
+                                              //
+                                              //     setState(() {
+                                              //
+                                              //       var  variant= va?.code;
+                                              //
+                                              //       int? id = va!.id;
+                                              //
+                                              //       Variable.tableindex =i;
+                                              //
+                                              //       recievlinequantityCheck=true;
+                                              //
+                                              //       stockCheck=true;
+                                              //
+                                              //       Variable.tableedit=false;
+                                              //
+                                              //
+                                              //
+                                              //       variantIdcheck=true;
+                                              //
+                                              //       context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+                                              //
+                                              //       context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
+                                              //
+                                              //
+                                              //
+                                              //       // orderType = va!;
+                                              //
+                                              //     });
+                                              //
+                                              //   }, // restricted: true,
+                                              //
+                                              // ),
   
                                             ),
   
@@ -2250,6 +2578,7 @@ bool  recievlinequantityCheck=false;
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
                                               child: UnderLinedInput(
+                                                integerOnly: true,
   
                                                 initialCheck: true,
   
@@ -2488,10 +2817,11 @@ bool  recievlinequantityCheck=false;
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
                                               child: UnderLinedInput(
+                                                controller: unitcostReceivingListControllers[i],
   
-                                                  initialCheck: true,
-  
-                                                last: recievingLisnes[i].unitCost.toString() ?? "",
+                                                //   initialCheck: true,
+                                                //
+                                                // last: recievingLisnes[i].unitCost.toString() ?? "",
   
                                                 onChanged: (va) {
   
@@ -3423,7 +3753,7 @@ bool  recievlinequantityCheck=false;
   
                                                   controller:recievingLisnes.length!=expirydateControllerList2.length?TextEditingController(text:""):expirydateControllerList2[i],
   
-                                                  label: "Promised reciept date",
+                                                  label: "Promised receipt date",
   
                                                   onSaved: (newValue) {
   
@@ -3593,7 +3923,7 @@ bool  recievlinequantityCheck=false;
   
                                               verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                              child: TableTextButton(label:recievingLisnes[i].updateCheck==true? 'Update':"Update",
+                                              child: TableTextButton(label:recievingLisnes[i].updateCheck==true? 'UPDATE':"",
 
 
                                                 textColor:recievingLisnes[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
@@ -3639,15 +3969,13 @@ bool  recievlinequantityCheck=false;
   
                                                   else if(qty!<foc!){
   
-                                                    context.showSnackBarError("the received qty allways greater than  foc");
+                                                    context.showSnackBarError("the received qty all ways greater than  foc");
   
   
   
                                                   }
   
-                                                  else if(exp==null||exp=="null"||exp=="")
-  
-                                                    context.showSnackBarError("please select expiry date");
+
   
   
   
@@ -3739,11 +4067,11 @@ bool  recievlinequantityCheck=false;
   
                                     6: FlexColumnWidth(3),
   
-                                    7: FlexColumnWidth(3),
+                                    7: FlexColumnWidth(4),
   
                                     8: FlexColumnWidth(3),
   
-                                    9: FlexColumnWidth(3),
+                                    9: FlexColumnWidth(2.4),
   
                                     10: FlexColumnWidth(3),
   
@@ -4335,67 +4663,126 @@ bool  recievlinequantityCheck=false;
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
-                                                    child: PopUpCall(
-  
-                                                      inventory: Variable.inventory_ID,
-  
-  
-  
-  
-  
-                                                      type:"cost-method-list",
-  
-                                                      value: additionalVariants[i].variantId,
-  
-                                                      onSelection: (VariantId? va) {
-  
-                                                        additionalVariants[i] = additionalVariants[i].copyWith(variantId:va?.code );
-  
-                                                        setState(() {
-  
-                                                          var  variant=
-  
-                                                              va?.code;
-  
-                                                          int? id = va!.id;
-  
-                                                          Variable.tableindex =i;
-  
-                                                          Variable.tableedit=true;
-  
-                                                          variantIdcheck=false;
-  
-  
-  
-  
-  
-  
-  
-                                                          context
-  
-                                                              .read<
-  
-                                                              TableDetailsCubitDartCubit>()
-  
-                                                              .getTableDetails(
-  
-                                                              id);
-  
-                                                          context
-  
-                                                              .read<PurchaseStockCubit>()
-  
-                                                              .getCurrentStock(Variable.inventory_ID, variant);
-  
-  
-  
-                                                          // orderType = va!;
-  
-                                                        });
-  
-                                                      }, // restricted: true,
-  
-                                                    ),
+                                                    child:
+                                                    VariantIdTAble(
+                                                      text:additionalVariants[i].variantId.toString(),
+                                                      onTap: (){
+                                                        showDailogPopUp(
+                                                          context,
+                                                          TableConfigurePopup(
+                                                              inventory: Variable.inventory_ID,
+                                                            type: "variantTabalePopup",
+                                                            valueSelect: (VariantId? va) {
+
+                                                              additionalVariants[i] = additionalVariants[i].copyWith(variantId:va?.code );
+
+                                                              setState(() {
+
+                                                                var  variant=
+
+                                                                    va?.code;
+
+                                                                int? id = va!.id;
+
+                                                                Variable.tableindex =i;
+
+                                                                Variable.tableedit=true;
+
+                                                                variantIdcheck=false;
+
+
+
+
+
+
+
+                                                                context
+
+                                                                    .read<
+
+                                                                    TableDetailsCubitDartCubit>()
+
+                                                                    .getTableDetails(
+
+                                                                    id);
+
+                                                                context
+
+                                                                    .read<PurchaseStockCubit>()
+
+                                                                    .getCurrentStock(Variable.inventory_ID, variant);
+
+
+
+                                                                // orderType = va!;
+
+                                                              });
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                    )
+                                                    // PopUpCall(
+                                                    //
+                                                    //   inventory: Variable.inventory_ID,
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //   type:"cost-method-list",
+                                                    //
+                                                    //   value: additionalVariants[i].variantId,
+                                                    //
+                                                    //   onSelection: (VariantId? va) {
+                                                    //
+                                                    //     additionalVariants[i] = additionalVariants[i].copyWith(variantId:va?.code );
+                                                    //
+                                                    //     setState(() {
+                                                    //
+                                                    //       var  variant=
+                                                    //
+                                                    //           va?.code;
+                                                    //
+                                                    //       int? id = va!.id;
+                                                    //
+                                                    //       Variable.tableindex =i;
+                                                    //
+                                                    //       Variable.tableedit=true;
+                                                    //
+                                                    //       variantIdcheck=false;
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //       context
+                                                    //
+                                                    //           .read<
+                                                    //
+                                                    //           TableDetailsCubitDartCubit>()
+                                                    //
+                                                    //           .getTableDetails(
+                                                    //
+                                                    //           id);
+                                                    //
+                                                    //       context
+                                                    //
+                                                    //           .read<PurchaseStockCubit>()
+                                                    //
+                                                    //           .getCurrentStock(Variable.inventory_ID, variant);
+                                                    //
+                                                    //
+                                                    //
+                                                    //       // orderType = va!;
+                                                    //
+                                                    //     });
+                                                    //
+                                                    //   }, // restricted: true,
+                                                    //
+                                                    // ),
   
                                                   ),
   
@@ -4636,6 +5023,7 @@ bool  recievlinequantityCheck=false;
                                                     child: UnderLinedInput(
   
                                                         initialCheck: true,
+                                                      integerOnly: true,
   
                                                       last: additionalVariants[i].receivedQty.toString() ?? "",
   
@@ -4802,120 +5190,120 @@ bool  recievlinequantityCheck=false;
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
                                                     child: UnderLinedInput(
+                                                      controller: unitcostAdditionalListControllers[i],
   
-                                                        initialCheck: true,
-  
-                                                      last: additionalVariants[i].unitCost.toString() ?? "",
+                                                      //   initialCheck: true,
+                                                      //
+                                                      // last: additionalVariants[i].unitCost.toString() ?? "",
   
                                                       onChanged: (va) {
-  
-                                                        double? unitcost;
-  
-                                                        if (va == "") {
-  
-                                                          print("entered");
-  
-                                                          unitcost = 0;
-  
-                                                          print("disc" + unitcost.toString());
-  
-                                                          additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
-  
-                                                        }
-  
-                                                        unitcost = double.tryParse(va);
-  
-                                                        print("unitcost" + unitcost.toString());
-  
-  
-  
-                                                        var qty = additionalVariants[i].receivedQty;
-  
-                                                        print("qty" + qty.toString());
-  
-                                                        var excess = additionalVariants[i].excessTax;
-  
-                                                        print("excess" + excess.toString());
-  
-                                                        var disc = additionalVariants[i].discount;
-  
-                                                        var foc=additionalVariants[i].foc;
-  
-  
-  
-                                                        var vat = additionalVariants[i].vat;
-  
-                                                        print("vat" + vat.toString());
-  
-                                                        print("qty" + qty.toString());
-  
-                                                        if (qty == 0 || qty == null) {
-  
-                                                          additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
-  
-                                                          setState(() {});
-  
-                                                        } else {
-  
-                                                          if(foc==0 || foc=="") {
-  
-                                                            var Vamount = vatableAmountUpdation(unitcost,qty,excess,disc);
-  
-                                                            // (((unitcost! *
-  
-                                                            //     qty!) +
-  
-                                                            //     excess!) -
-  
-                                                            //     disc!)
-  
-                                                            //     .toDouble();
-  
-                                                            var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
-  
-                                                            // (Vamount! +
-  
-                                                            //     ((Vamount! *
-  
-                                                            //         vat!) /
-  
-                                                            //         100));
-  
-                                                            additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: Vamount, actualCost: vactualCost, grandTotal: vactualCost, unitCost: unitcost);
-  
-                                                            setState(() {});
-  
-                                                          }else{
-  
-                                                            var   Vamount=vatableAmountFocUpdation(unitcost,qty,excess,disc,foc);
-  
-                                                            // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-  
-                                                            var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
-  
-                                                            additionalVariants[i] =
-  
-                                                                additionalVariants[i]
-  
-                                                                    .copyWith(
-  
-                                                                    vatableAmount: Vamount,
-  
-                                                                    actualCost: vactualCost,
-  
-                                                                    grandTotal: vactualCost,
-  
-                                                                    unitCost: unitcost);
-  
-                                                            setState(() {});
-  
-  
-  
-  
-  
-                                                          }
-  
-                                                        }
+
+      double? unitcost;
+
+      if (va == "") {
+
+      print("entered");
+
+      unitcost = 0;
+
+      print("disc" + unitcost.toString());
+
+      additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+      setState(() {
+
+      });
+
+      }else{
+
+      unitcost = double.tryParse(va);
+
+      print("unitcost" + unitcost.toString());
+
+
+      var qty = additionalVariants[i].receivedQty;
+
+      print("qty" + qty.toString());
+
+      var excess = additionalVariants[i].excessTax;
+
+      print("excess" + excess.toString());
+
+      var disc = additionalVariants[i].discount;
+
+      var foc=additionalVariants[i].foc;
+
+
+      var vat = additionalVariants[i].vat;
+
+      print("vat" + vat.toString());
+
+      print("qty" + qty.toString());
+
+      if (qty == 0 || qty == null) {
+
+      additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+
+      setState(() {});
+
+      } else {
+
+      if(foc==0 || foc=="") {
+
+      var Vamount = vatableAmountUpdation(unitcost,qty,excess,disc);
+
+      // (((unitcost! *
+
+      //     qty!) +
+
+      //     excess!) -
+
+      //     disc!)
+
+      //     .toDouble();
+
+      var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
+      // (Vamount! +
+
+      //     ((Vamount! *
+
+      //         vat!) /
+
+      //         100));
+
+      additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: Vamount, actualCost: vactualCost, grandTotal: vactualCost, unitCost: unitcost);
+
+      setState(() {});
+
+      }else{
+
+      var Vamount=vatableAmountFocUpdation(unitcost,qty,excess,disc,foc);
+
+      // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+
+      var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
+      additionalVariants[i] =
+
+      additionalVariants[i]
+
+          .copyWith(
+
+      vatableAmount: Vamount,
+
+      actualCost: vactualCost,
+
+      grandTotal: vactualCost,
+
+      unitCost: unitcost);
+
+      setState(() {});
+
+
+      }
+
+      }
+      }
   
                                                       },
   
@@ -4995,7 +5383,7 @@ bool  recievlinequantityCheck=false;
   
                                                           }else{
   
-                                                            Vamount=vatableFocAmountCalculation(unitcost,qty,excess,Vdiscount,foc);
+                                                            Vamount=vatableAmountFocUpdation(unitcost,qty,excess,Vdiscount,foc);
   
   
   
@@ -5714,90 +6102,165 @@ bool  recievlinequantityCheck=false;
                                                         fontWeight: FontWeight.w500),
   
                                                   ),
-  
-                                                  PopUpCall(
-  
-                                                    inventory: Variable.inventory_ID,
-  
-                                                    // label: "purchase UOM",
-  
-                                                    type:
-  
-                                                    "cost-method-list",
-  
-                                                    value: variantId,
-  
-                                                    onSelection:
-  
-                                                        (VariantId? va) {
-  
-                                                      print(va!.id
-  
-                                                          .toString());
-  
-                                                      print("code" +
-  
-                                                          va!.code
-  
-                                                              .toString());
-  
-  
-  
-                                                      setState(() {
-  
-                                                        stockCheck=true;
-  
-                                                        variantId =
-  
-                                                            va?.code;
-  
-                                                        int? id = va!.id;
-  
-                                                        print("is is"+id.toString());
-  
-                                                        Variable.tableedit=false;
-  
-  
-  
-                                                        recievlinequantityCheck=false;
-  
-                                                        stockCheck=true;
-  
-                                                        variantIdcheck=false;
-  
-                                                        // onChange = true;
-  
-                                                        context
-  
-                                                            .read<
-  
-                                                            TableDetailsCubitDartCubit>()
-  
-                                                            .getTableDetails(
-  
-                                                            id);
-  
-                                                        setState(() {
-  
-                                                        });
-  
-                                                        context
-  
-                                                            .read<PurchaseStockCubit>()
-  
-                                                            .getCurrentStock(Variable.inventory_ID, variantId);
-  
-  
-  
-                                                        // orderType = va!;
-  
-                                                      });
-  
+                                                  VariantIdTAble(
+                                                    text:variantId.toString(),
+                                                    onTap: (){
+                                                      showDailogPopUp(
+                                                        context,
+                                                        TableConfigurePopup(
+                                                          inventory: Variable.inventory_ID,
+                                                          type: "variantTabalePopup",
+                                                          valueSelect: (VariantId? va) {
+                                                            print(va!.id
+
+                                                                .toString());
+
+                                                            print("code" +
+
+                                                                va!.code
+
+                                                                    .toString());
+
+
+
+                                                            setState(() {
+
+                                                              stockCheck=true;
+
+                                                              variantId =
+
+                                                                  va?.code;
+
+                                                              int? id = va!.id;
+
+                                                              print("is is"+id.toString());
+
+                                                              Variable.tableedit=false;
+
+
+
+                                                              recievlinequantityCheck=false;
+
+                                                              stockCheck=true;
+
+                                                              variantIdcheck=false;
+
+                                                              // onChange = true;
+
+                                                              context
+
+                                                                  .read<
+
+                                                                  TableDetailsCubitDartCubit>()
+
+                                                                  .getTableDetails(
+
+                                                                  id);
+
+                                                              setState(() {
+
+                                                              });
+
+                                                              context
+
+                                                                  .read<PurchaseStockCubit>()
+
+                                                                  .getCurrentStock(Variable.inventory_ID, variantId);
+
+
+
+                                                              // orderType = va!;
+
+                                                            });
+                                                          },
+                                                        ),
+                                                      );
                                                     },
-  
-                                                    // restricted: true,
-  
                                                   ),
+  
+                                                  // PopUpCall(
+                                                  //
+                                                  //   inventory: Variable.inventory_ID,
+                                                  //
+                                                  //   // label: "purchase UOM",
+                                                  //
+                                                  //   type:
+                                                  //
+                                                  //   "cost-method-list",
+                                                  //
+                                                  //   value: variantId,
+                                                  //
+                                                  //   onSelection:
+                                                  //
+                                                  //       (VariantId? va) {
+                                                  //
+                                                  //     print(va!.id
+                                                  //
+                                                  //         .toString());
+                                                  //
+                                                  //     print("code" +
+                                                  //
+                                                  //         va!.code
+                                                  //
+                                                  //             .toString());
+                                                  //
+                                                  //
+                                                  //
+                                                  //     setState(() {
+                                                  //
+                                                  //       stockCheck=true;
+                                                  //
+                                                  //       variantId =
+                                                  //
+                                                  //           va?.code;
+                                                  //
+                                                  //       int? id = va!.id;
+                                                  //
+                                                  //       print("is is"+id.toString());
+                                                  //
+                                                  //       Variable.tableedit=false;
+                                                  //
+                                                  //
+                                                  //
+                                                  //       recievlinequantityCheck=false;
+                                                  //
+                                                  //       stockCheck=true;
+                                                  //
+                                                  //       variantIdcheck=false;
+                                                  //
+                                                  //       // onChange = true;
+                                                  //
+                                                  //       context
+                                                  //
+                                                  //           .read<
+                                                  //
+                                                  //           TableDetailsCubitDartCubit>()
+                                                  //
+                                                  //           .getTableDetails(
+                                                  //
+                                                  //           id);
+                                                  //
+                                                  //       setState(() {
+                                                  //
+                                                  //       });
+                                                  //
+                                                  //       context
+                                                  //
+                                                  //           .read<PurchaseStockCubit>()
+                                                  //
+                                                  //           .getCurrentStock(Variable.inventory_ID, variantId);
+                                                  //
+                                                  //
+                                                  //
+                                                  //       // orderType = va!;
+                                                  //
+                                                  //     });
+                                                  //
+                                                  //   },
+                                                  //
+                                                  //   // restricted: true,
+                                                  //
+                                                  // ),
   
                                                   TableCell(
   
@@ -6048,6 +6511,7 @@ bool  recievlinequantityCheck=false;
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
                                                     child: UnderLinedInput(
+                                                      integerOnly: true,
   
                                                       controller: recievedClearController,
   
@@ -6955,7 +7419,7 @@ bool  recievlinequantityCheck=false;
   
                                                         setState(() {
   
-                                                          if(variantId=="null"||recievedQty==0||unitcost==0||expirydateController.text==""){
+                                                          if(variantId=="null"||unitcost==0){
   
                                                             context.showSnackBarError("please fill all the fields");
   
@@ -6971,7 +7435,7 @@ bool  recievlinequantityCheck=false;
   
                                                             context.showSnackBarError(
   
-                                                                "isreceived and isActive always true in this");
+                                                                "is received and isActive always true in this");
   
                                                           }
   
@@ -7028,6 +7492,8 @@ bool  recievlinequantityCheck=false;
                                                               expiryDate: expirydateController.text,
   
                                                             ));
+                                                            unitcostAdditionalListControllers.clear();
+                                                            valueAddingTextEdingController();
   
                                                             clear();
   

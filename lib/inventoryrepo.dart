@@ -26,8 +26,8 @@ abstract class InventoryRepository {
       {String? tab = ""});
   Future<Either<Failure, PurchaseOrdertype>> getPurchaseOrdertype();
   Future<Either<Failure, DoubleResponse>> postPurchase(PurchaseOrderPost model);
-  Future<Either<Failure, List<VariantId>>> getVariantId(
-      {String? vendorId, String? inventory = ""});
+  Future<Either<Failure,PaginatedResponse< List<VariantId>>>> getVariantId(
+     {String? vendorId, String? inventory = "",String? code});
   Future<Either<Failure, List<Result>>> getVariantCode();
   Future<Either<Failure, PurchaseOrderTableModel>> getTableDetails(int? id);
   Future<Either<Failure, VariantDetailsModel>> getVendorDetails(String? id);
@@ -50,7 +50,7 @@ abstract class InventoryRepository {
   Future<Either<Failure, PurchaseOrderRead>> getRequestFormRead(int? id);
   Future<Either<Failure, DoubleResponse>> postRequest(PurchaseOrderPost model);
   Future<Either<Failure, PurchaseOrdertype>> getRequestFormOrdertype();
-  Future<Either<Failure, List<OrderedPersonModel>>> getOrderedPerson();
+  Future<Either<Failure,PaginatedResponse< List<OrderedPersonModel>>>> getOrderedPerson(String ? code);
   Future<Either<Failure, DoubleResponse>> getRequestFormPatch(
       PurchaseOrderPost model, int? id);
   Future<Either<Failure, DoubleResponse>> requestFormDelete(int? id);
@@ -109,12 +109,12 @@ class InventoryRepositoryImpl extends InventoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<VariantId>>> getVariantId(
-      {String? vendorId, String? inventory = ""}) {
-    print("repooooo");
-    print("in" + inventory.toString());
-    return repoExecute<List<VariantId>>(() async => remoteDataSource
-        .getVariantId(vendorId: vendorId, inventory: inventory));
+  Future<Either<Failure,PaginatedResponse< List<VariantId>>>> getVariantId(
+      {String? vendorId, String? inventory = "",String? code}) {
+
+
+    return repoExecute<PaginatedResponse<List<VariantId>>>(() async => remoteDataSource
+        .getVariantId(code:code,vendorId: vendorId, inventory: inventory));
   }
 
   @override
@@ -204,10 +204,10 @@ class InventoryRepositoryImpl extends InventoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<OrderedPersonModel>>> getOrderedPerson() {
+  Future<Either<Failure,PaginatedResponse< List<OrderedPersonModel>>>> getOrderedPerson( String? code) {
     print("orderedPerson");
-    return repoExecute<List<OrderedPersonModel>>(
-        () async => remoteDataSource.getOrderedPerson());
+    return repoExecute<PaginatedResponse<List<OrderedPersonModel>>>(
+        () async => remoteDataSource.getOrderedPerson(code));
   }
 
   @override

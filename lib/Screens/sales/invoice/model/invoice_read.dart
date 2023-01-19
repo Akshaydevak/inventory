@@ -34,6 +34,7 @@ class OrderLinesInvoice with _$OrderLinesInvoice {
   const factory OrderLinesInvoice({
     final int? id,
     final int? quantity,
+    final bool? updatecheck,
     final String? barcode,
     final double? discount,
     final double? vat,
@@ -43,6 +44,7 @@ class OrderLinesInvoice with _$OrderLinesInvoice {
     @JsonKey(name: "return_type") final String? returnType,
     @JsonKey(name: "return_time") final int? returnTime,
     @JsonKey(name: "total_qty") final int? totalQuantity,
+
     @JsonKey(name: "is_invoiced", defaultValue: false) final bool? isInvoiced,
     @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,
     @JsonKey(name: "discount_type") final String? discountType,

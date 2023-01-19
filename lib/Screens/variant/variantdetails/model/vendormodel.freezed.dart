@@ -22,8 +22,11 @@ VendorDetailsModel _$VendorDetailsModelFromJson(Map<String, dynamic> json) {
 mixin _$VendorDetailsModel {
   int? get id => throw _privateConstructorUsedError;
   Address? get address => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   @JsonKey(name: "manufacturer_usercode")
   String? get manuFactureuserCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "alternative_email")
+  String? get alternativeEmail => throw _privateConstructorUsedError;
   @JsonKey(name: "tr_number")
   int? get trnNumber => throw _privateConstructorUsedError;
   @JsonKey(name: "manufacturer_name")
@@ -44,7 +47,9 @@ abstract class $VendorDetailsModelCopyWith<$Res> {
   $Res call(
       {int? id,
       Address? address,
+      String? email,
       @JsonKey(name: "manufacturer_usercode") String? manuFactureuserCode,
+      @JsonKey(name: "alternative_email") String? alternativeEmail,
       @JsonKey(name: "tr_number") int? trnNumber,
       @JsonKey(name: "manufacturer_name") String? manuFactureName});
 
@@ -66,7 +71,9 @@ class _$VendorDetailsModelCopyWithImpl<$Res, $Val extends VendorDetailsModel>
   $Res call({
     Object? id = freezed,
     Object? address = freezed,
+    Object? email = freezed,
     Object? manuFactureuserCode = freezed,
+    Object? alternativeEmail = freezed,
     Object? trnNumber = freezed,
     Object? manuFactureName = freezed,
   }) {
@@ -79,9 +86,17 @@ class _$VendorDetailsModelCopyWithImpl<$Res, $Val extends VendorDetailsModel>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       manuFactureuserCode: freezed == manuFactureuserCode
           ? _value.manuFactureuserCode
           : manuFactureuserCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      alternativeEmail: freezed == alternativeEmail
+          ? _value.alternativeEmail
+          : alternativeEmail // ignore: cast_nullable_to_non_nullable
               as String?,
       trnNumber: freezed == trnNumber
           ? _value.trnNumber
@@ -118,7 +133,9 @@ abstract class _$$_VendorDetailsModelCopyWith<$Res>
   $Res call(
       {int? id,
       Address? address,
+      String? email,
       @JsonKey(name: "manufacturer_usercode") String? manuFactureuserCode,
+      @JsonKey(name: "alternative_email") String? alternativeEmail,
       @JsonKey(name: "tr_number") int? trnNumber,
       @JsonKey(name: "manufacturer_name") String? manuFactureName});
 
@@ -139,7 +156,9 @@ class __$$_VendorDetailsModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? address = freezed,
+    Object? email = freezed,
     Object? manuFactureuserCode = freezed,
+    Object? alternativeEmail = freezed,
     Object? trnNumber = freezed,
     Object? manuFactureName = freezed,
   }) {
@@ -152,9 +171,17 @@ class __$$_VendorDetailsModelCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       manuFactureuserCode: freezed == manuFactureuserCode
           ? _value.manuFactureuserCode
           : manuFactureuserCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      alternativeEmail: freezed == alternativeEmail
+          ? _value.alternativeEmail
+          : alternativeEmail // ignore: cast_nullable_to_non_nullable
               as String?,
       trnNumber: freezed == trnNumber
           ? _value.trnNumber
@@ -174,7 +201,9 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
   const _$_VendorDetailsModel(
       {this.id,
       this.address,
+      this.email,
       @JsonKey(name: "manufacturer_usercode") this.manuFactureuserCode,
+      @JsonKey(name: "alternative_email") this.alternativeEmail,
       @JsonKey(name: "tr_number") this.trnNumber,
       @JsonKey(name: "manufacturer_name") this.manuFactureName});
 
@@ -186,8 +215,13 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
   @override
   final Address? address;
   @override
+  final String? email;
+  @override
   @JsonKey(name: "manufacturer_usercode")
   final String? manuFactureuserCode;
+  @override
+  @JsonKey(name: "alternative_email")
+  final String? alternativeEmail;
   @override
   @JsonKey(name: "tr_number")
   final int? trnNumber;
@@ -197,7 +231,7 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
 
   @override
   String toString() {
-    return 'VendorDetailsModel(id: $id, address: $address, manuFactureuserCode: $manuFactureuserCode, trnNumber: $trnNumber, manuFactureName: $manuFactureName)';
+    return 'VendorDetailsModel(id: $id, address: $address, email: $email, manuFactureuserCode: $manuFactureuserCode, alternativeEmail: $alternativeEmail, trnNumber: $trnNumber, manuFactureName: $manuFactureName)';
   }
 
   @override
@@ -207,8 +241,11 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
             other is _$_VendorDetailsModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.address, address) || other.address == address) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.manuFactureuserCode, manuFactureuserCode) ||
                 other.manuFactureuserCode == manuFactureuserCode) &&
+            (identical(other.alternativeEmail, alternativeEmail) ||
+                other.alternativeEmail == alternativeEmail) &&
             (identical(other.trnNumber, trnNumber) ||
                 other.trnNumber == trnNumber) &&
             (identical(other.manuFactureName, manuFactureName) ||
@@ -217,8 +254,8 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, address, manuFactureuserCode,
-      trnNumber, manuFactureName);
+  int get hashCode => Object.hash(runtimeType, id, address, email,
+      manuFactureuserCode, alternativeEmail, trnNumber, manuFactureName);
 
   @JsonKey(ignore: true)
   @override
@@ -239,8 +276,11 @@ abstract class _VendorDetailsModel implements VendorDetailsModel {
   const factory _VendorDetailsModel(
       {final int? id,
       final Address? address,
+      final String? email,
       @JsonKey(name: "manufacturer_usercode")
           final String? manuFactureuserCode,
+      @JsonKey(name: "alternative_email")
+          final String? alternativeEmail,
       @JsonKey(name: "tr_number")
           final int? trnNumber,
       @JsonKey(name: "manufacturer_name")
@@ -254,8 +294,13 @@ abstract class _VendorDetailsModel implements VendorDetailsModel {
   @override
   Address? get address;
   @override
+  String? get email;
+  @override
   @JsonKey(name: "manufacturer_usercode")
   String? get manuFactureuserCode;
+  @override
+  @JsonKey(name: "alternative_email")
+  String? get alternativeEmail;
   @override
   @JsonKey(name: "tr_number")
   int? get trnNumber;

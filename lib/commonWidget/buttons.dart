@@ -154,7 +154,7 @@ class _TableTextButtonState extends State<TableTextButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 69,
+      width: MediaQuery.of(context).size.width*.05,
       margin: EdgeInsets.symmetric(horizontal:8),
 
       color: widget.buttonBagroundColor,
@@ -298,7 +298,7 @@ class _TableIconTextButtonState extends State<TableIconTextButton> {
       child: InkWell(
         onTap: (){ widget.onPress();},
         child: Center(
-          child: Icon(widget.actionCheck?Icons.add:Icons.delete,color:widget.actionCheck?Colors.blue: widget.textColor,size: 18,),
+          child: Icon(widget.actionCheck?Icons.add:Icons.delete,color:widget.actionCheck?Colors.blue: widget.textColor,size: MediaQuery.of(context).size.width*.014,),
         ),
       )
 

@@ -174,27 +174,233 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               height: height * .030,
                             ),
                             NewInputCard(
-                                controller: widget.itemName, title: "Item Name"),
-                            SizedBox(
-                              height: height * .030,
-                            ),
-                            NewInputCard(
-                                controller: widget.searchName, title: "Search Name"),
-                            SizedBox(
-                              height: height * .030,
-                            ),
-                            NewInputCard(
                                 controller: widget.displayName, title: "Display Name"),
+
                             SizedBox(
                               height: height * .030,
                             ),
-                            NewInputCard(
-                                height: 90,
-                                maxLines: 3,
-                                controller: widget.discription, title: "Description"),
+                            NewInputCard(controller: widget.uomGroupNameController,
+                              readOnly: true,
+                              icondrop:true,title: "Uom Group",ontap: (){
+                                showDailogPopUp(
+                                  context,
+                                  TableConfigurePopup(
+                                    type: "UomGroupTabalePopup", valueSelect: (BrandListModel va){
+
+                                    setState(() {
+
+
+
+
+                                      widget.uomGroupController.text=va?.code??"";
+                                      widget.uomGroupNameController.text=va?.name??"";
+                                      Variable.uomGroupId=va?.id;
+                                      // widget.idChange(1,va?.id);
+                                      widget.uomController.clear();
+                                      widget.uomGroupid=va?.id;
+                                      widget.baseuomNameController.clear();
+                                      setState(() {
+
+                                      });
+
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+
+                                  },
+                                  ),
+
+
+                                );
+
+                              },),
                             SizedBox(
                               height: height * .030,
                             ),
+
+                            FileUploadField(
+
+                                fileName:widget.image1.text,
+                                fileUrl:widget.image1.text,
+                                onCancel: (){
+
+                                  setState(() {
+                                    widget.image1.clear();
+                                    Variable.img1=null;
+                                  });
+
+                                },
+                                onChangeTap: (p0) {
+
+                                  // loading = true;
+                                  setState(() {});
+                                },
+                                onChange: (myFile) {
+                                  widget.imagePostCheck(type: "1");
+
+
+                                  widget.image1.text=myFile?.fileName??"";
+                                  // Variable.mobileBannerImage = myFile.toUint8List();
+                                  //
+                                  var     imageEncode =
+                                  myFile.toBase64();
+                                  // widget.fileMobileNameCtrl.text =
+                                  //     myFile.fileName ?? "";
+                                  // if (Variable.bannerimage!.length <= 240000)
+
+                                  // else
+                                  //   context.showSnackBarError(
+                                  //       "Please upload Banner of size Lesser than 230kb");
+                                },
+                                onImageChange: (newFile) async {
+                                  // onChange=true;
+                                  // Variable.popUp = false;
+
+                                  if (newFile.length <= 200000) {
+                                    context
+                                        .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image1");
+                                    // loading
+                                    //     ? showDailogPopUp(context, DialoguePopUp())
+                                    //     : Navigator.pop(context);
+                                    // context
+                                    //     .read<CreateWebImageCubit>()
+                                    //     .createMobImage();
+                                  } else
+                                    context.showSnackBarError(
+                                        "Please upload Image of size Lesser than 200kb");
+                                  setState(() {});
+                                },
+                                onCreate: true,
+                                label: "Image"),
+
+
+                            SizedBox(
+                              height: height * .030,
+                            ),
+
+                            FileUploadField(
+                                fileName: widget.itemCatelog1.text,
+                                fileUrl:widget.itemCatelog1.text,
+                                onCancel: (){
+
+                                  setState(() {
+                                    widget.itemCatelog1.clear();
+                                    Variable.img4=null;
+                                  });
+
+                                },
+                                onChangeTap: (p0) {
+                                  // loading = true;
+                                  setState(() {});
+                                },
+                                onChange: (myFile) {
+
+                                  widget.itemCatelog1.text=myFile?.fileName??"";
+                                  // Variable.mobileBannerImage = myFile.toUint8List();
+                                  var imageEncode =
+                                  myFile.toBase64();
+                                  // widget.fileMobileNameCtrl.text =
+                                  //     myFile.fileName ?? "";
+                                  // if (Variable.bannerimage!.length <= 240000)
+
+
+
+                                  // Variable.bannerEncodedMobileBannerImage =
+                                  //     myFile.toBase64();
+                                  // widget.fileMobileNameCtrl.text =
+                                  //     myFile.fileName ?? "";
+                                  // if (Variable.bannerimage!.length <= 240000)
+                                  //   context
+                                  //       .read<CreateWebImageCubit>()
+                                  //       .createMobImage();
+                                  // else
+                                  //   context.showSnackBarError(
+                                  //       "Please upload Banner of size Lesser than 230kb");
+                                },
+                                onImageChange: (newFile) async {
+                                  // Variable.popUp = false;
+
+                                  if (newFile.length <= 200000) {
+                                    context
+                                        .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image4");
+                                    widget.imagePostCheck(type: "4");
+                                    // loading
+                                    //     ? showDailogPopUp(context, DialoguePopUp())
+                                    //     : Navigator.pop(context);
+                                    // context
+                                    //     .read<CreateWebImageCubit>()
+                                    //     .createMobImage();
+                                  } else
+                                    context.showSnackBarError(
+                                        "Please upload Image of size Lesser than 200kb");
+                                  setState(() {});
+                                },
+                                onCreate: true,
+                                label: "Item Catalogue1"),
+                            SizedBox(
+                              height: height * .030,
+                            ),
+                            FileUploadField(
+                                fileName:  widget.itemCatelog4.text,
+                                fileUrl: widget.itemCatelog4.text,
+                                onCancel: (){
+
+                                  setState(() {
+                                    widget.itemCatelog4.clear();
+                                    Variable.img7=null;
+                                  });
+
+                                },
+                                onChangeTap: (p0) {
+                                  // loading = true;
+                                  setState(() {});
+                                },
+                                onChange: (myFile) {
+
+                                  widget.itemCatelog4.text=myFile?.fileName??"";
+                                  var  imageEncode =
+                                  myFile.toBase64();
+                                  // widget.fileMobileNameCtrl.text =
+                                  //     myFile.fileName ?? "";
+                                  // if (Variable.bannerimage!.length <= 240000)
+
+                                  // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                  // Variable.bannerEncodedMobileBannerImage =
+                                  //     myFile.toBase64();
+                                  // widget.fileMobileNameCtrl.text =
+                                  //     myFile.fileName ?? "";
+                                  // if (Variable.bannerimage!.length <= 240000)
+                                  //   context
+                                  //       .read<CreateWebImageCubit>()
+                                  //       .createMobImage();
+                                  // else
+                                  //   context.showSnackBarError(
+                                  //       "Please upload Banner of size Lesser than 230kb");
+                                },
+                                onImageChange: (newFile) async {
+                                  // Variable.popUp = false;
+
+                                  if (newFile.length <= 200000) {
+                                    context
+                                        .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image7");
+                                    widget.imagePostCheck(type: "7");
+                                    // loading
+                                    //     ? showDailogPopUp(context, DialoguePopUp())
+                                    //     : Navigator.pop(context);
+                                    // context
+                                    //     .read<CreateWebImageCubit>()
+                                    //     .createMobImage();
+                                  } else
+                                    context.showSnackBarError(
+                                        "Please upload Iamge of size Lesser than 200kb");
+                                  setState(() {});
+                                },
+                                onCreate: true,
+                                label: "item Catalogue4"),
+
+
 
                             SizedBox(
                               height: height * .080,
@@ -205,250 +411,54 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           ],
                         )),
                         Expanded(child: Column(children: [
-
-
                           NewInputCard(
-                              controller: widget.oldSystemCode, title: "Old System Code"),
+                              controller: widget.itemName, title: "Item Name"),
                           SizedBox(
                             height: height * .030,
                           ),
-                          NewInputCard(controller: widget.uomGroupNameController,
-                            readOnly: true,
-                            icondrop:true,title: "Uom Group",ontap: (){
-                            showDailogPopUp(
-                              context,
-                              TableConfigurePopup(
-                                type: "UomGroupTabalePopup", valueSelect: (BrandListModel va){
-
-                                setState(() {
-
-
-
-
-                                  widget.uomGroupController.text=va?.code??"";
-                                  widget.uomGroupNameController.text=va?.name??"";
-                                  Variable.uomGroupId=va?.id;
-                                  // widget.idChange(1,va?.id);
-                                  widget.uomController.clear();
-                                  widget.uomGroupid=va?.id;
-                                  widget.baseuomNameController.clear();
-                                  setState(() {
-
-                                  });
-
-
-                                  // onChange = true;
-                                  // orderType.text = va!;
-                                });
-
-                              },
-                              ),
-
-
-                            );
-
-                          },),
-                          // SelectableDropDownpopUp(
-                          //
-                          //   controller:widget.uomGroupNameController,
-                          //   label: "Uom Group",
-                          //   type:"Uomgroup_PopUpCall",
-                          //   value:  widget.uomGroupNameController.text,
-                          //   onchange: (vale){
-                          //     print("Akkk"+vale.toString());
-                          //     context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                          //   },
-                          //   enable: true,
-                          //   onSelection: (BrandListModel? va) {
-                          //     setState(() {
-                          //       widget.uomGroupController.text=va?.code??"";
-                          //     widget.uomGroupNameController.text=va?.name??"";
-                          //     Variable.uomGroupId=va?.id;
-                          //
-                          //
-                          //     });
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //       // onChange = true;
-                          //       // orderType.text = va!;
-                          //
-                          //   },
-                          //   onAddNew: () {
-                          //
-                          //     showDailogPopUp(
-                          //       context,
-                          //       ConfigurePopup(
-                          //         type: "uomgroup",
-                          //
-                          //       ),
-                          //
-                          //
-                          //     );
-                          //   },
-                          // ),
+                          NewInputCard(
+                              height: 90,
+                              maxLines: 3,
+                              controller: widget.discription, title: "Description"),
                           SizedBox(
                             height: height * .030,
                           ),
-
-
 
                           NewInputCard(controller: widget.baseuomNameController,
                             icondrop:true,
                             readOnly: true,
                             title: "Base UOM",ontap: (){
-                            showDailogPopUp(
-                              context,
-                              TableConfigurePopup(
-                                id: widget.uomGroupid,
-                                type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
+                              showDailogPopUp(
+                                context,
+                                TableConfigurePopup(
+                                  id: widget.uomGroupid,
+                                  type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
 
-                                setState(() {
-                                  print(va?.uomCode);
-                                  print(va);
-
-
-
-                                  widget.uomController.text=va?.uomCode??"";
-                                  widget.baseuomNameController.text=va?.name??"";
                                   setState(() {
+                                    print(va?.uomCode);
+                                    print(va);
 
+
+
+                                    widget.uomController.text=va?.uomCode??"";
+                                    widget.baseuomNameController.text=va?.name??"";
+                                    setState(() {
+
+                                    });
+
+
+                                    // onChange = true;
+                                    // orderType.text = va!;
                                   });
 
-
-                                  // onChange = true;
-                                  // orderType.text = va!;
-                                });
-
-                              },
-                              ),
+                                },
+                                ),
 
 
-                            );
+                              );
 
-                          },),
-                          // SelectableDropDownpopUp(
-                          //
-                          //   controller:widget.baseuomNameController,
-                          //   label: "base uom",
-                          //   type:"Uom_PopUpCall",
-                          //   value:  widget.baseuomNameController.text,
-                          //   onchange: (vale){
-                          //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                          //   },
-                          //   enable: true,
-                          //   onSelection: (BrandListModel? va) {
-                          //     setState(() {
-                          //
-                          //       widget.uomController.text=va?.uomCode??"";
-                          //       widget.baseuomNameController.text=va?.name??"";
-                          //       setState(() {
-                          //
-                          //       });
-                          //
-                          //
-                          //       // onChange = true;
-                          //       // orderType.text = va!;
-                          //     });
-                          //   },
-                          //   onAddNew: () {
-                          //
-                          //     showDailogPopUp(
-                          //       context,
-                          //       ConfigurePopup(
-                          //         type: "base_uom",
-                          //       ),
-                          //
-                          //
-                          //     );
-                          //   },
-                          // ),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          PopUpSwitchTile(
-                              value:widget.select?true:widget. active,
-                              title: "Is Active",
-                              onClick: (gg) {
-                                widget.activeChange(!widget.active);
+                            },),
 
-
-
-
-
-                                // extendedWarranty = gg;
-                                // widget.changeExtendedWarranty(gg);
-                                // onChangeExtWarranty = gg;
-                                setState(() {});
-                              }),
-
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          // NewInputCard(
-                          //   controller: widget.status, title: "Status", ),
-                          // SizedBox(
-                          //   height: height * .045,
-                          // ),
-                          FileUploadField(
-
-                              fileName:widget.image1.text,
-                              fileUrl:widget.image1.text,
-                              onCancel: (){
-
-                                setState(() {
-                                  widget.image1.clear();
-                                  Variable.img1=null;
-                                });
-
-                              },
-                              onChangeTap: (p0) {
-
-                                // loading = true;
-                                setState(() {});
-                              },
-                              onChange: (myFile) {
-                                widget.imagePostCheck(type: "1");
-
-
-                                widget.image1.text=myFile?.fileName??"";
-                                // Variable.mobileBannerImage = myFile.toUint8List();
-                                //
-                                var     imageEncode =
-                                myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-
-                                // else
-                                //   context.showSnackBarError(
-                                //       "Please upload Banner of size Lesser than 230kb");
-                              },
-                              onImageChange: (newFile) async {
-                                // onChange=true;
-                                // Variable.popUp = false;
-
-                                if (newFile.length <= 200000) {
-                                  context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image1");
-                                  // loading
-                                  //     ? showDailogPopUp(context, DialoguePopUp())
-                                  //     : Navigator.pop(context);
-                                  // context
-                                  //     .read<CreateWebImageCubit>()
-                                  //     .createMobImage();
-                                } else
-                                  context.showSnackBarError(
-                                      "Please upload Image of size Lesser than 200kb");
-                                setState(() {});
-                              },
-                              onCreate: true,
-                              label: "Image"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -509,13 +519,234 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               },
                               onCreate: true,
                               label: "Image2"),
+                          // SelectableDropDownpopUp(
+                          //
+                          //   controller:widget.baseuomNameController,
+                          //   label: "base uom",
+                          //   type:"Uom_PopUpCall",
+                          //   value:  widget.baseuomNameController.text,
+                          //   onchange: (vale){
+                          //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                          //   },
+                          //   enable: true,
+                          //   onSelection: (BrandListModel? va) {
+                          //     setState(() {
+                          //
+                          //       widget.uomController.text=va?.uomCode??"";
+                          //       widget.baseuomNameController.text=va?.name??"";
+                          //       setState(() {
+                          //
+                          //       });
+                          //
+                          //
+                          //       // onChange = true;
+                          //       // orderType.text = va!;
+                          //     });
+                          //   },
+                          //   onAddNew: () {
+                          //
+                          //     showDailogPopUp(
+                          //       context,
+                          //       ConfigurePopup(
+                          //         type: "base_uom",
+                          //       ),
+                          //
+                          //
+                          //     );
+                          //   },
+                          // ),
+                          SizedBox(
+                            height: height * .030,
+                          ),
+                          FileUploadField(
+                              fileName: widget.itemCatelog2.text,
+                              fileUrl:widget.itemCatelog2.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.itemCatelog2.clear();
+                                  Variable.img5=null;
+                                });
+
+                              },
+                              onChangeTap: (p0) {
+                                // loading = true;
+                                setState(() {});
+                              },
+                              onChange: (myFile) {
+
+                                widget.itemCatelog2.text=myFile?.fileName??"";
+                                var     imageEncode =
+                                myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+
+                                // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                // Variable.bannerEncodedMobileBannerImage =
+                                //     myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+                                //   context
+                                //       .read<CreateWebImageCubit>()
+                                //       .createMobImage();
+                                // else
+                                //   context.showSnackBarError(
+                                //       "Please upload Banner of size Lesser than 230kb");
+                              },
+                              onImageChange: (newFile) async {
+                                // Variable.popUp = false;
+
+                                if (newFile.length <= 200000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image5");
+                                  widget.imagePostCheck(type: "5");
+                                  // loading
+                                  //     ? showDailogPopUp(context, DialoguePopUp())
+                                  //     : Navigator.pop(context);
+                                  // context
+                                  //     .read<CreateWebImageCubit>()
+                                  //     .createMobImage();
+                                } else
+                                  context.showSnackBarError(
+                                      "Please upload Image of size Lesser than 200kb");
+                                setState(() {});
+                              },
+                              onCreate: true,
+                              label: "Item Catalogue2"),
+                          SizedBox(
+                            height: height * .030,
+                          ),
+
+                          FileUploadField(
+                              fileName: widget.itemCatelog5.text,
+                              fileUrl:widget.itemCatelog5.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.itemCatelog5.clear();
+                                  Variable.img8=null;
+                                });
+
+                              },
+                              onChangeTap: (p0) {
+                                // loading = true;
+                                setState(() {});
+                              },
+                              onChange: (myFile) {
+                                widget.itemCatelog5.text=myFile?.fileName??"";
+                                var     imageEncode =
+                                myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+
+                                // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                // Variable.bannerEncodedMobileBannerImage =
+                                //     myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+                                //   context
+                                //       .read<CreateWebImageCubit>()
+                                //       .createMobImage();
+                                // else
+                                //   context.showSnackBarError(
+                                //       "Please upload Banner of size Lesser than 230kb");
+                              },
+                              onImageChange: (newFile) async {
+                                // Variable.popUp = false;
+
+                                if (newFile.length <= 200000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image8");
+                                  widget.imagePostCheck(type: "8");
+                                  // loading
+                                  //     ? showDailogPopUp(context, DialoguePopUp())
+                                  //     : Navigator.pop(context);
+                                  // context
+                                  //     .read<CreateWebImageCubit>()
+                                  //     .createMobImage();
+                                } else
+                                  context.showSnackBarError(
+                                      "Please upload Image of size Lesser than 200kb");
+                                setState(() {});
+                              },
+                              onCreate: true,
+                              label: "Item Catalogue5"),
 
 
+
+
+
+
+                          // SelectableDropDownpopUp(
+                          //
+                          //   controller:widget.uomGroupNameController,
+                          //   label: "Uom Group",
+                          //   type:"Uomgroup_PopUpCall",
+                          //   value:  widget.uomGroupNameController.text,
+                          //   onchange: (vale){
+                          //     print("Akkk"+vale.toString());
+                          //     context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                          //   },
+                          //   enable: true,
+                          //   onSelection: (BrandListModel? va) {
+                          //     setState(() {
+                          //       widget.uomGroupController.text=va?.code??"";
+                          //     widget.uomGroupNameController.text=va?.name??"";
+                          //     Variable.uomGroupId=va?.id;
+                          //
+                          //
+                          //     });
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //       // onChange = true;
+                          //       // orderType.text = va!;
+                          //
+                          //   },
+                          //   onAddNew: () {
+                          //
+                          //     showDailogPopUp(
+                          //       context,
+                          //       ConfigurePopup(
+                          //         type: "uomgroup",
+                          //
+                          //       ),
+                          //
+                          //
+                          //     );
+                          //   },
+                          // ),
+                          SizedBox(
+                            height: height * .030,
+                          ),
+
+
+
+                          // NewInputCard(
+                          //   controller: widget.status, title: "Status", ),
+                          // SizedBox(
+                          //   height: height * .045,
+                          // ),
 
                           SizedBox(
-                            height: height * .145,
-
+                            height: height * .030,
                           ),
+
+
+
+
+
                           // SizedBox(
                           //   height:height*.034,
                           //
@@ -524,6 +755,36 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
 
                         ],)),
                         Expanded(child: Column(children: [
+                          NewInputCard(
+                              controller: widget.searchName, title: "Search Name"),
+                          SizedBox(
+                            height: height * .030,
+                          ),
+                          NewInputCard(
+                              controller: widget.oldSystemCode, title: "Old System Code"),
+                          SizedBox(
+                            height: height * .030,
+                          ),
+
+                          PopUpSwitchTile(
+                              value:widget.select?true:widget. active,
+                              title: "Is Active",
+                              onClick: (gg) {
+                                widget.activeChange(!widget.active);
+
+
+
+
+
+                                // extendedWarranty = gg;
+                                // widget.changeExtendedWarranty(gg);
+                                // onChangeExtWarranty = gg;
+                                setState(() {});
+                              }),
+
+                          SizedBox(
+                            height: height * .030,
+                          ),
 
 
 
@@ -591,129 +852,8 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                             height: height * .030,
                           ),
 
-                          FileUploadField(
-                              fileName: widget.itemCatelog1.text,
-                              fileUrl:widget.itemCatelog1.text,
-                              onCancel: (){
-
-                                setState(() {
-                                  widget.itemCatelog1.clear();
-                                  Variable.img4=null;
-                                });
-
-                              },
-                              onChangeTap: (p0) {
-                                // loading = true;
-                                setState(() {});
-                              },
-                              onChange: (myFile) {
-
-                                widget.itemCatelog1.text=myFile?.fileName??"";
-                                // Variable.mobileBannerImage = myFile.toUint8List();
-                                var imageEncode =
-                                myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
 
 
-
-                                // Variable.bannerEncodedMobileBannerImage =
-                                //     myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-                                //   context
-                                //       .read<CreateWebImageCubit>()
-                                //       .createMobImage();
-                                // else
-                                //   context.showSnackBarError(
-                                //       "Please upload Banner of size Lesser than 230kb");
-                              },
-                              onImageChange: (newFile) async {
-                                // Variable.popUp = false;
-
-                                if (newFile.length <= 200000) {
-                                  context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image4");
-                                  widget.imagePostCheck(type: "4");
-                                  // loading
-                                  //     ? showDailogPopUp(context, DialoguePopUp())
-                                  //     : Navigator.pop(context);
-                                  // context
-                                  //     .read<CreateWebImageCubit>()
-                                  //     .createMobImage();
-                                } else
-                                  context.showSnackBarError(
-                                      "Please upload Image of size Lesser than 200kb");
-                                setState(() {});
-                              },
-                              onCreate: true,
-                              label: "Item Catalogue1"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          FileUploadField(
-                              fileName: widget.itemCatelog2.text,
-                              fileUrl:widget.itemCatelog2.text,
-                              onCancel: (){
-
-                                setState(() {
-                                  widget.itemCatelog2.clear();
-                                  Variable.img5=null;
-                                });
-
-                              },
-                              onChangeTap: (p0) {
-                                // loading = true;
-                                setState(() {});
-                              },
-                              onChange: (myFile) {
-
-                                widget.itemCatelog2.text=myFile?.fileName??"";
-                                var     imageEncode =
-                                myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-
-                                // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                // Variable.bannerEncodedMobileBannerImage =
-                                //     myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-                                //   context
-                                //       .read<CreateWebImageCubit>()
-                                //       .createMobImage();
-                                // else
-                                //   context.showSnackBarError(
-                                //       "Please upload Banner of size Lesser than 230kb");
-                              },
-                              onImageChange: (newFile) async {
-                                // Variable.popUp = false;
-
-                                if (newFile.length <= 200000) {
-                                  context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image5");
-                                  widget.imagePostCheck(type: "5");
-                                  // loading
-                                  //     ? showDailogPopUp(context, DialoguePopUp())
-                                  //     : Navigator.pop(context);
-                                  // context
-                                  //     .read<CreateWebImageCubit>()
-                                  //     .createMobImage();
-                                } else
-                                  context.showSnackBarError(
-                                      "Please upload Image of size Lesser than 200kb");
-                                setState(() {});
-                              },
-                              onCreate: true,
-                              label: "Item Catalogue2"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
                           FileUploadField(
                               fileName:  widget.itemCatelog3.text,
                               fileUrl:widget.itemCatelog3.text,
@@ -773,130 +913,11 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               },
                               onCreate: true,
                               label: "Item Catalogue3"),
+
                           SizedBox(
                             height: height * .030,
                           ),
-                          FileUploadField(
-                              fileName:  widget.itemCatelog4.text,
-                              fileUrl: widget.itemCatelog4.text,
-                              onCancel: (){
 
-                                setState(() {
-                                  widget.itemCatelog4.clear();
-                                  Variable.img7=null;
-                                });
-
-                              },
-                              onChangeTap: (p0) {
-                                // loading = true;
-                                setState(() {});
-                              },
-                              onChange: (myFile) {
-
-                                widget.itemCatelog4.text=myFile?.fileName??"";
-                                var  imageEncode =
-                                myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-
-                                // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                // Variable.bannerEncodedMobileBannerImage =
-                                //     myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-                                //   context
-                                //       .read<CreateWebImageCubit>()
-                                //       .createMobImage();
-                                // else
-                                //   context.showSnackBarError(
-                                //       "Please upload Banner of size Lesser than 230kb");
-                              },
-                              onImageChange: (newFile) async {
-                                // Variable.popUp = false;
-
-                                if (newFile.length <= 200000) {
-                                  context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image7");
-                                  widget.imagePostCheck(type: "7");
-                                  // loading
-                                  //     ? showDailogPopUp(context, DialoguePopUp())
-                                  //     : Navigator.pop(context);
-                                  // context
-                                  //     .read<CreateWebImageCubit>()
-                                  //     .createMobImage();
-                                } else
-                                  context.showSnackBarError(
-                                      "Please upload Iamge of size Lesser than 200kb");
-                                setState(() {});
-                              },
-                              onCreate: true,
-                              label: "item Catalogue4"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          FileUploadField(
-                              fileName: widget.itemCatelog5.text,
-                              fileUrl:widget.itemCatelog5.text,
-                              onCancel: (){
-
-                                setState(() {
-                                  widget.itemCatelog5.clear();
-                                  Variable.img8=null;
-                                });
-
-                              },
-                              onChangeTap: (p0) {
-                                // loading = true;
-                                setState(() {});
-                              },
-                              onChange: (myFile) {
-                                widget.itemCatelog5.text=myFile?.fileName??"";
-                                var     imageEncode =
-                                myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-
-                                // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                // Variable.bannerEncodedMobileBannerImage =
-                                //     myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-                                //   context
-                                //       .read<CreateWebImageCubit>()
-                                //       .createMobImage();
-                                // else
-                                //   context.showSnackBarError(
-                                //       "Please upload Banner of size Lesser than 230kb");
-                              },
-                              onImageChange: (newFile) async {
-                                // Variable.popUp = false;
-
-                                if (newFile.length <= 200000) {
-                                  context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image8");
-                                  widget.imagePostCheck(type: "8");
-                                  // loading
-                                  //     ? showDailogPopUp(context, DialoguePopUp())
-                                  //     : Navigator.pop(context);
-                                  // context
-                                  //     .read<CreateWebImageCubit>()
-                                  //     .createMobImage();
-                                } else
-                                  context.showSnackBarError(
-                                      "Please upload Image of size Lesser than 200kb");
-                                setState(() {});
-                              },
-                              onCreate: true,
-                              label: "Item Catalogue5"),
-                          SizedBox(
-                            height: height * .097,
-                          ),
 
                         ],))
 

@@ -33,7 +33,7 @@ class SalesReturnGeneralPostModel with _$SalesReturnGeneralPostModel {
     @JsonKey(name: "selling_price_total") final double? sellingPriceTotal,
     @JsonKey(name: "total_price") final double? totalPrice,
     @JsonKey(name: "created_by") final String? createdBy,
-    // @JsonKey(name: "edited_by") final String? editedBy,/
+    @JsonKey(name: "edited_by") final String? editedBy,
     @JsonKey(name: "order_lines") final List<SalesReturnOrderLines>? orderLines,
   }) = _SalesReturnGeneralPostModel;
   factory SalesReturnGeneralPostModel.fromJson(Map<String, dynamic> json) =>

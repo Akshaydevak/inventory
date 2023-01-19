@@ -165,7 +165,7 @@ ismixed=false;
         print("postssssssss" + state.toString());
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loading");
+          // context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -241,6 +241,7 @@ ismixed=false;
               veritiaclid = result[0].id;
               selectedVertical=0;
               context.read<ReadDivisionConfigCubit>().getDivisionConfigRead(veritiaclid!);
+              select = false;
             }
             else {
               setState(() {

@@ -8,6 +8,7 @@ import 'package:inventory/Screens/logi/logincubit/logincubit_cubit.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/register/model/register.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
@@ -66,6 +67,7 @@ List<  InventoryListModel> inventoryList=[];
 
           if (data.data1) {
             print("DATAAAA OF LOGIN"+data.data2.toString());
+            context.showSnackBarSuccess("Success");
             // final SharedPreferences sharedPreferences =
             //     await SharedPreferences.getInstance();
             // sharedPreferences.setString('token',
@@ -116,6 +118,7 @@ List<  InventoryListModel> inventoryList=[];
                 setState(()   {
                   Variable.inventory_ID=inventoryList[0]?.businessUnitCode??"";
                   Variable.inventory_Name=inventoryList[0]?.name??"";
+
                   InventoryListModel model=InventoryListModel(
                     businessUnitCode: inventoryList[0]?.businessUnitCode??"",
                     name: inventoryList[0]?.name??""
@@ -162,29 +165,45 @@ List<  InventoryListModel> inventoryList=[];
           body: Center(
             child: Container(
               height:height/1.5,
-              width:height/2,
+              width:height/1.5,
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: height/10,),
+                  SizedBox(height: height/17,),
                   Container(
-                    margin: EdgeInsets.only(left: width*.015),
-                      child: Text('Sign In',style: TextStyle(color: Colors.black,fontWeight:FontWeight.w600,fontSize: height*0.035),)),
+                    margin: EdgeInsets.only(left: width*.03),
+                      child: Text('Sign In',style: TextStyle(color: Colors.black,fontWeight:FontWeight.w600,fontSize: height*0.04),)),
                   SizedBox(height: height*.03,),
-                  NewInputCard(controller: emailController, title: "EMAIL ID"),
-                  SizedBox(height: height*.02,),
-                  NewInputCard(controller: passwordController, title: "PASSWORD",password: true),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: width*.012),
 
-                  SizedBox(height: height*.02,),
-                  NewInputCard(controller: empCode, title: "Employee Code",password: true),
-                  SizedBox(height: height*.03,),
-                  LoginButton(
-                    label: "Sign In",
-                    onpress: (){
-                      context.read<LogincubitCubit>().getLogin(emailController.text,passwordController.text,empCode.text);
+                      child: NewInputCard(controller: emailController, title: "EMAIL ID",height:height/16 ,)),
+                  SizedBox(
+                    height: height * .035,
+                  ),
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal:width*.012),
+                      child: NewInputCard(controller: passwordController, title: "PASSWORD",password: true,height:height/16,)),
 
-                    },
+                  SizedBox(
+                    height: height * .035,
+                  ),
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: width*.012),
+                      child: NewInputCard(controller: empCode, title: "EMPLOYEE CODE",password: true,height: height/16,)),
+                  SizedBox(
+                    height: height * .075,
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: width*.012),
+                    child: LoginButton(
+                      label: "SIGN IN",
+                      onpress: (){
+                        context.read<LogincubitCubit>().getLogin(emailController.text,passwordController.text,empCode.text);
+
+                      },
+                    ),
                   ),
 
 
@@ -223,9 +242,9 @@ class _LoginButtonState extends State<LoginButton> {
         widget.onpress();
       },
       child: Container(
-        width: 300,
+        // width: 300,
         margin:  EdgeInsets.symmetric(horizontal: width*.019),
-        color: Colors.black,
+        color: Pellet.tableBlueHeaderPrint,
         height: widget.height,
         child: Center(child: Text(widget.label,style: TextStyle(color: widget.labelColor),)),
 

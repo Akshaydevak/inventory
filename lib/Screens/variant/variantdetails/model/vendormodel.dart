@@ -7,8 +7,11 @@ class VendorDetailsModel with _$VendorDetailsModel {
   const factory VendorDetailsModel({
     final int? id,
     final Address? address,
+    final String? email,
+
 
     @JsonKey(name: "manufacturer_usercode", ) final String? manuFactureuserCode,
+    @JsonKey(name: "alternative_email", ) final String? alternativeEmail,
     @JsonKey(name: "tr_number", ) final int? trnNumber,
     @JsonKey(name: "manufacturer_name", ) final String? manuFactureName,
   }) = _VendorDetailsModel;

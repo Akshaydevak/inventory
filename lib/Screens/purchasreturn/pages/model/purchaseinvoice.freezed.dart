@@ -608,6 +608,8 @@ mixin _$Liness {
   bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: "is_invoiced", defaultValue: false)
   bool? get isInvoiced => throw _privateConstructorUsedError;
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  bool? get upDateCheck => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -663,7 +665,9 @@ abstract class $LinessCopyWith<$Res> {
       @JsonKey(name: "is_active", defaultValue: false)
           bool? isActive,
       @JsonKey(name: "is_invoiced", defaultValue: false)
-          bool? isInvoiced});
+          bool? isInvoiced,
+      @JsonKey(name: "updateCheck", defaultValue: false)
+          bool? upDateCheck});
 }
 
 /// @nodoc
@@ -703,6 +707,7 @@ class _$LinessCopyWithImpl<$Res, $Val extends Liness>
     Object? isFree = freezed,
     Object? isActive = freezed,
     Object? isInvoiced = freezed,
+    Object? upDateCheck = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -801,6 +806,10 @@ class _$LinessCopyWithImpl<$Res, $Val extends Liness>
           ? _value.isInvoiced
           : isInvoiced // ignore: cast_nullable_to_non_nullable
               as bool?,
+      upDateCheck: freezed == upDateCheck
+          ? _value.upDateCheck
+          : upDateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -855,7 +864,9 @@ abstract class _$$_LinessCopyWith<$Res> implements $LinessCopyWith<$Res> {
       @JsonKey(name: "is_active", defaultValue: false)
           bool? isActive,
       @JsonKey(name: "is_invoiced", defaultValue: false)
-          bool? isInvoiced});
+          bool? isInvoiced,
+      @JsonKey(name: "updateCheck", defaultValue: false)
+          bool? upDateCheck});
 }
 
 /// @nodoc
@@ -892,6 +903,7 @@ class __$$_LinessCopyWithImpl<$Res>
     Object? isFree = freezed,
     Object? isActive = freezed,
     Object? isInvoiced = freezed,
+    Object? upDateCheck = freezed,
   }) {
     return _then(_$_Liness(
       id: freezed == id
@@ -990,6 +1002,10 @@ class __$$_LinessCopyWithImpl<$Res>
           ? _value.isInvoiced
           : isInvoiced // ignore: cast_nullable_to_non_nullable
               as bool?,
+      upDateCheck: freezed == upDateCheck
+          ? _value.upDateCheck
+          : upDateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1021,7 +1037,8 @@ class _$_Liness implements _Liness {
       @JsonKey(name: "purchase_uom") this.purchaseUom,
       @JsonKey(name: "is_free", defaultValue: false) this.isFree,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive,
-      @JsonKey(name: "is_invoiced", defaultValue: false) this.isInvoiced});
+      @JsonKey(name: "is_invoiced", defaultValue: false) this.isInvoiced,
+      @JsonKey(name: "updateCheck", defaultValue: false) this.upDateCheck});
 
   factory _$_Liness.fromJson(Map<String, dynamic> json) =>
       _$$_LinessFromJson(json);
@@ -1094,10 +1111,13 @@ class _$_Liness implements _Liness {
   @override
   @JsonKey(name: "is_invoiced", defaultValue: false)
   final bool? isInvoiced;
+  @override
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  final bool? upDateCheck;
 
   @override
   String toString() {
-    return 'Liness(id: $id, foc: $foc, discount: $discount, vat: $vat, invoiceLineCode: $invoiceLineCode, purchaseInvoiceLineCode: $purchaseInvoiceLineCode, purchaseInvoiceLineId: $purchaseInvoiceLineId, purchaseInvoiceId: $purchaseInvoiceId, returnOrderLineCode: $returnOrderLineCode, variantId: $variantId, variantName: $variantName, vendorRefrencecode: $vendorRefrencecode, totalQty: $totalQty, unitCost: $unitCost, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, grandTotal: $grandTotal, barcode: $barcode, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isActive: $isActive, isInvoiced: $isInvoiced)';
+    return 'Liness(id: $id, foc: $foc, discount: $discount, vat: $vat, invoiceLineCode: $invoiceLineCode, purchaseInvoiceLineCode: $purchaseInvoiceLineCode, purchaseInvoiceLineId: $purchaseInvoiceLineId, purchaseInvoiceId: $purchaseInvoiceId, returnOrderLineCode: $returnOrderLineCode, variantId: $variantId, variantName: $variantName, vendorRefrencecode: $vendorRefrencecode, totalQty: $totalQty, unitCost: $unitCost, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, grandTotal: $grandTotal, barcode: $barcode, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isActive: $isActive, isInvoiced: $isInvoiced, upDateCheck: $upDateCheck)';
   }
 
   @override
@@ -1148,7 +1168,9 @@ class _$_Liness implements _Liness {
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.isInvoiced, isInvoiced) ||
-                other.isInvoiced == isInvoiced));
+                other.isInvoiced == isInvoiced) &&
+            (identical(other.upDateCheck, upDateCheck) ||
+                other.upDateCheck == upDateCheck));
   }
 
   @JsonKey(ignore: true)
@@ -1178,7 +1200,8 @@ class _$_Liness implements _Liness {
         purchaseUom,
         isFree,
         isActive,
-        isInvoiced
+        isInvoiced,
+        upDateCheck
       ]);
 
   @JsonKey(ignore: true)
@@ -1240,7 +1263,9 @@ abstract class _Liness implements Liness {
       @JsonKey(name: "is_active", defaultValue: false)
           final bool? isActive,
       @JsonKey(name: "is_invoiced", defaultValue: false)
-          final bool? isInvoiced}) = _$_Liness;
+          final bool? isInvoiced,
+      @JsonKey(name: "updateCheck", defaultValue: false)
+          final bool? upDateCheck}) = _$_Liness;
 
   factory _Liness.fromJson(Map<String, dynamic> json) = _$_Liness.fromJson;
 
@@ -1312,6 +1337,9 @@ abstract class _Liness implements Liness {
   @override
   @JsonKey(name: "is_invoiced", defaultValue: false)
   bool? get isInvoiced;
+  @override
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  bool? get upDateCheck;
   @override
   @JsonKey(ignore: true)
   _$$_LinessCopyWith<_$_Liness> get copyWith =>

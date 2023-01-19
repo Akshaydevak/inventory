@@ -60,6 +60,7 @@ _$_OrderLinesInvoice _$$_OrderLinesInvoiceFromJson(Map<String, dynamic> json) =>
     _$_OrderLinesInvoice(
       id: json['id'] as int?,
       quantity: json['quantity'] as int?,
+      updatecheck: json['updatecheck'] as bool?,
       barcode: json['barcode'] as String?,
       discount: (json['discount'] as num?)?.toDouble(),
       vat: (json['vat'] as num?)?.toDouble(),
@@ -85,6 +86,7 @@ Map<String, dynamic> _$$_OrderLinesInvoiceToJson(
     <String, dynamic>{
       'id': instance.id,
       'quantity': instance.quantity,
+      'updatecheck': instance.updatecheck,
       'barcode': instance.barcode,
       'discount': instance.discount,
       'vat': instance.vat,

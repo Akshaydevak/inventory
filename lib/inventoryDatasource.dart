@@ -14,6 +14,7 @@ import 'package:inventory/purchaserecievingmodel/purchaserecieving_read.dart';
 import 'package:inventory/widgets/responseutils.dart';
 
 import 'Screens/inventory_creation_tab/inventory_read_model.dart';
+import 'commonWidget/sharedpreference.dart';
 import 'core/uttils/variable.dart';
 
 abstract class LogisticDataSource {
@@ -27,7 +28,7 @@ abstract class LogisticDataSource {
   Future<PurchaseOrdertype> getPurchaseOrdertype();
 
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model);
-  Future<List<VariantId>> getVariantId(
+  Future<PaginatedResponse<List<VariantId>>> getVariantId(
       {String? vendorId, String? inventory = ""});
   Future<List<Result>> getVariantCode();
   Future<PurchaseOrderTableModel> getTableDetails(int id);
@@ -48,7 +49,7 @@ abstract class LogisticDataSource {
   Future<PurchaseOrderRead> getRequestFormRead(int? id);
   Future<DoubleResponse> postRequest(PurchaseOrderPost model);
   Future<PurchaseOrdertype> getRequestFormOrdertype();
-  Future<List<OrderedPersonModel>> getOrderedPerson();
+  Future<PaginatedResponse<List<OrderedPersonModel>>> getOrderedPerson(String ? code);
   Future<DoubleResponse> getRequestFormPatch(PurchaseOrderPost model, int? id);
   Future<DoubleResponse> requestFormDelete(int id);
   //************requestFormreceiving********************
@@ -69,6 +70,7 @@ abstract class LogisticDataSource {
 
 class InventoryDataSourceImpl extends LogisticDataSource {
   Dio client = Dio();
+  String? token = "";
 
   @override
   Future<PaginatedResponse<List<PurchaseOrder>>> getInventorySearch(
@@ -95,7 +97,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     // path = tab == "RF"
     //    ? "http://65.1.61.201:8111/purchase-order/list-request-form/test"
     //    : "http://65.1.61.201:8111/purchase-order/list-purchase-order/test";
-    print(path);
+    print("SSSSSchecikngSSSSSSSSSSSSS"+path.toString());
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -328,17 +330,16 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   }
 
   @override
-  Future<List<VariantId>> getVariantId(
-      {String? vendorId, String? inventory = ""}) async {
-    print("repooooosss");
-    print("in" + inventory.toString());
+  Future<PaginatedResponse<List<VariantId>>> getVariantId(
+      {String? vendorId, String? inventory = "",String ? code}) async {
+
 
     String path = inventory == "" || inventory == null
-        ? inventoryBaseUrl +
-            "inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"
-        : inventoryBaseUrl +
-            "inventory-product/list-variant-by-inventory/$inventory";
-    print("sssssssssssssssAkshay" + path);
+        ?code==null? inventoryBaseUrl +
+            "inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId":"inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"+"?"+code.toString()
+        :code==null? inventoryBaseUrl +
+            "inventory-product/list-variant-by-inventory/$inventory":"inventory-product/list-variant-by-inventory/$inventory"+"?"+code.toString();
+
     // try{
     //   print("aaanananana");
     print(path);
@@ -353,17 +354,19 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         },
       ),
     );
-    print("aaammamam");
-    print("responseAkkkkkkkk" + response.toString());
-    //print(response.data['results']);
     List<VariantId> items = [];
-
     (response.data['data']['results'] as List).forEach((element) {
-      // print("data");
-
       items.add(VariantId.fromJson(element));
+      print("itemsAk" + items.toString());
     });
-    return items;
+    return PaginatedResponse<List<VariantId>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+
+
     // }catch(e){print("Akshaya2"+e.toString());}
     //   final response = await client.get(
     //     path,
@@ -915,17 +918,56 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   }
 
   @override
-  Future<List<OrderedPersonModel>> getOrderedPerson() async {
+  Future<PaginatedResponse<List<OrderedPersonModel>>> getOrderedPerson(String ? code) async {
     print("orderedPerson3");
+    print("token" + Variable.token.toString());
 
-    String path =
-        "https://api-user-uat.ahlancart.com/user-employee_employeeuser";
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
+
+    String path =requestFormOderPerson;
+
     print(path);
 
     // String path = inventory == "" || inventory == null
     //     ? "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory-and-vendor/test?vcode=test"
     //     : "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory/$inventory";
     print(path);
+    try{
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'token ${token}'
+          },
+        ),
+      );
+      print("response" + response.toString());
+      //print(response.data['results']);
+      List<OrderedPersonModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(OrderedPersonModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return PaginatedResponse<List<OrderedPersonModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],
+      );
+
+    }catch(e){
+      print("e"+e.toString());
+    }
     final response = await client.get(
       path,
       // data:
@@ -936,20 +978,27 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       options: Options(
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': 'token ${token}'
         },
       ),
     );
     print("response" + response.toString());
     //print(response.data['results']);
     List<OrderedPersonModel> items = [];
-
     (response.data['data']['results'] as List).forEach((element) {
-      // print("data");
-
       items.add(OrderedPersonModel.fromJson(element));
+      print("itemsAk" + items.toString());
     });
-    return items;
+    return PaginatedResponse<List<OrderedPersonModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+
+
+
   }
 
   @override
@@ -1164,6 +1213,25 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       invoicePost.toString(),
     );
 
+   try{
+     final response = await client.post(invoicePost,
+         data: model.toJson(),
+         options: Options(headers: {
+           'Content-Type': 'application/json',
+           'Accept': 'application/json',
+         }));
+     print("");
+     print(response);
+     print(response.data['message']);
+     if (response.data['status'] == 'failed') {
+       Variable.errorMessege = response.data['message'];
+     }
+     return DoubleResponse(
+         response.data['status'] == 'success', response.data['message']);
+   }
+   catch(e){
+     print(e);
+   }
     final response = await client.post(invoicePost,
         data: model.toJson(),
         options: Options(headers: {
@@ -1356,7 +1424,9 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     return PaginatedResponse<List<InventoryListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override

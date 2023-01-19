@@ -66,7 +66,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                   children: [
 
                     Container(
-                      height: width*.045,
+                      height: height/10,
                       decoration:BoxDecoration(   border: Border(bottom: BorderSide(color:Color(0xffF2F3F5), width:5))),
 
                       width: double.infinity,
@@ -76,9 +76,9 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
 
 
                           Container(
-                            width:MediaQuery.of(context).size.width*.48,
-                            height: width*.052,
-                            margin: EdgeInsets.only(top:22),
+                            width:MediaQuery.of(context).size.width/1.8,
+                            padding: EdgeInsets.only(top: height*.04),
+                            height: height*.18,
 
                             child: TabBar(
 
@@ -115,14 +115,40 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
 
                                 controller: _tabController,
                                 tabs: [
-                                  Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Division Configuration",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Customise Data",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                  Text("General",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                  Text("Division Configuration",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                  Text("Customise Data",style: TextStyle(color: Colors.black,fontSize: width*.011),),
 
                                 ]),
                           ),
 
                           Spacer(),
+                          // PopupMenuButton(
+                          //   icon: Text("Select"),
+                          //   //don't specify icon if you want 3 dot menu
+                          //   color: Colors.white,
+                          //   elevation: 1,
+                          //   padding: EdgeInsets.zero,
+                          //   constraints: const BoxConstraints.expand(width: 200, height: 300),
+                          //   shape:
+                          //   RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                          //   itemBuilder: (context) =>
+                          //   [
+                          //     PopupMenuItem(
+                          //         padding: const EdgeInsets.all(0),
+                          //         value: 'a',
+                          //         enabled: true,
+                          //         child:
+                          //         RihtDrawer()
+                          //     )
+                          //
+                          //   ],
+                          //   onSelected: (value) {
+                          //     print("Akshayaaaaaaaaaaaaaaa");
+                          //
+                          //   },
+                          // ),
+
                           Container(
                             margin: EdgeInsets.only(right: 10,top: 10),
                             child: TextButton.icon(onPressed: (){
@@ -168,6 +194,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
           ),
         ),
         AnimatedPositioned(
+
           duration: Duration(microseconds: 1000),
           right: isClossed?-250:0,
           child: RihtDrawer()

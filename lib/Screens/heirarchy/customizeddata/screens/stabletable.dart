@@ -39,10 +39,12 @@ class CustomizedStableTable extends StatefulWidget {
   final bool haveWrapOption;
   final bool needMultipleIntegreation;
   final Function activeChange;
+  final Function? nameChanege;
 
 
   CustomizedStableTable({
     required this.groupNameController,required this.needMultipleIntegreation,required this.select,
+    this.nameChanege,
     required this.group, required this.code, required this.minimumGp, required this.averageGp, required this.maximumGp, required this.targetedGp, required this.vat, required this.excessTax, required this.returnType, required this.returnTime, required this.weightUomId, required this.height, required this.width, required this.length, required this.active, required this.activeChange, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption, required this.lengthUnit, required this.weightUnit, required this.heightUnit, required this.widthUnit});
   @override
   _CustomizedStableTableState createState() => _CustomizedStableTableState();
@@ -233,6 +235,8 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                           //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                           setState(() {
                             widget.weightUnit.text = va??"";
+                            widget.nameChanege!(type:4, value:va??"");
+
 
                             // onChange = true;
                             // orderType = va!;
@@ -240,6 +244,7 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
 
                         },
                           type:"Weight_unit_popup" ,
+                          initialvalue: "Kilo Gram",
                         ),
                         // Container(
                         //   margin: EdgeInsets.only(left: 20),
@@ -333,6 +338,7 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                             //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                             setState(() {
                               widget.  heightUnit.text = va??"";
+                              widget.nameChanege!(type:2, value:va??"");
 
                               // onChange = true;
                               // orderType = va!;
@@ -434,6 +440,7 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                             //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                             setState(() {
                               widget.  widthUnit.text = va??"";
+                              widget.nameChanege!(type:3, value:va??"");
 
                               // onChange = true;
                               // orderType = va!;
@@ -535,6 +542,7 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                             //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                             setState(() {
                               widget.  lengthUnit.text = va??"";
+                              widget.nameChanege!(type:1, value:va??"");
 
                               // onChange = true;
                               // orderType = va!;

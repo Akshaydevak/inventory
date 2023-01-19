@@ -19,50 +19,44 @@ mixin _$VariantIdCubitDartState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
     required TResult Function() error,
-    required TResult Function(List<VariantId> data) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(PaginatedResponse<dynamic> data)? success,
     TResult? Function()? error,
-    TResult? Function(List<VariantId> data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     TResult Function()? error,
-    TResult Function(List<VariantId> data)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
+    required TResult Function(_Error1 value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error1 value)? error,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Error1 value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
+    TResult Function(_Error1 value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -125,9 +119,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
     required TResult Function() error,
-    required TResult Function(List<VariantId> data) success,
   }) {
     return initial();
   }
@@ -136,9 +129,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(PaginatedResponse<dynamic> data)? success,
     TResult? Function()? error,
-    TResult? Function(List<VariantId> data)? success,
   }) {
     return initial?.call();
   }
@@ -147,9 +139,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     TResult Function()? error,
-    TResult Function(List<VariantId> data)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -162,9 +153,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
+    required TResult Function(_Error1 value) error,
   }) {
     return initial(this);
   }
@@ -173,9 +163,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error1 value)? error,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Error1 value)? error,
   }) {
     return initial?.call(this);
   }
@@ -184,9 +173,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
+    TResult Function(_Error1 value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -201,72 +189,95 @@ abstract class _Initial implements VariantIdCubitDartState {
 }
 
 /// @nodoc
-abstract class _$$_LoadingCopyWith<$Res> {
-  factory _$$_LoadingCopyWith(
-          _$_Loading value, $Res Function(_$_Loading) then) =
-      __$$_LoadingCopyWithImpl<$Res>;
+abstract class _$$_SuccessCopyWith<$Res> {
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PaginatedResponse<dynamic> data});
 }
 
 /// @nodoc
-class __$$_LoadingCopyWithImpl<$Res>
-    extends _$VariantIdCubitDartStateCopyWithImpl<$Res, _$_Loading>
-    implements _$$_LoadingCopyWith<$Res> {
-  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+class __$$_SuccessCopyWithImpl<$Res>
+    extends _$VariantIdCubitDartStateCopyWithImpl<$Res, _$_Success>
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$_Success(
+      null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as PaginatedResponse<dynamic>,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_Loading implements _Loading {
-  const _$_Loading();
+class _$_Success implements _Success {
+  const _$_Success(this.data);
+
+  @override
+  final PaginatedResponse<dynamic> data;
 
   @override
   String toString() {
-    return 'VariantIdCubitDartState.loading()';
+    return 'VariantIdCubitDartState.success(data: $data)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loading);
+        (other.runtimeType == runtimeType &&
+            other is _$_Success &&
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
     required TResult Function() error,
-    required TResult Function(List<VariantId> data) success,
   }) {
-    return loading();
+    return success(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(PaginatedResponse<dynamic> data)? success,
     TResult? Function()? error,
-    TResult? Function(List<VariantId> data)? success,
   }) {
-    return loading?.call();
+    return success?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     TResult Function()? error,
-    TResult Function(List<VariantId> data)? success,
     required TResult orElse(),
   }) {
-    if (loading != null) {
-      return loading();
+    if (success != null) {
+      return success(data);
     }
     return orElse();
   }
@@ -275,42 +286,44 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
+    required TResult Function(_Error1 value) error,
   }) {
-    return loading(this);
+    return success(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error1 value)? error,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Error1 value)? error,
   }) {
-    return loading?.call(this);
+    return success?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
+    TResult Function(_Error1 value)? error,
     required TResult orElse(),
   }) {
-    if (loading != null) {
-      return loading(this);
+    if (success != null) {
+      return success(this);
     }
     return orElse();
   }
 }
 
-abstract class _Loading implements VariantIdCubitDartState {
-  const factory _Loading() = _$_Loading;
+abstract class _Success implements VariantIdCubitDartState {
+  const factory _Success(final PaginatedResponse<dynamic> data) = _$_Success;
+
+  PaginatedResponse<dynamic> get data;
+  @JsonKey(ignore: true)
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -350,9 +363,8 @@ class _$_Error1 implements _Error1 {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
     required TResult Function() error,
-    required TResult Function(List<VariantId> data) success,
   }) {
     return error();
   }
@@ -361,9 +373,8 @@ class _$_Error1 implements _Error1 {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(PaginatedResponse<dynamic> data)? success,
     TResult? Function()? error,
-    TResult? Function(List<VariantId> data)? success,
   }) {
     return error?.call();
   }
@@ -372,9 +383,8 @@ class _$_Error1 implements _Error1 {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     TResult Function()? error,
-    TResult Function(List<VariantId> data)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -387,9 +397,8 @@ class _$_Error1 implements _Error1 {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
+    required TResult Function(_Error1 value) error,
   }) {
     return error(this);
   }
@@ -398,9 +407,8 @@ class _$_Error1 implements _Error1 {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error1 value)? error,
     TResult? Function(_Success value)? success,
+    TResult? Function(_Error1 value)? error,
   }) {
     return error?.call(this);
   }
@@ -409,9 +417,8 @@ class _$_Error1 implements _Error1 {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
+    TResult Function(_Error1 value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -423,153 +430,4 @@ class _$_Error1 implements _Error1 {
 
 abstract class _Error1 implements VariantIdCubitDartState {
   const factory _Error1() = _$_Error1;
-}
-
-/// @nodoc
-abstract class _$$_SuccessCopyWith<$Res> {
-  factory _$$_SuccessCopyWith(
-          _$_Success value, $Res Function(_$_Success) then) =
-      __$$_SuccessCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<VariantId> data});
-}
-
-/// @nodoc
-class __$$_SuccessCopyWithImpl<$Res>
-    extends _$VariantIdCubitDartStateCopyWithImpl<$Res, _$_Success>
-    implements _$$_SuccessCopyWith<$Res> {
-  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? data = null,
-  }) {
-    return _then(_$_Success(
-      null == data
-          ? _value._data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<VariantId>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_Success implements _Success {
-  const _$_Success(final List<VariantId> data) : _data = data;
-
-  final List<VariantId> _data;
-  @override
-  List<VariantId> get data {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_data);
-  }
-
-  @override
-  String toString() {
-    return 'VariantIdCubitDartState.success(data: $data)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Success &&
-            const DeepCollectionEquality().equals(other._data, _data));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_data));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_SuccessCopyWith<_$_Success> get copyWith =>
-      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() error,
-    required TResult Function(List<VariantId> data) success,
-  }) {
-    return success(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? error,
-    TResult? Function(List<VariantId> data)? success,
-  }) {
-    return success?.call(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(List<VariantId> data)? success,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(data);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error1 value) error,
-    required TResult Function(_Success value) success,
-  }) {
-    return success(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Error1 value)? error,
-    TResult? Function(_Success value)? success,
-  }) {
-    return success?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
-    TResult Function(_Success value)? success,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Success implements VariantIdCubitDartState {
-  const factory _Success(final List<VariantId> data) = _$_Success;
-
-  List<VariantId> get data;
-  @JsonKey(ignore: true)
-  _$$_SuccessCopyWith<_$_Success> get copyWith =>
-      throw _privateConstructorUsedError;
 }

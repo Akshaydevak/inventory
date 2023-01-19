@@ -1,6 +1,7 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:inventory/commonWidget/common.dart';
 
 class InputDataField extends StatefulWidget {
   final String label;
@@ -156,7 +157,7 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
               width: 70,
               child: Text.rich(TextSpan(
                   text: widget.label,
-                  style: TextStyle(fontSize: 12),
+                  style:CommonTextStyle.normalHeadingStyle,
                   children: widget.required
                       ? [
                     TextSpan(
@@ -221,7 +222,7 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
         children: [
           Text(
             widget.label,
-            style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),
+              style:CommonTextStyle.normalHeadingStyle,
           ),
 
           SizedBox(height: 3,),

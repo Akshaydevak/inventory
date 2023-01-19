@@ -47,6 +47,7 @@ import 'Screens/variant/channels2allocation/cubits/data_assign/allocationdata_as
 import 'Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
 import 'Screens/variant/general/cubits/variant_selection/variantselection_cubit.dart';
 import 'Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
+import 'Screens/variant/variantdetails/cubits/producedcountry/producedcountry_cubit.dart';
 import 'commonWidget/Navigationprovider.dart';
 import 'commonWidget/sharedpreference.dart';
 import 'cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
@@ -172,6 +173,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => ChannelstockverticalCubit(),
         ),
+    BlocProvider(
+    create: (context) => ProducedcountryCubit()),
         BlocProvider(
           create: (context) => UnicostCostingCubit(),
         ),
@@ -233,7 +236,7 @@ class _MyHomeState extends State<MyHome> {
         "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" +
             Variable.inventory_ID.toString());
 
-    index = prefs.getInt('index') ?? 1;
+    index = prefs.getInt('index') ?? 0;
     print("index after caching $index");
     UserPreferences userPref = UserPreferences();
     await userPref.getUser().then((user) {
