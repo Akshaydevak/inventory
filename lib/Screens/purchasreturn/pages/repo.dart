@@ -215,6 +215,8 @@ abstract class PurchaseReturnRepoAbstract {
       ItemReadModel model, int? id);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
       getVariantList(String? code, {String? type});
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+  getStockPartitionList(String? code,);
   Future<Either<Failure, VariantReadModel>> getVariantRead(
     int? id,
   );
@@ -229,8 +231,8 @@ abstract class PurchaseReturnRepoAbstract {
 
   Future<Either<Failure, DoubleResponse>> postStockPartion(
       String? name,String? description);
-  Future<Either<Failure, DoubleResponse>> patchVariant(
-      VariantPatch model, int? id);
+  Future<Either<Failure, DoubleResponse>> patchVariant(VariantPatch model, int? id);
+  Future<Either<Failure, DoubleResponse>> patchStockPartition(String? name,String? description,bool ? active,int? id);
   //variantcreation++++++++++++++++++++++++++++++++++++
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
       getVariantCreationList(
@@ -363,6 +365,9 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, LinkedItemPostModel>> getLinkedItem(
     int? id,
   );
+  Future<Either<Failure, StockPartitionModel>> getStockPartitionRead(
+      int? id,
+      );
   Future<Either<Failure, PaginatedResponse<List<LinkedItemListIdModel>>>>
       getLinkedItemList(
     String? filter,
@@ -1660,5 +1665,30 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
           name,
           description,
         ));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getStockPartitionList(String? code) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+            () async => remoteDataSource.getStockPartitionList(code));
+  }
+
+  @override
+  Future<Either<Failure, StockPartitionModel>> getStockPartitionRead(int? id) {
+    return repoExecute<StockPartitionModel>(
+            () async =>
+            remoteDataSource.getStockPartitionRead(
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchStockPartition(String? name, String? description, bool? active, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async =>
+            remoteDataSource.patchStockPartition(
+              name,description,active,
+              id,
+            ));
   }
 }

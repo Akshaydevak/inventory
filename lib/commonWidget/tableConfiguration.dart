@@ -17,6 +17,11 @@ import 'package:inventory/Screens/heirarchy/general/cubits/subcategorylist/subca
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
+import 'package:inventory/Screens/promotiontab/discount/cubit/type_listing_on/type_id_list_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/listsegments/list_segments_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/offergroup/list_offer_group_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/saleapplyingname/sale_applying_name_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/Screens/sales/general/cubit/customeridcreation/customeridcreation_cubit.dart';
 import 'package:inventory/Screens/sales/general/cubit/customeridlist/customeridlist_cubit.dart';
 import 'package:inventory/Screens/sales/general/cubit/shippingaddress/shippingadrees_cubit.dart';
@@ -29,6 +34,7 @@ import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/cost
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricinglist/pricinglist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/liststock/liststockpartition_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/salesList/sales_list_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/vendordetailslist/vendordetailslist_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
@@ -37,6 +43,7 @@ import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/variant_id_cubit_dart_cubit.dart';
+import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/purchaserecievingmodel/generatemissing.dart';
 import 'package:inventory/requestformcubit/cubit/orderedperson_cubit.dart';
@@ -46,6 +53,8 @@ import 'package:inventory/widgets/searchTextfield.dart';
 import '../Screens/heirarchy/general/cubits/materialRead/materialread_cubit.dart';
 import '../Screens/heirarchy/general/model/listbrand.dart';
 import '../Screens/heirarchy/general/model/materialread.dart';
+import '../Screens/promotiontab/sale/cubits/ListOfferPeriodGroup/list_offer_period_cubit.dart';
+import '../Screens/promotiontab/sale/cubits/variantList/variant_list_promotion_cubit.dart';
 import '../Screens/variant/general/cubits/variant_selection/variantselection_cubit.dart';
 import '../Screens/variant/variantdetails/cubits/producedcountry/producedcountry_cubit.dart';
 import '../Screens/variant/variantdetails/cubits/variantsearch/variantsearch_cubit.dart';
@@ -59,6 +68,7 @@ class TableConfigurePopup extends StatelessWidget {
   final int? id;
   final String? inventory;
   final String? vendorId;
+  final dynamic? object;
 
   TableConfigurePopup(
       {Key? key,
@@ -66,6 +76,7 @@ class TableConfigurePopup extends StatelessWidget {
       this.inventory = "",
         this.vendorId,
         this.code,
+        this.object,
       required this.type,
       this.id = 0,
       required this.valueSelect})
@@ -85,6 +96,16 @@ class TableConfigurePopup extends StatelessWidget {
       case "variantTabalePopup":
         {
           data = variantTabalePopup(
+            vendorId: vendorId,
+            inventory: inventory,
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "SegmentListTabalePopup":
+        {
+          data = SegmentListTabalePopup(
             vendorId: vendorId,
             inventory: inventory,
             type: type,
@@ -131,6 +152,48 @@ class TableConfigurePopup extends StatelessWidget {
         {
           data = CostingTabalePopup(
             type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "OfferPeriodPopup":
+        {
+          data = OfferPeriodPopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+
+      case "OfferGroupPeriodPopup":
+        {
+          data = OfferGroupPeriodPopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "SaleApplyingNamePeriodPopup":
+        {
+          data = SaleApplyingNamePeriodPopup(
+            type: type,
+            model: object,
+            valueSelect: valueSelect,
+          );
+        }
+        break;case "DiscountTypeidPopup":
+        {
+          data = DiscountTypeidPopup(
+            type: type,
+            model: object,
+            valueSelect: valueSelect,
+          );
+        }
+        break;  case "VariantListPopup":
+        {
+          data = VariantListPopup(
+            type: type,
+            model: object,
             valueSelect: valueSelect,
           );
         }
@@ -762,18 +825,25 @@ class _variantTabalePopup extends State<variantTabalePopup> {
                 () => context.read<VariantIdCubitDartCubit>().refresh(),
             back: list1?.previousUrl == null
             ? null
+
                 : () {
-            context
+                  widget.inventory == ""?  context
                 .read<VariantIdCubitDartCubit>()
-                .previuosslotSectionPageList();
+                .previuosslotSectionPageList(vendorId: widget.vendorId):
+                  context
+                      .read<VariantIdCubitDartCubit>()
+                      .previuosslotSectionPageList( inventory: widget.inventory);
             },
             next: list1.nextPageUrl == null
             ? null
                 : () {
             // print(data.nextPageUrl);
-            context
-                .read<VariantIdCubitDartCubit>()
-                .nextslotSectionPageList();
+              widget.inventory == ""?  context
+                  .read<VariantIdCubitDartCubit>()
+                  .nextslotSectionPageList(vendorId: widget.vendorId):
+              context
+                  .read<VariantIdCubitDartCubit>()
+                  .nextslotSectionPageList( inventory: widget.inventory);
             },
             ):Container(),
                 dataField: Container(
@@ -903,6 +973,318 @@ class _variantTabalePopup extends State<variantTabalePopup> {
                                               ontap: () {
                                                 VariantId model =
                                                 VariantId(
+                                                  id: table[i].id,
+                                                  name: table[i].name,
+                                                  code: table[i].code,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].name ?? "",
+
+                                            )
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+
+
+class SegmentListTabalePopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final String? inventory;
+  final String? vendorId;
+
+  SegmentListTabalePopup({
+    Key? key,
+    required this.type,
+    this.inventory = "",
+    this.vendorId,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _SegmentListTabalePopup createState() => _SegmentListTabalePopup();
+}
+
+class _SegmentListTabalePopup extends State<SegmentListTabalePopup> {
+  bool? active = true;
+  bool suffixIconCheck = false;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  List<salesOrderTypeModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => ListSegmentsCubit(),
+  child: Builder(builder: (context) {
+
+           context
+          .read<ListSegmentsCubit>()
+          .getListSegment();
+
+      return BlocConsumer<ListSegmentsCubit, ListSegmentsState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonVisible: true,
+                buttonName: "",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Segment Id",
+                onApply: () {
+
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:        list1 != null?
+                tablePagination(
+                () => context.read<ListSegmentsCubit>().refresh(),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<ListSegmentsCubit>()
+                .previuosslotSectionPageList();
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<ListSegmentsCubit>()
+                .nextslotSectionPageList();
+            },
+            ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+
+                    children: [
+                      // Container(
+                      //     // margin: EdgeInsets.all(5),
+                      //     child: SearchTextfiled(
+                      //       color: Color(0xffFAFAFA),
+                      //       h: 40,
+                      //       suffixIconCheck: suffixIconCheck,
+                      //       w: MediaQuery.of(context).size.width/2.11,
+                      //       hintText: "Search...",
+                      //       ctrlr: searchContoller,
+                      //       onChanged: (va) {
+                      //         print("searching case" + va.toString());
+                      //         context
+                      //             .read<DevisionListCubit>()
+                      //             .searchDevisionList(searchContoller.text);
+                      //         suffixIconCheck=true;
+                      //         if (va == "") {
+                      //           context
+                      //               .read<DevisionListCubit>()
+                      //               .getDevisionList();
+                      //           suffixIconCheck=false;
+                      //         }
+                      //       },
+                      //     )),
+                      // SizedBox(
+                      //   height: h * .005,
+                      // ),
+                      Container(
+                        height: h / 1.86,
+                        // width: w/7,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Segment',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString(),)
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                salesOrderTypeModel model =
+                                                salesOrderTypeModel(
                                                   id: table[i].id,
                                                   name: table[i].name,
                                                   code: table[i].code,
@@ -2830,6 +3212,1578 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
     });
   }
 }
+
+
+class OfferPeriodPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+
+  OfferPeriodPopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _OfferPeriodPopup createState() => _OfferPeriodPopup();
+}
+
+class _OfferPeriodPopup extends State<OfferPeriodPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  bool suffixIconCheck=false;
+  List<OfferPeriodList> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return Builder(builder: (context) {
+      context.read<ListOfferPeriodCubit>().getOfferPeriodList();
+      return BlocConsumer<ListOfferPeriodCubit, ListOfferPeriodState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Offer  Period",
+                onApply: () {
+                  costingTypeMethodeCheck = true;
+                  showDailogPopUp(
+                    context,
+                    ConfigurePopup(
+                      type: "CreateOfferPeriodCreatePopUp",
+                    ),
+                  );
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:           list1 != null?
+                tablePagination(
+                () => context.read<ListOfferPeriodCubit>().refresh(),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<ListOfferPeriodCubit>()
+                .previuosslotSectionPageList();
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<ListOfferPeriodCubit>()
+                .nextslotSectionPageList();
+            },
+            ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<ListOfferPeriodCubit>()
+                                  .searchUomList(searchContoller.text);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context
+                                    .read<ListOfferPeriodCubit>()
+                                    .getOfferPeriodList();
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Offer Period',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                CostingCreatePostModel model =
+                                                    CostingCreatePostModel(
+                                                  id: table[i].id,
+                                                  methodName:
+                                                      table[i].title,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text:
+
+                                                      table[i].title ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    });
+  }
+}
+
+
+
+
+
+
+
+
+class OfferGroupPeriodPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+
+  OfferGroupPeriodPopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _OfferGroupPeriodPopup createState() => _OfferGroupPeriodPopup();
+}
+
+class _OfferGroupPeriodPopup extends State<OfferGroupPeriodPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  bool suffixIconCheck=false;
+  List<OfferGroupList> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return Builder(builder: (context) {
+      context.read<ListOfferGroupCubit>().getOfferGroupList();
+      return BlocConsumer<ListOfferGroupCubit, ListOfferGroupState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Offer Group",
+                onApply: () {
+                  costingTypeMethodeCheck = true;
+                  showDailogPopUp(
+                    context,
+                    ConfigurePopup(
+                      type: "CreateOfferGroupPopUp",
+                    ),
+                  );
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:           list1 != null?
+                tablePagination(
+                () => context.read<ListOfferGroupCubit>().refresh(),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<ListOfferGroupCubit>()
+                .previuosslotSectionPageList();
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<ListOfferGroupCubit>()
+                .nextslotSectionPageList();
+            },
+            ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<ListOfferGroupCubit>()
+                                  .searchOfferGroupList(searchContoller.text);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context
+                                    .read<ListOfferGroupCubit>()
+                                    .getOfferGroupList();
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Offer Group',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                OfferGroupList model =
+                                                OfferGroupList(
+                                                  id: table[i].id,
+                                                  title:
+                                                      table[i].title,
+                                                  offerGroupCode: table[i].offerGroupCode
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].title ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    });
+  }
+}
+
+
+class SaleApplyingNamePeriodPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final salesOrderNamePostModel model;
+
+  SaleApplyingNamePeriodPopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+    required this.model,
+  }) : super(key: key);
+
+  @override
+  _SaleApplyingNamePeriodPopup createState() => _SaleApplyingNamePeriodPopup();
+}
+
+class _SaleApplyingNamePeriodPopup extends State<SaleApplyingNamePeriodPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  bool suffixIconCheck=false;
+  List<OfferPeriodList> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => SaleApplyingNameCubit(),
+  child: Builder(builder: (context) {
+      context.read<SaleApplyingNameCubit>().getSaleApplyingName(widget.model);
+      return BlocConsumer<SaleApplyingNameCubit, SaleApplyingNameState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Offer Group",
+                onApply: () {
+                  costingTypeMethodeCheck = true;
+                  showDailogPopUp(
+                    context,
+                    ConfigurePopup(
+                      type: "CreateOfferGroupPopUp",
+                    ),
+                  );
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:           list1 != null?
+                tablePagination(
+                () => context.read<ListOfferGroupCubit>().refresh(),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<SaleApplyingNameCubit>()
+                .previuosslotSectionPageList(widget.model);
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<SaleApplyingNameCubit>()
+                .nextslotSectionPageList(widget.model);
+            },
+            ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<SaleApplyingNameCubit>()
+                                  .searchSaleAppyingNameList(widget.model,searchContoller.text);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context
+                                    .read<SaleApplyingNameCubit>()
+                                    .getSaleApplyingName(widget.model);
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Offer Group',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                OfferPeriodList model =
+                                                OfferPeriodList(
+                                                  id: table[i].id,
+                                                  name: table[i].name,
+                                                  code: table[i].code
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].name ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+class DiscountTypeidPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final salesOrderNamePostModel model;
+
+  DiscountTypeidPopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+    required this.model,
+  }) : super(key: key);
+
+  @override
+  _DiscountTypeidPopup createState() => _DiscountTypeidPopup();
+}
+
+class _DiscountTypeidPopup extends State<DiscountTypeidPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  bool suffixIconCheck=false;
+  List<OfferPeriodList> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => TypeIdListCubit(),
+  child: Builder(builder: (context) {
+      context.read<TypeIdListCubit>().getListTypeId(widget.model);
+      return BlocConsumer<TypeIdListCubit, TypeIdListState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Offer Group",
+                onApply: () {
+                  costingTypeMethodeCheck = true;
+                  // showDailogPopUp(
+                  //   context,
+                  //   ConfigurePopup(
+                  //     type: "CreateOfferGroupPopUp",
+                  //   ),
+                  // );
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:           list1 != null?
+                tablePagination(
+                () => context.read<TypeIdListCubit>().refresh(widget.model),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<TypeIdListCubit>()
+                .previuosslotSectionPageList(widget.model);
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<TypeIdListCubit>()
+                .nextslotSectionPageList(widget.model);
+            },
+            ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<SaleApplyingNameCubit>()
+                                  .searchSaleAppyingNameList(widget.model,searchContoller.text);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context
+                                    .read<SaleApplyingNameCubit>()
+                                    .getSaleApplyingName(widget.model);
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Type Id',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                OfferPeriodList model =
+                                                OfferPeriodList(
+                                                  id: table[i].id,
+                                                  name: table[i].name,
+                                                  code: table[i].code
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].name ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+class VariantListPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final PromotionVariantPostModel model;
+
+  VariantListPopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+    required this.model,
+  }) : super(key: key);
+
+  @override
+  _VariantListPopup createState() => _VariantListPopup();
+}
+
+class _VariantListPopup extends State<VariantListPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  bool suffixIconCheck=false;
+  List<SaleLines> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => VariantListPromotionCubit(),
+  child: Builder(builder: (context) {
+      context.read<VariantListPromotionCubit>().getVariantList(widget.model);
+      return BlocConsumer<VariantListPromotionCubit, VariantListPromotionState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Offer Group",
+                onApply: () {
+                  costingTypeMethodeCheck = true;
+                  // showDailogPopUp(
+                  //   context,
+                  //   ConfigurePopup(
+                  //     type: "CreateOfferGroupPopUp",
+                  //   ),
+                  // );
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:           list1 != null?
+                tablePagination(
+                () => context.read<ListOfferGroupCubit>().refresh(),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<VariantListPromotionCubit>()
+                .previuosslotSectionPageList(widget.model);
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<VariantListPromotionCubit>()
+                .nextslotSectionPageList(widget.model);
+            },
+            ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<VariantListPromotionCubit>()
+                                  .searchVariantList(widget.model,searchContoller.text);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context
+                                    .read<VariantListPromotionCubit>()
+                                    .getVariantList(widget.model);
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Variant List',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                SaleLines model =
+                                                SaleLines(
+                                                  id: table[i].id,
+                                                    barcode: table[i].barcode,
+                                                  variantName: table[i].variantName,
+
+                                                  variantCode: table[i].variantCode
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].variantName ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+
+
 
 class PricingTabalePopup extends StatefulWidget {
   final String type;
@@ -8302,6 +10256,25 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
                   //
                   // setState(() {});
                 },
+                paginated: list1 != null?
+                tablePagination(
+                () => context.read<Listbrand2Cubit>().refresh(),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<Listbrand2Cubit>()
+                .previuosslotSectionPageList();
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<Listbrand2Cubit>()
+                .nextslotSectionPageList();
+            },
+            ):SizedBox(),
                 dataField: Container(
                   // height: 500,
                   child: Column(
@@ -8457,25 +10430,7 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
                       SizedBox(
                         height: h * .004,
                       ),
-                      if (list1 != null)
-                        tablePagination(
-                          () => context.read<Listbrand2Cubit>().refresh(),
-                          back: list1?.previousUrl == null
-                              ? null
-                              : () {
-                                  context
-                                      .read<Listbrand2Cubit>()
-                                      .previuosslotSectionPageList();
-                                },
-                          next: list1.nextPageUrl == null
-                              ? null
-                              : () {
-                                  // print(data.nextPageUrl);
-                                  context
-                                      .read<Listbrand2Cubit>()
-                                      .nextslotSectionPageList();
-                                },
-                        )
+
                     ],
                   ),
                 ),
@@ -9144,8 +11099,8 @@ class _StockPartitionGroupPopup extends State<StockPartitionGroupPopup> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return Builder(builder: (context) {
-      context.read<GrouplistCubit>().getGroupListList(id:widget.id);
-      return BlocConsumer<GrouplistCubit, GrouplistState>(
+      context.read<ListstockpartitionCubit>().getStockPartitionList();
+      return BlocConsumer<ListstockpartitionCubit, ListstockpartitionState>(
         listener: (context, state) {
           print("state" + state.toString());
           state.maybeWhen(
@@ -9173,6 +11128,7 @@ class _StockPartitionGroupPopup extends State<StockPartitionGroupPopup> {
                 addNew: false,
                 label: "Stock Partition Group Id",
                 onApply: () {
+                  costingTypeMethodeCheck=true;
                   showDailogPopUp(
                     context,
                     ConfigurePopup(

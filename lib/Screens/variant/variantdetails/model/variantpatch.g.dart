@@ -86,6 +86,10 @@ _$_VariantPatch _$$_VariantPatchFromJson(Map<String, dynamic> json) =>
           (json['wholesale_selling_price_percentage'] as num?)?.toDouble(),
       onlineSellingPercenage:
           (json['online_selling_price_percentage'] as num?)?.toDouble(),
+      haveStockPartitionGroup:
+          json['have_stock_partition_group'] as bool? ?? false,
+      haveStockPriority: json['have_stock_priority'] as bool? ?? false,
+      stockPartitionGroupId: json['stock_partition_group_id'] as int?,
       vedioUrl: json['vedio_url'] as String?,
       avgGp: (json['average_gp'] as num?)?.toDouble(),
       targetedGp: (json['targeted_gp'] as num?)?.toDouble(),
@@ -217,6 +221,9 @@ Map<String, dynamic> _$$_VariantPatchToJson(_$_VariantPatch instance) =>
       'wholesale_selling_price_percentage':
           instance.wholeSellingPricePercentage,
       'online_selling_price_percentage': instance.onlineSellingPercenage,
+      'have_stock_partition_group': instance.haveStockPartitionGroup,
+      'have_stock_priority': instance.haveStockPriority,
+      'stock_partition_group_id': instance.stockPartitionGroupId,
       'vedio_url': instance.vedioUrl,
       'average_gp': instance.avgGp,
       'targeted_gp': instance.targetedGp,

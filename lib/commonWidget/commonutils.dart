@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/Dashboard.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/allcategorylist_cubit.dart';
@@ -40,6 +41,15 @@ import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.d
 import 'package:inventory/Screens/heirarchy/general/screens.dart';
 import 'package:inventory/Screens/logi/inventorylist/inventorylist_cubit.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/createoffergroup/create_offer_group_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/de_activate_offer_post_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/offergroup/list_offer_group_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtype/costingtype_cubit.dart';
@@ -56,6 +66,7 @@ import 'package:inventory/Screens/variant/variantdetails/cubits/createlinkeditem
 import 'package:inventory/Screens/variant/variantdetails/cubits/createlinkeditem/linkeditemlistread_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/linkeditemcreation/linked_itemcreation_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/linkedlistvertica/linkedlistverticallist_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/liststock/liststockpartition_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/read_linkeditem/readlinkeditem_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
 import 'package:inventory/commonWidget/Colors.dart';
@@ -74,6 +85,7 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/custom_inputdecoration.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
+import 'package:inventory/widgets/inputfield.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,10 +98,17 @@ import '../Screens/heirarchy/general/cubits/uomGroupcreation/uomgroup_creation_c
 import '../Screens/heirarchy/general/cubits/variantframeworkpost/variantframeworkpost_cubit.dart';
 import '../Screens/heirarchy/general/model/brandreadmodel.dart';
 import '../Screens/heirarchy/general/model/frameworklistmodel.dart';
+import '../Screens/promotiontab/sale/cubits/ListOfferPeriodGroup/list_offer_period_cubit.dart';
+import '../Screens/promotiontab/sale/cubits/ReadOfferPeriod/read_offer_period_cubit.dart';
+import '../Screens/promotiontab/sale/cubits/create_offer_period/create_offer_period_cubit.dart';
+import '../Screens/promotiontab/sale/cubits/patch_offer_group/patch_offer_group_cubit.dart';
+import '../Screens/promotiontab/sale/cubits/readOfferGroup/read_offer_group_cubit.dart';
+import '../Screens/promotiontab/sale/cubits/variantList/variant_list_promotion_cubit.dart';
 import '../Screens/variant/channel_costing_allocation/cubits/pricinggrouppatch/pricinggrouppatch_cubit.dart';
 import '../Screens/variant/channel_costing_allocation/cubits/pricinggroupread/readpricingroupread_cubit.dart';
 import '../Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
 import '../Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
+import '../Screens/variant/variantdetails/cubits/stock_partitionread/stock_partition_read_cubit.dart';
 import '../Screens/variant/variantdetails/cubits/stockpartition/stockpartitionpost_cubit.dart';
 import '../Screens/variant/variantdetails/cubits/vendordetailslist/vendordetailslist_cubit.dart';
 import '../Screens/variant/variantdetails/model/vendormodel.dart';
@@ -665,12 +684,15 @@ class _ConfirmationPopupState extends State<ConfirmationPopup> {
 }class LogoutPopup extends StatefulWidget {
   final Function? clear;
   final Function? onPressed;
+  final Function? onLeftPress;
+  final String? onLeftText;
+  final String? onRightText;
   final List<OrderLines>? table;
   final int? verticalId;
   final String message;
 
   LogoutPopup(
-      {this.verticalId, this.table, this.clear, required this.onPressed,required this.message});
+      {this.verticalId, this.table, this.clear, required this.onPressed,required this.message, this.onLeftPress, this.onLeftText, this.onRightText});
 
   @override
   State<LogoutPopup> createState() => _LogoutPopup();
@@ -735,18 +757,21 @@ class _LogoutPopup extends State<LogoutPopup> {
                           Container(
                             margin: EdgeInsets.only(bottom: 5),
                             child: TextButtonLarge(
-                              text: "Cancel",
+                              text: widget?.onLeftText??"Cancel",
                               labelcolor:Colors.grey ,
 
                               clr: Colors.white,
                               onPress: () {
+                                if(widget.onLeftPress!=null)
+                                  widget.onLeftPress;
+                                else
                                 Navigator.pop(context);
                               },
                             ),
                           ),   Container(
           margin: EdgeInsets.only(bottom: 5),
                         child:  TextButtonLarge(
-                              text: "Confirm",
+                              text:widget?.onRightText?? "Confirm",
                               onPress: () {
                                 widget.onPressed!();
                               }
@@ -884,6 +909,7 @@ class CommonIcon extends StatelessWidget {
 class ConfigurePopup extends StatelessWidget {
   final String type;
   final String? code;
+  final dynamic? obj;
   final Function? listAssign;
   final List<LinkedItemListModel>?linkedListItemTable;
 
@@ -899,6 +925,7 @@ class ConfigurePopup extends StatelessWidget {
       required this.type,
       this.onBack,
         this.code,
+        this.obj,
       this.onAddNew = false,
       this.listAssign,
       this.veritiaclid})
@@ -931,6 +958,32 @@ class ConfigurePopup extends StatelessWidget {
 
           data = CreateSearchLinkedItem(
             veritcalCode:code,
+            linkedListItemTable:linkedListItemTable,
+            listAssign: listAssign,
+            type: type,
+          );
+        }
+        break;
+      case "VariantPromotionCreatativePopup":
+
+        {
+
+          data = VariantPromotionCreatativePopup(
+            veritcalCode:code,
+            linkedListItemTable:linkedListItemTable,
+            listAssign: listAssign,
+            type: type,
+          );
+        }
+        break;
+
+        case "DiscountVariantCreatativePopup":
+
+        {
+
+          data = DiscountVariantCreatativePopup(
+            veritcalCode:code,
+            obj: obj,
             linkedListItemTable:linkedListItemTable,
             listAssign: listAssign,
             type: type,
@@ -1096,6 +1149,20 @@ class ConfigurePopup extends StatelessWidget {
       case "create_costingCreate":
         {
           data = CreateCostingMethodeCreatePopUp(
+            type: type,
+          );
+        }
+        break;
+      case "CreateOfferPeriodCreatePopUp":
+        {
+          data = CreateOfferPeriodCreatePopUp(
+            type: type,
+          );
+        }
+        break;
+      case "CreateOfferGroupPopUp":
+        {
+          data = CreateOfferGroupPopUp(
             type: type,
           );
         }
@@ -2772,6 +2839,980 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
     );
   }
 }
+
+
+class VariantPromotionCreatativePopup extends StatefulWidget {
+  final String type;
+  final String? veritcalCode;
+  final Function? listAssign;
+  final List<LinkedItemListModel>?linkedListItemTable;
+
+  VariantPromotionCreatativePopup({
+    Key? key,
+  this.veritcalCode,
+    required this.linkedListItemTable,
+    required this.type,
+    required this.listAssign,
+  }) : super(key: key);
+
+  @override
+  _VariantPromotionCreatativePopup createState() => _VariantPromotionCreatativePopup();
+}
+
+class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativePopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  MaterialReadModel? group;
+  int? veritiaclid = 0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  List<String?>additionCheck=[];
+
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  TextEditingController searchContoller = TextEditingController();
+  bool addNew = false;
+  List<VariantModel> table = [];
+  List<int> list = [];
+  List<VariantModel> list1 = [];
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => DeActivateOfferPostCubit(),
+        ),
+
+        // BlocProvider(
+        //   create: (context) => PromotionSaleDeactivateCubit(),
+        // ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<PromotionSaleDeactivateCubit, PromotionSaleDeactivateState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // // context.
+                  // context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  // context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(widget.linkedListItemTable);
+                  if (data.isNotEmpty==true) {
+                    setState(() {
+
+                      table = data;
+                      additionCheck.clear();
+
+                      print("11111111111111111111111");
+//                       if(widget.linkedListItemTable?.isNotEmpty==true){
+//                         print("entered");
+//                         for (var i =0;i<widget.linkedListItemTable!.length;i++){
+//                           print("entered1");
+//                           additionCheck.add(widget.linkedListItemTable![i].name);
+//                           list1.add( LinkedItemListIdModel(
+//                               id:widget.linkedListItemTable![i].id,
+//                               name:widget.linkedListItemTable![i].name));
+//                           print("entered");
+//                         }
+//                         setState(() {
+// print(list1.contains(widget.linkedListItemTable?[0].name));
+//                         });
+//
+//
+//
+//
+//
+//                       }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    );
+                  }
+
+                  // context.showSnackBarSuccess(data.data2);
+
+                  ;
+                });
+              },
+            ),
+            BlocListener<DeActivateOfferPostCubit, DeActivateOfferPostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    // context.read<MaterialListCubit>().getMaterialList();
+                    Navigator.pop(context);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<MaterialreadCubit>()
+                            .getMaterialRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonVisible: true,
+                    functionChane: true,
+                    buttonCheck: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    label: "Variant Item",
+                    onApply: () {
+
+                      context
+                          .read<DeActivateOfferPostCubit>()
+                          .postCreatativeVariant(list1);
+
+                      // widget.onTap();
+                      setState(() {});
+                    },
+                    onEdit: () {
+                      // MaterialReadModel model = MaterialReadModel(
+                      //   name: namecontroller?.text ?? "",
+                      //   image: imageContollercontroller?.text ?? "",
+                      //   description: descriptionContollercontroller?.text ?? "",
+                      //   searchNmae: searchNamecontroller?.text ?? "",
+                      //   isActive: active,
+                      // );
+                      // // print(model);
+                      // context
+                      //     .read<MaterialcraetionCubit>()
+                      //     .postmaterialPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Container(
+                      // height: 500,
+                      child: Column(
+                        children: [
+
+                          Container(
+                            // width: w/7,
+                            // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                            child: customTable(
+                              // border: const TableBorder(
+                              //   verticalInside: BorderSide(
+                              //       width: .5,
+                              //       color: Colors.black45,
+                              //       style: BorderStyle.solid),
+                              //   horizontalInside: BorderSide(
+                              //       width: .3,
+                              //       color: Colors.black45,
+                              //       // color: Colors.blue,
+                              //       style: BorderStyle.solid),
+                              // ),
+                              tableWidth: .5,
+                              childrens: [
+                                TableRow(
+                                  // decoration: BoxDecoration(
+
+                                  //     color: Colors.green.shade200,
+
+                                  //     shape: BoxShape.rectangle,
+
+                                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                  children: [
+                                    tableHeadtext(
+                                      '',
+
+                                      // padding: EdgeInsets.all(7),
+                                      //
+                                      // height: 46,
+                                      // textColor: Colors.black,
+                                      // color: Color(0xffE5E5E5),
+
+                                      size: 13,
+                                    ),
+
+                                    tableHeadtext(
+                                      'Item Id',
+                                      // textColor: Colors.black,
+                                      // padding: EdgeInsets.all(7),
+                                      // height: 46,
+                                      size: 13,
+                                      // color: Color(0xffE5E5E5),
+                                    ),
+                                    tableHeadtext(
+                                      'VariantName',
+                                      // textColor: Colors.black,
+                                      // padding: EdgeInsets.all(7),
+                                      // height: 46,
+                                      size: 13,
+                                      // color: Color(0xffE5E5E5),
+                                    ),
+                                    tableHeadtext(
+                                      'Active Offer',
+                                      // textColor: Colors.black,
+                                      // padding: EdgeInsets.all(7),
+                                      // height: 46,
+                                      size: 13,
+                                      // color: Color(0xffE5E5E5),
+                                    ),
+                                  ],
+                                ),
+                                if (table?.isNotEmpty == true) ...[
+                                  for (var i = 0; i < table.length; i++)
+                                    TableRow(
+                                        decoration: BoxDecoration(
+                                            color: Pellet.tableRowColor,
+                                            shape: BoxShape.rectangle,
+                                            border:  Border(
+                                                left: BorderSide(
+
+                                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+                                                    style: BorderStyle.solid),
+                                                bottom: BorderSide(
+
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    style: BorderStyle.solid),
+                                                right: BorderSide(
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+
+                                                    style: BorderStyle.solid))),
+                                        children: [
+                                          TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+
+                                            child: CustomCheckBox(
+                                              key: UniqueKey(),
+                                              value:additionCheck.contains(table![i].variantName),
+                                              onChange: (p0) {
+                                                if (p0)
+                                                  list1.add(
+                                                      VariantModel(
+                                                          typeData: table![i].typeData,
+                                                          variantId: table[i].variantId));
+                                                else
+                                                  list1.removeWhere((element) =>
+                                                      element == list1[i]);
+                                                // list1.remove(table![i]);
+
+                                                // widget.listAssign!(list1);
+
+                                                print(list1);
+                                              },
+                                            ),
+                                            // Text(keys[i].key??"")
+                                          ),
+                                          TableCell(
+                                              verticalAlignment:
+                                                  TableCellVerticalAlignment
+                                                      .middle,
+                                              child: textPadding(
+                                                  table[i].variantId.toString() ?? "",
+                                                 )
+                                              // Text(keys[i].value??"",)
+
+                                              ),
+                                          TableCell(
+                                              verticalAlignment:
+                                                  TableCellVerticalAlignment
+                                                      .middle,
+                                              child: textPadding(
+                                                  table[i].variantName ?? "",
+                                                 )
+                                              ),
+                                          TableCell(
+                                              verticalAlignment:
+                                                  TableCellVerticalAlignment
+                                                      .middle,
+                                              child: textPadding(
+                                                  table[i].offerName ?? "",
+                                                 )
+                                              ),
+                                        ]),
+                                ],
+                                //
+                                // TableRow(
+                                //     decoration: BoxDecoration(
+                                //         color: Colors.grey
+                                //             .shade200,
+                                //         shape: BoxShape
+                                //             .rectangle,
+                                //         border:const  Border(
+                                //             left: BorderSide(
+                                //                 width: .5,
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 style: BorderStyle
+                                //                     .solid),
+                                //             bottom: BorderSide(
+                                //                 width: .5,
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 style: BorderStyle
+                                //                     .solid),
+                                //             right: BorderSide(
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 width: .5,
+                                //                 style: BorderStyle
+                                //                     .solid))),
+                                //     children: [
+                                //
+                                //       TableCell(
+                                //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                //
+                                //         child: UnderLinedInput(
+                                //           onChanged: (va){
+                                //             key.text=va;
+                                //
+                                //           },
+                                //
+                                //           formatter: false,
+                                //
+                                //         ),
+                                //
+                                //
+                                //       ),
+                                //       TableCell(
+                                //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                //
+                                //         child:
+                                //
+                                //         UnderLinedInput(
+                                //           onChanged: (va){
+                                //             value.text=va;
+                                //           },
+                                //           formatter: false,
+                                //         ),
+                                //
+                                //
+                                //       ),
+                                //       TableTextButton(label: "", onPress: (){
+                                //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                //           Keys model=Keys(
+                                //             key: key.text??"",
+                                //             value: value.text??'',
+                                //           );
+                                //           setState(() {
+                                //             onChange=true;
+                                //
+                                //
+                                //             keys?.add(model);
+                                //
+                                //
+                                //             productFeatures?.add(ProductFeatures(
+                                //
+                                //                 keyValues: keys
+                                //             ));
+                                //             widget.productTableEdit(type:"3",list:productFeatures);
+                                //             key.text="";
+                                //             value.text="";
+                                //           });
+                                //
+                                //
+                                //
+                                //
+                                //         }
+                                //
+                                //       })
+                                //
+                                //
+                                //     ])
+                              ],
+                              widths: {
+                                0: FlexColumnWidth(2),
+                                1: FlexColumnWidth(3),
+                                2: FlexColumnWidth(3),3: FlexColumnWidth(3),
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class DiscountVariantCreatativePopup extends StatefulWidget {
+  final String type;
+  final String? veritcalCode;
+  final Function? listAssign;
+  final PromotionVariantPostModel? obj;
+  final List<LinkedItemListModel>?linkedListItemTable;
+
+  DiscountVariantCreatativePopup({
+    Key? key,
+  this.veritcalCode,
+    required this.linkedListItemTable,
+    required this.type,
+    this.obj,
+    required this.listAssign,
+  }) : super(key: key);
+
+  @override
+  _DiscountVariantCreatativePopup createState() => _DiscountVariantCreatativePopup();
+}
+
+class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  MaterialReadModel? group;
+  int? veritiaclid = 0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  List<String?>additionCheck=[];
+
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  TextEditingController searchContoller = TextEditingController();
+  bool addNew = false;
+  List<SaleLines>table= [];
+  List<int> list = [];
+  List<VariantsLinesDiscount> list1 = [];
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => VariantListPromotionCubit()..getVariantList(widget.obj!),
+        ),
+
+        // BlocProvider(
+        //   create: (context) => PromotionSaleDeactivateCubit(),
+        // ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<VariantListPromotionCubit, VariantListPromotionState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // // context.
+                  // context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  // context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(widget.linkedListItemTable);
+                  if (data.data.isNotEmpty==true) {
+                    setState(() {
+
+                      table = data.data;
+                      additionCheck.clear();
+
+                      print("11111111111111111111111");
+//                       if(widget.linkedListItemTable?.isNotEmpty==true){
+//                         print("entered");
+//                         for (var i =0;i<widget.linkedListItemTable!.length;i++){
+//                           print("entered1");
+//                           additionCheck.add(widget.linkedListItemTable![i].name);
+//                           list1.add( LinkedItemListIdModel(
+//                               id:widget.linkedListItemTable![i].id,
+//                               name:widget.linkedListItemTable![i].name));
+//                           print("entered");
+//                         }
+//                         setState(() {
+// print(list1.contains(widget.linkedListItemTable?[0].name));
+//                         });
+//
+//
+//
+//
+//
+//                       }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    );
+                  }
+
+                  // context.showSnackBarSuccess(data.data2);
+
+                  ;
+                });
+              },
+            ),
+
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<MaterialreadCubit>()
+                            .getMaterialRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonVisible: true,
+                    functionChane: true,
+                    buttonCheck: true,
+                    buttonName: "Add",
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    label: "Variant Item",
+                    onApply: () {
+                      widget.listAssign!(list1);
+                      Navigator.pop(context);
+
+                      // context
+                      //     .read<DeActivateOfferPostCubit>()
+                      //     .postCreatativeVariant(list1);
+
+                      // widget.onTap();
+                      setState(() {});
+                    },
+                    onEdit: () {
+                      // MaterialReadModel model = MaterialReadModel(
+                      //   name: namecontroller?.text ?? "",
+                      //   image: imageContollercontroller?.text ?? "",
+                      //   description: descriptionContollercontroller?.text ?? "",
+                      //   searchNmae: searchNamecontroller?.text ?? "",
+                      //   isActive: active,
+                      // );
+                      // // print(model);
+                      // context
+                      //     .read<MaterialcraetionCubit>()
+                      //     .postmaterialPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Container(
+
+                      child: Column(
+                        children: [
+
+                          SingleChildScrollView(
+
+                            // width: w/7,
+                            // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                            child: Container(
+                              height: 300,
+                              color: Colors.red,
+                              child: customTable(
+                                // border: const TableBorder(
+                                //   verticalInside: BorderSide(
+                                //       width: .5,
+                                //       color: Colors.black45,
+                                //       style: BorderStyle.solid),
+                                //   horizontalInside: BorderSide(
+                                //       width: .3,
+                                //       color: Colors.black45,
+                                //       // color: Colors.blue,
+                                //       style: BorderStyle.solid),
+                                // ),
+                                tableWidth: .5,
+                                childrens: [
+                                  TableRow(
+                                    // decoration: BoxDecoration(
+
+                                    //     color: Colors.green.shade200,
+
+                                    //     shape: BoxShape.rectangle,
+
+                                    //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                    children: [
+                                      tableHeadtext(
+                                        '',
+
+                                        // padding: EdgeInsets.all(7),
+                                        //
+                                        // height: 46,
+                                        // textColor: Colors.black,
+                                        // color: Color(0xffE5E5E5),
+
+                                        size: 13,
+                                      ),
+
+                                      tableHeadtext(
+                                        'Item Id',
+                                        // textColor: Colors.black,
+                                        // padding: EdgeInsets.all(7),
+                                        // height: 46,
+                                        size: 13,
+                                        // color: Color(0xffE5E5E5),
+                                      ),
+                                      tableHeadtext(
+                                        'VariantName',
+                                        // textColor: Colors.black,
+                                        // padding: EdgeInsets.all(7),
+                                        // height: 46,
+                                        size: 13,
+                                        // color: Color(0xffE5E5E5),
+                                      ),
+
+                                    ],
+                                  ),
+                                  if (table?.isNotEmpty == true) ...[
+                                    for (var i = 0; i < table.length; i++)
+                                      TableRow(
+                                          decoration: BoxDecoration(
+                                              color: Pellet.tableRowColor,
+                                              shape: BoxShape.rectangle,
+                                              border:  Border(
+                                                  left: BorderSide(
+
+                                                      color: Color(0xff3E4F5B).withOpacity(.1),
+                                                      width: .4,
+                                                      style: BorderStyle.solid),
+                                                  bottom: BorderSide(
+
+                                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                      style: BorderStyle.solid),
+                                                  right: BorderSide(
+                                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                      width: .4,
+
+                                                      style: BorderStyle.solid))),
+                                          children: [
+                                            TableCell(
+                                              verticalAlignment:
+                                                  TableCellVerticalAlignment
+                                                      .middle,
+
+                                              child: CustomCheckBox(
+                                                key: UniqueKey(),
+                                                value:additionCheck.contains(table![i].variantName),
+                                                onChange: (p0) {
+                                                  if (p0)
+                                                    list1.add(
+                                                      VariantsLinesDiscount(
+                                                        name:table[i].variantName,
+                                                        id:table[i].id,
+                                                        barcode:table[i].barcode
+
+                                                      )
+                                                        );
+                                                  else
+                                                    list1.removeWhere((element) =>
+                                                        element == list1[i]);
+                                                  // list1.remove(table![i]);
+
+                                                  // widget.listAssign!(list1);
+
+                                                  print(list1);
+                                                },
+                                              ),
+                                              // Text(keys[i].key??"")
+                                            ),
+                                            TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+                                                child: textPadding(
+                                                    table[i].id.toString() ?? "",
+                                                   )
+                                                // Text(keys[i].value??"",)
+
+                                                ),
+                                            TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+                                                child: textPadding(
+                                                    table[i].variantName ?? "",
+                                                   )
+                                                ),
+
+                                          ]),
+                                  ],
+                                  //
+                                  // TableRow(
+                                  //     decoration: BoxDecoration(
+                                  //         color: Colors.grey
+                                  //             .shade200,
+                                  //         shape: BoxShape
+                                  //             .rectangle,
+                                  //         border:const  Border(
+                                  //             left: BorderSide(
+                                  //                 width: .5,
+                                  //                 color: Colors
+                                  //                     .grey,
+                                  //                 style: BorderStyle
+                                  //                     .solid),
+                                  //             bottom: BorderSide(
+                                  //                 width: .5,
+                                  //                 color: Colors
+                                  //                     .grey,
+                                  //                 style: BorderStyle
+                                  //                     .solid),
+                                  //             right: BorderSide(
+                                  //                 color: Colors
+                                  //                     .grey,
+                                  //                 width: .5,
+                                  //                 style: BorderStyle
+                                  //                     .solid))),
+                                  //     children: [
+                                  //
+                                  //       TableCell(
+                                  //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                  //
+                                  //         child: UnderLinedInput(
+                                  //           onChanged: (va){
+                                  //             key.text=va;
+                                  //
+                                  //           },
+                                  //
+                                  //           formatter: false,
+                                  //
+                                  //         ),
+                                  //
+                                  //
+                                  //       ),
+                                  //       TableCell(
+                                  //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                  //
+                                  //         child:
+                                  //
+                                  //         UnderLinedInput(
+                                  //           onChanged: (va){
+                                  //             value.text=va;
+                                  //           },
+                                  //           formatter: false,
+                                  //         ),
+                                  //
+                                  //
+                                  //       ),
+                                  //       TableTextButton(label: "", onPress: (){
+                                  //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                  //           Keys model=Keys(
+                                  //             key: key.text??"",
+                                  //             value: value.text??'',
+                                  //           );
+                                  //           setState(() {
+                                  //             onChange=true;
+                                  //
+                                  //
+                                  //             keys?.add(model);
+                                  //
+                                  //
+                                  //             productFeatures?.add(ProductFeatures(
+                                  //
+                                  //                 keyValues: keys
+                                  //             ));
+                                  //             widget.productTableEdit(type:"3",list:productFeatures);
+                                  //             key.text="";
+                                  //             value.text="";
+                                  //           });
+                                  //
+                                  //
+                                  //
+                                  //
+                                  //         }
+                                  //
+                                  //       })
+                                  //
+                                  //
+                                  //     ])
+                                ],
+                                widths: {
+                                  0: FlexColumnWidth(2),
+                                  1: FlexColumnWidth(3),
+                                  2: FlexColumnWidth(3),3: FlexColumnWidth(3),
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+
 
 class VendorDetailsList extends StatefulWidget {
   final String type;
@@ -5555,7 +6596,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                           SizedBox(height: 10,),
                                           Container(
                                              // color: Colors.red,
-                                              height: 150,
+                                              height: 200,
                                               child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -5724,7 +6765,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                    height: 220,
+                                                    height: 180,
 
 
                                                     child: VariantFrameWorkBottomTable(
@@ -7449,6 +8490,1237 @@ class _CreateCostingMethodeCreatePopUpState
   }
 }
 
+
+
+class CreateOfferPeriodCreatePopUp extends StatefulWidget {
+  final String type;
+
+  CreateOfferPeriodCreatePopUp({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  @override
+  _CreateOfferPeriodCreatePopUpState createState() =>
+      _CreateOfferPeriodCreatePopUpState();
+}
+
+class _CreateOfferPeriodCreatePopUpState
+    extends State<CreateOfferPeriodCreatePopUp> {
+  bool? active = costingTypeMethodeCheck != true ? false : true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  ReadOfferPeriod? group;
+  int? veritiaclid = 0;
+  int? typeId;
+  List<OfferPeriodList> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  var list;
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController fromDateController = TextEditingController();
+  TextEditingController fromTimeController = TextEditingController();
+  TextEditingController toDateController = TextEditingController();
+  TextEditingController toTimeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  String Datefrom="";
+
+  TextEditingController descriptionContollercontroller = TextEditingController();
+  TextEditingController noteContollercontroller = TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel> table = [];
+
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = tables;
+    });
+  }
+  TimeOfDay _time = TimeOfDay(hour: 7, minute: 15);
+
+   selectTime() async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    print("the searching time======"+newTime.toString());
+    if (newTime != null) {
+      print("the searching time======"+newTime.toString());
+      setState(() {
+        _time = newTime.replacing(hour: newTime.hourOfPeriod);
+        print(_time);
+        final dt = DateTime( newTime.hour, newTime.minute);
+
+        final format = DateFormat.jm();
+        fromTimeController.text = newTime.toString();
+        print("Current Time: ${newTime.format(context)}");
+        var value=newTime.format(context);
+        fromTimeController.text=value;
+
+
+        // print(DateTime.now(newTime));
+
+      });
+    }
+  }
+  clear(){
+
+    setState(() {
+
+      codeController.text =  "";
+
+      noteContollercontroller.text="";
+      fromDateController.text="";
+      toDateController.text="";
+      titleController.text="";
+      fromTimeController.text="";
+      toTimeController.text="";
+
+
+      descriptionContollercontroller.text =
+      "";
+
+      active = false;
+
+    });
+  }
+
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    if (costingTypeMethodeCheck != true)
+      context.read<ListOfferPeriodCubit>().getOfferPeriodList();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CreateOfferPeriodCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ReadOfferPeriodCubit(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ReadOfferPeriodCubit, ReadOfferPeriodState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        print("dataaaaaaaaaaaa" + data.toString());
+                        print("shifas" + data.toTime.toString());
+                        group = data;
+
+                        codeController.text = data.offerPeriodCode ?? "";
+
+                        noteContollercontroller.text=data.notes??"";
+                        fromDateController.text=data.fromDate??"";
+                        toDateController.text=data.toDate??"";
+                        titleController.text=data.title??"";
+                        fromTimeController.text=data.fromTime.toString()??"";
+                        toTimeController.text=data.toTime.toString()??"";
+
+                        Datefrom=data.fromTime.toString();
+
+                        descriptionContollercontroller.text =
+
+                            data.description ?? "";
+
+                        active = data.isActive ?? false;
+                        print("PP${Datefrom}");
+                      });
+                    });
+              },
+            ),
+            BlocListener<DeleteOfferPeriodCubit, DeleteOfferPeriodState>(
+              listener: (context, state) {
+                print("patch" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+
+                  if (data.data1) {
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    clear();
+                    context.read<ListOfferPeriodCubit>().getOfferPeriodList();
+                  }
+                  else {
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                  }
+                });
+              },
+            ),
+            BlocListener<CreateOfferPeriodCubit, CreateOfferPeriodState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  // Navigator.pop(context);
+                  if (data.data1) {
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context.read<ListOfferPeriodCubit>().getOfferPeriodList();
+
+                    setState(() {});
+                  } else {
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<ListOfferPeriodCubit, ListOfferPeriodState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        if (costingTypeMethodeCheck != true)
+                          context
+                              .read<ReadOfferPeriodCubit>()
+                              .getOfferPeriodRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
+
+                    label: "OfferPeriod",
+                    onApply: () {
+                      CreateOfferPeriod model=CreateOfferPeriod(
+                        title: titleController?.text??"",
+                        notes: noteContollercontroller.text,
+                        fromDate: fromDateController?.text??"",
+                        fromTime:
+                        // "18:00:00",
+                        fromTimeController?.text??"",
+                        toDate: toDateController?.text??"",
+                        toTime:
+                        // "19:00:00",
+                        toTimeController?.text??"",
+                        description: descriptionContollercontroller?.text??"",
+                        createdBy: Variable.created_by
+
+                      );
+
+                      print(model);
+                      context.read<CreateOfferPeriodCubit>().postCreateOfferPeriod(model);
+
+                      // widget.onTap();
+                      setState(() {
+
+                      });
+
+
+                      // );
+
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      ReadOfferPeriod model=ReadOfferPeriod(
+                        fromDate: fromDateController?.text??"",
+                        toDate: toDateController?.text??"",
+                        fromTime: fromTimeController?.text??"",
+                        toTime: toTimeController?.text??"",
+                        title: titleController.text??"",
+                        isActive: active,
+                        notes: noteContollercontroller.text,
+                        createdBy: Variable.created_by??"",
+                        description: descriptionContollercontroller.text??"",
+                      );
+
+                      print("patchData$model");
+                      context.read<CreateOfferPeriodCubit>().patchOfferPeriod(veritiaclid,model);
+                    },
+                    onCancel: () {
+                      context
+                          .read<DeleteOfferPeriodCubit>()
+                          .deleteOfferPeriod(veritiaclid, type: "1");
+                    },
+
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (costingTypeMethodeCheck != true)
+                                  Container(
+                                    // width: width * .112,
+                                    height: 400,
+                                    child: offerPeriodVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
+
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
+
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid = result[index].id;
+                                          clear();
+                                          // select=true;
+                                          //
+                                          //
+
+                                          setState(() {
+                                            context
+                                                .read<ReadOfferPeriodCubit>()
+                                                .getOfferPeriodRead(veritiaclid!);
+                                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+                                          });
+                                        });
+                                      },
+                                      search: (String va) {
+                                        print(va);
+                                        context
+                                            .read<CostingcreatelistCubit>()
+                                            .searchCostingList(va);
+                                        if (va == "") {
+                                          context
+                                              .read<CostingcreatelistCubit>()
+                                              .getCostingCreateList();
+                                        }
+                                      },
+                                      result: result,
+                                    ),
+                                  ),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+
+                                    NewInputCard(
+
+                                        readOnly: true,
+                                        controller: codeController,
+                                        title: "Code"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                      // height: 60,
+                                      controller:titleController,
+                                      title: "Title",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    PopUpDateFormField(
+
+                                        format:DateFormat('yyyy-MM-dd'),
+                                        controller: fromDateController,
+                                        // initialValue:
+                                        //     DateTime.parse(fromDate!),
+                                        label: "From Date",
+                                        onSaved: (newValue) {
+                                          fromDateController.text = newValue
+                                                ?.toIso8601String()
+                                                .split("T")[0] ??
+                                                "";
+                                          // print("promised_receipt_date.text"+promised_receipt_date.text.toString());
+                                        },
+                                        enable: true),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+
+                                    PopUpDateFormField(
+
+                                        format:DateFormat('yyyy-MM-dd'),
+                                        controller: toDateController,
+                                        // initialValue:
+                                        //     DateTime.parse(fromDate!),
+                                        label: "To Date",
+                                        onSaved: (newValue) {
+                                          toDateController.text = newValue
+                                              ?.toIso8601String()
+                                              .split("T")[0] ??
+                                              "";
+                                          // print("promised_receipt_date.text"+promised_receipt_date.text.toString());
+                                        },
+                                        enable: true),
+                                  ],
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                      controller: fromTimeController,
+                                      icondrop: true,
+                                      readOnly: true,
+                                      title: "From Time",
+                                      ontap: ()async {
+                                        final TimeOfDay? newTime = await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now(),
+
+                                        );
+                                        // var value=newTime?.format(context);
+                                        print("24h: ${newTime?.hour}:${newTime?.minute}");
+                                        var value=    " ${newTime?.hour}:${newTime?.minute}";
+
+                                        fromTimeController.text=value??"";
+                                        setState(() {
+
+                                        });
+                                      },
+                                    ),
+                                    // PopUpDateFormField(
+                                    //
+                                    //     format:DateFormat('yyyy-MM-dd'),
+                                    //     controller: TextEditingController(text: Datefrom),
+                                    //     // initialValue:
+                                    //     //     DateTime.parse(fromDate!),
+                                    //     label: "From Time",
+                                    //     onSaved: (newValue) {
+                                    //       fromTimeController.text = newValue
+                                    //           ?.toIso8601String()
+                                    //           .split("T")[0] ??
+                                    //           "";
+                                    //       // print("promised_receipt_date.text"+promised_receipt_date.text.toString());
+                                    //     },
+                                    //     enable: true),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                      controller: toTimeController,
+                                      icondrop: true,
+                                      readOnly: true,
+                                      title: "To Time",
+                                      ontap: ()async {
+                                        final TimeOfDay? newTime = await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now(),
+
+                                        );
+                                        var value=    " ${newTime?.hour}:${newTime?.minute}";
+                                        toTimeController.text=value??"";
+                                        setState(() {
+
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    // PopUpDateFormField(
+                                    //
+                                    //     format:DateFormat('yyyy-MM-dd'),
+                                    //     controller: toTimeController,
+                                    //     // initialValue:
+                                    //     //     DateTime.parse(fromDate!),
+                                    //     label: "To Time",
+                                    //     onSaved: (newValue) {
+                                    //       toTimeController.text = newValue
+                                    //           ?.toIso8601String()
+                                    //           .split("T")[0] ??
+                                    //           "";
+                                    //       // print("promised_receipt_date.text"+promised_receipt_date.text.toString());
+                                    //     },
+                                    //     enable: true),
+                                    NewInputCard(
+                                      height: 60,
+                                      controller:
+                                      noteContollercontroller,
+                                      title: "Note",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),     NewInputCard(
+                                      height: 60,
+                                      controller:
+                                          descriptionContollercontroller,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    PopUpSwitchTile(
+                                        value: active ?? false,
+                                        title: "is active",
+                                        onClick: (gg) {
+                                          onChange = true;
+                                          if (costingTypeMethodeCheck != true)
+                                            active = !active!;
+
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+                                  ],
+                                )),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            // VariantFrameWorkBottomTable(listAssign:listAssign),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+class CreateOfferGroupPopUp extends StatefulWidget {
+  final String type;
+
+  CreateOfferGroupPopUp({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  @override
+  _CreateOfferGroupPopUpState createState() =>
+      _CreateOfferGroupPopUpState();
+}
+
+class _CreateOfferGroupPopUpState
+    extends State<CreateOfferGroupPopUp> {
+  bool? active = costingTypeMethodeCheck != true ? false : true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  ReadOfferGroup? group;
+  int? veritiaclid = 0;
+  int? typeId;
+  List<OfferGroupList> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  var list;
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController fromDateController = TextEditingController();
+  TextEditingController fromTimeController = TextEditingController();
+  TextEditingController toDateController = TextEditingController();
+  TextEditingController offerGroupApplyingTo = TextEditingController();
+  TextEditingController offerGroupApplyingToId = TextEditingController();
+  TextEditingController offerGroupApplyingToType = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  String Datefrom="";
+
+  TextEditingController descriptionContollercontroller = TextEditingController();
+  TextEditingController noteContollercontroller = TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel> table = [];
+
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = tables;
+    });
+  }
+  TimeOfDay _time = TimeOfDay(hour: 7, minute: 15);
+
+   selectTime() async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    print("the searching time======"+newTime.toString());
+    if (newTime != null) {
+      print("the searching time======"+newTime.toString());
+      setState(() {
+        _time = newTime.replacing(hour: newTime.hourOfPeriod);
+        print(_time);
+        final dt = DateTime( newTime.hour, newTime.minute);
+
+        final format = DateFormat.jm();
+        fromTimeController.text = newTime.toString();
+        print("Current Time: ${newTime.format(context)}");
+        var value=newTime.format(context);
+        fromTimeController.text=value;
+
+
+        // print(DateTime.now(newTime));
+
+      });
+    }
+  }
+  clear(){
+
+    setState(() {
+
+      codeController.text =  "";
+      imageContollercontroller.text =  "";
+      titleController.text =  "";
+      offerGroupApplyingToType.text = "";
+      offerGroupApplyingTo.text = "";
+      descriptionContollercontroller.clear();
+      active =  false;
+      imageName="";
+
+
+
+
+    });
+  }
+
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+   initState() {
+    if (costingTypeMethodeCheck != true)
+    context.read<ListOfferGroupCubit>().getOfferGroupList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CreateOfferGroupCubit(),
+        ),
+           BlocProvider(
+          create: (context) => PatchOfferGroupCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ReadOfferGroupCubit(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<PromotionImageCubit, PromotionImageState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshayiMAGE" + data.data2.toString());
+                    imageContollercontroller.text = data.data2.toString();
+
+                    // context.showSnackBarSuccess(data.data2);
+
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<ReadOfferGroupCubit, ReadOfferGroupState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        print("dataaaaaaaaaaaa" + data.toString());
+
+                        group = data;
+
+                        codeController.text = data.offerGroupData?.offerGroupCode ?? "";
+                        imageContollercontroller.text = data.offerGroupData?.image ?? "";
+                        imageName = data.offerGroupData?.image ?? "";
+                        titleController.text = data.offerGroupData?.title ?? "";
+                        descriptionContollercontroller.text = data.offerGroupData?.description ?? "";
+                        offerGroupApplyingToType.text = data.offerGroupData?.offerAppliedToType ?? "";
+                        offerGroupApplyingTo.text = data.offerGroupData?.offerAppliedToCode ?? "";
+                        active = data.offerGroupData?.isActive ?? false;
+
+
+
+
+
+
+
+
+
+
+                        print("PP${Datefrom}");
+                      });
+                    });
+              },
+            ),
+            BlocListener<DeleteOfferPeriodCubit, DeleteOfferPeriodState>(
+              listener: (context, state) {
+                print("patch" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+
+                  if (data.data1) {
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    clear();
+                    context.read<ListOfferGroupCubit>().getOfferGroupList();
+                  }
+                  else {
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                  }
+                });
+              },
+            ),
+            BlocListener<CreateOfferGroupCubit, CreateOfferGroupState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  showDailogPopUp(
+                      context,
+                      FailiurePopup(
+                        content: Variable.errorMessege,
+                        // table:table,
+                      ));
+                }, success: (data) {
+                  // Navigator.pop(context);
+                  if (data.data1) {
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context.read<ListOfferGroupCubit>().getOfferGroupList();
+
+                    setState(() {});
+                  } else {
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<PatchOfferGroupCubit, PatchOfferGroupState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  showDailogPopUp(
+                      context,
+                      FailiurePopup(
+                        content: Variable.errorMessege,
+                        // table:table,
+                      ));
+                }, success: (data) {
+                  // Navigator.pop(context);
+                  if (data.data1) {
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    // context.read<ListOfferGroupCubit>().getOfferGroupList();
+
+                    setState(() {});
+                  } else {
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<ListOfferGroupCubit, ListOfferGroupState>(
+            listener: (context, state) {
+
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    print("seee" + result.toString());
+
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        if (costingTypeMethodeCheck != true)
+                          context.read<ReadOfferGroupCubit>().getOfferGroupRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
+
+                    label: "Offer Group",
+                    onApply: () {
+                      CreateOfferGroup model=CreateOfferGroup(
+                          title: titleController?.text??"",
+                          offerAppliedToCode: offerGroupApplyingTo.text,
+                          offerAppliedToType: offerGroupApplyingToType.text??"",
+                          offerAppliedToId: offerGroupApplyingToId.text,
+                          description: descriptionContollercontroller?.text??"",
+                          image:imageContollercontroller.text,
+                          isActive: true,
+                        inventoryId: Variable.inventory_ID,
+                          createdBy: Variable.created_by
+                      );
+
+                      // print(model);
+                      context.read<CreateOfferGroupCubit>().postCreateOfferGroup(model);
+
+                      // widget.onTap();
+                      setState(() {
+
+                      });
+
+
+                      // );
+
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      OfferGroupData model=OfferGroupData(
+                          title: titleController?.text??"",
+                          offerAppliedToCode: offerGroupApplyingTo.text,
+                          offerAppliedToType: offerGroupApplyingToType.text??"",
+                          offerAppliedToId: offerGroupApplyingTo.text,
+                          description: descriptionContollercontroller?.text??"",
+                          image:imageContollercontroller.text,
+                          isActive: active,
+
+                      );
+
+                      print("patchData$model");
+                      context.read<PatchOfferGroupCubit>().patchOfferGroup(veritiaclid,model);
+                    },
+                    onCancel: () {
+                      context
+                          .read<DeleteOfferPeriodCubit>()
+                          .deleteOfferPeriod(veritiaclid, type: "2");
+                    },
+
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (costingTypeMethodeCheck != true)
+                                  Container(
+                                    // width: width * .112,
+                                    height: 400,
+                                    child: offerPeriodGroupVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
+
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
+
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid = result[index].id;
+                                          clear();
+                                          // select=true;
+                                          //
+                                          //
+
+                                          setState(() {
+                                            context
+                                                .read<ReadOfferGroupCubit>()
+                                                .getOfferGroupRead(veritiaclid!);
+                                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+                                          });
+                                        });
+                                      },
+                                      search: (String va) {
+                                        print(va);
+                                        context
+                                            .read<CostingcreatelistCubit>()
+                                            .searchCostingList(va);
+                                        if (va == "") {
+                                          context
+                                              .read<CostingcreatelistCubit>()
+                                              .getCostingCreateList();
+                                        }
+                                      },
+                                      result: result,
+                                    ),
+                                  ),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController,
+                                        title: "Code"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SelectableDropDownpopUp(
+                                      label: "Offer Group Applying Type",
+                                      type:"OfferAppliedtoTypePopup",
+                                      value: offerGroupApplyingToType.text,
+                                      onSelection: (String? va) {
+                                        print(
+                                            "+++++++++++++++++++++++");
+                                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                        setState(() {
+
+
+                                          // onChange = true;
+                                          offerGroupApplyingToType.text = va!;
+                                          // context
+                                          //     .read<ChannelListCubit>()
+                                          //     .getChannelList(va
+                                          // );
+                                        });
+                                      },
+                                    ),
+                                    // NewInputCard(
+                                    //
+                                    //     readOnly: true,
+                                    //     controller: offerGroupApplyingToType  ,
+                                    //     title: " "),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SelectableDropDownpopUp(
+                                      label: "Offer Group Applying To",
+                                      type:"PromotionChannelListPopup",
+                                      code: offerGroupApplyingToType.text,
+                                      value: offerGroupApplyingTo.text,
+                                      onSelection: (ChannelListModel? va) {
+                                        print(
+                                            "+++++++++++++++++++++++");
+                                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                        setState(() {
+
+
+                                          // onChange = true;
+                                          offerGroupApplyingTo.text = va?.channelCode??"";
+                                          offerGroupApplyingToId.text = va?.id.toString()??"";
+                                        });
+                                      },
+                                    ),
+
+
+                                    // NewInputCard(
+                                    //
+                                    //     readOnly: true,
+                                    //     controller: offerGroupApplyingTo  ,
+                                    //     title: "Offer Group Applying To "),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                      // height: 60,
+                                      controller:titleController,
+                                      title: "Title",
+                                    ),
+
+
+                                  ],
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    FileUploadField(
+                                        fileName: imageName,
+                                        fileUrl: imageName,
+                                        onChangeTap: (p0) {
+                                          onChange = true;
+                                          // loading = true;
+                                          setState(() {});
+                                        },
+                                        onChange: (myFile) {
+                                          onChange = true;
+                                          imageName = myFile?.fileName ?? "";
+                                          // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                          imageEncode = myFile.toBase64();
+                                          // widget.fileMobileNameCtrl.text =
+                                          //     myFile.fileName ?? "";
+                                          // if (Variable.bannerimage!.length <= 240000)
+                                          print("imabbabba" + Variable.imageName.toString());
+                                          print("imabbabba" + imageEncode.toString());
+
+                                          // else
+                                          //   context.showSnackBarError(
+                                          //       "Please upload Banner of size Lesser than 230kb");
+                                        },
+                                        onImageChange: (newFile) async {
+                                          onChange = true;
+                                          // Variable.popUp = false;
+
+                                          if (newFile.length <= 150000) {
+                                            context.read<PromotionImageCubit>().postPromotionImage(
+                                                Variable.imageName, imageEncode);
+                                            // loading
+                                            //     ? showDailogPopUp(context, DialoguePopUp())
+                                            //     : Navigator.pop(context);
+                                            // context
+                                            //     .read<CreateWebImageCubit>()
+                                            //     .createMobImage();
+                                          } else
+                                            showDailogPopUp(
+                                                context,
+                                                FailiurePopup(
+                                                  content: "Please upload Image of size Lesser than 150kb",
+                                                  // table:table,
+                                                ));
+
+                                          setState(() {});
+                                        },
+                                        onCreate: true,
+                                        label: "Image"),
+
+                                    NewInputCard(
+                                      height: 60,
+                                      controller:
+                                          descriptionContollercontroller,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    PopUpSwitchTile(
+                                        value: active ?? false,
+                                        title: "is active",
+                                        onClick: (gg) {
+                                          onChange = true;
+                                          if (costingTypeMethodeCheck != true)
+                                            active = !active!;
+
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+                                  ],
+                                )),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            // VariantFrameWorkBottomTable(listAssign:listAssign),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
 class PricingGroupCreatePopUp extends StatefulWidget {
   final String type;
 
@@ -8637,10 +10909,10 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
   String imageName = "";
   String imageEncode = "";
   int selectedVertical = 0;
-  PricingTypeListModel? group;
+  StockPartitionModel? group;
   int? veritiaclid = 0;
   int? typeId;
-  List<PricingTypeListModel> result = [];
+  List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
   String parentName = "";
   bool changer = false;
@@ -8687,7 +10959,7 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
 
   void initState() {
     if (costingTypeMethodeCheck != true)
-      context.read<PricinglistCubit>().getPricingList();
+      context.read<ListstockpartitionCubit>().getStockPartitionList();
 
     super.initState();
   }
@@ -8714,13 +10986,15 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
           create: (context) => PricinggrouppatchCubit(),
         ),
         BlocProvider(
-          create: (context) => PricingreadCubit(),
+          create: (context) => StockPartitionReadCubit(),
+        ),  BlocProvider(
+          create: (context) => DeletioncostingCubit(),
         ),
       ],
       child: Builder(builder: (context) {
         return MultiBlocListener(
           listeners: [
-            BlocListener<PricingreadCubit, PricingreadState>(
+            BlocListener<StockPartitionReadCubit, StockPartitionReadState>(
               listener: (context, state) {
                 print("nnnnop" + state.toString());
                 state.maybeWhen(
@@ -8731,12 +11005,8 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                     success: (data) {
                       setState(() {
                         group = data;
-                        codeController.text = data.pricingCroupCode ?? "";
-                        namecontroller.text = data.pricingGroupName ?? "";
-                        pricingTypecontroller.text =
-                            data.pricingTypeId.toString() ?? "";
-                        pricingTypeNamecontroller.text =
-                            data.pricingGroupName.toString() ?? "";
+                        codeController.text = data. partitionCode?? "";
+                        namecontroller.text = data.name ?? "";
 
                         descriptionContollercontroller.text =
                             data.description ?? "";
@@ -8762,7 +11032,9 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                           content: data.data2,
                           // table:table,
                         ));
-                    context.read<PricinglistCubit>().getPricingList(); context.showSnackBarSuccess(data.data2);
+                    if (costingTypeMethodeCheck == true)     context.read<ListstockpartitionCubit>().getStockPartitionList();
+                    // context.read<PricinglistCubit>().getPricingList();
+                    // context.showSnackBarSuccess(data.data2);
                     // Navigator.pop(context);
                     setState(() {});
                   } else {
@@ -8779,29 +11051,45 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                 });
               },
             ),
-            BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
+            BlocListener<DeletioncostingCubit, DeletioncostingState>(
               listener: (context, state) {
-                print("postssssssss" + state.toString());
+                print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
 
                 }, error: () {
-                  context.showSnackBarError(Variable.errorMessege);
+                  showDailogPopUp(
+                      context,
+                      FailiurePopup(
+                        content:Variable.errorMessege,
+                        // table:table,
+                      ));
                 }, success: (data) {
+
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    Navigator.pop(context);
-                    setState(() {});
+                    context.read<ListstockpartitionCubit>().getStockPartitionList();
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content:data.data1,
+                          // table:table,
+                        ));
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content:data.data1,
+                          // table:table,
+                        ));
+                    print(data.data1);
                   }
                   ;
                 });
               },
             ),
+
           ],
-          child: BlocConsumer<PricinglistCubit, PricinglistState>(
+          child: BlocConsumer<ListstockpartitionCubit, ListstockpartitionState>(
             listener: (context, state) {
               print("state" + state.toString());
               state.maybeWhen(
@@ -8816,12 +11104,12 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].pricingTypeId;
+                        veritiaclid = result[0].id;
                         // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
+
                         if (costingTypeMethodeCheck != true)  context
-                            .read<PricingreadCubit>()
-                            .getPricingGroupRead(veritiaclid);
+                            .read<StockPartitionReadCubit>()
+                            .getStockPartitionRead(veritiaclid);
                       } else {
                         print("common");
                         // select=true;
@@ -8858,22 +11146,15 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                       // widget.onTap();
                     },
                     onEdit: () {
-                      PricingTypeListModel model = PricingTypeListModel(
-                        pricingTypeId: int.tryParse(pricingTypecontroller.text),
-                        pricingGroupName: namecontroller.text,
-                        customerGrouCode: customerGroupcontroller.text,
-                        description: descriptionContollercontroller.text,
-                        createdBy: Variable.created_by,
-                        isActive: active,
-                      );
+
                       context
-                          .read<PricinggrouppatchCubit>()
-                          .patchPricingGroup(model, veritiaclid);
+                          .read<StockpartitionpostCubit>()
+                          .patchStockPartition(namecontroller.text,descriptionContollercontroller.text,active,veritiaclid);
                     },
                     onCancel: () {
                       context
                           .read<DeletioncostingCubit>()
-                          .CostingDelete(veritiaclid, type: "4");
+                          .CostingDelete(veritiaclid, type: "9");
                     },
 
 
@@ -8891,7 +11172,7 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                                   Container(
                                     // width: width * .112,
                                     height: 400,
-                                    child: PricingVerticalList(
+                                    child: StockPartitionVerticalList(
                                       list: list,
                                       selectedVertical: selectedVertical,
                                       itemsearch: itemsearch,
@@ -8910,7 +11191,7 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                                           //     // result[index].id.toString());
 
                                           veritiaclid =
-                                              result[index].pricingTypeId;
+                                              result[index].id;
                                           // clear();
                                           // select=true;
                                           //
@@ -8918,8 +11199,8 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
 
                                           setState(() {
                                             context
-                                                .read<PricingreadCubit>()
-                                                .getPricingGroupRead(
+                                                .read<StockPartitionReadCubit>()
+                                                .getStockPartitionRead(
                                                     veritiaclid);
                                             // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                                           });

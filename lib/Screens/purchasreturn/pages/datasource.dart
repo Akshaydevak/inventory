@@ -184,6 +184,8 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> postItemPatch(ItemReadModel model, int? id);
   Future<PaginatedResponse<List<BrandListModel>>> getVariantList(String? code,
       {String? type});
+  Future<PaginatedResponse<List<BrandListModel>>> getStockPartitionList(String? code,
+      );
   Future<VariantReadModel> getVariantRead(
     int? id,
   );
@@ -195,6 +197,7 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> postVariant(VariantPost model, int? id);
   Future<DoubleResponse> postStockPartion(String? name,String? descriptio);
   Future<DoubleResponse> patchVariant(VariantPatch model, int? id);
+  Future<DoubleResponse> patchStockPartition(String? name,String? description,bool ? active,int? id);
   Future<PaginatedResponse<List<BrandListModel>>> getVariantCreationList(
       String? code);
   Future<PaginatedResponse<List<BrandListModel>>> getVariantSelectionList(
@@ -298,6 +301,9 @@ abstract class PurchaseSourceAbstract {
   );
   Future<DoubleResponse> postLinkedItem(LinkedItemPostModel model);
   Future<LinkedItemPostModel> getLinkedItem(
+    int? id,
+  );
+  Future<StockPartitionModel> getStockPartitionRead(
     int? id,
   );
   Future<PaginatedResponse<List<LinkedItemListIdModel>>> getLinkedItemList(
@@ -429,10 +435,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<PurchaseReturnGeneralRead> getGeneralInvoiceRead(int? id) async {
     print("Akshaytttttttt" + id.toString());
     print(
-        "https://api-purchase-order-staging.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id");
+        purchaseReturnInvoiceIdRead+id.toString());
+    String path =purchaseReturnInvoiceIdRead+id.toString();
     try {
-      String path =
-          "https://api-purchase-order-staging.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id";
+
       print("ppppath" + path.toString());
       print(path);
       final response = await client.get(
@@ -452,8 +458,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     } catch (e) {
       print(e);
     }
-    String path =
-        "https://invtry-purchase-return.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id";
+
+
     print(path);
     print("ppppath" + path.toString());
     final response = await client.get(
@@ -1132,7 +1138,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     // String path =
     // "https://api-rgc-user.hilalcart.com/user-account_login/inventory";
     String path =
-        "https://api-rgc-user.hilalcart.com/user-employee_employeeuserlogin/inventory";
+        "https://api-uat-user.sidrabazar.com/user-employee_employeeuserlogin/inventory";
     print(path);
 
     final response = await client.post(path,
@@ -1262,7 +1268,7 @@ catch(e){
     }
 
     final response = await client.post(
-        "https://api-rgc-user.hilalcart.com/user-general_admin_address/create",
+        shippingAddressCreationApi,
         data: model.toJson(),
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1436,7 +1442,7 @@ catch(e){
     //         taxableAmoubt: model.ivoiceLines?[i].taxableAmoubt ?? 0));
     try {
       final response = await client.post(
-          salesOrderBaseUrl+"sales-invoice/create-sales-invoice",
+          salesOrderLiveBaseUrl+"sales-invoice/create-sales-invoice",
           data: model.toJson(),
           // data: {
           //   "sales_order_id": model.salesOrderId,
@@ -1469,7 +1475,7 @@ catch(e){
     }
 
     final response = await client.post(
-        salesOrderBaseUrl+"sales-invoice/create-sales-invoice",
+        salesOrderLiveBaseUrl+"sales-invoice/create-sales-invoice",
         data: model.toJson(),
         // data: {
         //   "sales_order_id": model.salesOrderId,
@@ -1954,7 +1960,7 @@ catch(e){
   @override
   Future<List<BrandListModel>> getBrandList() async {
     String path =
-        "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-brand";
+        brandListApi;
     print(path);
 
     final response = await client.get(
@@ -3692,6 +3698,9 @@ catch(e){
             "purchase_block": model.purchaseBlock,
             "ratio_to_eccommerce": model.ratioToEcommerce,
             "min_max_ratio": model.minMaxRatio,
+            "have_stock_partition_group":model.haveStockPartitionGroup,
+            "stock_partition_group_id":model.stockPartitionGroupId,
+            "have_stock_priority":model.haveStockPriority,
             "whole_sale_stock": model.wholeSaleStock,
             "min_sales_order_limit": model.minSalesOrderLimit,
             "max_sales_order_limit": model.maxSalesOrderLimit,
@@ -3790,6 +3799,9 @@ catch(e){
         "net_weight": model.netWeight,
         "unit_cost": model.unitCost,
         "base_price": model.basePrize,
+          "have_stock_partition_group":model.haveStockPartitionGroup,
+          "stock_partition_group_id":model.stockPartitionGroupId,
+          "have_stock_priority":model.haveStockPriority,
         "landing_cost": model.landingCost,
           "need_multiple_integration":model.needMultipleIntegration,
         "actual_cost": model.actualCost,
@@ -3901,6 +3913,9 @@ catch(e){
           "length_unit":model.lengthUnit,
           "width_unit":model.widthUnit,
           "height_unit":model.heightUnit,
+          "have_stock_partition_group":model.haveStockPartitionGroup,
+          "stock_partition_group_id":model.stockPartitionGroupId,
+          "have_stock_priority":model.haveStockPriority,
 
           "barcode": model.barcode,
           "qrcode": model.qrcode,
@@ -4353,19 +4368,39 @@ try{
   Future<PaginatedResponse<List<StockVerticalReadModel>>> getStockList(
       String? code) async {
     code = code == null ? "" : code;
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
     String path = stockVerticalReadApi + code.toString();
     print("spaths" + path.toString());
+    try{
+      final response = await client.get(path,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': '$token'
+          }));
 
-    // if (code == "")
-    //   path = salesListApi + Variable.uomId.toString();
-    // else
-    //   path = salesListApi + Variable.uomId.toString() + "?name=$code";
-
-    print(path);
+      List<StockVerticalReadModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(StockVerticalReadModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return PaginatedResponse<List<StockVerticalReadModel>>(
+          items,
+          response.data['data']['next'],
+          response.data['data']['count'].toString(),
+          previousUrl: response.data['data']['previous']);
+    }
+    catch(e){
+      print("the mistake issssssssssssss"+e.toString());
+    }
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': '$token'
         }));
 
     List<StockVerticalReadModel> items = [];
@@ -4378,6 +4413,14 @@ try{
         response.data['data']['next'],
         response.data['data']['count'].toString(),
         previousUrl: response.data['data']['previous']);
+
+    // if (code == "")
+    //   path = salesListApi + Variable.uomId.toString();
+    // else
+    //   path = salesListApi + Variable.uomId.toString() + "?name=$code";
+
+    print(path);
+
   }
 
   @override
@@ -5022,6 +5065,11 @@ try{
       case "8":
         {
           url = readDivisionConfig;
+        }
+        break;
+      case "9":
+        {
+          url = readStockPartitionApi;
         }
         break;
     }
@@ -6420,10 +6468,10 @@ try{
 
     code=code==null?"":code;
     if(code==""){
-      path = inventoryBaseUrl+"country-list?value=list";
+      path = inventoryLiveBaseUrl+"country-list?value=list";
     }
     else{
-      path=inventoryBaseUrl+"state-list?code=$code&value=list";
+      path=inventoryLiveBaseUrl+"state-list?code=$code&value=list";
     }
     try {
       print("ppppath" + path.toString());
@@ -6928,7 +6976,7 @@ try{
 
 
 
-    String  path=inventoryBaseUrl+"state-list?code=$code&value=list";
+    String  path=inventoryLiveBaseUrl+"state-list?code=$code&value=list";
 
     try {
       print("ppppath" + path.toString());
@@ -7408,5 +7456,109 @@ print(attributePostApi);
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
 
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getStockPartitionList(String? code) async {
+    String path = "";
+    code = code == null ? "" : code;
+
+    if (code == "")
+      path = listStockPartitionApi ;
+    else
+      path = listStockPartitionApi + "?$code";
+
+    print("afffffuu" + path.toString());
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print(response);
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
+  }
+
+  @override
+  Future<StockPartitionModel> getStockPartitionRead(int? id) async {
+    String path = readStockPartitionApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+
+      StockPartitionModel dataa =
+      StockPartitionModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("the error is" + e.toString());
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("uomGroup response" + response.data['data'].toString());
+    StockPartitionModel dataa =
+    StockPartitionModel.fromJson(response.data['data']);
+    print("uomGroup read" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> patchStockPartition(String? name, String? description, bool? active, int? id) async {
+    String path = readStockPartitionApi + id.toString();
+
+
+    final response = await client.patch(path,
+        // data: model.toJson(),
+
+        data: {
+
+          "name": name,
+
+          "description": description,
+
+          "inventory_id": Variable.inventory_ID,
+
+          "is_active":active
+
+
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
   }
 }

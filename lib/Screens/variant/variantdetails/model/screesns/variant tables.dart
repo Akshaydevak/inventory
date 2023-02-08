@@ -188,14 +188,18 @@ class ProductTableState extends State<ProductTable> {
                             onChanged: (va) {
                               onChange=true;
                               setState(() {
-
+                                va=va.replaceAll('', '');
+                                if(va.isNotEmpty==true){
                                   upDateButton[i]=true;
+                                  keys[i]["name"] = va;
+                                  aboutProducts = Storage(
+                                      name: headingController.text, keyValues: keys);
+                                }
+                                else{
+                                  upDateButton[i]=false;
+                                }
 
 
-
-                                keys[i]["name"] = va;
-                                aboutProducts = Storage(
-                                    name: headingController.text, keyValues: keys);
 
 
                               });

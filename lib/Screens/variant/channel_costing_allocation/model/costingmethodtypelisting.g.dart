@@ -96,6 +96,26 @@ Map<String, dynamic> _$$_PricingTypeListModelToJson(
       'is_active': instance.isActive,
     };
 
+_$_StockPartitionModel _$$_StockPartitionModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_StockPartitionModel(
+      description: json['description'] as String?,
+      name: json['name'] as String?,
+      partitionCode: json['partition_code'] as String?,
+      inventoryId: json['inventory_id'] as String?,
+      isActive: json['is_active'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$_StockPartitionModelToJson(
+        _$_StockPartitionModel instance) =>
+    <String, dynamic>{
+      'description': instance.description,
+      'name': instance.name,
+      'partition_code': instance.partitionCode,
+      'inventory_id': instance.inventoryId,
+      'is_active': instance.isActive,
+    };
+
 _$_ListingChnanelTableModel _$$_ListingChnanelTableModelFromJson(
         Map<String, dynamic> json) =>
     _$_ListingChnanelTableModel(

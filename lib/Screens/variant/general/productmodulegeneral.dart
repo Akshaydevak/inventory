@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/frameworkpostcombination/variant_frameworkcombinationpost_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
 import 'package:inventory/Screens/variant/general/cubits/variantCreatio_read2/variant_creation_read2_cubit.dart';
@@ -623,8 +624,8 @@ print("the list is"+variantList.toString());
                         if (result.isNotEmpty) {
                           veritiaclid = result[0].id;
                           Variable.variantSearchId = result[0].id;
-                          itemCode = result[0].code.toString();
-                          uomCode = result[0].uomCode.toString();
+                          itemCode = result[0].code?.toString()??"";
+                          uomCode = result[0].uomCode?.toString()??"";
                           // Variable.verticalid=result[0].id;
                           // print("Variable.ak"+Variable.verticalid.toString());
                           context
@@ -659,13 +660,17 @@ print("the list is"+variantList.toString());
                                 selectedVertical = index;
                                 variantController.clear();
                                 variantNameController.clear();
+                                variantFrameWorkNameController.clear();
                                 vals.clear();
-                                uomCode = result[index].uomCode.toString();
+
+                                variantList.clear();
 
                                 // select=false;
                                 // clear();
                                 // exportCheck=false;
                                 // addNew=true;
+                                itemCode = result[index].code?.toString()??"";
+                                uomCode = result[index].uomCode?.toString()??"";
 
                                 // updateCheck=false;
                                 print("rijina" + result[index].id.toString());
@@ -699,6 +704,27 @@ print("the list is"+variantList.toString());
                               }
                             },
                             result: result,
+                            child:           tablePagination(
+                                  () => context
+                                  .read<ListvariantCubit>()
+                                  .refresh(),
+                              back: lists?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
+                                    .read<ListvariantCubit>()
+                                    .previuosslotSectionPageList();
+                              },
+                              next: lists?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<ListvariantCubit>()
+                                    .nextslotSectionPageList();
+                              },
+                            ),
+
                           ),
                           Expanded(
                               child: SingleChildScrollView(
@@ -824,7 +850,7 @@ print("the list is"+variantList.toString());
                                           }
                                         }
                                       }
-                                      print("filterList"+uomCode.toString());
+                                      // print("filterList"+uomCode.toString());
 
 
 
@@ -835,7 +861,7 @@ print("the list is"+variantList.toString());
                                           uomCode: uomCode,
                                           itemCode: itemCode,
                                           variantCode:
-                                          group.variantFrameWork,
+                                          variantFrameWorkController.text,
                                           variantlist: variantList);
                                     },
                                     discardFunction: (){
@@ -947,6 +973,7 @@ class _NewCheckBoxTextState extends State<NewCheckBoxText> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Colors.red,
 
       child: Row(
         children: [
@@ -957,12 +984,16 @@ class _NewCheckBoxTextState extends State<NewCheckBoxText> {
                   widget.onChange(va);
                 }),
           SizedBox(
-            width: 5,
+            width: 1,
           ),
-          Text(widget.label),
+          SizedBox(
+            width: 80,
+            child: Text(widget.label,style: TextStyle(overflow: TextOverflow.ellipsis),
+            ),
+          ),
           if (widget.labelI1st == true) ...[
             SizedBox(
-              width: 5,
+              width: 1,
             ),
             CheckedBoxs(
                 valueChanger: widget.valueChanger,

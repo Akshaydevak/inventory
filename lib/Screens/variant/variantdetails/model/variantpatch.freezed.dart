@@ -136,6 +136,12 @@ mixin _$VariantPatch {
   double? get wholeSellingPricePercentage => throw _privateConstructorUsedError;
   @JsonKey(name: "online_selling_price_percentage")
   double? get onlineSellingPercenage => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  bool? get haveStockPartitionGroup => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  bool? get haveStockPriority => throw _privateConstructorUsedError;
+  @JsonKey(name: "stock_partition_group_id")
+  int? get stockPartitionGroupId => throw _privateConstructorUsedError;
   @JsonKey(name: "vedio_url")
   String? get vedioUrl => throw _privateConstructorUsedError;
   @JsonKey(name: "average_gp")
@@ -322,6 +328,12 @@ abstract class $VariantPatchCopyWith<$Res> {
           double? wholeSellingPricePercentage,
       @JsonKey(name: "online_selling_price_percentage")
           double? onlineSellingPercenage,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          int? stockPartitionGroupId,
       @JsonKey(name: "vedio_url")
           String? vedioUrl,
       @JsonKey(name: "average_gp")
@@ -472,6 +484,9 @@ class _$VariantPatchCopyWithImpl<$Res, $Val extends VariantPatch>
     Object? retailSellingPricePercentage = freezed,
     Object? wholeSellingPricePercentage = freezed,
     Object? onlineSellingPercenage = freezed,
+    Object? haveStockPartitionGroup = freezed,
+    Object? haveStockPriority = freezed,
+    Object? stockPartitionGroupId = freezed,
     Object? vedioUrl = freezed,
     Object? avgGp = freezed,
     Object? targetedGp = freezed,
@@ -785,6 +800,18 @@ class _$VariantPatchCopyWithImpl<$Res, $Val extends VariantPatch>
           ? _value.onlineSellingPercenage
           : onlineSellingPercenage // ignore: cast_nullable_to_non_nullable
               as double?,
+      haveStockPartitionGroup: freezed == haveStockPartitionGroup
+          ? _value.haveStockPartitionGroup
+          : haveStockPartitionGroup // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveStockPriority: freezed == haveStockPriority
+          ? _value.haveStockPriority
+          : haveStockPriority // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      stockPartitionGroupId: freezed == stockPartitionGroupId
+          ? _value.stockPartitionGroupId
+          : stockPartitionGroupId // ignore: cast_nullable_to_non_nullable
+              as int?,
       vedioUrl: freezed == vedioUrl
           ? _value.vedioUrl
           : vedioUrl // ignore: cast_nullable_to_non_nullable
@@ -1129,6 +1156,12 @@ abstract class _$$_VariantPatchCopyWith<$Res>
           double? wholeSellingPricePercentage,
       @JsonKey(name: "online_selling_price_percentage")
           double? onlineSellingPercenage,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          int? stockPartitionGroupId,
       @JsonKey(name: "vedio_url")
           String? vedioUrl,
       @JsonKey(name: "average_gp")
@@ -1286,6 +1319,9 @@ class __$$_VariantPatchCopyWithImpl<$Res>
     Object? retailSellingPricePercentage = freezed,
     Object? wholeSellingPricePercentage = freezed,
     Object? onlineSellingPercenage = freezed,
+    Object? haveStockPartitionGroup = freezed,
+    Object? haveStockPriority = freezed,
+    Object? stockPartitionGroupId = freezed,
     Object? vedioUrl = freezed,
     Object? avgGp = freezed,
     Object? targetedGp = freezed,
@@ -1599,6 +1635,18 @@ class __$$_VariantPatchCopyWithImpl<$Res>
           ? _value.onlineSellingPercenage
           : onlineSellingPercenage // ignore: cast_nullable_to_non_nullable
               as double?,
+      haveStockPartitionGroup: freezed == haveStockPartitionGroup
+          ? _value.haveStockPartitionGroup
+          : haveStockPartitionGroup // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveStockPriority: freezed == haveStockPriority
+          ? _value.haveStockPriority
+          : haveStockPriority // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      stockPartitionGroupId: freezed == stockPartitionGroupId
+          ? _value.stockPartitionGroupId
+          : stockPartitionGroupId // ignore: cast_nullable_to_non_nullable
+              as int?,
       vedioUrl: freezed == vedioUrl
           ? _value.vedioUrl
           : vedioUrl // ignore: cast_nullable_to_non_nullable
@@ -1830,6 +1878,12 @@ class _$_VariantPatch implements _VariantPatch {
           this.wholeSellingPricePercentage,
       @JsonKey(name: "online_selling_price_percentage")
           this.onlineSellingPercenage,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          this.haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          this.haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          this.stockPartitionGroupId,
       @JsonKey(name: "vedio_url")
           this.vedioUrl,
       @JsonKey(name: "average_gp")
@@ -2079,6 +2133,15 @@ class _$_VariantPatch implements _VariantPatch {
   @JsonKey(name: "online_selling_price_percentage")
   final double? onlineSellingPercenage;
   @override
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  final bool? haveStockPartitionGroup;
+  @override
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  final bool? haveStockPriority;
+  @override
+  @JsonKey(name: "stock_partition_group_id")
+  final int? stockPartitionGroupId;
+  @override
   @JsonKey(name: "vedio_url")
   final String? vedioUrl;
   @override
@@ -2190,7 +2253,7 @@ class _$_VariantPatch implements _VariantPatch {
 
   @override
   String toString() {
-    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, needMultipleIntegration: $needMultipleIntegration, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
+    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, needMultipleIntegration: $needMultipleIntegration, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, haveStockPartitionGroup: $haveStockPartitionGroup, haveStockPriority: $haveStockPriority, stockPartitionGroupId: $stockPartitionGroupId, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
   }
 
   @override
@@ -2310,6 +2373,9 @@ class _$_VariantPatch implements _VariantPatch {
             (identical(other.retailSellingPricePercentage, retailSellingPricePercentage) || other.retailSellingPricePercentage == retailSellingPricePercentage) &&
             (identical(other.wholeSellingPricePercentage, wholeSellingPricePercentage) || other.wholeSellingPricePercentage == wholeSellingPricePercentage) &&
             (identical(other.onlineSellingPercenage, onlineSellingPercenage) || other.onlineSellingPercenage == onlineSellingPercenage) &&
+            (identical(other.haveStockPartitionGroup, haveStockPartitionGroup) || other.haveStockPartitionGroup == haveStockPartitionGroup) &&
+            (identical(other.haveStockPriority, haveStockPriority) || other.haveStockPriority == haveStockPriority) &&
+            (identical(other.stockPartitionGroupId, stockPartitionGroupId) || other.stockPartitionGroupId == stockPartitionGroupId) &&
             (identical(other.vedioUrl, vedioUrl) || other.vedioUrl == vedioUrl) &&
             (identical(other.avgGp, avgGp) || other.avgGp == avgGp) &&
             (identical(other.targetedGp, targetedGp) || other.targetedGp == targetedGp) &&
@@ -2414,6 +2480,9 @@ class _$_VariantPatch implements _VariantPatch {
         retailSellingPricePercentage,
         wholeSellingPricePercentage,
         onlineSellingPercenage,
+        haveStockPartitionGroup,
+        haveStockPriority,
+        stockPartitionGroupId,
         vedioUrl,
         avgGp,
         targetedGp,
@@ -2574,6 +2643,12 @@ abstract class _VariantPatch implements VariantPatch {
           final double? wholeSellingPricePercentage,
       @JsonKey(name: "online_selling_price_percentage")
           final double? onlineSellingPercenage,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          final bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          final bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          final int? stockPartitionGroupId,
       @JsonKey(name: "vedio_url")
           final String? vedioUrl,
       @JsonKey(name: "average_gp")
@@ -2818,6 +2893,15 @@ abstract class _VariantPatch implements VariantPatch {
   @override
   @JsonKey(name: "online_selling_price_percentage")
   double? get onlineSellingPercenage;
+  @override
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  bool? get haveStockPartitionGroup;
+  @override
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  bool? get haveStockPriority;
+  @override
+  @JsonKey(name: "stock_partition_group_id")
+  int? get stockPartitionGroupId;
   @override
   @JsonKey(name: "vedio_url")
   String? get vedioUrl;

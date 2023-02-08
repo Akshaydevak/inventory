@@ -37,8 +37,8 @@ class VariantIdCubitDartCubit extends Cubit<VariantIdCubitDartState> {
     });
   }
 
-  Future nextslotSectionPageList() async {
-    final result = await repo.getVariantId(code:next);
+  Future nextslotSectionPageList({String? vendorId,String? inventory=""}) async {
+    final result = await repo.getVariantId(code:next,vendorId:vendorId,inventory: inventory );
     result.fold((l) => emit(_Error1()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -47,9 +47,9 @@ class VariantIdCubitDartCubit extends Cubit<VariantIdCubitDartState> {
     });
   }
 
-  Future previuosslotSectionPageList() async {
+  Future previuosslotSectionPageList({String? vendorId,String? inventory=""}) async {
     // print(previous);
-    final result = await repo.getVariantId(code:prev);
+    final result = await repo.getVariantId(code:prev,vendorId:vendorId,inventory: inventory);
     result.fold((l) => emit(_Error1()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

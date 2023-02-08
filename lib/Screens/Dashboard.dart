@@ -79,7 +79,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     TabController _tabController =
-        TabController(length: 6, vsync: this, initialIndex: widget.index);
+        TabController(length: 7, vsync: this, initialIndex: widget.index);
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -182,7 +182,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                               SalesReturnScreen(isCollapsed),
                                               HeirarchyTabScreen(isCollapsed),
                                               ProductModuleTab(isCollapsed),
-                                              // PromotionTabScreenTab(isCollapsed)
+                                              PromotionTabScreenTab(isCollapsed)
                                             ],
                                           ),
                                         ),
@@ -481,10 +481,10 @@ class _TitleScreenState extends State<TitleScreen> {
                           "Variant",
                           style: TextStyle(fontSize: height * 00.022),
                         ),
-                        // Text(
-                        //   "Promotion",
-                        //   style: TextStyle(fontSize: height * 00.022),
-                        // ),
+                        Text(
+                          "Promotion",
+                          style: TextStyle(fontSize: height * 00.022),
+                        ),
                       ]),
                 ),
               ),

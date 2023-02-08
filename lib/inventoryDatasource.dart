@@ -122,16 +122,16 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print("code1" + next.toString());
     String path = "";
     if (tab == "RF") {
-      path = stagingUrl +
+      path = purchaseOrderLiveBaseUrl +
           "purchase-order/list-request-form/${Variable.inventory_ID}?$next";
     } else if (tab == "RFR") {
-      path = stagingUrl +
+      path = purchaseOrderLiveBaseUrl +
           "purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
     } else if (tab == "II") {
-      path = stagingUrl +
+      path = purchaseOrderLiveBaseUrl +
           "purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}?$next";
     } else {
-      path = stagingUrl +
+      path = purchaseOrderLiveBaseUrl +
           "purchase-order/list-purchase-order/${Variable.inventory_ID}?$next";
     }
     print("urlof Search");
@@ -335,10 +335,10 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
 
     String path = inventory == "" || inventory == null
-        ?code==null? inventoryBaseUrl +
-            "inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId":"inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"+"?"+code.toString()
-        :code==null? inventoryBaseUrl +
-            "inventory-product/list-variant-by-inventory/$inventory":"inventory-product/list-variant-by-inventory/$inventory"+"?"+code.toString();
+        ?code==null? inventoryLiveBaseUrl +
+            "inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId":inventoryLiveBaseUrl +"inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"+"?"+code.toString()
+        :code==null? inventoryLiveBaseUrl +
+            "inventory-product/list-variant-by-inventory/$inventory":inventoryLiveBaseUrl +"inventory-product/list-variant-by-inventory/$inventory"+"?"+code.toString();
 
     // try{
     //   print("aaanananana");
@@ -397,7 +397,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
     String path =
-        inventoryBaseUrl + "inventory-product/read-variant-for-lpo/$id";
+        inventoryLiveBaseUrl + "inventory-product/read-variant-for-lpo/$id";
     print(path);
     try {
       final response = await client.get(
@@ -448,7 +448,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   Future<PurchaseCureentStockQty> getCurrentStock(
       String? id, String? invdendotyId) async {
     print("Avalkkayi");
-    String path = inventoryBaseUrl +
+    String path = inventoryLiveBaseUrl +
         "inventory-stock/get-stock-quantity-by-variant/"+invdendotyId.toString()+"/"+Variable.inventory_ID.toString();
     print(path);
 
@@ -500,7 +500,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<PurchaseOrderRead> getGeneralPurchaseRead(int id) async {
-    print("sssshamna" + id.toString());
+
     try {
       String path = generalPurchaseRead + id.toString();
       print("ppppath" + path.toString());
@@ -519,7 +519,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
           },
         ),
       );
-      // print("responsesssssd" + response.toString());
+
       PurchaseOrderRead dataa =
           PurchaseOrderRead.fromJson(response.data['data']);
       // print("rwead" + dataa.toString());
@@ -529,7 +529,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     }
     String path = generalPurchaseRead + id.toString();
     print(path);
-    print("ppppath" + path.toString());
+
     final response = await client.get(
       path,
       // data:
@@ -1370,7 +1370,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       String? code) async {
     print("here arrived");
     print(code);
-    String path = inventoryListApi+code.toString();
+    String path = organizationLiveApiApi+code.toString();
     try {
       print("THE INVENTORYLIST PATH" + path.toString());
       print(path);

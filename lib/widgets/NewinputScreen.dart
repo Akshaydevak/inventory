@@ -380,6 +380,7 @@ class _NewInputPopupFieldState extends State<NewInputPopupField> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
+                  flex: 1,
                   child: Container(
                     // height: 70,
                     // width:150,
@@ -417,6 +418,7 @@ class _NewInputPopupFieldState extends State<NewInputPopupField> {
                   ),
                 ),
                 Expanded(
+                  flex: 2,
                   child: Container(
                     // height: 70,
                     // width: 100,
@@ -560,7 +562,7 @@ class _NewInputCreateCardState extends State<NewInputCreateCard> {
               children: [
                 Text(
                   widget.title,
-                  style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w600),
+                  style: CommonTextStyle.normalHeadingStyle,
                 ),
                 TextButton(onPressed: (){
                   widget.ontap();
@@ -1638,7 +1640,7 @@ class CustomDropDown extends StatefulWidget {
    final bool border;
    final Color clr;
 
-  CustomDropDown({required this.choosenValue, required this.onChange,required this.items,this.border=false,this.clr=Colors.transparent});
+  CustomDropDown({required this.choosenValue, required this.onChange,required this.items,this.border=false,this.clr=Colors.grey});
 
 
 
@@ -1648,32 +1650,40 @@ class CustomDropDown extends StatefulWidget {
 
 class _CustomDropDownState extends State<CustomDropDown> {
 
+
   bool value=true;
 
   @override
   Widget build(BuildContext context) {
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
     return Container(
-      height: 48,
-      width: 85,
+      height: height*.049,
+      width: width*.085,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-       color:   widget.clr,
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+       // color:   widget.clr,
         border: widget.border?Border.all(
           color: Colors.grey,
           width: .4
         ):null
       ),
-      child:Center(child:
+      child:Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          height: height*.049,
+          width: width*.085,
+          child:
    // value?
    DropdownButtonHideUnderline(
 
      child: DropdownButton(
-       iconEnabledColor: Colors.black,
-       iconDisabledColor: Colors.black,
+       iconEnabledColor: Colors.grey,
+       iconDisabledColor: Pellet.tableBlueHeaderPrint,
 
        borderRadius:BorderRadius.zero ,
 
-       // focusColor: Pellet.tableBlueHeaderPrint,
+       focusColor: Pellet.bagroundColor,
           dropdownColor: Colors.white,
 
 
@@ -1682,9 +1692,10 @@ class _CustomDropDownState extends State<CustomDropDown> {
           // value: "widget.choosenValue"??"",
 
           // Down Arrow Icon
-          icon: const Icon(Icons.keyboard_arrow_down),
+          icon: const Icon(Icons.keyboard_arrow_down,size: 13,),
        hint: Container(
-         child: Text(widget.choosenValue.toString(),style: TextStyle(color: Colors.black), ),
+
+         child: Text(widget.choosenValue.toString(),style: TextStyle(color: widget.choosenValue!="_Select_"?Colors.black:Colors.grey,fontSize:widget.choosenValue!="_Select_"?16:13 ), ),
        ),
 
           // Array list of items

@@ -94,6 +94,29 @@ class PricingTypeListModel with _$PricingTypeListModel {
   factory PricingTypeListModel.fromJson(Map<String, dynamic> json) =>
       _$PricingTypeListModelFromJson(json);
 }
+@freezed
+class StockPartitionModel with _$StockPartitionModel {
+  const factory StockPartitionModel({
+
+
+    final String? description,
+    final String? name,
+
+
+
+    @JsonKey(name: "partition_code") final String? partitionCode,
+    @JsonKey(name: "inventory_id") final String? inventoryId,
+    @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
+
+
+
+
+
+
+  }) = _StockPartitionModel;
+  factory StockPartitionModel.fromJson(Map<String, dynamic> json) =>
+      _$StockPartitionModelFromJson(json);
+}
 
 
 

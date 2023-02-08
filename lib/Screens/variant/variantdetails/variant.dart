@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/deletion/deletioncosting_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
@@ -116,6 +117,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController shelfTypeController = TextEditingController();
   TextEditingController shelfTimeController = TextEditingController();
   TextEditingController stockPartitionGroupId = TextEditingController();
+  TextEditingController stockPartitionGroupName = TextEditingController();
   bool salesBolock = false;
   bool purchaseBolock = false;
   bool stockWarning = false;
@@ -399,6 +401,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
     });
   }
+
   imagePostCheck({String? type}){
 
 
@@ -501,6 +504,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
       saftyStockController.clear();
       salesBolock=false;
       weightUnit.clear();
+      stockPartitionGroupId.clear();
+      stockPartitionGroupName.clear();
+      haveStockPriority=false;
+      haveStockPartitionGroup=false;
       weightUomIdController.clear();
       variantCodeController.clear();
       variantFrameWorkController.clear();
@@ -699,7 +706,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                           variantNameController.text=data.name??"";
                           itemCodeController.text=data.itemData?.itemName??"";
                           variantNameController.text=data.name??"";
+                            stockPartitionGroupName.text=data.partitionGroupName??"";
                             haveGiftOption=data.haveGiftOption??false;
+
+
                             haveWrapOption=data.haveWrapOption??false;
                             needMultipleIntegration=data.needMultipleIntegration??false;
                           shelfTypeController.text=data.shelfType??"";
@@ -707,6 +717,9 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                           minSalesOrderLimitController.text=data?.minSaleOrderLimit?.toString()??"";
                           maxSalesOrderLimitController.text=data?.maxSaleOrderLimit?.toString()??"";
                           salesUomController.text=data.SalesUom??"";
+                            stockPartitionGroupId.text=data.stockPartitionGroupId?.toString()??"";
+                            haveStockPriority=data.haveStockPriority??false;
+                            haveStockPartitionGroup=data.haveStockPartitionGroup??false;
                           salesUomNameController.text=data.salesUomData?.salesUomName??"";
                           purchaseUomController.text=data.purchaseuom??"";
                           purchaseUomNameController.text=data.purchaseUomdata?.purchaseUomName??"";
@@ -918,6 +931,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                           context.read<VariantreadCubit>().getVariantRead(veritiaclid!);
                         }
                         else {
+                          clear();
 
                           select=true;
 
@@ -996,6 +1010,27 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                           }
                                         },
                                         result: result,
+                                        child:           tablePagination(
+                                              () => context
+                                              .read<ListvraiantCubit>()
+                                              .refresh(),
+                                          back: list?.previousUrl == null
+                                              ? null
+                                              : () {
+                                            context
+                                                .read<ListvraiantCubit>()
+                                                .previuosslotSectionPageList();
+                                          },
+                                          next: list?.nextPageUrl == null
+                                              ? null
+                                              : () {
+                                            // print(data.nextPageUrl);
+                                            context
+                                                .read<ListvraiantCubit>()
+                                                .nextslotSectionPageList();
+                                          },
+                                        ),
+
                                       ),
                                       Expanded(child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1108,7 +1143,8 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                             ),
                                           ),
                                           SizedBox(height: height * .10,),
-                                          VariantStabletable(needMultipleIntegration:needMultipleIntegration,
+                                          VariantStabletable(
+                                              needMultipleIntegration:needMultipleIntegration,
                                               weightUom:weightUomIdController, weight:weightController,
                                               baseUomId:baseUomId,
                                               select:select,
@@ -1191,6 +1227,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                               shelfTime:shelfTimeController,
                                               haveGiftOption:haveGiftOption,
                                               haveWrapOption:haveWrapOption,
+                                              stockPartitionGroupName:stockPartitionGroupName,
                                               imagePostCheck:imagePostCheck,
                                               nameChanege:   nameChange
                                               ,
@@ -1608,6 +1645,9 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           returnTime: int.tryParse(returnTimeController.text),
                                                           variantStatus: "va",
                                                           isActive: active,
+                                                          stockPartitionGroupId: int.tryParse(stockPartitionGroupId.text),
+                                                          haveStockPriority: haveStockPriority??false,
+                                                          haveStockPartitionGroup: haveStockPartitionGroup??false,
                                                           image1: img1?Variable.img1.toString():image1Controller?.text??null,
                                                           image2:img2?Variable.img2.toString():  image2Controller?.text??null,
                                                           image3:img3?Variable.img3.toString():image3Controller?.text??null,
@@ -1652,6 +1692,9 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           length: double.tryParse(lengthController.text)??0,
                                                           width: double.tryParse(widthController.text)??0,
                                                           height: double.tryParse(heightController.text)??0,
+                                                          stockPartitionGroupId: int.tryParse(stockPartitionGroupId.text),
+                                                          haveStockPriority: haveStockPriority??false,
+                                                          haveStockPartitionGroup: haveStockPartitionGroup??false,
                                                           variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
                                                           salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
                                                           // "1",

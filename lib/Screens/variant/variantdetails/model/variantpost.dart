@@ -87,6 +87,9 @@ class VariantPost with _$VariantPost {
     @JsonKey(name: "purchase_block", defaultValue: false)
         final bool? purchaseBlock,
     @JsonKey(name: "sales_block", defaultValue: false) final bool? salesBolock,
+    @JsonKey(name: "have_stock_partition_group", defaultValue: false) final bool? haveStockPartitionGroup,
+    @JsonKey(name: "have_stock_priority", defaultValue: false) final bool? haveStockPriority,
+    @JsonKey(name: "stock_partition_group_id") final int? stockPartitionGroupId,
     @JsonKey(name: "stock_warning", defaultValue: false)
         final bool? stockWarning,
     @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,

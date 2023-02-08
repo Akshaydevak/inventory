@@ -4,6 +4,7 @@ import 'package:desktop_window/desktop_window.dart' as window_size;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/grouplist/grouplist_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/readOfferGroup/read_offer_group_cubit.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtypelist/costingtypelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
@@ -33,6 +34,13 @@ import 'Screens/heirarchy/general/cubits/subcategorylist/subcategory_cubit.dart'
 import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 
 import 'Screens/logi/login.dart';
+import 'Screens/promotiontab/discount/cubit/PromotionDiscountVerticalList/promotion_discount_vertical_list_cubit.dart';
+import 'Screens/promotiontab/sale/cubits/ListOfferPeriodGroup/list_offer_period_cubit.dart';
+import 'Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
+import 'Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
+import 'Screens/promotiontab/sale/cubits/offergroup/list_offer_group_cubit.dart';
+import 'Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
+import 'Screens/promotiontab/sale/cubits/salevertical_list/promotionsale_vertical_list_cubit.dart';
 import 'Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
 import 'Screens/sales/general/cubit/shippingaddress/shippingadrees_cubit.dart';
 import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
@@ -47,6 +55,7 @@ import 'Screens/variant/channels2allocation/cubits/data_assign/allocationdata_as
 import 'Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
 import 'Screens/variant/general/cubits/variant_selection/variantselection_cubit.dart';
 import 'Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
+import 'Screens/variant/variantdetails/cubits/liststock/liststockpartition_cubit.dart';
 import 'Screens/variant/variantdetails/cubits/producedcountry/producedcountry_cubit.dart';
 import 'commonWidget/Navigationprovider.dart';
 import 'commonWidget/sharedpreference.dart';
@@ -95,6 +104,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => InventorysearchCubit(),
         ),
+        BlocProvider(
+          create: (context) => PromotionDiscountVerticalListCubit(),
+        ),
+
         // BlocProvider(
         //   create: (context) => PurchasegeneratingCubit(),
         // ),
@@ -112,6 +125,8 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => GeneralPurchaseReadCubit(),
+        ),   BlocProvider(
+          create: (context) => ListOfferPeriodCubit(),
         ),
         BlocProvider(
           create: (context) => MaterialListCubit(),
@@ -130,6 +145,11 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => GrouplistCubit(),
+        ),    BlocProvider(
+          create: (context) => ListOfferGroupCubit(),
+        ),
+        BlocProvider(
+          create: (context) => DeleteOfferPeriodCubit(),
         ),
         BlocProvider(
           create: (context) => BaseuomlistCubit(),
@@ -148,6 +168,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => CostingtypelistCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ListstockpartitionCubit(),
         ),
         BlocProvider(
           create: (context) => CostingcreatelistCubit(),
@@ -172,6 +195,8 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => ChannelstockverticalCubit(),
+        ),    BlocProvider(
+          create: (context) => PromotionsaleVerticalListCubit(),
         ),
     BlocProvider(
     create: (context) => ProducedcountryCubit()),
@@ -180,6 +205,8 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => AllcategorylistCubit(),
+        ),  BlocProvider(
+          create: (context) => ChannelListCubit(),
         ),
         // BlocProvider(
         //   create: (context) => ChannelreadCubit(),
@@ -198,6 +225,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => ShippingadreesCubit(),
         ), BlocProvider(
           create: (context) => AttributepatchlistCubit(),
+        ),BlocProvider(
+          create: (context) => PromotionImageCubit(),
         ),
       ],
       child: MaterialApp(

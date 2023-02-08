@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/listbrand2/listbrand2_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/producedcountry/producedcountry_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 
@@ -1489,6 +1491,7 @@ class VariantStabletable extends StatefulWidget {
   final TextEditingController heightUnit;
   final TextEditingController widthUnit;
   final TextEditingController stockPartitionGroupId;
+  final TextEditingController stockPartitionGroupName;
 
   final bool purchaseBlock;
   final int? veritiaclid;
@@ -1594,7 +1597,7 @@ class VariantStabletable extends StatefulWidget {
     required this.purchaseUomName,
     required this.length,
     required this.width,
-    required this.height, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption, required this.lengthUnit, required this.weightUnit, required this.heightUnit, required this.widthUnit, required this.stockPartitionGroupId, required this.haveStockPartitionGroup, required this.haveStockPriority,
+    required this.height, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption, required this.lengthUnit, required this.weightUnit, required this.heightUnit, required this.widthUnit, required this.stockPartitionGroupId, required this.haveStockPartitionGroup, required this.haveStockPriority, required this.stockPartitionGroupName,
   });
 
   @override
@@ -1620,6 +1623,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
   String imageName8 = "";
   String imageEncode = "";
   int? base_uom = 0;
+
+ @override
+  // void initState() {
+  //  context.read<ProducedcountryCubit>().getProducedCountry("");
+  //  // TODO: implement initState
+  //  // context.read<Listbrand2Cubit>().getSlotSectionPage();
+  //  super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -2452,6 +2463,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     // ),
 
                     SelectableDropDownpopUp(
+                      onTap: (){
+                      },
                       controller: widget.producedCountry,
                       label: "Produced Country",
                       type: "ProducedCountryPopUpCall",
@@ -3508,7 +3521,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         label: "Catalog8"),
 
                     SizedBox(
-                      height: height * .172,
+                      height: height * .1498,
                     ),
                     // SizedBox(
                     //   height: height * .140,
@@ -3546,7 +3559,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 child: Visibility(
                   visible:widget?.haveStockPartitionGroup==true?true:false ,
                   child: NewInputCard(
-                    controller: widget.stockPartitionGroupId,
+                    controller: widget.stockPartitionGroupName,
                     icondrop: true,
                     title: "Stock Partition Group Id",
                     readOnly: true,
@@ -3558,8 +3571,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           type: "StockPartitionGroupPopup",
                           valueSelect: (BrandListModel va) {
                             setState(() {
-                              // widget.group.text = va?.code ?? "";
-                              // widget.groupName.text = va?.name ?? "";
+                              widget.stockPartitionGroupId.text = va?.id.toString() ?? "";
+                              widget.stockPartitionGroupName.text = va?.name ?? "";
                               setState(() {});
 
                               // onChange = true;

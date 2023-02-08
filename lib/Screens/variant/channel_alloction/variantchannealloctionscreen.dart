@@ -91,6 +91,26 @@ class _VariantChannelAllocationScreenState
       }
     }
   }
+  checkBoxClickSelectUnselct(List<ChannelTypeModel>table1){
+
+    for(var n in table)
+      {
+        if(n.isActive==false){
+          selectAll=false;
+          break;
+        }
+        else{
+          selectAll=true;
+        }
+        setState(() {
+
+        });
+
+      }
+
+  }
+
+
 
   listAssign(List<ChannelTypeModel>table1, PaginatedResponse<dynamic> data) {
     setState(() {
@@ -292,7 +312,7 @@ class _VariantChannelAllocationScreenState
 
 
                               setState(() {
-                                context.read<ChannelreadCubit>().getChannelRead(result[0].category?.id);
+                                context.read<ChannelreadCubit>().getChannelRead(result[index].category?.id);
                                 // context.read<StockreadCubit>().getStockRead(veritiaclid!);
 
                               });
@@ -355,10 +375,10 @@ class _VariantChannelAllocationScreenState
                                                 items: items,
                                               ),
                                             ),
-                                      SizedBox(width:w*.38 ,),
+                                      SizedBox(width:w*.36 ,),
                                       // Spacer(),
                                       Container(
-                                        margin: EdgeInsets.only(top: h*.022,right:w *.0198),
+                                        margin: EdgeInsets.only(top: h*.022,right:w *.0199),
                                         child: Row(
                                           children: [
 
@@ -376,7 +396,9 @@ class _VariantChannelAllocationScreenState
                                               valueChanger: selectAll,
                                             ),
 
-                                            Text(selectAll?"Unselect All":"Select All"),
+                                            SizedBox(
+                                              // width: MediaQuery.of(context).size.width*.06,
+                                                child: Text(selectAll?"Unselect All":"Select All",style: TextStyle(fontSize: w*.011),)),
                                             // SizedBox(width: w *.0198,)
 
                                           ],
@@ -426,6 +448,7 @@ class _VariantChannelAllocationScreenState
                                   ChannelAllocationBottomTable(
                                     table: table,
                                       tableAssign:tableAssign,
+                                      checkBoxClickSelectUnselct:checkBoxClickSelectUnselct,
                                   ),
                                   SizedBox(height: 8,),
                                   // tablePagination(

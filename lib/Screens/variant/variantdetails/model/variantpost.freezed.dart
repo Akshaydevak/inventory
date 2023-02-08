@@ -143,6 +143,12 @@ mixin _$VariantPost {
   bool? get purchaseBlock => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_block", defaultValue: false)
   bool? get salesBolock => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  bool? get haveStockPartitionGroup => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  bool? get haveStockPriority => throw _privateConstructorUsedError;
+  @JsonKey(name: "stock_partition_group_id")
+  int? get stockPartitionGroupId => throw _privateConstructorUsedError;
   @JsonKey(name: "stock_warning", defaultValue: false)
   bool? get stockWarning => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
@@ -322,6 +328,12 @@ abstract class $VariantPostCopyWith<$Res> {
           bool? purchaseBlock,
       @JsonKey(name: "sales_block", defaultValue: false)
           bool? salesBolock,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          int? stockPartitionGroupId,
       @JsonKey(name: "stock_warning", defaultValue: false)
           bool? stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
@@ -463,6 +475,9 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
     Object? maxPurchaseOrderLimit = freezed,
     Object? purchaseBlock = freezed,
     Object? salesBolock = freezed,
+    Object? haveStockPartitionGroup = freezed,
+    Object? haveStockPriority = freezed,
+    Object? stockPartitionGroupId = freezed,
     Object? stockWarning = freezed,
     Object? isActive = freezed,
     Object? itemCatelog = freezed,
@@ -775,6 +790,18 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
           ? _value.salesBolock
           : salesBolock // ignore: cast_nullable_to_non_nullable
               as bool?,
+      haveStockPartitionGroup: freezed == haveStockPartitionGroup
+          ? _value.haveStockPartitionGroup
+          : haveStockPartitionGroup // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveStockPriority: freezed == haveStockPriority
+          ? _value.haveStockPriority
+          : haveStockPriority // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      stockPartitionGroupId: freezed == stockPartitionGroupId
+          ? _value.stockPartitionGroupId
+          : stockPartitionGroupId // ignore: cast_nullable_to_non_nullable
+              as int?,
       stockWarning: freezed == stockWarning
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
@@ -1104,6 +1131,12 @@ abstract class _$$_VariantPostCopyWith<$Res>
           bool? purchaseBlock,
       @JsonKey(name: "sales_block", defaultValue: false)
           bool? salesBolock,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          int? stockPartitionGroupId,
       @JsonKey(name: "stock_warning", defaultValue: false)
           bool? stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
@@ -1252,6 +1285,9 @@ class __$$_VariantPostCopyWithImpl<$Res>
     Object? maxPurchaseOrderLimit = freezed,
     Object? purchaseBlock = freezed,
     Object? salesBolock = freezed,
+    Object? haveStockPartitionGroup = freezed,
+    Object? haveStockPriority = freezed,
+    Object? stockPartitionGroupId = freezed,
     Object? stockWarning = freezed,
     Object? isActive = freezed,
     Object? itemCatelog = freezed,
@@ -1564,6 +1600,18 @@ class __$$_VariantPostCopyWithImpl<$Res>
           ? _value.salesBolock
           : salesBolock // ignore: cast_nullable_to_non_nullable
               as bool?,
+      haveStockPartitionGroup: freezed == haveStockPartitionGroup
+          ? _value.haveStockPartitionGroup
+          : haveStockPartitionGroup // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveStockPriority: freezed == haveStockPriority
+          ? _value.haveStockPriority
+          : haveStockPriority // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      stockPartitionGroupId: freezed == stockPartitionGroupId
+          ? _value.stockPartitionGroupId
+          : stockPartitionGroupId // ignore: cast_nullable_to_non_nullable
+              as int?,
       stockWarning: freezed == stockWarning
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
@@ -1780,6 +1828,12 @@ class _$_VariantPost implements _VariantPost {
           this.purchaseBlock,
       @JsonKey(name: "sales_block", defaultValue: false)
           this.salesBolock,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          this.haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          this.haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          this.stockPartitionGroupId,
       @JsonKey(name: "stock_warning", defaultValue: false)
           this.stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
@@ -2046,6 +2100,15 @@ class _$_VariantPost implements _VariantPost {
   @JsonKey(name: "sales_block", defaultValue: false)
   final bool? salesBolock;
   @override
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  final bool? haveStockPartitionGroup;
+  @override
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  final bool? haveStockPriority;
+  @override
+  @JsonKey(name: "stock_partition_group_id")
+  final int? stockPartitionGroupId;
+  @override
   @JsonKey(name: "stock_warning", defaultValue: false)
   final bool? stockWarning;
   @override
@@ -2121,7 +2184,7 @@ class _$_VariantPost implements _VariantPost {
 
   @override
   String toString() {
-    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, unitCost: $unitCost, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
+    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, unitCost: $unitCost, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, haveStockPartitionGroup: $haveStockPartitionGroup, haveStockPriority: $haveStockPriority, stockPartitionGroupId: $stockPartitionGroupId, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
   }
 
   @override
@@ -2239,6 +2302,9 @@ class _$_VariantPost implements _VariantPost {
             (identical(other.maxPurchaseOrderLimit, maxPurchaseOrderLimit) || other.maxPurchaseOrderLimit == maxPurchaseOrderLimit) &&
             (identical(other.purchaseBlock, purchaseBlock) || other.purchaseBlock == purchaseBlock) &&
             (identical(other.salesBolock, salesBolock) || other.salesBolock == salesBolock) &&
+            (identical(other.haveStockPartitionGroup, haveStockPartitionGroup) || other.haveStockPartitionGroup == haveStockPartitionGroup) &&
+            (identical(other.haveStockPriority, haveStockPriority) || other.haveStockPriority == haveStockPriority) &&
+            (identical(other.stockPartitionGroupId, stockPartitionGroupId) || other.stockPartitionGroupId == stockPartitionGroupId) &&
             (identical(other.stockWarning, stockWarning) || other.stockWarning == stockWarning) &&
             (identical(other.isActive, isActive) || other.isActive == isActive) &&
             (identical(other.itemCatelog, itemCatelog) || other.itemCatelog == itemCatelog) &&
@@ -2339,6 +2405,9 @@ class _$_VariantPost implements _VariantPost {
         maxPurchaseOrderLimit,
         purchaseBlock,
         salesBolock,
+        haveStockPartitionGroup,
+        haveStockPriority,
+        stockPartitionGroupId,
         stockWarning,
         isActive,
         itemCatelog,
@@ -2499,6 +2568,12 @@ abstract class _VariantPost implements VariantPost {
           final bool? purchaseBlock,
       @JsonKey(name: "sales_block", defaultValue: false)
           final bool? salesBolock,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          final bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          final bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          final int? stockPartitionGroupId,
       @JsonKey(name: "stock_warning", defaultValue: false)
           final bool? stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
@@ -2739,6 +2814,15 @@ abstract class _VariantPost implements VariantPost {
   @override
   @JsonKey(name: "sales_block", defaultValue: false)
   bool? get salesBolock;
+  @override
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  bool? get haveStockPartitionGroup;
+  @override
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  bool? get haveStockPriority;
+  @override
+  @JsonKey(name: "stock_partition_group_id")
+  int? get stockPartitionGroupId;
   @override
   @JsonKey(name: "stock_warning", defaultValue: false)
   bool? get stockWarning;

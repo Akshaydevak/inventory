@@ -1598,10 +1598,20 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
     onChanged: (va){
       onChange=true;
         print(va);
+        va=va.replaceAll("", "");
+        if(va.isNotEmpty==true){
+          setState(() {
+            values[i]=va;
+          });
+        }
+        else{
+          setState(() {
+            values.removeAt(i);
+          });
 
-        setState(() {
-    values[i]=va;
-        });
+        }
+
+
 
     },
     ),

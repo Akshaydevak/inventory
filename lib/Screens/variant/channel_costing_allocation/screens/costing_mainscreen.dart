@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/channelStocktableread/channelsttocktableread_cubit.dart';
@@ -408,6 +409,27 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                         }
                       },
                       result: result,
+                      child:
+                      tablePagination(
+                            () => context
+                            .read<ListvraiantCubit>()
+                            .refresh(),
+                        back: list?.previousUrl == null
+                            ? null
+                            : () {
+                          context
+                              .read<ListvraiantCubit>()
+                              .previuosslotSectionPageList();
+                        },
+                        next: list?.nextPageUrl == null
+                            ? null
+                            : () {
+                          // print(data.nextPageUrl);
+                          context
+                              .read<ListvraiantCubit>()
+                              .nextslotSectionPageList();
+                        },
+                      ),
                     ),
                     Expanded(child: SingleChildScrollView(
                       child: Column(children: [

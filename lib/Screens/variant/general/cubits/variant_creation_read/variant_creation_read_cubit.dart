@@ -10,6 +10,7 @@ class VariantCreationReadCubit extends Cubit<VariantCreationReadState> {
   VariantCreationReadCubit() : super(VariantCreationReadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getVariantCreationRead(int? id) async {
+    emit(VariantCreationReadState.initial());
     print("idddidd" + id.toString());
     final result = await repo.getVariantCreationRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

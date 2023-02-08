@@ -2401,6 +2401,8 @@ else{
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: TableTextButton(
+                                                                      textColor:  table?[i].updateCheck==true?Pellet.bagroundColor:Colors.black,
+                                                                      bagroundColor: table?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
 
                                                                         onPress: () {
                                                                           var Vamount = table[i].variableAmount??0;

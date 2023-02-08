@@ -10,9 +10,10 @@ import 'package:inventory/widgets/customtable.dart';
 class ChannelAllocationBottomTable extends StatefulWidget {
   final  List<ChannelTypeModel>? table;
   final  Function tableAssign;
+  final  Function checkBoxClickSelectUnselct;
   // final  bool addNew;
   // final  Key? key;
-  ChannelAllocationBottomTable({required this.table,required this.tableAssign});
+  ChannelAllocationBottomTable({required this.table,required this.tableAssign, required this.checkBoxClickSelectUnselct});
   @override
   ChannelAllocationBottomTableState createState() => ChannelAllocationBottomTableState();
 }
@@ -279,6 +280,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                                     isActive = !isActive!;
                                     table[i] = table[i].copyWith(isActive: isActive);
                                 widget.tableAssign(table);
+                                widget.checkBoxClickSelectUnselct(table);
 
                                   });
                                 }),

@@ -1107,6 +1107,244 @@ abstract class _PricingTypeListModel implements PricingTypeListModel {
       throw _privateConstructorUsedError;
 }
 
+StockPartitionModel _$StockPartitionModelFromJson(Map<String, dynamic> json) {
+  return _StockPartitionModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StockPartitionModel {
+  String? get description => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  @JsonKey(name: "partition_code")
+  String? get partitionCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "inventory_id")
+  String? get inventoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $StockPartitionModelCopyWith<StockPartitionModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StockPartitionModelCopyWith<$Res> {
+  factory $StockPartitionModelCopyWith(
+          StockPartitionModel value, $Res Function(StockPartitionModel) then) =
+      _$StockPartitionModelCopyWithImpl<$Res, StockPartitionModel>;
+  @useResult
+  $Res call(
+      {String? description,
+      String? name,
+      @JsonKey(name: "partition_code") String? partitionCode,
+      @JsonKey(name: "inventory_id") String? inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
+}
+
+/// @nodoc
+class _$StockPartitionModelCopyWithImpl<$Res, $Val extends StockPartitionModel>
+    implements $StockPartitionModelCopyWith<$Res> {
+  _$StockPartitionModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? description = freezed,
+    Object? name = freezed,
+    Object? partitionCode = freezed,
+    Object? inventoryId = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_value.copyWith(
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      partitionCode: freezed == partitionCode
+          ? _value.partitionCode
+          : partitionCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      inventoryId: freezed == inventoryId
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_StockPartitionModelCopyWith<$Res>
+    implements $StockPartitionModelCopyWith<$Res> {
+  factory _$$_StockPartitionModelCopyWith(_$_StockPartitionModel value,
+          $Res Function(_$_StockPartitionModel) then) =
+      __$$_StockPartitionModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? description,
+      String? name,
+      @JsonKey(name: "partition_code") String? partitionCode,
+      @JsonKey(name: "inventory_id") String? inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
+}
+
+/// @nodoc
+class __$$_StockPartitionModelCopyWithImpl<$Res>
+    extends _$StockPartitionModelCopyWithImpl<$Res, _$_StockPartitionModel>
+    implements _$$_StockPartitionModelCopyWith<$Res> {
+  __$$_StockPartitionModelCopyWithImpl(_$_StockPartitionModel _value,
+      $Res Function(_$_StockPartitionModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? description = freezed,
+    Object? name = freezed,
+    Object? partitionCode = freezed,
+    Object? inventoryId = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_$_StockPartitionModel(
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      partitionCode: freezed == partitionCode
+          ? _value.partitionCode
+          : partitionCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      inventoryId: freezed == inventoryId
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_StockPartitionModel implements _StockPartitionModel {
+  const _$_StockPartitionModel(
+      {this.description,
+      this.name,
+      @JsonKey(name: "partition_code") this.partitionCode,
+      @JsonKey(name: "inventory_id") this.inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive});
+
+  factory _$_StockPartitionModel.fromJson(Map<String, dynamic> json) =>
+      _$$_StockPartitionModelFromJson(json);
+
+  @override
+  final String? description;
+  @override
+  final String? name;
+  @override
+  @JsonKey(name: "partition_code")
+  final String? partitionCode;
+  @override
+  @JsonKey(name: "inventory_id")
+  final String? inventoryId;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  final bool? isActive;
+
+  @override
+  String toString() {
+    return 'StockPartitionModel(description: $description, name: $name, partitionCode: $partitionCode, inventoryId: $inventoryId, isActive: $isActive)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StockPartitionModel &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.partitionCode, partitionCode) ||
+                other.partitionCode == partitionCode) &&
+            (identical(other.inventoryId, inventoryId) ||
+                other.inventoryId == inventoryId) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, description, name, partitionCode, inventoryId, isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StockPartitionModelCopyWith<_$_StockPartitionModel> get copyWith =>
+      __$$_StockPartitionModelCopyWithImpl<_$_StockPartitionModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_StockPartitionModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StockPartitionModel implements StockPartitionModel {
+  const factory _StockPartitionModel(
+      {final String? description,
+      final String? name,
+      @JsonKey(name: "partition_code")
+          final String? partitionCode,
+      @JsonKey(name: "inventory_id")
+          final String? inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false)
+          final bool? isActive}) = _$_StockPartitionModel;
+
+  factory _StockPartitionModel.fromJson(Map<String, dynamic> json) =
+      _$_StockPartitionModel.fromJson;
+
+  @override
+  String? get description;
+  @override
+  String? get name;
+  @override
+  @JsonKey(name: "partition_code")
+  String? get partitionCode;
+  @override
+  @JsonKey(name: "inventory_id")
+  String? get inventoryId;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive;
+  @override
+  @JsonKey(ignore: true)
+  _$$_StockPartitionModelCopyWith<_$_StockPartitionModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 ListingChnanelTableModel _$ListingChnanelTableModelFromJson(
     Map<String, dynamic> json) {
   return _ListingChnanelTableModel.fromJson(json);

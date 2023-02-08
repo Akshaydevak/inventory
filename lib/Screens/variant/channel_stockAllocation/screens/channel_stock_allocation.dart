@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/channel_stockAllocation/cubit/channael_allocation_post/channel_stock_allocation_post_cubit.dart';
 import 'package:inventory/Screens/variant/channel_stockAllocation/cubit/channelread/channelstockallocationread_cubit.dart';
@@ -411,6 +412,27 @@ if(addVirtual==null){
 
                       selectedVertical: selectedVertical,
                       itemsearch: itemsearch,
+                      child:        tablePagination(
+                            () => context
+                            .read<ListvraiantCubit>()
+                            .refresh(),
+                        back: list?.previousUrl == null
+                            ? null
+                            : () {
+                          context
+                              .read<ListvraiantCubit>()
+                              .previuosslotSectionPageList();
+                        },
+                        next: list?.nextPageUrl == null
+                            ? null
+                            : () {
+                          // print(data.nextPageUrl);
+                          context
+                              .read<ListvraiantCubit>()
+                              .nextslotSectionPageList();
+                        },
+                      ),
+
                       ontap: (int index) {
                         setState(() {
                           selectedVertical = index;

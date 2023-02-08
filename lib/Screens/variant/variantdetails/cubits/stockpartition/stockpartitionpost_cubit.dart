@@ -18,4 +18,14 @@ class StockpartitionpostCubit extends Cubit<StockpartitionpostState> {
     );
     result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));
   }
+  Future patchStockPartition(
+      String? name,String? description,bool ? active,int? id
+      ) async {
+
+    final result = await repo.patchStockPartition(
+      name,description,active,
+      id,
+    );
+    result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));
+  }
 }

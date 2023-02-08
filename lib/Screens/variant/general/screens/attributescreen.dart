@@ -35,8 +35,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("akkuttan" + graphArray.toString());
-    print("akkumon" + attribute.toString());
+
 
     if (!onChange) {
       print("hellooooooooo");
@@ -136,11 +135,16 @@ class _AttributeScreenState extends State<AttributeScreen> {
             });
       },
       child: Container(
-        height: 250,
+        height: 200,
+        // color: Colors.yellow,
         alignment: Alignment.topRight,
         width: MediaQuery.of(context).size.width - 60,
         child: attribute.isNotEmpty == true
             ? ListView.builder(
+          shrinkWrap:true,
+            // physics: NeverScrollableScrollPhysics(),
+
+
             //
             //      gridDelegate: const Sli(
             //
@@ -169,10 +173,13 @@ class _AttributeScreenState extends State<AttributeScreen> {
                         ),
                         if (graphArray[index].isNotEmpty == true)
                           Container(
-                            height: 50,
+                            height: 100,
+                            // width: 600,
+                            // color: Colors.red,
 
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
+                            child: GridView.builder(
+
+                              scrollDirection: Axis.vertical,
                               itemCount: graphArray[index]!.length,
                               itemBuilder: (context, item) {
                                 return Row(
@@ -302,9 +309,15 @@ class _AttributeScreenState extends State<AttributeScreen> {
                                         print("akskks");
                                       },
                                     ),
+                                    SizedBox(width: 22,)
                                   ],
                                 );
-                              },
+                              }, gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 1/5,
+                                mainAxisExtent: MediaQuery.of(context).size.width/40,
+                                crossAxisSpacing: 10,
+
+                                crossAxisCount: 5),
                             ),
                           )
                       ],

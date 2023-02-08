@@ -156,7 +156,7 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                           controller: _tabController,
                           children: [
                             ProductModulGeneralScreen(),
-                          VariantDetailScreen(),
+                            VariantDetailScreen(),
                             VariantChannelAllocationScreen(),
                             StockScreen(),
                             ChannelStockAllocateScreen(),
@@ -257,7 +257,21 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
 
             );
-          },),
+          },
+          ),
+          DrawerCared(label: "Stock Partition ",ontap: (){
+            costingTypeMethodeCheck = false;
+
+            showDailogPopUp(
+              context,
+              ConfigurePopup(
+                type: "StockPartitionPopUp",
+              ),
+
+
+            );
+          },
+          ),
           // DrawerCared(label: "Linked Item ",ontap: (){
           //   costingTypeMethodeCheck = false;
           //

@@ -11,6 +11,7 @@ class SelectableDropDownpopUp extends StatefulWidget {
   final String? value;
   final TextEditingController? controller;
   final VoidCallback? onAddNew;
+  final VoidCallback? onTap;
   final Function onSelection;
   final String? code;
   final bool required;
@@ -39,7 +40,7 @@ class SelectableDropDownpopUp extends StatefulWidget {
         this.required = false,
         this.list,
         this.onchange,
-        this.restricted = false})
+        this.restricted = false, this.onTap})
       : super(key: key);
 
   @override
@@ -59,93 +60,96 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
       widget.row?
     SizedBox(
 
-        child: ListTile(
-            contentPadding: EdgeInsets.symmetric(
-              //horizontal: 10,
-                vertical: 5),
-            leading: Container(
+        child: InkWell(
+          onTap: widget.onTap,
+          child: ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                //horizontal: 10,
+                  vertical: 5),
+              leading: Container(
 
-                width: 70,
-                child: Text.rich(TextSpan(
-                    text: widget.label,
-                    style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-                    children: widget.required
-                        ? [
-                      TextSpan(
-                          text: "*", style: TextStyle(color:Colors.grey))
-                    ]
-                        : []))),
-            title:
-            Container(
-              height: 39,
-              child:Container(  decoration: BoxDecoration(
-                  color:
-                  widget.restricted ? Colors.white.withOpacity(.2) : null,
-                  // border: Border.all(
-                  //   color: Color(0xff3E4F5B).withOpacity(.1),
-                  //   width: 0.5, //width of border
-                  // ),
-                  // borderRadius: BorderRadius.circular(5)
+                  width: 70,
+                  child: Text.rich(TextSpan(
+                      text: widget.label,
+                      style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                      children: widget.required
+                          ? [
+                        TextSpan(
+                            text: "*", style: TextStyle(color:Colors.grey))
+                      ]
+                          : []))),
+              title:
+              Container(
+                height: 39,
+                child:Container(  decoration: BoxDecoration(
+                    color:
+                    widget.restricted ? Colors.white.withOpacity(.2) : null,
+                    // border: Border.all(
+                    //   color: Color(0xff3E4F5B).withOpacity(.1),
+                    //   width: 0.5, //width of border
+                    // ),
+                    // borderRadius: BorderRadius.circular(5)
 
-              ),
-
-
-                child: widget.type != null
-                    ? PopUpCall(
-                  code: widget.code,
-                    apiType:widget.apiType,
-                  id:widget.id,
-                  onchange:widget.onchange,
-                    bindType:widget.bindType,
-
-
-                    onSelection: widget.onSelection,
-                    onAddNew: widget.onAddNew,
-                    value: widget.value,
-                    enable: widget.enable,
-                    type: widget.type!)
-                    :TypeAheadFormField(
-
-
-                  textFieldConfiguration: TextFieldConfiguration(
-
-
-                      controller: widget.controller,
-
-                      onChanged: (va){
-                        widget?.onchange!(va!);
-
-                      },
-
-                      decoration: InputDecoration(
-
-
-                          enabledBorder:OutlineInputBorder(
-                              borderRadius:BorderRadius.circular(2),
-
-                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                          focusedBorder:   OutlineInputBorder(
-                              borderRadius:BorderRadius.circular(2),
-
-                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                          isDense: true,
-                          // border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.more_horiz_rounded))),
-                  onSuggestionSelected: (suggestion) {
-                    widget.onSelection(suggestion);
-                  },
-                  itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      // leading: Icon(Icons.shopping_cart_outlined),
-                      title: Text(suggestion.toString()),
-                    );
-                  },
-                  suggestionsCallback: (String? areas) async {
-                    return list;
-                  },
                 ),
-              ) ,
-            ),
+
+
+                  child: widget.type != null
+                      ? PopUpCall(
+                    code: widget.code,
+                      apiType:widget.apiType,
+                    id:widget.id,
+                    onchange:widget.onchange,
+                      bindType:widget.bindType,
+
+
+                      onSelection: widget.onSelection,
+                      onAddNew: widget.onAddNew,
+                      value: widget.value,
+                      enable: widget.enable,
+                      type: widget.type!)
+                      :TypeAheadFormField(
+
+
+                    textFieldConfiguration: TextFieldConfiguration(
+
+
+                        controller: widget.controller,
+
+                        onChanged: (va){
+                          widget?.onchange!(va!);
+
+                        },
+
+                        decoration: InputDecoration(
+
+
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            isDense: true,
+                            // border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.more_horiz_rounded))),
+                    onSuggestionSelected: (suggestion) {
+                      widget.onSelection(suggestion);
+                    },
+                    itemBuilder: (context, suggestion) {
+                      return ListTile(
+                        // leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? areas) async {
+                      return list;
+                    },
+                  ),
+                ) ,
+              ),
+          ),
         )):
     Container(
         padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),

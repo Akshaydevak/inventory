@@ -20,7 +20,7 @@ class ChanneAllocationTopScreen extends StatefulWidget {
 }
 
 class _ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
-  String choosenValue = '';
+  String choosenValue = '_Select_';
   bool onChange=false;
   List<String> items = ["variant", "group"];
   List<bool?>selection=[];
@@ -69,7 +69,7 @@ class _ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
                 children: [
                   Container(
                     height: 100,
-                    width: w-1000,
+                    width: w-700,
                     // color: Colors.red,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -136,21 +136,24 @@ class _ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
                   //       ],
                   //     )),
                   Spacer(),
-                  CustomDropDown(
-                    border: true,
-                    choosenValue: choosenValue,
-                    onChange: (val) {
-                      setState(() {
-                        choosenValue = val;
-                      });
-                      print(val);
-                      widget.appiCheckingTrue(true,choosenValue);
-                      context
-                          .read<ChannelfilterCubit>()
-                          .getChannelFilterList(widget.channelCodeList,Variable.inventory_ID,val);
-                      choosenValue=val;
-                    },
-                    items: items,
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: CustomDropDown(
+                      border: true,
+                      choosenValue: choosenValue,
+                      onChange: (val) {
+                        setState(() {
+                          choosenValue = val;
+                        });
+                        print(val);
+                        widget.appiCheckingTrue(true,choosenValue);
+                        context
+                            .read<ChannelfilterCubit>()
+                            .getChannelFilterList(widget.channelCodeList,Variable.inventory_ID,val);
+                        choosenValue=val;
+                      },
+                      items: items,
+                    ),
                   ),
                 ],
               ));

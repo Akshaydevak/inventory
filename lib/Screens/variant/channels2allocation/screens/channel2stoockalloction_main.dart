@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/channel_stockAllocation/cubit/channelstockvertical/channelstockvertical_cubit.dart';
 import 'package:inventory/Screens/variant/channel_stockAllocation/model/channelstock_allocationlist.dart';
@@ -405,6 +406,26 @@ class _ChannelTypeStockAllocationState
                             }
                           },
                           result: result,
+                         child: tablePagination(
+                                () => context
+                                .read<ListvraiantCubit>()
+                                .refresh(),
+                            back: list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<ListvraiantCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next: list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<ListvraiantCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          ),
                         ),
                         Expanded(
                           child: SingleChildScrollView(

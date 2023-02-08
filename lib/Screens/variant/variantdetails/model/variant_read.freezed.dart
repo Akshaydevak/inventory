@@ -39,6 +39,8 @@ mixin _$VariantReadModel {
   String? get uomId => throw _privateConstructorUsedError;
   @JsonKey(name: "inventory_id")
   String? get inventoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "partition_group_name")
+  String? get partitionGroupName => throw _privateConstructorUsedError;
   @JsonKey(name: "uom_group_name")
   String? get uomGroupName => throw _privateConstructorUsedError;
   @JsonKey(name: "reorder_point")
@@ -85,6 +87,12 @@ mixin _$VariantReadModel {
   String? get returnType => throw _privateConstructorUsedError;
   @JsonKey(name: "return_time")
   int? get returnTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  bool? get haveStockPartitionGroup => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  bool? get haveStockPriority => throw _privateConstructorUsedError;
+  @JsonKey(name: "stock_partition_group_id")
+  int? get stockPartitionGroupId => throw _privateConstructorUsedError;
   @JsonKey(name: "max_gp")
   double? get maxGp => throw _privateConstructorUsedError;
   @JsonKey(name: "min_gp")
@@ -193,6 +201,8 @@ abstract class $VariantReadModelCopyWith<$Res> {
           String? uomId,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
+      @JsonKey(name: "partition_group_name")
+          String? partitionGroupName,
       @JsonKey(name: "uom_group_name")
           String? uomGroupName,
       @JsonKey(name: "reorder_point")
@@ -237,6 +247,12 @@ abstract class $VariantReadModelCopyWith<$Res> {
           String? returnType,
       @JsonKey(name: "return_time")
           int? returnTime,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          int? stockPartitionGroupId,
       @JsonKey(name: "max_gp")
           double? maxGp,
       @JsonKey(name: "min_gp")
@@ -351,6 +367,7 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
     Object? variantFrameWorkId = freezed,
     Object? uomId = freezed,
     Object? inventoryId = freezed,
+    Object? partitionGroupName = freezed,
     Object? uomGroupName = freezed,
     Object? reOrderPoint = freezed,
     Object? siblingCode = freezed,
@@ -373,6 +390,9 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
     Object? avgGp = freezed,
     Object? returnType = freezed,
     Object? returnTime = freezed,
+    Object? haveStockPartitionGroup = freezed,
+    Object? haveStockPriority = freezed,
+    Object? stockPartitionGroupId = freezed,
     Object? maxGp = freezed,
     Object? minGap = freezed,
     Object? targetedGp = freezed,
@@ -472,6 +492,10 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
+      partitionGroupName: freezed == partitionGroupName
+          ? _value.partitionGroupName
+          : partitionGroupName // ignore: cast_nullable_to_non_nullable
+              as String?,
       uomGroupName: freezed == uomGroupName
           ? _value.uomGroupName
           : uomGroupName // ignore: cast_nullable_to_non_nullable
@@ -559,6 +583,18 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
       returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      haveStockPartitionGroup: freezed == haveStockPartitionGroup
+          ? _value.haveStockPartitionGroup
+          : haveStockPartitionGroup // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveStockPriority: freezed == haveStockPriority
+          ? _value.haveStockPriority
+          : haveStockPriority // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      stockPartitionGroupId: freezed == stockPartitionGroupId
+          ? _value.stockPartitionGroupId
+          : stockPartitionGroupId // ignore: cast_nullable_to_non_nullable
               as int?,
       maxGp: freezed == maxGp
           ? _value.maxGp
@@ -848,6 +884,8 @@ abstract class _$$_VariantReadModelCopyWith<$Res>
           String? uomId,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
+      @JsonKey(name: "partition_group_name")
+          String? partitionGroupName,
       @JsonKey(name: "uom_group_name")
           String? uomGroupName,
       @JsonKey(name: "reorder_point")
@@ -892,6 +930,12 @@ abstract class _$$_VariantReadModelCopyWith<$Res>
           String? returnType,
       @JsonKey(name: "return_time")
           int? returnTime,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          int? stockPartitionGroupId,
       @JsonKey(name: "max_gp")
           double? maxGp,
       @JsonKey(name: "min_gp")
@@ -1013,6 +1057,7 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
     Object? variantFrameWorkId = freezed,
     Object? uomId = freezed,
     Object? inventoryId = freezed,
+    Object? partitionGroupName = freezed,
     Object? uomGroupName = freezed,
     Object? reOrderPoint = freezed,
     Object? siblingCode = freezed,
@@ -1035,6 +1080,9 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
     Object? avgGp = freezed,
     Object? returnType = freezed,
     Object? returnTime = freezed,
+    Object? haveStockPartitionGroup = freezed,
+    Object? haveStockPriority = freezed,
+    Object? stockPartitionGroupId = freezed,
     Object? maxGp = freezed,
     Object? minGap = freezed,
     Object? targetedGp = freezed,
@@ -1134,6 +1182,10 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
+      partitionGroupName: freezed == partitionGroupName
+          ? _value.partitionGroupName
+          : partitionGroupName // ignore: cast_nullable_to_non_nullable
+              as String?,
       uomGroupName: freezed == uomGroupName
           ? _value.uomGroupName
           : uomGroupName // ignore: cast_nullable_to_non_nullable
@@ -1221,6 +1273,18 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
       returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      haveStockPartitionGroup: freezed == haveStockPartitionGroup
+          ? _value.haveStockPartitionGroup
+          : haveStockPartitionGroup // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveStockPriority: freezed == haveStockPriority
+          ? _value.haveStockPriority
+          : haveStockPriority // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      stockPartitionGroupId: freezed == stockPartitionGroupId
+          ? _value.stockPartitionGroupId
+          : stockPartitionGroupId // ignore: cast_nullable_to_non_nullable
               as int?,
       maxGp: freezed == maxGp
           ? _value.maxGp
@@ -1397,6 +1461,8 @@ class _$_VariantReadModel implements _VariantReadModel {
           this.uomId,
       @JsonKey(name: "inventory_id")
           this.inventoryId,
+      @JsonKey(name: "partition_group_name")
+          this.partitionGroupName,
       @JsonKey(name: "uom_group_name")
           this.uomGroupName,
       @JsonKey(name: "reorder_point")
@@ -1441,6 +1507,12 @@ class _$_VariantReadModel implements _VariantReadModel {
           this.returnType,
       @JsonKey(name: "return_time")
           this.returnTime,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          this.haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          this.haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          this.stockPartitionGroupId,
       @JsonKey(name: "max_gp")
           this.maxGp,
       @JsonKey(name: "min_gp")
@@ -1558,6 +1630,9 @@ class _$_VariantReadModel implements _VariantReadModel {
   @JsonKey(name: "inventory_id")
   final String? inventoryId;
   @override
+  @JsonKey(name: "partition_group_name")
+  final String? partitionGroupName;
+  @override
   @JsonKey(name: "uom_group_name")
   final String? uomGroupName;
   @override
@@ -1644,6 +1719,15 @@ class _$_VariantReadModel implements _VariantReadModel {
   @override
   @JsonKey(name: "return_time")
   final int? returnTime;
+  @override
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  final bool? haveStockPartitionGroup;
+  @override
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  final bool? haveStockPriority;
+  @override
+  @JsonKey(name: "stock_partition_group_id")
+  final int? stockPartitionGroupId;
   @override
   @JsonKey(name: "max_gp")
   final double? maxGp;
@@ -1766,7 +1850,7 @@ class _$_VariantReadModel implements _VariantReadModel {
 
   @override
   String toString() {
-    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, siblingCode: $siblingCode, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, needMultipleIntegration: $needMultipleIntegration, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
+    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, partitionGroupName: $partitionGroupName, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, siblingCode: $siblingCode, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, needMultipleIntegration: $needMultipleIntegration, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, haveStockPartitionGroup: $haveStockPartitionGroup, haveStockPriority: $haveStockPriority, stockPartitionGroupId: $stockPartitionGroupId, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
   }
 
   @override
@@ -1793,6 +1877,8 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.uomId, uomId) || other.uomId == uomId) &&
             (identical(other.inventoryId, inventoryId) ||
                 other.inventoryId == inventoryId) &&
+            (identical(other.partitionGroupName, partitionGroupName) ||
+                other.partitionGroupName == partitionGroupName) &&
             (identical(other.uomGroupName, uomGroupName) ||
                 other.uomGroupName == uomGroupName) &&
             (identical(other.reOrderPoint, reOrderPoint) ||
@@ -1836,6 +1922,12 @@ class _$_VariantReadModel implements _VariantReadModel {
                 other.returnType == returnType) &&
             (identical(other.returnTime, returnTime) ||
                 other.returnTime == returnTime) &&
+            (identical(other.haveStockPartitionGroup, haveStockPartitionGroup) ||
+                other.haveStockPartitionGroup == haveStockPartitionGroup) &&
+            (identical(other.haveStockPriority, haveStockPriority) ||
+                other.haveStockPriority == haveStockPriority) &&
+            (identical(other.stockPartitionGroupId, stockPartitionGroupId) ||
+                other.stockPartitionGroupId == stockPartitionGroupId) &&
             (identical(other.maxGp, maxGp) || other.maxGp == maxGp) &&
             (identical(other.minGap, minGap) || other.minGap == minGap) &&
             (identical(other.targetedGp, targetedGp) ||
@@ -1858,14 +1950,10 @@ class _$_VariantReadModel implements _VariantReadModel {
                 other.variantMeta == variantMeta) &&
             (identical(other.itemData, itemData) ||
                 other.itemData == itemData) &&
-            (identical(other.searchName, searchName) ||
-                other.searchName == searchName) &&
-            (identical(other.SalesUom, SalesUom) ||
-                other.SalesUom == SalesUom) &&
-            (identical(other.grossWeight, grossWeight) ||
-                other.grossWeight == grossWeight) &&
-            (identical(other.producedCountry, producedCountry) ||
-                other.producedCountry == producedCountry) &&
+            (identical(other.searchName, searchName) || other.searchName == searchName) &&
+            (identical(other.SalesUom, SalesUom) || other.SalesUom == SalesUom) &&
+            (identical(other.grossWeight, grossWeight) || other.grossWeight == grossWeight) &&
+            (identical(other.producedCountry, producedCountry) || other.producedCountry == producedCountry) &&
             (identical(other.netWeight, netWeight) || other.netWeight == netWeight) &&
             (identical(other.posName, posName) || other.posName == posName) &&
             (identical(other.displayname, displayname) || other.displayname == displayname) &&
@@ -1908,6 +1996,7 @@ class _$_VariantReadModel implements _VariantReadModel {
         variantFrameWorkId,
         uomId,
         inventoryId,
+        partitionGroupName,
         uomGroupName,
         reOrderPoint,
         siblingCode,
@@ -1930,6 +2019,9 @@ class _$_VariantReadModel implements _VariantReadModel {
         avgGp,
         returnType,
         returnTime,
+        haveStockPartitionGroup,
+        haveStockPriority,
+        stockPartitionGroupId,
         maxGp,
         minGap,
         targetedGp,
@@ -2004,6 +2096,8 @@ abstract class _VariantReadModel implements VariantReadModel {
           final String? uomId,
       @JsonKey(name: "inventory_id")
           final String? inventoryId,
+      @JsonKey(name: "partition_group_name")
+          final String? partitionGroupName,
       @JsonKey(name: "uom_group_name")
           final String? uomGroupName,
       @JsonKey(name: "reorder_point")
@@ -2048,6 +2142,12 @@ abstract class _VariantReadModel implements VariantReadModel {
           final String? returnType,
       @JsonKey(name: "return_time")
           final int? returnTime,
+      @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+          final bool? haveStockPartitionGroup,
+      @JsonKey(name: "have_stock_priority", defaultValue: false)
+          final bool? haveStockPriority,
+      @JsonKey(name: "stock_partition_group_id")
+          final int? stockPartitionGroupId,
       @JsonKey(name: "max_gp")
           final double? maxGp,
       @JsonKey(name: "min_gp")
@@ -2161,6 +2261,9 @@ abstract class _VariantReadModel implements VariantReadModel {
   @JsonKey(name: "inventory_id")
   String? get inventoryId;
   @override
+  @JsonKey(name: "partition_group_name")
+  String? get partitionGroupName;
+  @override
   @JsonKey(name: "uom_group_name")
   String? get uomGroupName;
   @override
@@ -2226,6 +2329,15 @@ abstract class _VariantReadModel implements VariantReadModel {
   @override
   @JsonKey(name: "return_time")
   int? get returnTime;
+  @override
+  @JsonKey(name: "have_stock_partition_group", defaultValue: false)
+  bool? get haveStockPartitionGroup;
+  @override
+  @JsonKey(name: "have_stock_priority", defaultValue: false)
+  bool? get haveStockPriority;
+  @override
+  @JsonKey(name: "stock_partition_group_id")
+  int? get stockPartitionGroupId;
   @override
   @JsonKey(name: "max_gp")
   double? get maxGp;
