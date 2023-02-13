@@ -70,9 +70,24 @@ Map<String, dynamic> _$$_CustomerIdListModelToJson(
 _$_BusinessData _$$_BusinessDataFromJson(Map<String, dynamic> json) =>
     _$_BusinessData(
       taxId: json['tax_id'] as String?,
+      buisnessMeta: json['business_meta'] == null
+          ? null
+          : BusinessMeta.fromJson(
+              json['business_meta'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_BusinessDataToJson(_$_BusinessData instance) =>
     <String, dynamic>{
       'tax_id': instance.taxId,
+      'business_meta': instance.buisnessMeta,
+    };
+
+_$_BusinessMeta _$$_BusinessMetaFromJson(Map<String, dynamic> json) =>
+    _$_BusinessMeta(
+      fullmae: json['fullname'] as String?,
+    );
+
+Map<String, dynamic> _$$_BusinessMetaToJson(_$_BusinessMeta instance) =>
+    <String, dynamic>{
+      'fullname': instance.fullmae,
     };

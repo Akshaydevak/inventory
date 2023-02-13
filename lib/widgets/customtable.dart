@@ -151,7 +151,7 @@ child: Container(
 padding: EdgeInsets.all(11),
 child:
 Text(widget.text??"",style: TextStyle(fontSize: 13.5),),
-height: 45),
+),
 ),
   ),
 );;

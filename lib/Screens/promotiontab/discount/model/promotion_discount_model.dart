@@ -110,6 +110,7 @@ class SaleLinesDiscount with _$SaleLinesDiscount{
   const factory SaleLinesDiscount({
     final int? id,
     final String? image,
+    final String? imageName,
     final String? title,
     final List<VariantsLinesDiscount>? variants,
 

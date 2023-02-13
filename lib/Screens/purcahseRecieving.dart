@@ -1147,7 +1147,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                             ),
                                                                             SizedBox(
                                                                               height: height *
-                                                                                  .226,
+                                                                                  .23,
                                                                             ),
 
                                                                             // SizedBox(height: height*.010,),
@@ -2284,9 +2284,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 ],
                                                                                 widths: {
                                                                                   0: FlexColumnWidth(2),
-                                                                                  1: FlexColumnWidth(4),
-                                                                                  2: FlexColumnWidth(4),
-                                                                                  3: FlexColumnWidth(3),
+                                                                                  1: FlexColumnWidth(3),
+                                                                                  2: FlexColumnWidth(3),
+                                                                                  3: FlexColumnWidth(4),
                                                                                   4: FlexColumnWidth(3),
                                                                                   5: FlexColumnWidth(3),
                                                                                   6: FlexColumnWidth(3),

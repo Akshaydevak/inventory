@@ -788,6 +788,8 @@ BusinessData _$BusinessDataFromJson(Map<String, dynamic> json) {
 mixin _$BusinessData {
   @JsonKey(name: "tax_id")
   String? get taxId => throw _privateConstructorUsedError;
+  @JsonKey(name: "business_meta")
+  BusinessMeta? get buisnessMeta => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -801,7 +803,11 @@ abstract class $BusinessDataCopyWith<$Res> {
           BusinessData value, $Res Function(BusinessData) then) =
       _$BusinessDataCopyWithImpl<$Res, BusinessData>;
   @useResult
-  $Res call({@JsonKey(name: "tax_id") String? taxId});
+  $Res call(
+      {@JsonKey(name: "tax_id") String? taxId,
+      @JsonKey(name: "business_meta") BusinessMeta? buisnessMeta});
+
+  $BusinessMetaCopyWith<$Res>? get buisnessMeta;
 }
 
 /// @nodoc
@@ -818,13 +824,30 @@ class _$BusinessDataCopyWithImpl<$Res, $Val extends BusinessData>
   @override
   $Res call({
     Object? taxId = freezed,
+    Object? buisnessMeta = freezed,
   }) {
     return _then(_value.copyWith(
       taxId: freezed == taxId
           ? _value.taxId
           : taxId // ignore: cast_nullable_to_non_nullable
               as String?,
+      buisnessMeta: freezed == buisnessMeta
+          ? _value.buisnessMeta
+          : buisnessMeta // ignore: cast_nullable_to_non_nullable
+              as BusinessMeta?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessMetaCopyWith<$Res>? get buisnessMeta {
+    if (_value.buisnessMeta == null) {
+      return null;
+    }
+
+    return $BusinessMetaCopyWith<$Res>(_value.buisnessMeta!, (value) {
+      return _then(_value.copyWith(buisnessMeta: value) as $Val);
+    });
   }
 }
 
@@ -836,7 +859,12 @@ abstract class _$$_BusinessDataCopyWith<$Res>
       __$$_BusinessDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: "tax_id") String? taxId});
+  $Res call(
+      {@JsonKey(name: "tax_id") String? taxId,
+      @JsonKey(name: "business_meta") BusinessMeta? buisnessMeta});
+
+  @override
+  $BusinessMetaCopyWith<$Res>? get buisnessMeta;
 }
 
 /// @nodoc
@@ -851,12 +879,17 @@ class __$$_BusinessDataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? taxId = freezed,
+    Object? buisnessMeta = freezed,
   }) {
     return _then(_$_BusinessData(
       taxId: freezed == taxId
           ? _value.taxId
           : taxId // ignore: cast_nullable_to_non_nullable
               as String?,
+      buisnessMeta: freezed == buisnessMeta
+          ? _value.buisnessMeta
+          : buisnessMeta // ignore: cast_nullable_to_non_nullable
+              as BusinessMeta?,
     ));
   }
 }
@@ -864,7 +897,9 @@ class __$$_BusinessDataCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_BusinessData implements _BusinessData {
-  const _$_BusinessData({@JsonKey(name: "tax_id") this.taxId});
+  const _$_BusinessData(
+      {@JsonKey(name: "tax_id") this.taxId,
+      @JsonKey(name: "business_meta") this.buisnessMeta});
 
   factory _$_BusinessData.fromJson(Map<String, dynamic> json) =>
       _$$_BusinessDataFromJson(json);
@@ -872,10 +907,13 @@ class _$_BusinessData implements _BusinessData {
   @override
   @JsonKey(name: "tax_id")
   final String? taxId;
+  @override
+  @JsonKey(name: "business_meta")
+  final BusinessMeta? buisnessMeta;
 
   @override
   String toString() {
-    return 'BusinessData(taxId: $taxId)';
+    return 'BusinessData(taxId: $taxId, buisnessMeta: $buisnessMeta)';
   }
 
   @override
@@ -883,12 +921,14 @@ class _$_BusinessData implements _BusinessData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BusinessData &&
-            (identical(other.taxId, taxId) || other.taxId == taxId));
+            (identical(other.taxId, taxId) || other.taxId == taxId) &&
+            (identical(other.buisnessMeta, buisnessMeta) ||
+                other.buisnessMeta == buisnessMeta));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, taxId);
+  int get hashCode => Object.hash(runtimeType, taxId, buisnessMeta);
 
   @JsonKey(ignore: true)
   @override
@@ -905,7 +945,9 @@ class _$_BusinessData implements _BusinessData {
 }
 
 abstract class _BusinessData implements BusinessData {
-  const factory _BusinessData({@JsonKey(name: "tax_id") final String? taxId}) =
+  const factory _BusinessData(
+          {@JsonKey(name: "tax_id") final String? taxId,
+          @JsonKey(name: "business_meta") final BusinessMeta? buisnessMeta}) =
       _$_BusinessData;
 
   factory _BusinessData.fromJson(Map<String, dynamic> json) =
@@ -915,7 +957,150 @@ abstract class _BusinessData implements BusinessData {
   @JsonKey(name: "tax_id")
   String? get taxId;
   @override
+  @JsonKey(name: "business_meta")
+  BusinessMeta? get buisnessMeta;
+  @override
   @JsonKey(ignore: true)
   _$$_BusinessDataCopyWith<_$_BusinessData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+BusinessMeta _$BusinessMetaFromJson(Map<String, dynamic> json) {
+  return _BusinessMeta.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BusinessMeta {
+  @JsonKey(name: "fullname")
+  String? get fullmae => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BusinessMetaCopyWith<BusinessMeta> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BusinessMetaCopyWith<$Res> {
+  factory $BusinessMetaCopyWith(
+          BusinessMeta value, $Res Function(BusinessMeta) then) =
+      _$BusinessMetaCopyWithImpl<$Res, BusinessMeta>;
+  @useResult
+  $Res call({@JsonKey(name: "fullname") String? fullmae});
+}
+
+/// @nodoc
+class _$BusinessMetaCopyWithImpl<$Res, $Val extends BusinessMeta>
+    implements $BusinessMetaCopyWith<$Res> {
+  _$BusinessMetaCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? fullmae = freezed,
+  }) {
+    return _then(_value.copyWith(
+      fullmae: freezed == fullmae
+          ? _value.fullmae
+          : fullmae // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_BusinessMetaCopyWith<$Res>
+    implements $BusinessMetaCopyWith<$Res> {
+  factory _$$_BusinessMetaCopyWith(
+          _$_BusinessMeta value, $Res Function(_$_BusinessMeta) then) =
+      __$$_BusinessMetaCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: "fullname") String? fullmae});
+}
+
+/// @nodoc
+class __$$_BusinessMetaCopyWithImpl<$Res>
+    extends _$BusinessMetaCopyWithImpl<$Res, _$_BusinessMeta>
+    implements _$$_BusinessMetaCopyWith<$Res> {
+  __$$_BusinessMetaCopyWithImpl(
+      _$_BusinessMeta _value, $Res Function(_$_BusinessMeta) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? fullmae = freezed,
+  }) {
+    return _then(_$_BusinessMeta(
+      fullmae: freezed == fullmae
+          ? _value.fullmae
+          : fullmae // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_BusinessMeta implements _BusinessMeta {
+  const _$_BusinessMeta({@JsonKey(name: "fullname") this.fullmae});
+
+  factory _$_BusinessMeta.fromJson(Map<String, dynamic> json) =>
+      _$$_BusinessMetaFromJson(json);
+
+  @override
+  @JsonKey(name: "fullname")
+  final String? fullmae;
+
+  @override
+  String toString() {
+    return 'BusinessMeta(fullmae: $fullmae)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_BusinessMeta &&
+            (identical(other.fullmae, fullmae) || other.fullmae == fullmae));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, fullmae);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BusinessMetaCopyWith<_$_BusinessMeta> get copyWith =>
+      __$$_BusinessMetaCopyWithImpl<_$_BusinessMeta>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_BusinessMetaToJson(
+      this,
+    );
+  }
+}
+
+abstract class _BusinessMeta implements BusinessMeta {
+  const factory _BusinessMeta(
+      {@JsonKey(name: "fullname") final String? fullmae}) = _$_BusinessMeta;
+
+  factory _BusinessMeta.fromJson(Map<String, dynamic> json) =
+      _$_BusinessMeta.fromJson;
+
+  @override
+  @JsonKey(name: "fullname")
+  String? get fullmae;
+  @override
+  @JsonKey(ignore: true)
+  _$$_BusinessMetaCopyWith<_$_BusinessMeta> get copyWith =>
       throw _privateConstructorUsedError;
 }

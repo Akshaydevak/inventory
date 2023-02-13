@@ -983,32 +983,19 @@ class _StableTableState extends State<StableTable> {
                               height: height * .030,
                             ),
 
-                            NewInputCard(controller: widget.customerId,
+                            NewInputCard(controller: widget.customerName,
                               readOnly: true,
                               icondrop:true,title: "Customer id",ontap: (){
                                 showDailogPopUp(
                                   context,
                                   TableConfigurePopup(
                                     type: "customerId_ListPopup", valueSelect: (CustomerIdListModel va){
-
                                     setState(() {
-
-                                      widget.customerName.text=va?.customerName??"";
+                                      widget.customerName.text=va?.customerName!=""&&va?.customerName!=null?va?.customerName??"":va.businessData?.buisnessMeta?.fullmae??"";
                                      widget.customerId.text=va?.id.toString()??"";
-
                                       customerUserCode=va?.customerUserCode??"";
-                                      print("usercode"+customerUserCode.toString());
-                                      print("xxxxxxxxxxxxxxx"+widget.customerId.text.toString());
                                       widget.trnNumber.text=va?.businessData?.taxId??"";
-                                      setState(() {
-
-                                      });
-
-
-                                      // onChange = true;
-                                      // orderType.text = va!;
                                     });
-
                                   },
                                   ),
 
@@ -1127,7 +1114,7 @@ class _StableTableState extends State<StableTable> {
                                 showDailogPopUp(
                                   context,
                                   TableConfigurePopup(
-                                    code: widget.customerId.text,
+                                    code:customerUserCode,
 
                                     id: int.tryParse(widget.customerId.text),
                                     type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
@@ -1186,7 +1173,7 @@ class _StableTableState extends State<StableTable> {
                             //   },
                             // ),
                             SizedBox(
-                              height: height * .172,
+                              height: height * .187,
                             ),
 
                             // NewInputCard(
@@ -1203,7 +1190,7 @@ class _StableTableState extends State<StableTable> {
                                 showDailogPopUp(
                                   context,
                                   TableConfigurePopup(
-                                    code: widget.customerId.text,
+                                    code: customerUserCode,
 
                                     type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
@@ -1369,7 +1356,7 @@ class _StableTableState extends State<StableTable> {
                                 controller: widget.totalPrice,
                                 title: "Total Price"),
                             SizedBox(
-                              height: height * .076,
+                              height: height * .085,
                             ),
                           ],
                         ))
@@ -2532,8 +2519,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                             });
                                           },
                                         ): textPadding(
-                                            table1?[i]
-                                                .taxableAmount
+                                            table1[i].discountType
                                                 .toString() ??
                                                 "",
                                             fontSize: 12,
@@ -2612,7 +2598,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           TableCellVerticalAlignment.middle,
                                           child: textPadding(
                                               table1?[i]
-                                                  .discountType
+                                                  .taxableAmount
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
@@ -3442,7 +3428,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                   boarType: "int",
 
                                   controller:contact ,
-                                  label: "Contact",
+                                  label: "Mobile No",
                                 ),
                                 PopUpInputField(
                                   controller:city ,

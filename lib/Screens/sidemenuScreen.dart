@@ -92,7 +92,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
               });
 
             },selected: selected5, size: .03,),
-            MenuIcon(iconurl: "asset/menuicon6.png",ontap: (){
+            MenuIcon(iconurl: "asset/logout.png",ontap: (){
 
                 showDailogPopUp(
                     context,

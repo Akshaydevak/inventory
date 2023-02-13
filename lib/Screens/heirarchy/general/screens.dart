@@ -416,13 +416,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
-                          NewInputCard(
-                              height: 90,
-                              maxLines: 3,
-                              controller: widget.discription, title: "Description"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
+
 
                           NewInputCard(controller: widget.baseuomNameController,
                             icondrop:true,
@@ -678,6 +672,14 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onCreate: true,
                               label: "Item Catalogue5"),
 
+                          SizedBox(
+                            height: height * .030,
+                          ),
+                          NewInputCard(
+                              height: 90,
+                              maxLines: 3,
+                              controller: widget.discription, title: "Description"),
+
 
 
 
@@ -728,7 +730,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           //   },
                           // ),
                           SizedBox(
-                            height: height * .030,
+                            height: height * .038,
                           ),
 
 
@@ -765,28 +767,6 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
-
-                          PopUpSwitchTile(
-                              value:widget.select?true:widget. active,
-                              title: "Is Active",
-                              onClick: (gg) {
-                                widget.activeChange(!widget.active);
-
-
-
-
-
-                                // extendedWarranty = gg;
-                                // widget.changeExtendedWarranty(gg);
-                                // onChangeExtWarranty = gg;
-                                setState(() {});
-                              }),
-
-                          SizedBox(
-                            height: height * .030,
-                          ),
-
-
 
                           FileUploadField(
                               fileName: widget.image3.text,
@@ -913,6 +893,25 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               },
                               onCreate: true,
                               label: "Item Catalogue3"),
+
+                          SizedBox(
+                            height: height * .030,
+                          ),
+                          PopUpSwitchTile(
+                              value:widget.select?true:widget. active,
+                              title: "Is Active",
+                              onClick: (gg) {
+                                widget.activeChange(!widget.active);
+
+
+
+
+
+                                // extendedWarranty = gg;
+                                // widget.changeExtendedWarranty(gg);
+                                // onChangeExtWarranty = gg;
+                                setState(() {});
+                              }),
 
                           SizedBox(
                             height: height * .030,

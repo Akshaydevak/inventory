@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/promotiontab/discount/cubit/read_promotion_discount/read_promotion_discount_cubit.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/saleread/promtion_sale_read_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/variantList/variant_list_promotion_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
@@ -9,6 +10,7 @@ import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/model/purchaseorder.dart';
@@ -36,6 +38,9 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
   String typeCode="";
   TextEditingController maximumInvenortry=TextEditingController();
   TextEditingController titleController=TextEditingController();
+  TextEditingController imageController=TextEditingController();
+  String  imageName="";
+  var     imageEncode ;
 
   bool isActive=false;
   Barcode barcode=Barcode();
@@ -109,7 +114,9 @@ print("vaaaaaaaaaaa");
       // child:
       Builder(
           builder: (context) {
-            return   BlocListener<ReadPromotionDiscountCubit, ReadPromotionDiscountState>(
+            return   MultiBlocListener(
+  listeners: [
+    BlocListener<ReadPromotionDiscountCubit, ReadPromotionDiscountState>(
               listener: (context, state) {
                 print("state++++++++++++++++++++++++++++++++");
                 state.maybeWhen(
@@ -126,7 +133,32 @@ print("vaaaaaaaaaaa");
                       });
                     });
               },
-              child: Column(
+),
+    BlocListener<PromotionImageCubit, PromotionImageState>(
+      listener: (context, state) {
+        print("postssssssss" + state.toString());
+        state.maybeWhen(orElse: () {
+          // context.
+        }, error: () {
+          context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+          if (data.data1) {
+            imageController.text = data.data2.toString();
+            // print("dataAkshay" +
+            //     imageContollercontroller.text.toString());
+
+            // context.showSnackBarSuccess(data.data2);
+
+          } else {
+            // context.showSnackBarError(data.data2);
+            // print(data.data1.toString());
+          }
+          ;
+        });
+      },
+    ),
+  ],
+  child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
@@ -349,7 +381,7 @@ print("vaaaaaaaaaaa");
                                   ),      TableCell(
                                       verticalAlignment: TableCellVerticalAlignment.middle,
 
-                                      child:textPadding(table[i].image??"")
+                                      child:textPadding(table[i].imageName??"")
 
 
 
@@ -487,8 +519,7 @@ print("vaaaaaaaaaaa");
                                             setState(() {
 
 
-                                              typeId =
-                                                  va.id.toString() ?? "";
+                                              typeId = va.id.toString() ?? "";
                                               // setState(() {});
 
                                               // onChange = true;
@@ -531,7 +562,7 @@ print("vaaaaaaaaaaa");
                                       integerOnly: true,
 
                                       onChanged: (p0) {
-                                    maximumInvenortry.text=maximumInvenortry.text;
+
                                         // print(Qty);
                                       },
                                       enable: true,
@@ -606,7 +637,57 @@ print("vaaaaaaaaaaa");
                               TableCell(
                                   verticalAlignment: TableCellVerticalAlignment.middle,
 
-                                  child:textPadding("")
+                                  child: FileUploadField(
+                                    tableCheck: true,
+
+                                      fileName:imageName,
+                                      fileUrl:imageName,
+                                      onCancel: (){
+
+                                        setState(() {
+                                          imageName="";
+                                          imageController.text="";
+                                        });
+
+                                      },
+                                      onChangeTap: (p0) {
+
+                                        // loading = true;
+                                        setState(() {});
+                                      },
+                                      onChange: (myFile) {
+                                      imageName=myFile?.fileName??"";
+                                        // Variable.mobileBannerImage = myFile.toUint8List();
+                                        //
+                                        var     imageEncode =
+                                        myFile.toBase64();
+                                        // widget.fileMobileNameCtrl.text =
+                                        //     myFile.fileName ?? "";
+                                        // if (Variable.bannerimage!.length <= 240000)
+
+                                        // else
+                                        //   context.showSnackBarError(
+                                        //       "Please upload Banner of size Lesser than 230kb");
+                                      },
+                                      onImageChange: (newFile) async {
+                                        // onChange=true;
+                                        // Variable.popUp = false;
+
+                                        if (newFile.length <= 150000) {
+                                          context.read<PromotionImageCubit>().postPromotionImage(Variable.imageName,  imageEncode);
+                                          // loading
+                                          //     ? showDailogPopUp(context, DialoguePopUp())
+                                          //     : Navigator.pop(context);
+                                          // context
+                                          //     .read<CreateWebImageCubit>()
+                                          //     .createMobImage();
+                                        } else
+                                          context.showSnackBarError(
+                                              "Please upload Image of size Lesser than 200kb");
+                                        setState(() {});
+                                      },
+                                      onCreate: true,
+                                      label: "Image"),
                               ),
                               TableCell(
                                 verticalAlignment:
@@ -636,19 +717,17 @@ print("vaaaaaaaaaaa");
                                           title: titleController.text,
                                           maximumQuantity:int.tryParse( maximumInvenortry.text),
                                           variants: variant,
-                                          isActive:isActive
-
-
-
+                                          image: imageController.text,
+                                          isActive:isActive,
                                         ));
                                         typeAllying="";
                                         titleController.clear();
+                                        imageName="";
+                                        imageController.clear();
                                         maximumInvenortry.clear();
-
                                         typeId="";
                                         variant.clear();
 ;
-
                                         // isActive=false;
                                         widget.updation(table);
                                       });
@@ -660,6 +739,19 @@ print("vaaaaaaaaaaa");
 
 
                       ],
+                      widths: {
+                        0: FlexColumnWidth(2),
+                        1: FlexColumnWidth(2),
+                        2: FlexColumnWidth(3),
+                        3: FlexColumnWidth(2),
+                        4: FlexColumnWidth(2),
+                        5: FlexColumnWidth(3),
+                        6: FlexColumnWidth(2),
+                        7: FlexColumnWidth(2),
+
+
+
+                      },
 
                     ),
 
@@ -667,7 +759,7 @@ print("vaaaaaaaaaaa");
                   ),
                 ],
               ),
-            );
+);
           }
       );
 

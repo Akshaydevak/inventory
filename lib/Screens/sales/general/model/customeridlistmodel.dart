@@ -52,10 +52,25 @@ class BusinessData with _$BusinessData {
 
 
     @JsonKey(name: "tax_id") final String? taxId,
+    @JsonKey(name: "business_meta") final BusinessMeta? buisnessMeta,
 
 
 
   }) = _BusinessData;
   factory BusinessData.fromJson(Map<String, dynamic> json) =>
       _$BusinessDataFromJson(json);
+}
+@freezed
+class BusinessMeta with _$BusinessMeta {
+  const factory BusinessMeta({
+
+
+    @JsonKey(name: "fullname") final String? fullmae,
+
+
+
+
+  }) = _BusinessMeta;
+  factory BusinessMeta.fromJson(Map<String, dynamic> json) =>
+      _$BusinessMetaFromJson(json);
 }

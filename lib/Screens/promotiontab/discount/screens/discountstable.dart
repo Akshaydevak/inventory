@@ -253,7 +253,7 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                               widget.image.text=myFile?.fileName??"";
                               // Variable.mobileBannerImage = myFile.toUint8List();
                               //
-                              var     imageEncode =
+                                   imageEncode =
                               myFile.toBase64();
                               // widget.fileMobileNameCtrl.text =
                               //     myFile.fileName ?? "";

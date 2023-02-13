@@ -1047,7 +1047,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     NewInputCard(
                                                       readOnly: true,
                                                         controller: grandTotalController, title: "Grand Total"),
-                                                    SizedBox(height: height*.130,),
+                                                    SizedBox(height: height*.135,),
 
 
                                                   ],

@@ -6998,6 +6998,8 @@ bool  recievlinequantityCheck=false;
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
   
                                                     child: UnderLinedInput(
+                                                      controller: focClearController,
+
   
   
   

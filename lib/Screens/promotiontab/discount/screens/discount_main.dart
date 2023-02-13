@@ -10,6 +10,7 @@ import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount
 import 'package:inventory/Screens/promotiontab/discount/screens/discountstable.dart';
 import 'package:inventory/Screens/promotiontab/discount/screens/segment_table.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/saleread/promtion_sale_read_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/Screens/promotiontab/sale/screens/segmenttable.dart';
@@ -177,6 +178,29 @@ offerGroupNameController.clear();
           } else {
             context.showSnackBarError(data.data2);
             print(data.data1);
+          }
+          ;
+        });
+      },
+    ),
+    BlocListener<PromotionImageCubit, PromotionImageState>(
+      listener: (context, state) {
+        print("postssssssss" + state.toString());
+        state.maybeWhen(orElse: () {
+          // context.
+        }, error: () {
+          context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+          if (data.data1) {
+            imageController.text = data.data2.toString();
+            // print("dataAkshay" +
+            //     imageContollercontroller.text.toString());
+
+            // context.showSnackBarSuccess(data.data2);
+
+          } else {
+            // context.showSnackBarError(data.data2);
+            // print(data.data1.toString());
           }
           ;
         });
@@ -453,9 +477,7 @@ offerGroupNameController.clear();
                               );
                               print(model);
 
-                              select?
-                              context.read<CreationPromotionDiscountCubit>().postCreatePromtionDiscount(model):
-                              context.read<CreationPromotionDiscountCubit>().getPromotionDiscountPatch(veritiaclid,model);
+                              select? context.read<CreationPromotionDiscountCubit>().postCreatePromtionDiscount(model): context.read<CreationPromotionDiscountCubit>().getPromotionDiscountPatch(veritiaclid,model);
 
 
 

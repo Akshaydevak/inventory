@@ -339,7 +339,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
 
             if(onChange==false){
               if(checkBoxLis.isNotEmpty==true)
-                for(var i=0;i<checkBoxLis.length;i++)
+                for(var i=0;i<checkBoxLis.length-1;i++)
                   selection.add(false);
 
             }

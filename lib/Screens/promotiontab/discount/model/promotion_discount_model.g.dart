@@ -165,6 +165,7 @@ _$_SaleLinesDiscount _$$_SaleLinesDiscountFromJson(Map<String, dynamic> json) =>
     _$_SaleLinesDiscount(
       id: json['id'] as int?,
       image: json['image'] as String?,
+      imageName: json['imageName'] as String?,
       title: json['title'] as String?,
       variants: (json['variants'] as List<dynamic>?)
           ?.map(
@@ -188,6 +189,7 @@ Map<String, dynamic> _$$_SaleLinesDiscountToJson(
     <String, dynamic>{
       'id': instance.id,
       'image': instance.image,
+      'imageName': instance.imageName,
       'title': instance.title,
       'variants': instance.variants,
       'type_id': instance.typeId,

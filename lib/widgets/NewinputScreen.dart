@@ -78,6 +78,7 @@ class _NewInputCardState extends State<NewInputCard> {
   bool show = false;
   bool onChange = false;
   bool limitOflength=false;
+  bool isClear=false;
   @override
   void initState() {
     super.initState();
@@ -257,8 +258,15 @@ class _NewInputCardState extends State<NewInputCard> {
 
                         child: InkWell(onTap:(){
                   widget.ontap!=null?widget.ontap!():null;
+                  if(widget.controller.text.isNotEmpty){
+                    isClear=true;
+                  }
+                  else
+                    isClear=false;
 
-                }, child: Icon(Icons.more_horiz_rounded)),
+
+
+                }, child: Icon(isClear?Icons.clear:Icons.more_horiz_rounded)),
                       ),
                     ):null,
                 labelStyle: const TextStyle(
@@ -349,8 +357,10 @@ class NewInputPopupField extends StatefulWidget {
   final TextEditingController contrrollerUnit;
   final String initialvalue;
   final String type;
+  final double fontsize;
   final Function(String?) onChange;
-  NewInputPopupField({ required this.label, required this.contrroller, required this.type,this.initialvalue="",
+  NewInputPopupField({ required this.label,this.fontsize=12,
+    required this.contrroller, required this.type,this.initialvalue="",
     required this.onChange, required this.contrrollerUnit,});
 
 
@@ -371,7 +381,7 @@ class _NewInputPopupFieldState extends State<NewInputPopupField> {
         children: [
           Text(
             widget.label,
-            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+            style: GoogleFonts.roboto(fontSize: widget.fontsize,fontWeight: FontWeight.w500),
           ),
           Container(
             // height: 70,
@@ -1155,6 +1165,8 @@ class FileUploadField extends StatefulWidget {
   final bool required;
   final bool isFile;
   final bool enable;
+  final bool tableCheck;
+  final double fontsize;
   final String fileName;
   const FileUploadField(
       {Key? key,
@@ -1162,6 +1174,8 @@ class FileUploadField extends StatefulWidget {
         this.row=false,
         this.fileUrl,
         this.onCancel,
+        this.fontsize=12,
+        this.tableCheck=false,
         this.onCreate = false,
         this.enable = false,
         this.isFile = false,
@@ -1278,23 +1292,23 @@ class _FileUploadFieldState extends State<FileUploadField> {
             ),
           ),
         )):
-      Padding(
-      padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
+      Container(
+      padding: widget.tableCheck==false?  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018):EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:[
 
-       Container(
+    widget.tableCheck==false?  Container(
 
             child: Text.rich(TextSpan(
                 text: widget.label,
-                style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                style: GoogleFonts.roboto(fontSize: widget.fontsize,fontWeight: FontWeight.w500),
                 children: widget.required
                     ? [
                   TextSpan(
                       text: "*", style: TextStyle(color: Palette.DANGER))
                 ]
-                    : []))),
+                    : []))):Container(),
           SizedBox(height:3),
      Container(
 
@@ -1340,14 +1354,21 @@ class _FileUploadFieldState extends State<FileUploadField> {
               EdgeInsets.symmetric(horizontal: 10, vertical: 18.7),
               isDense: true,
               hintStyle: TextStyle(fontSize: 10),
-              enabledBorder:OutlineInputBorder(
-                  borderRadius:BorderRadius.circular(2),
+              border: widget.tableCheck==true? InputBorder.none:OutlineInputBorder(
+                borderRadius:BorderRadius.circular(2),
+    borderSide: BorderSide(
 
-                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-              focusedBorder:   OutlineInputBorder(
-                  borderRadius:BorderRadius.circular(2),
-
-                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+    color:Colors.red,
+   ),
+    ),
+              // enabledBorder:OutlineInputBorder(
+              //     borderRadius:BorderRadius.circular(2),
+              //
+              //     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+              // focusedBorder:   OutlineInputBorder(
+              //     borderRadius:BorderRadius.circular(2),
+              //
+              //     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
               suffixIcon: IconButton(
                   onPressed: () {
                    print("aakkakakkakak");

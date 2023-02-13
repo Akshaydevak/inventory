@@ -1770,9 +1770,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //   },
                     //   onAddNew: () {},
                     // ),
-                    SizedBox(
-                      height: height * .030,
-                    ),
 
                     NewInputCard(
                       controller: widget.baseGroupName,
@@ -2181,7 +2178,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
 
                     SizedBox(
-                      height: height * .259,
+                      height: height * .289,
                     ),
                   ],
                 )),

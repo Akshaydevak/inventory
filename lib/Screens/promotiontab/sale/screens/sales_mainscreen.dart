@@ -481,6 +481,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                         TextWidget(text: "Based On Batch"),
                       ],
                     ),
+                    SizedBox(height: height*.02,),
                     ProductListGrowableTable(
                       key:_myWidgetState,
                       segmentList: segmentTable,

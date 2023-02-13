@@ -634,7 +634,7 @@ return data;
     if (code == "")
       path = "https://api-uat-inventory.sidrabazar.com/inventory-product/list-promotion-applying-on";
     else
-      path = ListApplyingNameApi + "?$code";
+      path = "https://api-uat-inventory.sidrabazar.com/inventory-product/list-promotion-applying-on" + "?$code";
     print(path);
     print("sasasasssssssssssssss"+model.toString());
 
@@ -698,7 +698,7 @@ return data;
     if (code == "")
       path = "https://api-uat-inventory.sidrabazar.com/inventory-product/list-variant-by-applying-on";
     else
-      path = ListApplyingNameApi + "?$code";
+      path = "https://api-uat-inventory.sidrabazar.com/inventory-product/list-variant-by-applying-on" + "?$code";
     print(path);
     print("sasasasssssssssssssss"+model.toString());
     try{

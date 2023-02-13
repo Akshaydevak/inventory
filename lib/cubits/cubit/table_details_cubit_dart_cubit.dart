@@ -11,8 +11,8 @@ class TableDetailsCubitDartCubit extends Cubit<TableDetailsCubitDartState> {
   TableDetailsCubitDartCubit() : super(TableDetailsCubitDartState.initial());
   final InventoryRepository repo = InventoryRepositoryImpl();
   Future getTableDetails(int? id) async {
-    emit(_Loading());
-    print("ssssssssssssssssssss");
+    emit(TableDetailsCubitDartState.initial());
+
 
 
     final result = await repo.getTableDetails(id);

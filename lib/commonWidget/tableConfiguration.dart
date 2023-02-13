@@ -798,7 +798,7 @@ class _variantTabalePopup extends State<variantTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonVisible: true,
+                buttonVisible: false,
                 buttonName: "",
                 onTap: () {},
                 isDirectCreate: true,
@@ -1117,7 +1117,7 @@ class _SegmentListTabalePopup extends State<SegmentListTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonVisible: true,
+                buttonVisible: false,
                 buttonName: "",
                 onTap: () {},
                 isDirectCreate: true,
@@ -3922,7 +3922,7 @@ class _SaleApplyingNamePeriodPopup extends State<SaleApplyingNamePeriodPopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "Offer Group",
+                label: "Sales Applying Name",
                 onApply: () {
                   costingTypeMethodeCheck = true;
                   showDailogPopUp(
@@ -3950,7 +3950,7 @@ class _SaleApplyingNamePeriodPopup extends State<SaleApplyingNamePeriodPopup> {
                 },
                 paginated:           list1 != null?
                 tablePagination(
-                () => context.read<ListOfferGroupCubit>().refresh(),
+                () => context.read<SaleApplyingNameCubit>().refresh(widget.model),
             back: list1?.previousUrl == null
             ? null
                 : () {
@@ -4548,7 +4548,7 @@ class _VariantListPopup extends State<VariantListPopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "Offer Group",
+                label: "Variant List",
                 onApply: () {
                   costingTypeMethodeCheck = true;
                   // showDailogPopUp(
@@ -10024,7 +10024,7 @@ class _customerIdListPopup extends State<customerIdListPopup> {
                                       ),
 
                                       tableHeadtext(
-                                        'customer Code',
+                                        'Customer Code',
                                         // textColor: Colors.black,
                                         // padding: EdgeInsets.all(7),
                                         // height: 46,
@@ -10087,14 +10087,15 @@ class _customerIdListPopup extends State<customerIdListPopup> {
                                                         customerName:table[i].customerName,
 
 
+
                                                     );
 
                                                     Navigator.pop(context);
 
                                                     widget.valueSelect(model);
                                                   },
-                                                  text:
-                                                      table[i].customerName ?? "",
+                                                  text:table[i].customerName!=''&&table[i].customerName!=null?table[i].customerName:
+                                                    table[i].businessData?.buisnessMeta?.fullmae??"",
 
                                                 )
                                               // Text(keys[i].value??"",)

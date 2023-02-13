@@ -21,7 +21,7 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
   bool isClossed=true;
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 2, vsync: this,initialIndex: Variable.subIndex[6]??0);
+    TabController _tabController = TabController(length: 3, vsync: this,initialIndex: Variable.subIndex[6]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return Stack(
@@ -109,6 +109,7 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
                                 tabs: [
                                   Text("Sale",style: TextStyle(color: Colors.black,fontSize: 13),),
                                   Text("Discount",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                  Text("Buy More ",style: TextStyle(color: Colors.black,fontSize: 13),),
 
 
                                 ]),

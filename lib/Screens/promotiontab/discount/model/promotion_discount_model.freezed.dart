@@ -1962,6 +1962,7 @@ SaleLinesDiscount _$SaleLinesDiscountFromJson(Map<String, dynamic> json) {
 mixin _$SaleLinesDiscount {
   int? get id => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
+  String? get imageName => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   List<VariantsLinesDiscount>? get variants =>
       throw _privateConstructorUsedError;
@@ -2003,6 +2004,7 @@ abstract class $SaleLinesDiscountCopyWith<$Res> {
   $Res call(
       {int? id,
       String? image,
+      String? imageName,
       String? title,
       List<VariantsLinesDiscount>? variants,
       @JsonKey(name: "type_id") int? typeId,
@@ -2033,6 +2035,7 @@ class _$SaleLinesDiscountCopyWithImpl<$Res, $Val extends SaleLinesDiscount>
   $Res call({
     Object? id = freezed,
     Object? image = freezed,
+    Object? imageName = freezed,
     Object? title = freezed,
     Object? variants = freezed,
     Object? typeId = freezed,
@@ -2055,6 +2058,10 @@ class _$SaleLinesDiscountCopyWithImpl<$Res, $Val extends SaleLinesDiscount>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageName: freezed == imageName
+          ? _value.imageName
+          : imageName // ignore: cast_nullable_to_non_nullable
               as String?,
       title: freezed == title
           ? _value.title
@@ -2123,6 +2130,7 @@ abstract class _$$_SaleLinesDiscountCopyWith<$Res>
   $Res call(
       {int? id,
       String? image,
+      String? imageName,
       String? title,
       List<VariantsLinesDiscount>? variants,
       @JsonKey(name: "type_id") int? typeId,
@@ -2151,6 +2159,7 @@ class __$$_SaleLinesDiscountCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? image = freezed,
+    Object? imageName = freezed,
     Object? title = freezed,
     Object? variants = freezed,
     Object? typeId = freezed,
@@ -2173,6 +2182,10 @@ class __$$_SaleLinesDiscountCopyWithImpl<$Res>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageName: freezed == imageName
+          ? _value.imageName
+          : imageName // ignore: cast_nullable_to_non_nullable
               as String?,
       title: freezed == title
           ? _value.title
@@ -2236,6 +2249,7 @@ class _$_SaleLinesDiscount implements _SaleLinesDiscount {
   const _$_SaleLinesDiscount(
       {this.id,
       this.image,
+      this.imageName,
       this.title,
       final List<VariantsLinesDiscount>? variants,
       @JsonKey(name: "type_id") this.typeId,
@@ -2258,6 +2272,8 @@ class _$_SaleLinesDiscount implements _SaleLinesDiscount {
   final int? id;
   @override
   final String? image;
+  @override
+  final String? imageName;
   @override
   final String? title;
   final List<VariantsLinesDiscount>? _variants;
@@ -2305,7 +2321,7 @@ class _$_SaleLinesDiscount implements _SaleLinesDiscount {
 
   @override
   String toString() {
-    return 'SaleLinesDiscount(id: $id, image: $image, title: $title, variants: $variants, typeId: $typeId, maximumQuantity: $maximumQuantity, typeApplying: $typeApplying, typeCode: $typeCode, offerGroupCode: $offerGroupCode, offerName: $offerName, offerProductGroupCode: $offerProductGroupCode, offerProductGroupId: $offerProductGroupId, typeData: $typeData, updateCheck: $updateCheck, isActive: $isActive)';
+    return 'SaleLinesDiscount(id: $id, image: $image, imageName: $imageName, title: $title, variants: $variants, typeId: $typeId, maximumQuantity: $maximumQuantity, typeApplying: $typeApplying, typeCode: $typeCode, offerGroupCode: $offerGroupCode, offerName: $offerName, offerProductGroupCode: $offerProductGroupCode, offerProductGroupId: $offerProductGroupId, typeData: $typeData, updateCheck: $updateCheck, isActive: $isActive)';
   }
 
   @override
@@ -2315,6 +2331,8 @@ class _$_SaleLinesDiscount implements _SaleLinesDiscount {
             other is _$_SaleLinesDiscount &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.image, image) || other.image == image) &&
+            (identical(other.imageName, imageName) ||
+                other.imageName == imageName) &&
             (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality().equals(other._variants, _variants) &&
             (identical(other.typeId, typeId) || other.typeId == typeId) &&
@@ -2346,6 +2364,7 @@ class _$_SaleLinesDiscount implements _SaleLinesDiscount {
       runtimeType,
       id,
       image,
+      imageName,
       title,
       const DeepCollectionEquality().hash(_variants),
       typeId,
@@ -2379,6 +2398,7 @@ abstract class _SaleLinesDiscount implements SaleLinesDiscount {
   const factory _SaleLinesDiscount(
       {final int? id,
       final String? image,
+      final String? imageName,
       final String? title,
       final List<VariantsLinesDiscount>? variants,
       @JsonKey(name: "type_id")
@@ -2411,6 +2431,8 @@ abstract class _SaleLinesDiscount implements SaleLinesDiscount {
   int? get id;
   @override
   String? get image;
+  @override
+  String? get imageName;
   @override
   String? get title;
   @override
