@@ -13,6 +13,7 @@ _$_OfferPeriodList _$$_OfferPeriodListFromJson(Map<String, dynamic> json) =>
       code: json['code'] as String?,
       title: json['title'] as String?,
       offerPeriodCode: json['offer_period_code'] as String?,
+      buyMoreCode: json['buy_more_code'] as String?,
     );
 
 Map<String, dynamic> _$$_OfferPeriodListToJson(_$_OfferPeriodList instance) =>
@@ -22,6 +23,7 @@ Map<String, dynamic> _$$_OfferPeriodListToJson(_$_OfferPeriodList instance) =>
       'code': instance.code,
       'title': instance.title,
       'offer_period_code': instance.offerPeriodCode,
+      'buy_more_code': instance.buyMoreCode,
     };
 
 _$_CreateOfferPeriod _$$_CreateOfferPeriodFromJson(Map<String, dynamic> json) =>
@@ -460,11 +462,14 @@ _$_VariantModel _$$_VariantModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int?,
       barcode: json['barcode'] as String?,
       variantId: json['variant_id'] as int?,
+      buyMoreId: json['buy_more_id'] as int?,
       variantCode: json['variant_code'] as String?,
       variantName: json['variant_name'] as String?,
       offerGroupCode: json['offer_group_code'] as String?,
+      buyMoreLineCode: json['buy_more_line_code'] as String?,
       offerName: json['offer_name'] as String?,
       typeData: json['type_data'] as String?,
+      updatedAt: json['updated_at'] as String?,
       updateCheck: json['updateCheck'] as bool? ?? false,
       isActive: json['is_active'] as bool? ?? false,
     );
@@ -474,11 +479,14 @@ Map<String, dynamic> _$$_VariantModelToJson(_$_VariantModel instance) =>
       'id': instance.id,
       'barcode': instance.barcode,
       'variant_id': instance.variantId,
+      'buy_more_id': instance.buyMoreId,
       'variant_code': instance.variantCode,
       'variant_name': instance.variantName,
       'offer_group_code': instance.offerGroupCode,
+      'buy_more_line_code': instance.buyMoreLineCode,
       'offer_name': instance.offerName,
       'type_data': instance.typeData,
+      'updated_at': instance.updatedAt,
       'updateCheck': instance.updateCheck,
       'is_active': instance.isActive,
     };

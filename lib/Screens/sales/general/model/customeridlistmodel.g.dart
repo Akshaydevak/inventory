@@ -36,6 +36,61 @@ Map<String, dynamic> _$$_CustomerIdCreationModelToJson(
       'tax_id': instance.taxId,
     };
 
+_$_PaymentListSalesModel _$$_PaymentListSalesModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_PaymentListSalesModel(
+      id: json['id'] as int?,
+      order: json['order'] as String?,
+      lname: json['lname'] as String?,
+      created: json['created'] as String?,
+      updated: json['updated'] as String?,
+      userCode: json['user_code'] as String?,
+      paymentMethod: json['payment_method'] as String?,
+      transactionCode: json['transaction_code'] as String?,
+      customerCode: json['customer_code'] as String?,
+      paymentStatus: json['payment_status'] as String?,
+      totalAmount: (json['total_amount'] as num?)?.toDouble(),
+      updateCheck: json['update_check'] as bool? ?? false,
+      postResponse: json['post_response'] == null
+          ? null
+          : PostResponse.fromJson(
+              json['post_response'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$_PaymentListSalesModelToJson(
+        _$_PaymentListSalesModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'order': instance.order,
+      'lname': instance.lname,
+      'created': instance.created,
+      'updated': instance.updated,
+      'user_code': instance.userCode,
+      'payment_method': instance.paymentMethod,
+      'transaction_code': instance.transactionCode,
+      'customer_code': instance.customerCode,
+      'payment_status': instance.paymentStatus,
+      'total_amount': instance.totalAmount,
+      'update_check': instance.updateCheck,
+      'post_response': instance.postResponse,
+    };
+
+_$_PostResponse _$$_PostResponseFromJson(Map<String, dynamic> json) =>
+    _$_PostResponse(
+      contact: json['contact'] as String?,
+      updated: json['updated'] as String?,
+      orderId: json['order_id'] as String?,
+      customerName: json['customer_name'] as String?,
+    );
+
+Map<String, dynamic> _$$_PostResponseToJson(_$_PostResponse instance) =>
+    <String, dynamic>{
+      'contact': instance.contact,
+      'updated': instance.updated,
+      'order_id': instance.orderId,
+      'customer_name': instance.customerName,
+    };
+
 _$_CustomerIdListModel _$$_CustomerIdListModelFromJson(
         Map<String, dynamic> json) =>
     _$_CustomerIdListModel(

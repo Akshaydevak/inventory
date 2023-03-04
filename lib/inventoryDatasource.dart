@@ -336,7 +336,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
     String path = inventory == "" || inventory == null
         ?code==null? inventoryLiveBaseUrl +
-            "inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId":inventoryLiveBaseUrl +"inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"+"?"+code.toString()
+            "inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId":inventoryLiveBaseUrl +"inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"+"&&"+code.toString()
         :code==null? inventoryLiveBaseUrl +
             "inventory-product/list-variant-by-inventory/$inventory":inventoryLiveBaseUrl +"inventory-product/list-variant-by-inventory/$inventory"+"?"+code.toString();
 
@@ -921,13 +921,18 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   Future<PaginatedResponse<List<OrderedPersonModel>>> getOrderedPerson(String ? code) async {
     print("orderedPerson3");
     print("token" + Variable.token.toString());
-
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = requestFormOderPerson;
+    else
+      path = requestFormOderPerson + "?$code";
     UserPreferences().getUser().then((value) {
       token = value.token;
       print("token is here222 exist" + token.toString());
     });
 
-    String path =requestFormOderPerson;
+
 
     print(path);
 

@@ -33,7 +33,7 @@ const salesReturnBaseUrl = "https://api-invtry-sales-return.hilalcart.com/";
 const salesReturnLiveBaseUrl = "https://api-uat-inv-sales-return.sidrabusiness.com/";
 
 
-
+const payMentBaseUrl = "https://api-uat-payments.sidrabazar.com/";
 
 
 
@@ -86,13 +86,14 @@ const invoiceVerticalList =
     purchaseOrderLiveBaseUrl + "purchase-order/list-purchase-order-for-invoice-posting/";
 
 //purchase return+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const purchaseReturnGeneralPost =
-    purchasereturnLiveBaseUrl + "purchase-return/create-purchase-return";
-const purchaseReturnPurchaseInvoiceidReadApi =
-    purchaseOrderLiveBaseUrl + "purchase-order/list-purchase-invoice-for-purchase-return/";
+const purchaseReturnGeneralPost = purchasereturnLiveBaseUrl + "purchase-return/create-purchase-return";
+const payMentListApi = payMentBaseUrl + "payment-general/payment-methods";
+const payMentPostApi = payMentBaseUrl + "payment-general/payment-transaction";
+const payMentPatchApi = payMentBaseUrl + "payment-general/payment-transaction";
+const purchaseReturnPurchaseInvoiceidReadApi = purchaseOrderLiveBaseUrl + "purchase-order/list-purchase-invoice-for-purchase-return/";
 const purchaseReturnInvoiceRead = purchasereturnLiveBaseUrl + "purchase-return-invoice/read-purchase-return-order-for-invoice/";
 const purchaseReturnInvoicelPost = purchasereturnLiveBaseUrl + "purchase-return-invoice/create-purchase-return-invoice";
-const purchaseReturnInvoiceIdRead = purchasereturnLiveBaseUrl + "purchase-order/read-purchase-invoice-for-purchase-return/";
+const purchaseReturnInvoiceIdRead = purchaseOrderLiveBaseUrl + "purchase-order/read-purchase-invoice-for-purchase-return/";
 
 const purchaseReturnGeneralreadApi = purchasereturnLiveBaseUrl + "purchase-return/read-purchase-return/";
 const purchaseReturnGeneralPatchApi = purchasereturnLiveBaseUrl + "purchase-return/read-purchase-return/";
@@ -104,16 +105,17 @@ const purchaseReturnGeneralVerticalListApi =
 //sales general..........................................
 const salesOederGeneralPost = salesOrderLiveBaseUrl + "sales-order/create-sales-order";
 const listsalesOederGeneral = salesOrderLiveBaseUrl + "sales-order/list-sales-order/";
-const salesGeneralOrderType =
-    salesOrderLiveBaseUrl + "sales-order/create-sales-order";
-const salesGeneralVerticalList =
-    salesOrderLiveBaseUrl + "sales-order/list-sales-order/";
+const salesGeneralOrderType = salesOrderLiveBaseUrl + "sales-order/create-sales-order";
+const salesGeneralVerticalList = salesOrderLiveBaseUrl + "sales-order/list-sales-order/";
 const salesGeneralPost = salesOrderLiveBaseUrl + "sales-order/create-sales-order";
 const salesGeneralRead = salesOrderLiveBaseUrl + "sales-order/read-sales-order/";
-const salesGeneralDeleateApi =
-    salesOrderLiveBaseUrl + "sales-order/read-sales-order/";
-const salesGeneralPatchApi =
-    salesOrderLiveBaseUrl + "sales-order/read-sales-order/";
+const salesGeneralDeleateApi = salesOrderLiveBaseUrl + "sales-order/read-sales-order/";
+const salesGeneralPatchApi = salesOrderLiveBaseUrl + "sales-order/read-sales-order/";
+const paymetPatchListApi = payMentBaseUrl + "payment-general/payment-transaction-list";
+
+
+
+
 //sales invoice tab*************************************
 const salesInvoiceReadApi = salesOrderLiveBaseUrl + "sales-invoice/read-sales-order-for-invoice/";
 const salesInvoicePostApi = salesOrderLiveBaseUrl + "sales-invoice/create-sales-invoice";
@@ -122,8 +124,10 @@ const salesReurnVertcalListApi = salesReturnLiveBaseUrl + "sales-return/list-sal
 const shippingAddressCreationApi = userLiveBaseUrl + "user-general_admin_address/create";
 const salesReurnPostApi = salesReturnLiveBaseUrl + "sales-return/create-sales-return";
 const listsalesReurnApi = salesReturnLiveBaseUrl + "sales-return/list-sales-return-by-inventory/";
-const salesInvoiceCodeApi =
-    salesOrderLiveBaseUrl + "sales-invoice/list-sales-invoice/";
+const salesInvoiceCodeApi = salesOrderLiveBaseUrl + "sales-invoice/list-sales-invoice/";
+const purchaseOrderPaymentPostSuccessApi = purchaseOrderLiveBaseUrl + "purchase-order/order-edit-after-payment";
+const salePaymentPostSuccessApi = salesOrderLiveBaseUrl + "sales-invoice/order-edit-after-payment";
+
 const salesInvoiceRradApi =
     salesOrderLiveBaseUrl + "sales-invoice/read-sales-invoice-for-sales-return/";
 const salesReturnInvoiceRradApi =
@@ -163,10 +167,8 @@ const patchStaticApi = inventoryLiveBaseUrl + "inventory-product/patch-static-gr
 const uomGroupCreateApi = inventoryLiveBaseUrl + "inventory-product/create-uom-group";
 const listUomGroupApi = inventoryLiveBaseUrl + "inventory-product/list-uom-group";
 const readUomGroupApi = inventoryLiveBaseUrl + "inventory-product/patch-uom-group/";
-const deleteUomGroupApi =
-    inventoryLiveBaseUrl + "inventory-product/patch-uom-group/";
-const patchUomGroupApi =
-    inventoryLiveBaseUrl + "inventory-product/patch-uom-group/";
+const deleteUomGroupApi = inventoryLiveBaseUrl + "inventory-product/patch-uom-group/";
+const patchUomGroupApi = inventoryLiveBaseUrl + "inventory-product/patch-uom-group/";
 const listCategoryGroupApi =
     inventoryLiveBaseUrl + "inventory-product/list-category-by-division/";
 const listMaterialGroupApi =
@@ -365,8 +367,16 @@ const deactivateOfferByVariantPostApi = promotionLiveBaseUrl + "buy-more/deactiv
 
 //Discount ************************************
 const listDiscountVerticalListApi = promotionLiveBaseUrl +"discount/list-discount/";
+const listDiscountVariantByGroupCodeApi = promotionLiveBaseUrl +"discount/list-products-by-group-code/";
 const readPatchPromotionDiscountApi = promotionLiveBaseUrl + "discount/read-patch-delete-discount/";
 const deletePromotionDiscountApi = promotionLiveBaseUrl + "discount/create-discount";
+
+
+//buyMore******************
+const createPromotionBuyMore = promotionLiveBaseUrl +"buy-more/create-buy-more";
+const listBuyMoreVerticalListApi = promotionLiveBaseUrl +"buy-more/list-buy-more-by-inventory/";
+const readBuyMoreApi = promotionLiveBaseUrl +"buy-more/read-buy-more/";
+
 
 
 

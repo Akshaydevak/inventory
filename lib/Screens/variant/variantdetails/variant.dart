@@ -674,7 +674,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                         Timer(Duration(seconds: 5), () {
                           setState(() {
                             onChange=true;
-                            context.read<ListvraiantCubit>().getVariantList();
+                            // context.read<ListvraiantCubit>().getVariantList();
                             // select=false;
                           });
                         });
@@ -948,91 +948,91 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                       builder: (context) {
                         return Scaffold(
                             backgroundColor: Pellet.bagroundColor,
-                            body: SingleChildScrollView(
-                              child: IntrinsicHeight(
-                                  child: Row(
-                                    children: [
-                                      VariantVerticalList(
-                                        list: list,
-                                        select: select,
-                                        suffixIconCheck: suffixIconCheck,
+                            body: IntrinsicHeight(
+                                child: Row(
+                                  children: [
+                                    VariantVerticalList(
+                                      list: list,
+                                      select: select,
+                                      suffixIconCheck: suffixIconCheck,
 
 
-                                        selectedVertical: selectedVertical,
-                                        itemsearch: itemsearch,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
 
-                                        ontap: (int index) {
-                                          onChange=true;
-                                          setState(() {
+                                      ontap: (int index) {
+                                        onChange=true;
+                                        setState(() {
 
-                                            selectedVertical = index;
+                                          selectedVertical = index;
 
-                                            select=false;
-                                            clear();
-                                            exportCheck=false;
-                                            // addNew=true;
+                                          select=false;
+                                          clear();
+                                          exportCheck=false;
+                                          // addNew=true;
 
-                                            // updateCheck=false;
-                                            print("rijina"+result[index].id.toString());
-
-
-                                            veritiaclid = result[index].id;
-                                            veritiaclString = result[index].code;
-                                            Variable.variantCode=result[index].code.toString();
-                                            newWeight==null?   weightUnit= TextEditingController(text: "Kilogram"):newWeight;
-                                            newWidth==null?   widthUnit= TextEditingController(text: "Centimeter"):newWidth;
-                                            newHeight==null?   heightUnit= TextEditingController(text: "Centimeter"):newHeight;
-                                            newLength==null?   lengthUnit= TextEditingController(text: "Centimeter"):newLength;
-                                            // clear();
-                                            // select=true;
-                                            //
-                                            //
+                                          // updateCheck=false;
+                                          print("rijina"+result[index].id.toString());
 
 
+                                          veritiaclid = result[index].id;
+                                          veritiaclString = result[index].code;
+                                          Variable.variantCode=result[index].code.toString();
+                                          newWeight==null?   weightUnit= TextEditingController(text: "Kilogram"):newWeight;
+                                          newWidth==null?   widthUnit= TextEditingController(text: "Centimeter"):newWidth;
+                                          newHeight==null?   heightUnit= TextEditingController(text: "Centimeter"):newHeight;
+                                          newLength==null?   lengthUnit= TextEditingController(text: "Centimeter"):newLength;
+                                          // clear();
+                                          // select=true;
+                                          //
+                                          //
 
 
-                                            context.read<VariantreadCubit>().getVariantRead(veritiaclid!);
 
 
-                                          });
-                                        },
-                                        search: (String va) {
-                                          print(va);
+                                          context.read<VariantreadCubit>().getVariantRead(veritiaclid!);
+
+
+                                        });
+                                      },
+                                      search: (String va) {
+                                        print(va);
+                                        context
+                                            .read<ListvraiantCubit>()
+                                            .getSearchVariantList(va);
+                                        suffixIconCheck=true;
+                                        if (va == "") {
                                           context
                                               .read<ListvraiantCubit>()
-                                              .getSearchVariantList(va);
-                                          suffixIconCheck=true;
-                                          if (va == "") {
-                                            context
-                                                .read<ListvraiantCubit>()
-                                                .getVariantList();
-                                            suffixIconCheck=false;
-                                          }
-                                        },
-                                        result: result,
-                                        child:           tablePagination(
-                                              () => context
+                                              .getVariantList();
+                                          suffixIconCheck=false;
+                                        }
+                                      },
+                                      result: result,
+                                      child:           tablePagination(
+                                            () => context
+                                            .read<ListvraiantCubit>()
+                                            .refresh(),
+                                        back: list?.previousUrl == null
+                                            ? null
+                                            : () {
+                                          context
                                               .read<ListvraiantCubit>()
-                                              .refresh(),
-                                          back: list?.previousUrl == null
-                                              ? null
-                                              : () {
-                                            context
-                                                .read<ListvraiantCubit>()
-                                                .previuosslotSectionPageList();
-                                          },
-                                          next: list?.nextPageUrl == null
-                                              ? null
-                                              : () {
-                                            // print(data.nextPageUrl);
-                                            context
-                                                .read<ListvraiantCubit>()
-                                                .nextslotSectionPageList();
-                                          },
-                                        ),
-
+                                              .previuosslotSectionPageList();
+                                        },
+                                        next: list?.nextPageUrl == null
+                                            ? null
+                                            : () {
+                                          // print(data.nextPageUrl);
+                                          context
+                                              .read<ListvraiantCubit>()
+                                              .nextslotSectionPageList();
+                                        },
                                       ),
-                                      Expanded(child: Column(
+
+                                    ),
+                                    Expanded(child: SingleChildScrollView(
+                                      child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(height: height * .073,),
@@ -1801,10 +1801,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                           SizedBox(height: 20,)
 
                                         ],
-                                      ))
-                                    ],
-                                  )
-                              ),
+                                      ),
+                                    ))
+                                  ],
+                                )
                             )
 
                         );

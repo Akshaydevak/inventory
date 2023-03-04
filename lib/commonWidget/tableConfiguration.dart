@@ -69,11 +69,13 @@ class TableConfigurePopup extends StatelessWidget {
   final String? inventory;
   final String? vendorId;
   final dynamic? object;
+  final List<dynamic>? list;
 
   TableConfigurePopup(
       {Key? key,
       this.apiType,
       this.inventory = "",
+        this.list,
         this.vendorId,
         this.code,
         this.object,
@@ -85,7 +87,7 @@ class TableConfigurePopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (type) {
-      case "division-TablePopup":
+      case "division_TablePopup":
         {
           data = divisionTabalePopup(
             type: type,
@@ -107,6 +109,7 @@ class TableConfigurePopup extends StatelessWidget {
         {
           data = SegmentListTabalePopup(
             vendorId: vendorId,
+            list:list,
             inventory: inventory,
             type: type,
             valueSelect: valueSelect,
@@ -475,7 +478,8 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
             double h = MediaQuery.of(context).size.height;
             double w = MediaQuery.of(context).size.width;
             return AlertDialog(
-              content: PopUpHeader(
+              content:
+              PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
                 buttonName: "ADD NEW",
@@ -851,32 +855,42 @@ class _variantTabalePopup extends State<variantTabalePopup> {
                   child: Column(
 
                     children: [
-                      // Container(
-                      //     // margin: EdgeInsets.all(5),
-                      //     child: SearchTextfiled(
-                      //       color: Color(0xffFAFAFA),
-                      //       h: 40,
-                      //       suffixIconCheck: suffixIconCheck,
-                      //       w: MediaQuery.of(context).size.width/2.11,
-                      //       hintText: "Search...",
-                      //       ctrlr: searchContoller,
-                      //       onChanged: (va) {
-                      //         print("searching case" + va.toString());
-                      //         context
-                      //             .read<DevisionListCubit>()
-                      //             .searchDevisionList(searchContoller.text);
-                      //         suffixIconCheck=true;
-                      //         if (va == "") {
-                      //           context
-                      //               .read<DevisionListCubit>()
-                      //               .getDevisionList();
-                      //           suffixIconCheck=false;
-                      //         }
-                      //       },
-                      //     )),
-                      // SizedBox(
-                      //   height: h * .005,
-                      // ),
+                      SizedBox(height: 8,),
+                      Container(
+                          // margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            suffixIconCheck: suffixIconCheck,
+                            w: MediaQuery.of(context).size.width/2.11,
+                            hintText: "Search...",
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              widget.inventory == ""
+                                  ? context
+                                  .read<VariantIdCubitDartCubit>()
+                                  .getSearchCustomList(va,vendorId: widget.vendorId)
+                                  : context
+                                  .read<VariantIdCubitDartCubit>()
+                                  .getSearchCustomList(va,inventory: widget.inventory);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                widget.inventory == ""
+                                    ? context
+                                    .read<VariantIdCubitDartCubit>()
+                                    .getVariantId(vendorId: widget.vendorId)
+                                    : context
+                                    .read<VariantIdCubitDartCubit>()
+                                    .getVariantId(inventory: widget.inventory);
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         // width: w/7,
@@ -1039,13 +1053,14 @@ class SegmentListTabalePopup extends StatefulWidget {
   final Function valueSelect;
   final String? inventory;
   final String? vendorId;
+  final List<dynamic>? list;
 
   SegmentListTabalePopup({
     Key? key,
     required this.type,
     this.inventory = "",
     this.vendorId,
-    required this.valueSelect,
+    required this.valueSelect, this.list,
   }) : super(key: key);
 
   @override
@@ -1104,9 +1119,58 @@ class _SegmentListTabalePopup extends State<SegmentListTabalePopup> {
                 print("error");
               },
               success: (list) {
-                print("Welcome" + list.toString());
-                table = list.data;
-                list1 = list;
+
+                  print("Welcome" + widget.  list.toString());
+                  table = list.data;
+                  List<String?> list1 = [];
+                  int length = table.length;
+                  // list=data.orderTypes;
+                  for (var i = 0; i < length; i++) {
+                    list1.add(list.data[i].code);
+                  }
+                  print(list1);
+                  for(var i=0;i<list1.length;i++){
+                    if( widget.  list?.isNotEmpty==true){
+                      widget.  list!.forEach((n) {
+
+                        if(list1[i]==n.segmentCode){
+
+                          list1.removeAt(i);
+                          table.removeAt(i);
+                          print("the able is"+table.toString());
+                        }
+
+                      });
+                    }
+
+                  }
+
+
+
+
+
+
+
+                //
+                // print("the real table" +table.toString());
+                // for(var i =0;i<table.length;i++){
+                //   if( widget.  list?.isNotEmpty==true){
+                //    for(var j=0;j<widget.list!.length;j++){
+                //      print(table[i].code);
+                //
+                //      if(table[i].code==widget.  list?[j].segmentCode){
+                //        table.removeAt(i);
+                //
+                //
+                //      }
+                //
+                //
+                //    }
+                //
+                //   }
+                //
+                // }
+                // list1 = list;
               });
         },
         builder: (context, state) {
@@ -1163,6 +1227,7 @@ class _SegmentListTabalePopup extends State<SegmentListTabalePopup> {
                   child: Column(
 
                     children: [
+                      SizedBox(height: 10,),
                       // Container(
                       //     // margin: EdgeInsets.all(5),
                       //     child: SearchTextfiled(
@@ -1474,6 +1539,7 @@ class _SearchTabalePopup extends State<SearchTabalePopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 8,),
                       Container(
                           margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -1487,9 +1553,7 @@ class _SearchTabalePopup extends State<SearchTabalePopup> {
 
                             },
                           )),
-                      SizedBox(
-                        height: h * .005,
-                      ),
+                      SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
@@ -1775,6 +1839,7 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 8,),
                       Container(
                           margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -1797,9 +1862,7 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
                               }
                             },
                           )),
-                      SizedBox(
-                        height: h * .005,
-                      ),
+                      SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
@@ -2089,6 +2152,7 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                       // height: 500,
                       child: Column(
                         children: [
+                          SizedBox(height: 8,),
                           // Container(
                           //     margin: EdgeInsets.all(5),
                           //     child: SearchTextfiled(
@@ -2434,6 +2498,7 @@ class _UOMPopup extends State<UOMPopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 8,),
                       Container(
                           margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -2456,9 +2521,7 @@ class _UOMPopup extends State<UOMPopup> {
                               }
                             },
                           )),
-                      SizedBox(
-                        height: h * .005,
-                      ),
+                      SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
@@ -3029,6 +3092,7 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 8,),
                       Container(
                           margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -3051,9 +3115,7 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
                               }
                             },
                           )),
-                      SizedBox(
-                        height: h * .005,
-                      ),
+                      SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
@@ -3340,6 +3402,7 @@ class _OfferPeriodPopup extends State<OfferPeriodPopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 8,),
                       Container(
                           margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -3362,9 +3425,7 @@ class _OfferPeriodPopup extends State<OfferPeriodPopup> {
                               }
                             },
                           )),
-                      SizedBox(
-                        height: h * .005,
-                      ),
+                      SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
@@ -3657,6 +3718,7 @@ class _OfferGroupPeriodPopup extends State<OfferGroupPeriodPopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 8,),
                       Container(
                           margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -3679,9 +3741,7 @@ class _OfferGroupPeriodPopup extends State<OfferGroupPeriodPopup> {
                               }
                             },
                           )),
-                      SizedBox(
-                        height: h * .005,
-                      ),
+                      SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
@@ -3971,6 +4031,7 @@ class _SaleApplyingNamePeriodPopup extends State<SaleApplyingNamePeriodPopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 8,),
                       Container(
                           margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -3980,22 +4041,34 @@ class _SaleApplyingNamePeriodPopup extends State<SaleApplyingNamePeriodPopup> {
                             suffixIconCheck: suffixIconCheck,
                             ctrlr: searchContoller,
                             onChanged: (va) {
-                              print("searching case" + va.toString());
-                              context
-                                  .read<SaleApplyingNameCubit>()
-                                  .searchSaleAppyingNameList(widget.model,searchContoller.text);
-                              suffixIconCheck=true;
+
                               if (va == "") {
+
                                 context
                                     .read<SaleApplyingNameCubit>()
-                                    .getSaleApplyingName(widget.model);
-                                suffixIconCheck=false;
+                                    .getSaleApplyingName(widget.model);;
+                                // suffixIconCheck=false;
+                                // suffixIconCheck=false;
                               }
+                              else{
+                                salesOrderNamePostModel? obj=salesOrderNamePostModel(
+                                  searchElemet: va,
+                                  inventoryId: Variable.inventory_ID,
+                                  segmentList:widget.model.segmentList,
+                                  typeAllyingOn:widget.model.typeAllyingOn,
+                                  id: widget.model.id,
+                                  type: widget.model.type
+
+                                );
+
+                                context
+                                    .read<SaleApplyingNameCubit>()
+                                    .getSaleApplyingName(obj);
+                              }
+
                             },
                           )),
-                      SizedBox(
-                        height: h * .005,
-                      ),
+                    SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
@@ -4284,6 +4357,7 @@ class _DiscountTypeidPopup extends State<DiscountTypeidPopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 8,),
                       Container(
                           margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -4306,9 +4380,7 @@ class _DiscountTypeidPopup extends State<DiscountTypeidPopup> {
                               }
                             },
                           )),
-                      SizedBox(
-                        height: h * .005,
-                      ),
+                      SizedBox(height: 8,),
                       Container(
                         height: h / 1.86,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
@@ -4609,7 +4681,10 @@ class _VariantListPopup extends State<VariantListPopup> {
                               print("searching case" + va.toString());
                               context
                                   .read<VariantListPromotionCubit>()
-                                  .searchVariantList(widget.model,searchContoller.text);
+                                  .getVariantList(widget.model.copyWith(searchElement: va));
+                              // context
+                              //     .read<VariantListPromotionCubit>()
+                              //     .searchVariantList(widget.model,searchContoller.text);
                               suffixIconCheck=true;
                               if (va == "") {
                                 context
@@ -4665,7 +4740,23 @@ class _VariantListPopup extends State<VariantListPopup> {
                                   ),
 
                                   tableHeadtext(
-                                    'Variant List',
+                                    'Variant Code',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  tableHeadtext(
+                                    'Variant Name',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  tableHeadtext(
+                                    'Barcode',
                                     // textColor: Colors.black,
                                     // padding: EdgeInsets.all(7),
                                     // height: 44,
@@ -4731,7 +4822,55 @@ class _VariantListPopup extends State<VariantListPopup> {
 
                                                 widget.valueSelect(model);
                                               },
+                                              text: table[i].variantCode ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                SaleLines model =
+                                                SaleLines(
+                                                  id: table[i].id,
+                                                    barcode: table[i].barcode,
+                                                  variantName: table[i].variantName,
+
+                                                  variantCode: table[i].variantCode
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
                                               text: table[i].variantName ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                SaleLines model =
+                                                SaleLines(
+                                                  id: table[i].id,
+                                                    barcode: table[i].barcode,
+                                                  variantName: table[i].variantName,
+
+                                                  variantCode: table[i].variantCode
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].barcode?.barcodeNumber ??
                                                           ""),
 
                                             // Text(keys[i].value??"",)
@@ -4742,7 +4881,9 @@ class _VariantListPopup extends State<VariantListPopup> {
                             ],
                             widths: {
                               0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(5),
+                              1: FlexColumnWidth(3),
+                              2: FlexColumnWidth(3),
+                              3: FlexColumnWidth(3),
                             },
                           ),
                         ),
@@ -5780,7 +5921,7 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                   //
                   // setState(() {});
                 },
-                paginated:                       list1 != null?
+                paginated:list1 != null?
                 tablePagination(
                 () => context.read<VariantselectionCubit>().refresh(),
             back: list1?.previousUrl == null
@@ -6354,6 +6495,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                   showDailogPopUp(
                     context,
                     ConfigurePopup(
+                      veritiaclid:  widget.id,
                       type: "category_group",
                     ),
                   );
@@ -6382,7 +6524,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                 : () {
             context
                 .read<CategorylistCubit>()
-                .previuosslotSectionPageList(id: widget.id);
+                .previuosslotSectionPageList(type:widget.apiType ?? "",id: widget.id);
             },
             next: list1.nextPageUrl == null
             ? null
@@ -6390,7 +6532,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
             // print(data.nextPageUrl);
             context
                 .read<CategorylistCubit>()
-                .nextslotSectionPageList(id:widget.id);
+                .nextslotSectionPageList(type:widget.apiType ?? "",id:widget.id);
             },
             ):Container(),
                 dataField: Container(
@@ -6409,7 +6551,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                               print("searching case" + va.toString());
                               context
                                   .read<CategorylistCubit>()
-                                  .searchCategoryist(searchContoller.text,id: widget.id);
+                                  .searchCategoryist(searchContoller.text,type: widget.apiType ?? "",id: widget.id);
                               suffixIconCheck=true;
                               if (va == "") {
                                 context
@@ -6666,6 +6808,7 @@ bool  suffixIconCheck=false;
                   showDailogPopUp(
                     context,
                     ConfigurePopup(
+                      veritiaclid: widget.id,
                       type: "Subcategory_group",
                     ),
                   );
@@ -9564,14 +9707,12 @@ class _RequestFormCstomGroupListPopup extends State<RequestFormCstomGroupListPop
                             ctrlr: searchContoller,
                             onChanged: (va) {
                               print("searching case" + va.toString());
-                              context
-                                  .read<ShippingadreesCubit>()
-                                  .getSearchCustomList(searchContoller.text,widget.code);
+                              context.read<OrderedpersonCubit>().getSearchOrderedPersonList(searchContoller.text);
                               suffixIconCheck=true;
                               if (va == "") {
                                 context
-                                    .read<ShippingadreesCubit>()
-                                    .getShippingId(id:widget.code);
+                                    .read<OrderedpersonCubit>()
+                                    .getOrderedPerson();
                                 suffixIconCheck=false;
                               }
                             },

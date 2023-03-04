@@ -461,6 +461,9 @@ class _IdentificationState extends State<Identification> {
                                       saveButtonActovde(
                                           barCodeTextEditingController.text,
                                           barActive);
+                                      setState(() {
+
+                                      });
                                     },
                                   )),
                               TableCell(
@@ -470,12 +473,13 @@ class _IdentificationState extends State<Identification> {
                                     valueChanger: barActive,
                                     onSelection: (va) {
                                       onChange = true;
-                                      saveButtonActovde(
-                                          barCodeTextEditingController.text,
-                                          barActive);
+
                                       setState(() {
                                         barActive = !barActive!;
                                       });
+                                      saveButtonActovde(
+                                          barCodeTextEditingController.text,
+                                          barActive);
                                     }),
                               ),
                               TableCell(
@@ -1511,8 +1515,8 @@ class VariantStabletable extends StatefulWidget {
   final Function({String type, bool val}) trueOrFalseChange;
   final Function? nameChanege;
 
-  VariantStabletable({
 
+  VariantStabletable({
     required this.weightUom,
     required this.veritiaclCode,
     required this.imagePostCheck,
@@ -1841,29 +1845,38 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       readOnly: true,
                       title: "Sales Uom",
                       ontap: () {
-                        showDailogPopUp(
-                          context,
-                          TableConfigurePopup(
-                            id: widget.baseUomId,
-                            type: "SalesUomTabalePopup",
-                            valueSelect: (BrandListModel va) {
-                              setState(() {
-                                print(va?.uomCode);
-                                print(va);
+                        if(widget.salesUomName.text.isNotEmpty){
+                          setState(() {
+                            widget.salesUomName.text="";
+                            widget.salesUom.text = "";
+                            widget.salesUomName.text ="";
+                          });
+                        }
+                        else{
+                          showDailogPopUp(
+                            context,
+                            TableConfigurePopup(
+                              id: widget.baseUomId,
+                              type: "SalesUomTabalePopup",
+                              valueSelect: (BrandListModel va) {
+                                setState(() {
+                                  print(va?.uomCode);
+                                  print(va);
 
-                                widget.salesUom.text = va?.id.toString() ?? "";
-                                widget.salesUomName.text =
-                                    va?.name.toString() ?? "";
-                                base_uom = va?.id;
-                                Variable.uomId = va?.id;
-                                setState(() {});
+                                  widget.salesUom.text = va?.id.toString() ?? "";
+                                  widget.salesUomName.text =
+                                      va?.name.toString() ?? "";
+                                  base_uom = va?.id;
+                                  Variable.uomId = va?.id;
+                                  setState(() {});
+                                  // onChange = true;
+                                  // orderType.text = va!;
+                                });
+                              },
+                            ),
+                          );
+                        }
 
-                                // onChange = true;
-                                // orderType.text = va!;
-                              });
-                            },
-                          ),
-                        );
                       },
                     ),
                     // SelectableDropDownpopUp(
@@ -1897,6 +1910,15 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       readOnly: true,
                       title: "Purchase UOM",
                       ontap: () {
+                        if(widget.purchaseUomName.text.isNotEmpty){
+                          setState(() {
+                            widget.purchaseUomName.text="";
+                            widget.purchaseUom.text = "";
+                            widget.purchaseUomName.text = "";
+
+
+                          });
+                        }
                         showDailogPopUp(
                           context,
                           TableConfigurePopup(
@@ -3531,236 +3553,254 @@ class _VariantStabletableState extends State<VariantStabletable> {
               ],
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child:PopUpSwitchTile(
-                    paddingCheck: false,
-                    value: widget?.haveStockPartitionGroup ?? false,
-                    title: "Have Stock Partition Group",
-                    onClick: (gg) {
-                      bool val = widget.haveStockPartitionGroup;
-                      val = !val;
-                      widget.trueOrFalseChange(type: "1", val: val);
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: width * .02),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    PopUpSwitchTile(
+                        paddingCheck: false,
+                        value: widget?.haveStockPartitionGroup ?? false,
+                        title: "Have Stock Partition Group",
+                        onClick: (gg) {
+                          bool val = widget.haveStockPartitionGroup;
+                          val = !val;
+                          widget.trueOrFalseChange(type: "1", val: val);
 
-                      // widget.activeChange(!widget.active);
+                          // widget.activeChange(!widget.active);
 
-                      // extendedWarranty = gg;
-                      // widget.changeExtendedWarranty(gg);
-                      // onChangeExtWarranty = gg;
-                      setState(() {});
-                    }),
-              ),
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
 
-              Expanded(
-                child: Visibility(
-                  visible:widget?.haveStockPartitionGroup==true?true:false ,
-                  child: NewInputCard(
-                    controller: widget.stockPartitionGroupName,
-                    icondrop: true,
-                    title: "Stock Partition Group Id",
-                    readOnly: true,
-                    ontap: () {
-                      showDailogPopUp(
-                        context,
-                        TableConfigurePopup(
-                          // id:widget.subCategoryId!=0?widget.subCategoryId:widget.categoryid,
-                          type: "StockPartitionGroupPopup",
-                          valueSelect: (BrandListModel va) {
-                            setState(() {
-                              widget.stockPartitionGroupId.text = va?.id.toString() ?? "";
-                              widget.stockPartitionGroupName.text = va?.name ?? "";
-                              setState(() {});
+                    Expanded(
+                      child: Visibility(
+                        visible:widget?.haveStockPartitionGroup==true?true:false ,
+                        child: NewInputCard(
+                          controller: widget.stockPartitionGroupName,
+                          icondrop: true,
+                          title: "Stock Partition Group Id",
+                          readOnly: true,
+                          ontap: () {
+                            showDailogPopUp(
+                              context,
+                              TableConfigurePopup(
+                                // id:widget.subCategoryId!=0?widget.subCategoryId:widget.categoryid,
+                                type: "StockPartitionGroupPopup",
+                                valueSelect: (BrandListModel va) {
+                                  setState(() {
+                                    widget.stockPartitionGroupId.text = va?.id.toString() ?? "";
+                                    widget.stockPartitionGroupName.text = va?.name ?? "";
+                                    setState(() {});
 
-                              // onChange = true;
-                              // orderType.text = va!;
-                            });
+                                    // onChange = true;
+                                    // orderType.text = va!;
+                                  });
+                                },
+                              ),
+                            );
                           },
                         ),
-                      );
-                    },
+                      ),
+                    ),
+                    Visibility(
+                      visible:widget?.haveStockPartitionGroup==true?true:false ,
+                      child: PopUpSwitchTile(
+                          paddingCheck: false,
+                          value: widget?.haveStockPriority ?? false,
+                          title: "Have Stock Priority",
+                          onClick: (gg) {
+                            bool val = widget.haveStockPriority;
+                            val = !val;
+                            widget.trueOrFalseChange(type: "2", val: val);
+
+                            // widget.activeChange(!widget.active);
+
+                            // extendedWarranty = gg;
+                            // widget.changeExtendedWarranty(gg);
+                            // onChangeExtWarranty = gg;
+                            setState(() {});
+                          }),
+                    ),
+
+                  ],
+                ),
+                SizedBox(
+                  height: height * .055,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    PopUpSwitchTile(
+                        paddingCheck: false,
+                        value: widget?.salesBlock ?? false,
+                        title: "Sales Block",
+                        onClick: (gg) {
+                          bool val = widget.salesBlock;
+                          val = !val;
+                          widget.trueOrFalseChange(type: "Sales", val: val);
+
+                          // widget.activeChange(!widget.active);
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+                    PopUpSwitchTile(
+                        paddingCheck: false,
+                        value: widget?.purchaseBlock ?? false,
+                        title: "Purchase Block",
+                        onClick: (gg) {
+                          bool val = widget.purchaseBlock;
+                          val = !val;
+                          widget.trueOrFalseChange(type: "Purchase", val: val);
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+                    PopUpSwitchTile(
+                        paddingCheck: false,
+                        value: widget?.stockWarning ?? false,
+                        title: "Stock Warning",
+                        onClick: (gg) {
+                          bool val = widget.stockWarning;
+                          val = !val;
+                          widget.trueOrFalseChange(type: "Stock", val: val);
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+
+                  ],
+                ),
+                SizedBox(
+                  height: height * .035,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    PopUpSwitchTile(
+                        paddingCheck: false,
+                        value: widget?.itmCatelog ?? false,
+                        title: "Item Catalog",
+                        onClick: (gg) {
+                          bool val = widget.itmCatelog;
+                          val = !val;
+                          widget.trueOrFalseChange(type: "Catalog", val: val);
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+                    PopUpSwitchTile(
+                        paddingCheck: false,
+                        value: widget?.itmImage ?? false,
+                        title: "Item Image",
+                        onClick: (gg) {
+                          bool val = widget.itmImage;
+                          val = !val;
+                          widget.trueOrFalseChange(type: "Image", val: val);
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+                    PopUpSwitchTile(
+                        paddingCheck: false,
+                        value:widget.select?true: widget.active ?? false,
+                        title: "Active",
+                        onClick: (gg) {
+                          if(widget.select==false){
+                            bool val = widget.active;
+                            val = !val;
+                            widget.trueOrFalseChange(type: "Active", val: val);
+                          }
+
+                          // widget.activeChange(!widget.active);
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+
+
+
+                  ],
+                ),
+                SizedBox(
+                  height: height * .035,
+                ),
+                Container(
+                  // width: MediaQuery.of(context).size.width / 1.9,
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      PopUpSwitchTile(
+                          paddingCheck: false,
+                          value: widget.needMultipleIntegration ?? false,
+                          title: "Need Multiple Integration",
+                          onClick: (gg) {
+                            bool val = widget.needMultipleIntegration;
+                            val = !val;
+                            widget.trueOrFalseChange(type: "Multiple", val: val);
+                            // widget.activeChange(!widget.active);
+
+                            // extendedWarranty = gg;
+                            // widget.changeExtendedWarranty(gg);
+                            // onChangeExtWarranty = gg;
+                            setState(() {});
+                          }),
+                      PopUpSwitchTile(
+                          paddingCheck: false,
+                          value: widget.haveGiftOption ?? false,
+                          title: "Have Gift Option",
+                          onClick: (gg) {
+                            bool val = widget.haveGiftOption;
+                            val = !val;
+                            widget.trueOrFalseChange(type: "GiftOption", val: val);
+                            // widget.activeChange(!widget.active);
+
+                            // extendedWarranty = gg;
+                            // widget.changeExtendedWarranty(gg);
+                            // onChangeExtWarranty = gg;
+                            setState(() {});
+                          }),
+                      PopUpSwitchTile(
+                          paddingCheck: false,
+                          value: widget.haveWrapOption ?? false,
+                          title: "Have Wrap Option",
+                          onClick: (gg) {
+                            bool val = widget.haveWrapOption;
+                            val = !val;
+                            widget.trueOrFalseChange(type: "GiftWrap", val: val);
+                            // widget.activeChange(!widget.active);
+
+                            // extendedWarranty = gg;
+                            // widget.changeExtendedWarranty(gg);
+                            // onChangeExtWarranty = gg;
+                            setState(() {});
+                          }),
+                    ],
                   ),
-                ),
-              ),
-              Expanded(
-                child: Visibility(
-                  visible:widget?.haveStockPartitionGroup==true?true:false ,
-                  child: PopUpSwitchTile(
-                      paddingCheck: false,
-                      value: widget?.haveStockPriority ?? false,
-                      title: "Have Stock Priority",
-                      onClick: (gg) {
-                        bool val = widget.haveStockPriority;
-                        val = !val;
-                        widget.trueOrFalseChange(type: "2", val: val);
+                )
 
-                        // widget.activeChange(!widget.active);
-
-                        // extendedWarranty = gg;
-                        // widget.changeExtendedWarranty(gg);
-                        // onChangeExtWarranty = gg;
-                        setState(() {});
-                      }),
-                ),
-              ),
-
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              PopUpSwitchTile(
-                paddingCheck: false,
-                  value: widget?.salesBlock ?? false,
-                  title: "Sales Block",
-                  onClick: (gg) {
-                    bool val = widget.salesBlock;
-                    val = !val;
-                    widget.trueOrFalseChange(type: "Sales", val: val);
-
-                    // widget.activeChange(!widget.active);
-
-                    // extendedWarranty = gg;
-                    // widget.changeExtendedWarranty(gg);
-                    // onChangeExtWarranty = gg;
-                    setState(() {});
-                  }),
-              PopUpSwitchTile(
-                  paddingCheck: false,
-                  value: widget?.purchaseBlock ?? false,
-                  title: "Purchase Block",
-                  onClick: (gg) {
-                    bool val = widget.purchaseBlock;
-                    val = !val;
-                    widget.trueOrFalseChange(type: "Purchase", val: val);
-
-                    // extendedWarranty = gg;
-                    // widget.changeExtendedWarranty(gg);
-                    // onChangeExtWarranty = gg;
-                    setState(() {});
-                  }),
-              PopUpSwitchTile(
-                  paddingCheck: false,
-                  value: widget?.stockWarning ?? false,
-                  title: "Stock Warning",
-                  onClick: (gg) {
-                    bool val = widget.stockWarning;
-                    val = !val;
-                    widget.trueOrFalseChange(type: "Stock", val: val);
-
-                    // extendedWarranty = gg;
-                    // widget.changeExtendedWarranty(gg);
-                    // onChangeExtWarranty = gg;
-                    setState(() {});
-                  }),
-              PopUpSwitchTile(
-                  paddingCheck: false,
-                  value: widget?.itmCatelog ?? false,
-                  title: "Itemm Catalog",
-                  onClick: (gg) {
-                    bool val = widget.itmCatelog;
-                    val = !val;
-                    widget.trueOrFalseChange(type: "Catalog", val: val);
-
-                    // extendedWarranty = gg;
-                    // widget.changeExtendedWarranty(gg);
-                    // onChangeExtWarranty = gg;
-                    setState(() {});
-                  }),
-            ],
-          ),
-          SizedBox(
-            height: height * .035,
-          ),
-          Container(
-            // width: MediaQuery.of(context).size.width / 1.9,
-            alignment: Alignment.topLeft,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                PopUpSwitchTile(
-                    paddingCheck: false,
-                    value: widget?.itmImage ?? false,
-                    title: "Item Image",
-                    onClick: (gg) {
-                      bool val = widget.itmImage;
-                      val = !val;
-                      widget.trueOrFalseChange(type: "Image", val: val);
-
-                      // extendedWarranty = gg;
-                      // widget.changeExtendedWarranty(gg);
-                      // onChangeExtWarranty = gg;
-                      setState(() {});
-                    }),
-                PopUpSwitchTile(
-                    paddingCheck: false,
-                    value:widget.select?true: widget.active ?? false,
-                    title: "Active",
-                    onClick: (gg) {
-                      if(widget.select!){
-                        bool val = widget.active;
-                        val = !val;
-                        widget.trueOrFalseChange(type: "Active", val: val);
-                      }
-
-                      // widget.activeChange(!widget.active);
-
-                      // extendedWarranty = gg;
-                      // widget.changeExtendedWarranty(gg);
-                      // onChangeExtWarranty = gg;
-                      setState(() {});
-                    }),
-                PopUpSwitchTile(
-                    paddingCheck: false,
-                    value: widget.needMultipleIntegration ?? false,
-                    title: "Need Multiple Integration",
-                    onClick: (gg) {
-                      bool val = widget.needMultipleIntegration;
-                      val = !val;
-                      widget.trueOrFalseChange(type: "Multiple", val: val);
-                      // widget.activeChange(!widget.active);
-
-                      // extendedWarranty = gg;
-                      // widget.changeExtendedWarranty(gg);
-                      // onChangeExtWarranty = gg;
-                      setState(() {});
-                    }),
-                PopUpSwitchTile(
-                    paddingCheck: false,
-                    value: widget.haveGiftOption ?? false,
-                    title: "Have Gift Option",
-                    onClick: (gg) {
-                      bool val = widget.haveGiftOption;
-                      val = !val;
-                      widget.trueOrFalseChange(type: "GiftOption", val: val);
-                      // widget.activeChange(!widget.active);
-
-                      // extendedWarranty = gg;
-                      // widget.changeExtendedWarranty(gg);
-                      // onChangeExtWarranty = gg;
-                      setState(() {});
-                    }),
-                PopUpSwitchTile(
-                    paddingCheck: false,
-                    value: widget.haveWrapOption ?? false,
-                    title: "Have Wrap Option",
-                    onClick: (gg) {
-                      bool val = widget.haveWrapOption;
-                      val = !val;
-                      widget.trueOrFalseChange(type: "GiftWrap", val: val);
-                      // widget.activeChange(!widget.active);
-
-                      // extendedWarranty = gg;
-                      // widget.changeExtendedWarranty(gg);
-                      // onChangeExtWarranty = gg;
-                      setState(() {});
-                    }),
               ],
             ),
-          )
+          ),
+
         ],
       );
     });

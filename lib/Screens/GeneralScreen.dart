@@ -515,7 +515,7 @@ List<TextEditingController> vatController =[];
                           context
                               .read<InventorysearchCubit>()
                               .getInventorySearch("code");
-                          select=false;
+
 
                         });
                       });
@@ -931,10 +931,25 @@ List<TextEditingController> vatController =[];
 
                       result = list.data;
                       setState(() {
-if(result.isNotEmpty){ veritiaclid=result[0].id;
-Variable.verticalid=result[0].id;
-print("Variable.ak"+Variable.verticalid.toString());
-context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+if(result.isNotEmpty){
+  if(select==true){
+    print("enteraaaaaaaaaaaaaaaaaaase1");
+    veritiaclid=result[result.length-1].id;
+    print("veritiaclid"+veritiaclid.toString());
+    ;
+    context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+    selectedVertical=result.length-1;
+
+  }
+  else{
+    print("enteraaaaaaaaaaaaaaaaaaase13");
+    veritiaclid=result[0].id;
+    selectedVertical=0;
+    print("veritiaclid"+veritiaclid.toString());
+    ;
+    context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+  }
+
 select=false;
 }
 else{

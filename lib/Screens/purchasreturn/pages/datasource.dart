@@ -68,7 +68,10 @@ abstract class PurchaseSourceAbstract {
   Future<List<PurchaseInvoice>> getPurchaseInvoice();
   Future<PurchaseReturnGeneralRead> getGeneralInvoiceRead(int? id);
   Future<DoubleResponse> postGeneral(PurchaseReturnGeneralPost model);
+  Future<DoubleResponse> postSaleOrderPaymentPost(
+      PurchasePaymentPostModel model);
   Future<PaginatedResponse<List<PurchaseOrder>>> getGeneralVertical();
+  Future<PaginatedResponse<List<PurchasePaymentModel>>> getPaymentList();
   Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(
     String? code,
   );
@@ -81,9 +84,12 @@ abstract class PurchaseSourceAbstract {
   //Sales General Screennnn
   Future<DoubleResponse> postSalesGeneral(SalesGeneralPostModel model);
   Future<DoubleResponse> postShippinAddress(ShippingAddressCreationModel model);
-  Future<DoubleResponse> postCustomerIdCreation(CustomerIdCreationUpdateModel model);
+  Future<DoubleResponse> postCustomerIdCreation(
+      CustomerIdCreationUpdateModel model);
   Future<PaginatedResponse<List<salesOrderTypeModel>>>
       getSalesGeneralVertical();
+  Future<PaginatedResponse<List<PaymentListSalesModel>>>
+      getSalePaymentVerticalList(String? code);
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesSearch(
     String? code,
   );
@@ -92,11 +98,18 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> salesGeneralDelete(int? id);
   Future<DoubleResponse> getSalesGeneralPatch(
       SalesGeneralPostModel model, int? id);
-  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String code,{String ? id});
-  Future<PaginatedResponse<List<CustomerIdListModel>>> getCustomerId(String? code);
+  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(
+      String code,
+      {String? id});
+  Future<PaginatedResponse<List<CustomerIdListModel>>> getCustomerId(
+      String? code);
 //Sales invoice screen*******************************
   Future<SalesReturnInvoiceReadModel> getSalesInvoiceRead(int id);
   Future<DoubleResponse> postSalesInvoice(SalesReturnInvoicePostModel model);
+  Future<DoubleResponse> postPaymentTransactionSuccess(int? invoiceId, String? paymentMethod, String? paymentCode,int type);
+  
+  
+  Future<DoubleResponse> patchPayment(PurchasePaymentPostModel model);
 //salesreturgeneral
   Future<PaginatedResponse<List<salesOrderTypeModel>>>
       getSalesReturnGeneralVertical();
@@ -126,7 +139,8 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> brandDelete(int? id);
   Future<DoubleResponse> postBrandPatch(BrandCreationtModel model, int? id);
   Future<PaginatedResponse<List<BrandListModel>>> searchMaterialList(
-      String? code,{String ? page});
+      String? code,
+      {String? page});
   Future<DoubleResponse> postCreateMaterial(MaterialCreationtModel model);
   Future<MaterialReadModel> getMaterialRead(int? id);
   Future<DoubleResponse> postmaterialPatch(MaterialReadModel model, int? id);
@@ -146,7 +160,8 @@ abstract class PurchaseSourceAbstract {
   );
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryist(String? code,
       {String? type});
-  Future<PaginatedResponse<List<BrandListModel>>> getAllCategoryist(String? code);
+  Future<PaginatedResponse<List<BrandListModel>>> getAllCategoryist(
+      String? code);
   Future<DoubleResponse> postCreateCategory(CategoryCreationtModel model);
   Future<CategoryReadModel> getCategoryRead(
     int? id,
@@ -156,12 +171,13 @@ abstract class PurchaseSourceAbstract {
     int? id,
   );
   Future<PaginatedResponse<List<BrandListModel>>> getSubCategoryList(
-      String? code,{int ? id});
+      String? code,
+      {int? id});
   Future<DoubleResponse> postCreateGroup(
     MaterialCreationtModel model,
   );
   Future<PaginatedResponse<List<BrandListModel>>> getGroupListList(String? code,
-      {String? type,int ? id});
+      {String? type, int? id});
   Future<MaterialReadModel> getGroupRead(
     int? id,
   );
@@ -171,7 +187,7 @@ abstract class PurchaseSourceAbstract {
   );
   Future<DoubleResponse> postCreateBaseUom(BaseUomCreationtModel model);
   Future<PaginatedResponse<List<BrandListModel>>> getUomist(String? code,
-      {String? type,int? id});
+      {String? type, int? id});
   Future<BaseUomCreationtModel> getBaseUomRead(
     int? id,
   );
@@ -184,8 +200,9 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> postItemPatch(ItemReadModel model, int? id);
   Future<PaginatedResponse<List<BrandListModel>>> getVariantList(String? code,
       {String? type});
-  Future<PaginatedResponse<List<BrandListModel>>> getStockPartitionList(String? code,
-      );
+  Future<PaginatedResponse<List<BrandListModel>>> getStockPartitionList(
+    String? code,
+  );
   Future<VariantReadModel> getVariantRead(
     int? id,
   );
@@ -195,9 +212,10 @@ abstract class PurchaseSourceAbstract {
       String? code,
       {String? type});
   Future<DoubleResponse> postVariant(VariantPost model, int? id);
-  Future<DoubleResponse> postStockPartion(String? name,String? descriptio);
+  Future<DoubleResponse> postStockPartion(String? name, String? descriptio);
   Future<DoubleResponse> patchVariant(VariantPatch model, int? id);
-  Future<DoubleResponse> patchStockPartition(String? name,String? description,bool ? active,int? id);
+  Future<DoubleResponse> patchStockPartition(
+      String? name, String? description, bool? active, int? id);
   Future<PaginatedResponse<List<BrandListModel>>> getVariantCreationList(
       String? code);
   Future<PaginatedResponse<List<BrandListModel>>> getVariantSelectionList(
@@ -248,7 +266,7 @@ abstract class PurchaseSourceAbstract {
       String? code);
   Future<DoubleResponse> postPatchpostPatchCostingCreateCostingType(
     int? verticalId,
-      int? typeId,
+    int? typeId,
     String typeName,
     String description,
     String createdBy,
@@ -290,7 +308,7 @@ abstract class PurchaseSourceAbstract {
       {String? itemCode,
       String? variantCode,
       String? uomCode,
-        List< dynamic>? variantlist});
+      List<dynamic>? variantlist});
   Future<PurchaseOrdertype> getVirtualStiocktype();
 
   Future<DoubleResponse> postStock(
@@ -316,45 +334,47 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<VendorDetailsModel>>> getVendorDetailList(
     String? code,
   );
-  Future<List<VariantReadModel>> getProducedCountry(String ? code);
-  Future<List<StateList>> getStateList(String ? code);
+  Future<List<VariantReadModel>> getProducedCountry(String? code);
+  Future<List<StateList>> getStateList(String? code);
   //Custome Page++++++++++++++++++++++++++++++++++++++++++++++++++++++
   Future<DoubleResponse> postCreateCustom(CustomCreationtModel model);
-  Future<DoubleResponse> patchCreateCustom(CustomCreationtModel model,int? id);
-  Future<PaginatedResponse<List<BrandListModel>>> getCustomVerticalList(String? code,
-      );
+  Future<DoubleResponse> patchCreateCustom(CustomCreationtModel model, int? id);
+  Future<PaginatedResponse<List<BrandListModel>>> getCustomVerticalList(
+    String? code,
+  );
   Future<ReadCustomModel> getCustomRead(
-      int? id,
-      );
-  Future<ReadCustomModel> getReturnRead(
-
-      );
+    int? id,
+  );
+  Future<ReadCustomModel> getReturnRead();
   //:::::::::::Division Config+++++++++++++++++++++++++
   Future<DoubleResponse> postCreateDivisionConfig(DivisionCreationtModel model);
-  Future<PaginatedResponse<List<BrandListModel>>> getDivisionVerticalList(String? code,
-      );
+  Future<PaginatedResponse<List<BrandListModel>>> getDivisionVerticalList(
+    String? code,
+  );
 
   Future<DivisionReadModel> getDivisionConfigRead(
-      int? id,
-      );
-  Future<DoubleResponse> patchDivisionConfig(DivisionCreationtModel model,int? id);
-  Future<PaginatedResponse<List<BrandListModel>>> getUomDivisionList(String? code,
-      {String? type, int? id});
+    int? id,
+  );
+  Future<DoubleResponse> patchDivisionConfig(
+      DivisionCreationtModel model, int? id);
+  Future<PaginatedResponse<List<BrandListModel>>> getUomDivisionList(
+      String? code,
+      {String? type,
+      int? id});
   Future<PaginatedResponse<List<BrandListModel>>> getGroupList(String? code,
       {String? type, int? id});
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryList(String? code,
       {String? type, int? id});
   Future<CostingPageCreationPostModel> getChannelCostingRead(int? id);
-  Future<Returntypemodel> getReturnType(
-
-      );
-  Future<DoubleResponse> getAttributePost(String? attributeType,String? attributeName,bool? isActive);
-  Future<PaginatedResponse<List<AttributeListModel>>> getAttributePatchList(String? code);
+  Future<Returntypemodel> getReturnType();
+  Future<DoubleResponse> getAttributePost(
+      String? attributeType, String? attributeName, bool? isActive);
+  Future<PaginatedResponse<List<AttributeListModel>>> getAttributePatchList(
+      String? code);
   Future<AttributeListModel> getAttributeCreationRead(int? id);
-  Future<DoubleResponse> getAttributePatch(String? attributeType,String? attributeName,bool? isActive,int? id);
-  Future<AttributeListModel> getAttributeTypeList(
-
-      );
+  Future<DoubleResponse> getAttributePatch(
+      String? attributeType, String? attributeName, bool? isActive, int? id);
+  Future<AttributeListModel> getAttributeTypeList();
   Future<ReadMessuremnetModel> getMessurementRead();
 }
 
@@ -368,7 +388,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     String path =
         purchaseReturnPurchaseInvoiceidReadApi + Variable.inventory_ID;
 
-    print("Gassalllllllllllliiiiiiii"+path.toString());
+    print("Gassalllllllllllliiiiiiii" + path.toString());
 
     try {
       final response = await client.get(
@@ -434,11 +454,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PurchaseReturnGeneralRead> getGeneralInvoiceRead(int? id) async {
     print("Akshaytttttttt" + id.toString());
-    print(
-        purchaseReturnInvoiceIdRead+id.toString());
-    String path =purchaseReturnInvoiceIdRead+id.toString();
+    print(purchaseReturnInvoiceIdRead + id.toString());
+    String path = purchaseReturnInvoiceIdRead + id.toString();
     try {
-
       print("ppppath" + path.toString());
       print(path);
       final response = await client.get(
@@ -452,13 +470,12 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       );
       // print("responsesssssd" + response.toString());
       PurchaseReturnGeneralRead dataa =
-          PurchaseReturnGeneralRead.fromJson(response.data['data']);
+      PurchaseReturnGeneralRead.fromJson(response.data['data']);
       // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
       print(e);
     }
-
 
     print(path);
     print("ppppath" + path.toString());
@@ -473,7 +490,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     );
     // print("responsesssssd" + response.toString());
     PurchaseReturnGeneralRead dataa =
-        PurchaseReturnGeneralRead.fromJson(response.data['data']);
+    PurchaseReturnGeneralRead.fromJson(response.data['data']);
     // print("rwead" + dataa.toString());
     return dataa;
   }
@@ -540,7 +557,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? code) async {
-    String path =listpurchaseReturnGeneralApi+Variable.inventory_ID.toString()+"?$code";
+    String path = listpurchaseReturnGeneralApi +
+        Variable.inventory_ID.toString() +
+        "?$code";
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -557,9 +576,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString(),
-        previousUrl: response.data['data']['previous']
-
-    );
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -580,7 +597,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       );
       // print("responsesssssd" + response.toString());
       ReturnGeneralRead dataa =
-          ReturnGeneralRead.fromJson(response.data['data']);
+      ReturnGeneralRead.fromJson(response.data['data']);
       // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -610,8 +627,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<DoubleResponse> getGeneralFormPatch(
-      ReturnGeneralPatchModel model, int? id) async {
+  Future<DoubleResponse> getGeneralFormPatch(ReturnGeneralPatchModel model,
+      int? id) async {
     print("searching" + model.toString());
     String path = purchaseReturnGeneralPatchApi + id.toString();
     print("asss" + path.toString());
@@ -677,7 +694,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       );
       print("responsesssssd" + response.toString());
       PurchaseInvoiceReadModel dataa =
-          PurchaseInvoiceReadModel.fromJson(response.data['data']);
+      PurchaseInvoiceReadModel.fromJson(response.data['data']);
       // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -700,7 +717,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     );
     // print("responsesssssd" + response.toString());
     PurchaseInvoiceReadModel dataa =
-        PurchaseInvoiceReadModel.fromJson(response.data['data']);
+    PurchaseInvoiceReadModel.fromJson(response.data['data']);
     // print("rwead" + dataa.toString());
     return dataa;
   }
@@ -812,6 +829,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
+    print(response);
 
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
@@ -860,7 +878,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PaginatedResponse<List<salesOrderTypeModel>>>
-      getSalesGeneralVertical() async {
+  getSalesGeneralVertical() async {
     print("baaaat");
 
     String path = salesGeneralVerticalList + Variable.inventory_ID.toString();
@@ -886,8 +904,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesSearch(
       String? code) async {
-    String path =
-        listsalesOederGeneral+"${Variable.verticalid}?$code";
+    String path = listsalesOederGeneral + "${Variable.verticalid}?$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -903,8 +920,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString(),
-        previousUrl: response.data['data']['previous']
-    );
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -936,7 +952,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     );
     print("response" + response.toString());
     PurchaseOrdertype ordertype =
-        PurchaseOrdertype.fromJson(response.data['data']);
+    PurchaseOrdertype.fromJson(response.data['data']);
     print(ordertype);
     return ordertype;
   }
@@ -964,7 +980,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       );
       print("responsesssssd" + response.toString());
       SalesGeneralReadModel dataa =
-          SalesGeneralReadModel.fromJson(response.data['data']);
+      SalesGeneralReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -987,7 +1003,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     );
     print("responsesssssd" + response.toString());
     SalesGeneralReadModel dataa =
-        SalesGeneralReadModel.fromJson(response.data['data']);
+    SalesGeneralReadModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -1013,8 +1029,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<DoubleResponse> getSalesGeneralPatch(
-      SalesGeneralPostModel model, int? id) async {
+  Future<DoubleResponse> getSalesGeneralPatch(SalesGeneralPostModel model,
+      int? id) async {
     String path = salesGeneralPatchApi + id.toString();
     print(path);
     final response = await client.patch(path,
@@ -1051,7 +1067,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       );
 
       SalesReturnInvoiceReadModel dataa =
-          SalesReturnInvoiceReadModel.fromJson(response.data['data']);
+      SalesReturnInvoiceReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -1076,7 +1092,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     );
     print("responsesssssd" + response.toString());
     SalesReturnInvoiceReadModel dataa =
-        SalesReturnInvoiceReadModel.fromJson(response.data['data']);
+    SalesReturnInvoiceReadModel.fromJson(response.data['data']);
     print("aksa" + dataa.toString());
 
     return dataa;
@@ -1105,8 +1121,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<DoubleResponse> otpReg(
-      String email, String mobile, String key, String cratedCode) async {
+  Future<DoubleResponse> otpReg(String email, String mobile, String key,
+      String cratedCode) async {
     String path =
         "https://api-rgc-user.hilalcart.com/user-customer_customerusersignupvarify/inventory";
     print(path);
@@ -1133,8 +1149,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<DoubleResponse> getLogin(
-      String username, String password, String empCode) async {
+  Future<DoubleResponse> getLogin(String username, String password,
+      String empCode) async {
     // String path =
     // "https://api-rgc-user.hilalcart.com/user-account_login/inventory";
     String path =
@@ -1160,7 +1176,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String? code,{String ? id=null}) async {
+  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(
+      String? code,
+      {String? id = null}) async {
     print("token" + Variable.token.toString());
 
     UserPreferences().getUser().then((value) {
@@ -1171,43 +1189,41 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     code = code == null ? "" : code;
 
     if (code == "")
-      path = shippingListUrl+"?customer_id=$id";
+      path = shippingListUrl + "?customer_id=$id";
     else
-      path = shippingListUrl+"?customer_id=$id"+"&&"+ code.toString();
+      path = shippingListUrl + "?customer_id=$id" + "&&" + code.toString();
     print(path);
 
-try{
-  final response = await client.get(
-    path,
-    options: Options(
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'token ${token}'
-      },
-    ),
-  );
-  print("vp vp vp");
-  print("Prabhaakaran" + response.toString());
-  //print(response.data['results']);
-  List<ShippingAddressModel> items = [];
-  print(response.data['data']['customer_user_data']['results']);
-  (response.data['data']['results'] as List)
-      .forEach((element) {
-    // print("data");
+    try {
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'token ${token}'
+          },
+        ),
+      );
+      print("vp vp vp");
+      print("Prabhaakaran" + response.toString());
+      //print(response.data['results']);
+      List<ShippingAddressModel> items = [];
+      print(response.data['data']['customer_user_data']['results']);
+      (response.data['data']['results'] as List).forEach((element) {
+        // print("data");
 
-    items.add(ShippingAddressModel.fromJson(element));
-  });
-  return PaginatedResponse<List<ShippingAddressModel>>(
-    items,
-    response.data['data']['next'],
-    response.data['data']['count'].toString(),
-    previousUrl: response.data['data']['previous'],
-  );
-}
-catch(e){
-  print("the error is$e");
-}
+        items.add(ShippingAddressModel.fromJson(element));
+      });
+      return PaginatedResponse<List<ShippingAddressModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],
+      );
+    } catch (e) {
+      print("the error is$e");
+    }
     final response = await client.get(
       path,
       options: Options(
@@ -1223,8 +1239,7 @@ catch(e){
     //print(response.data['results']);
     List<ShippingAddressModel> items = [];
     print(response.data['data']['results']);
-    (response.data['data']['results'] as List)
-        .forEach((element) {
+    (response.data['data']['results'] as List).forEach((element) {
       // print("data");
 
       items.add(ShippingAddressModel.fromJson(element));
@@ -1243,12 +1258,11 @@ catch(e){
     UserPreferences().getUser().then((value) {
       token = value.token;
     });
-    String path=shippingCreationUrl;
+    String path = shippingCreationUrl;
     print(path);
     print(model);
     try {
-      final response = await client.post(
-          shippingCreationUrl,
+      final response = await client.post(shippingCreationUrl,
           data: model.toJson(),
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -1267,8 +1281,7 @@ catch(e){
       print("errrr" + e.toString());
     }
 
-    final response = await client.post(
-        shippingAddressCreationApi,
+    final response = await client.post(shippingAddressCreationApi,
         data: model.toJson(),
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1286,7 +1299,8 @@ catch(e){
   }
 
   @override
-  Future<PaginatedResponse<List<CustomerIdListModel>>> getCustomerId(String? code) async {
+  Future<PaginatedResponse<List<CustomerIdListModel>>> getCustomerId(
+      String? code) async {
     // String path =
     //     "https://api-rgc-user.hilalcart.com/user-customer_customeruser/inventory?business_user=True";
     // print(path);
@@ -1301,9 +1315,9 @@ catch(e){
     if (code == "")
       path = customIdListUrl;
     else
-      path = customIdListUrl+"?$code";
+      path = customIdListUrl + "?$code";
     print("sssssssssssssssssssssss$path");
-    try{
+    try {
       final response = await client.get(
         path,
         options: Options(
@@ -1316,14 +1330,9 @@ catch(e){
       );
       print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSW");
 
-
-
-
-
       List<CustomerIdListModel> items = [];
       print(response.data['data']['results']);
-      (response.data['data']['results'] as List)
-          .forEach((element) {
+      (response.data['data']['results'] as List).forEach((element) {
         // print("data");
 
         items.add(CustomerIdListModel.fromJson(element));
@@ -1334,8 +1343,7 @@ catch(e){
         response.data['data']['count'].toString(),
         previousUrl: response.data['data']['previous'],
       );
-    }
-    catch(e){
+    } catch (e) {
       print(e);
     }
 
@@ -1351,14 +1359,9 @@ catch(e){
     );
     print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSW");
 
-
-
-
-
     List<CustomerIdListModel> items = [];
     print(response.data['data']['results']);
-    (response.data['data']['results'] as List)
-        .forEach((element) {
+    (response.data['data']['results'] as List).forEach((element) {
       // print("data");
 
       items.add(CustomerIdListModel.fromJson(element));
@@ -1380,13 +1383,12 @@ catch(e){
       token = value.token;
     });
     print("token is here" + token.toString());
-    String path=customerCreationApi;
+    String path = customerCreationApi;
     print(path);
     print(model);
 
     try {
-      final response = await client.post(
-          path,
+      final response = await client.post(path,
           data: model.toJson(),
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -1403,8 +1405,7 @@ catch(e){
       print("errrr" + e.toString());
     }
 
-    final response = await client.post(
-        path,
+    final response = await client.post(path,
         data: model.toJson(),
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1442,7 +1443,7 @@ catch(e){
     //         taxableAmoubt: model.ivoiceLines?[i].taxableAmoubt ?? 0));
     try {
       final response = await client.post(
-          salesOrderLiveBaseUrl+"sales-invoice/create-sales-invoice",
+          salesOrderLiveBaseUrl + "sales-invoice/create-sales-invoice",
           data: model.toJson(),
           // data: {
           //   "sales_order_id": model.salesOrderId,
@@ -1475,7 +1476,7 @@ catch(e){
     }
 
     final response = await client.post(
-        salesOrderLiveBaseUrl+"sales-invoice/create-sales-invoice",
+        salesOrderLiveBaseUrl + "sales-invoice/create-sales-invoice",
         data: model.toJson(),
         // data: {
         //   "sales_order_id": model.salesOrderId,
@@ -1509,7 +1510,7 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<salesOrderTypeModel>>>
-      getSalesReturnGeneralVertical() async {
+  getSalesReturnGeneralVertical() async {
     String path = salesReurnVertcalListApi + Variable.inventory_ID.toString();
     print(path);
 
@@ -1533,8 +1534,7 @@ catch(e){
   @override
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesReturnSearch(
       String? code) async {
-    String path =
-        listsalesReurnApi+"${Variable.verticalid}?code=$code";
+    String path = listsalesReurnApi + "${Variable.verticalid}?code=$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1550,8 +1550,7 @@ catch(e){
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString(),
-        previousUrl: response.data['data']['previous']
-    );
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -1638,7 +1637,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       SalesReturnGeneralInvoiceReadModel dataa =
-          SalesReturnGeneralInvoiceReadModel.fromJson(response.data['data']);
+      SalesReturnGeneralInvoiceReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -1658,7 +1657,7 @@ catch(e){
     );
     print("responsesssssd" + response.toString());
     SalesReturnGeneralInvoiceReadModel dataa =
-        SalesReturnGeneralInvoiceReadModel.fromJson(response.data['data']);
+    SalesReturnGeneralInvoiceReadModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -1681,7 +1680,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       SalesReturnGeneralPostModel dataa =
-          SalesReturnGeneralPostModel.fromJson(response.data['data']);
+      SalesReturnGeneralPostModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -1701,7 +1700,7 @@ catch(e){
     );
     print("responsesssssd" + response.toString());
     SalesReturnGeneralPostModel dataa =
-        SalesReturnGeneralPostModel.fromJson(response.data['data']);
+    SalesReturnGeneralPostModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -1734,61 +1733,61 @@ catch(e){
     try {
       final response = await client.patch(path,
           data: model.toJson(),
-     // data:     {
-     //
-     //        "shipping_address_id": "sxs",
-     //
-     //        "billing_address_id": "sa",
-     //
-     //        "reason": "sa",
-     //
-     //        "remarks": "jsdv",
-     //
-     //        "discount": 100,
-     //
-     //        "unit_cost": 100,
-     //
-     //        "excess_tax": 100,
-     //
-     //        "taxable_amount": 100,
-     //
-     //        "vat": 100,
-     //
-     //        "selling_price_total": 100,
-     //
-     //        "total_price": 100,
-     //
-     //        "edited_by":"dcv",
-     //
-     //        "order_lines":[{
-     //
-     //          "id":5,
-     //
-     //          "quantity":15,
-     //
-     //          "invoice_line_code":"SLSINVCLN124",
-     //
-     //          "variant_id":"testing",
-     //
-     //          "is_active":true,
-     //
-     //          "discount":100,
-     //
-     //          "unit_cost":100,
-     //
-     //          "excess_tax":100,
-     //
-     //          "taxable_amount":100,
-     //
-     //          "warranty_price":100,
-     //
-     //          "selling_price":100,
-     //
-     //          "total_price":100
-     //
-     //        }]
-     //
-     //      },
+          // data:     {
+          //
+          //        "shipping_address_id": "sxs",
+          //
+          //        "billing_address_id": "sa",
+          //
+          //        "reason": "sa",
+          //
+          //        "remarks": "jsdv",
+          //
+          //        "discount": 100,
+          //
+          //        "unit_cost": 100,
+          //
+          //        "excess_tax": 100,
+          //
+          //        "taxable_amount": 100,
+          //
+          //        "vat": 100,
+          //
+          //        "selling_price_total": 100,
+          //
+          //        "total_price": 100,
+          //
+          //        "edited_by":"dcv",
+          //
+          //        "order_lines":[{
+          //
+          //          "id":5,
+          //
+          //          "quantity":15,
+          //
+          //          "invoice_line_code":"SLSINVCLN124",
+          //
+          //          "variant_id":"testing",
+          //
+          //          "is_active":true,
+          //
+          //          "discount":100,
+          //
+          //          "unit_cost":100,
+          //
+          //          "excess_tax":100,
+          //
+          //          "taxable_amount":100,
+          //
+          //          "warranty_price":100,
+          //
+          //          "selling_price":100,
+          //
+          //          "total_price":100
+          //
+          //        }]
+          //
+          //      },
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -1801,8 +1800,8 @@ catch(e){
       }
       return DoubleResponse(
           response.data['status'] == 'success', response.data['message']);
-    }catch(e){
-      print("the error is here going to be"+e.toString());
+    } catch (e) {
+      print("the error is here going to be" + e.toString());
     }
     final response = await client.patch(path,
         data: model.toJson(),
@@ -1894,7 +1893,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       SalesReturnInvoiceReadModel2 dataa =
-          SalesReturnInvoiceReadModel2.fromJson(response.data['data']);
+      SalesReturnInvoiceReadModel2.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -1914,7 +1913,7 @@ catch(e){
     );
     print("responsesssssd" + response.toString());
     SalesReturnInvoiceReadModel2 dataa =
-        SalesReturnInvoiceReadModel2.fromJson(response.data['data']);
+    SalesReturnInvoiceReadModel2.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -1922,6 +1921,9 @@ catch(e){
   @override
   Future<DoubleResponse> postSalesReturnInvoice(
       SalesReturnInvoicePostModel2 model) async {
+
+
+    print(salesReturnInvoicePostApi);
     try {
       final response = await client.post(salesReturnInvoicePostApi,
           data: model.toJson(),
@@ -1959,8 +1961,7 @@ catch(e){
 
   @override
   Future<List<BrandListModel>> getBrandList() async {
-    String path =
-        brandListApi;
+    String path = brandListApi;
     print(path);
 
     final response = await client.get(
@@ -2092,38 +2093,31 @@ catch(e){
           Variable.catalog1 = response.data["data"];
           break;
         case '2':
-
-          // Variable.img= ImagesModel(itemCatelog5: response.data);
+        // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.catalog2 = response.data["data"];
           break;
         case '3':
-
-          // Variable.img= ImagesModel(itemCatelog5: response.data);
+        // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.catalog3 = response.data["data"];
           break;
         case '4':
-
-          // Variable.img= ImagesModel(itemCatelog5: response.data);
+        // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.catalog4 = response.data["data"];
           break;
         case '5':
-
-          // Variable.img= ImagesModel(itemCatelog5: response.data);
+        // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.catalog5 = response.data["data"];
           break;
         case '6':
-
-          // Variable.img= ImagesModel(itemCatelog5: response.data);
+        // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.catalog6 = response.data["data"];
           break;
         case '7':
-
-          // Variable.img= ImagesModel(itemCatelog5: response.data);
+        // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.catalog7 = response.data["data"];
           break;
         case '8':
-
-          // Variable.img= ImagesModel(itemCatelog5: response.data);
+        // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.catalog8 = response.data["data"];
           break;
       }
@@ -2154,9 +2148,9 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
   }
@@ -2222,8 +2216,8 @@ catch(e){
   }
 
   @override
-  Future<DoubleResponse> postBrandPatch(
-      BrandCreationtModel model, int? id) async {
+  Future<DoubleResponse> postBrandPatch(BrandCreationtModel model,
+      int? id) async {
     // TODO: implement postBrandPatch
     print("searching" + model.toString());
     String path = brandPatchApi + id.toString();
@@ -2249,27 +2243,25 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> searchMaterialList(
-      String? code,{String ? page}) async {
+      String? code,
+      {String? page}) async {
     print("avavava");
     print(page);
     code = code == null ? "" : code;
 
+    String path;
 
-      String path;
-
-
-
-      if (code == "")
-        path = listMaterialGroupApi;
-      else
-        path = listMaterialGroupApi + "?$code";
+    if (code == "")
+      path = listMaterialGroupApi;
+    else
+      path = listMaterialGroupApi + "?$code";
 
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }));
-    print("material"+path.toString());
+    print("material" + path.toString());
 
     List<BrandListModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
@@ -2277,11 +2269,10 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
-
     );
   }
 
@@ -2341,7 +2332,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       MaterialReadModel dataa =
-          MaterialReadModel.fromJson(response.data['data']);
+      MaterialReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -2364,8 +2355,8 @@ catch(e){
   }
 
   @override
-  Future<DoubleResponse> postmaterialPatch(
-      MaterialReadModel model, int? id) async {
+  Future<DoubleResponse> postmaterialPatch(MaterialReadModel model,
+      int? id) async {
     // TODO: implement postmaterialPatch
     print("searching" + model.toString());
     String path = patchMaterialApi + id.toString();
@@ -2503,17 +2494,16 @@ catch(e){
     });
     print("apuuram 5" + items.toString());
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
-
     );
   }
 
   @override
-  Future<DoubleResponse> postCreateDevision(
-      MaterialCreationtModel model, String type) async {
+  Future<DoubleResponse> postCreateDevision(MaterialCreationtModel model,
+      String type) async {
     String path = "";
 
     switch (type) {
@@ -2598,7 +2588,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       DevisionReadModel dataa =
-          DevisionReadModel.fromJson(response.data['data']);
+      DevisionReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -2622,8 +2612,8 @@ catch(e){
   }
 
   @override
-  Future<DoubleResponse> postDivisionPatch(
-      DevisionReadModel model, int? id, String type) async {
+  Future<DoubleResponse> postDivisionPatch(DevisionReadModel model, int? id,
+      String type) async {
     String path = "";
     String url = "";
 
@@ -2693,16 +2683,16 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
-
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
-  Future<DoubleResponse> postCreateUomGroup(
-      String description, String name, String shortName) async {
+  Future<DoubleResponse> postCreateUomGroup(String description, String name,
+      String shortName) async {
     String path = uomGroupCreateApi;
     print(uomGroupCreateApi);
     try {
@@ -2796,7 +2786,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       DevisionReadModel dataa =
-          DevisionReadModel.fromJson(response.data['data']);
+      DevisionReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -2821,20 +2811,17 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryist(String? code,
-      {String? type,int ?id}) async {
+      {String? type, int? id}) async {
     print(code);
     print("akakka" + id.toString());
     String path = "";
-
 
     code = code == null ? "" : code;
     if (type == null || type == "") {
       if (code == "")
         path = listCategoryGroupApi + id.toString();
       else
-        path = listCategoryGroupApi +
-            id.toString() +
-            "?$code";
+        path = listCategoryGroupApi + id.toString() + "?$code";
     } else if (type == "all") {
       print("entered to All case");
       print(code);
@@ -2857,12 +2844,11 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
-
   }
 
   @override
@@ -2922,7 +2908,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       CategoryReadModel dataa =
-          CategoryReadModel.fromJson(response.data['data']);
+      CategoryReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -2946,8 +2932,8 @@ catch(e){
   }
 
   @override
-  Future<DoubleResponse> postcategoryPatch(
-      CategoryCreationtModel model, int? id) async {
+  Future<DoubleResponse> postcategoryPatch(CategoryCreationtModel model,
+      int? id) async {
     String path = deleteCategoryGroupApi + id.toString();
     try {} catch (e) {
       print("erroe" + e.toString());
@@ -2970,7 +2956,8 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getSubCategoryList(
-      String? code,{int? id }) async {
+      String? code,
+      {int? id}) async {
     print("enterdAAAAAAAAAAAAAAA");
     String path = "";
 
@@ -2979,10 +2966,9 @@ catch(e){
     if (code == "")
       path = listSubCategoryGroupApi + id.toString();
     else
-      path = listSubCategoryGroupApi + id.toString() +"?$code";
+      path = listSubCategoryGroupApi + id.toString() + "?$code";
 
-
-    print("the existing path"+path.toString());
+    print("the existing path" + path.toString());
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -2995,9 +2981,9 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
   }
@@ -3043,7 +3029,7 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getGroupListList(String? code,
-      {String? type,int ? id}) async {
+      {String? type, int? id}) async {
     String path;
     print("ttttppp" + type.toString());
 
@@ -3057,26 +3043,13 @@ catch(e){
     } else {
       code = code == null ? "" : code;
 
-      if (code == ""){
-
-
-          path = listGroupApi + id.toString();
-
-
-
-          }
-
-
-
-      else {
-
-
-          path = listGroupApi + id.toString() + "?$code";
-
-
+      if (code == "") {
+        path = listGroupApi + id.toString();
+      } else {
+        path = listGroupApi + id.toString() + "?$code";
       }
     }
-    print("patheeeeeeeeeeeeeeee"+path.toString());
+    print("patheeeeeeeeeeeeeeee" + path.toString());
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -3090,10 +3063,11 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
@@ -3113,7 +3087,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       MaterialReadModel dataa =
-          MaterialReadModel.fromJson(response.data['data']);
+      MaterialReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -3137,8 +3111,8 @@ catch(e){
   }
 
   @override
-  Future<DoubleResponse> postGroupPatch(
-      MaterialCreationtModel model, int? id) async {
+  Future<DoubleResponse> postGroupPatch(MaterialCreationtModel model,
+      int? id) async {
     String path = patchGroupApi + id.toString();
     print(path);
     try {
@@ -3217,7 +3191,7 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getUomist(String? code,
-      {String? type,int ? id}) async {
+      {String? type, int? id}) async {
     String path = "";
     if (type == "all") {
       print("all case");
@@ -3233,9 +3207,7 @@ catch(e){
       if (code == "")
         path = listBaseUomGroupApi + id.toString();
       else
-        path = listBaseUomGroupApi +
-            id.toString() +
-            "?$code";
+        path = listBaseUomGroupApi + id.toString() + "?$code";
     }
     print(path);
     final response = await client.get(path,
@@ -3250,9 +3222,9 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
   }
@@ -3274,7 +3246,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       BaseUomCreationtModel dataa =
-          BaseUomCreationtModel.fromJson(response.data['data']);
+      BaseUomCreationtModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -3292,15 +3264,15 @@ catch(e){
     );
     print("uomGroup response" + response.toString());
     BaseUomCreationtModel dataa =
-        BaseUomCreationtModel.fromJson(response.data['data']);
+    BaseUomCreationtModel.fromJson(response.data['data']);
     print("uomGroup read" + dataa.toString());
     return dataa;
     ;
   }
 
   @override
-  Future<DoubleResponse> postUomPatch(
-      BaseUomCreationtModel model, int? id) async {
+  Future<DoubleResponse> postUomPatch(BaseUomCreationtModel model,
+      int? id) async {
     String path = readBaseUomGroupApi + id.toString();
     try {} catch (e) {
       print("erroe" + e.toString());
@@ -3343,10 +3315,11 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
@@ -3606,7 +3579,7 @@ catch(e){
     if (code == "")
       path = salesListApi + id.toString();
     else
-      path = salesListApi +id.toString() + "?$code";
+      path = salesListApi + id.toString() + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -3615,18 +3588,17 @@ catch(e){
           'Accept': 'application/json'
         }));
 
-
-
     List<BrandListModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
       items.add(BrandListModel.fromJson(element));
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
@@ -3663,20 +3635,20 @@ catch(e){
   Future<DoubleResponse> postVariant(VariantPost model, int? id) async {
     String path = variantCreatetApi + id.toString();
     print(path);
-    print("sasasaassss"+model.inventoryName.toString());
+    print("sasasaassss" + model.inventoryName.toString());
     try {
       final response = await client.post(path,
           // data: model.toJson(),
 
-          data:{
+          data: {
             "inventory_id": model.inventoryId,
             "search_name": model.searchName,
-            "weight_uom_id":model.weightUomId,
-            "weight":model.weight,
-            "inventory_name":model.inventoryName,
+            "weight_uom_id": model.weightUomId,
+            "weight": model.weight,
+            "inventory_name": model.inventoryName,
             "pos_name": model.posName,
-            "shelf_type":model.shelfType,
-            "shelf_time":model.shelfTime,
+            "shelf_type": model.shelfType,
+            "shelf_time": model.shelfTime,
             "display_name": model.displayName,
             "arabic_description": model.arabicDescription,
             "additional_description": model.additionalDescription,
@@ -3698,21 +3670,23 @@ catch(e){
             "purchase_block": model.purchaseBlock,
             "ratio_to_eccommerce": model.ratioToEcommerce,
             "min_max_ratio": model.minMaxRatio,
-            "have_stock_partition_group":model.haveStockPartitionGroup,
-            "stock_partition_group_id":model.stockPartitionGroupId,
-            "have_stock_priority":model.haveStockPriority,
+            "have_stock_partition_group": model.haveStockPartitionGroup,
+            "stock_partition_group_id": model.stockPartitionGroupId,
+            "have_stock_priority": model.haveStockPriority,
             "whole_sale_stock": model.wholeSaleStock,
             "min_sales_order_limit": model.minSalesOrderLimit,
             "max_sales_order_limit": model.maxSalesOrderLimit,
-            "min_purchase_order_limit":model.minPurchaseOrderLimit,
+            "min_purchase_order_limit": model.minPurchaseOrderLimit,
             "max_purchase_order_limit": model.maxPurchaseOrderLimit,
             "stock_warning": model.stockWarning,
-            "retail_selling_price_percentage": model.retailSellingPricePercentage,
-            "wholesale_selling_price_percentage": model.wholeSellingPricePercentage,
+            "retail_selling_price_percentage":
+            model.retailSellingPricePercentage,
+            "wholesale_selling_price_percentage":
+            model.wholeSellingPricePercentage,
             "online_selling_price_percentage": model.onlineSellingPercenage,
-            "need_multiple_integration":model.needMultipleIntegration,
-            "have_gift_option":model.haveGiftOption,
-            "have_wrap_option":model.haveWrapOption,
+            "need_multiple_integration": model.needMultipleIntegration,
+            "have_gift_option": model.haveGiftOption,
+            "have_wrap_option": model.haveWrapOption,
             "vat": model.vat,
             "excess_tax": model.excessTax,
             "minimum_gp": model.minGap,
@@ -3720,14 +3694,14 @@ catch(e){
             "average_gp": model.avgGp,
             "targeted_gp": model.targetedGp,
             "vedio_url": model.vedioUrl,
-            "height":model.height,
-            "width":model.width,
-            "length":model.length,
+            "height": model.height,
+            "width": model.width,
+            "length": model.length,
             "alternative_barcode": model.alternativeBarcode,
-            "alternative_qrcode":model.alternativeQrCodeBarcode,
-            "vendor_details":model.vendorDetails,
-            "var_alternative_rfid":model.varAlternativeRfid,
-            "sebling_id":model.seblingId,
+            "alternative_qrcode": model.alternativeQrCodeBarcode,
+            "vendor_details": model.vendorDetails,
+            "var_alternative_rfid": model.varAlternativeRfid,
+            "sebling_id": model.seblingId,
             "return_type": model.returnType,
             "return_time": model.returnTime,
             "variant_status": model.variantStatus,
@@ -3737,10 +3711,10 @@ catch(e){
             "image3": model.image3,
             "image4": model.image4,
             "image5": model.image5,
-            "weight_unit":model.weightUnit,
-            "length_unit":model.lengthUnit,
-            "width_unit":model.widthUnit,
-            "height_unit":model.heightUnit,
+            "weight_unit": model.weightUnit,
+            "length_unit": model.lengthUnit,
+            "width_unit": model.widthUnit,
+            "height_unit": model.heightUnit,
             "catalog1": model.catalog1,
             "catalog2": model.catalog2,
             "catalog3": model.catalog3,
@@ -3749,18 +3723,37 @@ catch(e){
             "catalog6": model.catalog6,
             "catalog7": model.catalog7,
             "catalog8": model.catalog8,
-            "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[]}:model.Ingrediants,
-            "important_info": model.importantInfo==null?{"name":"important info","key_values":[]}:model.importantInfo,
-            "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[]}:model.additionalInfo,
-            "Nutriants_facts": model.nutriantsFacts==null?{"name":"Nutriants facts","key_values":[]}:model.nutriantsFacts,
-            "product_details": model.productDetails==null?{"name":"product details","key_values":[]}:model.productDetails,
-            "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[]}:model.usageDirection,
-            "product_features": model.productFeatures==null?{"name":"product features","key_values":[]}:model.productFeatures,
+            "Ingrediants": model.Ingrediants == null
+                ? {"name": "Ingrediants", "key_values": []}
+                : model.Ingrediants,
+            "important_info": model.importantInfo == null
+                ? {"name": "important info", "key_values": []}
+                : model.importantInfo,
+            "Additional_info": model.additionalInfo == null
+                ? {"name": "Additional info", "key_values": []}
+                : model.additionalInfo,
+            "Nutriants_facts": model.nutriantsFacts == null
+                ? {"name": "Nutriants facts", "key_values": []}
+                : model.nutriantsFacts,
+            "product_details": model.productDetails == null
+                ? {"name": "product details", "key_values": []}
+                : model.productDetails,
+            "usage_direction": model.usageDirection == null
+                ? {"name": "usage direction", "key_values": []}
+                : model.usageDirection,
+            "product_features": model.productFeatures == null
+                ? {"name": "product features", "key_values": []}
+                : model.productFeatures,
             "product_behaviour": model.productBehavior,
-            "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[]}:model.aboutProducts,
-            "storage": model.storage==null?{"name":"storage","key_values":[{}]}: model.storage,
-
-
+            "about_the_products": model.aboutProducts == null
+                ? {"name": "about the products", "key_values": []}
+                : model.aboutProducts,
+            "storage": model.storage == null
+                ? {
+              "name": "storage",
+              "key_values": [{}]
+            }
+                : model.storage,
           },
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -3780,99 +3773,118 @@ catch(e){
     final response = await client.post(path,
         // data: model.toJson(),
 
-        data:{
-
-        "inventory_id": model.inventoryId,
-        "search_name": model.searchName,
-        "inventory_name":model.inventoryName,
-          "weight":model.weight,
-        "pos_name": model.posName,
-          "weight_uom_id":model.weightUomId,
-        "display_name": model.displayName,
-        "arabic_description": model.arabicDescription,
-        "additional_description": model.additionalDescription,
-        "sales_uom": model.salesUom,
-        "item_catalog": model.itemCatelog,
-        "item_image": model.itemImage,
-        "purchase_uom": model.purchaseUom,
-        "gross_weight": model.grossWeight,
-        "net_weight": model.netWeight,
-        "unit_cost": model.unitCost,
-        "base_price": model.basePrize,
-          "have_stock_partition_group":model.haveStockPartitionGroup,
-          "stock_partition_group_id":model.stockPartitionGroupId,
-          "have_stock_priority":model.haveStockPriority,
-        "landing_cost": model.landingCost,
-          "need_multiple_integration":model.needMultipleIntegration,
-        "actual_cost": model.actualCost,
-        "produced_country": model.producedCountry,
-        "safty_stock": model.safetyStock,
-        "reorder_point": model.reOrderPoint,
-        "reorder_quantity": model.reorderQuantity,
-        "sales_block": model.salesBolock,
-        "purchase_block": model.purchaseBlock,
-        "ratio_to_eccommerce": model.ratioToEcommerce,
-        "min_max_ratio": model.minMaxRatio,
-        "whole_sale_stock": model.wholeSaleStock,
-        "min_sales_order_limit": model.minMaxRatio,
-        "max_sales_order_limit": model.maxSalesOrderLimit,
-        "min_purchase_order_limit":model.minPurchaseOrderLimit,
-        "max_purchase_order_limit": model.maxPurchaseOrderLimit,
-        "stock_warning": model.stockWarning,
-        "retail_selling_price_percentage": model.retailSellingPricePercentage,
-        "wholesale_selling_price_percentage": model.wholeSellingPricePercentage,
-        "online_selling_price_percentage": model.onlineSellingPercenage,
-        "vat": model.vat,
-        "excess_tax": model.excessTax,
-        "minimum_gp": model.minGap,
-        "maximum_gp": model.maxGp,
-        "average_gp": model.avgGp,
-        "targeted_gp": model.targetedGp,
-        "vedio_url": model.vedioUrl,
-        "height":model.height,
-        "width":model.width,
-          "shelf_type":model.shelfType,
-          "shelf_time":model.shelfTime,
-          "have_gift_option":model.haveGiftOption,
-          "have_wrap_option":model.haveWrapOption,
-        "length":model.length,
-        "alternative_barcode": model.alternativeBarcode,
-        "alternative_qrcode":model.alternativeQrCodeBarcode,
-        "vendor_details":model.vendorDetails,
-        "var_alternative_rfid":model.varAlternativeRfid,
-        "sebling_id":model.seblingId,
-        "return_type": model.returnType,
-        "return_time": model.returnTime,
-        "variant_status": model.variantStatus,
-        "is_active": model.isActive,
-        "image2": model.image2,
-        "image3": model.image3,
-        "image4": model.image4,
-        "image5": model.image5,
-          "weight_unit":model.weightUnit,
-          "length_unit":model.lengthUnit,
-          "width_unit":model.widthUnit,
-          "height_unit":model.heightUnit,
-        "catalog1": model.catalog1,
-        "catalog2": model.catalog2,
-        "catalog3": model.catalog3,
-        "catalog4": model.catalog4,
-        "catalog5": model.catalog5,
-        "catalog6": model.catalog6,
-        "catalog7": model.catalog7,
-        "catalog8": model.catalog8,
-        "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[]}:model.Ingrediants,
-        "important_info": model.importantInfo==null?{"name":"important info","key_values":[]}:model.importantInfo,
-        "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[]}:model.additionalInfo,
-        "Nutriants_facts": model.nutriantsFacts==null?{"name":"Nutriants facts","key_values":[]}:model.nutriantsFacts,
-        "product_details": model.productDetails==null?{"name":"product details","key_values":[]}:model.productDetails,
-        "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[]}:model.usageDirection,
-        "product_features": model.productFeatures==null?{"name":"product features","key_values":[]}:model.productFeatures,
+        data: {
+          "inventory_id": model.inventoryId,
+          "search_name": model.searchName,
+          "inventory_name": model.inventoryName,
+          "weight": model.weight,
+          "pos_name": model.posName,
+          "weight_uom_id": model.weightUomId,
+          "display_name": model.displayName,
+          "arabic_description": model.arabicDescription,
+          "additional_description": model.additionalDescription,
+          "sales_uom": model.salesUom,
+          "item_catalog": model.itemCatelog,
+          "item_image": model.itemImage,
+          "purchase_uom": model.purchaseUom,
+          "gross_weight": model.grossWeight,
+          "net_weight": model.netWeight,
+          "unit_cost": model.unitCost,
+          "base_price": model.basePrize,
+          "have_stock_partition_group": model.haveStockPartitionGroup,
+          "stock_partition_group_id": model.stockPartitionGroupId,
+          "have_stock_priority": model.haveStockPriority,
+          "landing_cost": model.landingCost,
+          "need_multiple_integration": model.needMultipleIntegration,
+          "actual_cost": model.actualCost,
+          "produced_country": model.producedCountry,
+          "safty_stock": model.safetyStock,
+          "reorder_point": model.reOrderPoint,
+          "reorder_quantity": model.reorderQuantity,
+          "sales_block": model.salesBolock,
+          "purchase_block": model.purchaseBlock,
+          "ratio_to_eccommerce": model.ratioToEcommerce,
+          "min_max_ratio": model.minMaxRatio,
+          "whole_sale_stock": model.wholeSaleStock,
+          "min_sales_order_limit": model.minMaxRatio,
+          "max_sales_order_limit": model.maxSalesOrderLimit,
+          "min_purchase_order_limit": model.minPurchaseOrderLimit,
+          "max_purchase_order_limit": model.maxPurchaseOrderLimit,
+          "stock_warning": model.stockWarning,
+          "retail_selling_price_percentage": model.retailSellingPricePercentage,
+          "wholesale_selling_price_percentage":
+          model.wholeSellingPricePercentage,
+          "online_selling_price_percentage": model.onlineSellingPercenage,
+          "vat": model.vat,
+          "excess_tax": model.excessTax,
+          "minimum_gp": model.minGap,
+          "maximum_gp": model.maxGp,
+          "average_gp": model.avgGp,
+          "targeted_gp": model.targetedGp,
+          "vedio_url": model.vedioUrl,
+          "height": model.height,
+          "width": model.width,
+          "shelf_type": model.shelfType,
+          "shelf_time": model.shelfTime,
+          "have_gift_option": model.haveGiftOption,
+          "have_wrap_option": model.haveWrapOption,
+          "length": model.length,
+          "alternative_barcode": model.alternativeBarcode,
+          "alternative_qrcode": model.alternativeQrCodeBarcode,
+          "vendor_details": model.vendorDetails,
+          "var_alternative_rfid": model.varAlternativeRfid,
+          "sebling_id": model.seblingId,
+          "return_type": model.returnType,
+          "return_time": model.returnTime,
+          "variant_status": model.variantStatus,
+          "is_active": model.isActive,
+          "image2": model.image2,
+          "image3": model.image3,
+          "image4": model.image4,
+          "image5": model.image5,
+          "weight_unit": model.weightUnit,
+          "length_unit": model.lengthUnit,
+          "width_unit": model.widthUnit,
+          "height_unit": model.heightUnit,
+          "catalog1": model.catalog1,
+          "catalog2": model.catalog2,
+          "catalog3": model.catalog3,
+          "catalog4": model.catalog4,
+          "catalog5": model.catalog5,
+          "catalog6": model.catalog6,
+          "catalog7": model.catalog7,
+          "catalog8": model.catalog8,
+          "Ingrediants": model.Ingrediants == null
+              ? {"name": "Ingrediants", "key_values": []}
+              : model.Ingrediants,
+          "important_info": model.importantInfo == null
+              ? {"name": "important info", "key_values": []}
+              : model.importantInfo,
+          "Additional_info": model.additionalInfo == null
+              ? {"name": "Additional info", "key_values": []}
+              : model.additionalInfo,
+          "Nutriants_facts": model.nutriantsFacts == null
+              ? {"name": "Nutriants facts", "key_values": []}
+              : model.nutriantsFacts,
+          "product_details": model.productDetails == null
+              ? {"name": "product details", "key_values": []}
+              : model.productDetails,
+          "usage_direction": model.usageDirection == null
+              ? {"name": "usage direction", "key_values": []}
+              : model.usageDirection,
+          "product_features": model.productFeatures == null
+              ? {"name": "product features", "key_values": []}
+              : model.productFeatures,
           "product_behaviour": model.productBehavior,
-        "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[]}:model.aboutProducts,
-        "storage": model.storage==null?{"name":"storage","key_values":[{}]}: model.storage,
-
-
+          "about_the_products": model.aboutProducts == null
+              ? {"name": "about the products", "key_values": []}
+              : model.aboutProducts,
+          "storage": model.storage == null
+              ? {
+            "name": "storage",
+            "key_values": [{}]
+          }
+              : model.storage,
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -3898,25 +3910,23 @@ catch(e){
         // data: model.toJson(),
 
         data: {
-
           "variant_name": model.variantName,
           "sales_uom": model.salesUom,
           "purchase_uom": model.purchaseUom,
           "variant_value": model.variantValue,
-          "height":model.height,
-          "width":model.width,
-          "length":model.length,
-          "need_multiple_integration":model.needMultipleIntegration,
-          "weight":model.weight,
-          "weight_uom_id":model.weightUomId,
-          "weight_unit":model.weightUnit,
-          "length_unit":model.lengthUnit,
-          "width_unit":model.widthUnit,
-          "height_unit":model.heightUnit,
-          "have_stock_partition_group":model.haveStockPartitionGroup,
-          "stock_partition_group_id":model.stockPartitionGroupId,
-          "have_stock_priority":model.haveStockPriority,
-
+          "height": model.height,
+          "width": model.width,
+          "length": model.length,
+          "need_multiple_integration": model.needMultipleIntegration,
+          "weight": model.weight,
+          "weight_uom_id": model.weightUomId,
+          "weight_unit": model.weightUnit,
+          "length_unit": model.lengthUnit,
+          "width_unit": model.widthUnit,
+          "height_unit": model.heightUnit,
+          "have_stock_partition_group": model.haveStockPartitionGroup,
+          "stock_partition_group_id": model.stockPartitionGroupId,
+          "have_stock_priority": model.haveStockPriority,
           "barcode": model.barcode,
           "qrcode": model.qrcode,
           "alternative_barcode": model.alternativeBarcode,
@@ -3930,14 +3940,14 @@ catch(e){
           "gross_weight": model.grossWeight,
           "net_weight": model.netWeight,
           "unit_cost": model.unitCost,
-          "landing_cost":model.landingCost,
-          "actual_cost":model.actualCost,
-          "base_price":model.basePrize,
+          "landing_cost": model.landingCost,
+          "actual_cost": model.actualCost,
+          "base_price": model.basePrize,
           "produced_country": model.producedCountry,
           "manufacture_id": model.manuFacturedId,
           "manufacture_name": model.manuFacturedName,
           "safty_stock": model.safetyStock,
-          "reorder_point":model.reorderQuantity,
+          "reorder_point": model.reorderQuantity,
           "reorder_quantity": model.reorderQuantity,
           "sales_block": model.salesBolock,
           "purchase_block": model.purchaseBlock,
@@ -3952,14 +3962,13 @@ catch(e){
           "is_active": model.isActive,
           "sebling_id": model.sibilingCode,
           "sibling_code": model.sibilingCode,
-          "shelf_type":model.shelfType,
-          "shelf_time":model.shelfTime,
-          "have_gift_option":model.haveGiftOption,
-          "have_wrap_option":model.haveWrapOption,
-
-
+          "shelf_type": model.shelfType,
+          "shelf_time": model.shelfTime,
+          "have_gift_option": model.haveGiftOption,
+          "have_wrap_option": model.haveWrapOption,
           "retail_selling_price_percentage": model.retailSellingPricePercentage,
-          "wholesale_selling_price_percentage": model.wholeSellingPricePercentage,
+          "wholesale_selling_price_percentage":
+          model.wholeSellingPricePercentage,
           "online_selling_price_percentage": model.onlineSellingPercenage,
           "image1": model.image1,
           "image2": model.image2,
@@ -3972,14 +3981,14 @@ catch(e){
           "catalog4": model.catalog4,
           "catalog5": model.catalog5,
           "catalog6": model.catalog6,
-          "catalog7":model.catalog7,
-          "catalog8":model.catalog8,
+          "catalog7": model.catalog7,
+          "catalog8": model.catalog8,
           "vedio_url": model.vedioUrl,
-          "minimum_gp":model.minGap,
-          "maximum_gp":model.maxGp,
+          "minimum_gp": model.minGap,
+          "maximum_gp": model.maxGp,
           "average_gp": model.avgGp,
           "targeted_gp": model.targetedGp,
-          "min_purchase_order_limit":model.minPurchaseOrderLimit,
+          "min_purchase_order_limit": model.minPurchaseOrderLimit,
           "max_purchase_order_limit": model.maxPurchaseOrderLimit,
           "vat": model.vat,
           "excess_tax": model.excessTax,
@@ -3988,16 +3997,52 @@ catch(e){
           "variant_status": model.variantStatus,
           "status": model.status,
           "vendor_details": model.vendorDetails,
-          "Ingrediants": model.Ingrediants==null?{"name":"Ingrediants","key_values":[]}:model.Ingrediants,
-          "important_info": model.importantInfo==null?{"name":"important info","key_values":[]}:model.importantInfo,
-          "Additional_info": model.additionalInfo==null?{"name":"Additional info","key_values":[]}:model.additionalInfo,
-          "Nutriants_facts": model.nutriantsFacts==null?{"name":"Nutriants facts","key_values":[{}]}:model.nutriantsFacts,
-          "product_details": model.productDetails==null?{"name":"product details","key_values":[{}]}:model.productDetails,
-          "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[{}]}:model.usageDirection,
-          "product_features": model.productFeatures==null?{"name":"product features","key_values":[{}]}:model.productFeatures,
+          "Ingrediants": model.Ingrediants == null
+              ? {"name": "Ingrediants", "key_values": []}
+              : model.Ingrediants,
+          "important_info": model.importantInfo == null
+              ? {"name": "important info", "key_values": []}
+              : model.importantInfo,
+          "Additional_info": model.additionalInfo == null
+              ? {"name": "Additional info", "key_values": []}
+              : model.additionalInfo,
+          "Nutriants_facts": model.nutriantsFacts == null
+              ? {
+            "name": "Nutriants facts",
+            "key_values": [{}]
+          }
+              : model.nutriantsFacts,
+          "product_details": model.productDetails == null
+              ? {
+            "name": "product details",
+            "key_values": [{}]
+          }
+              : model.productDetails,
+          "usage_direction": model.usageDirection == null
+              ? {
+            "name": "usage direction",
+            "key_values": [{}]
+          }
+              : model.usageDirection,
+          "product_features": model.productFeatures == null
+              ? {
+            "name": "product features",
+            "key_values": [{}]
+          }
+              : model.productFeatures,
           "product_behaviour": model.productBehavior,
-          "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[{}]}:model.aboutProducts,
-          "storage": model.storage==null?{"name":"storage","key_values":[{}]}: model.storage,
+          "about_the_products": model.aboutProducts == null
+              ? {
+            "name": "about the products",
+            "key_values": [{}]
+          }
+              : model.aboutProducts,
+          "storage": model.storage == null
+              ? {
+            "name": "storage",
+            "key_values": [{}]
+          }
+              : model.storage,
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -4038,8 +4083,7 @@ catch(e){
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString(),
-        previousUrl: response.data['data']['previous']
-    );
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -4055,7 +4099,10 @@ catch(e){
           Variable.variantSearchId.toString();
     else
       path =
-          "https://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-division?name=$code";
+          variantCreationSearchListApi +
+              Variable.inventory_ID.toString() +
+              "/" +
+              Variable.variantSearchId.toString()+"?"+code.toString();
 
     print(path);
     final response = await client.get(path,
@@ -4078,7 +4125,7 @@ catch(e){
   @override
   Future<VariantCreationReadModel> getVariantCreationRead(int? id) async {
     String path = variantCreationReadApi + id.toString();
-    print("the searchin path"+path.toString());
+    print("the searchin path" + path.toString());
 
     try {
       print("ppppath" + path.toString());
@@ -4094,7 +4141,7 @@ catch(e){
       );
       print("responsesssssd" + response.toString());
       VariantCreationReadModel dataa =
-          VariantCreationReadModel.fromJson(response.data['data']);
+      VariantCreationReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -4114,7 +4161,7 @@ catch(e){
     );
     print("responsesssssd" + response.toString());
     VariantCreationReadModel dataa =
-        VariantCreationReadModel.fromJson(response.data['data']);
+    VariantCreationReadModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -4173,31 +4220,44 @@ catch(e){
   @override
   Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelTypeList(
       String? code, String type) async {
-    String path = channelTypeReadApi +
-        "inventory_id=" +
-        Variable.inventory_ID.toString() +
-        "&selection_type=" +
-        type.toString();
-    print(path);
-try{
-  final response = await client.get(path,
-      options: Options(headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }));
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = channelTypeReadApi +
+          "inventory_id=" +
+          Variable.inventory_ID.toString() +
+          "&selection_type=" +
+          type.toString();
+    else
+      path =
+          channelTypeReadApi +
+              "inventory_id=" +
+              Variable.inventory_ID.toString() +
+              "&selection_type=" +
+              type.toString()+code.toString();
 
-  List<ChannelTypeModel> items = [];
-  (response.data['data']['results'] as List).forEach((element) {
-    items.add(ChannelTypeModel.fromJson(element));
-    print("itemsAk" + items.toString());
-  });
-  return PaginatedResponse<List<ChannelTypeModel>>(
-      items,
-      response.data['data']['next'],
-      response.data['data']['count'].toString());
-}catch(e){
-  print("the searching error is"+e.toString());
-}
+
+    print(path);
+    try {
+      final response = await client.get(path,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }));
+
+      List<ChannelTypeModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(ChannelTypeModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return PaginatedResponse<List<ChannelTypeModel>>(
+          items,
+          response.data['data']['next'],
+          response.data['data']['count'].toString(),
+          previousUrl: response.data['data']['previous']);
+    } catch (e) {
+      print("the searching error is" + e.toString());
+    }
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -4212,8 +4272,8 @@ try{
     return PaginatedResponse<List<ChannelTypeModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
-
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -4245,7 +4305,8 @@ try{
       return PaginatedResponse<List<ChannelTypeModel>>(
           items,
           response.data['data']['next'],
-          response.data['data']['count'].toString());
+          response.data['data']['count'].toString(),
+          previousUrl: response.data['data']['previous']);
     } catch (e) {
       print(e);
     }
@@ -4374,7 +4435,7 @@ try{
     });
     String path = stockVerticalReadApi + code.toString();
     print("spaths" + path.toString());
-    try{
+    try {
       final response = await client.get(path,
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -4392,9 +4453,8 @@ try{
           response.data['data']['next'],
           response.data['data']['count'].toString(),
           previousUrl: response.data['data']['previous']);
-    }
-    catch(e){
-      print("the mistake issssssssssssss"+e.toString());
+    } catch (e) {
+      print("the mistake issssssssssssss" + e.toString());
     }
     final response = await client.get(path,
         options: Options(headers: {
@@ -4420,7 +4480,6 @@ try{
     //   path = salesListApi + Variable.uomId.toString() + "?name=$code";
 
     print(path);
-
   }
 
   @override
@@ -4440,7 +4499,7 @@ try{
       );
       print("responsesssssd" + response.toString());
       channelAllocatesRead dataa =
-          channelAllocatesRead.fromJson(response.data['common_attr']);
+      channelAllocatesRead.fromJson(response.data['common_attr']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -4458,7 +4517,7 @@ try{
     );
     print("responsesssssd" + response.toString());
     channelAllocatesRead dataa =
-        channelAllocatesRead.fromJson(response.data['common_attr']);
+    channelAllocatesRead.fromJson(response.data['common_attr']);
     print("rwead" + dataa.toString());
     return dataa;
 
@@ -4515,9 +4574,10 @@ try{
 
   @override
   Future<PaginatedResponse<List<ChanmneStockListModelModel>>>
-      getChannelAllocationList(int? code) async {
+  getChannelAllocationList(int? code) async {
     String path =
         channelReadApi + code.toString() + "/" + Variable.inventory_ID;
+    print("channel allocation list"+path.toString());
 
     // if (code == "")
     //   path = salesListApi + Variable.uomId.toString();
@@ -4561,7 +4621,7 @@ try{
       );
       print("responsesssssd" + response.toString());
       ChannelAllocationStockStockReadModel dataa =
-          ChannelAllocationStockStockReadModel.fromJson(response.data['data']);
+      ChannelAllocationStockStockReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -4581,7 +4641,7 @@ try{
     );
     print("responsesssssd" + response.toString());
     ChannelAllocationStockStockReadModel dataa =
-        ChannelAllocationStockStockReadModel.fromJson(response.data['data']);
+    ChannelAllocationStockStockReadModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -4653,15 +4713,18 @@ try{
 
   @override
   Future<PaginatedResponse<List<ChannelListModel>>> getChannelList(
-    String? channelType,
-    int? id,
-  ) async {
+      String? channelType,
+      int? id,) async {
     String path = channelAllocationReadApi +
         id.toString() +
         "/" +
         Variable.inventory_ID.toString() +
         "/" +
         channelType.toString();
+
+
+
+    print("the costing verticalList paaath"+path.toString());
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -4683,8 +4746,8 @@ try{
   }
 
   @override
-  Future<ChannelListModel> getChannelAllocationRead(
-      int? id, int? channelId) async {
+  Future<ChannelListModel> getChannelAllocationRead(int? id,
+      int? channelId) async {
     String path = channelAssignReadApi + id.toString();
     try {
       print("AAAAAAA" + path.toString());
@@ -4717,7 +4780,7 @@ try{
     );
     print("responsesssssd" + response.toString());
     ChannelListModel dataa =
-        ChannelListModel.fromJson(response.data['common_attr']);
+    ChannelListModel.fromJson(response.data['common_attr']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -4726,15 +4789,13 @@ try{
   Future<PaginatedResponse<List<FrameWorkListModel>>> getFrameWorklist(
       String? filter) async {
     String path = "";
-    filter=filter==null?"":filter;
+    filter = filter == null ? "" : filter;
     if (filter == "")
-      path = frameWorkListApi ;
+      path = frameWorkListApi;
     else
-      path =
-          frameWorkListApi+"$filter";
+      path = frameWorkListApi + "$filter";
 
     try {
-
       print(path);
       final response = await client.get(
         path,
@@ -4785,8 +4846,8 @@ try{
   }
 
   @override
-  Future<DoubleResponse> channel2StockAllocationPatch(
-      ChannelListModel model, int? id) async {
+  Future<DoubleResponse> channel2StockAllocationPatch(ChannelListModel model,
+      int? id) async {
     String path = channelAssignReadApi + id.toString();
     print(path);
     print("the error is here" + model.safetyStockQuantity.toString());
@@ -4794,19 +4855,19 @@ try{
     final response = await client.patch(path,
         // data: model.toJson(),
         data:
-            // {
-            //   "virtual_type":model.virtualStock??null,
-            //   "safety_stock_qty":model.safetyStockQuantity,
-            //   "stock_warning":model.stockWarning,
-            //   "reorder_point":model.reOrderPoint,
-            //   "reorder_quantity":model.reOrderQuantity,
-            //   "sales_block":model.salesBlock,
-            //   "add_virtual_stock":model.addVirtualStock,
-            //   "channel_status_crucial_point":100,
-            //   "channel_status_medium_point ":150
-            //
-            // },
-            {
+        // {
+        //   "virtual_type":model.virtualStock??null,
+        //   "safety_stock_qty":model.safetyStockQuantity,
+        //   "stock_warning":model.stockWarning,
+        //   "reorder_point":model.reOrderPoint,
+        //   "reorder_quantity":model.reOrderQuantity,
+        //   "sales_block":model.salesBlock,
+        //   "add_virtual_stock":model.addVirtualStock,
+        //   "channel_status_crucial_point":100,
+        //   "channel_status_medium_point ":150
+        //
+        // },
+        {
           "virtual_type": model.virtualType,
           "safety_stock_qty": model.safetyStockQuantity,
           "stock_warning": model.stockWarning,
@@ -4877,8 +4938,8 @@ try{
   }
 
   @override
-  Future<DoubleResponse> postCreateCostingType(
-      String typeName, String description, String createdBy,
+  Future<DoubleResponse> postCreateCostingType(String typeName,
+      String description, String createdBy,
       {int? id}) async {
     String? path = "";
     if (id == null)
@@ -4947,8 +5008,7 @@ try{
     if (code == "")
       path = listcostingMethodApi;
     else
-      path = listcostingMethodApi+"?$code";
-
+      path = listcostingMethodApi + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -5097,12 +5157,10 @@ try{
     String path = "";
     code = code == null ? "" : code;
 
-
     if (code == "")
       path = listcostingCreationMethodApi;
     else
-      path = listcostingCreationMethodApi+"?$code";
-
+      path = listcostingCreationMethodApi + "?$code";
 
     print(path);
 
@@ -5133,7 +5191,6 @@ try{
       String createdBy,
       bool? isActive) async {
     String path = costingCreateDeleteApi + verticalId.toString();
-
 
     print("details");
     print(typeName);
@@ -5193,20 +5250,13 @@ try{
   @override
   Future<PaginatedResponse<List<PricingGroupListModel>>> getPricingGroupList(
       String? code) async {
-
-
-
-
     String path = "";
     code = code == null ? "" : code;
-
 
     if (code == "")
       path = pricingGroupListApi;
     else
-      path = pricingGroupListApi+"?$code";
-
-
+      path = pricingGroupListApi + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -5243,7 +5293,7 @@ try{
       );
       print("responsesssssd" + response.toString());
       CostingCreatePostModel dataa =
-          CostingCreatePostModel.fromJson(response.data['data']);
+      CostingCreatePostModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -5263,7 +5313,7 @@ try{
     );
     print("brand response" + response.toString());
     CostingCreatePostModel dataa =
-        CostingCreatePostModel.fromJson(response.data['data']);
+    CostingCreatePostModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -5285,7 +5335,7 @@ try{
       );
       print("responsesssssd" + response.toString());
       CostingMetodTypePostModel dataa =
-          CostingMetodTypePostModel.fromJson(response.data['data']);
+      CostingMetodTypePostModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -5305,7 +5355,7 @@ try{
     );
     print("brand response" + response.toString());
     CostingMetodTypePostModel dataa =
-        CostingMetodTypePostModel.fromJson(response.data['data']);
+    CostingMetodTypePostModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -5356,8 +5406,8 @@ try{
   }
 
   @override
-  Future<DoubleResponse> patchPricingGroupType(
-      PricingGroupListModel model, int? id,
+  Future<DoubleResponse> patchPricingGroupType(PricingGroupListModel model,
+      int? id,
       {int? type}) async {
     String? path = "";
     if (type == 1)
@@ -5418,7 +5468,7 @@ try{
       );
       print("responsesssssd" + response.toString());
       PricingGroupListModel dataa =
-          PricingGroupListModel.fromJson(response.data['data']);
+      PricingGroupListModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -5438,7 +5488,7 @@ try{
     );
     print("brand response" + response.toString());
     PricingGroupListModel dataa =
-        PricingGroupListModel.fromJson(response.data['data']);
+    PricingGroupListModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -5446,16 +5496,13 @@ try{
   @override
   Future<PaginatedResponse<List<PricingTypeListModel>>> getPricingList(
       String? code) async {
-
-
     String path = "";
     code = code == null ? "" : code;
-
 
     if (code == "")
       path = pricinglistReadApi;
     else
-      path = pricinglistReadApi+"?$code";
+      path = pricinglistReadApi + "?$code";
     print(path);
     final response = await client.get(path,
         options: Options(headers: {
@@ -5492,7 +5539,7 @@ try{
       );
       print("responsesssssd" + response.toString());
       PricingTypeListModel dataa =
-          PricingTypeListModel.fromJson(response.data['data']);
+      PricingTypeListModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -5512,7 +5559,7 @@ try{
     );
     print("brand response" + response.toString());
     PricingTypeListModel dataa =
-        PricingTypeListModel.fromJson(response.data['data']);
+    PricingTypeListModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
   }
@@ -5698,12 +5745,12 @@ try{
       );
       print("akshayaaas" + response.data['data']['costing_data'].toString());
       CostingPageCreationPostModel dataa =
-          CostingPageCreationPostModel.fromJson(
-              response.data['data']['costing_data']);
+      CostingPageCreationPostModel.fromJson(
+          response.data['data']['costing_data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
-      print("the mistake is"+e.toString());
+      print("the mistake is" + e.toString());
     }
 
     print(path);
@@ -5718,9 +5765,7 @@ try{
       ),
     );
 
-
-    CostingPageCreationPostModel dataa =
-    CostingPageCreationPostModel.fromJson(
+    CostingPageCreationPostModel dataa = CostingPageCreationPostModel.fromJson(
         response.data['data']['costing_data']);
     print("rwead" + dataa.toString());
     return dataa;
@@ -5748,7 +5793,7 @@ try{
     print("ayalkaran" + response.toString());
 
     PurchaseOrdertype ordertype =
-        PurchaseOrdertype.fromJson(response.data['data']);
+    PurchaseOrdertype.fromJson(response.data['data']);
     print(ordertype);
     return ordertype;
   }
@@ -5801,8 +5846,8 @@ try{
   }
 
   @override
-  Future<DoubleResponse> patchCosting(
-      CostingPageCreationPostModel model, int? id) async {
+  Future<DoubleResponse> patchCosting(CostingPageCreationPostModel model,
+      int? id) async {
     String path = patchCostingApi + id.toString();
     print(path);
     try {
@@ -5884,15 +5929,16 @@ try{
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<AttributeListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
-  Future<DoubleResponse> postPatchFrameWork(
-      VariantFrameWorkPostModel model, int? id) async {
+  Future<DoubleResponse> postPatchFrameWork(VariantFrameWorkPostModel model,
+      int? id) async {
     String path = VariantFrameWorkPatchApi + id.toString();
     print(path);
     print(model);
@@ -5932,11 +5978,10 @@ try{
   }
 
   @override
-  Future<DoubleResponse> postCombinationFrameWork(
-      {String? itemCode,
-      String? variantCode,
-      String? uomCode,
-        List< dynamic>? variantlist}) async {
+  Future<DoubleResponse> postCombinationFrameWork({String? itemCode,
+    String? variantCode,
+    String? uomCode,
+    List<dynamic>? variantlist}) async {
     String path = postCombinationFrameworkPostApi;
 
     print(path);
@@ -5950,10 +5995,9 @@ try{
             "item_code": itemCode,
 
             "variant_framework_code": variantCode,
-            "inventory_name":Variable.inventory_Name,
+            "inventory_name": Variable.inventory_Name,
 
             "uom_code": uomCode,
-
 
             "inventory_id": Variable.inventory_ID,
 
@@ -5985,7 +6029,7 @@ try{
           "uom_code": uomCode,
 
           "inventory_id": Variable.inventory_ID,
-          "inventory_name":Variable.inventory_Name,
+          "inventory_name": Variable.inventory_Name,
 
           "variant_list": variantlist
           // [[{"key":"color","value":"red"},{"key":"size","value":"large"}],[{"key":"color","value":"yellow"},{"key":"size","value":"small"}]]
@@ -6024,15 +6068,13 @@ try{
     print("ayalkaran" + response.toString());
 
     PurchaseOrdertype ordertype =
-        PurchaseOrdertype.fromJson(response.data['data']);
+    PurchaseOrdertype.fromJson(response.data['data']);
     print(ordertype);
     return ordertype;
   }
 
   @override
-  Future<DoubleResponse> postStock(
-    StockData model,
-  ) async {
+  Future<DoubleResponse> postStock(StockData model,) async {
     String path = stockPostkDeleteApi;
     print(path);
     print(model);
@@ -6179,10 +6221,8 @@ try{
       print(response.data['message']);
       if (response.data['status'] == 'failed') {
         Variable.errorMessege = response.data['message'];
-      }
-      else {
+      } else {
         Variable.linkedVaue = response.data['data'];
-
       }
       return DoubleResponse(
           response.data['status'] == 'success', response.data['message']);
@@ -6200,10 +6240,9 @@ try{
     print(response);
     print(response.data['message']);
     if (response.data['status'] == 'failed') {
-      Variable.errorMessege = response.data['message'];}
-    else {
+      Variable.errorMessege = response.data['message'];
+    } else {
       Variable.linkedVaue = response.data['data'];
-
     }
 
     return DoubleResponse(
@@ -6227,7 +6266,7 @@ try{
       );
 
       LinkedItemPostModel dataa =
-          LinkedItemPostModel.fromJson(response.data['data']);
+      LinkedItemPostModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -6245,7 +6284,7 @@ try{
     );
     print("uomGroup response" + response.data['data'].toString());
     LinkedItemPostModel dataa =
-        LinkedItemPostModel.fromJson(response.data['data']);
+    LinkedItemPostModel.fromJson(response.data['data']);
     print("uomGroup read" + dataa.toString());
     return dataa;
     ;
@@ -6268,15 +6307,16 @@ try{
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<LinkedItemListIdModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
-  Future<DoubleResponse> patchLinkedItem(
-      LinkedItemPostModel model, int? id) async {
+  Future<DoubleResponse> patchLinkedItem(LinkedItemPostModel model,
+      int? id) async {
     String path = linkedListPatchnApi + id.toString();
     print(path);
     try {
@@ -6309,9 +6349,8 @@ try{
     print(response.data['message']);
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
-    }
-     else if (response.data['status'] == 'success') {
-       print("the error  cacaccac"+response.data['data']);
+    } else if (response.data['status'] == 'success') {
+      print("the error  cacaccac" + response.data['data']);
       Variable.linkedVaue = response.data['data'];
     }
     return DoubleResponse(
@@ -6335,7 +6374,7 @@ try{
       );
       print("ansaaaa" + response.toString());
       VariantFrameWorkPostModel dataa =
-          VariantFrameWorkPostModel.fromJson(response.data['data']);
+      VariantFrameWorkPostModel.fromJson(response.data['data']);
       print("ansaaaa" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -6353,7 +6392,7 @@ try{
     );
     print("uomGroup response" + response.toString());
     VariantFrameWorkPostModel dataa =
-        VariantFrameWorkPostModel.fromJson(response.data['data']);
+    VariantFrameWorkPostModel.fromJson(response.data['data']);
     print("uomGroup read" + dataa.toString());
     return dataa;
     ;
@@ -6391,9 +6430,8 @@ try{
     print(response.data['message']);
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
-    }
-    else{
-      Variable.successMessege=response.data['message'];
+    } else {
+      Variable.successMessege = response.data['message'];
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['data']);
@@ -6402,17 +6440,15 @@ try{
   @override
   Future<PaginatedResponse<List<VendorDetailsModel>>> getVendorDetailList(
       String? code) async {
-    print(""""""""""""""""""+code.toString());
+    print("""""" """""" """""" + code.toString());
     String path;
-    code=code==null?"":code;
-    if(code==""){
-       path = vendorDetailsApi;
-    }
-    else{
-      path=vendorDetailsApi+"?"+code.toString();
+    code = code == null ? "" : code;
+    if (code == "") {
+      path = vendorDetailsApi;
+    } else {
+      path = vendorDetailsApi + "?" + code.toString();
     }
     print(path);
-
 
     UserPreferences().getUser().then((value) {
       token = value.token;
@@ -6438,7 +6474,7 @@ try{
           response.data['data']['next'],
           response.data['data']['count'].toString());
     } catch (e) {
-      print("the mistake is"+e.toString());
+      print("the mistake is" + e.toString());
     }
     final response = await client.get(path,
         options: Options(headers: {
@@ -6461,17 +6497,13 @@ try{
 
   @override
   Future<List<VariantReadModel>> getProducedCountry(String? code) async {
-    String path ;
+    String path;
 
-
-
-
-    code=code==null?"":code;
-    if(code==""){
-      path = inventoryLiveBaseUrl+"country-list?value=list";
-    }
-    else{
-      path=inventoryLiveBaseUrl+"state-list?code=$code&value=list";
+    code = code == null ? "" : code;
+    if (code == "") {
+      path = inventoryLiveBaseUrl + "country-list?value=list";
+    } else {
+      path = inventoryLiveBaseUrl + "state-list?code=$code&value=list";
     }
     try {
       print("ppppath" + path.toString());
@@ -6516,7 +6548,7 @@ try{
 
   @override
   Future<DoubleResponse> postCreateCustom(CustomCreationtModel model) async {
-    String path=createCustomApi;
+    String path = createCustomApi;
     print(path);
     try {
       final response = await client.post(path,
@@ -6554,14 +6586,15 @@ try{
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getCustomVerticalList(String? code) async {
+  Future<PaginatedResponse<List<BrandListModel>>> getCustomVerticalList(
+      String? code) async {
     String path = "";
     code = code == null ? "" : code;
 
     if (code == "")
       path = listCustomApi;
     else
-      path = listCustomApi+"?$code";
+      path = listCustomApi + "?$code";
 
     print("afffffuu" + path.toString());
     final response = await client.get(path,
@@ -6577,9 +6610,9 @@ try{
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
   }
@@ -6589,7 +6622,6 @@ try{
     String path = readCustomApi + id.toString();
     print(path);
     try {
-
       final response = await client.get(
         path,
         options: Options(
@@ -6600,8 +6632,7 @@ try{
         ),
       );
 
-      ReadCustomModel dataa =
-      ReadCustomModel.fromJson(response.data['data']);
+      ReadCustomModel dataa = ReadCustomModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
@@ -6618,15 +6649,14 @@ try{
       ),
     );
 
-    ReadCustomModel dataa =
-    ReadCustomModel.fromJson(response.data['data']);
+    ReadCustomModel dataa = ReadCustomModel.fromJson(response.data['data']);
 
     return dataa;
   }
 
   @override
   Future<ReadCustomModel> getReturnRead() async {
- String   path=createCustomApi;
+    String path = createCustomApi;
 
     final response = await client.get(
       path,
@@ -6638,16 +6668,16 @@ try{
       ),
     );
 
-    ReadCustomModel dataa =
-    ReadCustomModel.fromJson(response.data['data']);
+    ReadCustomModel dataa = ReadCustomModel.fromJson(response.data['data']);
 
     return dataa;
   }
 
   @override
-  Future<DoubleResponse> patchCreateCustom(CustomCreationtModel model, int? id) async {
-    String path=patchCustomApi+id.toString();
-    print("updation"+path.toString());
+  Future<DoubleResponse> patchCreateCustom(CustomCreationtModel model,
+      int? id) async {
+    String path = patchCustomApi + id.toString();
+    print("updation" + path.toString());
     try {
       final response = await client.patch(path,
           data: model.toJson(),
@@ -6684,8 +6714,9 @@ try{
   }
 
   @override
-  Future<DoubleResponse> postCreateDivisionConfig(DivisionCreationtModel model) async {
-    String path=createDivisionConfig;
+  Future<DoubleResponse> postCreateDivisionConfig(
+      DivisionCreationtModel model) async {
+    String path = createDivisionConfig;
     print(path);
     try {
       final response = await client.post(path,
@@ -6723,14 +6754,15 @@ try{
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getDivisionVerticalList(String? code) async {
+  Future<PaginatedResponse<List<BrandListModel>>> getDivisionVerticalList(
+      String? code) async {
     String path = "";
     code = code == null ? "" : code;
 
     if (code == "")
       path = listDivisionConfig;
     else
-      path = listDivisionConfig+"?$code";
+      path = listDivisionConfig + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -6758,7 +6790,6 @@ try{
     String path = readDivisionConfig + id.toString();
     print(path);
     try {
-
       final response = await client.get(
         path,
         options: Options(
@@ -6787,16 +6818,16 @@ try{
       ),
     );
 
-    DivisionReadModel dataa =
-    DivisionReadModel.fromJson(response.data['data']);
+    DivisionReadModel dataa = DivisionReadModel.fromJson(response.data['data']);
 
     return dataa;
   }
 
   @override
-  Future<DoubleResponse> patchDivisionConfig(DivisionCreationtModel model, int? id) async {
-    String path=readDivisionConfig+id.toString();
-    print("updation"+path.toString());
+  Future<DoubleResponse> patchDivisionConfig(DivisionCreationtModel model,
+      int? id) async {
+    String path = readDivisionConfig + id.toString();
+    print("updation" + path.toString());
     try {
       final response = await client.patch(path,
           data: model.toJson(),
@@ -6833,23 +6864,25 @@ try{
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getUomDivisionList(String? code, {String? type, int? id}) async {
+  Future<PaginatedResponse<List<BrandListModel>>> getUomDivisionList(
+      String? code,
+      {String? type,
+        int? id}) async {
     code = code == null ? "" : code;
     String path = "";
 
     if (code == "")
-      path = listUomDivisionConfig ;
+      path = listUomDivisionConfig;
     else
-      path =listUomDivisionConfig + "?$code";
+      path = listUomDivisionConfig + "?$code";
 
-    print(path);try{
+    print(path);
+    try {
       final response = await client.get(path,
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           }));
-
-
 
       List<BrandListModel> items = [];
       (response.data['data']['results'] as List).forEach((element) {
@@ -6860,11 +6893,10 @@ try{
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString(),
-        previousUrl: response.data['data']['previous'],);
-    }
-    catch(e){
+        previousUrl: response.data['data']['previous'],
+      );
+    } catch (e) {
       print(e);
-
     }
     final response = await client.get(path,
         options: Options(headers: {
@@ -6872,29 +6904,29 @@ try{
           'Accept': 'application/json'
         }));
 
-
-
     List<BrandListModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
       items.add(BrandListModel.fromJson(element));
       print("itemsAk" + items.toString());
     });
     return PaginatedResponse<List<BrandListModel>>(
-        items,
-        response.data['data']['next'],
-        response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getGroupList(String? code, {String? type, int? id}) async {
+  Future<PaginatedResponse<List<BrandListModel>>> getGroupList(String? code,
+      {String? type, int? id}) async {
     code = code == null ? "" : code;
     String path = "";
 
     if (code == "")
       path = listGroupConfig;
     else
-      path =listGroupConfig + "?$code";
+      path = listGroupConfig + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -6903,8 +6935,6 @@ try{
           'Accept': 'application/json'
         }));
 
-
-
     List<BrandListModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
       items.add(BrandListModel.fromJson(element));
@@ -6914,27 +6944,28 @@ try{
       items,
       response.data['data']['next'],
       response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getCategoryList(String? code, {String? type, int? id}) async {
+  Future<PaginatedResponse<List<BrandListModel>>> getCategoryList(String? code,
+      {String? type, int? id}) async {
     code = code == null ? "" : code;
     String path = "";
 
     if (code == "")
-      path = listCategoryDivisionConfig ;
+      path = listCategoryDivisionConfig;
     else
-      path =listCategoryDivisionConfig + "?$code";
+      path = listCategoryDivisionConfig + "?$code";
 
-    print(path);try{
+    print(path);
+    try {
       final response = await client.get(path,
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           }));
-
-
 
       List<BrandListModel> items = [];
       (response.data['data']['results'] as List).forEach((element) {
@@ -6945,19 +6976,16 @@ try{
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString(),
-        previousUrl: response.data['data']['previous'],);
-    }
-    catch(e){
+        previousUrl: response.data['data']['previous'],
+      );
+    } catch (e) {
       print(e);
-
     }
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }));
-
-
 
     List<BrandListModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
@@ -6968,15 +6996,13 @@ try{
       items,
       response.data['data']['next'],
       response.data['data']['count'].toString(),
-      previousUrl: response.data['data']['previous'],);
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
   Future<List<StateList>> getStateList(String? code) async {
-
-
-
-    String  path=inventoryLiveBaseUrl+"state-list?code=$code&value=list";
+    String path = inventoryLiveBaseUrl + "state-list?code=$code&value=list";
 
     try {
       print("ppppath" + path.toString());
@@ -7041,7 +7067,7 @@ try{
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
-      print("the datasa error is"+e.toString());
+      print("the datasa error is" + e.toString());
     }
 
     print(path);
@@ -7063,16 +7089,15 @@ try{
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getAllCategoryist(String? code) async {
-    String path="";
+  Future<PaginatedResponse<List<BrandListModel>>> getAllCategoryist(
+      String? code) async {
+    String path = "";
     code = code == null ? "" : code;
 
-
-
-      if (code == "")
-        path = listCategoryAllGroupApi;
-      else
-        path = listCategoryAllGroupApi + "?$code";
+    if (code == "")
+      path = listCategoryAllGroupApi;
+    else
+      path = listCategoryAllGroupApi + "?$code";
 
     print("Searching path" + path.toString());
     final response = await client.get(path,
@@ -7097,7 +7122,6 @@ try{
 
   @override
   Future<Returntypemodel> getReturnType() async {
-
     String path = readVariantApi + "${0}";
     try {
       print("ppppathreturntype" + path.toString());
@@ -7111,7 +7135,7 @@ try{
           },
         ),
       );
-      print("anamika" +response.data.toString());
+      print("anamika" + response.data.toString());
       Returntypemodel dataa = Returntypemodel.fromJson(response.data);
       print("rwead" + dataa.toString());
       return dataa;
@@ -7136,17 +7160,15 @@ try{
   }
 
   @override
-  Future<DoubleResponse> getAttributePost(String? attributeType, String? attributeName, bool? isActive) async {
-print(attributePostApi);
+  Future<DoubleResponse> getAttributePost(String? attributeType,
+      String? attributeName, bool? isActive) async {
+    print(attributePostApi);
     try {
       final response = await client.post(attributePostApi,
           data: {
             "attribute_type": attributeType,
-
             "attribute_name": attributeName,
-
-            "is_active":isActive
-
+            "is_active": isActive
           },
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -7167,11 +7189,8 @@ print(attributePostApi);
     final response = await client.post(attributePostApi,
         data: {
           "attribute_type": attributeType,
-
           "attribute_name": attributeName,
-
-          "is_active":isActive
-
+          "is_active": isActive
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -7188,11 +7207,10 @@ print(attributePostApi);
   }
 
   @override
-  Future<PaginatedResponse<List<AttributeListModel>>> getAttributePatchList(String? code) async {
-    String path="";
+  Future<PaginatedResponse<List<AttributeListModel>>> getAttributePatchList(
+      String? code) async {
+    String path = "";
     code = code == null ? "" : code;
-
-
 
     if (code == "")
       path = attributePatchListApi;
@@ -7215,8 +7233,7 @@ print(attributePostApi);
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString(),
-        previousUrl: response.data['data']['previous']
-    );
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -7259,17 +7276,17 @@ print(attributePostApi);
     AttributeListModel.fromJson(response.data['data']['attribute_data']);
     print("rwead" + dataa.toString());
     return dataa;
-
   }
 
   @override
-  Future<DoubleResponse> getAttributePatch(String? attributeType, String? attributeName, bool? isActive, int? id) async {
+  Future<DoubleResponse> getAttributePatch(String? attributeType,
+      String? attributeName, bool? isActive, int? id) async {
     print(attributePatchApi);
-    String path=attributePatchApi+"$id";
+    String path = attributePatchApi + "$id";
     try {
       final response = await client.patch(path,
           data: {
-            "attribute_type":attributeType,
+            "attribute_type": attributeType,
             "attribute_name": attributeName,
             "is_active": isActive
           },
@@ -7290,15 +7307,11 @@ print(attributePostApi);
     }
 
     final response = await client.patch(path,
-        data:{
-
-          "attribute_type":attributeType,
-
+        data: {
+          "attribute_type": attributeType,
           "attribute_name": attributeName,
-
           "is_active": isActive
-
-        } ,
+        },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -7311,7 +7324,6 @@ print(attributePostApi);
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
-
   }
 
   @override
@@ -7349,7 +7361,8 @@ print(attributePostApi);
       ),
     );
 
-    AttributeListModel dataa = AttributeListModel.fromJson(response.data['data']);
+    AttributeListModel dataa =
+    AttributeListModel.fromJson(response.data['data']);
     print("uomGroup read" + dataa.toString());
     return dataa;
     ;
@@ -7357,7 +7370,7 @@ print(attributePostApi);
 
   @override
   Future<ReadMessuremnetModel> getMessurementRead() async {
-    String path = createCustomApi ;
+    String path = createCustomApi;
     print(path);
 
     try {
@@ -7407,7 +7420,8 @@ print(attributePostApi);
   }
 
   @override
-  Future<DoubleResponse> postStockPartion(String? name, String? descriptio) async {
+  Future<DoubleResponse> postStockPartion(String? name,
+      String? descriptio) async {
     String path = stockPartition;
     print(path);
     // print("sasasaassss"+model.inventoryName.toString());
@@ -7415,7 +7429,7 @@ print(attributePostApi);
       final response = await client.post(path,
           // data: model.toJson(),
 
-          data:{
+          data: {
             "inventory_id": Variable.inventory_ID,
             "description": descriptio,
             "name": name,
@@ -7438,7 +7452,7 @@ print(attributePostApi);
     final response = await client.post(path,
         // data: model.toJson(),
 
-        data:{
+        data: {
           "inventory_id": Variable.inventory_ID,
           "description": descriptio,
           "name": name,
@@ -7455,16 +7469,16 @@ print(attributePostApi);
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
-
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getStockPartitionList(String? code) async {
+  Future<PaginatedResponse<List<BrandListModel>>> getStockPartitionList(
+      String? code) async {
     String path = "";
     code = code == null ? "" : code;
 
     if (code == "")
-      path = listStockPartitionApi ;
+      path = listStockPartitionApi;
     else
       path = listStockPartitionApi + "?$code";
 
@@ -7529,30 +7543,312 @@ print(attributePostApi);
   }
 
   @override
-  Future<DoubleResponse> patchStockPartition(String? name, String? description, bool? active, int? id) async {
+  Future<DoubleResponse> patchStockPartition(String? name, String? description,
+      bool? active, int? id) async {
     String path = readStockPartitionApi + id.toString();
-
 
     final response = await client.patch(path,
         // data: model.toJson(),
 
         data: {
-
           "name": name,
-
           "description": description,
-
           "inventory_id": Variable.inventory_ID,
-
-          "is_active":active
-
-
+          "is_active": active
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
     print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<PurchasePaymentModel>>> getPaymentList() async {
+    String path = payMentListApi;
+    print(path);
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
+    try {
+      final response = await client.get(path,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': '$token'
+          }));
+
+      List<PurchasePaymentModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(PurchasePaymentModel.fromJson(element));
+        print("items" + items.toString());
+      });
+      return PaginatedResponse<List<PurchasePaymentModel>>(
+          items,
+          response.data['data']['next'],
+          response.data['data']['count'].toString(),
+          previousUrl: response.data['data']['previous']);
+    } catch (e) {
+      print("assssss" + e.toString());
+    }
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': '$token'
+        }));
+
+    List<PurchasePaymentModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(PurchasePaymentModel.fromJson(element));
+      print("items" + items.toString());
+    });
+    return PaginatedResponse<List<PurchasePaymentModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
+  }
+
+  @override
+  Future<DoubleResponse> postSaleOrderPaymentPost(
+      PurchasePaymentPostModel model) async {
+    print(payMentPostApi);
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
+    try {
+      final response = await client.post(payMentPostApi,
+          data:   {"customer_code": model.customerCode,
+                    "method_code": model.methodCode,
+                    "total_amount": model.totalAmount,
+                    "order_id": model.orderId,
+                    "status": model.status,
+                    "transaction_code": model.tranSactionCode,
+                    "customer_name": model.customerName,
+                    "contact": model.contact
+                  },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': '$token'
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['data']['id'].toString());
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(payMentPostApi,
+        data:
+        {"customer_code": model.customerCode,
+        "method_code": model.methodCode,
+        "total_amount": model.totalAmount,
+        "order_id": model.orderId,
+        "status": model.status,
+        "transaction_code": model.tranSactionCode,
+        "customer_name": model.customerName,
+        "contact": model.contact
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': '$token'
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success',  response.data['data']['id'].toString());
+  }
+
+  @override
+  Future<PaginatedResponse<
+      List<PaymentListSalesModel>>> getSalePaymentVerticalList(
+      String? code) async {
+    String path="";
+    code = code == null ? "" : code;
+
+    if (code == "")
+      path = paymetPatchListApi;
+    else
+      path = paymetPatchListApi + "?$code";
+
+
+
+    print(path);
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
+
+    try {
+      final response = await client.get(path,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': '$token'
+          }));
+      print("akkakkakakakkakak");
+      List<PaymentListSalesModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(PaymentListSalesModel.fromJson(element));
+        print("items" + items.toString());
+      });
+      return PaginatedResponse<List<PaymentListSalesModel>>(
+          items,
+          response.data['data']['next'],
+          response.data['data']['count'].toString(),
+          previousUrl: response.data['data']['previous']);
+    }
+    catch (e) {
+      print(e);
+    }
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': '$token'
+        }));
+    print("akkakkakakakkakak");
+    List<PaymentListSalesModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(PaymentListSalesModel.fromJson(element));
+      print("items" + items.toString());
+    });
+    return PaginatedResponse<List<PaymentListSalesModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
+  }
+
+  @override
+  Future<DoubleResponse> patchPayment(PurchasePaymentPostModel model) async {
+    String path=payMentPatchApi;
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
+    print(path);
+    try {
+      final response = await client.put(
+          payMentPatchApi,
+          data: model.toJson(),
+
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': '$token'
+          }));
+
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.put(
+       path,
+        data: model.toJson(),
+
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': '$token'
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> postPaymentTransactionSuccess(int? invoiceId, String? paymentMethod, String? paymentCode,int type) async {
+    String path="";
+    print(path);
+    print(invoiceId);
+    print(paymentMethod);
+    print(paymentCode);
+    switch (type) {
+      case 1:
+        {
+          path = purchaseOrderPaymentPostSuccessApi;
+        }
+        break;
+
+      case 2:
+        {
+          path = salePaymentPostSuccessApi;
+        }
+
+        break;
+
+    }
+    print(path);
+
+
+    try {
+      final response = await client.post(
+          path,
+          data: {
+            "invoice_id":invoiceId,
+            "payment_method":paymentMethod,
+            "payment_code":paymentCode
+          },
+
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(
+        path,
+        data: {
+          "invoice_id":invoiceId,
+          "payment_method":paymentMethod,
+          "payment_code":paymentCode
+        },
+
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
     print(response);
     print(response.data['message']);
     if (response.data['status'] == 'failed') {

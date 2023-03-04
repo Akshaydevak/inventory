@@ -29,6 +29,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/readFrameWork/framewo
 import 'package:inventory/Screens/heirarchy/general/cubits/subcategorylist/subcategory_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgroupread/uomgroupread_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/categorymodel.dart';
@@ -41,6 +42,7 @@ import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.d
 import 'package:inventory/Screens/heirarchy/general/screens.dart';
 import 'package:inventory/Screens/logi/inventorylist/inventorylist_cubit.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
+import 'package:inventory/Screens/promotiontab/discount/cubit/customer_group/customer_group_cubit.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
@@ -51,6 +53,10 @@ import 'package:inventory/Screens/promotiontab/sale/cubits/offergroup/list_offer
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/payment_list/payment_list_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment_sale_post_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
+import 'package:inventory/Screens/sales/invoice/ipayment_list.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtype/costingtype_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtypelist/costingtypelist_cubit.dart';
@@ -86,7 +92,9 @@ import 'package:inventory/widgets/custom_inputdecoration.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
 import 'package:inventory/widgets/inputfield.dart';
+import 'package:inventory/widgets/itemmenu.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Screens/heirarchy/general/cubits/attributecreationread_cubit.dart';
@@ -98,6 +106,7 @@ import '../Screens/heirarchy/general/cubits/uomGroupcreation/uomgroup_creation_c
 import '../Screens/heirarchy/general/cubits/variantframeworkpost/variantframeworkpost_cubit.dart';
 import '../Screens/heirarchy/general/model/brandreadmodel.dart';
 import '../Screens/heirarchy/general/model/frameworklistmodel.dart';
+import '../Screens/promotiontab/buy_more/cubit/get_product_by_groupcode/get_product_by_group_code_cubit.dart';
 import '../Screens/promotiontab/sale/cubits/ListOfferPeriodGroup/list_offer_period_cubit.dart';
 import '../Screens/promotiontab/sale/cubits/ReadOfferPeriod/read_offer_period_cubit.dart';
 import '../Screens/promotiontab/sale/cubits/create_offer_period/create_offer_period_cubit.dart';
@@ -763,7 +772,7 @@ class _LogoutPopup extends State<LogoutPopup> {
                               clr: Colors.white,
                               onPress: () {
                                 if(widget.onLeftPress!=null)
-                                  widget.onLeftPress;
+                                  widget.onLeftPress!();
                                 else
                                 Navigator.pop(context);
                               },
@@ -912,6 +921,7 @@ class ConfigurePopup extends StatelessWidget {
   final dynamic? obj;
   final Function? listAssign;
   final List<LinkedItemListModel>?linkedListItemTable;
+  final List<dynamic>?passingList;
 
   final int? veritiaclid;
 
@@ -925,6 +935,7 @@ class ConfigurePopup extends StatelessWidget {
       required this.type,
       this.onBack,
         this.code,
+  this.passingList,
         this.obj,
       this.onAddNew = false,
       this.listAssign,
@@ -964,6 +975,18 @@ class ConfigurePopup extends StatelessWidget {
           );
         }
         break;
+      case "CustomGroupLinkedItem":
+
+        {
+
+          data = CustomGroupLinkedItem(
+            veritcalCode:code,
+            linkedListItemTable:passingList,
+            listAssign: listAssign,
+            type: type,
+          );
+        }
+        break;
       case "VariantPromotionCreatativePopup":
 
         {
@@ -984,6 +1007,38 @@ class ConfigurePopup extends StatelessWidget {
           data = DiscountVariantCreatativePopup(
             veritcalCode:code,
             obj: obj,
+            passingList: passingList,
+
+            linkedListItemTable:linkedListItemTable,
+            listAssign: listAssign,
+            type: type,
+          );
+        }
+        break;
+      case "DiscountVariantGroupCodeCreatativePopup":
+
+        {
+
+          data = DiscountVariantGroupCodeCreatativePopup(
+            veritcalCode:code,
+            obj: obj,
+            passingList: passingList,
+
+            linkedListItemTable:linkedListItemTable,
+            listAssign: listAssign,
+            type: type,
+          );
+        }
+        break;
+      case "VariantAddTimePopup":
+
+        {
+
+          data = VariantAddTimePopup(
+            veritcalCode:code,
+            obj: obj,
+            passingList: passingList,
+
             linkedListItemTable:linkedListItemTable,
             listAssign: listAssign,
             type: type,
@@ -1055,6 +1110,7 @@ class ConfigurePopup extends StatelessWidget {
         {
           data = CategoryCreatePopUp(
             type: type,
+            id:veritiaclid
           );
         }
         break;
@@ -1062,6 +1118,7 @@ class ConfigurePopup extends StatelessWidget {
         {
           data = SubCategoryCreatePopUp(
             type: type,
+            id:veritiaclid
           );
         }
         break;
@@ -1104,6 +1161,7 @@ class ConfigurePopup extends StatelessWidget {
           );
         }
         break;
+
 
       case "uom_patch":
         {
@@ -1300,8 +1358,9 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  // Navigator.pop(context);
+
                   if (data.data1) {
+                    Navigator.pop(context);
                     setState(() {
                       context.read<Listbrand2Cubit>().getSlotSectionPage();
                     });
@@ -2105,8 +2164,9 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  // Navigator.pop(context);
+
                   if (data.data1) {
+                    Navigator.pop(context);
                     showDailogPopUp(
                         context,
                         SuccessPopup(
@@ -2615,215 +2675,222 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
                                 },
                               )),
                           Container(
-                            // width: w/7,
-                            // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                            child: customTable(
-                              // border: const TableBorder(
-                              //   verticalInside: BorderSide(
-                              //       width: .5,
-                              //       color: Colors.black45,
-                              //       style: BorderStyle.solid),
-                              //   horizontalInside: BorderSide(
-                              //       width: .3,
-                              //       color: Colors.black45,
-                              //       // color: Colors.blue,
-                              //       style: BorderStyle.solid),
-                              // ),
-                              tableWidth: .5,
-                              childrens: [
-                                TableRow(
-                                  // decoration: BoxDecoration(
+                              height: MediaQuery
+                                  .of(context).size.height/ 1.8,
+                            child: SingleChildScrollView(
+                              child: Container(
 
-                                  //     color: Colors.green.shade200,
-
-                                  //     shape: BoxShape.rectangle,
-
-                                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
-                                  children: [
-                                    tableHeadtext(
-                                      '',
-
-                                      // padding: EdgeInsets.all(7),
-                                      //
-                                      // height: 46,
-                                      // textColor: Colors.black,
-                                      // color: Color(0xffE5E5E5),
-
-                                      size: 13,
-                                    ),
-
-                                    tableHeadtext(
-                                      'Item Name',
-                                      // textColor: Colors.black,
-                                      // padding: EdgeInsets.all(7),
-                                      // height: 46,
-                                      size: 13,
-                                      // color: Color(0xffE5E5E5),
-                                    ),
-                                    // tableHeadtext(
-                                    //   '',
-                                    //   textColor: Colors.black,
-                                    //   padding: EdgeInsets.all(7),
-                                    //   height: 46,
-                                    //   size: 13,
-                                    //   // color: Color(0xffE5E5E5),
-                                    // ),
-                                  ],
-                                ),
-                                if (table?.isNotEmpty == true) ...[
-                                  for (var i = 0; i < table.length; i++)
+                                // width: w/7,
+                                // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                                child: customTable(
+                                  // border: const TableBorder(
+                                  //   verticalInside: BorderSide(
+                                  //       width: .5,
+                                  //       color: Colors.black45,
+                                  //       style: BorderStyle.solid),
+                                  //   horizontalInside: BorderSide(
+                                  //       width: .3,
+                                  //       color: Colors.black45,
+                                  //       // color: Colors.blue,
+                                  //       style: BorderStyle.solid),
+                                  // ),
+                                  tableWidth: .5,
+                                  childrens: [
                                     TableRow(
-                                        decoration: BoxDecoration(
-                                            color: Pellet.tableRowColor,
-                                            shape: BoxShape.rectangle,
-                                            border:  Border(
-                                                left: BorderSide(
+                                      // decoration: BoxDecoration(
 
-                                                    color: Color(0xff3E4F5B).withOpacity(.1),
-                                                    width: .4,
-                                                    style: BorderStyle.solid),
-                                                bottom: BorderSide(
+                                      //     color: Colors.green.shade200,
 
-                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                    style: BorderStyle.solid),
-                                                right: BorderSide(
-                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                    width: .4,
+                                      //     shape: BoxShape.rectangle,
 
-                                                    style: BorderStyle.solid))),
-                                        children: [
-                                          TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
+                                      //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                                            child: CustomCheckBox(
-                                              key: UniqueKey(),
-                                              value:additionCheck.contains(table![i].name),
-                                              onChange: (p0) {
-                                                if (p0)
-                                                  list1.add(
-                                                      LinkedItemListIdModel(
-                                                          id: table![i].id,
-                                                          name: table[i].name));
-                                                else
-                                                  list1.removeWhere((element) =>
-                                                      element == list1[i]);
-                                                // list1.remove(table![i]);
+                                      children: [
+                                        tableHeadtext(
+                                          '',
 
-                                                widget.listAssign!(list1);
+                                          // padding: EdgeInsets.all(7),
+                                          //
+                                          // height: 46,
+                                          // textColor: Colors.black,
+                                          // color: Color(0xffE5E5E5),
 
-                                                print(list1);
-                                              },
-                                            ),
-                                            // Text(keys[i].key??"")
-                                          ),
-                                          TableCell(
-                                              verticalAlignment:
-                                                  TableCellVerticalAlignment
-                                                      .middle,
-                                              child: textPadding(
-                                                  table[i].name ?? "",
-                                                 )
-                                              // Text(keys[i].value??"",)
+                                          size: 13,
+                                        ),
 
+                                        tableHeadtext(
+                                          'Item Name',
+                                          // textColor: Colors.black,
+                                          // padding: EdgeInsets.all(7),
+                                          // height: 46,
+                                          size: 13,
+                                          // color: Color(0xffE5E5E5),
+                                        ),
+                                        // tableHeadtext(
+                                        //   '',
+                                        //   textColor: Colors.black,
+                                        //   padding: EdgeInsets.all(7),
+                                        //   height: 46,
+                                        //   size: 13,
+                                        //   // color: Color(0xffE5E5E5),
+                                        // ),
+                                      ],
+                                    ),
+                                    if (table?.isNotEmpty == true) ...[
+                                      for (var i = 0; i < table.length; i++)
+                                        TableRow(
+                                            decoration: BoxDecoration(
+                                                color: Pellet.tableRowColor,
+                                                shape: BoxShape.rectangle,
+                                                border:  Border(
+                                                    left: BorderSide(
+
+                                                        color: Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+                                                        style: BorderStyle.solid),
+                                                    bottom: BorderSide(
+
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        style: BorderStyle.solid),
+                                                    right: BorderSide(
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+
+                                                        style: BorderStyle.solid))),
+                                            children: [
+                                              TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+
+                                                child: CustomCheckBox(
+                                                  key: UniqueKey(),
+                                                  value:additionCheck.contains(table![i].name),
+                                                  onChange: (p0) {
+                                                    if (p0)
+                                                      list1.add(
+                                                          LinkedItemListIdModel(
+                                                              id: table![i].id,
+                                                              name: table[i].name));
+                                                    else
+                                                      list1.removeWhere((element) =>
+                                                          element == list1[i]);
+                                                    // list1.remove(table![i]);
+
+                                                    widget.listAssign!(list1);
+
+                                                    print(list1);
+                                                  },
+                                                ),
+                                                // Text(keys[i].key??"")
                                               ),
-                                        ]),
-                                ],
-                                //
-                                // TableRow(
-                                //     decoration: BoxDecoration(
-                                //         color: Colors.grey
-                                //             .shade200,
-                                //         shape: BoxShape
-                                //             .rectangle,
-                                //         border:const  Border(
-                                //             left: BorderSide(
-                                //                 width: .5,
-                                //                 color: Colors
-                                //                     .grey,
-                                //                 style: BorderStyle
-                                //                     .solid),
-                                //             bottom: BorderSide(
-                                //                 width: .5,
-                                //                 color: Colors
-                                //                     .grey,
-                                //                 style: BorderStyle
-                                //                     .solid),
-                                //             right: BorderSide(
-                                //                 color: Colors
-                                //                     .grey,
-                                //                 width: .5,
-                                //                 style: BorderStyle
-                                //                     .solid))),
-                                //     children: [
-                                //
-                                //       TableCell(
-                                //         verticalAlignment: TableCellVerticalAlignment.middle,
-                                //
-                                //         child: UnderLinedInput(
-                                //           onChanged: (va){
-                                //             key.text=va;
-                                //
-                                //           },
-                                //
-                                //           formatter: false,
-                                //
-                                //         ),
-                                //
-                                //
-                                //       ),
-                                //       TableCell(
-                                //         verticalAlignment: TableCellVerticalAlignment.middle,
-                                //
-                                //         child:
-                                //
-                                //         UnderLinedInput(
-                                //           onChanged: (va){
-                                //             value.text=va;
-                                //           },
-                                //           formatter: false,
-                                //         ),
-                                //
-                                //
-                                //       ),
-                                //       TableTextButton(label: "", onPress: (){
-                                //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
-                                //           Keys model=Keys(
-                                //             key: key.text??"",
-                                //             value: value.text??'',
-                                //           );
-                                //           setState(() {
-                                //             onChange=true;
-                                //
-                                //
-                                //             keys?.add(model);
-                                //
-                                //
-                                //             productFeatures?.add(ProductFeatures(
-                                //
-                                //                 keyValues: keys
-                                //             ));
-                                //             widget.productTableEdit(type:"3",list:productFeatures);
-                                //             key.text="";
-                                //             value.text="";
-                                //           });
-                                //
-                                //
-                                //
-                                //
-                                //         }
-                                //
-                                //       })
-                                //
-                                //
-                                //     ])
-                              ],
-                              widths: {
-                                0: FlexColumnWidth(2),
-                                1: FlexColumnWidth(5),
-                              },
+                                              TableCell(
+                                                  verticalAlignment:
+                                                      TableCellVerticalAlignment
+                                                          .middle,
+                                                  child: textPadding(
+                                                      table[i].name ?? "",
+                                                     )
+                                                  // Text(keys[i].value??"",)
+
+                                                  ),
+                                            ]),
+                                    ],
+                                    //
+                                    // TableRow(
+                                    //     decoration: BoxDecoration(
+                                    //         color: Colors.grey
+                                    //             .shade200,
+                                    //         shape: BoxShape
+                                    //             .rectangle,
+                                    //         border:const  Border(
+                                    //             left: BorderSide(
+                                    //                 width: .5,
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 style: BorderStyle
+                                    //                     .solid),
+                                    //             bottom: BorderSide(
+                                    //                 width: .5,
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 style: BorderStyle
+                                    //                     .solid),
+                                    //             right: BorderSide(
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 width: .5,
+                                    //                 style: BorderStyle
+                                    //                     .solid))),
+                                    //     children: [
+                                    //
+                                    //       TableCell(
+                                    //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                    //
+                                    //         child: UnderLinedInput(
+                                    //           onChanged: (va){
+                                    //             key.text=va;
+                                    //
+                                    //           },
+                                    //
+                                    //           formatter: false,
+                                    //
+                                    //         ),
+                                    //
+                                    //
+                                    //       ),
+                                    //       TableCell(
+                                    //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                    //
+                                    //         child:
+                                    //
+                                    //         UnderLinedInput(
+                                    //           onChanged: (va){
+                                    //             value.text=va;
+                                    //           },
+                                    //           formatter: false,
+                                    //         ),
+                                    //
+                                    //
+                                    //       ),
+                                    //       TableTextButton(label: "", onPress: (){
+                                    //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                    //           Keys model=Keys(
+                                    //             key: key.text??"",
+                                    //             value: value.text??'',
+                                    //           );
+                                    //           setState(() {
+                                    //             onChange=true;
+                                    //
+                                    //
+                                    //             keys?.add(model);
+                                    //
+                                    //
+                                    //             productFeatures?.add(ProductFeatures(
+                                    //
+                                    //                 keyValues: keys
+                                    //             ));
+                                    //             widget.productTableEdit(type:"3",list:productFeatures);
+                                    //             key.text="";
+                                    //             value.text="";
+                                    //           });
+                                    //
+                                    //
+                                    //
+                                    //
+                                    //         }
+                                    //
+                                    //       })
+                                    //
+                                    //
+                                    //     ])
+                                  ],
+                                  widths: {
+                                    0: FlexColumnWidth(2),
+                                    1: FlexColumnWidth(5),
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -2839,6 +2906,521 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
     );
   }
 }
+
+
+class CustomGroupLinkedItem extends StatefulWidget {
+  final String type;
+  final String? veritcalCode;
+  final Function? listAssign;
+  final List<dynamic>?linkedListItemTable;
+
+  CustomGroupLinkedItem({
+    Key? key,
+  this.veritcalCode,
+    required this.linkedListItemTable,
+    required this.type,
+    required this.listAssign,
+  }) : super(key: key);
+
+  @override
+  _CustomGroupLinkedItem createState() => _CustomGroupLinkedItem();
+}
+
+class _CustomGroupLinkedItem extends State<CustomGroupLinkedItem> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  MaterialReadModel? group;
+  int? veritiaclid = 0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  List<String?>additionCheck=[];
+
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  TextEditingController searchContoller = TextEditingController();
+  bool addNew = false;
+  List<CustomGroupReadModel>? table = [];
+  List<int> list = [];
+  List<AvailableCustomerGroups> list1 = [];
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MaterialcraetionCubit(),
+        ),
+
+        BlocProvider(
+          create: (context) => CustomerGroupCubit()..getCustomGroupRead(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<CustomerGroupCubit, CustomerGroupState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // // context.
+                  // context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print("the real Akshay" + data.toString());
+
+
+                  print(widget.linkedListItemTable);
+                  if (data?.data.isNotEmpty==true) {
+                    setState(() {
+                      list1.clear();
+                      table = data.data;
+                      additionCheck.clear();
+
+                      print("11111111111111111111111");
+                      if(widget.linkedListItemTable?.isNotEmpty==true){
+                        print("entered");
+                        for (var i =0;i<widget.linkedListItemTable!.length;i++){
+                          print("entered1");
+                          additionCheck.add(widget.linkedListItemTable![i].customerGroupName);
+                          list1.add( AvailableCustomerGroups(
+                              customerGroupId:widget.linkedListItemTable![i].customerGroupId,
+                              customerGroupCode:widget.linkedListItemTable![i].customerGroupCode,
+                          customerGroupName:widget.linkedListItemTable![i].customerGroupName ));
+                          print("entered");
+                        }
+                        setState(() {
+// print(list1.contains(widget.linkedListItemTable?[0].name));
+                        });
+
+
+
+
+
+                      }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    );
+                  }
+
+                  // context.showSnackBarSuccess(data.data2);
+
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialcraetionCubit, MaterialcraetionState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<MaterialListCubit>().getMaterialList();
+                    Navigator.pop(context);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<MaterialreadCubit>()
+                            .getMaterialRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonVisible: false,
+                    functionChane: true,
+                    buttonCheck: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    label: "Linked Item",
+                    onApply: () {
+                      MaterialCreationtModel model = MaterialCreationtModel(
+                        description: descriptionContollercontroller?.text ?? "",
+                        image: imageContollercontroller.text,
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        name: namecontroller?.text ?? "",
+                      );
+                      context
+                          .read<MaterialcraetionCubit>()
+                          .postCreateMaterial(model);
+
+                      // widget.onTap();
+                      setState(() {});
+                    },
+                    onEdit: () {
+                      MaterialReadModel model = MaterialReadModel(
+                        name: namecontroller?.text ?? "",
+                        image: imageContollercontroller?.text ?? "",
+                        description: descriptionContollercontroller?.text ?? "",
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        isActive: active,
+                      );
+                      // print(model);
+                      context
+                          .read<MaterialcraetionCubit>()
+                          .postmaterialPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Container(
+                      // height: 500,
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child: SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                h: 40,
+                                hintText: "Search...",
+                                ctrlr: searchContoller,
+                                onChanged: (va) {
+                                  // print("searching case"+va.toString());
+                                  // context
+                                  //     .read<InventorysearchCubit>()
+                                  //     .getSearch(widget.itemsearch.text,tab: widget.tab);
+                                  // if(va==""){
+                                  //   context
+                                  //       .read<InventorysearchCubit>()
+                                  //       .getInventorySearch("code",tab: widget.tab);
+
+                                  // }
+                                },
+                              )),
+                          Container(
+                              height: MediaQuery
+                                  .of(context).size.height/ 1.8,
+                            child: SingleChildScrollView(
+                              child: Container(
+
+                                // width: w/7,
+                                // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                                child: customTable(
+                                  // border: const TableBorder(
+                                  //   verticalInside: BorderSide(
+                                  //       width: .5,
+                                  //       color: Colors.black45,
+                                  //       style: BorderStyle.solid),
+                                  //   horizontalInside: BorderSide(
+                                  //       width: .3,
+                                  //       color: Colors.black45,
+                                  //       // color: Colors.blue,
+                                  //       style: BorderStyle.solid),
+                                  // ),
+                                  tableWidth: .5,
+                                  childrens: [
+                                    TableRow(
+                                      // decoration: BoxDecoration(
+
+                                      //     color: Colors.green.shade200,
+
+                                      //     shape: BoxShape.rectangle,
+
+                                      //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                      children: [
+                                        tableHeadtext(
+                                          '',
+
+                                          // padding: EdgeInsets.all(7),
+                                          //
+                                          // height: 46,
+                                          // textColor: Colors.black,
+                                          // color: Color(0xffE5E5E5),
+
+                                          size: 13,
+                                        ),
+
+                                        tableHeadtext(
+                                          'Item Name',
+                                          // textColor: Colors.black,
+                                          // padding: EdgeInsets.all(7),
+                                          // height: 46,
+                                          size: 13,
+                                          // color: Color(0xffE5E5E5),
+                                        ),
+                                        // tableHeadtext(
+                                        //   '',
+                                        //   textColor: Colors.black,
+                                        //   padding: EdgeInsets.all(7),
+                                        //   height: 46,
+                                        //   size: 13,
+                                        //   // color: Color(0xffE5E5E5),
+                                        // ),
+                                      ],
+                                    ),
+                                    if (table?.isNotEmpty == true) ...[
+                                      for (var i = 0; i < table!.length; i++)
+                                        TableRow(
+                                            decoration: BoxDecoration(
+                                                color: Pellet.tableRowColor,
+                                                shape: BoxShape.rectangle,
+                                                border:  Border(
+                                                    left: BorderSide(
+
+                                                        color: Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+                                                        style: BorderStyle.solid),
+                                                    bottom: BorderSide(
+
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        style: BorderStyle.solid),
+                                                    right: BorderSide(
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+
+                                                        style: BorderStyle.solid))),
+                                            children: [
+                                              TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+
+                                                child: CustomCheckBox(
+                                                  key: UniqueKey(),
+                                                  value:additionCheck.contains(table![i].name),
+                                                  onChange: (p0) {
+                                                    if (p0)
+                                                      list1.add(
+                                                          AvailableCustomerGroups(
+                                                              customerGroupId: table![i].code,
+                                                              customerGroupCode: table![i].code,
+                                                              customerGroupName: table![i].name
+                                                          ));
+                                                    else
+                                                      list1.removeWhere((element) =>
+                                                          element == list1[i]);
+                                                    // list1.remove(table![i]);
+
+                                                    widget.listAssign!(list1);
+
+                                                    print(list1);
+                                                  },
+                                                ),
+                                                // Text(keys[i].key??"")
+                                              ),
+                                              TableCell(
+                                                  verticalAlignment:
+                                                      TableCellVerticalAlignment
+                                                          .middle,
+                                                  child: textPadding(
+                                                      table?[i].name ?? "",
+                                                     )
+                                                  // Text(keys[i].value??"",)
+
+                                                  ),
+                                            ]),
+                                    ],
+                                    //
+                                    // TableRow(
+                                    //     decoration: BoxDecoration(
+                                    //         color: Colors.grey
+                                    //             .shade200,
+                                    //         shape: BoxShape
+                                    //             .rectangle,
+                                    //         border:const  Border(
+                                    //             left: BorderSide(
+                                    //                 width: .5,
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 style: BorderStyle
+                                    //                     .solid),
+                                    //             bottom: BorderSide(
+                                    //                 width: .5,
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 style: BorderStyle
+                                    //                     .solid),
+                                    //             right: BorderSide(
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 width: .5,
+                                    //                 style: BorderStyle
+                                    //                     .solid))),
+                                    //     children: [
+                                    //
+                                    //       TableCell(
+                                    //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                    //
+                                    //         child: UnderLinedInput(
+                                    //           onChanged: (va){
+                                    //             key.text=va;
+                                    //
+                                    //           },
+                                    //
+                                    //           formatter: false,
+                                    //
+                                    //         ),
+                                    //
+                                    //
+                                    //       ),
+                                    //       TableCell(
+                                    //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                    //
+                                    //         child:
+                                    //
+                                    //         UnderLinedInput(
+                                    //           onChanged: (va){
+                                    //             value.text=va;
+                                    //           },
+                                    //           formatter: false,
+                                    //         ),
+                                    //
+                                    //
+                                    //       ),
+                                    //       TableTextButton(label: "", onPress: (){
+                                    //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                    //           Keys model=Keys(
+                                    //             key: key.text??"",
+                                    //             value: value.text??'',
+                                    //           );
+                                    //           setState(() {
+                                    //             onChange=true;
+                                    //
+                                    //
+                                    //             keys?.add(model);
+                                    //
+                                    //
+                                    //             productFeatures?.add(ProductFeatures(
+                                    //
+                                    //                 keyValues: keys
+                                    //             ));
+                                    //             widget.productTableEdit(type:"3",list:productFeatures);
+                                    //             key.text="";
+                                    //             value.text="";
+                                    //           });
+                                    //
+                                    //
+                                    //
+                                    //
+                                    //         }
+                                    //
+                                    //       })
+                                    //
+                                    //
+                                    //     ])
+                                  ],
+                                  widths: {
+                                    0: FlexColumnWidth(2),
+                                    1: FlexColumnWidth(5),
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+
+
+
+
 
 
 class VariantPromotionCreatativePopup extends StatefulWidget {
@@ -3342,12 +3924,14 @@ class DiscountVariantCreatativePopup extends StatefulWidget {
   final Function? listAssign;
   final PromotionVariantPostModel? obj;
   final List<LinkedItemListModel>?linkedListItemTable;
+  final List<dynamic>?passingList;
 
   DiscountVariantCreatativePopup({
     Key? key,
   this.veritcalCode,
     required this.linkedListItemTable,
     required this.type,
+    this.passingList,
     this.obj,
     required this.listAssign,
   }) : super(key: key);
@@ -3385,6 +3969,7 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
   List<SaleLines>table= [];
   List<int> list = [];
   List<VariantsLinesDiscount> list1 = [];
+  var paginated;
 
   void changeAddNew(bool va) {
     addNew = va;
@@ -3400,6 +3985,8 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -3430,6 +4017,7 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                 }, error: () {
                   // context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
+                  paginated=data;
                   print(widget.linkedListItemTable);
                   if (data.data.isNotEmpty==true) {
                     setState(() {
@@ -3437,26 +4025,31 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                       table = data.data;
                       additionCheck.clear();
 
-                      print("11111111111111111111111");
-//                       if(widget.linkedListItemTable?.isNotEmpty==true){
-//                         print("entered");
-//                         for (var i =0;i<widget.linkedListItemTable!.length;i++){
-//                           print("entered1");
-//                           additionCheck.add(widget.linkedListItemTable![i].name);
-//                           list1.add( LinkedItemListIdModel(
-//                               id:widget.linkedListItemTable![i].id,
-//                               name:widget.linkedListItemTable![i].name));
-//                           print("entered");
-//                         }
-//                         setState(() {
-// print(list1.contains(widget.linkedListItemTable?[0].name));
-//                         });
-//
-//
-//
-//
-//
-//                       }
+                      print("11111111111111111111111"+table.toString());
+                      print("11111111111111111111111"+widget.passingList.toString());
+                      print(widget.passingList);
+                      if(widget.passingList?.isNotEmpty==true){
+                        print("entered");
+                        for (var i =0;i<widget.passingList!.length;i++){
+                          print("entered1");
+                          additionCheck.add(widget.passingList![i].name);
+                          list1.add( VariantsLinesDiscount(
+                              id:widget.passingList![i].variantIdd,
+                              variantIdd:widget.passingList![i].variantIdd,
+                              variantCode:widget.passingList![i].variantCode,
+
+                              name:widget.passingList![i].name));
+                          print("entered");
+                        }
+                        setState(() {
+
+                        });
+
+
+
+
+
+                      }
 
 
 
@@ -3560,18 +4153,73 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                       //
                       // setState(() {});
                     },
+                    paginated: paginated != null?
+                    tablePagination(
+                          () => context.read<VariantListPromotionCubit>().refresh(widget.obj!),
+                      back: paginated?.previousUrl == null
+                          ? null
+                          : () {
+                        context
+                            .read<VariantListPromotionCubit>()
+                            .previuosslotSectionPageList(widget.obj!);
+                      },
+                      next: paginated.nextPageUrl == null
+                          ? null
+                          : () {
+                        // print(data.nextPageUrl);
+                        context
+                            .read<VariantListPromotionCubit>()
+                            .nextslotSectionPageList(widget.obj!);
+                      },
+                    ):Container(),
                     dataField: Container(
+
 
                       child: Column(
                         children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child: SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                h: 40,
+                                hintText: "Search...",
+                                // suffixIconCheck: suffixIconCheck,
+                                ctrlr: searchContoller,
+                                onChanged: (va) {
+                                  setState(() {
 
-                          SingleChildScrollView(
 
-                            // width: w/7,
-                            // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                            child: Container(
-                              height: 300,
-                              color: Colors.red,
+
+                                    // suffixIconCheck=true;
+                                    // suffixIconCheck=true;
+                                    if (va == "") {
+                                      context
+                                          .read<VariantListPromotionCubit>().getVariantList(widget.obj!);
+                                      // suffixIconCheck=false;
+                                      // suffixIconCheck=false;
+                                    }
+                                    else{
+                                      PromotionVariantPostModel? obj=PromotionVariantPostModel(
+                                          searchElement: va,
+                                        inventoryId: Variable.inventory_ID,
+                                        segmentList: widget.obj?.segmentList??[],
+                                        applyingTypeCode:widget.obj?.applyingTypeCode??"",
+                                        applyinType: widget.obj?.applyinType??"",
+
+                                      );
+
+                                      print(widget.obj);
+                                      context
+                                          .read<VariantListPromotionCubit>().getVariantList(obj);
+                                    }
+                                  });
+                                },
+                              )),
+
+                          Container(
+                            height: h / 1.9,
+
+                            child: SingleChildScrollView(
                               child: customTable(
                                 // border: const TableBorder(
                                 //   verticalInside: BorderSide(
@@ -3609,7 +4257,7 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                                       ),
 
                                       tableHeadtext(
-                                        'Item Id',
+                                        'Variant code',
                                         // textColor: Colors.black,
                                         // padding: EdgeInsets.all(7),
                                         // height: 46,
@@ -3618,6 +4266,14 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                                       ),
                                       tableHeadtext(
                                         'VariantName',
+                                        // textColor: Colors.black,
+                                        // padding: EdgeInsets.all(7),
+                                        // height: 46,
+                                        size: 13,
+                                        // color: Color(0xffE5E5E5),
+                                      ),
+                                      tableHeadtext(
+                                        'Barcode',
                                         // textColor: Colors.black,
                                         // padding: EdgeInsets.all(7),
                                         // height: 46,
@@ -3662,8 +4318,11 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                                                     list1.add(
                                                       VariantsLinesDiscount(
                                                         name:table[i].variantName,
-                                                        id:table[i].id,
-                                                        barcode:table[i].barcode
+                                                        id:table[i].variantId,
+                                                        variantIdd: table[i].variantId,
+                                                        variantName:table[i].variantName,
+                                                        barcode:table[i].barcode,
+                                                          variantCode: table[i].variantCode
 
                                                       )
                                                         );
@@ -3684,7 +4343,7 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                                                     TableCellVerticalAlignment
                                                         .middle,
                                                 child: textPadding(
-                                                    table[i].id.toString() ?? "",
+                                                    table[i].variantCode.toString() ?? "",
                                                    )
                                                 // Text(keys[i].value??"",)
 
@@ -3695,6 +4354,14 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                                                         .middle,
                                                 child: textPadding(
                                                     table[i].variantName ?? "",
+                                                   )
+                                                ),
+                                            TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+                                                child: textPadding(
+                                                    table[i].barcode?.barcodeNumber.toString()??"",
                                                    )
                                                 ),
 
@@ -3808,6 +4475,1367 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
         );
       }),
     );
+  }
+}
+
+
+
+class DiscountVariantGroupCodeCreatativePopup extends StatefulWidget {
+  final String type;
+  final String? veritcalCode;
+  final Function? listAssign;
+  final PromotionVariantPostModel? obj;
+  final List<LinkedItemListModel>?linkedListItemTable;
+  final List<dynamic>?passingList;
+
+  DiscountVariantGroupCodeCreatativePopup({
+    Key? key,
+  this.veritcalCode,
+    required this.linkedListItemTable,
+    required this.type,
+    this.passingList,
+    this.obj,
+    required this.listAssign,
+  }) : super(key: key);
+
+  @override
+  _DiscountVariantGroupCodeCreatativePopup createState() => _DiscountVariantGroupCodeCreatativePopup();
+}
+
+class _DiscountVariantGroupCodeCreatativePopup extends State<DiscountVariantGroupCodeCreatativePopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  MaterialReadModel? group;
+  int? veritiaclid = 0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  List<String?>additionCheck=[];
+  List<VariantsLinesDiscount> deleteList=List.from([]);
+  List<VariantsLinesDiscount> addList=List.from([]);
+
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  TextEditingController searchContoller = TextEditingController();
+  bool addNew = false;
+  List<SaleLines>table= [];
+  List<int> list = [];
+  List<VariantsLinesDiscount> list1 = [];
+  var paginated;
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  variantNewAdditionList(List<VariantsLinesDiscount> value){
+    print(value);
+    setState(() {
+
+      for(var val in value ){
+
+        table.add(SaleLines(
+          variantId: val.variantIdd,
+          variantName: val.name,
+            barcode:val.barcode,
+          variantCode:val.variantCode,
+
+
+        ));
+        addList.add(VariantsLinesDiscount(
+            variantIdd:val.variantIdd,
+          name:val.name,
+            variantName:val.name,
+            barcode:val.barcode,
+            variantCode:val.variantCode
+
+
+        )
+
+        );
+      }
+
+
+        });
+
+
+  }
+  @override
+  Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toStng());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GetProductByGroupCodeCubit()..getVariantGroupCodeList(widget.veritcalCode),
+        ),
+
+        // BlocProvider(
+        //   create: (context) => PromotionSaleDeactivateCubit(),
+        // ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<GetProductByGroupCodeCubit, GetProductByGroupCodeState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // // context.
+                  // context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  // context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  paginated=data;
+
+                  if (data.data.isNotEmpty==true) {
+                    setState(() {
+
+                      table = data.data;
+                      additionCheck.clear();
+
+                      print("11111111111111111111111sssssssssssssssssssssssssss"+table.toString());
+                      print(widget.passingList);
+                      // if(widget.passingList?.isNotEmpty==true){
+                      //   print("entered");
+                      //   for (var i =0;i<widget.passingList!.length;i++){
+                      //     print("entered1");
+                      //     additionCheck.add(widget.passingList![i].name);
+                      //     list1.add( VariantsLinesDiscount(
+                      //         id:widget.passingList![i].id,
+                      //         name:widget.passingList![i].name));
+                      //     print("entered");
+                      //   }
+                      //   setState(() {
+                      //
+                      //   });
+                      //
+                      //
+                      //
+                      //
+                      //
+                      // }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    );
+                  }
+
+                  // context.showSnackBarSuccess(data.data2);
+
+                  ;
+                });
+              },
+            ),
+
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<MaterialreadCubit>()
+                            .getMaterialRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonVisible: true,
+                    functionChane: true,
+                    buttonCheck: true,
+                    buttonName: "Add",
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    label: "Variant Item",
+                    onApply: () {
+                      widget.listAssign!(deleteList,addList);
+                      Navigator.pop(context);
+
+                      // context
+                      //     .read<DeActivateOfferPostCubit>()
+                      //     .postCreatativeVariant(list1);
+
+                      // widget.onTap();
+                      setState(() {});
+                    },
+                    onEdit: () {
+                      // MaterialReadModel model = MaterialReadModel(
+                      //   name: namecontroller?.text ?? "",
+                      //   image: imageContollercontroller?.text ?? "",
+                      //   description: descriptionContollercontroller?.text ?? "",
+                      //   searchNmae: searchNamecontroller?.text ?? "",
+                      //   isActive: active,
+                      // );
+                      // // print(model);
+                      // context
+                      //     .read<MaterialcraetionCubit>()
+                      //     .postmaterialPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    paginated: paginated != null?
+                    tablePagination(
+                          () => context.read<VariantListPromotionCubit>().refresh(widget.obj!),
+                      back: paginated?.previousUrl == null
+                          ? null
+                          : () {
+                        context
+                            .read<VariantListPromotionCubit>()
+                            .previuosslotSectionPageList(widget.obj!);
+                      },
+                      next: paginated.nextPageUrl == null
+                          ? null
+                          : () {
+                        // print(data.nextPageUrl);
+                        context
+                            .read<VariantListPromotionCubit>()
+                            .nextslotSectionPageList(widget.obj!);
+                      },
+                    ):Container(),
+                    dataField: Container(
+
+
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child: SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                h: 40,
+                                hintText: "Search...",
+                                // suffixIconCheck: suffixIconCheck,
+                                ctrlr: searchContoller,
+                                onChanged: (va) {
+                                  setState(() {
+
+
+
+                                    // suffixIconCheck=true;
+                                    // suffixIconCheck=true;
+                                    if (va == "") {
+                                      context
+                                          .read<VariantListPromotionCubit>().getVariantList(widget.obj!);
+                                      // suffixIconCheck=false;
+                                      // suffixIconCheck=false;
+                                    }
+                                    else{
+                                      PromotionVariantPostModel? obj=PromotionVariantPostModel(
+                                          searchElement: va,
+                                        inventoryId: Variable.inventory_ID,
+                                        segmentList: widget.obj?.segmentList??[],
+                                        applyingTypeCode:widget.obj?.applyingTypeCode??"",
+                                        applyinType: widget.obj?.applyinType??"",
+
+                                      );
+
+                                      print(widget.obj);
+                                      context
+                                          .read<VariantListPromotionCubit>().getVariantList(obj);
+                                    }
+                                  });
+                                },
+                              )),
+                          Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.end,
+                            children: [
+                              TextButtonLarge(
+                                text: "Add Product",
+
+                                // marginCheck:true,
+
+                                onPress: () {
+
+                                  showDailogPopUp(
+                                      context,
+                                      ConfigurePopup(
+                                      obj: widget.obj,
+                                      passingList: addList,
+
+
+                                      listAssign: variantNewAdditionList,
+                                      type: "DiscountVariantCreatativePopup",
+                                  ),
+
+                                  //  ConfigurePopup(
+                                  // obj: widget.obj,
+                                  // code:"" ,
+                                  //
+                                  // listAssign: variantNewAdditionList,
+                                  // type: "VariantAddTimePopup",
+                                  // )
+                                  );
+
+
+
+                                },
+                                // icon: Icon(Icons.refresh),
+                                // label: Text("Clear")
+
+                              ),
+
+                            ],
+                          ),
+                          SizedBox(height: 7,),
+
+
+                          Container(
+                            height: h / 1.9,
+
+                            child: SingleChildScrollView(
+
+                              child: customTable(
+                                // border: const TableBorder(
+                                //   verticalInside: BorderSide(
+                                //       width: .5,
+                                //       color: Colors.black45,
+                                //       style: BorderStyle.solid),
+                                //   horizontalInside: BorderSide(
+                                //       width: .3,
+                                //       color: Colors.black45,
+                                //       // color: Colors.blue,
+                                //       style: BorderStyle.solid),
+                                // ),
+                                tableWidth: .5,
+                                childrens: [
+                                  TableRow(
+                                    // decoration: BoxDecoration(
+
+                                    //     color: Colors.green.shade200,
+
+                                    //     shape: BoxShape.rectangle,
+
+                                    //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                    children: [
+
+
+                                      tableHeadtext(
+                                        'Variant code',
+                                        // textColor: Colors.black,
+                                        // padding: EdgeInsets.all(7),
+                                        // height: 46,
+                                        size: 13,
+                                        // color: Color(0xffE5E5E5),
+                                      ),
+                                      tableHeadtext(
+                                        'VariantName',
+                                        // textColor: Colors.black,
+                                        // padding: EdgeInsets.all(7),
+                                        // height: 46,
+                                        size: 13,
+                                        // color: Color(0xffE5E5E5),
+                                      ),
+                                      tableHeadtext(
+                                        'Barcode',
+                                        // textColor: Colors.black,
+                                        // padding: EdgeInsets.all(7),
+                                        // height: 46,
+                                        size: 13,
+                                        // color: Color(0xffE5E5E5),
+                                      ),
+                                      tableHeadtext(
+                                        '',
+
+                                        // padding: EdgeInsets.all(7),
+                                        //
+                                        // height: 46,
+                                        // textColor: Colors.black,
+                                        // color: Color(0xffE5E5E5),
+
+                                        size: 13,
+                                      ),
+
+                                    ],
+                                  ),
+                                  if (table?.isNotEmpty == true) ...[
+                                    for (var i = 0; i < table.length; i++)
+                                      TableRow(
+                                          decoration: BoxDecoration(
+                                              color: Pellet.tableRowColor,
+                                              shape: BoxShape.rectangle,
+                                              border:  Border(
+                                                  left: BorderSide(
+
+                                                      color: Color(0xff3E4F5B).withOpacity(.1),
+                                                      width: .4,
+                                                      style: BorderStyle.solid),
+                                                  bottom: BorderSide(
+
+                                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                      style: BorderStyle.solid),
+                                                  right: BorderSide(
+                                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                      width: .4,
+
+                                                      style: BorderStyle.solid))),
+                                          children: [
+                                            // TableCell(
+                                            //   verticalAlignment:
+                                            //       TableCellVerticalAlignment
+                                            //           .middle,
+                                            //
+                                            //   child: CustomCheckBox(
+                                            //     key: UniqueKey(),
+                                            //     value:additionCheck.contains(table![i].variantName),
+                                            //     onChange: (p0) {
+                                            //       if (p0)
+                                            //         list1.add(
+                                            //           VariantsLinesDiscount(
+                                            //             name:table[i].variantName,
+                                            //             id:table[i].id,
+                                            //             barcode:table[i].barcode
+                                            //
+                                            //           )
+                                            //             );
+                                            //       else
+                                            //         list1.removeWhere((element) =>
+                                            //             element == list1[i]);
+                                            //       // list1.remove(table![i]);
+                                            //
+                                            //       // widget.listAssign!(list1);
+                                            //
+                                            //       print(list1);
+                                            //     },
+                                            //   ),
+                                            //   // Text(keys[i].key??"")
+                                            // ),
+                                            TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+                                                child: textPadding(
+                                                    table[i].variantCode.toString() ?? "",
+                                                   )
+                                                // Text(keys[i].value??"",)
+
+                                                ),
+                                            TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+                                                child: textPadding(
+                                                    table[i].variantName ?? "",
+                                                   )
+                                                ),
+                                            TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+                                                child: textPadding(
+                                                    table[i].barcode?.barcodeNumber.toString()??"",
+                                                   )
+                                                ),
+                                            TableCell(
+                                              verticalAlignment:
+                                              TableCellVerticalAlignment
+                                                  .middle,
+                                              child: TableIconTextButton(
+
+                                                // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
+                                                // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
+                                                // bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Colors.transparent,
+                                                onPress: () {
+
+                                                  setState(() {
+                                                    deleteList.add(VariantsLinesDiscount(
+                                                        variantIdd: table[i].variantId,
+                                                        id: table[i].variantId,
+                                                        variantCode:table[i].variantCode,
+                                                        barcode:table[i].barcode,
+                                                      variantName: table[i].variantName,
+
+
+                                                    ));
+
+
+                                                    table?.removeAt(i);
+
+
+
+                                                    // widget.updation(table);
+
+                                                  });
+                                                },
+                                                icon: Icons.delete,
+                                                label: "",
+                                              ),
+                                            ),
+
+                                          ]),
+                                  ],
+                                  //
+                                  // TableRow(
+                                  //     decoration: BoxDecoration(
+                                  //         color: Colors.grey
+                                  //             .shade200,
+                                  //         shape: BoxShape
+                                  //             .rectangle,
+                                  //         border:const  Border(
+                                  //             left: BorderSide(
+                                  //                 width: .5,
+                                  //                 color: Colors
+                                  //                     .grey,
+                                  //                 style: BorderStyle
+                                  //                     .solid),
+                                  //             bottom: BorderSide(
+                                  //                 width: .5,
+                                  //                 color: Colors
+                                  //                     .grey,
+                                  //                 style: BorderStyle
+                                  //                     .solid),
+                                  //             right: BorderSide(
+                                  //                 color: Colors
+                                  //                     .grey,
+                                  //                 width: .5,
+                                  //                 style: BorderStyle
+                                  //                     .solid))),
+                                  //     children: [
+                                  //
+                                  //       TableCell(
+                                  //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                  //
+                                  //         child: UnderLinedInput(
+                                  //           onChanged: (va){
+                                  //             key.text=va;
+                                  //
+                                  //           },
+                                  //
+                                  //           formatter: false,
+                                  //
+                                  //         ),
+                                  //
+                                  //
+                                  //       ),
+                                  //       TableCell(
+                                  //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                  //
+                                  //         child:
+                                  //
+                                  //         UnderLinedInput(
+                                  //           onChanged: (va){
+                                  //             value.text=va;
+                                  //           },
+                                  //           formatter: false,
+                                  //         ),
+                                  //
+                                  //
+                                  //       ),
+                                  //       TableTextButton(label: "", onPress: (){
+                                  //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                  //           Keys model=Keys(
+                                  //             key: key.text??"",
+                                  //             value: value.text??'',
+                                  //           );
+                                  //           setState(() {
+                                  //             onChange=true;
+                                  //
+                                  //
+                                  //             keys?.add(model);
+                                  //
+                                  //
+                                  //             productFeatures?.add(ProductFeatures(
+                                  //
+                                  //                 keyValues: keys
+                                  //             ));
+                                  //             widget.productTableEdit(type:"3",list:productFeatures);
+                                  //             key.text="";
+                                  //             value.text="";
+                                  //           });
+                                  //
+                                  //
+                                  //
+                                  //
+                                  //         }
+                                  //
+                                  //       })
+                                  //
+                                  //
+                                  //     ])
+                                ],
+                                widths: {
+                                  0: FlexColumnWidth(2),
+                                  1: FlexColumnWidth(3),
+                                  2: FlexColumnWidth(3),3: FlexColumnWidth(3),
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+class VariantAddTimePopup extends StatefulWidget {
+  final String type;
+  final String? veritcalCode;
+  final Function? listAssign;
+  final PromotionVariantPostModel? obj;
+  final List<LinkedItemListModel>?linkedListItemTable;
+  final List<dynamic>?passingList;
+
+  VariantAddTimePopup({
+    Key? key,
+  this.veritcalCode,
+    required this.linkedListItemTable,
+    required this.type,
+    this.passingList,
+    this.obj,
+    required this.listAssign,
+  }) : super(key: key);
+
+  @override
+  _VariantAddTimePopup createState() => _VariantAddTimePopup();
+}
+
+class _VariantAddTimePopup extends State<VariantAddTimePopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  MaterialReadModel? group;
+  int? veritiaclid = 0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  List<String?>additionCheck=[];
+  List<SaleLines> deleteList=List.from([]);
+  List<SaleLines> addList=List.from([]);
+
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  TextEditingController searchContoller = TextEditingController();
+  bool addNew = false;
+  List<SaleLines>table= [];
+  List<int> list = [];
+  List<VariantsLinesDiscount> list1 = [];
+  var paginated;
+  String variantCode="";
+  String variantName="";
+  bool isActive=false;
+  Barcode barcode=Barcode();
+
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+  clear(){
+    variantCode="";
+    variantName="";
+    isActive=false;
+    table=[];
+    barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toStng());
+    return Builder(builder: (context) {
+      return BlocConsumer<MaterialListCubit, MaterialListState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("aaaaayyyiram" + list.data.toString());
+
+                result = list.data;
+                setState(() {
+                  if (result.isNotEmpty) {
+                    veritiaclid = result[0].id;
+                    // Variable.verticalid=result[0].id;
+                    print("Variable.ak" + Variable.verticalid.toString());
+                    context
+                        .read<MaterialreadCubit>()
+                        .getMaterialRead(veritiaclid!);
+                  } else {
+                    print("common");
+                    // select=true;
+                    setState(() {});
+                  }
+
+                  setState(() {});
+                });
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            return AlertDialog(
+              content: PopUpHeader(
+                buttonVisible: true,
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "Add",
+                onTap: () {
+                  addNew = !addNew;
+                  setState(() {});
+                },
+                isDirectCreate: true,
+                addNew: addNew,
+                label: "Variant Item",
+                onApply: () {
+                  widget.listAssign!(table);
+                  Navigator.pop(context);
+
+                  // context
+                  //     .read<DeActivateOfferPostCubit>()
+                  //     .postCreatativeVariant(list1);
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {
+                  // MaterialReadModel model = MaterialReadModel(
+                  //   name: namecontroller?.text ?? "",
+                  //   image: imageContollercontroller?.text ?? "",
+                  //   description: descriptionContollercontroller?.text ?? "",
+                  //   searchNmae: searchNamecontroller?.text ?? "",
+                  //   isActive: active,
+                  // );
+                  // // print(model);
+                  // context
+                  //     .read<MaterialcraetionCubit>()
+                  //     .postmaterialPatch(veritiaclid, model);
+                },
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated: paginated != null?
+                tablePagination(
+                      () => context.read<VariantListPromotionCubit>().refresh(widget.obj!),
+                  back: paginated?.previousUrl == null
+                      ? null
+                      : () {
+                    context
+                        .read<VariantListPromotionCubit>()
+                        .previuosslotSectionPageList(widget.obj!);
+                  },
+                  next: paginated.nextPageUrl == null
+                      ? null
+                      : () {
+                    // print(data.nextPageUrl);
+                    context
+                        .read<VariantListPromotionCubit>()
+                        .nextslotSectionPageList(widget.obj!);
+                  },
+                ):Container(),
+                dataField: Container(
+
+
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            // suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              setState(() {
+
+
+
+                                // suffixIconCheck=true;
+                                // suffixIconCheck=true;
+                                if (va == "") {
+                                  context
+                                      .read<VariantListPromotionCubit>().getVariantList(widget.obj!);
+                                  // suffixIconCheck=false;
+                                  // suffixIconCheck=false;
+                                }
+                                else{
+                                  PromotionVariantPostModel? obj=PromotionVariantPostModel(
+                                      searchElement: va,
+                                    inventoryId: Variable.inventory_ID,
+                                    segmentList: widget.obj?.segmentList??[],
+                                    applyingTypeCode:widget.obj?.applyingTypeCode??"",
+                                    applyinType: widget.obj?.applyinType??"",
+
+                                  );
+
+                                  print(widget.obj);
+                                  context
+                                      .read<VariantListPromotionCubit>().getVariantList(obj);
+                                }
+                              });
+                            },
+                          )),
+
+                      Container(
+                        // width: w/5,
+                        margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: customTable(
+
+                          border: const TableBorder(
+
+                            verticalInside: BorderSide(
+                                width:.5,
+                                color: Colors.black45,
+                                style: BorderStyle.solid),
+                            horizontalInside: BorderSide(
+                                width:.3,
+                                color: Colors.black45,
+                                // color: Colors.blue,
+                                style: BorderStyle.solid),),
+
+                          tableWidth: .5,
+
+                          childrens:[
+                            TableRow(
+
+                              // decoration: BoxDecoration(
+
+                              //     color: Colors.green.shade200,
+
+                              //     shape: BoxShape.rectangle,
+
+                              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                              children: [
+
+                                tableHeadtext(
+
+                                  'Variant Id',
+
+                                  // padding: EdgeInsets.all(7),
+                                  //
+                                  // height: 46,
+                                  textColor: Colors.white,
+
+
+                                  size: 13,
+
+
+                                ),
+                                tableHeadtext(
+
+                                  'Variant Name',
+
+                                  // padding: EdgeInsets.all(7),
+                                  //
+                                  // height: 46,
+                                  textColor: Colors.white,
+
+
+                                  size: 13,
+
+
+                                ),
+                                tableHeadtext(
+
+                                  "Barcode",
+
+                                  // padding: EdgeInsets.all(7),
+                                  //
+                                  // height: 46,
+                                  textColor: Colors.white,
+
+
+                                  size: 13,
+
+
+                                ),
+                                tableHeadtext(
+
+                                  "Is Active",
+
+                                  // padding: EdgeInsets.all(7),
+                                  //
+                                  // height: 46,
+                                  textColor: Colors.white,
+
+
+                                  size: 13,
+
+
+                                ),       tableHeadtext(
+
+                                  "",
+
+                                  // padding: EdgeInsets.all(7),
+                                  //
+                                  // height: 46,
+                                  textColor: Colors.white,
+
+
+                                  size: 13,
+
+
+                                ),
+
+
+
+
+
+                              ],
+
+                            ),
+                            if (table.isNotEmpty==true ) ...[
+
+
+                              for (var i = 0; i < table.length; i++)
+                                TableRow(
+                                    decoration: BoxDecoration(
+                                        color: Pellet.tableRowColor,
+                                        shape: BoxShape.rectangle,
+                                        border:  Border(
+                                            left: BorderSide(
+
+                                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                                width: .4,
+                                                style: BorderStyle.solid),
+                                            bottom: BorderSide(
+
+                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                style: BorderStyle.solid),
+                                            right: BorderSide(
+                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                width: .4,
+
+                                                style: BorderStyle.solid))),
+                                    children: [
+
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                        child: VariantIdTAble(
+                                          text:table[i].variantCode.toString()??"",
+                                          onTap: (){
+                                            List<String> list=[];
+
+                                            for (var val in widget?.obj?.segmentList??[])
+                                              list.add(val.segmentCode.toString());
+                                            print("sasasaaaaaaaaaaaaaa"+list.toString());
+
+                                            PromotionVariantPostModel model=PromotionVariantPostModel(
+                                                applyingTypeCode: widget?.obj?.applyingTypeCode,
+                                                applyinType: widget?.obj!.applyinType??"",
+                                                searchElement: "",
+                                                segmentList:widget?.obj!.segmentList??[],
+                                                inventoryId: Variable.inventory_ID
+                                            );
+                                            showDailogPopUp(
+                                              context,
+                                              TableConfigurePopup(
+                                                object: model,
+                                                // inventory: Variable.inventory_ID,
+                                                type: "VariantListPopup",
+                                                valueSelect: (SaleLines? va) {
+
+
+                                                  setState(() {
+                                                    table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName: va?.variantName??"",barcode:  va?.barcode,updateCheck: true);
+
+
+
+
+                                                    // orderType = va!;
+                                                  });
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        ),
+
+
+
+
+
+
+                                      ),
+                                      TableCell(
+                                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                          child:textPadding(table[i].variantName.toString())
+
+
+
+                                      ),
+                                      TableCell(
+                                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                          child:textPadding(table[i].barcode?.barcodeNumber.toString()??"")
+
+
+
+                                      ),
+                                      TableCell(
+                                        verticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                        child: CheckedBoxs(
+                                            valueChanger:
+                                            table?[i].isActive == null
+                                                ? false
+                                                : table?[i].isActive,
+                                            onSelection: (bool? value) {
+                                              bool? isActive =table[i].isActive;
+                                              setState(() {
+                                                // widget.updateCheck(true);
+                                                // print("aaaaaaaaaaa"+isActive.toString());
+                                                // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                table[i] = table[i].copyWith(updateCheck: true);
+                                                setState(() {});
+                                                isActive = !isActive!;
+                                                print("aaaaaaaaaaa"+isActive.toString());
+                                                table[i] = table[i]
+                                                    .copyWith(
+                                                    isActive: isActive);
+                                              });
+
+
+
+                                            }),
+                                      ),
+
+                                      TableCell(
+                                        verticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: TableTextButton(
+                                                onPress: () {
+
+                                                  setState(() {
+                                                    // widget.updateCheck(false);
+                                                    table[i]=      table[i].copyWith(updateCheck: false);
+                                                    // widget.updation(table);
+
+
+                                                  });
+
+                                                },
+                                                textColor:table[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
+                                                label:
+                                                table[i].updateCheck==true? "UPDATE":"",
+                                              ),
+                                            ),
+                                            SizedBox(width: 4,),
+
+
+                                            TableIconTextButton(
+
+                                              // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
+                                              // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
+                                              // bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Colors.transparent,
+                                              onPress: () {
+
+                                                setState(() {
+
+
+                                                  table?.removeAt(i);
+                                                  // widget.updation(table);
+
+                                                });
+                                              },
+                                              icon: Icons.delete,
+                                              label: "",
+                                            ),
+                                            SizedBox(width: 4,),
+                                          ],
+                                        ),
+                                      )
+
+
+
+
+                                    ]),],
+                            TableRow(
+                                decoration: BoxDecoration(
+                                    color: Pellet.tableRowColor,
+                                    shape: BoxShape.rectangle,
+                                    border:  Border(
+                                        left: BorderSide(
+
+                                            color: Color(0xff3E4F5B).withOpacity(.1),
+                                            width: .4,
+                                            style: BorderStyle.solid),
+                                        bottom: BorderSide(
+
+                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                            style: BorderStyle.solid),
+                                        right: BorderSide(
+                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                            width: .4,
+
+                                            style: BorderStyle.solid))),
+                                children: [
+
+                                  TableCell(
+                                    verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                    child:
+                                    VariantIdTAble(
+                                      text:variantCode,
+                                      onTap: (){
+                                        print(widget?.obj?.segmentList??[]);
+                                        print(widget?.obj?.applyingTypeCode??"");
+                                        List<String> list=[];
+                                        if(widget?.obj!.segmentList?.isNotEmpty==true){
+                                          for (var val in widget.obj!.segmentList!)
+                                            list.add(val);
+                                        }
+
+
+                                        print("sasasaaaaaaaaaaaaaa"+list.toString());
+
+                                        PromotionVariantPostModel model=PromotionVariantPostModel(
+                                            applyingTypeCode: widget.obj?.applyingTypeCode,
+                                            applyinType: widget.obj?.applyinType,
+                                            searchElement: "",
+                                            segmentList:widget.obj?.segmentList,
+                                            inventoryId: Variable.inventory_ID
+                                        );
+                                        showDailogPopUp(
+                                          context,
+                                          BlocProvider(
+  create: (context) => VariantListPromotionCubit()..getVariantList(model),
+  child: TableConfigurePopup(
+                                            object: model,
+                                            // inventory: Variable.inventory_ID,
+                                            type: "VariantListPopup",
+                                            valueSelect: (SaleLines? va) {
+
+
+                                              setState(() {
+                                                variantCode=va?.variantCode??"";
+                                                variantName=va?.variantName??"";
+                                                print("barcodeeeeeeeeeeee");
+                                                print(va?.barcode?.barcodeNumber??"");
+                                                barcode=      barcode.copyWith(barcodeNumber: va?.barcode?.barcodeNumber??"");
+                                                // saveButtonActovde(variantCode,variantName);
+
+
+
+                                                // orderType = va!;
+                                              });
+                                            },
+                                          ),
+),
+                                        );
+                                      },
+                                    ),
+                                    // UnderLinedInput(
+                                    //   formatter: false,
+                                    // ),
+
+
+                                  ),
+
+                                  TableCell(
+                                      verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                      child:textPadding(variantName??"")
+                                    // UnderLinedInput(
+                                    //   formatter: false,
+                                    // ),
+
+
+                                  ),
+
+                                  TableCell(
+                                      verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                      child:textPadding(barcode?.barcodeNumber??"")
+                                    // UnderLinedInput(
+                                    //   formatter: false,
+                                    // ),
+
+
+                                  ),
+                                  TableCell(
+                                    verticalAlignment:
+                                    TableCellVerticalAlignment.middle,
+                                    child: CheckedBoxs(
+                                      // color: Color(0xff3E4F5B),
+                                      valueChanger: isActive,
+                                      onSelection: (bool? value) {
+                                        // clear=true;
+                                        setState(() {
+                                          isActive = !isActive!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  TableCell(
+                                    verticalAlignment:
+                                    TableCellVerticalAlignment.middle,
+                                    child: TableTextButton(
+                                        // buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
+                                        // textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
+                                        // bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
+                                        label: "Save",
+                                        onPress: () {
+                                          setState(() {
+                                            if(variantName.isNotEmpty && variantCode.isNotEmpty){
+                                              table.add(SaleLines(
+                                                variantCode: variantCode,
+                                                barcode: barcode,
+                                                variantName: variantName.isEmpty?"":variantName,
+                                                isActive: isActive,
+                                              ));
+                                              variantCode="";
+                                              variantName="";
+                                              barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
+                                              isActive=false;
+                                              // onSaveActive=false;
+                                              // widget.updation(table);
+                                            }
+
+                                          });
+                                        }),
+                                  )
+
+
+                                ])
+
+
+                          ],
+                          widths: {
+                            0: FlexColumnWidth(3),
+                            1: FlexColumnWidth(3),
+                            2: FlexColumnWidth(1.5),
+                            3: FlexColumnWidth(1.5),
+                            4: FlexColumnWidth(2),
+
+                          },
+
+                        ),
+
+
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    });
   }
 }
 
@@ -5253,9 +7281,9 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  // Navigator.pop(context);
+
                   if (data.data1) {
-                    print("success case");
+                    Navigator.pop(context);
                     showDailogPopUp(
                         context,
                         SuccessPopup(
@@ -5263,6 +7291,7 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                           // table:table,
                         ));
                     context.read<DevisionListCubit>().getDevisionList();
+                    // context.showSnackBarSuccess(data.data2);
 
                     setState(() {});
                   } else {
@@ -6039,8 +8068,9 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  // Navigator.pop(context);
+
                   if (data.data1) {
+                    Navigator.pop(context);
                     context.read<ListstaticCubit>().getStaticList();
                     showDailogPopUp(
                         context,
@@ -6352,7 +8382,9 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
+                  Navigator.pop(context);
                   if (data.data1) {
+
 
                     setState(() {
                       showDailogPopUp(
@@ -6416,6 +8448,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                 }, success: (data) {
                   // Navigator.pop(context);
                   if (data.data1) {
+                    Navigator.pop(context);
                     print("here after  creation");
 
                     setState(() {
@@ -8189,17 +10222,33 @@ class _CreateCostingMethodeCreatePopUpState
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  // Navigator.pop(context);
+
                   if (data.data1) {
-                    showDailogPopUp(
-                        context,
-                        SuccessPopup(
-                          content: data.data2,
-                          // table:table,
-                        ));
-                    context
-                        .read<CostingcreatelistCubit>()
-                        .getCostingCreateList();
+                    if(costingTypeMethodeCheck){
+                      Navigator.pop(context);
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context
+                          .read<CostingcreatelistCubit>()
+                          .getCostingCreateList();
+                    }
+                    else{
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context
+                          .read<ReadcostingCubit>()
+                          .getCostMethodRead(veritiaclid!);
+
+                    }
+
 
                     setState(() {});
                   } else {
@@ -8707,13 +10756,28 @@ class _CreateOfferPeriodCreatePopUpState
                 }, success: (data) {
                   // Navigator.pop(context);
                   if (data.data1) {
-                    showDailogPopUp(
-                        context,
-                        SuccessPopup(
-                          content: data.data2,
-                          // table:table,
-                        ));
-                    context.read<ListOfferPeriodCubit>().getOfferPeriodList();
+                    if(costingTypeMethodeCheck==true){
+                      Navigator.pop(context);
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context.read<ListOfferPeriodCubit>().getOfferPeriodList();
+                    }else{
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context
+                          .read<ReadOfferPeriodCubit>()
+                          .getOfferPeriodRead(veritiaclid!);
+
+                    }
+
 
                     setState(() {});
                   } else {
@@ -8753,6 +10817,7 @@ class _CreateOfferPeriodCreatePopUpState
                               .getOfferPeriodRead(veritiaclid!);
                       } else {
                         print("common");
+                        clear();
                         // select=true;
                         setState(() {});
                       }
@@ -8877,12 +10942,10 @@ class _CreateOfferPeriodCreatePopUpState
                                       search: (String va) {
                                         print(va);
                                         context
-                                            .read<CostingcreatelistCubit>()
-                                            .searchCostingList(va);
+                                            .read<ListOfferPeriodCubit>()
+                                            .searchUomList(va);
                                         if (va == "") {
-                                          context
-                                              .read<CostingcreatelistCubit>()
-                                              .getCostingCreateList();
+                                          context.read<ListOfferPeriodCubit>().getOfferPeriodList();
                                         }
                                       },
                                       result: result,
@@ -9043,6 +11106,8 @@ class _CreateOfferPeriodCreatePopUpState
                                       height: 10,
                                     ),
                                     PopUpSwitchTile(
+                                      // paddingCheck: true,
+
                                         value: active ?? false,
                                         title: "is active",
                                         onClick: (gg) {
@@ -9322,6 +11387,7 @@ class _CreateOfferGroupPopUpState
                   // context.
 
                 }, error: () {
+                  if(costingTypeMethodeCheck){}
                   showDailogPopUp(
                       context,
                       FailiurePopup(
@@ -9331,13 +11397,28 @@ class _CreateOfferGroupPopUpState
                 }, success: (data) {
                   // Navigator.pop(context);
                   if (data.data1) {
-                    showDailogPopUp(
-                        context,
-                        SuccessPopup(
-                          content: data.data2,
-                          // table:table,
-                        ));
-                    context.read<ListOfferGroupCubit>().getOfferGroupList();
+                    if(costingTypeMethodeCheck){
+                      Navigator.pop(context);
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context.read<ListOfferGroupCubit>().getOfferGroupList();
+
+
+                    }
+                    else{
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+
+                    }
+
 
                     setState(() {});
                   } else {
@@ -9347,6 +11428,7 @@ class _CreateOfferGroupPopUpState
                           content: data.data2,
                           // table:table,
                         ));
+                    context.read<ReadOfferGroupCubit>().getOfferGroupRead(veritiaclid!);
                   }
                   ;
                 });
@@ -9414,6 +11496,8 @@ class _CreateOfferGroupPopUpState
                           context.read<ReadOfferGroupCubit>().getOfferGroupRead(veritiaclid!);
                       } else {
                         print("common");
+                        clear();
+
                         // select=true;
                         setState(() {});
                       }
@@ -9533,12 +11617,10 @@ class _CreateOfferGroupPopUpState
                                       search: (String va) {
                                         print(va);
                                         context
-                                            .read<CostingcreatelistCubit>()
-                                            .searchCostingList(va);
+                                            .read<ListOfferGroupCubit>()
+                                            .searchOfferGroupList(va);
                                         if (va == "") {
-                                          context
-                                              .read<CostingcreatelistCubit>()
-                                              .getCostingCreateList();
+                                          context.read<ListOfferGroupCubit>().getOfferGroupList();
                                         }
                                       },
                                       result: result,
@@ -10541,13 +12623,28 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    showDailogPopUp(
-                        context,
-                        SuccessPopup(
-                          content: data.data2,
-                          // table:table,
-                        ));
-                    context.read<PricinglistCubit>().getPricingList(); context.showSnackBarSuccess(data.data2);
+                    if(costingTypeMethodeCheck){
+                      Navigator.pop(context);
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context.read<PricinglistCubit>().getPricingList(); context.showSnackBarSuccess(data.data2);
+
+                    }
+                    else{
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context.read<PricingreadCubit>().getPricingGroupRead(veritiaclid);
+
+                    }
+
                     // Navigator.pop(context);
                     setState(() {});
                   } else {
@@ -11673,8 +13770,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                         code: widget.veritiacalCode,
                                                         linkedListItemTable: table,
                                                         listAssign: listAssign,
-                                                        type:
-                                                            "CreateSearchLinkedItem-group",
+                                                        type: "CreateSearchLinkedItem-group",
                                                       ),
                                                     );
                                                   },
@@ -12972,8 +15068,9 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  // Navigator.pop(context);
+
                   if (data.data1) {
+                    Navigator.pop(context);
                     setState(() {
                       context.read<UomgruoplistCubit>().getUomGroupist();
                     });
@@ -13268,12 +15365,23 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                   print(data.data1);
 
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context
+                        .read<UomgroupreadCubit>()
+                        .getUomGroupRead(veritiaclid!);
                   } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
                   }
                   ;
                 });
@@ -13507,6 +15615,353 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
   }
 }
 
+
+
+class PurchaseReturnInvoicePaymentPopUp extends StatefulWidget {
+  final String type;
+  final String customerCode;
+  final String orderId;
+  final String status;
+  final String transactionCode;
+  final String customerName;
+  final double? totalPrice;
+  final Function? transactionPendingFunc;
+  final Function? paymentCompletedFunc;
+
+  PurchaseReturnInvoicePaymentPopUp({
+    Key? key,
+    required this.type,
+  this.totalPrice, required this.customerCode, required this.orderId, required this.status, required this.transactionCode, required this.customerName, this.transactionPendingFunc, this.paymentCompletedFunc,
+  }) : super(key: key);
+
+  @override
+  _PurchaseReturnInvoicePaymentPopUpState createState() => _PurchaseReturnInvoicePaymentPopUpState();
+}
+
+//create uom group
+
+class _PurchaseReturnInvoicePaymentPopUpState extends State<PurchaseReturnInvoicePaymentPopUp> {
+
+
+  List<String> result=["UPI Payment","Debit/Credit Card", "Pay On Delivery"];
+  String methodCode="";
+  List<PurchasePaymentModel> results=[];
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+  GlobalKey<_CreateStaticPopUpState>();
+  late AutoScrollController controller;
+  int verticalScrollIndex = 0;
+  @override
+   initState() {
+
+
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+    context.read<PaymentListCubit>().getPaymentList();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
+  }
+
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Builder(builder: (context) {
+      return BlocConsumer<PaymentListCubit, PaymentListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("successssssssssssssssssssssss");
+                    results=list.data;
+                    if(results.isNotEmpty){
+                      methodCode=results[0].code??"";
+                      Variable.methodCode=results[0].code??"";
+                    }
+
+
+
+
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                // if (!onChange) {
+                //   print("onchange"+onChange.toString());
+                //   namecontroller = TextEditingController(text: addNew ? "" : group?.name);
+                //   codeController = TextEditingController(text: addNew ? "" : group?.id.toString());
+                //   descriptionContollercontroller = TextEditingController(text: addNew ? "" : group?.description);
+                //   shortNamecontroller = TextEditingController(text: addNew ? "" : group?.description);
+                //   //
+                //   active=addNew?true:group?.isActive;
+                // }
+                // onChange = false;
+                return AlertDialog(
+                  content:Container(
+                    width: width/1.6,
+
+                    child: Column(
+                      children: [
+                        Container(
+                          height:height*.09,
+                          color: Color(0xff6F91CB),
+                            child:Row(
+                              children: [
+                                SizedBox(width: width*.02,),
+                                const Text("TOTAL PAYMENT",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                                Spacer(),
+                                 Text(widget.totalPrice.toString(),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                                SizedBox(width: width*.02,),
+
+                              ],
+                            )
+                        ),
+
+                       SizedBox(height:5),
+
+                       Expanded(child: Row(
+                          children: [
+                            Scrollbar(
+
+                              child: Container(
+                       decoration: BoxDecoration(
+                         // color: Colors.red,
+
+                           // Red border with the width is equal to 5
+                           border: Border.all(
+                               width: .8,
+                               color: Colors.grey
+                           ),
+                         borderRadius: BorderRadius.all(Radius.circular(10)),
+                       ),
+
+                                width: width*.17,
+                                 child:Column(
+                                   children:[
+                                     SizedBox(height: height*.02,),
+                                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                       children:  [
+                                         SizedBox(width: width*.007,),
+                                         Text("Choose a Option",style: TextStyle(fontWeight: FontWeight.bold),),
+                                         // SizedBox(width: context.blockSizeHorizontal*4,),
+                                         Text("Share",style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xff6F91CB)),
+
+                                           ),
+                                         SizedBox(width: width*.007,),
+                                       ],
+                                     ),
+                                     SizedBox( height: 5,),
+                                     Divider(
+                                       height: 0,
+                                       color: Color(0xff2B3944)
+                                           .withOpacity(0.3),
+                                       // thickness: 1,
+                                     ),
+                                     Expanded(
+                                       child: ListView.separated(
+
+
+
+                                         separatorBuilder: (context, index) {
+
+                                           return Divider(
+                                             height: 0,
+                                             color: Color(0xff2B3944)
+                                                 .withOpacity(0.3),
+                                             // thickness: 1,
+                                           );
+                                         },
+                                         physics: ScrollPhysics(),
+                                         controller: controller,
+                                         itemBuilder: (context, index) {
+                                           return AutoScrollTag(
+                                               highlightColor: Colors.red,
+                                               controller: controller,
+                                               key: ValueKey(index),
+                                               index: index,
+                                               child: ItemCardPayment(
+                                                 index: index,
+                                                 selectedVertical:verticalScrollIndex,
+                                                 item: results[index].tittle,
+                                                 id:"",
+
+                                                 onClick: () {
+
+                                                   setState(() {
+                                                     verticalScrollIndex=index;
+                                                     methodCode=results[index].code??"";
+                                                     Variable.methodCode=results[index].code??"";
+                                                   });
+
+
+                                                 },
+                                               ));
+                                         },
+                                         itemCount:results.length,
+                                       ),
+                                     )
+                                   ]
+                                 )
+                              ),
+                            ),
+                            Expanded(
+                              child:Container(
+                            margin: EdgeInsets.all(10),
+                                child:Column(
+                                    children:[
+                                      SizedBox(height:height*.02),
+                                      Row(
+                                        children:[
+                                          Text("We accepts all major credit and debit card:",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 17))
+                                        ]
+                                      ),
+                                      SizedBox(height:height*.02),
+                                      Container(
+                                          height:200,
+                                          decoration: BoxDecoration(
+
+                                            // Red border with the width is equal to 5
+                                            border: Border.all(
+                                                width: .8,
+                                                color: Colors.grey
+                                            ),
+                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                          ),
+                                        child:Column(
+                                          children:[
+                                            customTable(
+
+                                              border: const TableBorder(
+
+                                                verticalInside: BorderSide(
+                                                    width: .5,
+                                                    color: Colors.black45,
+                                                    style: BorderStyle.solid),
+                                                horizontalInside: BorderSide(
+                                                    width: .3,
+                                                    color: Colors.black45,
+                                                    // color: Colors.blue,
+                                                    style: BorderStyle.solid),),
+
+                                              tableWidth: .5,
+
+                                              childrens: [
+                                                TableRow(
+
+                                                  // decoration: BoxDecoration(
+
+                                                  //     color: Colors.green.shade200,
+
+                                                  //     shape: BoxShape.rectangle,
+
+                                                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                                  children: [
+
+                                                    tableHeadtext(
+                                                      'Bank Name',
+                                                      textColor: Colors.black,
+                                                      size: 13,
+                                                      color: Color(0xffEBEBEB),
+                                                    ),
+                                                    tableHeadtext(
+                                                      'South Indian Bank',
+                                                      textColor: Colors.black,
+                                                      size: 13,
+                                                      color: Color(0xffEBEBEB),
+                                                    ),
+
+
+
+                                                  ],
+
+                                                ),
+
+
+
+
+                                              ],
+                                              widths: {
+                                                0: FlexColumnWidth(3),
+                                                1: FlexColumnWidth(3),
+                                                2: FlexColumnWidth(1.5),
+                                                3: FlexColumnWidth(1.5),
+
+                                              },
+
+                                            ),
+
+                                          ]
+                                        )
+                                      ),
+                                      SaveUpdateResponsiveButton(
+                                        label:"Payment Completed" ,
+                                        saveFunction: (){
+                                          widget.paymentCompletedFunc!();
+                                          // PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                                          //   contact: Variable.mobileNumber,
+                                          //   customerCode: widget.customerCode,
+                                          //   customerName: widget.customerName,
+                                          //   methodCode: methodCode,
+                                          //   orderId: widget.orderId,
+                                          //   status: "payment_completed",
+                                          //   totalAmount: widget.totalPrice,
+                                          //   tranSactionCode: widget.transactionCode);
+                                          // print(model);
+                                          // context
+                                          //     .read<PaymentSalePostCubit>()
+                                          //     .postSaleOrderPaymentPost(model);
+                                        },
+                                        deleteLabel: "Transaction Pending",
+                                        discardFunction: (){
+                                          widget.transactionPendingFunc!();
+
+                                          // PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                                          //     contact: Variable.mobileNumber,
+                                          //     customerCode: widget.customerCode,
+                                          //     customerName: widget.customerName,
+                                          //     methodCode: methodCode,
+                                          //     orderId: widget.orderId,
+                                          //     status: "payment_pending",
+                                          //     totalAmount: widget.totalPrice,
+                                          //     tranSactionCode: widget.transactionCode);
+                                          // print(model);
+                                          // context
+                                          //     .read<PaymentSalePostCubit>()
+                                          //     .postSaleOrderPaymentPost(model);
+
+                                        },
+                                      ),
+
+                                    ]
+
+                                )
+                              ),
+                            )
+                          ],
+                        ))
+                      ],
+                    ),
+                  )
+
+                );
+              });
+            },
+          );
+    });
+  }
+}
 //create baseuom
 
 class UomCreatePopUp extends StatefulWidget {
@@ -13593,7 +16048,7 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
                   if (data.data1) {
                     showDailogPopUp(
                         context,
@@ -13725,8 +16180,7 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                                 NewInputCard(controller: uomGroupNameController,
                                   readOnly: true,
                                   icondrop:true,title: "Uom Group",ontap: (){
-                                    showDailogPopUp(
-                                      context,
+                                  showDailogPopUp(context,
                                       TableConfigurePopup(
                                         type: "UomGroupTabalePopup", valueSelect: (BrandListModel va){
 
@@ -14809,10 +17263,11 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
 //create category
 class CategoryCreatePopUp extends StatefulWidget {
   final String type;
+  final int? id;
 
   CategoryCreatePopUp({
     Key? key,
-    required this.type,
+    required this.type,  this.id,
   }) : super(key: key);
 
   @override
@@ -14916,8 +17371,9 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   // print(data.data1);
-                  // Navigator.pop(context);
+
                   if (data.data1) {
+                    Navigator.pop(context);
                     showDailogPopUp(
                         context,
                         SuccessPopup(
@@ -14929,7 +17385,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
 
                     context
                         .read<CategorylistCubit>()
-                        .getCategoryist(type: Variable.divisionId.toString());
+                        .getCategoryist(id: widget.id);
                   } else {
                     showDailogPopUp(
                         context,
@@ -15341,9 +17797,11 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
 
 class SubCategoryCreatePopUp extends StatefulWidget {
   final String type;
+  final int? id;
 
   SubCategoryCreatePopUp({
     Key? key,
+    this.id,
     required this.type,
   }) : super(key: key);
 
@@ -15448,15 +17906,16 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  // Navigator.pop(context);
+
                   if (data.data1) {
+                    Navigator.pop(context);
                     showDailogPopUp(
                         context,
                         SuccessPopup(
                           content: data.data2,
                           // table:table,
                         ));
-                    context.read<SubcategoryCubit>().getSubCategoryList();
+                    context.read<SubcategoryCubit>().getSubCategoryList(id:widget.id );
 
                     setState(() {});
                   } else {
@@ -15967,8 +18426,9 @@ class _GroupPopUpState extends State<GroupPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  // Navigator.pop(context);
+
                   if (data.data1) {
+                    Navigator.pop(context);
                     showDailogPopUp(
                         context,
                         SuccessPopup(
@@ -18170,8 +20630,7 @@ class _PopUpHeaderState extends State<PopUpHeader> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 boldText(widget.label ?? "", fontSize: 18),
-                widget.buttonCheck
-                    ? Container()
+                widget.buttonCheck ? Container()
                     : Transform.scale(
                         scale: 0.8,
                         child: widget.functionChane

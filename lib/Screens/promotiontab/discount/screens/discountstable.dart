@@ -71,14 +71,9 @@ required this.activeChange, required this.offerPeriod, required this.offerGroup,
 class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTable> {
 
   String imageName1="";
-  String imageName2="";
-  String imageName3="";
-  String imageName4="";
-  String imageName5="";
-  String imageName6="";
-  String imageName7="";
-  String imageName8="";
+
   String imageEncode="";
+  String offerApplingToName="";
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +115,9 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
 
                                 // onChange = true;
                                 widget.offerApplyingType.text = va!;
+                                widget.offerApplyingTo.text = "";
+                                widget.offerApplyingCode.text = "";
+                                widget.offerApplyingId.text = "";
                                 // context
                                 //     .read<ChannelListCubit>()
                                 //     .getChannelList(va
@@ -133,33 +131,13 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                             height: height * .030,
                           ),
                           NewInputCard(
-
-                              controller: widget.description, title: "Description"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
                               formatter: true,
 
                               controller: widget.discountPercenagePrice, title: "Discount Percentage/Price"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          PopUpSwitchTile(
-                              value:widget?. overridePriority??false,
-                              title: "OverRide Priority",
-                              onClick: (gg) {
-                                bool val=widget. overridePriority;
-                                val=!val;
-                                print(val);
-                                widget.activeChange(type:1,val:val);
 
 
 
 
-
-                                setState(() {});
-                              }),
 
 
 
@@ -180,6 +158,12 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                           readOnly: true,
                           title: "Offer Period",
                           ontap: () {
+                            if(widget.offerPeriodName.text.isNotEmpty){
+                              widget.offerPeriod.text = "";
+                              widget.offerPeriodName.text =  "";
+
+                            }
+                            else
                             showDailogPopUp(
                               context,
                               TableConfigurePopup(
@@ -210,7 +194,7 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                           label: "Offer Applying To",
                           type:"PromotionChannelListPopup",
                           code: widget.offerApplyingType.text,
-                          value: widget.offerApplyingTo.text,
+                          value:widget.offerApplyingCode.text ,
                           onSelection: (ChannelListModel? va) {
                             print(
                                 "+++++++++++++++++++++++");
@@ -219,9 +203,15 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
 
 
                               // onChange = true;
-                              widget.offerApplyingTo.text = va?.name??"";
+                              widget.offerApplyingTo.text
+                              = va?.name??"";
+                              print("SSSSSSSSSSSS");
+                              print(   widget.offerApplyingTo.text??"");
                               widget.offerApplyingCode.text = va?.channelCode??"";
                               widget.offerApplyingId.text = va?.id.toString()??"";
+                            });
+                            setState(() {
+
                             });
                           },
                         ),
@@ -282,34 +272,11 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                             },
                             onCreate: true,
                             label: "Image"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-                        NewInputCard(
-                            formatter: true,
-
-                            controller: widget.availableCustomerGroup, title: "Available Customer Groups"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-                        PopUpSwitchTile(
-                            value:widget?. isAvailableforAll??false,
-                            title: "Is Available For All",
-                            onClick: (gg) {
-                              bool val=widget. isAvailableforAll;
-                              val=!val;
-                              print(val);
-                              widget.activeChange(type:2,val:val);
 
 
 
 
 
-                              setState(() {});
-                            }),
 
 
 
@@ -334,40 +301,46 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
 
                       ],)),
                       Expanded(child: Column(children: [
-                        NewInputCard(
-                          controller: widget.offerGroupName,
-                          icondrop: true,
-                          readOnly: true,
-                          title: "Offer Group",
-                          ontap: () {
-                            showDailogPopUp(
-                              context,
-                              TableConfigurePopup(
-                                type: "OfferGroupPeriodPopup",
-                                valueSelect: (OfferGroupList va) {
-                                  setState(() {
-                                    widget.offerGroup.text = va?.id.toString() ?? "";
-                                    widget.offerGroupName.text = va.title.toString() ?? "";
-                                    // widget.costingName.text =
-                                    //     va.methodName ?? "";
-                                    // setState(() {});
-
-                                    // onChange = true;
-                                    // orderType.text = va!;
-                                  });
-                                },
-                              ),
-                            );
-                          },
-                        ),
+                        // NewInputCard(
+                        //   controller: widget.offerGroupName,
+                        //   icondrop: true,
+                        //   readOnly: true,
+                        //   title: "Offer Group",
+                        //   ontap: () {
+                        //     showDailogPopUp(
+                        //       context,
+                        //       TableConfigurePopup(
+                        //         type: "OfferGroupPeriodPopup",
+                        //         valueSelect: (OfferGroupList va) {
+                        //           setState(() {
+                        //             widget.offerGroup.text = va?.id.toString() ?? "";
+                        //             widget.offerGroupName.text = va.title.toString() ?? "";
+                        //             // widget.costingName.text =
+                        //             //     va.methodName ?? "";
+                        //             // setState(() {});
+                        //
+                        //             // onChange = true;
+                        //             // orderType.text = va!;
+                        //           });
+                        //         },
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
 
                         // NewInputCard(
                         //     readOnly: true,
                         //     controller: widget.offerGroup, title: "Offer Group"),
+                        // SizedBox(
+                        //   height: height * .030,
+                        // ),
+
+                        NewInputCard(
+
+                            controller: widget.description, title: "Description"),
                         SizedBox(
                           height: height * .030,
                         ),
-
                         NewInputCard(
 
                             controller: widget.title, title: "Title"),
@@ -393,19 +366,6 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                         // NewInputCard(
                         //
                         //     controller: widget.basedOn, title: "Based On"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        PopUpSwitchTile(
-                            value:widget.select?true:widget?. isActive??false,
-                            title: "Is Active",
-                            onClick: (gg) {
-                              if(widget.select!=true) {
-                                bool val = widget.isActive;
-                                val = !val;
-                                widget.activeChange(type: 3, val: val);
-                                setState(() {});
-                              } }),
 
 
 
@@ -414,9 +374,9 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
 
 
 
-                        SizedBox(
-                          height: height * .130,
-                        ),
+
+
+
                         // PopUpSwitchTile(
                         //     value:widget?. isAvailableforAll??false,
                         //     title: "Stock Warning",
@@ -455,6 +415,70 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                     ],
                   ),
                 ),
+                SizedBox(height: height*.04,),
+                Row(
+                  children: [
+
+                    Expanded(child:Column(
+                      children: [
+
+            PopUpSwitchTile(
+            value:widget?. isAvailableforAll??false,
+            title: "Is Available For All",
+            onClick: (gg) {
+            bool val=widget. isAvailableforAll;
+            val=!val;
+            print(val);
+            widget.activeChange(type:2,val:val);
+
+
+
+
+
+            setState(() {});
+            }),
+                      ],
+                    ),),
+
+                    Expanded(child:Column(
+                      children: [
+                        Visibility(
+                          visible: !widget.isAvailableforAll,
+                          child: NewInputCard(
+                              formatter: true,
+                              ontap: (){
+                                showDailogPopUp(
+                                  context,
+                                  ConfigurePopup(
+                                    // code: widget.veritiacalCode,
+                                    passingList: [],
+                                    listAssign: (){},
+                                    type: "CustomGroupLinkedItem",
+                                  ),
+                                );
+                              },
+
+                              controller: widget.availableCustomerGroup, title: "Available Customer Groups"),
+                        ),
+                      ],
+                    ),),
+                    Expanded(child:Column(
+                      children: [
+                        PopUpSwitchTile(
+                            value:widget.select?true:widget?. isActive??false,
+                            title: "Is Active",
+                            onClick: (gg) {
+                              if(widget.select!=true) {
+                                bool val = widget.isActive;
+                                val = !val;
+                                widget.activeChange(type: 3, val: val);
+                                setState(() {});
+                              } }),
+
+                      ],
+                    ),)
+                  ],
+                )
 
 
 

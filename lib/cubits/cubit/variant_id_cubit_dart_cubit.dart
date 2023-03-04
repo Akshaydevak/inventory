@@ -25,9 +25,9 @@ class VariantIdCubitDartCubit extends Cubit<VariantIdCubitDartState> {
       emit(_Success(r));});
   }
 
-  Future getSearchCustomList(String filter) async {
+  Future getSearchCustomList(String filter,{String? vendorId,String? inventory=""}) async {
     emit(VariantIdCubitDartState.initial());
-    final result = await repo.getVariantId(code:"");
+    final result = await repo.getVariantId(code:"name="+filter,vendorId:vendorId,inventory: inventory);
     result.fold((l) => emit(_Error1()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

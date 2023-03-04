@@ -4,8 +4,13 @@ import 'package:desktop_window/desktop_window.dart' as window_size;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/grouplist/grouplist_cubit.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/readOfferGroup/read_offer_group_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/payment_list/payment_list_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment_sale_post_cubit.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
+import 'package:inventory/Screens/sales/general/cubit/payment_verticallist/payement_vertical_list_cubit.dart';
+import 'package:inventory/Screens/sales/invoice/cubits/payment_suucess_post/payment_transaction_success_post_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtypelist/costingtypelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/linkedlistvertica/linkedlistverticallist_cubit.dart';
@@ -34,6 +39,7 @@ import 'Screens/heirarchy/general/cubits/subcategorylist/subcategory_cubit.dart'
 import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 
 import 'Screens/logi/login.dart';
+import 'Screens/promotiontab/buy_more/cubit/buy_more_verticalList/buy_more_vertical_list_cubit.dart';
 import 'Screens/promotiontab/discount/cubit/PromotionDiscountVerticalList/promotion_discount_vertical_list_cubit.dart';
 import 'Screens/promotiontab/sale/cubits/ListOfferPeriodGroup/list_offer_period_cubit.dart';
 import 'Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
@@ -119,6 +125,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => ImagepostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BuyMoreVerticalListCubit(),
         ),
         BlocProvider(
           create: (context) => Listbrand2Cubit(),
@@ -227,6 +236,18 @@ class _MyAppState extends State<MyApp> {
           create: (context) => AttributepatchlistCubit(),
         ),BlocProvider(
           create: (context) => PromotionImageCubit(),
+        ),BlocProvider(
+          create: (context) => PayementVerticalListCubit(),
+        ),BlocProvider(
+          create: (context) => PromotionSaleDeactivateCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PaymentListCubit(),
+        ),   BlocProvider(
+          create: (context) => PaymentSalePostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PaymentTransactionSuccessPostCubit(),
         ),
       ],
       child: MaterialApp(

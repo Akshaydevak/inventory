@@ -51,3 +51,47 @@ Map<String, dynamic> _$$_PurchaseReturnInvoicePostModelToJson(
       'vendor_trn_number': instance.vendorTrnNumber,
       'invoice_lines': instance.lines,
     };
+
+_$_PurchasePaymentModel _$$_PurchasePaymentModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_PurchasePaymentModel(
+      tittle: json['tittle'] as String?,
+      notes: json['notes'] as String?,
+      code: json['code'] as String?,
+    );
+
+Map<String, dynamic> _$$_PurchasePaymentModelToJson(
+        _$_PurchasePaymentModel instance) =>
+    <String, dynamic>{
+      'tittle': instance.tittle,
+      'notes': instance.notes,
+      'code': instance.code,
+    };
+
+_$_PurchasePaymentPostModel _$$_PurchasePaymentPostModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_PurchasePaymentPostModel(
+      contact: json['contact'] as String?,
+      status: json['status'] as String?,
+      customerCode: json['customer_code'] as String?,
+      processId: json['process_id'] as int?,
+      methodCode: json['method_code'] as String?,
+      orderId: json['order_id'] as String?,
+      tranSactionCode: json['transaction_code'] as String?,
+      customerName: json['customer_name'] as String?,
+      totalAmount: (json['total_amount'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$$_PurchasePaymentPostModelToJson(
+        _$_PurchasePaymentPostModel instance) =>
+    <String, dynamic>{
+      'contact': instance.contact,
+      'status': instance.status,
+      'customer_code': instance.customerCode,
+      'process_id': instance.processId,
+      'method_code': instance.methodCode,
+      'order_id': instance.orderId,
+      'transaction_code': instance.tranSactionCode,
+      'customer_name': instance.customerName,
+      'total_amount': instance.totalAmount,
+    };

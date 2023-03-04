@@ -46,7 +46,7 @@ _$_Category _$$_CategoryFromJson(Map<String, dynamic> json) => _$_Category(
       code: json['code'] as String?,
       id: json['id'] as int?,
       isActive: json['is_active'] as bool? ?? false,
-      legalUnitType: json['legal_unit_type'] as String?,
+      legalUnitType: json['legal_unit_type'] as int?,
       channelCode: json['channel_code'] as String?,
       channelStockType: json['channel_stock_type'] as String?,
       channelTypeCode: json['channel_type_code'] as String?,

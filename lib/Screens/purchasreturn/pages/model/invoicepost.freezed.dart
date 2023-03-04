@@ -561,3 +561,519 @@ abstract class _PurchaseReturnInvoicePostModel
   _$$_PurchaseReturnInvoicePostModelCopyWith<_$_PurchaseReturnInvoicePostModel>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+PurchasePaymentModel _$PurchasePaymentModelFromJson(Map<String, dynamic> json) {
+  return _PurchasePaymentModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PurchasePaymentModel {
+  String? get tittle => throw _privateConstructorUsedError;
+  String? get notes => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PurchasePaymentModelCopyWith<PurchasePaymentModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PurchasePaymentModelCopyWith<$Res> {
+  factory $PurchasePaymentModelCopyWith(PurchasePaymentModel value,
+          $Res Function(PurchasePaymentModel) then) =
+      _$PurchasePaymentModelCopyWithImpl<$Res, PurchasePaymentModel>;
+  @useResult
+  $Res call({String? tittle, String? notes, String? code});
+}
+
+/// @nodoc
+class _$PurchasePaymentModelCopyWithImpl<$Res,
+        $Val extends PurchasePaymentModel>
+    implements $PurchasePaymentModelCopyWith<$Res> {
+  _$PurchasePaymentModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tittle = freezed,
+    Object? notes = freezed,
+    Object? code = freezed,
+  }) {
+    return _then(_value.copyWith(
+      tittle: freezed == tittle
+          ? _value.tittle
+          : tittle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_PurchasePaymentModelCopyWith<$Res>
+    implements $PurchasePaymentModelCopyWith<$Res> {
+  factory _$$_PurchasePaymentModelCopyWith(_$_PurchasePaymentModel value,
+          $Res Function(_$_PurchasePaymentModel) then) =
+      __$$_PurchasePaymentModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? tittle, String? notes, String? code});
+}
+
+/// @nodoc
+class __$$_PurchasePaymentModelCopyWithImpl<$Res>
+    extends _$PurchasePaymentModelCopyWithImpl<$Res, _$_PurchasePaymentModel>
+    implements _$$_PurchasePaymentModelCopyWith<$Res> {
+  __$$_PurchasePaymentModelCopyWithImpl(_$_PurchasePaymentModel _value,
+      $Res Function(_$_PurchasePaymentModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tittle = freezed,
+    Object? notes = freezed,
+    Object? code = freezed,
+  }) {
+    return _then(_$_PurchasePaymentModel(
+      tittle: freezed == tittle
+          ? _value.tittle
+          : tittle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_PurchasePaymentModel implements _PurchasePaymentModel {
+  const _$_PurchasePaymentModel({this.tittle, this.notes, this.code});
+
+  factory _$_PurchasePaymentModel.fromJson(Map<String, dynamic> json) =>
+      _$$_PurchasePaymentModelFromJson(json);
+
+  @override
+  final String? tittle;
+  @override
+  final String? notes;
+  @override
+  final String? code;
+
+  @override
+  String toString() {
+    return 'PurchasePaymentModel(tittle: $tittle, notes: $notes, code: $code)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PurchasePaymentModel &&
+            (identical(other.tittle, tittle) || other.tittle == tittle) &&
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.code, code) || other.code == code));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, tittle, notes, code);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PurchasePaymentModelCopyWith<_$_PurchasePaymentModel> get copyWith =>
+      __$$_PurchasePaymentModelCopyWithImpl<_$_PurchasePaymentModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PurchasePaymentModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PurchasePaymentModel implements PurchasePaymentModel {
+  const factory _PurchasePaymentModel(
+      {final String? tittle,
+      final String? notes,
+      final String? code}) = _$_PurchasePaymentModel;
+
+  factory _PurchasePaymentModel.fromJson(Map<String, dynamic> json) =
+      _$_PurchasePaymentModel.fromJson;
+
+  @override
+  String? get tittle;
+  @override
+  String? get notes;
+  @override
+  String? get code;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PurchasePaymentModelCopyWith<_$_PurchasePaymentModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+PurchasePaymentPostModel _$PurchasePaymentPostModelFromJson(
+    Map<String, dynamic> json) {
+  return _PurchasePaymentPostModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PurchasePaymentPostModel {
+  String? get contact => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: "customer_code")
+  String? get customerCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "process_id")
+  int? get processId => throw _privateConstructorUsedError;
+  @JsonKey(name: "method_code")
+  String? get methodCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "order_id")
+  String? get orderId => throw _privateConstructorUsedError;
+  @JsonKey(name: "transaction_code")
+  String? get tranSactionCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "customer_name")
+  String? get customerName => throw _privateConstructorUsedError;
+  @JsonKey(name: "total_amount")
+  double? get totalAmount => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PurchasePaymentPostModelCopyWith<PurchasePaymentPostModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PurchasePaymentPostModelCopyWith<$Res> {
+  factory $PurchasePaymentPostModelCopyWith(PurchasePaymentPostModel value,
+          $Res Function(PurchasePaymentPostModel) then) =
+      _$PurchasePaymentPostModelCopyWithImpl<$Res, PurchasePaymentPostModel>;
+  @useResult
+  $Res call(
+      {String? contact,
+      String? status,
+      @JsonKey(name: "customer_code") String? customerCode,
+      @JsonKey(name: "process_id") int? processId,
+      @JsonKey(name: "method_code") String? methodCode,
+      @JsonKey(name: "order_id") String? orderId,
+      @JsonKey(name: "transaction_code") String? tranSactionCode,
+      @JsonKey(name: "customer_name") String? customerName,
+      @JsonKey(name: "total_amount") double? totalAmount});
+}
+
+/// @nodoc
+class _$PurchasePaymentPostModelCopyWithImpl<$Res,
+        $Val extends PurchasePaymentPostModel>
+    implements $PurchasePaymentPostModelCopyWith<$Res> {
+  _$PurchasePaymentPostModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? contact = freezed,
+    Object? status = freezed,
+    Object? customerCode = freezed,
+    Object? processId = freezed,
+    Object? methodCode = freezed,
+    Object? orderId = freezed,
+    Object? tranSactionCode = freezed,
+    Object? customerName = freezed,
+    Object? totalAmount = freezed,
+  }) {
+    return _then(_value.copyWith(
+      contact: freezed == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerCode: freezed == customerCode
+          ? _value.customerCode
+          : customerCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      processId: freezed == processId
+          ? _value.processId
+          : processId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      methodCode: freezed == methodCode
+          ? _value.methodCode
+          : methodCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderId: freezed == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tranSactionCode: freezed == tranSactionCode
+          ? _value.tranSactionCode
+          : tranSactionCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerName: freezed == customerName
+          ? _value.customerName
+          : customerName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalAmount: freezed == totalAmount
+          ? _value.totalAmount
+          : totalAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_PurchasePaymentPostModelCopyWith<$Res>
+    implements $PurchasePaymentPostModelCopyWith<$Res> {
+  factory _$$_PurchasePaymentPostModelCopyWith(
+          _$_PurchasePaymentPostModel value,
+          $Res Function(_$_PurchasePaymentPostModel) then) =
+      __$$_PurchasePaymentPostModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? contact,
+      String? status,
+      @JsonKey(name: "customer_code") String? customerCode,
+      @JsonKey(name: "process_id") int? processId,
+      @JsonKey(name: "method_code") String? methodCode,
+      @JsonKey(name: "order_id") String? orderId,
+      @JsonKey(name: "transaction_code") String? tranSactionCode,
+      @JsonKey(name: "customer_name") String? customerName,
+      @JsonKey(name: "total_amount") double? totalAmount});
+}
+
+/// @nodoc
+class __$$_PurchasePaymentPostModelCopyWithImpl<$Res>
+    extends _$PurchasePaymentPostModelCopyWithImpl<$Res,
+        _$_PurchasePaymentPostModel>
+    implements _$$_PurchasePaymentPostModelCopyWith<$Res> {
+  __$$_PurchasePaymentPostModelCopyWithImpl(_$_PurchasePaymentPostModel _value,
+      $Res Function(_$_PurchasePaymentPostModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? contact = freezed,
+    Object? status = freezed,
+    Object? customerCode = freezed,
+    Object? processId = freezed,
+    Object? methodCode = freezed,
+    Object? orderId = freezed,
+    Object? tranSactionCode = freezed,
+    Object? customerName = freezed,
+    Object? totalAmount = freezed,
+  }) {
+    return _then(_$_PurchasePaymentPostModel(
+      contact: freezed == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerCode: freezed == customerCode
+          ? _value.customerCode
+          : customerCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      processId: freezed == processId
+          ? _value.processId
+          : processId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      methodCode: freezed == methodCode
+          ? _value.methodCode
+          : methodCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderId: freezed == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tranSactionCode: freezed == tranSactionCode
+          ? _value.tranSactionCode
+          : tranSactionCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerName: freezed == customerName
+          ? _value.customerName
+          : customerName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalAmount: freezed == totalAmount
+          ? _value.totalAmount
+          : totalAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_PurchasePaymentPostModel implements _PurchasePaymentPostModel {
+  const _$_PurchasePaymentPostModel(
+      {this.contact,
+      this.status,
+      @JsonKey(name: "customer_code") this.customerCode,
+      @JsonKey(name: "process_id") this.processId,
+      @JsonKey(name: "method_code") this.methodCode,
+      @JsonKey(name: "order_id") this.orderId,
+      @JsonKey(name: "transaction_code") this.tranSactionCode,
+      @JsonKey(name: "customer_name") this.customerName,
+      @JsonKey(name: "total_amount") this.totalAmount});
+
+  factory _$_PurchasePaymentPostModel.fromJson(Map<String, dynamic> json) =>
+      _$$_PurchasePaymentPostModelFromJson(json);
+
+  @override
+  final String? contact;
+  @override
+  final String? status;
+  @override
+  @JsonKey(name: "customer_code")
+  final String? customerCode;
+  @override
+  @JsonKey(name: "process_id")
+  final int? processId;
+  @override
+  @JsonKey(name: "method_code")
+  final String? methodCode;
+  @override
+  @JsonKey(name: "order_id")
+  final String? orderId;
+  @override
+  @JsonKey(name: "transaction_code")
+  final String? tranSactionCode;
+  @override
+  @JsonKey(name: "customer_name")
+  final String? customerName;
+  @override
+  @JsonKey(name: "total_amount")
+  final double? totalAmount;
+
+  @override
+  String toString() {
+    return 'PurchasePaymentPostModel(contact: $contact, status: $status, customerCode: $customerCode, processId: $processId, methodCode: $methodCode, orderId: $orderId, tranSactionCode: $tranSactionCode, customerName: $customerName, totalAmount: $totalAmount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PurchasePaymentPostModel &&
+            (identical(other.contact, contact) || other.contact == contact) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.customerCode, customerCode) ||
+                other.customerCode == customerCode) &&
+            (identical(other.processId, processId) ||
+                other.processId == processId) &&
+            (identical(other.methodCode, methodCode) ||
+                other.methodCode == methodCode) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.tranSactionCode, tranSactionCode) ||
+                other.tranSactionCode == tranSactionCode) &&
+            (identical(other.customerName, customerName) ||
+                other.customerName == customerName) &&
+            (identical(other.totalAmount, totalAmount) ||
+                other.totalAmount == totalAmount));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      contact,
+      status,
+      customerCode,
+      processId,
+      methodCode,
+      orderId,
+      tranSactionCode,
+      customerName,
+      totalAmount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PurchasePaymentPostModelCopyWith<_$_PurchasePaymentPostModel>
+      get copyWith => __$$_PurchasePaymentPostModelCopyWithImpl<
+          _$_PurchasePaymentPostModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PurchasePaymentPostModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PurchasePaymentPostModel implements PurchasePaymentPostModel {
+  const factory _PurchasePaymentPostModel(
+          {final String? contact,
+          final String? status,
+          @JsonKey(name: "customer_code") final String? customerCode,
+          @JsonKey(name: "process_id") final int? processId,
+          @JsonKey(name: "method_code") final String? methodCode,
+          @JsonKey(name: "order_id") final String? orderId,
+          @JsonKey(name: "transaction_code") final String? tranSactionCode,
+          @JsonKey(name: "customer_name") final String? customerName,
+          @JsonKey(name: "total_amount") final double? totalAmount}) =
+      _$_PurchasePaymentPostModel;
+
+  factory _PurchasePaymentPostModel.fromJson(Map<String, dynamic> json) =
+      _$_PurchasePaymentPostModel.fromJson;
+
+  @override
+  String? get contact;
+  @override
+  String? get status;
+  @override
+  @JsonKey(name: "customer_code")
+  String? get customerCode;
+  @override
+  @JsonKey(name: "process_id")
+  int? get processId;
+  @override
+  @JsonKey(name: "method_code")
+  String? get methodCode;
+  @override
+  @JsonKey(name: "order_id")
+  String? get orderId;
+  @override
+  @JsonKey(name: "transaction_code")
+  String? get tranSactionCode;
+  @override
+  @JsonKey(name: "customer_name")
+  String? get customerName;
+  @override
+  @JsonKey(name: "total_amount")
+  double? get totalAmount;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PurchasePaymentPostModelCopyWith<_$_PurchasePaymentPostModel>
+      get copyWith => throw _privateConstructorUsedError;
+}

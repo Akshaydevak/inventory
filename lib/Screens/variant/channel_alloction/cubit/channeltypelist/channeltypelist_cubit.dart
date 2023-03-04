@@ -25,9 +25,9 @@ class ChanneltypelistCubit extends Cubit<ChanneltypelistState> {
     });
   }
 
-  Future searchVariantList(String filter) async {
+  Future searchVariantList(String filter, String type) async {
     emit(ChanneltypelistState.initial());
-    final result = await repo.getChannelTypeList(filter,"");
+    final result = await repo.getChannelTypeList("&name="+filter,type);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -37,8 +37,8 @@ class ChanneltypelistCubit extends Cubit<ChanneltypelistState> {
     });
   }
 
-  Future nextslotSectionPageList() async {
-    final result = await repo.getChannelTypeList(next,"");
+  Future nextslotSectionPageList(String type) async {
+    final result = await repo.getChannelTypeList(next,type);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -47,9 +47,9 @@ class ChanneltypelistCubit extends Cubit<ChanneltypelistState> {
     });
   }
 
-  Future previuosslotSectionPageList() async {
+  Future previuosslotSectionPageList(String type) async {
     // print(previous);
-    final result = await repo.getChannelTypeList(prev,"");
+    final result = await repo.getChannelTypeList(prev,type);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

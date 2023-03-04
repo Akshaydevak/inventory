@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/model/purchaseorder.dart';
@@ -34,17 +35,24 @@ abstract class InventoryPromotionRepository{
   Future<Either<Failure,List< ChannelListModel>>> getChannelList(String? code);
   Future<Either<Failure, PromotionSaleReadModel>> getPromotionSaleRead(int orderId);
   Future<Either<Failure, DoubleResponse>> patchOfferGroup(OfferGroupData model,int? id);
-  Future<Either<Failure, listAllSalesApis>> getListAllSalesApi();
+  Future<Either<Failure, listAllSalesApis>> getListAllSalesApi({String? type});
   Future<Either<Failure, DoubleResponse>> postPromotionImage(
       String? imageNmae, String ImageEncode,
       {String? type});
  //discount
 
-
+  Future<Either<Failure, PaginatedResponse<List<SaleLines>>>> getVariantGroupCodeList(String? code,{String? customereCode});
   Future<Either<Failure, DoubleResponse>> postCreatePromtionDiscount(PromotionDiscountCreationModel model);
   Future<Either<Failure, PromotionDiscountReadModel>> getPromotionDiscountRead(int id);
+  Future<Either<Failure,PaginatedResponse< List<CustomGroupReadModel>>>> getCustomGroupRead();
   Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getListTypeId(salesOrderNamePostModel model,String? code);
   Future<Either<Failure, DoubleResponse>> getPromotionDiscountPatch(PromotionDiscountCreationModel model,int? id);
+  //Buy more*****************************
+  Future<Either<Failure, DoubleResponse>> postCreatePromtionBuyMore(PromotionBuyMoreCreationModel model);
+  Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getBuyMoreVerticalList(String? code,);
+  Future<Either<Failure, PromotionBuyMoreCreationModel>> getBuyMoreRead(int verticalId);
+  Future<Either<Failure, DoubleResponse>> buyMorePromotionSalePatch(PromotionBuyMoreCreationModel model,int? id);
+
 }
 class InventoryPromoRepoIml extends InventoryPromotionRepository{
 
@@ -146,9 +154,9 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   }
 
   @override
-  Future<Either<Failure, listAllSalesApis>> getListAllSalesApi() {
+  Future<Either<Failure, listAllSalesApis>> getListAllSalesApi({String? type }) {
     return repoExecute<listAllSalesApis>(
-            () async => remoteDataSource.getListAllSalesApi());
+            () async => remoteDataSource.getListAllSalesApi(type:type));
   }
 
   @override
@@ -230,6 +238,40 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   Future<Either<Failure, DoubleResponse>> getPromotionDiscountPatch(PromotionDiscountCreationModel model, int? id) {
     return repoExecute<DoubleResponse>(
             () async => remoteDataSource.getPromotionDiscountPatch(model,id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCreatePromtionBuyMore(PromotionBuyMoreCreationModel model) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.postCreatePromtionBuyMore(model));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getBuyMoreVerticalList(String? code,{String? customereCode}) {
+    return repoExecute<PaginatedResponse<List<OfferPeriodList>>>(
+            () async => remoteDataSource.getBuyMoreVerticalList(code));
+  }
+
+  @override
+  Future<Either<Failure, PromotionBuyMoreCreationModel>> getBuyMoreRead(int verticalId) {
+    return repoExecute<PromotionBuyMoreCreationModel>(() async => remoteDataSource.getBuyMoreRead(verticalId));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> buyMorePromotionSalePatch(PromotionBuyMoreCreationModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.buyMorePromotionSalePatch(model,id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<  List<CustomGroupReadModel>>>> getCustomGroupRead() {
+    return repoExecute< PaginatedResponse< List<CustomGroupReadModel>>>(() async => remoteDataSource.getCustomGroupRead());
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<SaleLines>>>> getVariantGroupCodeList(String? code,{String? customereCode}) {
+    return repoExecute<PaginatedResponse<List<SaleLines>>>(
+            () async => remoteDataSource.getVariantGroupCodeList(code,customereCode:customereCode));
   }
   //
   // @override

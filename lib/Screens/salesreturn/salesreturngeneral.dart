@@ -316,7 +316,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                           setState(() {
                             context.read<SalesreturnverticalCubit>().getSalesReturnGeneralVertical();
                             // currentStock.clear();
-                            select=false;
+
 
                             // context.read<RequestformreadCubit>().getRequestFormRead(veritiaclid);
                           });
@@ -374,12 +374,23 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                         print("appuram" + result.toString());
                         setState(() {
                           if (result.isNotEmpty) {
-                            veritiaclid = result[0].id;
-                            Variable.verticalid = result[0].id;
-                            print("Variable.ak" + Variable.verticalid.toString());
-                            context
-                                .read<SalesgeneralreadCubit>()
-                                .getSalesReturnGeneralRead(veritiaclid!);
+                            if(select){
+                              veritiaclid = result[result.length-1].id;
+                              selectedVertical=result.length-1;
+
+                              context
+                                  .read<SalesgeneralreadCubit>()
+                                  .getSalesReturnGeneralRead(veritiaclid!);
+                            }
+                            else{
+                              veritiaclid = result[0].id;
+                              selectedVertical=0;
+
+                              context
+                                  .read<SalesgeneralreadCubit>()
+                                  .getSalesReturnGeneralRead(veritiaclid!);
+                            }
+
                             select = false;
                           } else {
                             print("common");

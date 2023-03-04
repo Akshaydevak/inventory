@@ -10,6 +10,7 @@ class OfferPeriodList with _$OfferPeriodList{
     final String? code,
     @JsonKey(name: "title") final String? title,
     @JsonKey(name: "offer_period_code") final String? offerPeriodCode,
+    @JsonKey(name: "buy_more_code") final String? buyMoreCode,
 
   }) = _OfferPeriodList;
   factory OfferPeriodList.fromJson(Map<String, dynamic> json) =>
@@ -311,11 +312,15 @@ class VariantModel with _$VariantModel{
     final String? barcode,
 
     @JsonKey(name: "variant_id") final int? variantId,
+    @JsonKey(name: "buy_more_id") final int? buyMoreId,
     @JsonKey(name: "variant_code") final String? variantCode,
     @JsonKey(name: "variant_name") final String? variantName,
     @JsonKey(name: "offer_group_code") final String? offerGroupCode,
+    @JsonKey(name: "buy_more_line_code") final String? buyMoreLineCode,
     @JsonKey(name: "offer_name") final String? offerName,
     @JsonKey(name: "type_data") final String? typeData,
+    @JsonKey(name: "updated_at") final String? updatedAt,
+
     @JsonKey(name: "updateCheck",defaultValue: false) final bool? updateCheck,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
 

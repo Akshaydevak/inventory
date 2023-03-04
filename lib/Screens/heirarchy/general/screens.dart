@@ -179,26 +179,30 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                             SizedBox(
                               height: height * .030,
                             ),
-                            NewInputCard(controller: widget.uomGroupNameController,
+                            NewInputCard(controller: widget.baseuomNameController,
+                              icondrop:true,
                               readOnly: true,
-                              icondrop:true,title: "Uom Group",ontap: (){
+                              title: "Base UOM",ontap: (){
+                              if(widget.baseuomNameController.text.isNotEmpty){
+                                widget.baseuomNameController.text="";
+                                widget.uomController.text="";
+
+                              }
+                              else{
                                 showDailogPopUp(
                                   context,
                                   TableConfigurePopup(
-                                    type: "UomGroupTabalePopup", valueSelect: (BrandListModel va){
+                                    id: widget.uomGroupid,
+                                    type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
 
                                     setState(() {
+                                      print(va?.uomCode);
+                                      print(va);
 
 
 
-
-                                      widget.uomGroupController.text=va?.code??"";
-                                      widget.uomGroupNameController.text=va?.name??"";
-                                      Variable.uomGroupId=va?.id;
-                                      // widget.idChange(1,va?.id);
-                                      widget.uomController.clear();
-                                      widget.uomGroupid=va?.id;
-                                      widget.baseuomNameController.clear();
+                                        widget.uomController.text=va?.uomCode??"";
+                                      widget.baseuomNameController.text=va?.name??"";
                                       setState(() {
 
                                       });
@@ -213,8 +217,11 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
 
 
                                 );
+                              }
+
 
                               },),
+
                             SizedBox(
                               height: height * .030,
                             ),
@@ -416,42 +423,11 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
-
-
-                          NewInputCard(controller: widget.baseuomNameController,
-                            icondrop:true,
-                            readOnly: true,
-                            title: "Base UOM",ontap: (){
-                              showDailogPopUp(
-                                context,
-                                TableConfigurePopup(
-                                  id: widget.uomGroupid,
-                                  type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
-
-                                  setState(() {
-                                    print(va?.uomCode);
-                                    print(va);
+                          NewInputCard(
+                              controller: widget.oldSystemCode, title: "Old System Code"),
 
 
 
-                                    widget.uomController.text=va?.uomCode??"";
-                                    widget.baseuomNameController.text=va?.name??"";
-                                    setState(() {
-
-                                    });
-
-
-                                    // onChange = true;
-                                    // orderType.text = va!;
-                                  });
-
-                                },
-                                ),
-
-
-                              );
-
-                            },),
 
                           SizedBox(
                             height: height * .030,
@@ -762,8 +738,50 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
-                          NewInputCard(
-                              controller: widget.oldSystemCode, title: "Old System Code"),
+
+                          NewInputCard(controller: widget.uomGroupNameController,
+                            readOnly: true,
+                            icondrop:true,title: "Uom Group",ontap: (){
+                              if(widget.uomGroupNameController.text.isNotEmpty){
+                                widget.uomGroupNameController.text="";
+                              widget.uomGroupController.text="";
+                                widget.baseuomNameController.clear();
+                                widget.uomController.clear();
+
+                              }
+                              showDailogPopUp(
+                                context,
+                                TableConfigurePopup(
+                                  type: "UomGroupTabalePopup", valueSelect: (BrandListModel va){
+
+                                  setState(() {
+
+
+
+
+                                    widget.uomGroupController.text=va?.code??"";
+                                    widget.uomGroupNameController.text=va?.name??"";
+                                    Variable.uomGroupId=va?.id;
+                                    // widget.idChange(1,va?.id);
+                                    widget.uomController.clear();
+                                    widget.uomGroupid=va?.id;
+                                    widget.baseuomNameController.clear();
+                                    setState(() {
+
+                                    });
+
+
+                                    // onChange = true;
+                                    // orderType.text = va!;
+                                  });
+
+                                },
+                                ),
+
+
+                              );
+
+                            },),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -967,7 +985,7 @@ class _TableBottomState extends State<TableBottom> {
 
                   children: [
                     NewInputCard(
-                      textLimit: 17,
+                      // textLimit: 17,
                       formatter: false,
                         readOnly: widget.select?false:true,
                         controller: widget.barCode, title: "Barcode"),

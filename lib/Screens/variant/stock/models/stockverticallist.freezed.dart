@@ -406,7 +406,7 @@ mixin _$Category {
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: "legal_unit_type")
-  String? get legalUnitType => throw _privateConstructorUsedError;
+  int? get legalUnitType => throw _privateConstructorUsedError;
   @JsonKey(name: "channel_code")
   String? get channelCode => throw _privateConstructorUsedError;
   @JsonKey(name: "channel_stock_type")
@@ -431,7 +431,7 @@ abstract class $CategoryCopyWith<$Res> {
       String? code,
       int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
-      @JsonKey(name: "legal_unit_type") String? legalUnitType,
+      @JsonKey(name: "legal_unit_type") int? legalUnitType,
       @JsonKey(name: "channel_code") String? channelCode,
       @JsonKey(name: "channel_stock_type") String? channelStockType,
       @JsonKey(name: "channel_type_code") String? channelTypeCode});
@@ -484,7 +484,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
       legalUnitType: freezed == legalUnitType
           ? _value.legalUnitType
           : legalUnitType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
@@ -514,7 +514,7 @@ abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
       String? code,
       int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
-      @JsonKey(name: "legal_unit_type") String? legalUnitType,
+      @JsonKey(name: "legal_unit_type") int? legalUnitType,
       @JsonKey(name: "channel_code") String? channelCode,
       @JsonKey(name: "channel_stock_type") String? channelStockType,
       @JsonKey(name: "channel_type_code") String? channelTypeCode});
@@ -565,7 +565,7 @@ class __$$_CategoryCopyWithImpl<$Res>
       legalUnitType: freezed == legalUnitType
           ? _value.legalUnitType
           : legalUnitType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
@@ -612,7 +612,7 @@ class _$_Category implements _Category {
   final bool? isActive;
   @override
   @JsonKey(name: "legal_unit_type")
-  final String? legalUnitType;
+  final int? legalUnitType;
   @override
   @JsonKey(name: "channel_code")
   final String? channelCode;
@@ -676,7 +676,7 @@ abstract class _Category implements Category {
           final String? code,
           final int? id,
           @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,
-          @JsonKey(name: "legal_unit_type") final String? legalUnitType,
+          @JsonKey(name: "legal_unit_type") final int? legalUnitType,
           @JsonKey(name: "channel_code") final String? channelCode,
           @JsonKey(name: "channel_stock_type") final String? channelStockType,
           @JsonKey(name: "channel_type_code") final String? channelTypeCode}) =
@@ -697,7 +697,7 @@ abstract class _Category implements Category {
   bool? get isActive;
   @override
   @JsonKey(name: "legal_unit_type")
-  String? get legalUnitType;
+  int? get legalUnitType;
   @override
   @JsonKey(name: "channel_code")
   String? get channelCode;

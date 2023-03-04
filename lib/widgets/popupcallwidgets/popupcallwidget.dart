@@ -3030,8 +3030,7 @@ class _AttributeListPopUpCallState extends State<AttributeListPopUpCall> {
               ),
               // error: () => {errorLoader(widget.onAddNew)},
               success: (data) {
-                print("data===" + data.toString());
-                print("data===" + widget.listOfList.toString());
+
                 List<String?> list = [];
                 int length = data.data.length;
                 // list=data.orderTypes;

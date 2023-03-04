@@ -113,6 +113,17 @@ class _CostingStableTableState extends State<CostingStableTable> {
                           readOnly: true,
                           title: "Costing Method Id",
                           ontap: () {
+                            if(widget.costingName.text.isNotEmpty){
+                              setState(() {
+                                widget.costingmethod.text =
+                                  "";
+                                widget.costingName.text =
+                                 "";
+
+
+                              });
+                            }
+                            else
                             showDailogPopUp(
                               context,
                               TableConfigurePopup(
@@ -174,6 +185,14 @@ class _CostingStableTableState extends State<CostingStableTable> {
                           icondrop: true,
                           title: "Pricing GroupId Id",
                           ontap: () {
+                            if(widget.pricingName.text.isNotEmpty){
+                              setState(() {
+                                widget.pricingName.text = "";
+                                widget.pricingGroupId.text = "";
+
+
+                              });
+                            }else
                             showDailogPopUp(
                               context,
                               TableConfigurePopup(

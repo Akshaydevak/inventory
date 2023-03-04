@@ -25,7 +25,7 @@ class OrderedpersonCubit extends Cubit<OrderedpersonState> {
   }
   Future getSearchOrderedPersonList(String filter) async {
     emit(OrderedpersonState.initial());
-    final result = await repo.getOrderedPerson("name=" + filter);
+    final result = await repo.getOrderedPerson("search_key=" + filter);
     result.fold((l) => emit(_Error1()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

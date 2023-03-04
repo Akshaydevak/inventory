@@ -436,21 +436,9 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.end,
                                   children: [
-                                    // Container(
-                                    //   padding:
-                                    //       EdgeInsets.only(top: 15, left: 10),
-                                    //   child: TextButton(
-                                    //     style: TextButton.styleFrom(
-                                    //         primary: Colors.blue,
-                                    //         // elevation: 2,
-                                    //         backgroundColor: Colors.white24),
-                                    //     onPressed: () {
-                                    //       setState(() {});
-                                    //     },
-                                    //     child: Text("Create"),
-                                    //   ),
-                                    // ),
+
                                     TextButtonLarge(
+                                      marginCheck: true,
                                       text: "PREVIEW",
                                       onPress: () {
                                         print("Akshay");

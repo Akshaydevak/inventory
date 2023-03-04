@@ -9,9 +9,12 @@ class Variable{
   static String  vendorAddress="";
   static String  variantCode="";
   static String  inventory_ID="";
+  static String  methodCode="";
   static String  inventory_Name="";
   static String  created_by="";
   static String  mobileNumber="";
+  static String  type_data="";
+  static bool  isTypeDataCheck=false;
 
   static String  username="";
   static String  loginLeage="";

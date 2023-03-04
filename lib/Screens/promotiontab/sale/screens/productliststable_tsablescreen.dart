@@ -29,6 +29,26 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
   bool isActive=false;
   Barcode barcode=Barcode();
   List<SaleLines>table=[];
+  bool onSaveActive=false;
+
+  saveButtonActovde(String key,String val){
+    print(key);
+    print(val);
+
+    key=(key.replaceAll(' ', ''));
+    val=(val.replaceAll(' ', ''));
+    if(key.isNotEmpty==true && val.isNotEmpty==true){
+      setState(() {
+        onSaveActive=true;
+      });
+    }
+    else{
+      setState(() {
+        onSaveActive=false;
+      });
+
+    }
+  }
   clear(){
      variantCode="";
      variantName="";
@@ -114,7 +134,6 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
   child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Container(
                 // width: w/5,
                 margin: EdgeInsets.symmetric(horizontal: w*.02),
@@ -252,7 +271,47 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                               TableCell(
                                   verticalAlignment: TableCellVerticalAlignment.middle,
 
-                                  child:textPadding(table[i].variantCode.toString()??"")
+                                  child: VariantIdTAble(
+                                    text:table[i].variantCode.toString()??"",
+                                    onTap: (){
+                                      List<String> list=[];
+
+                                      for (var val in widget.segmentList)
+                                        list.add(val.segmentCode.toString());
+                                      print("sasasaaaaaaaaaaaaaa"+list.toString());
+
+                                      PromotionVariantPostModel model=PromotionVariantPostModel(
+                                          applyingTypeCode: widget.applyingTypeCode,
+                                          applyinType: widget.applyingType,
+                                          searchElement: "",
+                                          segmentList:list,
+                                          inventoryId: Variable.inventory_ID
+                                      );
+                                      showDailogPopUp(
+                                        context,
+                                        TableConfigurePopup(
+                                          object: model,
+                                          // inventory: Variable.inventory_ID,
+                                          type: "VariantListPopup",
+                                          valueSelect: (SaleLines? va) {
+
+
+                                            setState(() {
+                                              table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName: va?.variantName??"",barcode:  va?.barcode,updateCheck: true);
+
+
+
+
+                                              // orderType = va!;
+                                            });
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+
+
+
 
 
 
@@ -304,21 +363,49 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                               TableCell(
                                 verticalAlignment:
                                 TableCellVerticalAlignment.middle,
-                                child: TableTextButton(
-                                  onPress: () {
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: TableTextButton(
+                                        onPress: () {
 
-                                    setState(() {
-                                      // widget.updateCheck(false);
-                                      table[i]=      table[i].copyWith(updateCheck: false);
-                                      widget.updation(table);
+                                          setState(() {
+                                            // widget.updateCheck(false);
+                                            table[i]=      table[i].copyWith(updateCheck: false);
+                                            widget.updation(table);
 
 
-                                    });
+                                          });
 
-                                  },
-                                  textColor:table[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
-                                  label:
-                                  table[i].updateCheck==true? "UPDATE":"",
+                                        },
+                                        textColor:table[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
+                                        label:
+                                        table[i].updateCheck==true? "UPDATE":"",
+                                      ),
+                                    ),
+                                    SizedBox(width: 4,),
+
+
+                                    TableIconTextButton(
+
+                                      // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
+                                      // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
+                                      // bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Colors.transparent,
+                                      onPress: () {
+
+                                        setState(() {
+
+
+                                          table?.removeAt(i);
+                                          widget.updation(table);
+
+                                        });
+                                      },
+                                      icon: Icons.delete,
+                                      label: "",
+                                    ),
+                                    SizedBox(width: 4,),
+                                  ],
                                 ),
                               )
 
@@ -350,7 +437,8 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                           TableCell(
                               verticalAlignment: TableCellVerticalAlignment.middle,
 
-                              child: VariantIdTAble(
+                              child:
+                              VariantIdTAble(
                                 text:variantCode,
                                 onTap: (){
                                   List<String> list=[];
@@ -381,6 +469,7 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                                           print("barcodeeeeeeeeeeee");
                                           print(va?.barcode?.barcodeNumber??"");
                                           barcode=      barcode.copyWith(barcodeNumber: va?.barcode?.barcodeNumber??"");
+                                          saveButtonActovde(variantCode,variantName);
 
 
 
@@ -437,20 +526,27 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                             verticalAlignment:
                             TableCellVerticalAlignment.middle,
                             child: TableTextButton(
+                                buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
+                                textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
+                                bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
                                 label: "Save",
                                 onPress: () {
                                   setState(() {
-                                    table.add(SaleLines(
-                                      variantCode: variantCode,
-                                      barcode: barcode,
-                                      variantName: variantName.isEmpty?"":variantName,
-                                      isActive: isActive,
-                                    ));
-                                    variantCode="";
-                                    variantName="";
-                                    barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
-                                    isActive=false;
-                                    widget.updation(table);
+                                    if(variantName.isNotEmpty && variantCode.isNotEmpty){
+                                      table.add(SaleLines(
+                                        variantCode: variantCode,
+                                        barcode: barcode,
+                                        variantName: variantName.isEmpty?"":variantName,
+                                        isActive: isActive,
+                                      ));
+                                      variantCode="";
+                                      variantName="";
+                                      barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
+                                      isActive=false;
+                                      onSaveActive=false;
+                                      widget.updation(table);
+                                    }
+
                                   });
                                 }),
                           )
@@ -460,6 +556,14 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
 
 
                   ],
+                  widths: {
+                    0: FlexColumnWidth(3),
+                    1: FlexColumnWidth(3),
+                    2: FlexColumnWidth(1.5),
+                    3: FlexColumnWidth(1.5),
+                    4: FlexColumnWidth(2),
+
+                  },
 
                 ),
 

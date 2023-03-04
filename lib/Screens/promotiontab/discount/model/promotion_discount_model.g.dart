@@ -70,11 +70,13 @@ _$_PromotionDiscountReadModel _$$_PromotionDiscountReadModelFromJson(
       name: json['name'] as String?,
       description: json['description'] as String?,
       image: json['image'] as String?,
+      code: json['code'] as String?,
       title: json['title'] as String?,
       segments: (json['segments'] as List<dynamic>?)
           ?.map((e) => Segment.fromJson(e as Map<String, dynamic>))
           .toList(),
       offerPeriodName: json['offer_period_name'] as String?,
+      offerGroupName: json['offer_group_name'] as String?,
       inventoryId: json['inventory_id'] as String?,
       basedOn: json['based_on'] as String?,
       offerPeriodId: json['offer_period_id'] as int?,
@@ -98,9 +100,11 @@ Map<String, dynamic> _$$_PromotionDiscountReadModelToJson(
       'name': instance.name,
       'description': instance.description,
       'image': instance.image,
+      'code': instance.code,
       'title': instance.title,
       'segments': instance.segments,
       'offer_period_name': instance.offerPeriodName,
+      'offer_group_name': instance.offerGroupName,
       'inventory_id': instance.inventoryId,
       'based_on': instance.basedOn,
       'offer_period_id': instance.offerPeriodId,
@@ -113,6 +117,20 @@ Map<String, dynamic> _$$_PromotionDiscountReadModelToJson(
       'offer_group_id': instance.offerGroupId,
       'is_active': instance.isActive,
       'is_available_for_all': instance.isAvailableForAll,
+    };
+
+_$_CustomGroupReadModel _$$_CustomGroupReadModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_CustomGroupReadModel(
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$$_CustomGroupReadModelToJson(
+        _$_CustomGroupReadModel instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'name': instance.name,
     };
 
 _$_OfferLines _$$_OfferLinesFromJson(Map<String, dynamic> json) =>
@@ -150,8 +168,9 @@ Map<String, dynamic> _$$_OfferLinesToJson(_$_OfferLines instance) =>
 _$_AvailableCustomerGroups _$$_AvailableCustomerGroupsFromJson(
         Map<String, dynamic> json) =>
     _$_AvailableCustomerGroups(
-      customerGroupId: json['customer_group_id'] as int?,
+      customerGroupId: json['customer_group_id'] as String?,
       customerGroupCode: json['customer_group_cod'] as String?,
+      customerGroupName: json['customer_group_name'] as String?,
     );
 
 Map<String, dynamic> _$$_AvailableCustomerGroupsToJson(
@@ -159,6 +178,7 @@ Map<String, dynamic> _$$_AvailableCustomerGroupsToJson(
     <String, dynamic>{
       'customer_group_id': instance.customerGroupId,
       'customer_group_cod': instance.customerGroupCode,
+      'customer_group_name': instance.customerGroupName,
     };
 
 _$_SaleLinesDiscount _$$_SaleLinesDiscountFromJson(Map<String, dynamic> json) =>
@@ -172,8 +192,17 @@ _$_SaleLinesDiscount _$$_SaleLinesDiscountFromJson(Map<String, dynamic> json) =>
               (e) => VariantsLinesDiscount.fromJson(e as Map<String, dynamic>))
           .toList(),
       typeId: json['type_id'] as int?,
+      typeName: json['type_Name'] as String?,
       maximumQuantity: json['maximum_qty'] as int?,
       typeApplying: json['type_applying'] as String?,
+      addedVariant: (json['addedd_variants'] as List<dynamic>?)
+          ?.map(
+              (e) => VariantsLinesDiscount.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      deletedVariants: (json['deleted_variants'] as List<dynamic>?)
+          ?.map(
+              (e) => VariantsLinesDiscount.fromJson(e as Map<String, dynamic>))
+          .toList(),
       typeCode: json['type_code'] as String?,
       offerGroupCode: json['offer_group_code'] as String?,
       offerName: json['offer_name'] as String?,
@@ -193,8 +222,11 @@ Map<String, dynamic> _$$_SaleLinesDiscountToJson(
       'title': instance.title,
       'variants': instance.variants,
       'type_id': instance.typeId,
+      'type_Name': instance.typeName,
       'maximum_qty': instance.maximumQuantity,
       'type_applying': instance.typeApplying,
+      'addedd_variants': instance.addedVariant,
+      'deleted_variants': instance.deletedVariants,
       'type_code': instance.typeCode,
       'offer_group_code': instance.offerGroupCode,
       'offer_name': instance.offerName,
@@ -213,6 +245,9 @@ _$_VariantsLinesDiscount _$$_VariantsLinesDiscountFromJson(
       barcode: json['barcode'] == null
           ? null
           : Barcode.fromJson(json['barcode'] as Map<String, dynamic>),
+      variantIdd: json['variant_id'] as int?,
+      variantName: json['variant_name'] as String?,
+      variantCode: json['variant_code'] as String?,
     );
 
 Map<String, dynamic> _$$_VariantsLinesDiscountToJson(
@@ -221,4 +256,7 @@ Map<String, dynamic> _$$_VariantsLinesDiscountToJson(
       'id': instance.id,
       'name': instance.name,
       'barcode': instance.barcode,
+      'variant_id': instance.variantIdd,
+      'variant_name': instance.variantName,
+      'variant_code': instance.variantCode,
     };

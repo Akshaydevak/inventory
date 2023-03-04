@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:inventory/Screens/sales/general/general.dart';
+import 'package:inventory/Screens/sales/invoice/ipayment_list.dart';
 
 import 'package:inventory/Screens/sales/salesinvoice.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
@@ -19,7 +20,7 @@ class SalesScreen extends StatefulWidget {
 class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 2, vsync: this,initialIndex:  Variable.subIndex[2]??0);
+    TabController _tabController = TabController(length: 3, vsync: this,initialIndex:  Variable.subIndex[2]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return Container(
@@ -103,6 +104,7 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
                             controller: _tabController,
                             tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: width*.011)),
                               Text("Sales Invoice",style:TextStyle(color: Colors.black,fontSize: width*.011,)),
+                              Text("Payment Status",style:TextStyle(color: Colors.black,fontSize: width*.011,)),
                             ]),
                       ),
                       Container(
@@ -127,7 +129,8 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
                       controller: _tabController,
                       children: [
                         SalesGeneral(),
-                        SalesInvoiceScreen()
+                        SalesInvoiceScreen(),
+                        SalesPaymentListPActh()
 
 
 

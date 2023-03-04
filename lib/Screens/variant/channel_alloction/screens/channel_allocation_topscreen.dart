@@ -9,21 +9,29 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 
 class ChanneAllocationTopScreen extends StatefulWidget {
   final Function listAssign;
+  final Key? key;
   List<Category> channels;
   final Function appiCheckingTrue;
   final Function filterTable;
   final List<String> channelCodeList;
-  ChanneAllocationTopScreen({required this.appiCheckingTrue,required this.channels, required this.listAssign, required this.filterTable, required this.channelCodeList});
+  ChanneAllocationTopScreen({required this.appiCheckingTrue,this.key,required this.channels, required this.listAssign, required this.filterTable, required this.channelCodeList});
   @override
-  _ChanneAllocationTopScreenState createState() =>
-      _ChanneAllocationTopScreenState();
+  ChanneAllocationTopScreenState createState() =>
+      ChanneAllocationTopScreenState();
 }
 
-class _ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
+class ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
   String choosenValue = '_Select_';
   bool onChange=false;
   List<String> items = ["variant", "group"];
   List<bool?>selection=[];
+  clear(){
+
+    setState(() {
+      selection.clear();
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;

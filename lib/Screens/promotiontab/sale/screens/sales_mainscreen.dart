@@ -53,7 +53,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
   TextEditingController  maximumCountController=TextEditingController();
   TextEditingController  availableCustomerGroupController=TextEditingController();
   TextEditingController  priorityController=TextEditingController();
-  bool isAvailableForAll=false;
+  bool isAvailableForAll=true;
   bool overidePriority=false;
   bool isAdminBased=false;
   bool isActive=false;
@@ -68,12 +68,14 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
   List<SaleLines> variantTable = [];
   tableAssign(List<Segment> table1) {
     print("ethito");
-
     setState(() {
       segmentTable = List.from(table1);
-
+      _myWidgetState.currentState?.clear();
+      variantTable.clear();
+      saleApplyingCodeController.clear();
+      saleApplyingIdController.clear();
+      saleApplyingNameController.clear();
     });
-
   }
  variantTableAssign(List<SaleLines> table1) {
     print("ethito");
@@ -81,6 +83,13 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
     setState(() {
       variantTable = List.from(table1);
 
+    });
+
+  }
+  variantTableDatsClear(){
+    setState(() {
+      variantTable.clear();
+      _myWidgetState.currentState?.clear();
     });
 
   }
@@ -167,6 +176,29 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
   ],
   child: MultiBlocListener(
   listeners: [
+    BlocListener<DeleteOfferPeriodCubit, DeleteOfferPeriodState>(
+      listener: (context, state) {
+        state.maybeWhen(orElse: () {
+          // context.
+          context.showSnackBarError("Loading");
+        }, error: () {
+          context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+          print("checkingdata" + data.data1.toString());
+          if (data.data1) {
+            context.showSnackBarSuccess(data.data2);
+            // clear();
+
+            context.read<PromotionsaleVerticalListCubit>().getPromotionSaleVerticalListt();;
+
+          } else {
+            context.showSnackBarError(data.data2);
+            print(data.data1);
+          }
+          ;
+        });
+      },
+    ),
     BlocListener<PromtionSaleReadCubit, PromtionSaleReadState>(
       listener: (context, state) {
         print("state++++++++++++++++++++++++++++++++");
@@ -236,6 +268,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
       },
     ),
 
+
     BlocListener<CreatePromotionSaleCubit, CreatePromotionSaleState>(
       listener: (context, state) {
         print("postssssssss" + state.toString());
@@ -249,15 +282,78 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
             context.showSnackBarSuccess(data.data2);
             Timer(Duration(seconds: 5), () {
               setState(() {
+                // context
+                //     .read<VertiacalCubit>()
+                //     .getGeneralVertical();
                 select
                     ?  context.read<PromotionsaleVerticalListCubit>().getPromotionSaleVerticalListt()
                     : context.read<PromtionSaleReadCubit>().getPromotionSaleRead(veritiaclid!);
-                // select=false;
               });
             });
-          } else {
-            context.showSnackBarError(data.data2);
-            print(data.data1);
+
+          }
+          else {
+
+            if(Variable.isTypeDataCheck==true){
+              showDailogPopUp(
+                  context,
+                  LogoutPopup(
+                    onLeftText: "View All Products",
+                    onRightText: "Deactivate",
+                    message:data.data2,
+                    onLeftPress: (){
+                      print("akskskskks");
+                      List<int?> list1=[];
+                      for(var a in variantTable)
+                        list1.add(a.variantId);
+
+                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(1,Variable.type_data,list1);
+                      showDailogPopUp(
+                        context,
+                        BlocProvider(
+                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(1,Variable.type_data,list1),
+                          child: ConfigurePopup(
+
+                            // listAssign: listAssign,
+                            type: "VariantPromotionCreatativePopup",
+                          ),
+                        ),
+                      );
+
+
+                    },
+                    // table:table,
+                    // clear:clear(),
+
+                    onPressed:() async {
+                      List<int?> list1=[];
+                      for(var a in variantTable)
+                        list1.add(a.variantId);
+
+                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,Variable.type_data,list1);
+                      showDailogPopUp(
+                        context,
+                        BlocProvider(
+                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,Variable.type_data,list1),
+                          child: ConfigurePopup(
+
+                            // listAssign: listAssign,
+                            type: "VariantPromotionCreatativePopup",
+                          ),
+                        ),
+                      );
+
+
+                    },
+
+
+                  ));
+            }
+            else{
+              context.showSnackBarError(data.data2);
+            }
+
+
           }
           ;
         });
@@ -305,15 +401,23 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
           setState(() {
             if(result.isNotEmpty){
 
-              veritiaclid=result[0].id;
-              context.read<PromtionSaleReadCubit>().getPromotionSaleRead(veritiaclid!);
-              // Variable.verticalid=result[0].id;
-              // print("Variable.ak"+Variable.verticalid.toString());
-              // context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+
+              if(select){
+                veritiaclid=result[result.length-1].id;
+                context.read<PromtionSaleReadCubit>().getPromotionSaleRead(veritiaclid!);
+              }else{
+                veritiaclid=result[0].id;
+                context.read<PromtionSaleReadCubit>().getPromotionSaleRead(veritiaclid!);
+              }
+
+
+
+              select=false;
             }
             else{
               print("common");
               select=true;
+              clear();
               setState(() {
               });
 
@@ -337,48 +441,31 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
               children: [
                 PromotionSaleVerticalList(
                   list: list,
-
-
-
                   selectedVertical: selectedVertical,
                   itemsearch: itemsearch,ontap: (int index){
                   setState(() {
                     selectedVertical=index;
-
                     // select=false;
                     // updateCheck=false;
-
-
                     veritiaclid = result[index].id;
                     // clear();
                     select = false;
                     _myWidgetState.currentState?.clear();
                     _segmnetState.currentState?.clears();
                     clear();
-
-
                     context.read<PromtionSaleReadCubit>().getPromotionSaleRead(veritiaclid!);
-
-
-
-
                     setState(() {
-
                     });
                   });
                 },
                     search: (String va) {
                       print(va);
                       context
-                          .read<PromotionsaleVerticalListCubit>()
-                          .searchPromotionList(va);
+                          .read<PromotionsaleVerticalListCubit>().searchPromotionList(va);
 
                       if (va == "") {
                         context
-                            .read<PromotionsaleVerticalListCubit>()
-                            .getPromotionSaleVerticalListt();
-
-                      }
+                            .read<PromotionsaleVerticalListCubit>().getPromotionSaleVerticalListt();}
                     },
                     result: result,
                  child:   tablePagination(
@@ -403,7 +490,6 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                     )
 
                 ),
-
                 Expanded(child: SingleChildScrollView(
                   child: Column(children: [
                     // SizedBox(height: height*.06,),
@@ -417,9 +503,11 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                           onPress: () {
                             setState(() {
                               select = true;
+
                               _myWidgetState.currentState?.clear();
                               _segmnetState.currentState?.clears();
                               clear();
+                              isActive=true;
                               // // _myWidgetState.currentState?.cl();
                               // _myWidgetState.currentState?.table1=[];
                               //
@@ -440,12 +528,13 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                     ),
                     SizedBox(height: height*.06,),
                     SegmentGrowableTable(
-                      key: _segmnetState,
+                        key: _segmnetState,
                         table: segmentTable,
                         updation: tableAssign),
                     SizedBox(height: height*.04,),
                     PromotionSaleStableTable(
                       isActive: isActive,
+                      variantTableDatsClear:variantTableDatsClear,
                       select: select,
                       offerGroupName: offerGroupNameController,
                       offerPeriodName: offerPeriodNameController,
@@ -489,32 +578,32 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                       applyingType: saleApplyingOnController?.text??"",
                       updation: variantTableAssign,
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(height: 50,),
                     SaveUpdateResponsiveButton(
                       label:  select ? "SAVE":"UPDATE",
                       discardFunction: (){
-                        showDailogPopUp(
-                            context,
-                            LogoutPopup(
-                              message: "Do you want to delete the order",
-                              // table:table,
-                              // clear:clear(),
-                              // verticalId: veritiaclid,
-                              onPressed: () {
-                                print("akshay");
-                                Navigator.pop(context);
-
-                                context
-                                    .read<DeleteOfferPeriodCubit>()
-                                    .deleteOfferPeriod(veritiaclid,type:"3"
-                                    );
-                                // context
-                                //     .read<
-                                //     SalesgeneraldeleteCubit>()
-                                //     .salesGeneralDelete(
-                                //     veritiaclid);
-                              },
-                            ));
+                        // showDailogPopUp(
+                        //     context,
+                        //     LogoutPopup(
+                        //       message: "Do you want to delete the order",
+                        //       // table:table,
+                        //       // clear:clear(),
+                        //       // verticalId: veritiaclid,
+                        //       onPressed: () {
+                        //         print("akshay");
+                        //         Navigator.pop(context);
+                        //
+                        //         context
+                        //             .read<DeleteOfferPeriodCubit>()
+                        //             .deleteOfferPeriod(veritiaclid,type:"3"
+                        //             );
+                        //         // context
+                        //         //     .read<
+                        //         //     SalesgeneraldeleteCubit>()
+                        //         //     .salesGeneralDelete(
+                        //         //     veritiaclid);
+                        //       },
+                        //     ));
 
 
                         showDailogPopUp(
@@ -523,6 +612,26 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                               onLeftText: "View All Products",
                               onRightText: "Deactivate",
                               message: "Sorry,some of products  are already include in offer sale/discount",
+                              onLeftPress: (){
+                                List<int?> list1=[];
+                                for(var a in variantTable)
+                                  list1.add(a.variantId);
+
+                                context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,"sale",list1);
+                                showDailogPopUp(
+                                  context,
+                                  BlocProvider(
+                                    create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(1,"sale",list1),
+                                    child: ConfigurePopup(
+
+                                      // listAssign: listAssign,
+                                      type: "VariantPromotionCreatativePopup",
+                                    ),
+                                  ),
+                                );
+
+
+                              },
                               // table:table,
                               // clear:clear(),
 

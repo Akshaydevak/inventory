@@ -32,6 +32,25 @@ class SegmentDisCountGrowableTableState extends State<SegmentDisCountGrowableTab
   String segmentName = "";
   String segmentCode = "";
   bool isActive = false;
+  bool onSaveActive = false;
+  saveButtonActovde(String key,String val){
+    print(key);
+    print(val);
+
+    key=(key.replaceAll(' ', ''));
+    val=(val.replaceAll(' ', ''));
+    if(key.isNotEmpty==true && val.isNotEmpty==true){
+      setState(() {
+        onSaveActive=true;
+      });
+    }
+    else{
+      setState(() {
+        onSaveActive=false;
+      });
+
+    }
+  }
 
   clears() {
     table = [];
@@ -223,6 +242,7 @@ class SegmentDisCountGrowableTableState extends State<SegmentDisCountGrowableTab
                                         showDailogPopUp(
                                           context,
                                           TableConfigurePopup(
+                                            list: table,
                                             // inventory: Variable.inventory_ID,
                                             type: "SegmentListTabalePopup",
                                             valueSelect: (
@@ -285,24 +305,51 @@ class SegmentDisCountGrowableTableState extends State<SegmentDisCountGrowableTab
                                   TableCell(
                                     verticalAlignment:
                                     TableCellVerticalAlignment.middle,
-                                    child: TableTextButton(
-                                      onPress: () {
-                                        setState(() {
-                                          // widget.updateCheck(false);
-                                          table[i] = table[i].copyWith(
-                                              updatecheck: false);
-                                          // widget.updation(table);
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TableTextButton(
+                                            onPress: () {
+                                              setState(() {
+                                                // widget.updateCheck(false);
+                                                table[i] = table[i].copyWith(
+                                                    updatecheck: false);
+                                                widget.updation(table);
 
 
-                                        });
-                                      },
-                                      textColor: table[i].updatecheck == true
-                                          ? Pellet.tableBlueHeaderPrint
-                                          : Colors.grey,
-                                      label:
-                                      table[i].updatecheck == true
-                                          ? "UPDATE"
-                                          : "",
+                                              });
+                                            },
+                                            textColor: table[i].updatecheck == true
+                                                ? Pellet.tableBlueHeaderPrint
+                                                : Colors.grey,
+                                            label:
+                                            table[i].updatecheck == true
+                                                ? "UPDATE"
+                                                : "",
+                                          ),
+                                        ),
+                                        SizedBox(width: 4,),
+
+
+                                        TableIconTextButton(
+
+                                          // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
+                                          // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
+                                          // bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Colors.transparent,
+                                          onPress: () {
+
+                                            setState(() {
+
+
+                                              table?.removeAt(i);
+                                              widget.updation(table);
+
+                                            });
+                                          },
+                                          icon: Icons.delete,
+                                          label: "",
+                                        ), SizedBox(width: 4,),
+                                      ],
                                     ),
                                   )
 
@@ -339,6 +386,7 @@ class SegmentDisCountGrowableTableState extends State<SegmentDisCountGrowableTab
                                   showDailogPopUp(
                                     context,
                                     TableConfigurePopup(
+                                      list: table,
                                       // inventory: Variable.inventory_ID,
                                       type: "SegmentListTabalePopup",
                                       valueSelect: (salesOrderTypeModel? va) {
@@ -348,6 +396,7 @@ class SegmentDisCountGrowableTableState extends State<SegmentDisCountGrowableTab
                                         setState(() {
                                           segmentCode = va?.code ?? "";
                                           segmentName = va?.name ?? "";
+                                          saveButtonActovde(segmentCode,segmentName);
                                           setState(() {
 
                                           });
@@ -393,9 +442,13 @@ class SegmentDisCountGrowableTableState extends State<SegmentDisCountGrowableTab
                                 verticalAlignment:
                                 TableCellVerticalAlignment.middle,
                                 child: TableTextButton(
+                                    buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
+                                    textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
+                                    bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
                                     label: "Save",
                                     onPress: () {
                                       setState(() {
+                                        if(onSaveActive)
                                         table.add(Segment(
 
                                           segmentCode: segmentCode.isEmpty
@@ -409,6 +462,7 @@ class SegmentDisCountGrowableTableState extends State<SegmentDisCountGrowableTab
                                         segmentCode = "";
                                         segmentName = "";
                                         isActive = false;
+                                        onSaveActive=false;
 
                                         widget.updation(table);
                                       });

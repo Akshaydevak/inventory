@@ -238,9 +238,17 @@ ismixed=false;
           print("seee" + result.toString());
           setState(() {
             if (result.isNotEmpty) {
-              veritiaclid = result[0].id;
-              selectedVertical=0;
-              context.read<ReadDivisionConfigCubit>().getDivisionConfigRead(veritiaclid!);
+              if(select){
+                veritiaclid = result[result.length-1].id;
+                selectedVertical=result.length-1;
+                context.read<ReadDivisionConfigCubit>().getDivisionConfigRead(veritiaclid!);
+              }
+              else{
+                veritiaclid = result[0].id;
+                selectedVertical=0;
+                context.read<ReadDivisionConfigCubit>().getDivisionConfigRead(veritiaclid!);
+              }
+
               select = false;
             }
             else {

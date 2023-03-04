@@ -64,10 +64,12 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, List<PurchaseInvoice>>> getPurchaseInvoice();
   Future<Either<Failure, PurchaseReturnGeneralRead>> getGeneralInvoiceRead(
       int? id);
-  Future<Either<Failure, DoubleResponse>> postGeneral(
-      PurchaseReturnGeneralPost model);
-  Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>>
-      getGeneralVertical();
+  Future<Either<Failure, DoubleResponse>> postGeneral(PurchaseReturnGeneralPost model);
+  Future<Either<Failure, DoubleResponse>> postSaleOrderPaymentPost(PurchasePaymentPostModel model);
+  Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>> getGeneralVertical();
+  Future<Either<Failure, PaginatedResponse<List<PurchasePaymentModel>>>> getPaymentList(String? code );
+
+
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>> getSearch(
     String? code,
   );
@@ -87,8 +89,11 @@ abstract class PurchaseReturnRepoAbstract {
       CustomerIdCreationUpdateModel model);
   Future<Either<Failure, DoubleResponse>> postShippinAddress(
       ShippingAddressCreationModel model);
-  Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>>
-      getSalesGeneralVertical();
+  Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>> getSalesGeneralVertical();
+  Future<Either<Failure, PaginatedResponse<List<PaymentListSalesModel>>>> getSalePaymentVerticalList(String? code);
+
+
+
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>>
       getSalesSearch(
     String? code,
@@ -103,8 +108,12 @@ abstract class PurchaseReturnRepoAbstract {
 //sales invoice tab*******************************
   Future<Either<Failure, SalesReturnInvoiceReadModel>> getSalesInvoiceRead(
       int id);
-  Future<Either<Failure, DoubleResponse>> postSalesInvoice(
-      SalesReturnInvoicePostModel model);
+  Future<Either<Failure, DoubleResponse>> postSalesInvoice(SalesReturnInvoicePostModel model);
+  Future<Either<Failure, DoubleResponse>> postPaymentTransactionSuccess(int ? invoiceId ,String? paymentMethod,String? paymentCode,int type );
+
+
+
+  Future<Either<Failure, DoubleResponse>> patchPayment(PurchasePaymentPostModel model);
 //salesReturn general
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>>
       getSalesReturnGeneralVertical();
@@ -120,8 +129,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, SalesReturnGeneralPostModel>>
       getSalesReturnGeneralRead(int? id);
   Future<Either<Failure, DoubleResponse>> salesreturnGeneralDelete(int? id);
-  Future<Either<Failure, DoubleResponse>> postSalesRequestGeneralPatch(
-      SalesReturnGeneralPostModel model, int? id);
+  Future<Either<Failure, DoubleResponse>> postSalesRequestGeneralPatch(SalesReturnGeneralPostModel model, int? id);
   //Sales return  invoice+++++++++++++++++++++++
   Future<Either<Failure, SalesReturnInvoiceReadModel2>>
       getSalesReturnInvoiceRead(int? id);
@@ -1690,5 +1698,36 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
               name,description,active,
               id,
             ));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<PurchasePaymentModel>>>> getPaymentList(String? code) {
+    return repoExecute<PaginatedResponse<List<PurchasePaymentModel>>>(
+            () async => remoteDataSource.getPaymentList());
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postSaleOrderPaymentPost(PurchasePaymentPostModel model) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.postSaleOrderPaymentPost(model));
+
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<PaymentListSalesModel>>>> getSalePaymentVerticalList(String? code) {
+    return repoExecute<PaginatedResponse<List<PaymentListSalesModel>>>(
+            () async => remoteDataSource.getSalePaymentVerticalList(code));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchPayment(PurchasePaymentPostModel model) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.patchPayment(model));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postPaymentTransactionSuccess(int? invoiceId, String? paymentMethod, String? paymentCode,int type) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.postPaymentTransactionSuccess(invoiceId,paymentMethod,paymentCode,type));
   }
 }

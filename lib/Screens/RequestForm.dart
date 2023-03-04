@@ -375,7 +375,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                   .read<InventorysearchCubit>()
                   .getInventorySearch("code",tab:"RF");
               currentStock.clear();
-              select=false;
+
 
               // context.read<RequestformreadCubit>().getRequestFormRead(veritiaclid);
             });
@@ -668,12 +668,20 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                   print("Here is the result");
                   print(result);
                   if(result.isNotEmpty){
-                    print(result[0].id);
-                    Variable.verticalid2=result[0].id;
-                    veritiaclid=result[0].id;
-                    context
-                        .read<RequestformreadCubit>().getRequestFormRead(veritiaclid!);
-                    selectedVertical=0;
+                    if(select){
+                      veritiaclid=result[result.length-1].id;
+                      context
+                          .read<RequestformreadCubit>().getRequestFormRead(veritiaclid!);
+                      selectedVertical=result.length-1;
+                    }
+                    else{
+
+                      veritiaclid=result[0].id;
+                      context
+                          .read<RequestformreadCubit>().getRequestFormRead(veritiaclid!);
+                      selectedVertical=0;
+                    }
+
                     select=false;
 
                   }

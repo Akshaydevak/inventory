@@ -35,7 +35,7 @@ class Category with _$Category {
     final String? code,
     final int? id,
     @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,
-    @JsonKey(name: "legal_unit_type") final String? legalUnitType,
+    @JsonKey(name: "legal_unit_type") final int? legalUnitType,
     @JsonKey(name: "channel_code") final String? channelCode,
     @JsonKey(name: "channel_stock_type") final String? channelStockType,
     @JsonKey(name: "channel_type_code") final String? channelTypeCode,

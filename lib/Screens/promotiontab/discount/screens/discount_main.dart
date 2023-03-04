@@ -9,6 +9,7 @@ import 'package:inventory/Screens/promotiontab/discount/cubit/read_promotion_dis
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/discount/screens/discountstable.dart';
 import 'package:inventory/Screens/promotiontab/discount/screens/segment_table.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/saleread/promtion_sale_read_cubit.dart';
@@ -42,6 +43,10 @@ class _DiscountMainScreenState extends State<DiscountMainScreen> {
 
      setState(() {
        segmentTable = List.from(table1);
+    for(int i=0;i<offerLines.length-1;i++){
+      offerLines[i]=offerLines[i].copyWith(typeId: null,typeCode:"",variants: [] );
+    }
+       bottomTableState.currentState?.clear();
 
      });
 
@@ -62,7 +67,7 @@ class _DiscountMainScreenState extends State<DiscountMainScreen> {
    TextEditingController  discountPercentageOrPriceController=TextEditingController();
    TextEditingController  availableCustomerGroupController=TextEditingController();
 
-   bool isAvailableForAll=false;
+   bool isAvailableForAll=true;
    bool overidePriority=false;
    bool isAdminBased=false;
    bool isActive=false;
@@ -74,6 +79,7 @@ class _DiscountMainScreenState extends State<DiscountMainScreen> {
    bottomTableAssign(List<SaleLinesDiscount> table1) {
      print("ethito");
      offerLines=List.from(table1);
+  print(offerLines);
 
      setState(() {
        // variantTable = List.from(table1);
@@ -88,7 +94,7 @@ class _DiscountMainScreenState extends State<DiscountMainScreen> {
 
 
    clear(){
-     isActive=false;
+     // isActive=false;
   offerPeriodNameController.clear();
 offerPeriodController.clear();
 offerGroupNameController.clear();
@@ -99,7 +105,7 @@ offerGroupNameController.clear();
      imageController.clear();
  basedOnController.clear();
       discountPercentageOrPriceController.clear();
-  isAvailableForAll=false;
+  isAvailableForAll=true;
      availableCustomerGroupController.clear();
      overidePriority=false;
    discountCodeController.clear();
@@ -176,8 +182,75 @@ offerGroupNameController.clear();
               });
             });
           } else {
-            context.showSnackBarError(data.data2);
-            print(data.data1);
+            if( Variable.isTypeDataCheck==true){
+              showDailogPopUp(
+                  context,
+                  LogoutPopup(
+                    onLeftText: "View All Products",
+                    onRightText: "Deactivate",
+                    message: data.data2,
+                    onLeftPress: (){
+                      print("anaghaaaaaaaaaaaa"+offerLines.toString());
+                      List<int?> list1=[];
+                      if(offerLines.isNotEmpty){
+                        for(var i=0;i<offerLines.length;i++){
+                          for(var a in offerLines[i].variants??[])
+                            list1.add(a.variantIdd);
+
+                        }
+                      }
+                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(1,Variable.type_data,list1);
+                      showDailogPopUp(
+                        context,
+                        BlocProvider(
+                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(1,Variable.type_data,list1),
+                          child: ConfigurePopup(
+
+                            // listAssign: listAssign,
+                            type: "VariantPromotionCreatativePopup",
+                          ),
+                        ),
+                      );
+
+
+                    },
+                    // table:table,
+                    // clear:clear(),
+
+                    onPressed:() async {
+                      List<int?> list1=[];
+                      print("anaghaaaaaaaaaaaa"+offerLines.toString());
+                    if(offerLines.isNotEmpty){
+                      for(var i=0;i<offerLines.length-1;i++){
+                        for(var a in offerLines[i].variants??[])
+                          list1.add(a.variantIdd);
+
+                      }
+                    }
+
+
+                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,Variable.type_data,list1);
+                      showDailogPopUp(
+                        context,
+                        BlocProvider(
+                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,Variable.type_data,list1),
+                          child: ConfigurePopup(
+
+                            // listAssign: listAssign,
+                            type: "VariantPromotionCreatativePopup",
+                          ),
+                        ),
+                      );
+
+
+                    },
+
+
+                  ));
+            }
+            else{
+              context.showSnackBarError(data.data2);
+            }
           }
           ;
         });
@@ -192,7 +265,7 @@ offerGroupNameController.clear();
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
           if (data.data1) {
-            imageController.text = data.data2.toString();
+            // imageController.text = data.data2.toString();
             // print("dataAkshay" +
             //     imageContollercontroller.text.toString());
 
@@ -201,6 +274,29 @@ offerGroupNameController.clear();
           } else {
             // context.showSnackBarError(data.data2);
             // print(data.data1.toString());
+          }
+          ;
+        });
+      },
+    ),
+    BlocListener<DeleteOfferPeriodCubit, DeleteOfferPeriodState>(
+      listener: (context, state) {
+        state.maybeWhen(orElse: () {
+          // context.
+          context.showSnackBarError("Loading");
+        }, error: () {
+          context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+          print("checkingdata" + data.data1.toString());
+          if (data.data1) {
+            context.showSnackBarSuccess(data.data2);
+            // clear();
+
+            context.read<PromotionDiscountVerticalListCubit>().getPromotionDiscountVerticalList();
+
+          } else {
+            context.showSnackBarError(data.data2);
+            print(data.data1);
           }
           ;
         });
@@ -229,6 +325,7 @@ offerGroupNameController.clear();
                 basedOnController.text=data.basedOn??"";
                 offerPeriodController.text=data.offerPeriodId.toString()??"";
                 offerGroupController.text=data.offerGroupId.toString()??"";
+                offerGroupNameController.text=data.offerGroupName??"";
                 discountPercentageOrPriceController.text=data.discountPercentageOrPrice.toString()??"";
                 isAvailableForAll=data.isAvailableForAll??false;
                 isActive=data.isActive??false;
@@ -236,7 +333,7 @@ offerGroupNameController.clear();
 
 
                 data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
-                // data.saleLines != null ? variantTable =List.from( data?.saleLines ?? []) : variantTable = [];
+                data.offerLines != null ? offerLines =List.from( data?.offerLines ?? []) : offerLines = [];
 
               });
             });
@@ -259,16 +356,21 @@ offerGroupNameController.clear();
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
+                        if(select){
+                          veritiaclid = result[result.length-1].id;
+                          context.read<ReadPromotionDiscountCubit>().getPromotionDiscountRead(
+                              veritiaclid!);
+                        }
+                        else{ veritiaclid = result[0].id;
                         context.read<ReadPromotionDiscountCubit>().getPromotionDiscountRead(
-                            veritiaclid!);
-                        // Variable.verticalid=result[0].id;
-                        // print("Variable.ak"+Variable.verticalid.toString());
-                        // context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                            veritiaclid!);}
+
+                        select = false;
                       }
                       else {
                         print("common");
                         select = true;
+                        clear();
                         setState(() {});
                       }
 
@@ -302,6 +404,7 @@ offerGroupNameController.clear();
                       veritiaclid = result[index].id;
                       clear();
                       select = false;
+                      isActive=true;
                       // _myWidgetState.currentState?.clear();
                       // _segmnetState.currentState?.clears();
                       // clear()
@@ -371,6 +474,7 @@ offerGroupNameController.clear();
                                   setState(() {
                                     select = true;
                                     clear();
+                                    isActive=true;
 
                                     // clear();
                                     // // _myWidgetState.currentState?.cl();
@@ -407,7 +511,7 @@ offerGroupNameController.clear();
                             offerGroupName: offerGroupNameController,
                             title: titleController,
                             offerApplyingType: offerApplyingTypeController,
-                            offerApplyingTo: offerApplyingToIdController,
+                            offerApplyingTo: offerApplyingToNameController,
                             description: descriptionController,
                             image: imageController,
                             basedOn: basedOnController,
@@ -421,13 +525,14 @@ offerGroupNameController.clear();
                            offerGroup: offerGroupController,
 
                           ),
+                          SizedBox(height: height*.04,),
                           DiscountBottomGrowableTable(
                             updation:bottomTableAssign ,
                             segmentList: segmentTable,
                             key:bottomTableState ,
                           ),
 
-                          SizedBox(height: 20,),
+                          SizedBox(height: 50,),
                           SaveUpdateResponsiveButton(
                             label:  select ? "SAVE":"UPDATE",
                             discardFunction: (){
@@ -455,24 +560,37 @@ offerGroupNameController.clear();
                                   ));
                             },
                             saveFunction: (){
+
+                              var segmentTable1=[
+                                for(var em in segmentTable)
+                                  if(em.isActive==true)
+                                    em
+                              ];
+                              var offerLines1=[
+                                for(var em in offerLines)
+                                  if(em.isActive==true)
+                                    em
+                              ];
                               PromotionDiscountCreationModel model=PromotionDiscountCreationModel(
                                 isActive: isActive,
                                 title: titleController.text,
                                 inventoryId: Variable.inventory_ID,
                                 description: descriptionController.text,
-                                image: imageController.text,
+                                image:select?Variable.img1!=null? Variable.img1.toString():null:imageController.text,
                                 discountPercentageOrPrice: double.tryParse(discountPercentageOrPriceController.text),
                                 basedOn: basedOnController.text,
-                                offerPeriodId: int.tryParse(offerPeriodController.text),
+                                offerPeriodId:
+                                // 1,
+                                int.tryParse(offerPeriodController.text),
                                 offerGroupId: int.tryParse(offerGroupController.text),
                                 offerAppliedTo: offerApplyingTypeController.text,
                                 offerAppliedToId:int.tryParse( offerApplyingToIdController.text),
                                 offerAppliedToCode: offerApplyingToCodeController.text,
                                 isAvailableFor: isAvailableForAll,
                                 createdBy: Variable.created_by,
-                                segments: segmentTable,
+                                segments:select?segmentTable1: segmentTable,
                                 availableCustomerGroups: [],
-                                offerLines: offerLines,
+                                offerLines: select?offerLines1:offerLines,
 
                               );
                               print(model);

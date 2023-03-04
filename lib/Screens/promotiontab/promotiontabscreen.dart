@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:inventory/Screens/Dashboard.dart';
+import 'package:inventory/Screens/promotiontab/buy_more/screeens/buy_more_screen.dart';
 import 'package:inventory/Screens/promotiontab/sale/screens/sales_mainscreen.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -107,8 +108,9 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
 
                                 controller: _tabController,
                                 tabs: [
-                                  Text("Sale",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                  Text("Discount",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                  Text(" Promotion Discount",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                  Text("Promotion Sale",style: TextStyle(color: Colors.black,fontSize: 13),),
+
                                   Text("Buy More ",style: TextStyle(color: Colors.black,fontSize: 13),),
 
 
@@ -140,8 +142,10 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-                            SalesMainScreen(),
+
                             DiscountMainScreen(),
+                            SalesMainScreen(),
+                            PromotionBuyMoreMainScreen()
 
 
 

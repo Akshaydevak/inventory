@@ -166,7 +166,11 @@ List<  InventoryListModel> inventoryList=[];
             child: Container(
               height:height/1.5,
               width:height/1.5,
-              color: Colors.white,
+
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                borderRadius: BorderRadius.circular(13)
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

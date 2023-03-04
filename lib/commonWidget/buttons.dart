@@ -201,8 +201,10 @@ class SaveUpdateResponsiveButton extends StatelessWidget {
 final Function discardFunction;
 final Function saveFunction;
 final String label;
+final String deleteLabel;
 final bool  isDelete;
-SaveUpdateResponsiveButton({required this.label,this.isDelete=false,required this.saveFunction,required this.discardFunction});
+final bool  dividercheck;
+SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.dividercheck=true,this.isDelete=false,required this.saveFunction,required this.discardFunction});
 
 
   @override
@@ -211,7 +213,7 @@ SaveUpdateResponsiveButton({required this.label,this.isDelete=false,required thi
     double width = MediaQuery.of(context).size.width;
     return   Column(
       children: [
-        CustomDivider(),
+     if(dividercheck)   CustomDivider(),
         SizedBox(height: 10,),
         Container(
 
@@ -223,7 +225,7 @@ SaveUpdateResponsiveButton({required this.label,this.isDelete=false,required thi
 
             if(isDelete==false)  TextButtonLarge(
 
-                  text: "DISCARD",
+                  text: deleteLabel,
                   onPress: (){
                 discardFunction();
                   },

@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment_sale_post_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/sales/invoice/cubits/invoicepost/invoicepost_cubit.dart';
+import 'package:inventory/Screens/sales/invoice/cubits/payment_suucess_post/payment_transaction_success_post_cubit.dart';
 
 import 'package:inventory/Screens/sales/invoice/cubits/read/invoiceread_cubit.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
@@ -58,6 +62,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
   bool updateCheck=false;
   List<salesOrderTypeModel> result = [];
   int selectedVertical=0;
+  bool isPaymentStatusSuccessCall=false;
+  SalesReturnInvoiceReadModel readInvoiceObject=SalesReturnInvoiceReadModel();
   List<OrderLinesInvoice>table=[];
   TextEditingController itemsearch = TextEditingController();
   tableAssign(List<OrderLinesInvoice> table1) {
@@ -162,6 +168,98 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
       ],
       child: MultiBlocListener(
         listeners: [
+          BlocListener<PaymentSalePostCubit, PaymentSalePostState>(
+            listener: (context, state) {
+              state.maybeWhen(orElse: () {
+                // context.
+                context.showSnackBarError("Loading");
+              }, error: () {
+                showDailogPopUp(
+                    context,
+                    FailiurePopup(
+                      content: Variable.errorMessege,
+                      // table:table,
+                    ));
+
+
+                // context.showSnackBarError(Variable.errorMessege);
+              }, success: (data) {
+                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                if (data.data1) {
+                  // showDailogPopUp(
+                  //     context,
+                  //     SuccessPopup(
+                  //       content: data.data2.toString(),
+                  //       // table:table,
+                  //     ));
+
+             if(isPaymentStatusSuccessCall)     context.read<PaymentTransactionSuccessPostCubit>().postPaymentTransactionSuccess(veritiaclid,Variable.methodCode, data.data2,1);
+             else
+                showDailogPopUp(
+                    context,
+                    SuccessPopup(
+                      content: "success",
+                      // table:table,
+                    ));
+
+
+
+                }
+                else {
+                  showDailogPopUp(
+                      context,
+                      FailiurePopup(
+                        content: data.data2,
+                        // table:table,
+                      ));
+                  print(data.data1);
+                }
+                ;
+              });
+            },
+          ),
+          BlocListener<PaymentTransactionSuccessPostCubit, PaymentTransactionSuccessPostState>(
+            listener: (context, state) {
+              state.maybeWhen(orElse: () {
+                // context.
+                context.showSnackBarError("Loading");
+              }, error: () {
+                showDailogPopUp(
+                    context,
+                    FailiurePopup(
+                      content: Variable.errorMessege,
+                      // table:table,
+                    ));
+
+
+                // context.showSnackBarError(Variable.errorMessege);
+              }, success: (data) {
+                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                if (data.data1) {
+                  showDailogPopUp(
+                      context,
+                      SuccessPopup(
+                        content: data.data2.toString(),
+                        // table:table,
+                      ));
+
+
+
+
+                }
+                else {
+                  showDailogPopUp(
+                      context,
+                      FailiurePopup(
+                        content: data.data2,
+                        // table:table,
+                      ));
+                  print(data.data1);
+                }
+                ;
+              });
+            },
+          ),
           BlocListener<InvoicepostCubit, InvoicepostState>(
             listener: (context, state) {
               print("postssssssss" + state.toString());
@@ -196,6 +294,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                   },
                   success: (data) {
                     print("data" + data.toString());
+                   readInvoiceObject=data;
                     if(data.invoicedData!=null)
                     {
                       data.invoicedData?.lines != null
@@ -347,12 +446,93 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                             child: SingleChildScrollView(
                               child: Column(
                                 children: [
+
                                   Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.end,
                                     children: [
+                                      TextButtonLarge(
+                                        marginCheck: true,
+                                        clr: Colors.green,
+
+
+                                        onPress: () {
+                                          if(readInvoiceObject.invoicedData!=null){
+                                            showDailogPopUp(
+                                              context,
+                                              PurchaseReturnInvoicePaymentPopUp(type: '"',
+                                                customerCode: customerIdController.text,
+                                                customerName: "",
+                                                orderId: veritiaclid.toString(),
+                                                status: "",
+                                                totalPrice: double.tryParse(totalPricePriceController.text)??0,
+                                                transactionCode: "",
+                                                paymentCompletedFunc:(){
+                                                  setState(() {
+                                                    isPaymentStatusSuccessCall=true;
+                                                  });
+                                                  PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                                                      contact: Variable.mobileNumber,
+                                                      customerCode: customerIdController.text,
+                                                      customerName: "",
+                                                      methodCode: Variable.methodCode,
+                                                      orderId:  veritiaclid.toString(),
+                                                      status: "payment_completed",
+                                                      totalAmount: double.tryParse(totalPricePriceController.text)??0,
+                                                      tranSactionCode: "");
+
+                                                  print(model);
+                                                  context
+                                                      .read<PaymentSalePostCubit>()
+                                                      .postSaleOrderPaymentPost(model);
+                                                } ,
+                                                transactionPendingFunc: (){
+                                                  setState(() {
+                                                    isPaymentStatusSuccessCall=false;
+                                                  });
+                                                  PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                                                      contact: Variable.mobileNumber,
+                                                      customerCode: customerIdController.text,
+                                                      customerName: "",
+                                                      methodCode: Variable.methodCode,
+                                                      orderId:  veritiaclid.toString(),
+                                                      status: "payment_pending",
+                                                      totalAmount: double.tryParse(totalPricePriceController.text)??0,
+                                                      tranSactionCode: "");
+
+                                                  print(model);
+                                                  context
+                                                      .read<PaymentSalePostCubit>()
+                                                      .postSaleOrderPaymentPost(model);
+                                                },
+
+                                              ),
+                                            );
+                                          }
+
+
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(builder: (context) =>
+                                          //       PurchaseReturnInvoicePaymentPopUp(type: '"',
+                                          //         customerCode: customerIdController.text,
+                                          //         customerName: "",
+                                          //         orderId: veritiaclid.toString(),
+                                          //         status: "",
+                                          //         totalPrice: double.tryParse(totalPricePriceController.text)??0,
+                                          //         transactionCode: "",
+                                          //
+                                          //       )),
+                                          // );
+
+
+
+
+                                        },
+                                        text: "PAYMENT",                                  ),
 
                                       TextButtonLarge(
+                                        marginCheck: true,
                                         text: "PREVIEW",
                                         onPress: (){
                                           print("Akshay");

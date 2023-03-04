@@ -176,16 +176,17 @@ class _NewInputCardState extends State<NewInputCard> {
           ):
           Container(
             alignment: Alignment.center,
-            height: widget.height,
+            // height: widget.height,
 
 
             // color: widget.colors,
             // color: Colors.grey.shade200,
             child: TextFormField(
+
               textAlignVertical: TextAlignVertical.center,
               onTap: (){
                 print("www");
-               widget.ontap!=null?widget.ontap!():null;
+                  widget.ontap!=null?widget.ontap!():null;
               },
               onChanged:(va){
                 if(widget.formatter==true){
@@ -229,7 +230,8 @@ class _NewInputCardState extends State<NewInputCard> {
 
               decoration: InputDecoration(
                 counterText: '',
-                contentPadding: null,
+
+                contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 16.5),
 
 
 
@@ -257,16 +259,20 @@ class _NewInputCardState extends State<NewInputCard> {
 
 
                         child: InkWell(onTap:(){
-                  widget.ontap!=null?widget.ontap!():null;
-                  if(widget.controller.text.isNotEmpty){
-                    isClear=true;
-                  }
-                  else
-                    isClear=false;
+                          setState(() {
+
+                            widget.ontap!=null?widget.ontap!():null;
+                          });
+
+                  // if(widget.controller.text.isNotEmpty){
+                  //   isClear=true;
+                  // }
+                  // else
+                  //   isClear=false;
 
 
 
-                }, child: Icon(isClear?Icons.clear:Icons.more_horiz_rounded)),
+                }, child:widget.controller.text.isNotEmpty?Icon(Icons.clear): Icon(Icons.more_horiz_rounded)),
                       ),
                     ):null,
                 labelStyle: const TextStyle(
@@ -1205,7 +1211,7 @@ class _FileUploadFieldState extends State<FileUploadField> {
   Widget build(BuildContext context) {
     // print(filename);
 
-    if (!fileChange && widget.fileUrl != null) {
+    if (!fileChange && widget.fileUrl != null &&!fileChange && widget.fileUrl != "null") {
       filename = widget.fileUrl;
       print("searching"+filename.toString());
     } else {
@@ -1273,9 +1279,14 @@ class _FileUploadFieldState extends State<FileUploadField> {
                     icon: Icon(Icons.attach_file)),
                 contentPadding:
                 EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                isDense: true,
+                // isDense: true,
                 hintStyle: TextStyle(fontSize: 10),
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0),
+                )
+                ,
                 suffixIcon: IconButton(
                     onPressed: () {
 
@@ -1298,7 +1309,8 @@ class _FileUploadFieldState extends State<FileUploadField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children:[
 
-    widget.tableCheck==false?  Container(
+    widget.tableCheck==false?
+    Container(
 
             child: Text.rich(TextSpan(
                 text: widget.label,
@@ -1361,14 +1373,14 @@ class _FileUploadFieldState extends State<FileUploadField> {
     color:Colors.red,
    ),
     ),
-              // enabledBorder:OutlineInputBorder(
-              //     borderRadius:BorderRadius.circular(2),
-              //
-              //     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-              // focusedBorder:   OutlineInputBorder(
-              //     borderRadius:BorderRadius.circular(2),
-              //
-              //     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+              enabledBorder:OutlineInputBorder(
+                  borderRadius:BorderRadius.circular(2),
+
+                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+              focusedBorder:   OutlineInputBorder(
+                  borderRadius:BorderRadius.circular(2),
+
+                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
               suffixIcon: IconButton(
                   onPressed: () {
                    print("aakkakakkakak");
@@ -1601,6 +1613,7 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
+            width: MediaQuery.of(context).size.width*.13,
 
 
               padding: EdgeInsets.only(top: 3,left:MediaQuery.of(context).size.width*.009),
@@ -1679,10 +1692,12 @@ class _CustomDropDownState extends State<CustomDropDown> {
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return Container(
+
       height: height*.049,
       width: width*.085,
       alignment: Alignment.center,
       decoration: BoxDecoration(
+
         borderRadius: BorderRadius.all(Radius.circular(5)),
        // color:   widget.clr,
         border: widget.border?Border.all(
@@ -1693,7 +1708,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       child:Container(
           margin: EdgeInsets.symmetric(horizontal: 10),
           height: height*.049,
-          width: width*.085,
+          // width: width*.085,
           child:
    // value?
    DropdownButtonHideUnderline(

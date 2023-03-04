@@ -40,6 +40,7 @@ class PromotionSaleStableTable extends StatefulWidget {
   final TextEditingController priority;
  final List<Segment> table;
  final Function activeChange;
+ final Function variantTableDatsClear;
 
 
 
@@ -62,7 +63,7 @@ class PromotionSaleStableTable extends StatefulWidget {
 
   PromotionSaleStableTable({
 
-    required this.salesCode,required this.table,required this.activeChange, required this.offerPeriod, required this.offerGroup, required this.saleApplyingPlace, required this.saleApplyingPlaceName, required this.title, required this.description, required this.image, required this.basedOn, required this.discountPercenagePrice, required this.totalprice, required this.saleApplyingOn, required this.saleApplyingName, required this.maximumCount, required this.availableCustomerGroup, required this.priority, required this.isAvailableforAll, required this.overridePriority, required this.isAdminBased, required this.isActive, required this.saleApplyingId, required this.saleApplyingCode, required this.saleApplyingPlaceId, required this.saleApplyingPlaceCode, required this.offerGroupName, required this.offerPeriodName, required this.select});
+    required this.salesCode,required this.table,required this.activeChange, required this.offerPeriod, required this.offerGroup, required this.saleApplyingPlace, required this.saleApplyingPlaceName, required this.title, required this.description, required this.image, required this.basedOn, required this.discountPercenagePrice, required this.totalprice, required this.saleApplyingOn, required this.saleApplyingName, required this.maximumCount, required this.availableCustomerGroup, required this.priority, required this.isAvailableforAll, required this.overridePriority, required this.isAdminBased, required this.isActive, required this.saleApplyingId, required this.saleApplyingCode, required this.saleApplyingPlaceId, required this.saleApplyingPlaceCode, required this.offerGroupName, required this.offerPeriodName, required this.select, required this.variantTableDatsClear});
   @override
   _PromotionSaleStableTableState createState() => _PromotionSaleStableTableState();
 }
@@ -70,13 +71,7 @@ class PromotionSaleStableTable extends StatefulWidget {
 class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
 
   String imageName1="";
-  String imageName2="";
-  String imageName3="";
-  String imageName4="";
-  String imageName5="";
-  String imageName6="";
-  String imageName7="";
-  String imageName8="";
+
   String imageEncode="";
 
   @override
@@ -119,6 +114,9 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
 
                                 // onChange = true;
                                 widget.saleApplyingPlace.text = va!;
+                                widget.saleApplyingPlaceName.text ="";
+                                widget.saleApplyingPlaceCode.text = "";
+                                widget.saleApplyingPlaceId.text = "";
                                 // context
                                 //     .read<ChannelListCubit>()
                                 //     .getChannelList(va
@@ -148,12 +146,12 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                           ),
                           FileUploadField(
 
-                              fileName:widget.image.text,
-                              fileUrl:widget.image.text,
+                              fileName:imageName1,
+                              fileUrl:imageName1,
                               onCancel: (){
 
                                 setState(() {
-                                  widget.image.clear();
+                                  imageName1="";
                                   Variable.img1=null;
                                 });
 
@@ -167,7 +165,7 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
 
 
 
-                                widget.image.text=myFile?.fileName??"";
+                                imageName1=myFile?.fileName??"";
                                 // Variable.mobileBannerImage = myFile.toUint8List();
                                 //
                                 var     imageEncode =
@@ -185,7 +183,7 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                                 // Variable.popUp = false;
 
                                 if (newFile.length <= 150000) {
-                                  context.read<PromotionImageCubit>().postPromotionImage(Variable.imageName,  imageEncode,type: "image1");
+                                  context.read<PromotionImageCubit>().postPromotionImage(Variable.imageName,  imageEncode);
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -209,7 +207,9 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                             height: height * .030,
                           ),
 
-                          NewInputCard(
+                          widget.isAvailableforAll?  SizedBox(
+                            height: height * .107,
+                          ):  NewInputCard(
                               formatter: true,
 
                               controller: widget.availableCustomerGroup, title: "Available Customer Groups"),
@@ -223,6 +223,14 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                           readOnly: true,
                           title: "Offer Period",
                           ontap: () {
+                            if(widget.offerPeriodName.text.isNotEmpty){
+                              setState(() {
+                                widget.offerPeriod.text =  "";
+                                widget.offerPeriodName.text = "";
+                              });
+
+                            }
+                            else
                             showDailogPopUp(
                               context,
                               TableConfigurePopup(
@@ -299,14 +307,13 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                           type:"SaleApplyingOnPromotionPopup",
                           value: widget.saleApplyingOn.text,
                           onSelection: (String? va) {
-                            print(
-                                "+++++++++++++++++++++++");
-                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+
                             setState(() {
-
-
                               // onChange = true;
                               widget.saleApplyingOn.text = va!;
+                              widget.saleApplyingName.text="";
+                              widget.saleApplyingCode.text="";
+                              widget.saleApplyingId.text="";
                             });
                           },
                         ),
@@ -361,6 +368,13 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                           readOnly: true,
                           title: "Offer Group",
                           ontap: () {
+                            if(widget.offerGroupName.text.isNotEmpty){
+                              setState(() {
+                                widget.offerGroupName.text =  "";
+                                widget.offerGroup.text = "";
+                              });
+
+                            }else
                             showDailogPopUp(
                               context,
                               TableConfigurePopup(
@@ -433,6 +447,7 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                                     widget.saleApplyingCode.text=va?.code??"";
                                     print("ssprint"+widget.saleApplyingCode.text.toString());
                                     widget.saleApplyingId.text=va?.id.toString()??"";
+                                    widget.variantTableDatsClear();
 
                                     // widget.costingName.text =
                                     //     va.methodName ?? "";
@@ -485,7 +500,7 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                                 setState(() {});
                               } }),
                         SizedBox(
-                          height: height * .080,
+                          height: height * .090,
                         ),
                         // PopUpSwitchTile(
                         //     value:widget?. isAvailableforAll??false,

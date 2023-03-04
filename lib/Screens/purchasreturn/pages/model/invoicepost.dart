@@ -32,3 +32,40 @@ class PurchaseReturnInvoicePostModel with _$PurchaseReturnInvoicePostModel {
   factory PurchaseReturnInvoicePostModel.fromJson(Map<String, dynamic> json) =>
       _$PurchaseReturnInvoicePostModelFromJson(json);
 }
+
+
+@freezed
+class PurchasePaymentModel with _$PurchasePaymentModel {
+  const factory PurchasePaymentModel({
+
+    final String? tittle,
+    final String? notes,
+    final String? code,
+
+
+  }) = _PurchasePaymentModel;
+  factory PurchasePaymentModel.fromJson(Map<String, dynamic> json) =>
+      _$PurchasePaymentModelFromJson(json);
+}
+
+
+@freezed
+class PurchasePaymentPostModel with _$PurchasePaymentPostModel {
+  const factory PurchasePaymentPostModel({
+
+
+    final String? contact,
+    final String? status,
+    @JsonKey(name: "customer_code") final String? customerCode,
+    @JsonKey(name: "process_id") final int? processId,
+    @JsonKey(name: "method_code") final String? methodCode,
+    @JsonKey(name: "order_id") final String? orderId,
+    @JsonKey(name: "transaction_code") final String? tranSactionCode,
+    @JsonKey(name: "customer_name") final String? customerName,
+    @JsonKey(name: "total_amount") final double? totalAmount,
+
+
+  }) = _PurchasePaymentPostModel;
+  factory PurchasePaymentPostModel.fromJson(Map<String, dynamic> json) =>
+      _$PurchasePaymentPostModelFromJson(json);
+}

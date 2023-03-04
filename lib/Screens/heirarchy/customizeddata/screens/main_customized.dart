@@ -312,13 +312,19 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
           print("seee" + result.toString());
           setState(() {
             if (result.isNotEmpty) {
-              veritiaclid = result[0].id;
-              selectedVertical=0;
+              if(select){
+                veritiaclid = result[result.length-1].id;
+                selectedVertical=result.length-1;
+                context.read<ReadcustomCubit>().getCustomRead(veritiaclid!);
 
+              }
+              else{
+                veritiaclid = result[0].id;
+                selectedVertical=0;
 
-              // Variable.verticalid=result[0].id;
-              // print("Variable.ak"+Variable.verticalid.toString());
-              context.read<ReadcustomCubit>().getCustomRead(veritiaclid!);
+                context.read<ReadcustomCubit>().getCustomRead(veritiaclid!);
+              }
+
               select = false;
             }
             else {

@@ -404,6 +404,669 @@ abstract class _CustomerIdCreationModel implements CustomerIdCreationModel {
       get copyWith => throw _privateConstructorUsedError;
 }
 
+PaymentListSalesModel _$PaymentListSalesModelFromJson(
+    Map<String, dynamic> json) {
+  return _PaymentListSalesModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PaymentListSalesModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get order => throw _privateConstructorUsedError;
+  String? get lname => throw _privateConstructorUsedError;
+  String? get created => throw _privateConstructorUsedError;
+  String? get updated => throw _privateConstructorUsedError;
+  @JsonKey(name: "user_code")
+  String? get userCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod => throw _privateConstructorUsedError;
+  @JsonKey(name: "transaction_code")
+  String? get transactionCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "customer_code")
+  String? get customerCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_status")
+  String? get paymentStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: "total_amount")
+  double? get totalAmount => throw _privateConstructorUsedError;
+  @JsonKey(name: "update_check", defaultValue: false)
+  bool? get updateCheck => throw _privateConstructorUsedError;
+  @JsonKey(name: "post_response")
+  PostResponse? get postResponse => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PaymentListSalesModelCopyWith<PaymentListSalesModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PaymentListSalesModelCopyWith<$Res> {
+  factory $PaymentListSalesModelCopyWith(PaymentListSalesModel value,
+          $Res Function(PaymentListSalesModel) then) =
+      _$PaymentListSalesModelCopyWithImpl<$Res, PaymentListSalesModel>;
+  @useResult
+  $Res call(
+      {int? id,
+      String? order,
+      String? lname,
+      String? created,
+      String? updated,
+      @JsonKey(name: "user_code") String? userCode,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "transaction_code") String? transactionCode,
+      @JsonKey(name: "customer_code") String? customerCode,
+      @JsonKey(name: "payment_status") String? paymentStatus,
+      @JsonKey(name: "total_amount") double? totalAmount,
+      @JsonKey(name: "update_check", defaultValue: false) bool? updateCheck,
+      @JsonKey(name: "post_response") PostResponse? postResponse});
+
+  $PostResponseCopyWith<$Res>? get postResponse;
+}
+
+/// @nodoc
+class _$PaymentListSalesModelCopyWithImpl<$Res,
+        $Val extends PaymentListSalesModel>
+    implements $PaymentListSalesModelCopyWith<$Res> {
+  _$PaymentListSalesModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? order = freezed,
+    Object? lname = freezed,
+    Object? created = freezed,
+    Object? updated = freezed,
+    Object? userCode = freezed,
+    Object? paymentMethod = freezed,
+    Object? transactionCode = freezed,
+    Object? customerCode = freezed,
+    Object? paymentStatus = freezed,
+    Object? totalAmount = freezed,
+    Object? updateCheck = freezed,
+    Object? postResponse = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      order: freezed == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lname: freezed == lname
+          ? _value.lname
+          : lname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created: freezed == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated: freezed == updated
+          ? _value.updated
+          : updated // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userCode: freezed == userCode
+          ? _value.userCode
+          : userCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      transactionCode: freezed == transactionCode
+          ? _value.transactionCode
+          : transactionCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerCode: freezed == customerCode
+          ? _value.customerCode
+          : customerCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStatus: freezed == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalAmount: freezed == totalAmount
+          ? _value.totalAmount
+          : totalAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      updateCheck: freezed == updateCheck
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      postResponse: freezed == postResponse
+          ? _value.postResponse
+          : postResponse // ignore: cast_nullable_to_non_nullable
+              as PostResponse?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PostResponseCopyWith<$Res>? get postResponse {
+    if (_value.postResponse == null) {
+      return null;
+    }
+
+    return $PostResponseCopyWith<$Res>(_value.postResponse!, (value) {
+      return _then(_value.copyWith(postResponse: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_PaymentListSalesModelCopyWith<$Res>
+    implements $PaymentListSalesModelCopyWith<$Res> {
+  factory _$$_PaymentListSalesModelCopyWith(_$_PaymentListSalesModel value,
+          $Res Function(_$_PaymentListSalesModel) then) =
+      __$$_PaymentListSalesModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? order,
+      String? lname,
+      String? created,
+      String? updated,
+      @JsonKey(name: "user_code") String? userCode,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "transaction_code") String? transactionCode,
+      @JsonKey(name: "customer_code") String? customerCode,
+      @JsonKey(name: "payment_status") String? paymentStatus,
+      @JsonKey(name: "total_amount") double? totalAmount,
+      @JsonKey(name: "update_check", defaultValue: false) bool? updateCheck,
+      @JsonKey(name: "post_response") PostResponse? postResponse});
+
+  @override
+  $PostResponseCopyWith<$Res>? get postResponse;
+}
+
+/// @nodoc
+class __$$_PaymentListSalesModelCopyWithImpl<$Res>
+    extends _$PaymentListSalesModelCopyWithImpl<$Res, _$_PaymentListSalesModel>
+    implements _$$_PaymentListSalesModelCopyWith<$Res> {
+  __$$_PaymentListSalesModelCopyWithImpl(_$_PaymentListSalesModel _value,
+      $Res Function(_$_PaymentListSalesModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? order = freezed,
+    Object? lname = freezed,
+    Object? created = freezed,
+    Object? updated = freezed,
+    Object? userCode = freezed,
+    Object? paymentMethod = freezed,
+    Object? transactionCode = freezed,
+    Object? customerCode = freezed,
+    Object? paymentStatus = freezed,
+    Object? totalAmount = freezed,
+    Object? updateCheck = freezed,
+    Object? postResponse = freezed,
+  }) {
+    return _then(_$_PaymentListSalesModel(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      order: freezed == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lname: freezed == lname
+          ? _value.lname
+          : lname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created: freezed == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated: freezed == updated
+          ? _value.updated
+          : updated // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userCode: freezed == userCode
+          ? _value.userCode
+          : userCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      transactionCode: freezed == transactionCode
+          ? _value.transactionCode
+          : transactionCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerCode: freezed == customerCode
+          ? _value.customerCode
+          : customerCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStatus: freezed == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalAmount: freezed == totalAmount
+          ? _value.totalAmount
+          : totalAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      updateCheck: freezed == updateCheck
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      postResponse: freezed == postResponse
+          ? _value.postResponse
+          : postResponse // ignore: cast_nullable_to_non_nullable
+              as PostResponse?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_PaymentListSalesModel implements _PaymentListSalesModel {
+  const _$_PaymentListSalesModel(
+      {this.id,
+      this.order,
+      this.lname,
+      this.created,
+      this.updated,
+      @JsonKey(name: "user_code") this.userCode,
+      @JsonKey(name: "payment_method") this.paymentMethod,
+      @JsonKey(name: "transaction_code") this.transactionCode,
+      @JsonKey(name: "customer_code") this.customerCode,
+      @JsonKey(name: "payment_status") this.paymentStatus,
+      @JsonKey(name: "total_amount") this.totalAmount,
+      @JsonKey(name: "update_check", defaultValue: false) this.updateCheck,
+      @JsonKey(name: "post_response") this.postResponse});
+
+  factory _$_PaymentListSalesModel.fromJson(Map<String, dynamic> json) =>
+      _$$_PaymentListSalesModelFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? order;
+  @override
+  final String? lname;
+  @override
+  final String? created;
+  @override
+  final String? updated;
+  @override
+  @JsonKey(name: "user_code")
+  final String? userCode;
+  @override
+  @JsonKey(name: "payment_method")
+  final String? paymentMethod;
+  @override
+  @JsonKey(name: "transaction_code")
+  final String? transactionCode;
+  @override
+  @JsonKey(name: "customer_code")
+  final String? customerCode;
+  @override
+  @JsonKey(name: "payment_status")
+  final String? paymentStatus;
+  @override
+  @JsonKey(name: "total_amount")
+  final double? totalAmount;
+  @override
+  @JsonKey(name: "update_check", defaultValue: false)
+  final bool? updateCheck;
+  @override
+  @JsonKey(name: "post_response")
+  final PostResponse? postResponse;
+
+  @override
+  String toString() {
+    return 'PaymentListSalesModel(id: $id, order: $order, lname: $lname, created: $created, updated: $updated, userCode: $userCode, paymentMethod: $paymentMethod, transactionCode: $transactionCode, customerCode: $customerCode, paymentStatus: $paymentStatus, totalAmount: $totalAmount, updateCheck: $updateCheck, postResponse: $postResponse)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PaymentListSalesModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.order, order) || other.order == order) &&
+            (identical(other.lname, lname) || other.lname == lname) &&
+            (identical(other.created, created) || other.created == created) &&
+            (identical(other.updated, updated) || other.updated == updated) &&
+            (identical(other.userCode, userCode) ||
+                other.userCode == userCode) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.transactionCode, transactionCode) ||
+                other.transactionCode == transactionCode) &&
+            (identical(other.customerCode, customerCode) ||
+                other.customerCode == customerCode) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
+            (identical(other.totalAmount, totalAmount) ||
+                other.totalAmount == totalAmount) &&
+            (identical(other.updateCheck, updateCheck) ||
+                other.updateCheck == updateCheck) &&
+            (identical(other.postResponse, postResponse) ||
+                other.postResponse == postResponse));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      order,
+      lname,
+      created,
+      updated,
+      userCode,
+      paymentMethod,
+      transactionCode,
+      customerCode,
+      paymentStatus,
+      totalAmount,
+      updateCheck,
+      postResponse);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PaymentListSalesModelCopyWith<_$_PaymentListSalesModel> get copyWith =>
+      __$$_PaymentListSalesModelCopyWithImpl<_$_PaymentListSalesModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PaymentListSalesModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PaymentListSalesModel implements PaymentListSalesModel {
+  const factory _PaymentListSalesModel(
+      {final int? id,
+      final String? order,
+      final String? lname,
+      final String? created,
+      final String? updated,
+      @JsonKey(name: "user_code")
+          final String? userCode,
+      @JsonKey(name: "payment_method")
+          final String? paymentMethod,
+      @JsonKey(name: "transaction_code")
+          final String? transactionCode,
+      @JsonKey(name: "customer_code")
+          final String? customerCode,
+      @JsonKey(name: "payment_status")
+          final String? paymentStatus,
+      @JsonKey(name: "total_amount")
+          final double? totalAmount,
+      @JsonKey(name: "update_check", defaultValue: false)
+          final bool? updateCheck,
+      @JsonKey(name: "post_response")
+          final PostResponse? postResponse}) = _$_PaymentListSalesModel;
+
+  factory _PaymentListSalesModel.fromJson(Map<String, dynamic> json) =
+      _$_PaymentListSalesModel.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get order;
+  @override
+  String? get lname;
+  @override
+  String? get created;
+  @override
+  String? get updated;
+  @override
+  @JsonKey(name: "user_code")
+  String? get userCode;
+  @override
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod;
+  @override
+  @JsonKey(name: "transaction_code")
+  String? get transactionCode;
+  @override
+  @JsonKey(name: "customer_code")
+  String? get customerCode;
+  @override
+  @JsonKey(name: "payment_status")
+  String? get paymentStatus;
+  @override
+  @JsonKey(name: "total_amount")
+  double? get totalAmount;
+  @override
+  @JsonKey(name: "update_check", defaultValue: false)
+  bool? get updateCheck;
+  @override
+  @JsonKey(name: "post_response")
+  PostResponse? get postResponse;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PaymentListSalesModelCopyWith<_$_PaymentListSalesModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+PostResponse _$PostResponseFromJson(Map<String, dynamic> json) {
+  return _PostResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PostResponse {
+  String? get contact => throw _privateConstructorUsedError;
+  String? get updated => throw _privateConstructorUsedError;
+  @JsonKey(name: "order_id")
+  String? get orderId => throw _privateConstructorUsedError;
+  @JsonKey(name: "customer_name")
+  String? get customerName => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PostResponseCopyWith<PostResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PostResponseCopyWith<$Res> {
+  factory $PostResponseCopyWith(
+          PostResponse value, $Res Function(PostResponse) then) =
+      _$PostResponseCopyWithImpl<$Res, PostResponse>;
+  @useResult
+  $Res call(
+      {String? contact,
+      String? updated,
+      @JsonKey(name: "order_id") String? orderId,
+      @JsonKey(name: "customer_name") String? customerName});
+}
+
+/// @nodoc
+class _$PostResponseCopyWithImpl<$Res, $Val extends PostResponse>
+    implements $PostResponseCopyWith<$Res> {
+  _$PostResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? contact = freezed,
+    Object? updated = freezed,
+    Object? orderId = freezed,
+    Object? customerName = freezed,
+  }) {
+    return _then(_value.copyWith(
+      contact: freezed == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated: freezed == updated
+          ? _value.updated
+          : updated // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderId: freezed == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerName: freezed == customerName
+          ? _value.customerName
+          : customerName // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_PostResponseCopyWith<$Res>
+    implements $PostResponseCopyWith<$Res> {
+  factory _$$_PostResponseCopyWith(
+          _$_PostResponse value, $Res Function(_$_PostResponse) then) =
+      __$$_PostResponseCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? contact,
+      String? updated,
+      @JsonKey(name: "order_id") String? orderId,
+      @JsonKey(name: "customer_name") String? customerName});
+}
+
+/// @nodoc
+class __$$_PostResponseCopyWithImpl<$Res>
+    extends _$PostResponseCopyWithImpl<$Res, _$_PostResponse>
+    implements _$$_PostResponseCopyWith<$Res> {
+  __$$_PostResponseCopyWithImpl(
+      _$_PostResponse _value, $Res Function(_$_PostResponse) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? contact = freezed,
+    Object? updated = freezed,
+    Object? orderId = freezed,
+    Object? customerName = freezed,
+  }) {
+    return _then(_$_PostResponse(
+      contact: freezed == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated: freezed == updated
+          ? _value.updated
+          : updated // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderId: freezed == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerName: freezed == customerName
+          ? _value.customerName
+          : customerName // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_PostResponse implements _PostResponse {
+  const _$_PostResponse(
+      {this.contact,
+      this.updated,
+      @JsonKey(name: "order_id") this.orderId,
+      @JsonKey(name: "customer_name") this.customerName});
+
+  factory _$_PostResponse.fromJson(Map<String, dynamic> json) =>
+      _$$_PostResponseFromJson(json);
+
+  @override
+  final String? contact;
+  @override
+  final String? updated;
+  @override
+  @JsonKey(name: "order_id")
+  final String? orderId;
+  @override
+  @JsonKey(name: "customer_name")
+  final String? customerName;
+
+  @override
+  String toString() {
+    return 'PostResponse(contact: $contact, updated: $updated, orderId: $orderId, customerName: $customerName)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PostResponse &&
+            (identical(other.contact, contact) || other.contact == contact) &&
+            (identical(other.updated, updated) || other.updated == updated) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.customerName, customerName) ||
+                other.customerName == customerName));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, contact, updated, orderId, customerName);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PostResponseCopyWith<_$_PostResponse> get copyWith =>
+      __$$_PostResponseCopyWithImpl<_$_PostResponse>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PostResponseToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PostResponse implements PostResponse {
+  const factory _PostResponse(
+          {final String? contact,
+          final String? updated,
+          @JsonKey(name: "order_id") final String? orderId,
+          @JsonKey(name: "customer_name") final String? customerName}) =
+      _$_PostResponse;
+
+  factory _PostResponse.fromJson(Map<String, dynamic> json) =
+      _$_PostResponse.fromJson;
+
+  @override
+  String? get contact;
+  @override
+  String? get updated;
+  @override
+  @JsonKey(name: "order_id")
+  String? get orderId;
+  @override
+  @JsonKey(name: "customer_name")
+  String? get customerName;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PostResponseCopyWith<_$_PostResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 CustomerIdListModel _$CustomerIdListModelFromJson(Map<String, dynamic> json) {
   return _CustomerIdListModel.fromJson(json);
 }

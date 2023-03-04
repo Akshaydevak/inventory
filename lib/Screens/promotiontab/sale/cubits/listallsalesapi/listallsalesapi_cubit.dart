@@ -10,9 +10,9 @@ part 'listallsalesapi_cubit.freezed.dart';
 class ListallsalesapiCubit extends Cubit<ListallsalesapiState> {
   ListallsalesapiCubit() : super(ListallsalesapiState.initial());
   final InventoryPromotionRepository repo = InventoryPromoRepoIml();
-  Future getListAllSalesApi() async {
+  Future getListAllSalesApi({String? type}) async {
     emit(ListallsalesapiState.initial());
-    final result = await repo.getListAllSalesApi();
+    final result = await repo.getListAllSalesApi(type:type);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
 }

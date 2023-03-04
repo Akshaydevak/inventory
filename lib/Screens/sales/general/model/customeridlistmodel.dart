@@ -26,6 +26,55 @@ class CustomerIdCreationModel with _$CustomerIdCreationModel {
 
 
 @freezed
+class PaymentListSalesModel with _$PaymentListSalesModel {
+  const factory PaymentListSalesModel({
+
+    final int? id,
+    final String? order,
+    final String? lname,
+    final String? created,
+    final String? updated,
+
+    @JsonKey(name: "user_code") final String? userCode,
+    @JsonKey(name: "payment_method") final String? paymentMethod,
+    @JsonKey(name: "transaction_code") final String? transactionCode,
+    @JsonKey(name: "customer_code") final String? customerCode,
+    @JsonKey(name: "payment_status") final String? paymentStatus,
+    @JsonKey(name: "total_amount") final double? totalAmount,
+    @JsonKey(name: "update_check",defaultValue: false) final bool? updateCheck,
+    @JsonKey(name: "post_response",) final PostResponse? postResponse,
+
+
+
+  }) = _PaymentListSalesModel;
+  factory PaymentListSalesModel.fromJson(Map<String, dynamic> json) =>
+      _$PaymentListSalesModelFromJson(json);
+}
+
+
+@freezed
+class PostResponse with _$PostResponse {
+  const factory PostResponse({
+
+
+    final String? contact,
+    final String? updated,
+
+
+    @JsonKey(name: "order_id") final String? orderId,
+    @JsonKey(name: "customer_name") final String? customerName,
+
+
+
+
+
+  }) = _PostResponse;
+  factory PostResponse.fromJson(Map<String, dynamic> json) =>
+      _$PostResponseFromJson(json);
+}
+
+
+@freezed
 class CustomerIdListModel with _$CustomerIdListModel {
   const factory CustomerIdListModel({
 

@@ -4876,7 +4876,7 @@ class GeneralSavePage extends StatelessWidget {
                       ? 40
                       : 20),
               child: child),
-        if(buttonVisible)  Positioned(
+         Positioned(
               bottom: 0,
               left: 0,
               right: 0,
@@ -4885,7 +4885,7 @@ class GeneralSavePage extends StatelessWidget {
                 children: [
                   if(paginated!=null)
                     paginated??Container(),
-                  Padding(
+                  if(buttonVisible)   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

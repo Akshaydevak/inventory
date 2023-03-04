@@ -569,6 +569,17 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                 mainAxisAlignment:MainAxisAlignment.end,
                                 children: [
 
+                                  // TextButtonLarge(
+                                  //   marginCheck: true,
+                                  //   clr: Colors.green,
+                                  //
+                                  //
+                                  //   onPress: () {
+                                  //
+                                  //
+                                  //   },
+                                  //   text: "PAYMENT",                                  ),
+
                                   TextButtonLarge(
                                     marginCheck: true,
 

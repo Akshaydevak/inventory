@@ -22,6 +22,7 @@ import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/responseutils.dart';
+import 'package:inventory/widgets/searchTextfield.dart';
 
 import '../../GeneralScreen.dart';
 import 'cubit/channelpost/channelpost_cubit.dart';
@@ -53,6 +54,7 @@ class _VariantChannelAllocationScreenState
   int selectedVertical = 0;bool selectAll=false;
   var list;
   int? veritiaclid = 0;
+  TextEditingController searchContoller = TextEditingController();
   filterTable(List<bool?>selections){
     print("seeee u"+channels1.toString());
    setState(() {
@@ -81,6 +83,7 @@ class _VariantChannelAllocationScreenState
 
 
   }
+
   selectUnSelect(){
     for(var i=0;i<table.length;i++){
       if(selectAll){
@@ -145,6 +148,7 @@ class _VariantChannelAllocationScreenState
     context.read<StockverticalCubit>().getStockList(Variable.inventory_ID);
     super.initState();
   }
+  final GlobalKey<ChanneAllocationTopScreenState> channelAllocationState = GlobalKey<ChanneAllocationTopScreenState>();
 
   @override
   Widget build(BuildContext context) {
@@ -305,6 +309,7 @@ class _VariantChannelAllocationScreenState
                               veritiaclid = result[index].category?.id;
                               channelTypeCode = result[index].category?.code.toString()??"";
                               channelTypeName = result[index].category?.name.toString()??"";
+                              channelAllocationState.currentState?.clear();
                               // clear();
                               // select=true;
                               //
@@ -342,6 +347,8 @@ class _VariantChannelAllocationScreenState
                                   ),
 
                                   ChanneAllocationTopScreen(
+                                    key: channelAllocationState,
+
                                       listAssign: listAssign,
                                       appiCheckingTrue: appiCheckingTrue,
                                     channels:channels,
@@ -358,7 +365,8 @@ class _VariantChannelAllocationScreenState
                                       SizedBox(width: 5,),
                                             Container(
                                               // margin: EdgeInsets.symmetric(horizontal: w * .02),
-                                              child: CustomDropDown(
+                                              child:
+                                              CustomDropDown(
                                                 // border: true,
                                                 choosenValue: choosenValue,
                                                 onChange: (val) {
@@ -445,51 +453,87 @@ class _VariantChannelAllocationScreenState
                                   // SizedBox(
                                   //   height: 5,
                                   // ),
+                                  SizedBox(
+                                    height: h * .03,
+                                  ),
+
+
+                                  Container(
+                                    // margin: EdgeInsets.all(5),
+                                      child: SearchTextfiled(
+                                        color: Color(0xffFAFAFA),
+                                        h: 40,
+                                        suffixIconCheck: suffixIconCheck,
+                                        w: MediaQuery.of(context).size.width/2.11,
+                                        hintText: "Search...",
+                                        ctrlr: searchContoller,
+                                        onChanged: (va) {
+                                          print("searching case" + va.toString());
+                                          context
+                                              .read<ChanneltypelistCubit>()
+                                              .searchVariantList(searchContoller.text,choosenValue);
+                                          suffixIconCheck=true;
+                                          if (va == "") {
+                                            context
+                                                .read<ChanneltypelistCubit>()
+                                                .getChannelTypeList(choosenValue);
+                                            suffixIconCheck=false;
+                                          }
+                                        },
+                                      )),
+                                  SizedBox(
+                                    height: h * .03,
+                                  ),
                                   ChannelAllocationBottomTable(
                                     table: table,
                                       tableAssign:tableAssign,
                                       checkBoxClickSelectUnselct:checkBoxClickSelectUnselct,
                                   ),
                                   SizedBox(height: 8,),
-                                  // tablePagination(
-                                  //       () {
-                                  //     apiChecking ?
-                                  //     context
-                                  //         .read<ChanneltypelistCubit>()
-                                  //         .refresh() : context
-                                  //         .read<ChannelfilterCubit>()
-                                  //         .refresh();
-                                  //   },
-                                  //   back:
-                                  //   paginated?.previousUrl == null
-                                  //       ? null
-                                  //       :
-                                  //       () {
-                                  //     apiChecking ? context.read<
-                                  //         ChanneltypelistCubit>()
-                                  //         .previuosslotSectionPageList() :
-                                  //     context
-                                  //         .read<ChannelfilterCubit>()
-                                  //         .previuosslotSectionPageList();
-                                  //     // context
-                                  //     //     .read<Listbrand2Cubit>()
-                                  //     //     .previuosslotSectionPageList();
-                                  //   },
-                                  //   next:
-                                  //   paginated?.nextPageUrl == null
-                                  //       ? null
-                                  //       :
-                                  //       () {
-                                  //     apiChecking ? context.read<
-                                  //         ChanneltypelistCubit>()
-                                  //         .nextslotSectionPageList() :
-                                  //     context
-                                  //         .read<ChannelfilterCubit>()
-                                  //         .nextslotSectionPageList(
-                                  //         channelCodeList, Variable.inventory_ID,
-                                  //         choosenValue);
-                                  //   },
-                                  // ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      tablePagination(
+                                            () {
+                                          apiChecking==false ?
+                                          context
+                                              .read<ChanneltypelistCubit>()
+                                              .refresh() : context
+                                              .read<ChannelfilterCubit>()
+                                              .refresh();
+                                        },
+                                        back:
+                                        paginated?.previousUrl == null
+                                            ? null
+                                            :
+                                            () {
+                                              apiChecking==false  ? context.read<
+                                              ChanneltypelistCubit>()
+                                              .previuosslotSectionPageList(choosenValue) :
+                                          context
+                                              .read<ChannelfilterCubit>()
+                                              .previuosslotSectionPageList();
+                                          // context
+                                          //     .read<Listbrand2Cubit>()
+                                          //     .previuosslotSectionPageList();
+                                        },
+                                        next:
+                                        paginated?.nextPageUrl == null
+                                            ? null
+                                            :
+                                            () {
+                                              apiChecking==false ? context.read<
+                                              ChanneltypelistCubit>()
+                                              .nextslotSectionPageList(choosenValue) :
+                                          context
+                                              .read<ChannelfilterCubit>()
+                                              .nextslotSectionPageList(
+                                              channelCodeList, Variable.inventory_ID,
+                                              choosenValue);
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(height: h * .11,),
                                   SaveUpdateResponsiveButton(
                                     label: "SAVE",

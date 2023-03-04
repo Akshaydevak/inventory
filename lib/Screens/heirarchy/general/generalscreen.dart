@@ -269,9 +269,10 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                     Timer(Duration(seconds: 5), () {
                       setState(() {
                         select
-                            ? context
-                                .read<ItemcreationListCubit>()
-                                .getItemListList()
+                            ?print("")
+                        // context
+                        //         .read<ItemcreationListCubit>()
+                        //         .getItemListList()
                             : context
                                 .read<ItemreadCubit>()
                                 .getItemRead(veritiaclid!);
@@ -398,10 +399,17 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                        if(select){
+                          veritiaclid = result[result.length-1].id;
+                          selectedVertical=result.length-1;
+                          context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                        }
+                        else{
+                          veritiaclid = result[0].id;
+                          selectedVertical=0;
+                          context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                        }
+
                         select = false;
                       } else {
                         print("common");
@@ -695,6 +703,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                     img5 = false;
                                     img6 = false;
                                     img7 = false;
+                                    img8 = false;
                                   },
                                 ),
                                 // Container(
@@ -1019,37 +1028,54 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 title: "Division",
                 readOnly: true,
                 ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(type: "division-TablePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          print(va?.id ?? "");
-                          divisionid = va?.id??0;
-                          Variable.divisionId = va?.id;
+                  if(widget.divisionName.text.isNotEmpty){
+    setState(() {
+                    widget.divisionName.text="";
+                    widget.division.text="";
+                    widget.category.clear();
+                    widget.categoryName.clear();
+                    widget.subCategory.clear();
+                    widget.subCategoryName.clear();
+                    widget.group.clear();
+                    widget.groupName.clear();
+                    widget.categoryid=0;
+                    widget.subCategoryId=0;
+    });
+                  }
+                  else{
+                    showDailogPopUp(
+                      context,
+                      TableConfigurePopup(type: "division_TablePopup",
+                        valueSelect: (BrandListModel va) {
+                          setState(() {
+                            print(va?.id ?? "");
+                            divisionid = va?.id??0;
+                            Variable.divisionId = va?.id;
 
 
-                          // onChan
-                                                    widget.division.text = va?.code ?? "";
-                                                    widget.divisionName.text = va?.name ?? "";
-                                                    widget.idChange(2,va?.id);
+                            // onChan
+                            widget.division.text = va?.code ?? "";
+                            widget.divisionName.text = va?.name ?? "";
+                            widget.idChange(2,va?.id);
 
-                                                    widget.divisionId=va?.id;
-                          print("widget.divisionId"+va.id.toString());
-                                                    widget.category.clear();
-                                                    widget.categoryName.clear();
-                                                    widget.subCategory.clear();
-                                                    widget.subCategoryName.clear();
-                                                    widget.group.clear();
-                                                    widget.groupName.clear();
-                                                    widget.categoryid=0;
-                                                    widget.subCategoryId=0;
-                          //                           setState(() {});ge = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
+                            widget.divisionId=va?.id;
+                            print("widget.divisionId"+va.id.toString());
+                            widget.category.clear();
+                            widget.categoryName.clear();
+                            widget.subCategory.clear();
+                            widget.subCategoryName.clear();
+                            widget.group.clear();
+                            widget.groupName.clear();
+                            widget.categoryid=0;
+                            widget.subCategoryId=0;
+                            //                           setState(() {});ge = true;
+                            // orderType.text = va!;
+                          });
+                        },
+                      ),
+                    );
+                  }
+
                 },
               ),
               SizedBox(
@@ -1063,23 +1089,33 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 title: "Group",
                 readOnly: true,
                 ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      id:widget.subCategoryId!=0?widget.subCategoryId:widget.categoryid,
-                      type: "GroupTabalePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.group.text = va?.code ?? "";
-                          widget.groupName.text = va?.name ?? "";
-                          setState(() {});
+                  if(widget.groupName.text.isNotEmpty){
+                    setState(() {
+                      widget.groupName.text="";
+                      widget.group.text="";
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
+                    });
+                  }
+                  else{
+                    showDailogPopUp(
+                      context,
+                      TableConfigurePopup(
+                        id:widget.subCategoryId!=0?widget.subCategoryId:widget.categoryid,
+                        type: "GroupTabalePopup",
+                        valueSelect: (BrandListModel va) {
+                          setState(() {
+                            widget.group.text = va?.code ?? "";
+                            widget.groupName.text = va?.name ?? "";
+                            setState(() {});
+
+                            // onChange = true;
+                            // orderType.text = va!;
+                          });
+                        },
+                      ),
+                    );
+                  }
+
                 },
               ),
               SizedBox(
@@ -1091,22 +1127,31 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 readOnly: true,
                 title: "Static Group",
                 ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      type: "StaticTabalePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.static.text = va?.code ?? "";
-                          widget.staticName.text = va?.name ?? "";
-                          setState(() {});
+                  if(widget.staticName.text.isNotEmpty){
+                    setState(() {
+                      widget.staticName.text="";
+                      widget.static.text="";
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
+                    });
+                  }else{
+                    showDailogPopUp(
+                      context,
+                      TableConfigurePopup(
+                        type: "StaticTabalePopup",
+                        valueSelect: (BrandListModel va) {
+                          setState(() {
+                            widget.static.text = va?.code ?? "";
+                            widget.staticName.text = va?.name ?? "";
+                            setState(() {});
+
+                            // onChange = true;
+                            // orderType.text = va!;
+                          });
+                        },
+                      ),
+                    );
+                  }
+
                 },
               ),
 
@@ -1208,29 +1253,44 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 title: "Category",
                 readOnly: true,
                 ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      id: widget.divisionId,
-                      type: "category-TablePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.category.text = va?.code ?? "";
-                          widget.categoryName.text = va?.name ?? "";
-                          widget.categoryid = va?.id;
-                          widget.subCategory.clear();
-                          widget.subCategoryName.clear();
-                          widget.group.clear();
-                          widget.groupName.clear();
-                          widget.subCategoryId=0;
-                          setState(() {});
+                  if(widget.categoryName.text.isNotEmpty){
+                    setState(() {
+                      widget.categoryName.text="";
+                      widget.category.text="";
+                      widget.subCategory.clear();
+                      widget.subCategoryName.clear();
+                      widget.group.clear();
+                      widget.groupName.clear();
+                      widget.subCategoryId=0;
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
+                    });
+                  }
+                  else{
+                    showDailogPopUp(
+                      context,
+                      TableConfigurePopup(
+                        id: widget.divisionId,
+                        type: "category-TablePopup",
+                        valueSelect: (BrandListModel va) {
+                          setState(() {
+                            widget.category.text = va?.code ?? "";
+                            widget.categoryName.text = va?.name ?? "";
+                            widget.categoryid = va?.id;
+                            widget.subCategory.clear();
+                            widget.subCategoryName.clear();
+                            widget.group.clear();
+                            widget.groupName.clear();
+                            widget.subCategoryId=0;
+                            setState(() {});
+
+                            // onChange = true;
+                            // orderType.text = va!;
+                          });
+                        },
+                      ),
+                    );
+                  }
+
                 },
               ),
               //   SelectableDropDownpopUp(
@@ -1283,22 +1343,33 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 readOnly: true,
                 title: "Material",
                 ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      type: "MaterialTabalePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.material.text = va?.code ?? "";
-                          widget.materialName.text = va?.name ?? "";
-                          setState(() {});
+                  if(widget.materialName.text.isNotEmpty){
+                    setState(() {
+                      widget.materialName.text="";
+                      widget.material.text="";
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
+
+                    });
+                  }
+                  else{
+                    showDailogPopUp(
+                      context,
+                      TableConfigurePopup(
+                        type: "MaterialTabalePopup",
+                        valueSelect: (BrandListModel va) {
+                          setState(() {
+                            widget.material.text = va?.code ?? "";
+                            widget.materialName.text = va?.name ?? "";
+                            setState(() {});
+
+                            // onChange = true;
+                            // orderType.text = va!;
+                          });
+                        },
+                      ),
+                    );
+                  }
+
                 },
               ),
               // SelectableDropDownpopUp(
@@ -1346,22 +1417,33 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 readOnly: true,
                 title: "Brand",
                 ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      type: "BrandTabalePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.brand.text = va?.code ?? "";
-                          widget.brandName.text = va?.name ?? "";
-                          setState(() {});
+                  if(widget.brandName.text.isNotEmpty){
+                    setState(() {
+                      widget.brandName.text="";
+                      widget.brand.text="";
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
+
+                    });
+                  }
+                  else{
+                    showDailogPopUp(
+                      context,
+                      TableConfigurePopup(
+                        type: "BrandTabalePopup",
+                        valueSelect: (BrandListModel va) {
+                          setState(() {
+                            widget.brand.text = va?.code ?? "";
+                            widget.brandName.text = va?.name ?? "";
+                            setState(() {});
+
+                            // onChange = true;
+                            // orderType.text = va!;
+                          });
+                        },
+                      ),
+                    );
+                  }
+
                 },
               ),
 
@@ -1422,26 +1504,39 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 readOnly: true,
                 title: "Sub Category",
                 ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      id:widget.categoryid,
-                      type: "SubcategoryTabalePopup",
-                      valueSelect: (BrandListModel va) {
-                        setState(() {
-                          widget.subCategory.text = va?.code ?? "";
-                          widget.subCategoryName.text = va?.name ?? "";
-                          widget.subCategoryId = va?.id;
-                          widget.group.clear();
-                          widget.groupName.clear();
-                          setState(() {});
+                  if(widget.subCategoryName.text.isNotEmpty){
+                    setState(() {
+                      widget.subCategoryName.text="";
+                      widget.subCategory.text="";
+                      widget.group.clear();
+                      widget.groupName.clear();
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
+
+                    });
+                  }
+                  else{
+                    showDailogPopUp(
+                      context,
+                      TableConfigurePopup(
+                        id:widget.categoryid,
+                        type: "SubcategoryTabalePopup",
+                        valueSelect: (BrandListModel va) {
+                          setState(() {
+                            widget.subCategory.text = va?.code ?? "";
+                            widget.subCategoryName.text = va?.name ?? "";
+                            widget.subCategoryId = va?.id;
+                            widget.group.clear();
+                            widget.groupName.clear();
+                            setState(() {});
+
+                            // onChange = true;
+                            // orderType.text = va!;
+                          });
+                        },
+                      ),
+                    );
+                  }
+
                 },
               ),
 
@@ -1490,22 +1585,28 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 readOnly: true,
                 title: "Variant Framework",
                 ontap: () {
-                  showDailogPopUp(
-                    context,
-                    TableConfigurePopup(
-                      type: "FrameWorkTabalePopup",
-                      valueSelect: (FrameWorkListModel va) {
-                        setState(() {
-                          widget.variantFramework.text = va?.code ?? "";
-                          widget.variantFrameworkName.text = va?.name ?? "";
-                          setState(() {});
+                  if(widget.variantFrameworkName.text.isNotEmpty){
+                    widget.variantFramework.text = "";
+                    widget.variantFrameworkName.text =  "";
 
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
-                  );
+                  }
+                  else{
+                    showDailogPopUp(
+                      context,
+                      TableConfigurePopup(
+                        type: "FrameWorkTabalePopup",
+                        valueSelect: (FrameWorkListModel va) {
+                          setState(() {
+                            widget.variantFramework.text = va?.code ?? "";
+                            widget.variantFrameworkName.text = va?.name ?? "";
+                            setState(() {});
+
+                            // onChange = true;
+                            // orderType.text = va!;
+                          });
+                        },
+                      ),
+                    );}
                 },
               ),
               // GestureDetector(

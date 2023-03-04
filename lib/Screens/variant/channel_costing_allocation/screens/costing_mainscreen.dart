@@ -72,23 +72,15 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
     super.initState();
   }
   clear(){
-
       unitCostController.clear();
       sellingPriceController.clear();
       costingCodeController.clear();
-
-      channelStockCodeController.clear();
       costingnameController.clear();
-      channelNameController.clear();
-
-
       costingMethodController.clear();
       gpPercentegeController.clear();
       pricingGptypeController.clear();
       pricingGroupIdController.clear();
       pricingNameController.clear();
-
-
   }
   sellingPriceCalculation({int ?unitCost=0,double? gp=0}){
     setState(() {
@@ -101,7 +93,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
     if(gp==null){
       gp=0;
     }
-      sellingPriceController.text=(unitCost!+gp!).toString();
+      sellingPriceController.text=(unitCost!+((unitCost!*gp!)/100)).toString();
 
     });
 
@@ -166,7 +158,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
               setState(() {
                 print("arion");
                 checkBoxLis=List.from(data.data);
-                print(data.data);
+                print(checkBoxLis.length);
                 // print(checkBoxLis);
                 // group = data.data;
                 // print("Akshgayaa" + group.toString());
@@ -339,7 +331,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
 
             if(onChange==false){
               if(checkBoxLis.isNotEmpty==true)
-                for(var i=0;i<checkBoxLis.length-1;i++)
+                for(var i=0;i<checkBoxLis.length;i++)
                   selection.add(false);
 
             }
@@ -368,6 +360,8 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                           table.clear();
                           group.clear();
                           clear();
+                          channelNameController.clear();
+                          channelStockCodeController.clear();
 
 
 
@@ -443,6 +437,8 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                               selection.clear();
                               table.clear();
                               clear();
+                              channelNameController.clear();
+                              channelStockCodeController.clear();
 
                               if(index!=null) {
                                 context

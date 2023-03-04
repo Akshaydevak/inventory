@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
 import 'package:inventory/Screens/purchaseorder/invoice/screens/invoice_mainScreen.dart';
+import 'package:inventory/Screens/sales/invoice/ipayment_list.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
@@ -31,7 +32,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
   @override
   Widget build(BuildContext context) {
 
-    TabController _tabController = TabController(length: 5, vsync: this,initialIndex: Variable.subIndex[0]??0);
+    TabController _tabController = TabController(length: 6, vsync: this,initialIndex: Variable.subIndex[0]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return MultiBlocProvider(
@@ -152,7 +153,9 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                             Text("Request Form",style: TextStyle(color:Colors.black,fontSize: width*.011),),
                             Text("Request Form Receiving",style: TextStyle(color: Colors.black,fontSize: width*.011),),
 
-                            Text("Inventory invoice",style: TextStyle(color:Colors.black,fontSize: width*.011),)]),
+                            Text("Inventory invoice",style: TextStyle(color:Colors.black,fontSize: width*.011),),
+                            Text("Payment Status",style: TextStyle(color:Colors.black,fontSize: width*.011),)
+                          ]),
                     ),
                     // Divider(
                     //   color: Colors.red,
@@ -197,7 +200,8 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                       ),
                       RequestFormScreen(),
                       RequestFormReceivigScreen(),
-                      InventoryInvoiceScreen()
+                      InventoryInvoiceScreen(),
+                      SalesPaymentListPActh()
 
 
                     ],

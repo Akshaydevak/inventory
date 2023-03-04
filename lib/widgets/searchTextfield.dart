@@ -31,7 +31,7 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
     return Container(
        // margin: EdgeInsets.only(top:3,),
         width: widget.w,
-        height: widget.h,
+        // height: widget.h,
         // color: ,
        // color:Color(0xFF423E3F),
         // padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 10),

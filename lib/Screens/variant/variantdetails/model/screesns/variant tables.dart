@@ -3643,6 +3643,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
   List<TextEditingController> purposeListTextEditingController = [];
   String choosenValue = '';
   bool onChange = false;
+  bool onSaveActive = false;
   List<String> items = ["Male", "Female"];
   List<String> ethinikItem = ["young", "old", "medium"];
   List<bool>upDate=[];
@@ -4071,7 +4072,9 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       child: CustomDropDown(
                           choosenValue: choosenValue,
                           onChange: (val) {
+                            onSaveActive=true;
                             choosenValue = val;
+                            setState(() {});
                           },
                           items: items),
                     ),
@@ -4080,6 +4083,12 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       child: UnderLinedInput(
 
                         controller: ageGroupController,
+                        onChanged: (va){
+                          setState(() {
+                            onSaveActive=true;
+                          });
+                        },
+
                       ),
                     ),
                     TableCell(
@@ -4087,7 +4096,11 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       child: CustomDropDown(
                           choosenValue: ethlinkController.text,
                           onChange: (val) {
+
+                            onSaveActive=true;
+
                             ethlinkController.text = val;
+                            setState(() {});
                           },
                           items: ethinikItem),
                     ),
@@ -4117,6 +4130,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       onSelection: (VariantReadModel? va) {
                         onChange=true;
                         setState(() {
+                          onSaveActive=true;
                           countryController?.text = va?.name ?? "";
 
                           setState(() {});
@@ -4176,6 +4190,9 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: TableTextButton(
+                        buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
+                        textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
+                        bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
                         label: "Save",
                         onPress: () {
                           setState(() {
@@ -4188,13 +4205,14 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                             purposeListTextEditingController.add(purposeValue);
 
                             inforMationList?.add(productBehaviour(
-                              genderGroup: choosenValue,
-                              ageGroup: ageGroupController.text ?? '',
-                              ethinik: ethlinkController.text,
-                              countries: countryController.text,
-                              purpose: purposeController.text,
+                              genderGroup: choosenValue.isEmpty?null:choosenValue,
+                              ageGroup: ageGroupController?.text ?? null,
+                              ethinik: ethlinkController?.text??null,
+                              countries: countryController?.text??null,
+                              purpose: purposeController?.text??null,
                             ));
-                            print("the list is" + inforMationList.toString());
+                            onSaveActive=false;
+
                             widget.productFeaturesableAssign(list: inforMationList);
 
                           });

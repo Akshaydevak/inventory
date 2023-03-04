@@ -2,6 +2,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/commonWidget/appurl.dart';
@@ -34,7 +35,7 @@ abstract class PromotionDatasourse {
   Future<List<ChannelListModel>>getChannelList(String? code);
   Future<PromotionSaleReadModel>getPromotionSaleRead(int id);
   Future<DoubleResponse> patchOfferGroup(OfferGroupData model,int? id);
-  Future<listAllSalesApis> getListAllSalesApi();
+  Future<listAllSalesApis> getListAllSalesApi({String? type });
   Future<DoubleResponse> postPromotionImage(String? imageNmae, String ImageEncode,
       {String? type});
   Future<PaginatedResponse<List<OfferPeriodList>>> getSaleApplyingName(salesOrderNamePostModel model, String? code);
@@ -43,8 +44,16 @@ abstract class PromotionDatasourse {
   //discount
   Future<DoubleResponse> postCreatePromtionDiscount(PromotionDiscountCreationModel model);
   Future<PromotionDiscountReadModel>getPromotionDiscountRead(int id);
+  Future<PaginatedResponse<  List<CustomGroupReadModel>>>getCustomGroupRead();
   Future<PaginatedResponse<List<OfferPeriodList>>> getListTypeId(salesOrderNamePostModel model, String? code);
   Future<DoubleResponse> getPromotionDiscountPatch(PromotionDiscountCreationModel model,int ? id);
+  Future<PaginatedResponse<List<SaleLines>>> getVariantGroupCodeList(String? code,{String? customereCode});
+
+  //buy more********************
+  Future<DoubleResponse> postCreatePromtionBuyMore(PromotionBuyMoreCreationModel model);
+  Future<PaginatedResponse<List<OfferPeriodList>>> getBuyMoreVerticalList(String? code);
+  Future<PromotionBuyMoreCreationModel>getBuyMoreRead(int id);
+  Future<DoubleResponse> buyMorePromotionSalePatch(PromotionBuyMoreCreationModel model,int ? id);
 
 
 
@@ -266,6 +275,11 @@ return data;
           url = readPatchPromotionDiscountApi;
         }
         break;
+      case "5":
+        {
+          url = readBuyMoreApi;
+        }
+        break;
 
 
     }
@@ -397,7 +411,7 @@ return data;
     if (code == "")
       path = listOfferGroupList+Variable.inventory_ID;
     else
-      path = listOfferGroupList+code.toString();
+      path = listOfferGroupList+Variable.inventory_ID+"?"+code.toString();
     print("Offer Link:$path");
 
     final response = await client.get(path,
@@ -520,14 +534,27 @@ return data;
            'Content-Type': 'application/json',
            'Accept': 'application/json',
          }));
-     print("");
-     print(response);
-     print(response.data['message']);
+
+     print(response.data);
      if (response.data['status'] == 'failed') {
-       Variable.errorMessege = response.data['message'];
+
+
+
+       if(response.data['is_another_promotion']==true){
+         Variable.errorMessege = response.data['message']['message'];
+         Variable.type_data = response.data['message']['type_data'];
+         Variable.isTypeDataCheck = true;
+
+       }
+       else{
+         Variable.errorMessege = response.data['message'];
+         Variable.isTypeDataCheck = false;
+       }
      }
      return DoubleResponse(
-         response.data['status'] == 'success', response.data['message']);
+         response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+
 
    }catch(e){
      print(e);
@@ -539,19 +566,32 @@ return data;
          'Content-Type': 'application/json',
          'Accept': 'application/json',
        }));
-   print("");
-   print(response);
-   print(response.data['message']);
-   if (response.data['status'] == 'failed') {
-     Variable.errorMessege = response.data['message'];
-   }
-   return DoubleResponse(
-       response.data['status'] == 'success', response.data['message']);
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+
   }
 
   @override
-  Future<listAllSalesApis> getListAllSalesApi() async {
-    print("SALES aPI"+createPromotionSaleApi.toString());
+  Future<listAllSalesApis> getListAllSalesApi({String ? type}) async {
+
     final response = await client.get(
       createPromotionSaleApi,
       // data:
@@ -703,7 +743,14 @@ return data;
     print("sasasasssssssssssssss"+model.toString());
     try{
       final response = await client.post(path,
-          data: model.toJson(),
+          data:
+          {"applying_type":model.applyinType,
+            "segment_list":model.segmentList,
+            "search_element":model.searchElement,
+            "applying_type_code":model.applyingTypeCode,
+            "inventory_id":Variable.inventory_ID
+          },
+          // model.toJson(),
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
@@ -725,7 +772,13 @@ return data;
 
     }
     final response = await client.post(path,
-        data: model.toJson(),
+        data:   {"applying_type":model.applyinType,
+          "segment_list":model.segmentList,
+          "search_element":model.searchElement,
+          "applying_type_code":model.applyingTypeCode,
+          "inventory_id":Variable.inventory_ID
+        },
+        // model.toJson(),
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -865,20 +918,34 @@ return data;
               "sale_line":model.saleLines
 
           },
+
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           }));
-      print("");
-      print(response);
-      print(response.data['message']);
-      if (response.data['status'] == 'failed') {
-        Variable.errorMessege = response.data['message'];
-      }
-      return DoubleResponse(
-          response.data['status'] == 'success', response.data['message']);
 
-    }catch(e){
+      print(response.data);
+      if (response.data['status'] == 'failed') {
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
+          }
+          return DoubleResponse(
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+
+
+          }catch(e){
       print(e);
 
     }
@@ -949,25 +1016,39 @@ return data;
 
             "sale_line":model.saleLines
 
-        },
-        options: Options(headers: {
+        },options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
-    print("");
-    print(response);
-    print(response.data['message']);
+
+    print(response.data);
     if (response.data['status'] == 'failed') {
-      Variable.errorMessege = response.data['message'];
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
     }
     return DoubleResponse(
-        response.data['status'] == 'success', response.data['message']);
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+
+
   }
 
   @override
   Future<DoubleResponse> postPromotionImage(String? imageNmae, String ImageEncode, {String? type}) async {
     String path = PromotionImagePostApi;
     print(path);
+    print("dhoshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhaaaaaaaaaaaaaaaaaaaaaa");
 
     final response = await client.post(path,
         data: {"image_name": imageNmae, "image_encode": ImageEncode},
@@ -1084,7 +1165,7 @@ try{
     data:{
 
       "type_data":typeData,
-      "id_list":[1]
+      "id_list":idList
     },
 
     options: Options(
@@ -1109,7 +1190,7 @@ try{
       data:{
 
         "type_data":typeData,
-        "id_list":[1]
+        "id_list":idList
       },
 
       options: Options(
@@ -1209,6 +1290,8 @@ try{
   @override
   Future<DoubleResponse> postCreatePromtionDiscount(PromotionDiscountCreationModel model) async {
     print(deletePromotionDiscountApi);
+    print(model);
+
     try{
       final response = await client.post(deletePromotionDiscountApi,
           data: model.toJson(),
@@ -1216,14 +1299,27 @@ try{
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           }));
-      print("");
-      print(response);
-      print(response.data['message']);
+
+      print(response.data);
       if (response.data['status'] == 'failed') {
-        Variable.errorMessege = response.data['message'];
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
       }
       return DoubleResponse(
-          response.data['status'] == 'success', response.data['message']);
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+
 
     }catch(e){
       print(e);
@@ -1235,14 +1331,24 @@ try{
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
-    print("");
-    print(response);
-    print(response.data['message']);
+
+
     if (response.data['status'] == 'failed') {
-      Variable.errorMessege = response.data['message'];
+
+      print(response.data['message']);
+
+      if(response.data['message']["type_data"]!=""){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+      }
     }
     return DoubleResponse(
-        response.data['status'] == 'success', response.data['message']);
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+
   }
 
   @override
@@ -1377,14 +1483,27 @@ return data;
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           }));
-      print("");
-      print(response);
-      print(response.data['message']);
+
+      print(response.data);
       if (response.data['status'] == 'failed') {
-        Variable.errorMessege = response.data['message'];
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
       }
       return DoubleResponse(
-          response.data['status'] == 'success', response.data['message']);
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+
 
     }catch(e){
       print(e);
@@ -1420,55 +1539,29 @@ return data;
 
           {
 
-            "offer_period_id":1,
+            "offer_period_id":model.offerPeriodId,
 
-            "offer_group_id":1,
+            "offer_group_id":model.offerGroupId,
 
-            "based_on":"percentage",
+            "based_on":model.basedOn,
 
-            "discount_percentage_or_price":100,
+            "discount_percentage_or_price":model.discountPercentageOrPrice,
 
-            "image":null,
+            "image":model.image,
 
-            "title":"SASASA",
+            "title":model.title,
 
-            "description":"SAS",
+            "description":model.description,
 
-            "is_available_for_all":true,
+            "is_available_for_all":model.isAvailableFor,
 
             "available_customer_groups":[],
 
-            "is_active":true,
+            "is_active":model.isActive,
 
-            "created_by":"kscb",
+            "created_by":model.createdBy,
 
-            "offer_lines":[{
-
-              "id":4,
-
-              "variants":[],
-
-              "override_priority":false,
-
-              "type_applying":"category",
-
-              "priority":"4",
-
-              "type_code":"assa",
-
-              "offer_product_group_code":"W89PXDH2ND",
-
-              "image":null,
-
-              "is_active":true,
-
-              "type_id":1,
-
-              "title":"sxs",
-
-              "maximum_qty":10,
-
-            }]
+            "offer_lines":model.offerLines
 
           }
 
@@ -1477,14 +1570,532 @@ return data;
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
-    print("");
-    print(response);
-    print(response.data['message']);
+
+    print(response.data);
     if (response.data['status'] == 'failed') {
-      Variable.errorMessege = response.data['message'];
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
     }
     return DoubleResponse(
-        response.data['status'] == 'success', response.data['message']);
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+
+  }
+
+  @override
+  Future<DoubleResponse> postCreatePromtionBuyMore(PromotionBuyMoreCreationModel model) async {
+    print(createPromotionBuyMore);
+    try{
+      final response = await client.post(createPromotionBuyMore,
+          data: model.toJson(),
+          // data:{
+          //
+          //
+          //   "lines": model.lines,
+          //
+          //
+          //   "inventory_id": model.inventoryId,
+          //
+          //   "offer_applied_to": model.offerAppliedTo,
+          //
+          //   "offer_applied_to_id": model.offerAppliedToId,
+          //
+          //   "offer_applied_to_code": model.offerAppliedToCode,
+          //
+          //   "title": "ajjhaa",
+          //
+          //   "description": "",
+          //
+          //   "segments":[{"segment_name":"groceries","segment_code":"groceries"}],
+          //
+          //   "is_available_for_all": true,
+          //
+          //   "available_customer_groups": [],
+          //
+          //   "count_price_percentage": [{"count":10,"price_percentage":10}],
+          //
+          //   "image": "",
+          //
+          //   "based_on": "price",
+          //
+          //   "buy_more_applying_on": "category",
+          //
+          //   "buy_more_applying_on_name": "CATY130171",
+          //
+          //   "buy_more_applying_on_id": 70,
+          //
+          //   "buy_more_applying_on_code": "CATY130171",
+          //
+          //   "created_by": "hai",
+          //
+          //   "is_active": false,
+          //
+          //   "offer_period_id": model.offerPeriodId,
+          //
+          //   "offer_group_id":model.offerGroupId
+          //
+          //
+          //
+          // },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      print(response.data);
+      if (response.data['status'] == 'failed') {
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
+
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+    }catch(e){
+      print(e);
+
+    }
+    final response = await client.post(createPromotionBuyMore,
+        data: model.toJson(),
+        // data:{
+        //
+        //
+        //   "lines": model.lines,
+        //
+        //
+        //   "inventory_id": model.inventoryId,
+        //
+        //   "offer_applied_to": model.offerAppliedTo,
+        //
+        //   "offer_applied_to_id": model.offerAppliedToId,
+        //
+        //   "offer_applied_to_code": model.offerAppliedToCode,
+        //
+        //   "title": "ajjhaa",
+        //
+        //   "description": "",
+        //
+        //   "segments":[{"segment_name":"groceries","segment_code":"groceries"}],
+        //
+        //   "is_available_for_all": true,
+        //
+        //   "available_customer_groups": [],
+        //
+        //   "count_price_percentage": [{"count":10,"price_percentage":10}],
+        //
+        //   "image": "",
+        //
+        //   "based_on": "price",
+        //
+        //   "buy_more_applying_on": "category",
+        //
+        //   "buy_more_applying_on_name": "CATY130171",
+        //
+        //   "buy_more_applying_on_id": 70,
+        //
+        //   "buy_more_applying_on_code": "CATY130171",
+        //
+        //   "created_by": "hai",
+        //
+        //   "is_active": false,
+        //
+        //   "offer_period_id": model.offerPeriodId,
+        //
+        //   "offer_group_id":model.offerGroupId
+        //
+        //
+        //
+        // },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+  }
+
+  @override
+  Future<PaginatedResponse<List<OfferPeriodList>>> getBuyMoreVerticalList(String? code) async {
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = listBuyMoreVerticalListApi+Variable.inventory_ID;
+    else
+      path = listBuyMoreVerticalListApi +Variable.inventory_ID+ "?$code";
+    print(path);
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<OfferPeriodList> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(OfferPeriodList.fromJson(element));
+      print("listOfferPeriod" + items.toString());
+    });
+    return PaginatedResponse<List<OfferPeriodList>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+  }
+
+  @override
+  Future<PromotionBuyMoreCreationModel> getBuyMoreRead(int id) async {
+    String path=readBuyMoreApi+id.toString();
+    print(path);
+try{
+  final response = await client.get(path,
+    options: Options(
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+    ),
+  );
+  // print("response" + response.toString());
+  PromotionBuyMoreCreationModel data = PromotionBuyMoreCreationModel.fromJson(response.data['data']['buy_more_data']);
+  print("far$data");
+  return data;
+}catch(e){
+
+
+  print("the error is here is "+e.toString());
+}
+    final response = await client.get(path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    // print("response" + response.toString());
+    PromotionBuyMoreCreationModel data = PromotionBuyMoreCreationModel.fromJson(response.data['data']['buy_more_data']);
+    print("far$data");
+    return data;
+  }
+
+  @override
+  Future<DoubleResponse> buyMorePromotionSalePatch(PromotionBuyMoreCreationModel model, int? id) async {
+    String path=readBuyMoreApi+id.toString();
+    print(path);
+    print(model);
+
+    try{
+      final response = await client.patch(path,
+          // data: model.toJson(),
+
+        data:  {
+          // "title": "kjsbxjkssssab",
+          // "offer_period_id": 2,
+          // "offer_group_id": 2,
+          // "based_on": "price",
+          // "created_by": "msb",
+          // "inventory_id": "SBNU1003",
+          // "segments":[],
+          // "count_price_percentage": [
+          //   {
+          //     "count": 10,
+          //     "price_percentage": 10
+          //   }
+          // ],
+          // "description": "ajshvs",
+          // "is_available_for_all": true,
+          // "available_customer_groups": [
+          //   {
+          //     "customer_group_code": null,
+          //     "customer_group_name": null
+          //   }
+          // ],
+          // "image": null,
+          // "is_active": true,
+          // "lines": [
+          //
+          // ]
+            "title":model.title,
+            "offer_period_id":model.offerPeriodId,
+            "offer_group_id":model.offerGroupId,
+            "based_on":model.basedOn,
+            "created_by":model.createdBy,
+            "inventory_id":model.inventoryId,
+            "count_price_percentage":model.countPricePercentage,
+            "description":model.description,
+            "is_available_for_all":model.isAvailableForAll,
+             "segments":model.segments,
+            "available_customer_groups":   {
+              "customer_group_code": null,
+              "customer_group_name": null
+            },
+            // model.availableCustomerGroups,
+
+            "image":model.image,
+
+            "is_active":model.isActive,
+
+
+            "lines":model.lines
+
+
+          },
+      //     options: Options(headers: {
+      //       'Content-Type': 'application/json',
+      //       'Accept': 'application/json',
+      //     }));
+      // print("");
+      // print(response);
+      // print(response.data['message']);
+      // if (response.data['status'] == 'failed') {
+      //   Variable.errorMessege = response.data['message'];
+      // }
+      // return DoubleResponse(
+      //     response.data['status'] == 'success', response.data['message']);
+
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      print(response.data);
+      if (response.data['status'] == 'failed') {
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
+
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+    }catch(e){
+      print("the error is here"+e.toString());
+
+    }
+    final response = await client.patch(path,
+        // data: model.toJson(),
+
+        // data: model.toJson(),
+
+        data:  {
+
+          // "title": "kjsbxjksab",
+          // "offer_period_id": 2,
+          // "offer_group_id": 2,
+          // "based_on": "price",
+          // "created_by": "msb",
+          // "inventory_id": "SBNU1003",
+          // "segments":[],
+          // "count_price_percentage": [
+          //   {
+          //     "count": 10,
+          //     "price_percentage": 10
+          //   }
+          // ],
+          // "description": "ajshvs",
+          // "is_available_for_all": true,
+          // "available_customer_groups": [
+          //   {
+          //     "customer_group_code": null,
+          //     "customer_group_name": null
+          //   }
+          // ],
+          // "image": null,
+          // "is_active": true,
+          // "lines": [
+          //
+          // ]
+
+          "title":model.title,
+          "offer_period_id":model.offerPeriodId,
+          "offer_group_id":model.offerGroupId,
+          "based_on":model.basedOn,
+          "created_by":model.createdBy,
+          "inventory_id":model.inventoryId,
+          "count_price_percentage":model.countPricePercentage,
+          "description":model.description,
+          "is_available_for_all":model.isAvailableForAll,
+          "segments":model.segments,
+          "available_customer_groups":  {
+            "customer_group_code": null,
+            "customer_group_name": null
+          },
+
+          // model.availableCustomerGroups,
+          "image":model.image,
+          "is_active":model.isActive,
+          "lines":model.lines
+
+
+        },
+    //     options: Options(headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json',
+    //     }));
+    // print("");
+    // print(response);
+    // print(response.data['message']);
+    // if (response.data['status'] == 'failed') {
+    //   Variable.errorMessege = response.data['message'];
+    // }
+    // return DoubleResponse(
+    //     response.data['status'] == 'success', response.data['message']);
+    //
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);;
+  }
+
+  @override
+  Future<PaginatedResponse<  List<CustomGroupReadModel>>> getCustomGroupRead() async {
+    var path=Uri.parse("https://api-customergroup-application.hilalcart.com/");
+    print(path);
+    try{
+      final response = await client.get(path.toString(),
+          options:Options(
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          )
+      );
+      print(response);
+
+      List<CustomGroupReadModel> items = [];
+
+      (response.data['data']['Group_Code_Name'] as List).forEach((element) {
+        items.add(CustomGroupReadModel.fromJson(element));
+        print("listOfferPeriod" + items.toString());
+      });
+      return PaginatedResponse<List<CustomGroupReadModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],
+      );
+    }catch(e){
+      print("pppppppppppppppppppppp"+e.toString());
+    }
+    print("hi here");
+    final response = await client.get(path.toString(),
+      options:Options(
+          headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        },
+      )
+    );
+
+    List<CustomGroupReadModel> items = [];
+
+    (response.data['data']['Group_Code_Name'] as List).forEach((element) {
+      items.add(CustomGroupReadModel.fromJson(element));
+      print("listOfferPeriod" + items.toString());
+    });
+    return PaginatedResponse<List<CustomGroupReadModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+  }
+
+  @override
+  Future<PaginatedResponse<List<SaleLines>>> getVariantGroupCodeList(String? code,{String? customereCode}) async {
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = listDiscountVariantByGroupCodeApi+customereCode.toString();
+    else
+      path = listDiscountVariantByGroupCodeApi +customereCode.toString()+ "?$code";
+    print(path);
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<SaleLines> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(SaleLines.fromJson(element));
+      print("listOfferPeriod" + items.toString());
+    });
+    return PaginatedResponse<List<SaleLines>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
 

@@ -395,13 +395,24 @@ class _SalesGeneralState extends State<SalesGeneral> {
                     print("appuram" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        selectedVertical=0;
-                        Variable.verticalid = result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<SalesgeneralreadCubit>()
-                            .getSalesGenralRead(veritiaclid!);
+                        if(select){
+                          veritiaclid = result[result.length-1].id;
+                          selectedVertical=result.length-1;
+
+                          context
+                              .read<SalesgeneralreadCubit>()
+                              .getSalesGenralRead(veritiaclid!);
+
+                        }
+                        else{
+                          veritiaclid = result[0].id;
+                          selectedVertical=0;
+
+                          context
+                              .read<SalesgeneralreadCubit>()
+                              .getSalesGenralRead(veritiaclid!);
+                        }
+
                         select = false;
                       } else {
                         print("common");
