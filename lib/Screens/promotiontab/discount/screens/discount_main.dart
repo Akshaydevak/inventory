@@ -199,11 +199,11 @@ offerGroupNameController.clear();
 
                         }
                       }
-                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(1,Variable.type_data,list1);
+                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,Variable.type_data,list1);
                       showDailogPopUp(
                         context,
                         BlocProvider(
-                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(1,Variable.type_data,list1),
+                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,Variable.type_data,list1),
                           child: ConfigurePopup(
 
                             // listAssign: listAssign,
@@ -229,18 +229,18 @@ offerGroupNameController.clear();
                     }
 
 
-                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,Variable.type_data,list1);
-                      showDailogPopUp(
-                        context,
-                        BlocProvider(
-                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,Variable.type_data,list1),
-                          child: ConfigurePopup(
-
-                            // listAssign: listAssign,
-                            type: "VariantPromotionCreatativePopup",
-                          ),
-                        ),
-                      );
+                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(1,Variable.type_data,list1);
+                      // showDailogPopUp(
+                      //   context,
+                      //   BlocProvider(
+                      //     create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,Variable.type_data,list1),
+                      //     child: ConfigurePopup(
+                      //
+                      //       // listAssign: listAssign,
+                      //       type: "VariantPromotionCreatativePopup",
+                      //     ),
+                      //   ),
+                      // );
 
 
                     },

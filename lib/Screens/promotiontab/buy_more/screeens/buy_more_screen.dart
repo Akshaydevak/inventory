@@ -310,11 +310,11 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                       for(var a in variantTable)
                         list1.add(a.variantId);
 
-                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(1,Variable.type_data,list1);
+                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,Variable.type_data,list1);
                       showDailogPopUp(
                         context,
                         BlocProvider(
-                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(1,Variable.type_data,list1),
+                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,Variable.type_data,list1),
                           child: ConfigurePopup(
 
                             // listAssign: listAssign,
@@ -333,18 +333,18 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                       for(var a in variantTable)
                         list1.add(a.variantId);
 
-                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,Variable.type_data,list1);
-                      showDailogPopUp(
-                        context,
-                        BlocProvider(
-                          create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,Variable.type_data,list1),
-                          child: ConfigurePopup(
-
-                            // listAssign: listAssign,
-                            type: "VariantPromotionCreatativePopup",
-                          ),
-                        ),
-                      );
+                      context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(1,Variable.type_data,list1);
+                      // showDailogPopUp(
+                      //   context,
+                      //   BlocProvider(
+                      //     create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,Variable.type_data,list1),
+                      //     child: ConfigurePopup(
+                      //
+                      //       // listAssign: listAssign,
+                      //       type: "VariantPromotionCreatativePopup",
+                      //     ),
+                      //   ),
+                      // );
 
 
                     },

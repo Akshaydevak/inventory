@@ -279,6 +279,10 @@ return data;
         {
           url = readBuyMoreApi;
         }
+        break;   case "6":
+        {
+          url = patchotionBogoApi;
+        }
         break;
 
 

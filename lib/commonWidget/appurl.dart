@@ -378,5 +378,9 @@ const listBuyMoreVerticalListApi = promotionLiveBaseUrl +"buy-more/list-buy-more
 const readBuyMoreApi = promotionLiveBaseUrl +"buy-more/read-buy-more/";
 
 
+//Bogo******************
+const patchotionBogoApi = promotionLiveBaseUrl +"bogo/read-patch-bogo/";
+
+
 
 

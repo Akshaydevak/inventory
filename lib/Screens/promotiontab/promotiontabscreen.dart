@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:inventory/Screens/Dashboard.dart';
+import 'package:inventory/Screens/promotiontab/bogo_tab/bogo_screens/bogo_main_screnn.dart';
 import 'package:inventory/Screens/promotiontab/buy_more/screeens/buy_more_screen.dart';
 import 'package:inventory/Screens/promotiontab/sale/screens/sales_mainscreen.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
@@ -22,7 +23,7 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
   bool isClossed=true;
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 3, vsync: this,initialIndex: Variable.subIndex[6]??0);
+    TabController _tabController = TabController(length: 4, vsync: this,initialIndex: Variable.subIndex[6]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return Stack(
@@ -112,6 +113,7 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
                                   Text("Promotion Sale",style: TextStyle(color: Colors.black,fontSize: 13),),
 
                                   Text("Buy More ",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                  Text("BOGO ",style: TextStyle(color: Colors.black,fontSize: 13),),
 
 
                                 ]),
@@ -145,7 +147,8 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
 
                             DiscountMainScreen(),
                             SalesMainScreen(),
-                            PromotionBuyMoreMainScreen()
+                            PromotionBuyMoreMainScreen(),
+                            PromotionBogoMnainScreen(),
 
 
 
