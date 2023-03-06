@@ -29,6 +29,8 @@ mixin _$OfferPeriodList {
   String? get offerPeriodCode => throw _privateConstructorUsedError;
   @JsonKey(name: "buy_more_code")
   String? get buyMoreCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "bogo_code")
+  String? get bogoCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +50,8 @@ abstract class $OfferPeriodListCopyWith<$Res> {
       String? code,
       @JsonKey(name: "title") String? title,
       @JsonKey(name: "offer_period_code") String? offerPeriodCode,
-      @JsonKey(name: "buy_more_code") String? buyMoreCode});
+      @JsonKey(name: "buy_more_code") String? buyMoreCode,
+      @JsonKey(name: "bogo_code") String? bogoCode});
 }
 
 /// @nodoc
@@ -70,6 +73,7 @@ class _$OfferPeriodListCopyWithImpl<$Res, $Val extends OfferPeriodList>
     Object? title = freezed,
     Object? offerPeriodCode = freezed,
     Object? buyMoreCode = freezed,
+    Object? bogoCode = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -96,6 +100,10 @@ class _$OfferPeriodListCopyWithImpl<$Res, $Val extends OfferPeriodList>
           ? _value.buyMoreCode
           : buyMoreCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      bogoCode: freezed == bogoCode
+          ? _value.bogoCode
+          : bogoCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -114,7 +122,8 @@ abstract class _$$_OfferPeriodListCopyWith<$Res>
       String? code,
       @JsonKey(name: "title") String? title,
       @JsonKey(name: "offer_period_code") String? offerPeriodCode,
-      @JsonKey(name: "buy_more_code") String? buyMoreCode});
+      @JsonKey(name: "buy_more_code") String? buyMoreCode,
+      @JsonKey(name: "bogo_code") String? bogoCode});
 }
 
 /// @nodoc
@@ -134,6 +143,7 @@ class __$$_OfferPeriodListCopyWithImpl<$Res>
     Object? title = freezed,
     Object? offerPeriodCode = freezed,
     Object? buyMoreCode = freezed,
+    Object? bogoCode = freezed,
   }) {
     return _then(_$_OfferPeriodList(
       id: freezed == id
@@ -160,6 +170,10 @@ class __$$_OfferPeriodListCopyWithImpl<$Res>
           ? _value.buyMoreCode
           : buyMoreCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      bogoCode: freezed == bogoCode
+          ? _value.bogoCode
+          : bogoCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -173,7 +187,8 @@ class _$_OfferPeriodList implements _OfferPeriodList {
       this.code,
       @JsonKey(name: "title") this.title,
       @JsonKey(name: "offer_period_code") this.offerPeriodCode,
-      @JsonKey(name: "buy_more_code") this.buyMoreCode});
+      @JsonKey(name: "buy_more_code") this.buyMoreCode,
+      @JsonKey(name: "bogo_code") this.bogoCode});
 
   factory _$_OfferPeriodList.fromJson(Map<String, dynamic> json) =>
       _$$_OfferPeriodListFromJson(json);
@@ -193,10 +208,13 @@ class _$_OfferPeriodList implements _OfferPeriodList {
   @override
   @JsonKey(name: "buy_more_code")
   final String? buyMoreCode;
+  @override
+  @JsonKey(name: "bogo_code")
+  final String? bogoCode;
 
   @override
   String toString() {
-    return 'OfferPeriodList(id: $id, name: $name, code: $code, title: $title, offerPeriodCode: $offerPeriodCode, buyMoreCode: $buyMoreCode)';
+    return 'OfferPeriodList(id: $id, name: $name, code: $code, title: $title, offerPeriodCode: $offerPeriodCode, buyMoreCode: $buyMoreCode, bogoCode: $bogoCode)';
   }
 
   @override
@@ -211,13 +229,15 @@ class _$_OfferPeriodList implements _OfferPeriodList {
             (identical(other.offerPeriodCode, offerPeriodCode) ||
                 other.offerPeriodCode == offerPeriodCode) &&
             (identical(other.buyMoreCode, buyMoreCode) ||
-                other.buyMoreCode == buyMoreCode));
+                other.buyMoreCode == buyMoreCode) &&
+            (identical(other.bogoCode, bogoCode) ||
+                other.bogoCode == bogoCode));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, code, title, offerPeriodCode, buyMoreCode);
+  int get hashCode => Object.hash(runtimeType, id, name, code, title,
+      offerPeriodCode, buyMoreCode, bogoCode);
 
   @JsonKey(ignore: true)
   @override
@@ -235,13 +255,13 @@ class _$_OfferPeriodList implements _OfferPeriodList {
 
 abstract class _OfferPeriodList implements OfferPeriodList {
   const factory _OfferPeriodList(
-          {final int? id,
-          final String? name,
-          final String? code,
-          @JsonKey(name: "title") final String? title,
-          @JsonKey(name: "offer_period_code") final String? offerPeriodCode,
-          @JsonKey(name: "buy_more_code") final String? buyMoreCode}) =
-      _$_OfferPeriodList;
+      {final int? id,
+      final String? name,
+      final String? code,
+      @JsonKey(name: "title") final String? title,
+      @JsonKey(name: "offer_period_code") final String? offerPeriodCode,
+      @JsonKey(name: "buy_more_code") final String? buyMoreCode,
+      @JsonKey(name: "bogo_code") final String? bogoCode}) = _$_OfferPeriodList;
 
   factory _OfferPeriodList.fromJson(Map<String, dynamic> json) =
       _$_OfferPeriodList.fromJson;
@@ -261,6 +281,9 @@ abstract class _OfferPeriodList implements OfferPeriodList {
   @override
   @JsonKey(name: "buy_more_code")
   String? get buyMoreCode;
+  @override
+  @JsonKey(name: "bogo_code")
+  String? get bogoCode;
   @override
   @JsonKey(ignore: true)
   _$$_OfferPeriodListCopyWith<_$_OfferPeriodList> get copyWith =>

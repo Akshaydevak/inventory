@@ -14,6 +14,7 @@ _$_OfferPeriodList _$$_OfferPeriodListFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String?,
       offerPeriodCode: json['offer_period_code'] as String?,
       buyMoreCode: json['buy_more_code'] as String?,
+      bogoCode: json['bogo_code'] as String?,
     );
 
 Map<String, dynamic> _$$_OfferPeriodListToJson(_$_OfferPeriodList instance) =>
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$_OfferPeriodListToJson(_$_OfferPeriodList instance) =>
       'title': instance.title,
       'offer_period_code': instance.offerPeriodCode,
       'buy_more_code': instance.buyMoreCode,
+      'bogo_code': instance.bogoCode,
     };
 
 _$_CreateOfferPeriod _$$_CreateOfferPeriodFromJson(Map<String, dynamic> json) =>

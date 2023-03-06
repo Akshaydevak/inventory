@@ -380,6 +380,7 @@ const readBuyMoreApi = promotionLiveBaseUrl +"buy-more/read-buy-more/";
 
 //Bogo******************
 const patchotionBogoApi = promotionLiveBaseUrl +"bogo/read-patch-bogo/";
+const verticalListBogoApi = promotionLiveBaseUrl +"bogo/list-bogo-by-inventory/";
 
 
 

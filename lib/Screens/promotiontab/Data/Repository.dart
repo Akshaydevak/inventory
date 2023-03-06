@@ -31,7 +31,7 @@ abstract class InventoryPromotionRepository{
   Future<Either<Failure, DoubleResponse>> getPromotionSalePatch(PromotionSaleCreateModel model,int? id);
   Future<Either<Failure, PaginatedResponse<List<OfferGroupList>>>> getOfferGroupList(String? code, {String? type});
   Future<Either<Failure, ReadOfferGroup>> getOfferGroupRead(int orderId);
-  Future<Either<Failure, List<VariantModel>>> getVariantDeactivate(int type,String ? typeData, List<int?>idList);
+  Future<Either<Failure, DoubleResponse>> getVariantDeactivate(int type,String ? typeData, List<int?>idList);
   Future<Either<Failure,List< ChannelListModel>>> getChannelList(String? code);
   Future<Either<Failure, PromotionSaleReadModel>> getPromotionSaleRead(int orderId);
   Future<Either<Failure, DoubleResponse>> patchOfferGroup(OfferGroupData model,int? id);
@@ -52,6 +52,9 @@ abstract class InventoryPromotionRepository{
   Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getBuyMoreVerticalList(String? code,);
   Future<Either<Failure, PromotionBuyMoreCreationModel>> getBuyMoreRead(int verticalId);
   Future<Either<Failure, DoubleResponse>> buyMorePromotionSalePatch(PromotionBuyMoreCreationModel model,int? id);
+  //BoGO++++++++++++++++++++
+  Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getBogoVerticalList(String? code,);
+
 
 }
 class InventoryPromoRepoIml extends InventoryPromotionRepository{
@@ -201,8 +204,8 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   }
 
   @override
-  Future<Either<Failure, List<VariantModel>>> getVariantDeactivate(int type, String? typeData, List<int?> idList) {
-    return repoExecute<List<VariantModel>>(() async => remoteDataSource.getVariantDeactivate(type,typeData,idList));
+  Future<Either<Failure, DoubleResponse>> getVariantDeactivate(int type, String? typeData, List<int?> idList) {
+    return repoExecute<DoubleResponse>(() async => remoteDataSource.getVariantDeactivate(type,typeData,idList));
   }
 
   @override
@@ -272,6 +275,12 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   Future<Either<Failure, PaginatedResponse<List<SaleLines>>>> getVariantGroupCodeList(String? code,{String? customereCode}) {
     return repoExecute<PaginatedResponse<List<SaleLines>>>(
             () async => remoteDataSource.getVariantGroupCodeList(code,customereCode:customereCode));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getBogoVerticalList(String? code) {
+    return repoExecute<PaginatedResponse<List<OfferPeriodList>>>(
+            () async => remoteDataSource.getBogoVerticalList(code));
   }
   //
   // @override

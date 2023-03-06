@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inventory/Screens/promotiontab/Data/Repository.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
+import 'package:inventory/widgets/responseutils.dart';
 import 'package:meta/meta.dart';
 
 part 'promotion_sale_deactivate_state.dart';

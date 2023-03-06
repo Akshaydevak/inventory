@@ -4,6 +4,7 @@ import 'package:desktop_window/desktop_window.dart' as window_size;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/grouplist/grouplist_cubit.dart';
+import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_verticallist/bogo_vertical_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/readOfferGroup/read_offer_group_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/payment_list/payment_list_cubit.dart';
@@ -243,8 +244,12 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => PaymentListCubit(),
-        ),   BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => PaymentSalePostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BogoVerticalListCubit(),
         ),
         BlocProvider(
           create: (context) => PaymentTransactionSuccessPostCubit(),

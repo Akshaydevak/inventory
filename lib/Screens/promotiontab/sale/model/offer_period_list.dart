@@ -11,6 +11,7 @@ class OfferPeriodList with _$OfferPeriodList{
     @JsonKey(name: "title") final String? title,
     @JsonKey(name: "offer_period_code") final String? offerPeriodCode,
     @JsonKey(name: "buy_more_code") final String? buyMoreCode,
+    @JsonKey(name: "bogo_code") final String? bogoCode,
 
   }) = _OfferPeriodList;
   factory OfferPeriodList.fromJson(Map<String, dynamic> json) =>

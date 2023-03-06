@@ -3516,10 +3516,10 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
                   // context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(widget.linkedListItemTable);
-                  if (data.isNotEmpty==true) {
+                  if (data.data1==true) {
                     setState(() {
 
-                      table = data;
+                      table = data.data2.runtimeType!=String?data.data2:[];
                       additionCheck.clear();
 
                       print("11111111111111111111111");

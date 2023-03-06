@@ -21,7 +21,7 @@ mixin _$PromotionSaleDeactivateState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<VariantModel> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +29,7 @@ mixin _$PromotionSaleDeactivateState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<VariantModel> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,7 +37,7 @@ mixin _$PromotionSaleDeactivateState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<VariantModel> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -129,7 +129,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<VariantModel> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) {
     return initial();
   }
@@ -140,7 +140,7 @@ class _$_Initial implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<VariantModel> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return initial?.call();
   }
@@ -151,7 +151,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<VariantModel> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -242,7 +242,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<VariantModel> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) {
     return loading();
   }
@@ -253,7 +253,7 @@ class _$_Loading implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<VariantModel> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return loading?.call();
   }
@@ -264,7 +264,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<VariantModel> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -354,7 +354,7 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<VariantModel> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) {
     return error();
   }
@@ -365,7 +365,7 @@ class _$_Error implements _Error {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<VariantModel> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return error?.call();
   }
@@ -376,7 +376,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<VariantModel> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -433,7 +433,7 @@ abstract class _$$_SuccessCopyWith<$Res> {
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<VariantModel> data});
+  $Res call({DoubleResponse<dynamic, dynamic> data});
 }
 
 /// @nodoc
@@ -450,9 +450,9 @@ class __$$_SuccessCopyWithImpl<$Res>
   }) {
     return _then(_$_Success(
       null == data
-          ? _value._data
+          ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<VariantModel>,
+              as DoubleResponse<dynamic, dynamic>,
     ));
   }
 }
@@ -460,14 +460,10 @@ class __$$_SuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Success implements _Success {
-  const _$_Success(final List<VariantModel> data) : _data = data;
+  const _$_Success(this.data);
 
-  final List<VariantModel> _data;
   @override
-  List<VariantModel> get data {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_data);
-  }
+  final DoubleResponse<dynamic, dynamic> data;
 
   @override
   String toString() {
@@ -479,12 +475,11 @@ class _$_Success implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Success &&
-            const DeepCollectionEquality().equals(other._data, _data));
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_data));
+  int get hashCode => Object.hash(runtimeType, data);
 
   @JsonKey(ignore: true)
   @override
@@ -498,7 +493,7 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<VariantModel> data) success,
+    required TResult Function(DoubleResponse<dynamic, dynamic> data) success,
   }) {
     return success(data);
   }
@@ -509,7 +504,7 @@ class _$_Success implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? error,
-    TResult? Function(List<VariantModel> data)? success,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return success?.call(data);
   }
@@ -520,7 +515,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<VariantModel> data)? success,
+    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -568,9 +563,10 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements PromotionSaleDeactivateState {
-  const factory _Success(final List<VariantModel> data) = _$_Success;
+  const factory _Success(final DoubleResponse<dynamic, dynamic> data) =
+      _$_Success;
 
-  List<VariantModel> get data;
+  DoubleResponse<dynamic, dynamic> get data;
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;

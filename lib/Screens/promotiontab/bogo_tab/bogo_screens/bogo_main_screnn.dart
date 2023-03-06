@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/bogo_screens/bogo_segment_screen.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/bogo_screens/bogo_stable_table.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/bogo_screens/bogo_variantScreen.dart';
+import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_verticallist/bogo_vertical_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/commonWidget/Colors.dart';
@@ -10,6 +12,7 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 
 class PromotionBogoMnainScreen extends StatefulWidget {
@@ -47,6 +50,10 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
   int? veritiaclid;
   List<Segment> segmentTable = [];
   List<VariantModel> variantTable=[];
+  var list;
+  TextEditingController itemsearch = TextEditingController();
+  int selectedVertical=0;
+  List<OfferPeriodList> result = [];
   activeChange({int? type,bool val=false}){
     print("ssssssssssssssssssssssssssssssssssssss");
     print(type);
@@ -90,6 +97,11 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
 
   }
   @override
+  void initState() {
+    context.read<BogoVerticalListCubit>().getBogoVerticalList();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
@@ -120,9 +132,46 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
       },
     ),
   ],
-  child: BlocConsumer<SubjectBloc, SubjectState>(
+  child: BlocConsumer<BogoVerticalListCubit, BogoVerticalListState>(
   listener: (context, state) {
-    // TODO: implement listener
+    state.maybeWhen(
+        orElse: () {},
+        error: () {
+          print("error");
+        },
+        success: (list) {
+          print("aaaaayyyiram"+list.data.toString());
+          list=list;
+
+          result = list.data;
+          print("seee"+result.toString());
+          setState(() {
+            if(result.isNotEmpty){
+              if(select){  veritiaclid=result[result.length-1].id;
+              // context.read<ReadBuyMoreCubit>().getBuyMoreRead(veritiaclid!);
+              }
+              else{
+                veritiaclid=result[0].id;
+                // context.read<ReadBuyMoreCubit>().getBuyMoreRead(veritiaclid!);
+              }
+
+
+              select=false;
+            }
+            else{
+              print("common");
+              select=true;
+              // clear();
+              setState(() {
+              });
+
+            }
+
+
+            setState(() {});
+
+          });
+        });
   },
   builder: (context, state) {
     return Builder(
@@ -134,9 +183,71 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  color: Colors.red,
-                  width: 200,
+                PromotionBuyMoreVerticalList(
+                    list: list,
+                    selectedVertical: selectedVertical,
+                    itemsearch: itemsearch,ontap: (int index){
+                  setState(() {
+                    selectedVertical=index;
+
+                    // select=false;
+                    // updateCheck=false;
+
+
+                    veritiaclid = result[index].id;
+                    // clear();
+                    select = false;
+
+                    // _myWidgetState.currentState?.clear();
+                    // s.currentState?.clears();
+                    // clear();
+
+
+                    // context.read<ReadBuyMoreCubit>().getBuyMoreRead(veritiaclid!);
+
+
+
+
+                    setState(() {
+
+                    });
+                  });
+                },
+                    search: (String va) {
+                      print(va);
+                      context
+                          .read<BogoVerticalListCubit>()
+                          .searchBogoVerticalList(va);
+
+                      if (va == "") {
+                        context
+                            .read<BogoVerticalListCubit>()
+                            .getBogoVerticalList();
+
+                      }
+                    },
+                    result: result,
+                    child:   tablePagination(
+                          () => context
+                          .read<BogoVerticalListCubit>()
+                          .refresh(),
+                      back: list?.previousUrl == null
+                          ? null
+                          : () {
+                        context
+                            .read<BogoVerticalListCubit>()
+                            .previuosslotSectionPageList();
+                      },
+                      next: list?.nextPageUrl == null
+                          ? null
+                          : () {
+                        // print(data.nextPageUrl);
+                        context
+                            .read<BogoVerticalListCubit>()
+                            .nextslotSectionPageList();
+                      },
+                    )
+
                 ),
                 Expanded(child: SingleChildScrollView(child: Column(
                   children: [

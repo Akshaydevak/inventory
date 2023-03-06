@@ -31,7 +31,7 @@ abstract class PromotionDatasourse {
   Future<DoubleResponse> getPromotionSalePatch(PromotionSaleCreateModel model,int ? id);
   Future<PaginatedResponse<List<OfferGroupList>>> getOfferGroupList(String? code, {String? type});
   Future<ReadOfferGroup>getOfferGroupRead(int id);
-  Future<List<VariantModel>>getVariantDeactivate(int type, String? typeData, List<int?> idList);
+  Future<DoubleResponse>getVariantDeactivate(int type, String? typeData, List<int?> idList);
   Future<List<ChannelListModel>>getChannelList(String? code);
   Future<PromotionSaleReadModel>getPromotionSaleRead(int id);
   Future<DoubleResponse> patchOfferGroup(OfferGroupData model,int? id);
@@ -54,6 +54,9 @@ abstract class PromotionDatasourse {
   Future<PaginatedResponse<List<OfferPeriodList>>> getBuyMoreVerticalList(String? code);
   Future<PromotionBuyMoreCreationModel>getBuyMoreRead(int id);
   Future<DoubleResponse> buyMorePromotionSalePatch(PromotionBuyMoreCreationModel model,int ? id);
+
+  //BoGO+++++++++++++++++
+  Future<PaginatedResponse<List<OfferPeriodList>>> getBogoVerticalList(String? code);
 
 
 
@@ -1159,7 +1162,7 @@ return data;
   }
 
   @override
-  Future<List<VariantModel>> getVariantDeactivate(int type, String? typeData, List<int?> idList) async {
+  Future<DoubleResponse> getVariantDeactivate(int type, String? typeData, List<int?> idList) async {
     String path=type==1?promotionVariantDeactivateByTypeApi:promotionVariantDeactivateByVariantApi;
     print(path);
     print(typeData);
@@ -1179,13 +1182,27 @@ try{
       },
     ),
   );
-  // print("response" + response.toString());
+  // pri
+  // nt("response" + response.toString());
   List<VariantModel> items = [];
-  (response.data['data'] as List).forEach((element) {
-    items.add(VariantModel.fromJson(element));
-    print("listOfferPeriod" + items.toString());
-  });
-  return items;
+
+  if(type!=1){
+
+    (response.data['data'] as List).forEach((element) {
+      items.add(VariantModel.fromJson(element));
+      print("listOfferPeriod" + items.toString());
+    });
+
+  }
+  else if
+
+
+   (response.data['status'] == 'failed') {
+    Variable.errorMessege = response.data['message'];
+  }
+  return DoubleResponse(
+      response.data['status'] == 'success',type!=1? items:response.data['message']);
+
 }
     catch(e){
   print(e);
@@ -1204,13 +1221,24 @@ try{
         },
       ),
     );
-    // print("response" + response.toString());
     List<VariantModel> items = [];
-    (response.data['data'] as List).forEach((element) {
-      items.add(VariantModel.fromJson(element));
-      print("listOfferPeriod" + items.toString());
-    });
-    return items;
+
+    if(type!=1){
+
+      (response.data['data'] as List).forEach((element) {
+        items.add(VariantModel.fromJson(element));
+        print("listOfferPeriod" + items.toString());
+      });
+
+    }
+    else if
+
+
+    (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success',type!=1? items:response.data['message']);
   }
 
   @override
@@ -2095,6 +2123,35 @@ try{
       print("listOfferPeriod" + items.toString());
     });
     return PaginatedResponse<List<SaleLines>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+  }
+
+  @override
+  Future<PaginatedResponse<List<OfferPeriodList>>> getBogoVerticalList(String? code) async {
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = verticalListBogoApi+Variable.inventory_ID;
+    else
+      path = verticalListBogoApi +Variable.inventory_ID+ "?$code";
+    print(path);
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<OfferPeriodList> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(OfferPeriodList.fromJson(element));
+      print("listOfferPeriod" + items.toString());
+    });
+    return PaginatedResponse<List<OfferPeriodList>>(
       items,
       response.data['data']['next'],
       response.data['data']['count'].toString(),
