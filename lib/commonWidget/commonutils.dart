@@ -4327,40 +4327,18 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                                                 value:additionCheck.contains(table![i].variantName),
                                                 onChange: (p0) {
                                                   if (p0){
-                                                    if(list1.isEmpty){
-        list1.add(
-        VariantsLinesDiscount(
-        name:table[i].variantName,
-        id:table[i].variantId,
-        variantIdd: table[i].variantId,
-        variantName:table[i].variantName,
-        barcode:table[i].barcode,
-        variantCode: table[i].variantCode
 
-        )
-        );
-        additionCheck.add(table[i].variantName);
-        }
+                                                    list1.add(
+                                                        VariantsLinesDiscount(
+                                                            name:table[i].variantName,
+                                                            id:table[i].variantId,
+                                                            variantIdd: table[i].variantId,
+                                                            variantName:table[i].variantName,
+                                                            barcode:table[i].barcode,
+                                                            variantCode: table[i].variantCode
 
-
-                                                   else{
-        if(list1.where((element) => element.variantCode!=table[i].variantCode)==true){
-        list1.add(
-        VariantsLinesDiscount(
-        name:table[i].variantName,
-        id:table[i].variantId,
-        variantIdd: table[i].variantId,
-        variantName:table[i].variantName,
-        barcode:table[i].barcode,
-        variantCode: table[i].variantCode
-
-        )
-        );
-        additionCheck.add(table[i].variantName);
-        }
-        }
-
-
+                                                        )
+                                                    );
                                                   }
 
 
@@ -4373,7 +4351,7 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                                                       print(element);
                                                       return element == list1[i];
                                                     });
-                                                    additionCheck.removeWhere((element) => element==elmentOfdeleted);
+                                                    // additionCheck.removeWhere((element) => element==elmentOfdeleted);
                                                   }
 
                                                   // list1.remove(table![i]);
