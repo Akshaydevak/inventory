@@ -83,7 +83,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
 
 
         Container(
-          height:height-100,
+          height:height-height*.16,
           width: double.infinity,
          color: Colors.white,
           child: Column(

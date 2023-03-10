@@ -39,6 +39,7 @@ class PromotionDiscountStableTable extends StatefulWidget {
 
 
   final Function activeChange;
+  final Function imagePostCheck;
 
 
 
@@ -63,7 +64,7 @@ class PromotionDiscountStableTable extends StatefulWidget {
   PromotionDiscountStableTable({
 
     required this.discountCode,
-required this.activeChange, required this.offerPeriod, required this.offerGroup, required this.offerApplyingType, required this.offerApplyingTo, required this.title, required this.description,  required this.basedOn, required this.discountPercenagePrice,   required this.availableCustomerGroup, required this.isAvailableforAll, required this.overridePriority,  required this.isActive,  required this.offerApplyingId, required this.offerApplyingCode, required this.offerGroupName, required this.offerPeriodName, required this.select, required this.image, });
+required this.activeChange, required this.offerPeriod, required this.offerGroup, required this.offerApplyingType, required this.offerApplyingTo, required this.title, required this.description,  required this.basedOn, required this.discountPercenagePrice,   required this.availableCustomerGroup, required this.isAvailableforAll, required this.overridePriority,  required this.isActive,  required this.offerApplyingId, required this.offerApplyingCode, required this.offerGroupName, required this.offerPeriodName, required this.select, required this.image, required this.imagePostCheck, });
   @override
   _PromotionDiscountStableTableState createState() => _PromotionDiscountStableTableState();
 }
@@ -130,10 +131,61 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                           SizedBox(
                             height: height * .030,
                           ),
-                          NewInputCard(
-                              formatter: true,
+                          FileUploadField(
 
-                              controller: widget.discountPercenagePrice, title: "Discount Percentage/Price"),
+                              fileName:widget.image.text,
+                              fileUrl:widget.image.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.image.clear();
+                                  Variable.img1=null;
+                                });
+
+                              },
+                              onChangeTap: (p0) {
+
+                                // loading = true;
+                                setState(() {});
+                              },
+                              onChange: (myFile) {
+                                widget.imagePostCheck(type: "1");
+
+
+
+                                widget.image.text=myFile?.fileName??"";
+                                // Variable.mobileBannerImage = myFile.toUint8List();
+                                //
+                                imageEncode =
+                                    myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+
+                                // else
+                                //   context.showSnackBarError(
+                                //       "Please upload Banner of size Lesser than 230kb");
+                              },
+                              onImageChange: (newFile) async {
+                                // onChange=true;
+                                // Variable.popUp = false;
+
+                                if (newFile.length <= 150000) {
+                                  context.read<PromotionImageCubit>().postPromotionImage(Variable.imageName,  imageEncode,type: "image1");
+                                  // loading
+                                  //     ? showDailogPopUp(context, DialoguePopUp())
+                                  //     : Navigator.pop(context);
+                                  // context
+                                  //     .read<CreateWebImageCubit>()
+                                  //     .createMobImage();
+                                } else
+                                  context.showSnackBarError(
+                                      "Please upload Image of size Lesser than 200kb");
+                                setState(() {});
+                              },
+                              onCreate: true,
+                              label: "Image"),
+
 
 
 
@@ -219,59 +271,23 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                         SizedBox(
                           height: height * .030,
                         ),
-                        FileUploadField(
-
-                            fileName:widget.image.text,
-                            fileUrl:widget.image.text,
-                            onCancel: (){
-
-                              setState(() {
-                                widget.image.clear();
-                                Variable.img1=null;
-                              });
-
-                            },
-                            onChangeTap: (p0) {
-
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
+                        SelectableDropDownpopUp(
+                          label: "Based On",
+                          type:"SaleBasedOnPromotionPopup",
+                          value: widget.basedOn.text,
+                          onSelection: (String? va) {
+                            print(
+                                "+++++++++++++++++++++++");
+                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            setState(() {
 
 
+                              // onChange = true;
+                              widget.basedOn.text = va!;
+                            });
+                          },
+                        ),
 
-                              widget.image.text=myFile?.fileName??"";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              //
-                                   imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // onChange=true;
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 150000) {
-                                context.read<PromotionImageCubit>().postPromotionImage(Variable.imageName,  imageEncode,type: "image1");
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Image of size Lesser than 200kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "Image"),
 
 
 
@@ -347,22 +363,11 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                         SizedBox(
                           height: height * .030,
                         ),
-                        SelectableDropDownpopUp(
-                          label: "Based On",
-                          type:"SaleBasedOnPromotionPopup",
-                          value: widget.basedOn.text,
-                          onSelection: (String? va) {
-                            print(
-                                "+++++++++++++++++++++++");
-                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                            setState(() {
+                        NewInputCard(
+                            formatter: true,
 
+                            controller: widget.discountPercenagePrice, title: "Discount Percentage/Price"),
 
-                              // onChange = true;
-                              widget.basedOn.text = va!;
-                            });
-                          },
-                        ),
                         // NewInputCard(
                         //
                         //     controller: widget.basedOn, title: "Based On"),

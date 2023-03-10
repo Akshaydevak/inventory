@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:inventory/Screens/promotiontab/bogo_tab/model/bogo_creation_model.dart';
 import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
@@ -54,6 +55,10 @@ abstract class InventoryPromotionRepository{
   Future<Either<Failure, DoubleResponse>> buyMorePromotionSalePatch(PromotionBuyMoreCreationModel model,int? id);
   //BoGO++++++++++++++++++++
   Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getBogoVerticalList(String? code,);
+  Future<Either<Failure, listAllSalesApis>> getListAllBogoApi({String? type});
+  Future<Either<Failure, DoubleResponse>> postPromtionBogo(PromotionBogoCreationModel model);
+  Future<Either<Failure, PromotionBogoReadModel>> getPromotionBogoRead(int verticalId);
+  Future<Either<Failure, DoubleResponse>> bogoPromotionPatch(PromotionBogoCreationModel model,int? id);
 
 
 }
@@ -281,6 +286,29 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getBogoVerticalList(String? code) {
     return repoExecute<PaginatedResponse<List<OfferPeriodList>>>(
             () async => remoteDataSource.getBogoVerticalList(code));
+  }
+
+  @override
+  Future<Either<Failure, listAllSalesApis>> getListAllBogoApi({String? type}) {
+    return repoExecute<listAllSalesApis>(
+            () async => remoteDataSource.getListAllBogoApi(type:type));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postPromtionBogo(PromotionBogoCreationModel model) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.postPromtionBogo(model));
+  }
+
+  @override
+  Future<Either<Failure, PromotionBogoReadModel>> getPromotionBogoRead(int verticalId) {
+    return repoExecute<PromotionBogoReadModel>(() async => remoteDataSource.getPromotionBogoRead(verticalId));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> bogoPromotionPatch(PromotionBogoCreationModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.bogoPromotionPatch(model,id));
   }
   //
   // @override

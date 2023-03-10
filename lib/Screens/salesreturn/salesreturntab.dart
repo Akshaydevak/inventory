@@ -50,7 +50,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen>with TickerProvide
 
 
           Container(
-            height:height-100,
+            height:height-height*.16,
             width: double.infinity,
             color: Colors.white,
             child: Column(

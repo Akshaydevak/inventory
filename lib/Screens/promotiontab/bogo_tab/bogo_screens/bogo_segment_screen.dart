@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_read/bogo_read_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
@@ -17,10 +18,12 @@ class BogoSegmentGrowableTable extends StatefulWidget {
   // final  bool addNew;
   final Key? key;
 
-  BogoSegmentGrowableTable({required this.table, required this.updation, this.key});
+  BogoSegmentGrowableTable(
+      {required this.table, required this.updation, this.key});
 
   @override
-  BogoSegmentGrowableTableState createState() => BogoSegmentGrowableTableState();
+  BogoSegmentGrowableTableState createState() =>
+      BogoSegmentGrowableTableState();
 }
 
 class BogoSegmentGrowableTableState extends State<BogoSegmentGrowableTable> {
@@ -29,22 +32,22 @@ class BogoSegmentGrowableTableState extends State<BogoSegmentGrowableTable> {
   String segmentCode = "";
   bool isActive = false;
   bool onSaveActive = false;
-  saveButtonActovde(String key,String val){
+
+  saveButtonActovde(String key, String val) {
     print(key);
     print(val);
 
-    key=(key.replaceAll(' ', ''));
-    val=(val.replaceAll(' ', ''));
-    if(key.isNotEmpty==true && val.isNotEmpty==true){
+    key = (key.replaceAll(' ', ''));
+    val = (val.replaceAll(' ', ''));
+    if (key.isNotEmpty == true && val.isNotEmpty == true) {
       setState(() {
-        onSaveActive=true;
+        onSaveActive = true;
       });
     }
-    else{
+    else {
       setState(() {
-        onSaveActive=false;
+        onSaveActive = false;
       });
-
     }
   }
 
@@ -92,381 +95,398 @@ class BogoSegmentGrowableTableState extends State<BogoSegmentGrowableTable> {
     // }
     // onChange=false;
     return
-      Builder(
-          builder: (context) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+      BlocListener<BogoReadCubit, BogoReadState>(
+        listener: (context, state) {
+          print("state++++++++++++++++++++++++++++++++");
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (data) {
+                setState(() {
+                  data.segments != null ?
+                  table = List.from(data?.segments ?? []) : table = [];
+                });
+              });
+        },
 
-                Container(
-                  // width: w/5,
-                  margin: EdgeInsets.symmetric(horizontal: w * .02),
-                  child: customTable(
+        child: Builder(
+            builder: (context) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-                    border: const TableBorder(
+                  Container(
+                    // width: w/5,
+                    margin: EdgeInsets.symmetric(horizontal: w * .02),
+                    child: customTable(
 
-                      verticalInside: BorderSide(
-                          width: .5,
-                          color: Colors.black45,
-                          style: BorderStyle.solid),
-                      horizontalInside: BorderSide(
-                          width: .3,
-                          color: Colors.black45,
-                          // color: Colors.blue,
-                          style: BorderStyle.solid),),
+                      border: const TableBorder(
 
-                    tableWidth: .5,
+                        verticalInside: BorderSide(
+                            width: .5,
+                            color: Colors.black45,
+                            style: BorderStyle.solid),
+                        horizontalInside: BorderSide(
+                            width: .3,
+                            color: Colors.black45,
+                            // color: Colors.blue,
+                            style: BorderStyle.solid),),
 
-                    childrens: [
-                      TableRow(
+                      tableWidth: .5,
 
-                        // decoration: BoxDecoration(
+                      childrens: [
+                        TableRow(
 
-                        //     color: Colors.green.shade200,
+                          // decoration: BoxDecoration(
 
-                        //     shape: BoxShape.rectangle,
+                          //     color: Colors.green.shade200,
 
-                        //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                          //     shape: BoxShape.rectangle,
 
-                        children: [
+                          //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                          tableHeadtext(
+                          children: [
 
-                            'Segment Name',
+                            tableHeadtext(
 
-                            textColor: Colors.white,
-                            size: 13,
-                          ),
-                          tableHeadtext(
-                            'Segment Code',
-                            // padding: EdgeInsets.all(7),
-                            //
-                            // height: 46,
-                            // textColor: Colors.white,
+                              'Segment Name',
 
-                            size: 13,
-                          ),
-                          tableHeadtext(
-                            "Is Active",
+                              textColor: Colors.white,
+                              size: 13,
+                            ),
+                            tableHeadtext(
+                              'Segment Code',
+                              // padding: EdgeInsets.all(7),
+                              //
+                              // height: 46,
+                              // textColor: Colors.white,
 
-                            // padding: EdgeInsets.all(7),
+                              size: 13,
+                            ),
+                            tableHeadtext(
+                              "Is Active",
 
-                            // height: 46,
-                            // textColor: Colors.white,
+                              // padding: EdgeInsets.all(7),
 
-
-                            size: 13,
-
-
-                          ), tableHeadtext(
-
-                            "",
-                            //
-                            // padding: EdgeInsets.all(7),
-                            //
-                            // height: 46,
-                            textColor: Colors.white,
-
-
-                            size: 13,
-
-
-                          ),
+                              // height: 46,
+                              // textColor: Colors.white,
 
 
-                        ],
-
-                      ),
-                      if (table?.isNotEmpty == true ) ...[
+                              size: 13,
 
 
-                        for (var i = 0; i < table.length; i++)
-                          TableRow(
-                              decoration: BoxDecoration(
-                                  color: Pellet.tableRowColor,
-                                  shape: BoxShape.rectangle,
-                                  border: Border(
-                                      left: BorderSide(
+                            ), tableHeadtext(
 
-                                          color: Color(0xff3E4F5B)
-                                              .withOpacity(.1),
-                                          width: .4,
-                                          style: BorderStyle.solid),
-                                      bottom: BorderSide(
-
-                                          color: Color(0xff3E4F5B)
-                                              .withOpacity(.1),
-                                          style: BorderStyle.solid),
-                                      right: BorderSide(
-                                          color: Color(0xff3E4F5B)
-                                              .withOpacity(.1),
-                                          width: .4,
-
-                                          style: BorderStyle.solid))),
-                              children: [
-
-                                TableCell(
-                                  verticalAlignment: TableCellVerticalAlignment
-                                      .middle,
-
-                                  child:
-                                  VariantIdTAble(
-                                    text: table[i].segmentName,
-                                    onTap: () {
-                                      showDailogPopUp(
-                                        context,
-                                        TableConfigurePopup(
-                                          list: table,
-                                          // inventory: Variable.inventory_ID,
-                                          type: "SegmentListTabalePopup",
-
-                                          valueSelect: (
-                                              salesOrderTypeModel? va) {
-                                            setState(() {
-                                              table[i] = table[i].copyWith(
-                                                  segmentCode: va?.code ?? "",
-                                                  segmentName: va?.name ?? "",
-                                                  updatecheck: true);
-
-                                              setState(() {
-
-                                              });
-
-                                              // orderType = va!;
-                                            });
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  ),
+                              "",
+                              //
+                              // padding: EdgeInsets.all(7),
+                              //
+                              // height: 46,
+                              textColor: Colors.white,
 
 
-                                ),
-                                TableCell(
+                              size: 13,
+
+
+                            ),
+
+
+                          ],
+
+                        ),
+                        if (table?.isNotEmpty == true ) ...[
+
+
+                          for (var i = 0; i < table.length; i++)
+                            TableRow(
+                                decoration: BoxDecoration(
+                                    color: Pellet.tableRowColor,
+                                    shape: BoxShape.rectangle,
+                                    border: Border(
+                                        left: BorderSide(
+
+                                            color: Color(0xff3E4F5B)
+                                                .withOpacity(.1),
+                                            width: .4,
+                                            style: BorderStyle.solid),
+                                        bottom: BorderSide(
+
+                                            color: Color(0xff3E4F5B)
+                                                .withOpacity(.1),
+                                            style: BorderStyle.solid),
+                                        right: BorderSide(
+                                            color: Color(0xff3E4F5B)
+                                                .withOpacity(.1),
+                                            width: .4,
+
+                                            style: BorderStyle.solid))),
+                                children: [
+
+                                  TableCell(
                                     verticalAlignment: TableCellVerticalAlignment
                                         .middle,
 
-                                    child: textPadding(
-                                        table[i].segmentCode.toString())
+                                    child:
+                                    VariantIdTAble(
+                                      text: table[i].segmentName,
+                                      onTap: () {
+                                        showDailogPopUp(
+                                          context,
+                                          TableConfigurePopup(
+                                            list: table,
+                                            // inventory: Variable.inventory_ID,
+                                            type: "SegmentListTabalePopup",
+
+                                            valueSelect: (
+                                                salesOrderTypeModel? va) {
+                                              setState(() {
+                                                table[i] = table[i].copyWith(
+                                                    segmentCode: va?.code ?? "",
+                                                    segmentName: va?.name ?? "",
+                                                    updatecheck: true);
+
+                                                setState(() {
+
+                                                });
+
+                                                // orderType = va!;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
 
 
-                                ),
-                                TableCell(
-                                  verticalAlignment:
-                                  TableCellVerticalAlignment.middle,
-                                  child: CheckedBoxs(
-                                      valueChanger:
-                                      table?[i].isActive == null
-                                          ? false
-                                          : table?[i].isActive,
-                                      onSelection: (bool? value) {
-                                        bool? isActive = table[i].isActive;
-                                        setState(() {
-                                          // widget.updateCheck(true);
-                                          // print("aaaaaaaaaaa"+isActive.toString());
-                                          // table1[i] = table1[i].copyWith(updatecheck: true);
-                                          table[i] = table[i].copyWith(
-                                              updatecheck: true);
-                                          setState(() {});
-                                          isActive = !isActive!;
-                                          print("aaaaaaaaaaa" +
-                                              isActive.toString());
-                                          table[i] = table[i]
-                                              .copyWith(
-                                              isActive: isActive);
-                                        });
-                                      }),
-                                ),
-                                TableCell(
-                                  verticalAlignment:
-                                  TableCellVerticalAlignment.middle,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: TableTextButton(
+                                  ),
+                                  TableCell(
+                                      verticalAlignment: TableCellVerticalAlignment
+                                          .middle,
+
+                                      child: textPadding(
+                                          table[i].segmentCode.toString())
+
+
+                                  ),
+                                  TableCell(
+                                    verticalAlignment:
+                                    TableCellVerticalAlignment.middle,
+                                    child: CheckedBoxs(
+                                        valueChanger:
+                                        table?[i].isActive == null
+                                            ? false
+                                            : table?[i].isActive,
+                                        onSelection: (bool? value) {
+                                          bool? isActive = table[i].isActive;
+                                          setState(() {
+                                            // widget.updateCheck(true);
+                                            // print("aaaaaaaaaaa"+isActive.toString());
+                                            // table1[i] = table1[i].copyWith(updatecheck: true);
+                                            table[i] = table[i].copyWith(
+                                                updatecheck: true);
+                                            setState(() {});
+                                            isActive = !isActive!;
+                                            print("aaaaaaaaaaa" +
+                                                isActive.toString());
+                                            table[i] = table[i]
+                                                .copyWith(
+                                                isActive: isActive);
+                                          });
+                                        }),
+                                  ),
+                                  TableCell(
+                                    verticalAlignment:
+                                    TableCellVerticalAlignment.middle,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TableTextButton(
+                                            onPress: () {
+                                              setState(() {
+                                                // widget.updateCheck(false);
+                                                table[i] = table[i].copyWith(
+                                                    updatecheck: false);
+                                                widget.updation(table);
+                                              });
+                                            },
+                                            textColor: table[i].updatecheck ==
+                                                true
+                                                ? Pellet.tableBlueHeaderPrint
+                                                : Colors.grey,
+                                            label:
+                                            table[i].updatecheck == true
+                                                ? "UPDATE"
+                                                : "",
+                                          ),
+                                        ),
+                                        SizedBox(width: 4,),
+
+
+                                        TableIconTextButton(
+
+                                          // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
+                                          // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
+                                          // bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Colors.transparent,
                                           onPress: () {
                                             setState(() {
-                                              // widget.updateCheck(false);
-                                              table[i] = table[i].copyWith(
-                                                  updatecheck: false);
+                                              table?.removeAt(i);
                                               widget.updation(table);
-
-
                                             });
                                           },
-                                          textColor: table[i].updatecheck == true
-                                              ? Pellet.tableBlueHeaderPrint
-                                              : Colors.grey,
-                                          label:
-                                          table[i].updatecheck == true
-                                              ? "UPDATE"
-                                              : "",
-                                        ),
-                                      ),
-                                      SizedBox(width: 4,),
+                                          icon: Icons.delete,
+                                          label: "",
+                                        ), SizedBox(width: 4,),
+
+                                      ],
+                                    ),
+                                  )
 
 
-                                      TableIconTextButton(
+                                ]),
+                        ],
+                        TableRow(
+                            decoration: BoxDecoration(
+                                color: Pellet.tableRowColor,
+                                shape: BoxShape.rectangle,
+                                border: Border(
+                                    left: BorderSide(
 
-                                        // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
-                                        // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
-                                        // bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Colors.transparent,
-                                        onPress: () {
+                                        color: Color(0xff3E4F5B).withOpacity(
+                                            .1),
+                                        width: .4,
+                                        style: BorderStyle.solid),
+                                    bottom: BorderSide(
 
+                                        color: Color(0xff3E4F5B).withOpacity(
+                                            .1),
+                                        style: BorderStyle.solid),
+                                    right: BorderSide(
+                                        color: Color(0xff3E4F5B).withOpacity(
+                                            .1),
+                                        width: .4,
+
+                                        style: BorderStyle.solid))),
+                            children: [
+
+                              VariantIdTAble(
+                                text: segmentName,
+                                onTap: () {
+                                  showDailogPopUp(
+                                    context,
+                                    TableConfigurePopup(
+                                      // inventory: Variable.inventory_ID,
+                                      type: "SegmentListTabalePopup",
+                                      list: table,
+                                      valueSelect: (salesOrderTypeModel? va) {
+                                        print(va!.id
+                                            .toString());
+
+                                        setState(() {
+                                          segmentCode = va?.code ?? "";
+                                          segmentName = va?.name ?? "";
+                                          saveButtonActovde(
+                                              segmentCode, segmentName);
                                           setState(() {
 
-
-                                            table?.removeAt(i);
-                                            widget.updation(table);
-
                                           });
-                                        },
-                                        icon: Icons.delete,
-                                        label: "",
-                                      ), SizedBox(width: 4,),
 
-                                    ],
-                                  ),
-                                )
-
-
-                              ]),
-                      ],
-                      TableRow(
-                          decoration: BoxDecoration(
-                              color: Pellet.tableRowColor,
-                              shape: BoxShape.rectangle,
-                              border: Border(
-                                  left: BorderSide(
-
-                                      color: Color(0xff3E4F5B).withOpacity(
-                                          .1),
-                                      width: .4,
-                                      style: BorderStyle.solid),
-                                  bottom: BorderSide(
-
-                                      color: Color(0xff3E4F5B).withOpacity(
-                                          .1),
-                                      style: BorderStyle.solid),
-                                  right: BorderSide(
-                                      color: Color(0xff3E4F5B).withOpacity(
-                                          .1),
-                                      width: .4,
-
-                                      style: BorderStyle.solid))),
-                          children: [
-
-                            VariantIdTAble(
-                              text: segmentName,
-                              onTap: () {
-                                showDailogPopUp(
-                                  context,
-                                  TableConfigurePopup(
-                                    // inventory: Variable.inventory_ID,
-                                    type: "SegmentListTabalePopup",
-                                    list: table,
-                                    valueSelect: (salesOrderTypeModel? va) {
-                                      print(va!.id
-                                          .toString());
-
-                                      setState(() {
-                                        segmentCode = va?.code ?? "";
-                                        segmentName = va?.name ?? "";
-                                        saveButtonActovde(segmentCode,segmentName);
-                                        setState(() {
-
+                                          // orderType = va!;
                                         });
-
-                                        // orderType = va!;
-                                      });
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-
-                            TableCell(
-                                verticalAlignment: TableCellVerticalAlignment
-                                    .middle,
-
-                                child: textPadding(segmentCode.isEmpty
-                                    ? ""
-                                    : segmentCode)
-                              // UnderLinedInput(
-                              //   formatter: false,
-                              // ),
-
-
-                            ),
-                            TableCell(
-                              verticalAlignment:
-                              TableCellVerticalAlignment.middle,
-                              child: CheckedBoxs(
-                                // color: Color(0xff3E4F5B),
-                                valueChanger: isActive,
-                                onSelection: (bool? value) {
-                                  // clear=true;
-                                  setState(() {
-                                    isActive = !isActive!;
-                                  });
+                                      },
+                                    ),
+                                  );
                                 },
                               ),
-                            ),
+
+                              TableCell(
+                                  verticalAlignment: TableCellVerticalAlignment
+                                      .middle,
+
+                                  child: textPadding(segmentCode.isEmpty
+                                      ? ""
+                                      : segmentCode)
+                                // UnderLinedInput(
+                                //   formatter: false,
+                                // ),
 
 
-                            TableCell(
-                              verticalAlignment:
-                              TableCellVerticalAlignment.middle,
-                              child: TableTextButton(
-                                  buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
-                                  textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
-                                  bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
-                                  label: "Save",
-                                  onPress: () {
+                              ),
+                              TableCell(
+                                verticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                                child: CheckedBoxs(
+                                  // color: Color(0xff3E4F5B),
+                                  valueChanger: isActive,
+                                  onSelection: (bool? value) {
+                                    // clear=true;
                                     setState(() {
-                                      if(segmentName.isNotEmpty &&segmentCode.isNotEmpty){
-                                        table.add(Segment(
-
-                                          segmentCode: segmentCode.isEmpty
-                                              ? ""
-                                              : segmentCode,
-                                          segmentName: segmentName.isEmpty
-                                              ? ""
-                                              : segmentName,
-                                          isActive: isActive,
-                                        ));
-                                        segmentCode = "";
-                                        segmentName = "";
-                                        isActive = false;
-                                        onSaveActive=false;
-
-                                        widget.updation(table);
-                                      }
-
+                                      isActive = !isActive!;
                                     });
-                                  }),
-                            )
+                                  },
+                                ),
+                              ),
 
 
-                          ])
+                              TableCell(
+                                verticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                                child: TableTextButton(
+                                    buttonBagroundColor: onSaveActive ? Pellet
+                                        .bagroundColor : Colors.transparent,
+                                    textColor: onSaveActive ? Pellet
+                                        .bagroundColor : Colors.black,
+                                    bagroundColor: onSaveActive ? Pellet
+                                        .tableBlueHeaderPrint : Color(
+                                        0xffe7e7e7),
+                                    label: "Save",
+                                    onPress: () {
+                                      setState(() {
+                                        if (segmentName.isNotEmpty &&
+                                            segmentCode.isNotEmpty) {
+                                          table.add(Segment(
+
+                                            segmentCode: segmentCode.isEmpty
+                                                ? ""
+                                                : segmentCode,
+                                            segmentName: segmentName.isEmpty
+                                                ? ""
+                                                : segmentName,
+                                            isActive: isActive,
+                                          ));
+                                          segmentCode = "";
+                                          segmentName = "";
+                                          isActive = false;
+                                          onSaveActive = false;
+
+                                          widget.updation(table);
+                                        }
+                                      });
+                                    }),
+                              )
 
 
-                    ],
-                    widths: {
-                      0: FlexColumnWidth(3),
-                      1: FlexColumnWidth(3),
-                      2: FlexColumnWidth(1.5),
-                      3: FlexColumnWidth(1.5),
+                            ])
 
-                    },
+
+                      ],
+                      widths: {
+                        0: FlexColumnWidth(3),
+                        1: FlexColumnWidth(3),
+                        2: FlexColumnWidth(1.5),
+                        3: FlexColumnWidth(1.5),
+
+                      },
+
+                    ),
+
 
                   ),
-
-
-                ),
-              ],
-            );
-          }
+                ],
+              );
+            }
+        ),
       );
   }
 }

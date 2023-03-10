@@ -19,6 +19,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruop
 import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.dart';
+import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_all_list_api/bogo_list_all_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/listallsalesapi/listallsalesapi_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
@@ -272,6 +273,26 @@ class _PopUpCallState extends State<PopUpCall> {
       case "SaleApplyingPlacePopup":
         {
           data = SaleApplyingPlacePopup(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "PromotionBogoApplyingPlaceTypePopup":
+        {
+          data = BogoApplyingPlaceTypePopup(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "PromotionBogoApplyingOnTypePopup":
+        {
+          data = BogoApplyingOnTypePopup(
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -3598,6 +3619,301 @@ class _SaleApplyingPlacePopupState extends State<SaleApplyingPlacePopup> {
     return newList;
   }
 }
+
+
+
+class BogoApplyingPlaceTypePopup extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const BogoApplyingPlaceTypePopup(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _BogoApplyingPlaceTypePopupState createState() => _BogoApplyingPlaceTypePopupState();
+}
+
+class _BogoApplyingPlaceTypePopupState extends State<BogoApplyingPlaceTypePopup> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<BogoListAllCubit>(
+        create: (context) => BogoListAllCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<BogoListAllCubit>().getListAllBogoApi();
+            return BlocBuilder<BogoListAllCubit, BogoListAllState>(
+                builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.offerApplyingTo?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.offerApplyingTo![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    listAllSalesApis? newData;
+                    list.forEach((element) {
+                      newData?.saleApplyingTo?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType:
+                        TextInputType.phone ,
+                        inputFormatters:
+
+                        <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r""))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.offerApplyingTo!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+class BogoApplyingOnTypePopup extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const BogoApplyingOnTypePopup(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _BogoApplyingOnTypePopupState createState() => _BogoApplyingOnTypePopupState();
+}
+
+class _BogoApplyingOnTypePopupState extends State<BogoApplyingOnTypePopup> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<BogoListAllCubit>(
+        create: (context) => BogoListAllCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<BogoListAllCubit>().getListAllBogoApi();
+            return BlocBuilder<BogoListAllCubit, BogoListAllState>(
+                builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.bogoApplyingOn?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.bogoApplyingOn![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    listAllSalesApis? newData;
+                    list.forEach((element) {
+                      newData?.saleApplyingTo?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType:
+                        TextInputType.phone ,
+                        inputFormatters:
+
+                        <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r""))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.bogoApplyingOn!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+
+
+
+
 class SaleBasedOnPromotionPopup extends StatefulWidget {
   final String? value;
   final VoidCallback? onAddNew;

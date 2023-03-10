@@ -64,7 +64,7 @@ dependencies:
 
 
   sticky_headers:
-  flutter_typeahead: ^4.1.1
+  flutter_typeahead: ^4.3.7
   flutter_svg: ^0.20.0-nullsafety.3
 
 

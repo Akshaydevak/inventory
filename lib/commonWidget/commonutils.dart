@@ -3519,10 +3519,23 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
                   if (data.data1==true) {
                     setState(() {
 
-                      table = data.data2.runtimeType!=String?data.data2:[];
-                      additionCheck.clear();
 
-                      print("11111111111111111111111");
+                      if(data.data2.runtimeType!=String){
+                        List<SaleLines>responseList=data.data2;
+                        for(var val in responseList){
+                          table.add(VariantModel(barcode: val.barcode?.barcodeNumber??"",
+                          variantCode: val.variantCode??"",
+                          variantId: val.variantId,
+                          variantName: val.variantName));
+                        }
+                        additionCheck.clear();
+                      }else{
+                        Navigator.pop(context);
+                        context.showSnackBarSuccess(data.data2);
+
+                      }
+
+
 //                       if(widget.linkedListItemTable?.isNotEmpty==true){
 //                         print("entered");
 //                         for (var i =0;i<widget.linkedListItemTable!.length;i++){
@@ -4025,8 +4038,7 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                       table = data.data;
                       additionCheck.clear();
 
-                      print("11111111111111111111111"+table.toString());
-                      print("11111111111111111111111"+widget.passingList.toString());
+
                       print(widget.passingList);
                       if(widget.passingList?.isNotEmpty==true){
                         print("entered");
@@ -4314,21 +4326,56 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
                                                 key: UniqueKey(),
                                                 value:additionCheck.contains(table![i].variantName),
                                                 onChange: (p0) {
-                                                  if (p0)
-                                                    list1.add(
-                                                      VariantsLinesDiscount(
-                                                        name:table[i].variantName,
-                                                        id:table[i].variantId,
-                                                        variantIdd: table[i].variantId,
-                                                        variantName:table[i].variantName,
-                                                        barcode:table[i].barcode,
-                                                          variantCode: table[i].variantCode
+                                                  if (p0){
+                                                    if(list1.isEmpty){
+        list1.add(
+        VariantsLinesDiscount(
+        name:table[i].variantName,
+        id:table[i].variantId,
+        variantIdd: table[i].variantId,
+        variantName:table[i].variantName,
+        barcode:table[i].barcode,
+        variantCode: table[i].variantCode
 
-                                                      )
-                                                        );
-                                                  else
-                                                    list1.removeWhere((element) =>
-                                                        element == list1[i]);
+        )
+        );
+        additionCheck.add(table[i].variantName);
+        }
+
+
+                                                   else{
+        if(list1.where((element) => element.variantCode!=table[i].variantCode)==true){
+        list1.add(
+        VariantsLinesDiscount(
+        name:table[i].variantName,
+        id:table[i].variantId,
+        variantIdd: table[i].variantId,
+        variantName:table[i].variantName,
+        barcode:table[i].barcode,
+        variantCode: table[i].variantCode
+
+        )
+        );
+        additionCheck.add(table[i].variantName);
+        }
+        }
+
+
+                                                  }
+
+
+
+                                                  else{
+                                                    var elmentOfdeleted;
+                                                    list1.removeWhere((element) {
+                                                      elmentOfdeleted=element;
+                                                      print("alllllllllllllllllllllllllllllllllllllll");
+                                                      print(element);
+                                                      return element == list1[i];
+                                                    });
+                                                    additionCheck.removeWhere((element) => element==elmentOfdeleted);
+                                                  }
+
                                                   // list1.remove(table![i]);
 
                                                   // widget.listAssign!(list1);
@@ -4613,52 +4660,56 @@ class _DiscountVariantGroupCodeCreatativePopup extends State<DiscountVariantGrou
                 }, error: () {
                   // context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  paginated=data;
+                setState(() {
+                paginated=data;
 
-                  if (data.data.isNotEmpty==true) {
-                    setState(() {
-
-                      table = data.data;
-                      additionCheck.clear();
-
-                      print("11111111111111111111111sssssssssssssssssssssssssss"+table.toString());
-                      print(widget.passingList);
-                      // if(widget.passingList?.isNotEmpty==true){
-                      //   print("entered");
-                      //   for (var i =0;i<widget.passingList!.length;i++){
-                      //     print("entered1");
-                      //     additionCheck.add(widget.passingList![i].name);
-                      //     list1.add( VariantsLinesDiscount(
-                      //         id:widget.passingList![i].id,
-                      //         name:widget.passingList![i].name));
-                      //     print("entered");
-                      //   }
-                      //   setState(() {
-                      //
-                      //   });
-                      //
-                      //
-                      //
-                      //
-                      //
-                      // }
+                if (data.data.isNotEmpty==true) {
 
 
+                table = data.data;
+                if(widget.passingList?.isNotEmpty==true)
+                for(var a in widget.passingList!){
+                table.add(SaleLines(variantName: a.variantName,
+                variantId:a.variantIdd ,
+                variantCode:a.variantCode ,
+                barcode:a. barcode));
+
+                }
+
+                additionCheck.clear();
+
+                print("11111111111111111111111sssssssssssssssssssssssssss"+table.toString()); setState(() {
+
+                });
+                print(widget.passingList);
+                // if(widget.passingList?.isNotEmpty==true){
+                //   print("entered");
+                //   for (var i =0;i<widget.passingList!.length;i++){
+                //     print("entered1");
+                //     additionCheck.add(widget.passingList![i].name);
+                //     list1.add( VariantsLinesDiscount(
+                //         id:widget.passingList![i].id,
+                //         name:widget.passingList![i].name));
+                //     print("entered");
+                //   }
+                //   setState(() {
+                //
+                //   });
+                //
+                //
+                //
+                //
+                //
+                // }
 
 
+                }
 
 
+                // context.showSnackBarSuccess(data.data2);
 
-
-
-                    }
-
-                    );
-                  }
-
-                  // context.showSnackBarSuccess(data.data2);
-
-                  ;
+                    ;
+                });
                 });
               },
             ),
@@ -4786,23 +4837,13 @@ class _DiscountVariantGroupCodeCreatativePopup extends State<DiscountVariantGrou
                                     // suffixIconCheck=true;
                                     if (va == "") {
                                       context
-                                          .read<VariantListPromotionCubit>().getVariantList(widget.obj!);
+                                          .read<GetProductByGroupCodeCubit>().getVariantGroupCodeList(widget.veritcalCode!);
                                       // suffixIconCheck=false;
                                       // suffixIconCheck=false;
                                     }
                                     else{
-                                      PromotionVariantPostModel? obj=PromotionVariantPostModel(
-                                          searchElement: va,
-                                        inventoryId: Variable.inventory_ID,
-                                        segmentList: widget.obj?.segmentList??[],
-                                        applyingTypeCode:widget.obj?.applyingTypeCode??"",
-                                        applyinType: widget.obj?.applyinType??"",
-
-                                      );
-
-                                      print(widget.obj);
                                       context
-                                          .read<VariantListPromotionCubit>().getVariantList(obj);
+                                          .read<GetProductByGroupCodeCubit>().searchgetVariantGroupCodeList(widget.veritcalCode!,va);
                                     }
                                   });
                                 },

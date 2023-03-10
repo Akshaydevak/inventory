@@ -118,6 +118,8 @@ class listAllSalesApis with _$listAllSalesApis {
     @JsonKey(name: "sale_applying_on")final List<String>? saleApplyingOn,
     @JsonKey(name: "based_on")final List<String>? basedOn,
     @JsonKey(name: "sale_applying_to")final List<String>? saleApplyingTo,
+    @JsonKey(name: "offer_applying_to")final List<String>? offerApplyingTo,
+    @JsonKey(name: "bogo_applying_on")final List<String>? bogoApplyingOn,
 
   }) = _listAllSalesApis;
   factory listAllSalesApis.fromJson(Map<String, dynamic> json) =>

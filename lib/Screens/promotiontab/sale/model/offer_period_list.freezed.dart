@@ -2189,6 +2189,10 @@ mixin _$listAllSalesApis {
   List<String>? get basedOn => throw _privateConstructorUsedError;
   @JsonKey(name: "sale_applying_to")
   List<String>? get saleApplyingTo => throw _privateConstructorUsedError;
+  @JsonKey(name: "offer_applying_to")
+  List<String>? get offerApplyingTo => throw _privateConstructorUsedError;
+  @JsonKey(name: "bogo_applying_on")
+  List<String>? get bogoApplyingOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -2205,7 +2209,9 @@ abstract class $listAllSalesApisCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "sale_applying_on") List<String>? saleApplyingOn,
       @JsonKey(name: "based_on") List<String>? basedOn,
-      @JsonKey(name: "sale_applying_to") List<String>? saleApplyingTo});
+      @JsonKey(name: "sale_applying_to") List<String>? saleApplyingTo,
+      @JsonKey(name: "offer_applying_to") List<String>? offerApplyingTo,
+      @JsonKey(name: "bogo_applying_on") List<String>? bogoApplyingOn});
 }
 
 /// @nodoc
@@ -2224,6 +2230,8 @@ class _$listAllSalesApisCopyWithImpl<$Res, $Val extends listAllSalesApis>
     Object? saleApplyingOn = freezed,
     Object? basedOn = freezed,
     Object? saleApplyingTo = freezed,
+    Object? offerApplyingTo = freezed,
+    Object? bogoApplyingOn = freezed,
   }) {
     return _then(_value.copyWith(
       saleApplyingOn: freezed == saleApplyingOn
@@ -2237,6 +2245,14 @@ class _$listAllSalesApisCopyWithImpl<$Res, $Val extends listAllSalesApis>
       saleApplyingTo: freezed == saleApplyingTo
           ? _value.saleApplyingTo
           : saleApplyingTo // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      offerApplyingTo: freezed == offerApplyingTo
+          ? _value.offerApplyingTo
+          : offerApplyingTo // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      bogoApplyingOn: freezed == bogoApplyingOn
+          ? _value.bogoApplyingOn
+          : bogoApplyingOn // ignore: cast_nullable_to_non_nullable
               as List<String>?,
     ) as $Val);
   }
@@ -2253,7 +2269,9 @@ abstract class _$$_listAllSalesApisCopyWith<$Res>
   $Res call(
       {@JsonKey(name: "sale_applying_on") List<String>? saleApplyingOn,
       @JsonKey(name: "based_on") List<String>? basedOn,
-      @JsonKey(name: "sale_applying_to") List<String>? saleApplyingTo});
+      @JsonKey(name: "sale_applying_to") List<String>? saleApplyingTo,
+      @JsonKey(name: "offer_applying_to") List<String>? offerApplyingTo,
+      @JsonKey(name: "bogo_applying_on") List<String>? bogoApplyingOn});
 }
 
 /// @nodoc
@@ -2270,6 +2288,8 @@ class __$$_listAllSalesApisCopyWithImpl<$Res>
     Object? saleApplyingOn = freezed,
     Object? basedOn = freezed,
     Object? saleApplyingTo = freezed,
+    Object? offerApplyingTo = freezed,
+    Object? bogoApplyingOn = freezed,
   }) {
     return _then(_$_listAllSalesApis(
       saleApplyingOn: freezed == saleApplyingOn
@@ -2284,6 +2304,14 @@ class __$$_listAllSalesApisCopyWithImpl<$Res>
           ? _value._saleApplyingTo
           : saleApplyingTo // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      offerApplyingTo: freezed == offerApplyingTo
+          ? _value._offerApplyingTo
+          : offerApplyingTo // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      bogoApplyingOn: freezed == bogoApplyingOn
+          ? _value._bogoApplyingOn
+          : bogoApplyingOn // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -2294,10 +2322,14 @@ class _$_listAllSalesApis implements _listAllSalesApis {
   const _$_listAllSalesApis(
       {@JsonKey(name: "sale_applying_on") final List<String>? saleApplyingOn,
       @JsonKey(name: "based_on") final List<String>? basedOn,
-      @JsonKey(name: "sale_applying_to") final List<String>? saleApplyingTo})
+      @JsonKey(name: "sale_applying_to") final List<String>? saleApplyingTo,
+      @JsonKey(name: "offer_applying_to") final List<String>? offerApplyingTo,
+      @JsonKey(name: "bogo_applying_on") final List<String>? bogoApplyingOn})
       : _saleApplyingOn = saleApplyingOn,
         _basedOn = basedOn,
-        _saleApplyingTo = saleApplyingTo;
+        _saleApplyingTo = saleApplyingTo,
+        _offerApplyingTo = offerApplyingTo,
+        _bogoApplyingOn = bogoApplyingOn;
 
   factory _$_listAllSalesApis.fromJson(Map<String, dynamic> json) =>
       _$$_listAllSalesApisFromJson(json);
@@ -2332,9 +2364,29 @@ class _$_listAllSalesApis implements _listAllSalesApis {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<String>? _offerApplyingTo;
+  @override
+  @JsonKey(name: "offer_applying_to")
+  List<String>? get offerApplyingTo {
+    final value = _offerApplyingTo;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _bogoApplyingOn;
+  @override
+  @JsonKey(name: "bogo_applying_on")
+  List<String>? get bogoApplyingOn {
+    final value = _bogoApplyingOn;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'listAllSalesApis(saleApplyingOn: $saleApplyingOn, basedOn: $basedOn, saleApplyingTo: $saleApplyingTo)';
+    return 'listAllSalesApis(saleApplyingOn: $saleApplyingOn, basedOn: $basedOn, saleApplyingTo: $saleApplyingTo, offerApplyingTo: $offerApplyingTo, bogoApplyingOn: $bogoApplyingOn)';
   }
 
   @override
@@ -2346,7 +2398,11 @@ class _$_listAllSalesApis implements _listAllSalesApis {
                 .equals(other._saleApplyingOn, _saleApplyingOn) &&
             const DeepCollectionEquality().equals(other._basedOn, _basedOn) &&
             const DeepCollectionEquality()
-                .equals(other._saleApplyingTo, _saleApplyingTo));
+                .equals(other._saleApplyingTo, _saleApplyingTo) &&
+            const DeepCollectionEquality()
+                .equals(other._offerApplyingTo, _offerApplyingTo) &&
+            const DeepCollectionEquality()
+                .equals(other._bogoApplyingOn, _bogoApplyingOn));
   }
 
   @JsonKey(ignore: true)
@@ -2355,7 +2411,9 @@ class _$_listAllSalesApis implements _listAllSalesApis {
       runtimeType,
       const DeepCollectionEquality().hash(_saleApplyingOn),
       const DeepCollectionEquality().hash(_basedOn),
-      const DeepCollectionEquality().hash(_saleApplyingTo));
+      const DeepCollectionEquality().hash(_saleApplyingTo),
+      const DeepCollectionEquality().hash(_offerApplyingTo),
+      const DeepCollectionEquality().hash(_bogoApplyingOn));
 
   @JsonKey(ignore: true)
   @override
@@ -2378,7 +2436,11 @@ abstract class _listAllSalesApis implements listAllSalesApis {
       @JsonKey(name: "based_on")
           final List<String>? basedOn,
       @JsonKey(name: "sale_applying_to")
-          final List<String>? saleApplyingTo}) = _$_listAllSalesApis;
+          final List<String>? saleApplyingTo,
+      @JsonKey(name: "offer_applying_to")
+          final List<String>? offerApplyingTo,
+      @JsonKey(name: "bogo_applying_on")
+          final List<String>? bogoApplyingOn}) = _$_listAllSalesApis;
 
   factory _listAllSalesApis.fromJson(Map<String, dynamic> json) =
       _$_listAllSalesApis.fromJson;
@@ -2392,6 +2454,12 @@ abstract class _listAllSalesApis implements listAllSalesApis {
   @override
   @JsonKey(name: "sale_applying_to")
   List<String>? get saleApplyingTo;
+  @override
+  @JsonKey(name: "offer_applying_to")
+  List<String>? get offerApplyingTo;
+  @override
+  @JsonKey(name: "bogo_applying_on")
+  List<String>? get bogoApplyingOn;
   @override
   @JsonKey(ignore: true)
   _$$_listAllSalesApisCopyWith<_$_listAllSalesApis> get copyWith =>

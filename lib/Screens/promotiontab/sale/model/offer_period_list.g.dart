@@ -185,6 +185,12 @@ _$_listAllSalesApis _$$_listAllSalesApisFromJson(Map<String, dynamic> json) =>
       saleApplyingTo: (json['sale_applying_to'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      offerApplyingTo: (json['offer_applying_to'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      bogoApplyingOn: (json['bogo_applying_on'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_listAllSalesApisToJson(_$_listAllSalesApis instance) =>
@@ -192,6 +198,8 @@ Map<String, dynamic> _$$_listAllSalesApisToJson(_$_listAllSalesApis instance) =>
       'sale_applying_on': instance.saleApplyingOn,
       'based_on': instance.basedOn,
       'sale_applying_to': instance.saleApplyingTo,
+      'offer_applying_to': instance.offerApplyingTo,
+      'bogo_applying_on': instance.bogoApplyingOn,
     };
 
 _$_PromotionSaleCreateModel _$$_PromotionSaleCreateModelFromJson(

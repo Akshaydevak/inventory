@@ -57,6 +57,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
   bool overidePriority=false;
   bool isAdminBased=false;
   bool isActive=false;
+  bool isSegmentClear=false;
   final GlobalKey<ProductListGrowableTableState> _myWidgetState = GlobalKey<ProductListGrowableTableState>();
   final GlobalKey<SegmentGrowableTableState> _segmnetState = GlobalKey<SegmentGrowableTableState>();
 
@@ -66,6 +67,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
   List<salesOrderTypeModel> result = [];
   List<Segment> segmentTable = [];
   List<SaleLines> variantTable = [];
+  List<SaleLines> variantTable2 = [];
   tableAssign(List<Segment> table1) {
     print("ethito");
     setState(() {
@@ -75,6 +77,17 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
       saleApplyingCodeController.clear();
       saleApplyingIdController.clear();
       saleApplyingNameController.clear();
+      if(select==false){
+        print("patch case");
+        if(variantTable2.isNotEmpty){
+          print("is Not empty");
+          for(var i=0;i<variantTable2.length;i++){
+            variantTable2[i]=variantTable2[i].copyWith(isActive: false);
+          }
+
+          isSegmentClear=true;
+        }
+      }
     });
   }
  variantTableAssign(List<SaleLines> table1) {
@@ -131,6 +144,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
     priorityController.clear();
     descriptionController.clear();
     imageController.clear();
+    isSegmentClear=false;
      totalPricePriceController.clear();
     availableCustomerGroupController.clear();
      basedOnController.clear();
@@ -577,6 +591,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                       applyingTypeCode: saleApplyingCodeController?.text??"",
                       applyingType: saleApplyingOnController?.text??"",
                       updation: variantTableAssign,
+                      select:select,
                     ),
                     SizedBox(height: 50,),
                     SaveUpdateResponsiveButton(
@@ -670,6 +685,15 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                             if(em.isActive==true)
                               em
                         ];
+                        if(isSegmentClear==true){
+                          print("post case");
+                          if(select==false){
+                            variantTable.addAll(variantTable2);
+                          }
+
+
+
+                        }
                         PromotionSaleCreateModel model=PromotionSaleCreateModel(
                           name: titleController?.text??null,
                           offerPeriodId:
@@ -694,7 +718,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                           isActive: isActive,
                           createdBy: Variable.created_by,
                           saleLines:select?variantTable1: variantTable,
-                          segments: select?segmentTable1:segmentTable,
+                          segments: segmentTable1??[],
                           availableCustomerGroup: "aaa",
                           salesApplyingPlace:saleApplyingPlaceController.text,
                           salesApplyingPlaceCode: saleApplyingPlaceCodedController.text,
@@ -706,6 +730,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                         print(model);
                       select?  context.read<CreatePromotionSaleCubit>().postPromotionSale(model):
                       context.read<CreatePromotionSaleCubit>().getPromotionSalePatch(veritiaclid,model);
+                      isSegmentClear=false;
 
 
 

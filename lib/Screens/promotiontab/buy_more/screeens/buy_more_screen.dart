@@ -42,6 +42,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
   TextEditingController offerGroupNameController=TextEditingController();
   TextEditingController buyMoreApplyingPlaceController=TextEditingController();
   TextEditingController buyMoreApplyingNameCodeController=TextEditingController();
+  TextEditingController maximumCountController=TextEditingController();
   TextEditingController buyMoreApplyingNameIdController=TextEditingController();
   TextEditingController buyMoreApplyingPlaceIdController=TextEditingController();
   TextEditingController buyMoreApplyingPlaceCodeController=TextEditingController();
@@ -58,8 +59,10 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
   bool select=false;
   int? veritiaclid;
   List<Segment> segmentTable = [];
+  bool isSegmentClear=false;
   List<CountPricePercentageModel> countTable=[];
   List<VariantModel> variantTable=[];
+  List<VariantModel> variantTable2=[];
   var list;
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical=0;
@@ -74,6 +77,17 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
       buyMoreApplyingNameController.clear();
       variantTable.clear();
       _myWidgetState.currentState?.clear();
+      if(select==false){
+        print("patch case");
+        if(variantTable2.isNotEmpty){
+          print("is Not empty");
+          for(var i=0;i<variantTable2.length;i++){
+            variantTable2[i]=variantTable2[i].copyWith(isActive: false);
+          }
+
+          isSegmentClear=true;
+        }
+      }
 
     });
 
@@ -147,6 +161,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
     imageController.text="";
     buyMoreApplyingOnController.text="";
     buyMoreApplyingNameController.text="";
+    maximumCountController.clear();
     buyMoreApplyingNameCodeController.text="";
     buyMoreApplyingNameIdController.text="";
     offerPeriodIdController.text="";
@@ -156,6 +171,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
     offerGroupIdController.text="";
     imageNameController.text="";
     isAvailableForAll=true;
+    isSegmentClear=false;
 
     _myWidgetState.currentState?.clear();
     buyMoreSegmnetState.currentState?.clears();
@@ -230,6 +246,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                 buyMoreApplyingOnController.text=data.buyMoreApplyingOn??"";
                 buyMoreApplyingNameController.text=data.buyMoreApplyingOnName??"";
                 buyMoreApplyingNameCodeController.text=data.buyMoreApplyingOnCode??"";
+                maximumCountController.text=data.maximumCount==null?"":data.maximumCount?.toString()??"";
                 buyMoreApplyingNameIdController.text=data.buyMoreApplyingOnId.toString()??"";
                 offerPeriodIdController.text=data?.offerPeriodId.toString()??"";
                 offerGroupIdController.text=data?.offerGroupId.toString()??"";
@@ -242,6 +259,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                 data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
                 data.countPricePercentage != null ? countTable =List.from( data?.countPricePercentage ?? []) : countTable = [];
                 data.lines != null ? variantTable =List.from( data?.lines ?? []) : variantTable = [];
+                data.lines != null ? variantTable2 =List.from( data?.lines ?? []) : variantTable2 = [];
 
 
               });
@@ -530,6 +548,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                         buyMoreApplyingPlaceCode: buyMoreApplyingPlaceCodeController,
                         buyMoreApplyingPlaceId: buyMoreApplyingPlaceIdController,
                         table: segmentTable,
+                        maximumCount:maximumCountController,
                         buyMoreApplyingNameCode: buyMoreApplyingNameCodeController,
                         buyMoreApplyingNameId: buyMoreApplyingNameIdController,
                         buyMoreApplyingPlace: buyMoreApplyingPlaceController,
@@ -556,6 +575,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                       ),
                       SizedBox(height: height*.06,), 
                       BuyMoreVariantGrowableTable(
+                        select:select,
                     key:_myWidgetState,
                     segmentList: segmentTable,
                     applyingTypeCode: buyMoreApplyingNameCodeController?.text??"",
@@ -616,6 +636,15 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
 
                             }
                           }
+                          if(isSegmentClear==true){
+                            print("post case");
+                            if(select==false){
+                              variantTable.addAll(variantTable2);
+                            }
+
+
+
+                          }
 
                           // var variantModel1;
                           //
@@ -633,7 +662,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                           print(segmentTable1);
 
                           PromotionBuyMoreCreationModel model=PromotionBuyMoreCreationModel(
-                            segments: select?segmentTable1:segmentTable,
+                            segments: segmentTable1,
                             inventoryId: Variable.inventory_ID,
                             offerAppliedTo: buyMoreApplyingPlaceController.text,
                             offerAppliedToId:int.tryParse( buyMoreApplyingPlaceIdController.text),
@@ -651,7 +680,8 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                             buyMoreApplyingOnId:int.tryParse( buyMoreApplyingNameIdController.text),
                             createdBy: Variable.created_by,
                             isActive: isActive,
-                            lines:lines1,
+                            maximumCount: int.tryParse(maximumCountController.text),
+                            lines:select?lines1:variantTable,
                             offerGroupId: int.tryParse(offerGroupIdController.text),
                             offerPeriodId: int.tryParse(offerPeriodIdController.text),
                           );
@@ -663,6 +693,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                           context.read<BuyMoreCreationCubit>().postCreatePromtionBuyMore(model)
                           :
                           context.read<BuyMoreCreationCubit>().buyMorePromotionSalePatch(veritiaclid,model);
+                          isSegmentClear=false;
 
 
 

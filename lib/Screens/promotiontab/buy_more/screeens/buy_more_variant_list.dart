@@ -15,9 +15,9 @@ class BuyMoreVariantGrowableTable extends StatefulWidget {
   final Function updation;
   final String applyingType;
   final String applyingTypeCode;
-  // final  bool addNew;
+  final  bool select;
   final  Key? key;
-  BuyMoreVariantGrowableTable({ required this.segmentList, required this.updation, required this.applyingType, required this.applyingTypeCode, this.key});
+  BuyMoreVariantGrowableTable({ required this.segmentList, required this.updation, required this.applyingType, required this.applyingTypeCode, this.key, required this.select});
   @override
   BuyMoreVariantGrowableTableState createState() => BuyMoreVariantGrowableTableState();
 }
@@ -25,6 +25,7 @@ class BuyMoreVariantGrowableTable extends StatefulWidget {
 class BuyMoreVariantGrowableTableState extends State<BuyMoreVariantGrowableTable> {
   String variantCode="";
   String variantName="";
+  int? variantId;
   bool isActive=false;
   Barcode barcode=Barcode();
   List<VariantModel>table=[];
@@ -51,6 +52,7 @@ class BuyMoreVariantGrowableTableState extends State<BuyMoreVariantGrowableTable
     variantCode="";
     variantName="";
     isActive=false;
+    variantId=null;
     table=[];
     barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
   }
@@ -337,7 +339,7 @@ class BuyMoreVariantGrowableTableState extends State<BuyMoreVariantGrowableTable
                                       SizedBox(width: 4,),
 
 
-                                      TableIconTextButton(
+                                  if(widget.select!)    TableIconTextButton(
 
                                         // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                         // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
@@ -417,6 +419,8 @@ class BuyMoreVariantGrowableTableState extends State<BuyMoreVariantGrowableTable
                                         setState(() {
                                           variantCode=va?.variantCode??"";
                                           variantName=va?.variantName??"";
+                                          variantId=va?.variantId??null;
+
                                           print("barcodeeeeeeeeeeee");
                                           print(va?.barcode?.barcodeNumber??"");
                                           barcode=      barcode.copyWith(barcodeNumber: va?.barcode?.barcodeNumber??"");
@@ -486,12 +490,14 @@ class BuyMoreVariantGrowableTableState extends State<BuyMoreVariantGrowableTable
                                       if(variantCode.isNotEmpty && variantName.isNotEmpty){
                                         table.add(VariantModel(
                                           variantCode: variantCode,
+                                          variantId: variantId,
                                           barcode: barcode.barcodeNumber,
                                           variantName: variantName.isEmpty?"":variantName,
                                           isActive: isActive,
                                         ));
                                         variantCode="";
                                         variantName="";
+                                        variantId=null;
                                         barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
                                         onSaveActive=false;
                                         isActive=false;

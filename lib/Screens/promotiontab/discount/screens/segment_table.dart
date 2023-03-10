@@ -16,12 +16,13 @@ import '../../../../commonWidget/popupinputfield.dart';
 class SegmentDisCountGrowableTable extends StatefulWidget {
   final List<Segment> table;
   final Function updation;
+  final bool select;
 
   // final  Function(int?) ontap;
   // final  bool addNew;
   final Key? key;
 
-  SegmentDisCountGrowableTable({required this.table, required this.updation, this.key});
+  SegmentDisCountGrowableTable({required this.table, required this.updation, this.key, required this.select});
 
   @override
   SegmentDisCountGrowableTableState createState() => SegmentDisCountGrowableTableState();
@@ -331,7 +332,7 @@ class SegmentDisCountGrowableTableState extends State<SegmentDisCountGrowableTab
                                         SizedBox(width: 4,),
 
 
-                                        TableIconTextButton(
+                                      if(widget.select)  TableIconTextButton(
 
                                           // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                           // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,

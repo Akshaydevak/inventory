@@ -314,6 +314,7 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                               widget.saleApplyingName.text="";
                               widget.saleApplyingCode.text="";
                               widget.saleApplyingId.text="";
+                              widget.variantTableDatsClear();
                             });
                           },
                         ),

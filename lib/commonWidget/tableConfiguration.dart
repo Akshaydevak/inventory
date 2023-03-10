@@ -1122,6 +1122,7 @@ class _SegmentListTabalePopup extends State<SegmentListTabalePopup> {
 
                   print("Welcome" + widget.  list.toString());
                   table = list.data;
+                  print(table);
                   List<String?> list1 = [];
                   int length = table.length;
                   // list=data.orderTypes;

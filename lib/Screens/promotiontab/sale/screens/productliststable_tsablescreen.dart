@@ -16,15 +16,18 @@ class ProductListGrowableTable extends StatefulWidget {
   final Function updation;
   final String applyingType;
   final String applyingTypeCode;
+  final bool select;
+
   // final  bool addNew;
   final  Key? key;
-  ProductListGrowableTable({ required this.segmentList, required this.updation, required this.applyingType, required this.applyingTypeCode, this.key});
+  ProductListGrowableTable({ required this.segmentList, required this.updation, required this.applyingType, required this.applyingTypeCode, this.key, required this.select});
   @override
   ProductListGrowableTableState createState() => ProductListGrowableTableState();
 }
 
 class ProductListGrowableTableState extends State<ProductListGrowableTable> {
   String variantCode="";
+  int? variantId;
   String variantName="";
   bool isActive=false;
   Barcode barcode=Barcode();
@@ -53,6 +56,7 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
      variantCode="";
      variantName="";
      isActive=false;
+     variantId=null;
      table=[];
      barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
   }
@@ -386,7 +390,7 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                                     SizedBox(width: 4,),
 
 
-                                    TableIconTextButton(
+                                 if(widget.select!)   TableIconTextButton(
 
                                       // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                       // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
@@ -466,6 +470,7 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                                         setState(() {
                                           variantCode=va?.variantCode??"";
                                           variantName=va?.variantName??"";
+                                          variantId=va?.variantId??null;
                                           print("barcodeeeeeeeeeeee");
                                           print(va?.barcode?.barcodeNumber??"");
                                           barcode=      barcode.copyWith(barcodeNumber: va?.barcode?.barcodeNumber??"");
@@ -534,6 +539,7 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                                   setState(() {
                                     if(variantName.isNotEmpty && variantCode.isNotEmpty){
                                       table.add(SaleLines(
+                                        variantId: variantId,
                                         variantCode: variantCode,
                                         barcode: barcode,
                                         variantName: variantName.isEmpty?"":variantName,
@@ -541,6 +547,7 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                                       ));
                                       variantCode="";
                                       variantName="";
+                                      variantId=null;
                                       barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
                                       isActive=false;
                                       onSaveActive=false;

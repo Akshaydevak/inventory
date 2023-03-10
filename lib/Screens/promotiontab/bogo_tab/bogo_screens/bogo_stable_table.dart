@@ -28,6 +28,7 @@ class PromotionBogoStableTable extends StatefulWidget {
     final TextEditingController bogoApplyingNameCode;
     final TextEditingController bogoApplyingNameId;
     final TextEditingController iamge;
+    final TextEditingController imageName;
     final TextEditingController maximumCount;
     final TextEditingController availableCustomer;
     final bool isAvailableForAll;
@@ -55,7 +56,7 @@ class PromotionBogoStableTable extends StatefulWidget {
 
   PromotionBogoStableTable({
 
-     required this.bogoCode, required this.offerPeriod, required this.title, required this.description, required this.bogoApplyingPlaceType, required this.bogoApplyingPlaceName, required this.bogoApplyingPlaceId, required this.bogoApplyingPlaceCode, required this.byCount, required this.geCount, required this.bogoApplyingOn, required this.bogoApplyingName, required this.bogoApplyingNameCode, required this.bogoApplyingNameId, required this.iamge, required this.maximumCount, required this.availableCustomer, required this.isAvailableForAll, required this.isActive, required this.table, required this.activeChange, required this.variantTableDatsClear, required this.offerPeriodName, required this.select});
+     required this.bogoCode, required this.offerPeriod, required this.title, required this.description, required this.bogoApplyingPlaceType, required this.bogoApplyingPlaceName, required this.bogoApplyingPlaceId, required this.bogoApplyingPlaceCode, required this.byCount, required this.geCount, required this.bogoApplyingOn, required this.bogoApplyingName, required this.bogoApplyingNameCode, required this.bogoApplyingNameId, required this.iamge, required this.maximumCount, required this.availableCustomer, required this.isAvailableForAll, required this.isActive, required this.table, required this.activeChange, required this.variantTableDatsClear, required this.offerPeriodName, required this.select, required this.imageName});
   @override
   _PromotionBogoStableTableState createState() => _PromotionBogoStableTableState();
 }
@@ -134,10 +135,10 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
                                   object: model,
                                   valueSelect: (OfferPeriodList va) {
                                     setState(() {
-                                      // widget.saleApplyingName.text=va?.name??"";
-                                      // widget.saleApplyingCode.text=va?.code??"";
+                                      widget.bogoApplyingName.text=va?.name??"";
+                                      widget.bogoApplyingNameCode.text=va?.code??"";
                                       // print("ssprint"+widget.saleApplyingCode.text.toString());
-                                      // widget.saleApplyingId.text=va?.id.toString()??"";
+                                      widget.bogoApplyingNameId.text=va?.id.toString()??"";
                                       widget.variantTableDatsClear();
 
                                       // widget.costingName.text =
@@ -166,7 +167,7 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
                       )),
                       Expanded(child: Column(children: [
                         NewInputCard(
-                          controller: widget.offerPeriod,
+                          controller: widget.offerPeriodName,
                           icondrop: true,
                           readOnly: true,
                           title: "Offer Period",
@@ -209,7 +210,7 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
 
                         SelectableDropDownpopUp(
                           label: "Bogo Applying Place Type",
-                          type:"SaleApplyingPlacePopup",
+                          type:"PromotionBogoApplyingPlaceTypePopup",
 
                           value: widget.bogoApplyingPlaceType.text,
                           onSelection: (String? va) {
@@ -241,20 +242,21 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
 
 
 
-                            controller: widget.byCount, title: "Get Count"),
+                            controller: widget.geCount, title: "Get Count"),
                         SizedBox(
                           height: height * .030,
                         ),
 
                         FileUploadField(
 
-                            fileName:imageName1,
-                            fileUrl:imageName1,
+                            fileName:widget.imageName.text,
+                            fileUrl:widget.imageName.text,
                             onCancel: (){
 
                               setState(() {
-                                imageName1="";
-                                Variable.img1=null;
+                                widget.imageName.text="";
+                                widget.iamge.text="";
+
                               });
 
                             },
@@ -267,10 +269,10 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
 
 
 
-                              imageName1=myFile?.fileName??"";
+                              widget.imageName.text=myFile?.fileName??"";
                               // Variable.mobileBannerImage = myFile.toUint8List();
                               //
-                              var     imageEncode =
+                                   imageEncode =
                               myFile.toBase64();
                               // widget.fileMobileNameCtrl.text =
                               //     myFile.fileName ?? "";
@@ -330,7 +332,7 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
                           label: "Bogo Applying Place ",
                           type:"PromotionChannelListPopup",
                           code: widget.bogoApplyingPlaceType.text,
-                          value: widget.bogoApplyingPlaceName.text,
+                          value: widget.bogoApplyingPlaceCode.text,
                           onSelection: (ChannelListModel? va) {
                             print(
                                 "+++++++++++++++++++++++");
@@ -341,6 +343,7 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
                               // onChange = true;
                               widget.bogoApplyingPlaceName.text = va?.name??"";
                               widget.bogoApplyingPlaceCode.text = va?.channelCode??"";
+                              print( widget.bogoApplyingPlaceCode.text);
                               widget.bogoApplyingPlaceId.text = va?.id.toString()??"";
                             });
                           },
@@ -353,7 +356,7 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
 
                         SelectableDropDownpopUp(
                           label: "Bogo Applying On",
-                          type:"SaleApplyingOnPromotionPopup",
+                          type:"PromotionBogoApplyingOnTypePopup",
                           value: widget.bogoApplyingOn.text,
                           onSelection: (String? va) {
 
@@ -363,6 +366,7 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
                               widget.bogoApplyingNameCode.text="";
                               widget.bogoApplyingName.text="";
                               widget.bogoApplyingNameId.text="";
+                              widget.variantTableDatsClear();
                             });
                           },
                         ),

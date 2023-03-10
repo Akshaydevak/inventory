@@ -21,6 +21,7 @@ class PromotionBuyMoreCreationModel with _$PromotionBuyMoreCreationModel{
     @JsonKey(name: "offer_group_id") final int? offerGroupId,
     @JsonKey(name: "offer_applied_to") final String? offerAppliedTo,
     @JsonKey(name: "offer_applied_to_id") final int? offerAppliedToId,
+    @JsonKey(name: "maximum_count") final int? maximumCount,
     @JsonKey(name: "offer_applied_to_code") final String? offerAppliedToCode,
     @JsonKey(name: "offer_period_name") final String? offerPeriodName,
     @JsonKey(name: "offer_group_name") final String? offerGroupName,
@@ -28,6 +29,7 @@ class PromotionBuyMoreCreationModel with _$PromotionBuyMoreCreationModel{
     @JsonKey(name: "buy_more_applying_on") final String? buyMoreApplyingOn,
     @JsonKey(name: "buy_more_applying_on_name") final String? buyMoreApplyingOnName,
     @JsonKey(name: "buy_more_applying_on_id") final int? buyMoreApplyingOnId,
+
 
     @JsonKey(name: "buy_more_applying_on_code") final String? buyMoreApplyingOnCode,
     @JsonKey(name: "count_price_percentage") final List<CountPricePercentageModel>? countPricePercentage,

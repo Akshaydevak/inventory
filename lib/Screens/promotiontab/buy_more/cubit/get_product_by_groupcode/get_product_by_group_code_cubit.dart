@@ -27,9 +27,9 @@ class GetProductByGroupCodeCubit extends Cubit<GetProductByGroupCodeState> {
     });
   }
 
-  Future searchgetVariantGroupCodeList(String filter) async {
+  Future searchgetVariantGroupCodeList(String customerCode,String filter) async {
     emit(GetProductByGroupCodeState.initial());
-    final result = await repo.getVariantGroupCodeList("name="+filter);
+    final result = await repo.getVariantGroupCodeList("name="+filter,customereCode: customerCode);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

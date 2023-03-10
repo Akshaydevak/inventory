@@ -36,21 +36,10 @@ class DiscountMainScreen extends StatefulWidget {
 class _DiscountMainScreenState extends State<DiscountMainScreen> {
    bool select=false;
    bool active=false;
+   bool isSegmentClear=false;
    final GlobalKey<SegmentDisCountGrowableTableState> discountSegmnetState = GlobalKey<SegmentDisCountGrowableTableState>();
    List<Segment> segmentTable = [];
-   tableAssign(List<Segment> table1) {
-     print("ethito");
 
-     setState(() {
-       segmentTable = List.from(table1);
-    for(int i=0;i<offerLines.length-1;i++){
-      offerLines[i]=offerLines[i].copyWith(typeId: null,typeCode:"",variants: [] );
-    }
-       bottomTableState.currentState?.clear();
-
-     });
-
-   }
    TextEditingController  discountCodeController=TextEditingController();
    TextEditingController  offerPeriodController=TextEditingController();
    TextEditingController  offerPeriodNameController=TextEditingController();
@@ -71,11 +60,47 @@ class _DiscountMainScreenState extends State<DiscountMainScreen> {
    bool overidePriority=false;
    bool isAdminBased=false;
    bool isActive=false;
+   bool img1 = false;
    int? veritiaclid=0;
    TextEditingController itemsearch = TextEditingController();
    int selectedVertical=0;
    var list;
    List <SaleLinesDiscount>offerLines=[];
+   List <SaleLinesDiscount>offerLines2=[];
+
+
+   tableAssign(List<Segment> table1) {
+     print("ethito");
+
+     setState(() {
+       segmentTable = List.from(table1);
+       offerLines.clear();
+       bottomTableState.currentState?.clear();
+       if(select==false){
+         print("patch case");
+         if(offerLines2.isNotEmpty){
+           print("is Not empty");
+           for(var i=0;i<offerLines2.length;i++){
+             offerLines2[i]=offerLines2[i].copyWith(isActive: false);
+           }
+           print("offerLines2");
+           print(offerLines2);
+           isSegmentClear=true;
+         }
+       }
+
+     });
+
+   }
+   imagePostCheck({String? type}) {
+     switch (type) {
+       case '1':
+         img1 = true;
+         break;
+
+
+     }
+   }
    bottomTableAssign(List<SaleLinesDiscount> table1) {
      print("ethito");
      offerLines=List.from(table1);
@@ -114,6 +139,8 @@ offerGroupNameController.clear();
      offerGroupController.clear();
      bottomTableState.currentState?.clear();
      discountSegmnetState.currentState?.clears();
+     img1=false;
+  isSegmentClear=false;
 
    }
    final GlobalKey<DiscountBottomGrowableTableState> bottomTableState = GlobalKey<DiscountBottomGrowableTableState>();
@@ -164,6 +191,69 @@ offerGroupNameController.clear();
       ],
   child:MultiBlocListener(
   listeners: [
+    BlocListener<PromotionSaleDeactivateCubit, PromotionSaleDeactivateState>(
+      listener: (context, state) {
+        print("postssssssss" + state.toString());
+        state.maybeWhen(orElse: () {
+          // // context.
+          // context.showSnackBarError("Loadingggg");
+        }, error: () {
+          // context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+
+          if (data.data1==true) {
+            setState(() {
+
+
+              if(data.data2.runtimeType==String){
+    context.showSnackBarSuccess(data.data2);
+                }
+
+              else{
+              print(data.data2);
+
+              }
+
+
+//                       if(widget.linkedListItemTable?.isNotEmpty==true){
+//                         print("entered");
+//                         for (var i =0;i<widget.linkedListItemTable!.length;i++){
+//                           print("entered1");
+//                           additionCheck.add(widget.linkedListItemTable![i].name);
+//                           list1.add( LinkedItemListIdModel(
+//                               id:widget.linkedListItemTable![i].id,
+//                               name:widget.linkedListItemTable![i].name));
+//                           print("entered");
+//                         }
+//                         setState(() {
+// print(list1.contains(widget.linkedListItemTable?[0].name));
+//                         });
+//
+//
+//
+//
+//
+//                       }
+
+
+
+
+
+
+
+
+
+            }
+
+            );
+          }
+
+          // context.showSnackBarSuccess(data.data2);
+
+              ;
+        });
+      },
+    ),
     BlocListener<CreationPromotionDiscountCubit, CreationPromotionDiscountState>(
       listener: (context, state) {
         print("postssssssss" + state.toString());
@@ -221,7 +311,7 @@ offerGroupNameController.clear();
                       List<int?> list1=[];
                       print("anaghaaaaaaaaaaaa"+offerLines.toString());
                     if(offerLines.isNotEmpty){
-                      for(var i=0;i<offerLines.length-1;i++){
+                      for(var i=0;i<offerLines.length;i++){
                         for(var a in offerLines[i].variants??[])
                           list1.add(a.variantIdd);
 
@@ -334,6 +424,7 @@ offerGroupNameController.clear();
 
                 data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
                 data.offerLines != null ? offerLines =List.from( data?.offerLines ?? []) : offerLines = [];
+                data.offerLines != null ? offerLines2 =List.from( data?.offerLines ?? []) : offerLines2 = [];
 
               });
             });
@@ -497,6 +588,7 @@ offerGroupNameController.clear();
                           ),
                           SizedBox(height: height*.06,),
                           SegmentDisCountGrowableTable(
+                            select:select,
                               key: discountSegmnetState,
                               table: segmentTable,
 
@@ -506,6 +598,7 @@ offerGroupNameController.clear();
                             isActive: isActive,
                             select: select,
                             activeChange:activeChange,
+                            imagePostCheck:imagePostCheck,
                             offerPeriodName: offerPeriodNameController,
                             offerPeriod: offerPeriodController,
                             offerGroupName: offerGroupNameController,
@@ -527,6 +620,7 @@ offerGroupNameController.clear();
                           ),
                           SizedBox(height: height*.04,),
                           DiscountBottomGrowableTable(
+                            select:select,
                             updation:bottomTableAssign ,
                             segmentList: segmentTable,
                             key:bottomTableState ,
@@ -571,12 +665,25 @@ offerGroupNameController.clear();
                                   if(em.isActive==true)
                                     em
                               ];
+                              if(isSegmentClear==true){
+                                print("post case");
+                                if(select==false){
+                                  offerLines.addAll(offerLines2);
+                                }
+                                print("post case"+offerLines.toString());
+
+
+                              }
+
+
+
+
                               PromotionDiscountCreationModel model=PromotionDiscountCreationModel(
                                 isActive: isActive,
                                 title: titleController.text,
                                 inventoryId: Variable.inventory_ID,
                                 description: descriptionController.text,
-                                image:select?Variable.img1!=null? Variable.img1.toString():null:imageController.text,
+                                image:select?Variable.img1!=null? Variable.img1.toString():null:img1?Variable.img1.toString():imageController.text.isEmpty?null:imageController.text,
                                 discountPercentageOrPrice: double.tryParse(discountPercentageOrPriceController.text),
                                 basedOn: basedOnController.text,
                                 offerPeriodId:
@@ -588,7 +695,7 @@ offerGroupNameController.clear();
                                 offerAppliedToCode: offerApplyingToCodeController.text,
                                 isAvailableFor: isAvailableForAll,
                                 createdBy: Variable.created_by,
-                                segments:select?segmentTable1: segmentTable,
+                                segments:segmentTable1,
                                 availableCustomerGroups: [],
                                 offerLines: select?offerLines1:offerLines,
 
@@ -596,6 +703,8 @@ offerGroupNameController.clear();
                               print(model);
 
                               select? context.read<CreationPromotionDiscountCubit>().postCreatePromtionDiscount(model): context.read<CreationPromotionDiscountCubit>().getPromotionDiscountPatch(veritiaclid,model);
+                              img1=false;
+                              isSegmentClear=false;
 
 
 

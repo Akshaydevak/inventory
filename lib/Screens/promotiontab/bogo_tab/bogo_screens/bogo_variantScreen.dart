@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_read/bogo_read_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
@@ -14,9 +15,10 @@ class BogoVariantGrowableTable extends StatefulWidget {
   final Function updation;
   final String applyingType;
   final String applyingTypeCode;
+  final bool select;
   // final  bool addNew;
   final  Key? key;
-  BogoVariantGrowableTable({ required this.segmentList, required this.updation, required this.applyingType, required this.applyingTypeCode, this.key});
+  BogoVariantGrowableTable({ required this.segmentList, required this.updation, required this.applyingType, required this.applyingTypeCode, this.key, required this.select});
   @override
   BogoVariantGrowableTableState createState() => BogoVariantGrowableTableState();
 }
@@ -24,6 +26,7 @@ class BogoVariantGrowableTable extends StatefulWidget {
 class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
   String variantCode="";
   String variantName="";
+  int? variantId;
   bool isActive=false;
   Barcode barcode=Barcode();
   List<VariantModel>table=[];
@@ -50,6 +53,7 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
     variantCode="";
     variantName="";
     isActive=false;
+    variantId=null;
     table=[];
     barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
   }
@@ -60,7 +64,25 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
     double w=MediaQuery.of(context).size.width;
 
     return
-      Builder(
+      BlocListener<BogoReadCubit, BogoReadState>(
+  listener: (context, state) {
+    print("state++++++++++++++++++++++++++++++++");
+    state.maybeWhen(
+        orElse: () {},
+        error: () {
+          print("error");
+        },
+        success: (data) {
+          setState(() {
+
+
+            data.lines != null ? table =List.from( data?.lines ?? []) : table = [];
+
+
+          });
+        });
+  },
+  child: Builder(
           builder: (context) {
             return   Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,7 +339,7 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
                                       SizedBox(width: 4,),
 
 
-                                      TableIconTextButton(
+                                    if(widget.select!)  TableIconTextButton(
 
                                         // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                         // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
@@ -396,6 +418,7 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
 
                                         setState(() {
                                           variantCode=va?.variantCode??"";
+                                          variantId=va?.variantId??null;
                                           variantName=va?.variantName??"";
                                           print("barcodeeeeeeeeeeee");
                                           print(va?.barcode?.barcodeNumber??"");
@@ -472,6 +495,7 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
                                         ));
                                         variantCode="";
                                         variantName="";
+                                        variantId=null;
                                         barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
                                         onSaveActive=false;
                                         isActive=false;
@@ -503,7 +527,8 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
               ],
             );
           }
-      );
+      ),
+);
 
   }
 }

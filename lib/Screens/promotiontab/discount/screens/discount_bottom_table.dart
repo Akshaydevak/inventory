@@ -23,12 +23,13 @@ import '../../../../widgets/dropdownbutton.dart';
 class DiscountBottomGrowableTable extends StatefulWidget {
   final  List<Segment> segmentList;
   final Function updation;
+  final bool select;
 
   // final  bool addNew;
   final  Key? key;
 
 
-  DiscountBottomGrowableTable({ required this.segmentList, required this.updation,this.key});
+  DiscountBottomGrowableTable({ required this.segmentList, required this.updation,this.key, required this.select});
   @override
   DiscountBottomGrowableTableState createState() => DiscountBottomGrowableTableState();
 }
@@ -46,6 +47,7 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
   var     imageEncode ;
 
   bool isActive=false;
+  bool imagePostCheck=false;
   Barcode barcode=Barcode();
   List<SaleLinesDiscount>table=[];
   List<VariantsLinesDiscount>variant=List.from([]);
@@ -396,23 +398,24 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                       verticalAlignment: TableCellVerticalAlignment.middle,
 
                                       child:
-                                      PopUpCall(
-
-                                        type:"SaleApplyingOnPromotionPopup",
-                                        value:table[i].typeApplying,
-                                        onSelection: (String? va) {
-                                          print(
-                                              "+++++++++++++++++++++++");
-                                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                          setState(() {
-                                            table[i]=table[i].copyWith(typeApplying:va,updateCheck: true ,typeCode: "",typeName: "",typeId: 0);
-
-
-                                            // // onChange = true;
-                                            // typeAllying= va!;
-                                          });
-                                        },
-                                      ),
+                                          textPadding(table[i].typeApplying??"")
+                                      // PopUpCall(
+                                      //
+                                      //   type:"SaleApplyingOnPromotionPopup",
+                                      //   value:table[i].typeApplying,
+                                      //   onSelection: (String? va) {
+                                      //     print(
+                                      //         "+++++++++++++++++++++++");
+                                      //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                      //     setState(() {
+                                      //       table[i]=table[i].copyWith(typeApplying:va,updateCheck: true ,typeCode: "",typeName: "",typeId: 0);
+                                      //
+                                      //
+                                      //       // // onChange = true;
+                                      //       // typeAllying= va!;
+                                      //     });
+                                      //   },
+                                      // ),
 
 
                                       // textPadding(table[i].typeApplying.toString()??"")
@@ -423,39 +426,39 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                   TableCell(
                                       verticalAlignment: TableCellVerticalAlignment.middle,
 
-                                      child:
-                                      VariantIdTAble(
-                                        text:table[i].typeCode,
-                                        onTap: (){
-                                          List<String> list=[];
-                                          for (var val in widget.segmentList)
-                                            list.add(val.segmentCode.toString());
-                                          salesOrderNamePostModel model=salesOrderNamePostModel(
-                                            inventoryId: Variable.inventory_ID,
-                                            searchElemet: null,
-                                            type:  table[i].typeApplying,
-                                            segmentList:list,
-                                          );
-                                          print(model);
-                                          showDailogPopUp(
-                                            context,
-                                            TableConfigurePopup(
-                                              type: "SaleApplyingNamePeriodPopup",
-                                              object: model,
-                                              valueSelect: (OfferPeriodList va) {
-                                                setState(() {
-                                                  table[i]=table[i].copyWith(typeId: va.id,typeName: va.name,variants: [],addedVariant:[],deletedVariants:[],updateCheck: true,typeCode: va.code);
-
-                                                  // setState(() {});
-
-                                                  // onChange = true;
-                                                  // orderType.text = va!;
-                                                });
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      ),
+                                      child:textPadding(table[i].typeCode??"")
+                                      // VariantIdTAble(
+                                      //   text:table[i].typeCode,
+                                      //   onTap: (){
+                                      //     List<String> list=[];
+                                      //     for (var val in widget.segmentList)
+                                      //       list.add(val.segmentCode.toString());
+                                      //     salesOrderNamePostModel model=salesOrderNamePostModel(
+                                      //       inventoryId: Variable.inventory_ID,
+                                      //       searchElemet: null,
+                                      //       type:  table[i].typeApplying,
+                                      //       segmentList:list,
+                                      //     );
+                                      //     print(model);
+                                      //     showDailogPopUp(
+                                      //       context,
+                                      //       TableConfigurePopup(
+                                      //         type: "SaleApplyingNamePeriodPopup",
+                                      //         object: model,
+                                      //         valueSelect: (OfferPeriodList va) {
+                                      //           setState(() {
+                                      //             table[i]=table[i].copyWith(typeId: va.id,typeName: va.name,variants: [],addedVariant:[],deletedVariants:[],updateCheck: true,typeCode: va.code);
+                                      //
+                                      //             // setState(() {});
+                                      //
+                                      //             // onChange = true;
+                                      //             // orderType.text = va!;
+                                      //           });
+                                      //         },
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      // ),
                                       // textPadding(table[i].typeId.toString())
 
 
@@ -552,6 +555,7 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                               create: (context) => VariantListPromotionCubit()..getVariantList(model),
                                               child: ConfigurePopup(
                                                 obj: model,
+                                                passingList: table[i].addedVariant,
                                                 code:table[i].offerProductGroupCode ,
 
                                                 listAssign: (deletedlist,adedlist){
@@ -607,6 +611,7 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                         setState(() {
                                           table[i]=table[i].copyWith(imageName: "",image: null,updateCheck: true);
                                           Variable.img3=null;
+                                          imagePostCheck=false;
                                         });
 
                                       },
@@ -636,6 +641,8 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                         // Variable.popUp = false;
 
                                         if (newFile.length <= 150000) {
+                                          table[i]=table[i].copyWith(image: null,updateCheck: true);
+
                                           context.read<PromotionImageCubit>().postPromotionImage(table[i].imageName,  imageEncode,type: "image3");
                                           // loading
                                           //     ? showDailogPopUp(context, DialoguePopUp())
@@ -700,7 +707,7 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
 
                                               setState(() {
                                                 // widget.updateCheck(false);
-                                                table[i]=      table[i].copyWith(updateCheck: false,image: Variable.img3!=null?Variable.img3.toString():null);
+                                                table[i]=      table[i].copyWith(updateCheck: false,image:table[i].image==null? Variable.img3!=null?Variable.img3.toString():null:table[i].image);
                                                 widget.updation(table);
 
 
@@ -716,7 +723,7 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                         SizedBox(width: 4,),
 
 
-                                        TableIconTextButton(
+                                     if(widget.select)   TableIconTextButton(
 
                                           // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                           // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
@@ -1041,10 +1048,10 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
             typeId: int.tryParse(typeId),
             title: titleController.text,
             maximumQuantity:int.tryParse( maximumInvenortry.text),
-            variants: variant,
-            image:Variable?.img2?.toString()??null,
+            variants: [...variant],
+            image:Variable?.img2!=null?Variable?.img2.toString():null,
             isActive:isActive,
-            addedVariant:variant ,
+            addedVariant: [...variant] ,
             typeName: typeApplyingName,
             typeCode: typeCode,
             imageName: imageName,
@@ -1061,6 +1068,7 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
             onSaveActive=false;
             imageController.clear();
             maximumInvenortry.clear();
+            Variable?.img2=null;
             typeId="";
             // variant.clear();
             typeApplyingName="";

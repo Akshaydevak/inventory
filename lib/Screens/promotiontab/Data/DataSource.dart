@@ -2,6 +2,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:inventory/Screens/promotiontab/bogo_tab/model/bogo_creation_model.dart';
 import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
@@ -57,6 +58,10 @@ abstract class PromotionDatasourse {
 
   //BoGO+++++++++++++++++
   Future<PaginatedResponse<List<OfferPeriodList>>> getBogoVerticalList(String? code);
+  Future<listAllSalesApis> getListAllBogoApi({String? type });
+  Future<DoubleResponse> postPromtionBogo(PromotionBogoCreationModel model);
+  Future<PromotionBogoReadModel>getPromotionBogoRead(int id);
+  Future<DoubleResponse> bogoPromotionPatch(PromotionBogoCreationModel model,int ? id);
 
 
 
@@ -1184,12 +1189,12 @@ try{
   );
   // pri
   // nt("response" + response.toString());
-  List<VariantModel> items = [];
+  List<SaleLines> items = [];
 
   if(type!=1){
 
     (response.data['data'] as List).forEach((element) {
-      items.add(VariantModel.fromJson(element));
+      items.add(SaleLines.fromJson(element));
       print("listOfferPeriod" + items.toString());
     });
 
@@ -1221,12 +1226,12 @@ try{
         },
       ),
     );
-    List<VariantModel> items = [];
+    List<SaleLines> items = [];
 
     if(type!=1){
 
       (response.data['data'] as List).forEach((element) {
-        items.add(VariantModel.fromJson(element));
+        items.add(SaleLines.fromJson(element));
         print("listOfferPeriod" + items.toString());
       });
 
@@ -1489,6 +1494,7 @@ return data;
             "offer_period_id":model.offerPeriodId,
 
             "offer_group_id":model.offerGroupId,
+                  "segments":model.segments,
 
             "based_on":model.basedOn,
 
@@ -1574,6 +1580,7 @@ return data;
             "offer_period_id":model.offerPeriodId,
 
             "offer_group_id":model.offerGroupId,
+            "segments":model.segments,
 
             "based_on":model.basedOn,
 
@@ -1896,6 +1903,12 @@ try{
             "description":model.description,
             "is_available_for_all":model.isAvailableForAll,
              "segments":model.segments,
+          "buy_more_applying_on_name":model.buyMoreApplyingOnName,
+          "buy_more_applying_on_id":model.buyMoreApplyingOnId,
+          "buy_more_applying_on_code":model.buyMoreApplyingOnCode,
+          "maximum_count":model.maximumCount,
+
+
             "available_customer_groups":   {
               "customer_group_code": null,
               "customer_group_name": null
@@ -1997,6 +2010,10 @@ try{
           "description":model.description,
           "is_available_for_all":model.isAvailableForAll,
           "segments":model.segments,
+          "buy_more_applying_on_name":model.buyMoreApplyingOnName,
+          "buy_more_applying_on_id":model.buyMoreApplyingOnId,
+          "buy_more_applying_on_code":model.buyMoreApplyingOnCode,
+          "maximum_count":model.maximumCount,
           "available_customer_groups":  {
             "customer_group_code": null,
             "customer_group_name": null
@@ -2049,10 +2066,10 @@ try{
 
   @override
   Future<PaginatedResponse<  List<CustomGroupReadModel>>> getCustomGroupRead() async {
-    var path=Uri.parse("https://api-customergroup-application.hilalcart.com/");
+    var path=Uri.parse("http://api-customergroup-application.hilalcart.com");
     print(path);
     try{
-      final response = await client.get(path.toString(),
+      final response = await client.get("https://api-customergroup-application.hilalcart.com",
           options:Options(
             headers: {
               'Content-Type': 'application/json',
@@ -2078,7 +2095,7 @@ try{
       print("pppppppppppppppppppppp"+e.toString());
     }
     print("hi here");
-    final response = await client.get(path.toString(),
+    final response = await client.get("https://api-customergroup-application.hilalcart.com",
       options:Options(
           headers: {
         'Content-Type': 'application/json',
@@ -2157,6 +2174,381 @@ try{
       response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
+  }
+
+  @override
+  Future<listAllSalesApis> getListAllBogoApi({String? type}) async {
+    final response = await client.get(
+      createBogoApi,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("response" + response.toString());
+    listAllSalesApis ordertype =
+    listAllSalesApis.fromJson(response.data['data']);
+    print("return OrderType+++++++++++++++++"+ordertype.toString());
+
+    return ordertype;
+  }
+
+  @override
+  Future<DoubleResponse> postPromtionBogo(PromotionBogoCreationModel model) async {
+    print(createBogoApi);
+    try{
+      final response = await client.post(createBogoApi,
+          data: model.toJson(),
+          // data:{
+          //
+          //
+          //   "lines": model.lines,
+          //
+          //
+          //   "inventory_id": model.inventoryId,
+          //
+          //   "offer_applied_to": model.offerAppliedTo,
+          //
+          //   "offer_applied_to_id": model.offerAppliedToId,
+          //
+          //   "offer_applied_to_code": model.offerAppliedToCode,
+          //
+          //   "title": "ajjhaa",
+          //
+          //   "description": "",
+          //
+          //   "segments":[{"segment_name":"groceries","segment_code":"groceries"}],
+          //
+          //   "is_available_for_all": true,
+          //
+          //   "available_customer_groups": [],
+          //
+          //   "count_price_percentage": [{"count":10,"price_percentage":10}],
+          //
+          //   "image": "",
+          //
+          //   "based_on": "price",
+          //
+          //   "buy_more_applying_on": "category",
+          //
+          //   "buy_more_applying_on_name": "CATY130171",
+          //
+          //   "buy_more_applying_on_id": 70,
+          //
+          //   "buy_more_applying_on_code": "CATY130171",
+          //
+          //   "created_by": "hai",
+          //
+          //   "is_active": false,
+          //
+          //   "offer_period_id": model.offerPeriodId,
+          //
+          //   "offer_group_id":model.offerGroupId
+          //
+          //
+          //
+          // },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      print(response.data);
+      if (response.data['status'] == 'failed') {
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
+
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+    }catch(e){
+      print(e);
+
+    }
+    final response = await client.post(createBogoApi,
+        data: model.toJson(),
+        // data:{
+        //
+        //
+        //   "lines": model.lines,
+        //
+        //
+        //   "inventory_id": model.inventoryId,
+        //
+        //   "offer_applied_to": model.offerAppliedTo,
+        //
+        //   "offer_applied_to_id": model.offerAppliedToId,
+        //
+        //   "offer_applied_to_code": model.offerAppliedToCode,
+        //
+        //   "title": "ajjhaa",
+        //
+        //   "description": "",
+        //
+        //   "segments":[{"segment_name":"groceries","segment_code":"groceries"}],
+        //
+        //   "is_available_for_all": true,
+        //
+        //   "available_customer_groups": [],
+        //
+        //   "count_price_percentage": [{"count":10,"price_percentage":10}],
+        //
+        //   "image": "",
+        //
+        //   "based_on": "price",
+        //
+        //   "buy_more_applying_on": "category",
+        //
+        //   "buy_more_applying_on_name": "CATY130171",
+        //
+        //   "buy_more_applying_on_id": 70,
+        //
+        //   "buy_more_applying_on_code": "CATY130171",
+        //
+        //   "created_by": "hai",
+        //
+        //   "is_active": false,
+        //
+        //   "offer_period_id": model.offerPeriodId,
+        //
+        //   "offer_group_id":model.offerGroupId
+        //
+        //
+        //
+        // },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+  }
+
+  @override
+  Future<PromotionBogoReadModel> getPromotionBogoRead(int id) async {
+    String path=patchotionBogoApi+id.toString();
+    print(path);
+    try{
+      final response = await client.get(path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      // print("response" + response.toString());
+      PromotionBogoReadModel data = PromotionBogoReadModel.fromJson(response.data['data']['bogo_data']);
+      print("far$data");
+      return data;
+    }catch(e){
+
+
+      print("the error is here is "+e.toString());
+    }
+    final response = await client.get(path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    // print("response" + response.toString());
+    PromotionBogoReadModel data = PromotionBogoReadModel.fromJson(response.data['data']['bogo_data']);
+    print("far$data");
+    return data;
+  }
+
+  @override
+  Future<DoubleResponse> bogoPromotionPatch(PromotionBogoCreationModel model, int? id) async {
+    String path=patchotionBogoApi+id.toString();
+  print(path);
+  print(model);
+
+  try{
+    final response = await client.patch(path,
+        data:  {
+
+
+          "segments": model.segments,
+
+          "name": model.name,
+
+          "description": model.description,
+
+          "get_count": model.getCount,
+
+          "buy_count": model.buyCount,
+
+          "maximum_count": model.maximumCount,
+
+          "is_available_for_all": model.isAvailableForAll,
+
+          "available_customer_groups": [{"customer_group_code": "hai", "customer_group_name": "hello"}],
+
+          "image": model.image,
+
+          "bogo_applying_on": model.bogoApplyingOn,
+
+          "bogo_applying_on_name": model.bogoApplyingOnName,
+
+          "bogo_applying_on_id": model.bogoApplyingOnId,
+
+          "bogo_applying_on_code": model.bogoApplyingOnCode,
+
+          "created_by": model.createdBy,
+
+          "is_active": model.isActive,
+
+          "offer_period_id": model.offerPeriodId,
+
+          "offer_group_id":null,
+
+
+
+          "lines":model.lines
+
+
+
+        },
+
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+  }catch(e){
+    print("the error is here"+e.toString());
+
+  }
+  final response = await client.patch(path,
+      // data: model.toJson(),
+
+      // data: model.toJson(),
+
+      data:  {
+
+
+        "segments": model.segments,
+
+        "name": model.name,
+
+        "description": model.description,
+
+        "get_count": model.getCount,
+
+        "buy_count": model.buyCount,
+
+        "maximum_count": model.maximumCount,
+
+        "is_available_for_all": model.isAvailableForAll,
+
+        "available_customer_groups": [{"customer_group_code": "hai", "customer_group_name": "hello"}],
+
+        "image": model.image,
+
+        "bogo_applying_on": model.bogoApplyingOn,
+
+        "bogo_applying_on_name": model.bogoApplyingOnName,
+
+        "bogo_applying_on_id": model.bogoApplyingOnId,
+
+        "bogo_applying_on_code": model.bogoApplyingOnCode,
+
+        "created_by": model.createdBy,
+
+        "is_active": model.isActive,
+
+        "offer_period_id": model.offerPeriodId,
+
+        "offer_group_id":null,
+
+
+
+        "lines":model.lines
+
+
+
+      },
+      options: Options(headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }));
+
+  print(response.data);
+  if (response.data['status'] == 'failed') {
+
+
+
+    if(response.data['is_another_promotion']==true){
+      Variable.errorMessege = response.data['message']['message'];
+      Variable.type_data = response.data['message']['type_data'];
+      Variable.isTypeDataCheck = true;
+
+    }
+    else{
+      Variable.errorMessege = response.data['message'];
+      Variable.isTypeDataCheck = false;
+    }
+  }
+  return DoubleResponse(
+      response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
   }
 
 

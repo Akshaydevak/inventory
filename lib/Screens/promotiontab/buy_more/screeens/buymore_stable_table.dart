@@ -30,6 +30,7 @@ class PromotionByMoreStableTable extends StatefulWidget {
   final TextEditingController buyMoreApplyinOn;
   final TextEditingController availableCustomerGroups;
   final TextEditingController buyMoreApplyingNameCode;
+  final TextEditingController maximumCount;
   final TextEditingController buyMoreApplyingNameId;
   final TextEditingController imageNameController;
 
@@ -41,7 +42,7 @@ class PromotionByMoreStableTable extends StatefulWidget {
   final Function activeChange;
   final Function variantTableDatsClear;
 
-  PromotionByMoreStableTable({ required this.buyMoreCode,required this.variantTableDatsClear, required this.descripion, required this.buyMoreApplyingNmae, required this.offerPeriodId, required this.offerPeriodName, required this.basedOn, required this.image, required this.title, required this.buyMoreApplyinOn, required this.availableCustomerGroups, required this.isAvailableForAll, required this.isActive, required this.isSelect, required this.offerGroupName, required this.offerGroupId, required this.buyMoreApplyingPlace, required this.buyMoreApplyingPlaceName, required this.table, required this.buyMoreApplyingNameCode, required this.buyMoreApplyingNameId, required this.buyMoreApplyingPlaceCode, required this.buyMoreApplyingPlaceId, required this.activeChange, required this.imageNameController});
+  PromotionByMoreStableTable({ required this.buyMoreCode,required this.variantTableDatsClear, required this.descripion, required this.buyMoreApplyingNmae, required this.offerPeriodId, required this.offerPeriodName, required this.basedOn, required this.image, required this.title, required this.buyMoreApplyinOn, required this.availableCustomerGroups, required this.isAvailableForAll, required this.isActive, required this.isSelect, required this.offerGroupName, required this.offerGroupId, required this.buyMoreApplyingPlace, required this.buyMoreApplyingPlaceName, required this.table, required this.buyMoreApplyingNameCode, required this.buyMoreApplyingNameId, required this.buyMoreApplyingPlaceCode, required this.buyMoreApplyingPlaceId, required this.activeChange, required this.imageNameController, required this.maximumCount});
 
 
   @override
@@ -235,7 +236,89 @@ class _PromotionByMoreStableTableState extends State<PromotionByMoreStableTable>
                   SizedBox(
                     height: height * .030,
                   ),
+                  NewInputCard(
+                      formatter: true,
 
+                      controller: widget.maximumCount, title: "Maximum Count"),
+                  SizedBox(
+                    height: height * .030,
+                  ),
+
+
+
+
+                ],
+              )),
+              Expanded(child: Column(
+                children: [
+                  // NewInputCard(
+                  //   controller: widget.offerGroupName,
+                  //   icondrop: true,
+                  //   readOnly: true,
+                  //   title: "Offer Group",
+                  //   ontap: () {
+                  //     if(widget.offerGroupName.text.isNotEmpty){
+                  //
+                  //       setState(() {
+                  //         widget.offerGroupId.text =  "";
+                  //         widget.offerGroupName.text =  "";
+                  //
+                  //       });
+                  //     }
+                  //     else
+                  //     showDailogPopUp(
+                  //       context,
+                  //       TableConfigurePopup(
+                  //         type: "OfferGroupPeriodPopup",
+                  //         valueSelect: (OfferGroupList va) {
+                  //           setState(() {
+                  //             widget.offerGroupId.text = va?.id.toString() ?? "";
+                  //             widget.offerGroupName.text = va.title.toString() ?? "";
+                  //             // widget.costingName.text =
+                  //             //     va.methodName ?? "";
+                  //             // setState(() {});
+                  //
+                  //             // onChange = true;
+                  //             // orderType.text = va!;
+                  //           });
+                  //         },
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+                  // SizedBox(
+                  //   height: height * .030,
+                  // ),
+                  NewInputCard(
+
+                      controller: widget.title,
+                      title: "Title"),
+                  SizedBox(
+                    height: height * .030,
+                  ),
+                  SelectableDropDownpopUp(
+                    label: "Buy More Applying On",
+                    type:"SaleApplyingOnPromotionPopup",
+                    value: widget.buyMoreApplyinOn.text,
+                    onSelection: (String? va) {
+                      print(
+                          "+++++++++++++++++++++++");
+                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                      setState(() {
+
+
+                        // onChange = true;
+                        widget.buyMoreApplyinOn.text = va!;
+                        widget.buyMoreApplyingNmae.text="";
+                        widget.buyMoreApplyingNameCode.text="";
+                        widget.buyMoreApplyingNameId.text="";
+                        widget.variantTableDatsClear();
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: height * .030,
+                  ),
                   FileUploadField(
 
                       fileName:widget.imageNameController?.text??"",
@@ -258,9 +341,9 @@ class _PromotionByMoreStableTableState extends State<PromotionByMoreStableTable>
 
 
 
-                        widget.image.text=myFile?.fileName??"";
-                             imageEncode =
-                        myFile.toBase64();
+                        widget.imageNameController.text=myFile?.fileName??"";
+                        imageEncode =
+                            myFile.toBase64();
                         // Variable.mobileBannerImage = myFile.toUint8List();
                         //
                         // imageEncode =
@@ -292,88 +375,13 @@ class _PromotionByMoreStableTableState extends State<PromotionByMoreStableTable>
                       },
                       onCreate: true,
                       label: "Image"),
-                  SizedBox(
-                    height: height * .030,
-                  ),
-
-
-                ],
-              )),
-              Expanded(child: Column(
-                children: [
-                  NewInputCard(
-                    controller: widget.offerGroupName,
-                    icondrop: true,
-                    readOnly: true,
-                    title: "Offer Group",
-                    ontap: () {
-                      if(widget.offerGroupName.text.isNotEmpty){
-
-                        setState(() {
-                          widget.offerGroupId.text =  "";
-                          widget.offerGroupName.text =  "";
-
-                        });
-                      }
-                      else
-                      showDailogPopUp(
-                        context,
-                        TableConfigurePopup(
-                          type: "OfferGroupPeriodPopup",
-                          valueSelect: (OfferGroupList va) {
-                            setState(() {
-                              widget.offerGroupId.text = va?.id.toString() ?? "";
-                              widget.offerGroupName.text = va.title.toString() ?? "";
-                              // widget.costingName.text =
-                              //     va.methodName ?? "";
-                              // setState(() {});
-
-                              // onChange = true;
-                              // orderType.text = va!;
-                            });
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: height * .030,
-                  ),
-                  NewInputCard(
-
-                      controller: widget.title,
-                      title: "Title"),
-                  SizedBox(
-                    height: height * .030,
-                  ),
-                  SelectableDropDownpopUp(
-                    label: "Buy More Applying On",
-                    type:"SaleApplyingOnPromotionPopup",
-                    value: widget.buyMoreApplyinOn.text,
-                    onSelection: (String? va) {
-                      print(
-                          "+++++++++++++++++++++++");
-                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                      setState(() {
-
-
-                        // onChange = true;
-                        widget.buyMoreApplyinOn.text = va!;
-                        widget.buyMoreApplyingNmae.text="";
-                        widget.buyMoreApplyingNameCode.text="";
-                        widget.buyMoreApplyingNameId.text="";
-                      });
-                    },
-                  ),
 
                   SizedBox(
-                    height: height * .135,
+                    height: height * .150,
                   ),
 
 
-                  SizedBox(
-                    height: height * .030,
-                  ),
+
 
                 ],
               )),

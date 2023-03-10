@@ -47,7 +47,7 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
 
 
           Container(
-            height:height-100,
+            height:height-height*.16,
             width: double.infinity,
             color: Colors.white,
             child: Column(

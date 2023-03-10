@@ -41,6 +41,8 @@ mixin _$PromotionBuyMoreCreationModel {
   String? get offerAppliedTo => throw _privateConstructorUsedError;
   @JsonKey(name: "offer_applied_to_id")
   int? get offerAppliedToId => throw _privateConstructorUsedError;
+  @JsonKey(name: "maximum_count")
+  int? get maximumCount => throw _privateConstructorUsedError;
   @JsonKey(name: "offer_applied_to_code")
   String? get offerAppliedToCode => throw _privateConstructorUsedError;
   @JsonKey(name: "offer_period_name")
@@ -103,6 +105,8 @@ abstract class $PromotionBuyMoreCreationModelCopyWith<$Res> {
           String? offerAppliedTo,
       @JsonKey(name: "offer_applied_to_id")
           int? offerAppliedToId,
+      @JsonKey(name: "maximum_count")
+          int? maximumCount,
       @JsonKey(name: "offer_applied_to_code")
           String? offerAppliedToCode,
       @JsonKey(name: "offer_period_name")
@@ -156,6 +160,7 @@ class _$PromotionBuyMoreCreationModelCopyWithImpl<$Res,
     Object? offerGroupId = freezed,
     Object? offerAppliedTo = freezed,
     Object? offerAppliedToId = freezed,
+    Object? maximumCount = freezed,
     Object? offerAppliedToCode = freezed,
     Object? offerPeriodName = freezed,
     Object? offerGroupName = freezed,
@@ -221,6 +226,10 @@ class _$PromotionBuyMoreCreationModelCopyWithImpl<$Res,
       offerAppliedToId: freezed == offerAppliedToId
           ? _value.offerAppliedToId
           : offerAppliedToId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maximumCount: freezed == maximumCount
+          ? _value.maximumCount
+          : maximumCount // ignore: cast_nullable_to_non_nullable
               as int?,
       offerAppliedToCode: freezed == offerAppliedToCode
           ? _value.offerAppliedToCode
@@ -304,6 +313,8 @@ abstract class _$$_PromotionBuyMoreCreationModelCopyWith<$Res>
           String? offerAppliedTo,
       @JsonKey(name: "offer_applied_to_id")
           int? offerAppliedToId,
+      @JsonKey(name: "maximum_count")
+          int? maximumCount,
       @JsonKey(name: "offer_applied_to_code")
           String? offerAppliedToCode,
       @JsonKey(name: "offer_period_name")
@@ -356,6 +367,7 @@ class __$$_PromotionBuyMoreCreationModelCopyWithImpl<$Res>
     Object? offerGroupId = freezed,
     Object? offerAppliedTo = freezed,
     Object? offerAppliedToId = freezed,
+    Object? maximumCount = freezed,
     Object? offerAppliedToCode = freezed,
     Object? offerPeriodName = freezed,
     Object? offerGroupName = freezed,
@@ -421,6 +433,10 @@ class __$$_PromotionBuyMoreCreationModelCopyWithImpl<$Res>
       offerAppliedToId: freezed == offerAppliedToId
           ? _value.offerAppliedToId
           : offerAppliedToId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maximumCount: freezed == maximumCount
+          ? _value.maximumCount
+          : maximumCount // ignore: cast_nullable_to_non_nullable
               as int?,
       offerAppliedToCode: freezed == offerAppliedToCode
           ? _value.offerAppliedToCode
@@ -499,6 +515,8 @@ class _$_PromotionBuyMoreCreationModel
           this.offerAppliedTo,
       @JsonKey(name: "offer_applied_to_id")
           this.offerAppliedToId,
+      @JsonKey(name: "maximum_count")
+          this.maximumCount,
       @JsonKey(name: "offer_applied_to_code")
           this.offerAppliedToCode,
       @JsonKey(name: "offer_period_name")
@@ -580,6 +598,9 @@ class _$_PromotionBuyMoreCreationModel
   @JsonKey(name: "offer_applied_to_id")
   final int? offerAppliedToId;
   @override
+  @JsonKey(name: "maximum_count")
+  final int? maximumCount;
+  @override
   @JsonKey(name: "offer_applied_to_code")
   final String? offerAppliedToCode;
   @override
@@ -631,7 +652,7 @@ class _$_PromotionBuyMoreCreationModel
 
   @override
   String toString() {
-    return 'PromotionBuyMoreCreationModel(id: $id, title: $title, description: $description, image: $image, segments: $segments, lines: $lines, inventoryId: $inventoryId, basedOn: $basedOn, buyMoreCode: $buyMoreCode, offerPeriodId: $offerPeriodId, offerGroupId: $offerGroupId, offerAppliedTo: $offerAppliedTo, offerAppliedToId: $offerAppliedToId, offerAppliedToCode: $offerAppliedToCode, offerPeriodName: $offerPeriodName, offerGroupName: $offerGroupName, buyMoreApplyingOn: $buyMoreApplyingOn, buyMoreApplyingOnName: $buyMoreApplyingOnName, buyMoreApplyingOnId: $buyMoreApplyingOnId, buyMoreApplyingOnCode: $buyMoreApplyingOnCode, countPricePercentage: $countPricePercentage, isActive: $isActive, isAvailableForAll: $isAvailableForAll, createdBy: $createdBy, availableCustomerGroups: $availableCustomerGroups)';
+    return 'PromotionBuyMoreCreationModel(id: $id, title: $title, description: $description, image: $image, segments: $segments, lines: $lines, inventoryId: $inventoryId, basedOn: $basedOn, buyMoreCode: $buyMoreCode, offerPeriodId: $offerPeriodId, offerGroupId: $offerGroupId, offerAppliedTo: $offerAppliedTo, offerAppliedToId: $offerAppliedToId, maximumCount: $maximumCount, offerAppliedToCode: $offerAppliedToCode, offerPeriodName: $offerPeriodName, offerGroupName: $offerGroupName, buyMoreApplyingOn: $buyMoreApplyingOn, buyMoreApplyingOnName: $buyMoreApplyingOnName, buyMoreApplyingOnId: $buyMoreApplyingOnId, buyMoreApplyingOnCode: $buyMoreApplyingOnCode, countPricePercentage: $countPricePercentage, isActive: $isActive, isAvailableForAll: $isAvailableForAll, createdBy: $createdBy, availableCustomerGroups: $availableCustomerGroups)';
   }
 
   @override
@@ -659,6 +680,8 @@ class _$_PromotionBuyMoreCreationModel
                 other.offerAppliedTo == offerAppliedTo) &&
             (identical(other.offerAppliedToId, offerAppliedToId) ||
                 other.offerAppliedToId == offerAppliedToId) &&
+            (identical(other.maximumCount, maximumCount) ||
+                other.maximumCount == maximumCount) &&
             (identical(other.offerAppliedToCode, offerAppliedToCode) ||
                 other.offerAppliedToCode == offerAppliedToCode) &&
             (identical(other.offerPeriodName, offerPeriodName) ||
@@ -702,6 +725,7 @@ class _$_PromotionBuyMoreCreationModel
         offerGroupId,
         offerAppliedTo,
         offerAppliedToId,
+        maximumCount,
         offerAppliedToCode,
         offerPeriodName,
         offerGroupName,
@@ -754,6 +778,8 @@ abstract class _PromotionBuyMoreCreationModel
               final String? offerAppliedTo,
           @JsonKey(name: "offer_applied_to_id")
               final int? offerAppliedToId,
+          @JsonKey(name: "maximum_count")
+              final int? maximumCount,
           @JsonKey(name: "offer_applied_to_code")
               final String? offerAppliedToCode,
           @JsonKey(name: "offer_period_name")
@@ -816,6 +842,9 @@ abstract class _PromotionBuyMoreCreationModel
   @override
   @JsonKey(name: "offer_applied_to_id")
   int? get offerAppliedToId;
+  @override
+  @JsonKey(name: "maximum_count")
+  int? get maximumCount;
   @override
   @JsonKey(name: "offer_applied_to_code")
   String? get offerAppliedToCode;
