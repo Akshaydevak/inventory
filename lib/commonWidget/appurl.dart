@@ -383,6 +383,11 @@ const patchotionBogoApi = promotionLiveBaseUrl +"bogo/read-patch-bogo/";
 const verticalListBogoApi = promotionLiveBaseUrl +"bogo/list-bogo-by-inventory/";
 const createBogoApi = promotionLiveBaseUrl +"bogo/create-bogo";
 
+//coupon__________________________________________
+const verticalListCouponApi = promotionLiveBaseUrl +"coupon/list-coupon-by-inventory/";
+const readCouponApi = promotionLiveBaseUrl +"coupon/read-patch-coupon/";
+
+
 
 
 

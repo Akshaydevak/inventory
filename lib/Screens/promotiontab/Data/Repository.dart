@@ -59,6 +59,9 @@ abstract class InventoryPromotionRepository{
   Future<Either<Failure, DoubleResponse>> postPromtionBogo(PromotionBogoCreationModel model);
   Future<Either<Failure, PromotionBogoReadModel>> getPromotionBogoRead(int verticalId);
   Future<Either<Failure, DoubleResponse>> bogoPromotionPatch(PromotionBogoCreationModel model,int? id);
+  
+  //Coupen
+  Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getCouPenVerticalList(String? code,);
 
 
 }
@@ -309,6 +312,12 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   Future<Either<Failure, DoubleResponse>> bogoPromotionPatch(PromotionBogoCreationModel model, int? id) {
     return repoExecute<DoubleResponse>(
             () async => remoteDataSource.bogoPromotionPatch(model,id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getCouPenVerticalList(String? code) {
+    return repoExecute<PaginatedResponse<List<OfferPeriodList>>>(
+            () async => remoteDataSource.getCouPenVerticalList(code));
   }
   //
   // @override

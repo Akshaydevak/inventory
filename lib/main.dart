@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/grouplist/grouplist_cubit.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_verticallist/bogo_vertical_list_cubit.dart';
+import 'package:inventory/Screens/promotiontab/coupon/cubit/verticallist/promotion_coupon_vertical_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/readOfferGroup/read_offer_group_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/payment_list/payment_list_cubit.dart';
@@ -137,6 +138,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => GeneralPurchaseReadCubit(),
         ),   BlocProvider(
           create: (context) => ListOfferPeriodCubit(),
+        ), BlocProvider(
+          create: (context) => PromotionCouponVerticalListCubit(),
         ),
         BlocProvider(
           create: (context) => MaterialListCubit(),

@@ -53,6 +53,7 @@ abstract class PromotionDatasourse {
   //buy more********************
   Future<DoubleResponse> postCreatePromtionBuyMore(PromotionBuyMoreCreationModel model);
   Future<PaginatedResponse<List<OfferPeriodList>>> getBuyMoreVerticalList(String? code);
+
   Future<PromotionBuyMoreCreationModel>getBuyMoreRead(int id);
   Future<DoubleResponse> buyMorePromotionSalePatch(PromotionBuyMoreCreationModel model,int ? id);
 
@@ -62,6 +63,8 @@ abstract class PromotionDatasourse {
   Future<DoubleResponse> postPromtionBogo(PromotionBogoCreationModel model);
   Future<PromotionBogoReadModel>getPromotionBogoRead(int id);
   Future<DoubleResponse> bogoPromotionPatch(PromotionBogoCreationModel model,int ? id);
+  //Coupon______________________________
+  Future<PaginatedResponse<List<OfferPeriodList>>> getCouPenVerticalList(String? code);
 
 
 
@@ -290,6 +293,11 @@ return data;
         break;   case "6":
         {
           url = patchotionBogoApi;
+        }
+        break;
+      case "7":
+        {
+          url = readCouponApi;
         }
         break;
 
@@ -2551,6 +2559,35 @@ try{
   }
   return DoubleResponse(
       response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+  }
+
+  @override
+  Future<PaginatedResponse<List<OfferPeriodList>>> getCouPenVerticalList(String? code) async {
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = verticalListCouponApi+Variable.inventory_ID;
+    else
+      path = verticalListCouponApi +Variable.inventory_ID+ "?$code";
+    print(path);
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<OfferPeriodList> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(OfferPeriodList.fromJson(element));
+      print("listOfferPeriod" + items.toString());
+    });
+    return PaginatedResponse<List<OfferPeriodList>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
 
