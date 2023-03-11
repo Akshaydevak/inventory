@@ -922,6 +922,7 @@ class ConfigurePopup extends StatelessWidget {
   final Function? listAssign;
   final List<LinkedItemListModel>?linkedListItemTable;
   final List<dynamic>?passingList;
+  final List<dynamic>?passingList2;
 
   final int? veritiaclid;
 
@@ -939,7 +940,7 @@ class ConfigurePopup extends StatelessWidget {
         this.obj,
       this.onAddNew = false,
       this.listAssign,
-      this.veritiaclid})
+      this.veritiaclid, this.passingList2})
       : super(key: key);
   late Widget data;
 
@@ -1023,6 +1024,7 @@ class ConfigurePopup extends StatelessWidget {
             veritcalCode:code,
             obj: obj,
             passingList: passingList,
+            passingList2: passingList2,
 
             linkedListItemTable:linkedListItemTable,
             listAssign: listAssign,
@@ -4075,6 +4077,52 @@ class _DiscountVariantCreatativePopup extends State<DiscountVariantCreatativePop
 
                     );
                   }
+                  else{
+                    setState(() {
+
+                      table =[];
+                      additionCheck.clear();
+
+
+                      print(widget.passingList);
+                      if(widget.passingList?.isNotEmpty==true){
+                        print("entered");
+                        for (var i =0;i<widget.passingList!.length;i++){
+                          print("entered1");
+                          additionCheck.add(widget.passingList![i].name);
+                          list1.add( VariantsLinesDiscount(
+                              id:widget.passingList![i].variantIdd,
+                              variantIdd:widget.passingList![i].variantIdd,
+                              variantCode:widget.passingList![i].variantCode,
+
+                              name:widget.passingList![i].name));
+                          print("entered");
+                        }
+                        setState(() {
+
+                        });
+
+
+
+
+
+                      }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    );
+
+
+
+                  }
 
                   // context.showSnackBarSuccess(data.data2);
 
@@ -4512,6 +4560,7 @@ class DiscountVariantGroupCodeCreatativePopup extends StatefulWidget {
   final PromotionVariantPostModel? obj;
   final List<LinkedItemListModel>?linkedListItemTable;
   final List<dynamic>?passingList;
+  final List<dynamic>?passingList2;
 
   DiscountVariantGroupCodeCreatativePopup({
     Key? key,
@@ -4520,7 +4569,7 @@ class DiscountVariantGroupCodeCreatativePopup extends StatefulWidget {
     required this.type,
     this.passingList,
     this.obj,
-    required this.listAssign,
+    required this.listAssign, this.passingList2,
   }) : super(key: key);
 
   @override
@@ -4641,10 +4690,10 @@ class _DiscountVariantGroupCodeCreatativePopup extends State<DiscountVariantGrou
                 setState(() {
                 paginated=data;
 
-                if (data.data.isNotEmpty==true) {
 
 
-                table = data.data;
+
+                table = data.data??[];
                 if(widget.passingList?.isNotEmpty==true)
                 for(var a in widget.passingList!){
                 table.add(SaleLines(variantName: a.variantName,
@@ -4653,6 +4702,13 @@ class _DiscountVariantGroupCodeCreatativePopup extends State<DiscountVariantGrou
                 barcode:a. barcode));
 
                 }
+                print("11111111111111111111111ssssssssssssssssssssssssss");
+                print( widget.passingList2);
+                for(var val in widget.passingList2??[])
+                  {
+                    table.removeWhere((element) => element.variantName==val.variantName);
+                  }
+
 
                 additionCheck.clear();
 
@@ -4681,7 +4737,7 @@ class _DiscountVariantGroupCodeCreatativePopup extends State<DiscountVariantGrou
                 // }
 
 
-                }
+
 
 
                 // context.showSnackBarSuccess(data.data2);

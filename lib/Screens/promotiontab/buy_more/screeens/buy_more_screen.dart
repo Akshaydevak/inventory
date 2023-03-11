@@ -67,6 +67,20 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical=0;
   List<OfferPeriodList> result = [];
+
+  segmentCleartymVariantAdd(){
+    if(select==false){
+      print("patch case");
+      if(variantTable2.isNotEmpty){
+        print("is Not empty");
+        for(var i=0;i<variantTable2.length;i++){
+          variantTable2[i]=variantTable2[i].copyWith(isActive: false);
+        }
+
+        isSegmentClear=true;
+      }
+    }
+  }
   tableAssign(List<Segment> table1) {
     print("ethito");
 
@@ -96,6 +110,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
     setState(() {
     variantTable.clear();
     _myWidgetState.currentState?.clear();
+    segmentCleartymVariantAdd();
     });
 
   }
@@ -535,6 +550,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                       SizedBox(height: height*.04,),
                       SegmentBuyMoreGrowableTable(
                           key: buyMoreSegmnetState,
+                          select:select,
                           table: segmentTable,
                           updation: tableAssign),
 
@@ -571,6 +587,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                       SizedBox(height: height*.06,),
                       CountBuyMoreGrowableTable(updation: countTableAssign,
                         key: buyMoreCountStateState,
+                        select:select,
 
                       ),
                       SizedBox(height: height*.06,), 

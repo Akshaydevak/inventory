@@ -97,6 +97,19 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
     isSegmentClear=false;
     });
   }
+  segmentCleartymVariantAdd(){
+    if(select==false){
+      print("patch case");
+      if(variantTable2.isNotEmpty){
+        print("is Not empty");
+        for(var i=0;i<variantTable2.length;i++){
+          variantTable2[i]=variantTable2[i].copyWith(isActive: false);
+        }
+
+        isSegmentClear=true;
+      }
+    }
+  }
   activeChange({int? type,bool val=false}){
     print("ssssssssssssssssssssssssssssssssssssss");
     print(type);
@@ -123,6 +136,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
     setState(() {
       variantTable.clear();
       _variantState.currentState?.clear();
+      segmentCleartymVariantAdd();
     });
 
   }
@@ -239,6 +253,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                 isActive=data.isActive??false;
                 data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
                 data.lines != null ? variantTable =List.from( data?.lines ?? []) : variantTable = [];
+                data.lines != null ? variantTable2 =List.from( data?.lines ?? []) : variantTable2 = [];
 
 
               });
@@ -516,6 +531,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                     ),
                     SizedBox(height: height*.04,),
                     BogoSegmentGrowableTable(
+                      select:select,
                         key: _segmnetState,
                         table: segmentTable,
                         updation: tableAssign),
@@ -629,7 +645,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                         PromotionBogoCreationModel model=PromotionBogoCreationModel(
                           lines: select?lines1:variantTable,
                           inventoryId: Variable.inventory_ID,
-                          segments:select?segmentTable1: segmentTable,
+                          segments:segmentTable1,
                           offerAppliedTo: bogoApplyingPlaceTypeController.text,
                           offerAppliedToId: bogoApplyingPlaceIdController.text,
                           offerAppliedToCode: bogoApplyingPlaceCodeController.text,

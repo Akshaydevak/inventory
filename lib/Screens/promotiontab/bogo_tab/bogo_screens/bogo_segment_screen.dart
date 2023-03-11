@@ -15,11 +15,11 @@ class BogoSegmentGrowableTable extends StatefulWidget {
   final Function updation;
 
   // final  Function(int?) ontap;
-  // final  bool addNew;
+  final  bool select;
   final Key? key;
 
   BogoSegmentGrowableTable(
-      {required this.table, required this.updation, this.key});
+      {required this.table, required this.updation, this.key,required this.select});
 
   @override
   BogoSegmentGrowableTableState createState() =>
@@ -324,7 +324,7 @@ class BogoSegmentGrowableTableState extends State<BogoSegmentGrowableTable> {
                                         SizedBox(width: 4,),
 
 
-                                        TableIconTextButton(
+                                   if(widget.select)     TableIconTextButton(
 
                                           // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                           // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,

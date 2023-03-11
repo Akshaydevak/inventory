@@ -1907,6 +1907,7 @@ try{
           "buy_more_applying_on_id":model.buyMoreApplyingOnId,
           "buy_more_applying_on_code":model.buyMoreApplyingOnCode,
           "maximum_count":model.maximumCount,
+          "buy_more_applying_on":model.buyMoreApplyingOn,
 
 
             "available_customer_groups":   {
@@ -2010,6 +2011,7 @@ try{
           "description":model.description,
           "is_available_for_all":model.isAvailableForAll,
           "segments":model.segments,
+          "buy_more_applying_on":model.buyMoreApplyingOn,
           "buy_more_applying_on_name":model.buyMoreApplyingOnName,
           "buy_more_applying_on_id":model.buyMoreApplyingOnId,
           "buy_more_applying_on_code":model.buyMoreApplyingOnCode,

@@ -363,46 +363,7 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
 
                       ],)),
                       Expanded(child: Column(children: [
-                        NewInputCard(
-                          controller: widget.offerGroupName,
-                          icondrop: true,
-                          readOnly: true,
-                          title: "Offer Group",
-                          ontap: () {
-                            if(widget.offerGroupName.text.isNotEmpty){
-                              setState(() {
-                                widget.offerGroupName.text =  "";
-                                widget.offerGroup.text = "";
-                              });
 
-                            }else
-                            showDailogPopUp(
-                              context,
-                              TableConfigurePopup(
-                                type: "OfferGroupPeriodPopup",
-                                valueSelect: (OfferGroupList va) {
-                                  setState(() {
-                                    widget.offerGroup.text = va?.id.toString() ?? "";
-                                    widget.offerGroupName.text = va.title.toString() ?? "";
-                                    // widget.costingName.text =
-                                    //     va.methodName ?? "";
-                                    // setState(() {});
-
-                                    // onChange = true;
-                                    // orderType.text = va!;
-                                  });
-                                },
-                              ),
-                            );
-                          },
-                        ),
-
-                        // NewInputCard(
-                        //     readOnly: true,
-                        //     controller: widget.offerGroup, title: "Offer Group"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
 
                         NewInputCard(
 
@@ -425,8 +386,11 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                           ontap: () {
                             List<String> list=[];
                             print("widget.table"+widget.table.toString());
-                            for (var val in widget.table)
+                            for (var val in widget.table){
+                              if(val.isActive==true)
                               list.add(val.segmentCode.toString());
+                            }
+
                             print("sasasaaaaaaaaaaaaaa"+list.toString());
 
                             salesOrderNamePostModel model=salesOrderNamePostModel(
@@ -501,7 +465,7 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                                 setState(() {});
                               } }),
                         SizedBox(
-                          height: height * .090,
+                          height: height * .190,
                         ),
                         // PopUpSwitchTile(
                         //     value:widget?. isAvailableforAll??false,

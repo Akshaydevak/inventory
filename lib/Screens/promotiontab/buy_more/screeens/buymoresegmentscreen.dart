@@ -18,11 +18,11 @@ class SegmentBuyMoreGrowableTable extends StatefulWidget {
   final Function updation;
 
   // final  Function(int?) ontap;
-  // final  bool addNew;
+  final  bool select;
   final Key? key;
 
   SegmentBuyMoreGrowableTable(
-      {required this.table, required this.updation, this.key});
+      {required this.table, required this.updation, this.key, required this.select});
 
   @override
   SegmentBuyMoreGrowableTableState createState() =>
@@ -328,7 +328,7 @@ class SegmentBuyMoreGrowableTableState
                                         SizedBox(width: 4,),
 
 
-                                        TableIconTextButton(
+                                      if(widget.select)  TableIconTextButton(
 
                                           // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                           // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
@@ -496,14 +496,14 @@ class CountBuyMoreGrowableTable extends StatefulWidget {
   final Function updation;
 
   // final  Function(int?) ontap;
-  // final  bool addNew;
+  final  bool select;
   final Key? key;
 
   CountBuyMoreGrowableTable({
     // required this.table,
     required this.updation,
 
-    this.key
+    this.key, required this.select
   });
 
   @override
@@ -824,7 +824,7 @@ class CountBuyMoreGrowableTableState extends State<CountBuyMoreGrowableTable> {
                                         SizedBox(width: 4,),
 
 
-                                        TableIconTextButton(
+                                     if(widget.select)   TableIconTextButton(
 
                                           // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                           // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,

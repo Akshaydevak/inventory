@@ -536,9 +536,14 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                         onTap: (){
                                           List<String> list=[];
 
-                                          for (var val in widget.segmentList)
-                                            list.add(val.segmentCode.toString());
-                                          print("sasasaaaaaaaaaaaaaa"+list.toString());
+                                          for (var val in widget.segmentList){
+                                            if(val.isActive==true){
+                                              list.add(val.segmentCode.toString());
+
+                                            }
+                                          }
+
+
 
 
 
@@ -556,6 +561,7 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                               child: ConfigurePopup(
                                                 obj: model,
                                                 passingList: table[i].addedVariant,
+                                                passingList2: table[i].deletedVariants,
                                                 code:table[i].offerProductGroupCode ,
 
                                                 listAssign: (deletedlist,adedlist){

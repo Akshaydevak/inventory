@@ -68,6 +68,21 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
   List<Segment> segmentTable = [];
   List<SaleLines> variantTable = [];
   List<SaleLines> variantTable2 = [];
+  segmentCleartymVariantAdd(){
+    if(select==false){
+      print("patch case");
+      if(variantTable2.isNotEmpty){
+        print("is Not empty");
+        for(var i=0;i<variantTable2.length;i++){
+          variantTable2[i]=variantTable2[i].copyWith(isActive: false);
+        }
+
+        isSegmentClear=true;
+      }
+    }
+
+
+  }
   tableAssign(List<Segment> table1) {
     print("ethito");
     setState(() {
@@ -103,6 +118,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
     setState(() {
       variantTable.clear();
       _myWidgetState.currentState?.clear();
+      segmentCleartymVariantAdd();
     });
 
   }

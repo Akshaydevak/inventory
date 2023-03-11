@@ -111,8 +111,11 @@ class _PromotionByMoreStableTableState extends State<PromotionByMoreStableTable>
                     ontap: () {
                       List<String> list=[];
 
-                      for (var val in widget.table)
-                        list.add(val.segmentCode.toString());
+                      for (var val in widget.table){
+                        if(val.isActive==true)
+                          list.add(val.segmentCode.toString());
+                      }
+
                       print("sasasaaaaaaaaaaaaaa"+list.toString());
 
                       salesOrderNamePostModel model=salesOrderNamePostModel(

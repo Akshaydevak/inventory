@@ -116,8 +116,12 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
                             ontap: () {
                               List<String> list=[];
                               print("widget.table"+widget.table.toString());
-                              for (var val in widget.table)
-                                list.add(val.segmentCode.toString());
+                              for (var val in widget.table){
+                                if(val.isActive==true)
+                                  list.add(val.segmentCode.toString());
+
+                              }
+
                               print("sasasaaaaaaaaaaaaaa"+list.toString());
 
                               salesOrderNamePostModel model=salesOrderNamePostModel(

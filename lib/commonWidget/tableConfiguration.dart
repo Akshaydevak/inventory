@@ -4113,7 +4113,7 @@ class _SaleApplyingNamePeriodPopup extends State<SaleApplyingNamePeriodPopup> {
                                   ),
 
                                   tableHeadtext(
-                                    'Offer Group',
+                                    'Applying  Name',
                                     // textColor: Colors.black,
                                     // padding: EdgeInsets.all(7),
                                     // height: 44,
