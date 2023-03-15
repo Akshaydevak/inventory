@@ -12,6 +12,7 @@ import 'package:inventory/core/uttils/variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'discount/screens/discount_main.dart';
+import 'muttibuy/screens/promotion_multibuy_main_screen.dart';
 
 class PromotionTabScreenTab extends StatefulWidget {
   final bool isCollapsed;
@@ -24,7 +25,7 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
   bool isClossed=true;
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 5, vsync: this,initialIndex: Variable.subIndex[6]??0);
+    TabController _tabController = TabController(length: 6, vsync: this,initialIndex: Variable.subIndex[6]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return Stack(
@@ -116,6 +117,7 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
                                   Text("Buy More ",style: TextStyle(color: Colors.black,fontSize: 13),),
                                   Text("BOGO ",style: TextStyle(color: Colors.black,fontSize: 13),),
                                   Text("Coupon ",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                  Text("Multibuy ",style: TextStyle(color: Colors.black,fontSize: 13),),
 
 
                                 ]),
@@ -152,6 +154,7 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
                             PromotionBuyMoreMainScreen(),
                             PromotionBogoMnainScreen(),
                             PromotionCouponMainPAge(),
+                            PromotionMultibuyMainScreen(),
 
 
 

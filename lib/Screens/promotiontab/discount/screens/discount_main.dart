@@ -27,7 +27,8 @@ import '../../../../commonWidget/commonutils.dart';
 import 'discount_bottom_table.dart';
 
 class DiscountMainScreen extends StatefulWidget {
-  const DiscountMainScreen({Key? key}) : super(key: key);
+  const
+  DiscountMainScreen({Key? key}) : super(key: key);
 
   @override
   State<DiscountMainScreen> createState() => _DiscountMainScreenState();

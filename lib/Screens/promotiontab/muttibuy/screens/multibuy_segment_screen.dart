@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inventory/Screens/promotiontab/coupon/cubit/read_coupon/read_coupon_promotion_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
-import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/widgets/customtable.dart';
 
-class CouponVariantGrowableTable extends StatefulWidget {
-  final  List<Segment> segmentList;
+class SegmentMultibuyGrowableTable extends StatefulWidget {
+  final List<Segment> table;
   final Function updation;
-  final String applyingType;
-  final String applyingTypeCode;
-  final  bool select;
-  final  Key? key;
-  CouponVariantGrowableTable({ required this.segmentList, required this.updation, required this.applyingType, required this.applyingTypeCode, this.key, required this.select});
+
+  // final  Function(int?) ontap;
+  // final  bool addNew;
+  final Key? key;
+
+  SegmentMultibuyGrowableTable({required this.table, required this.updation, this.key});
+
   @override
-  CouponVariantGrowableTableState createState() => CouponVariantGrowableTableState();
+  SegmentMultibuyGrowableTableState createState() => SegmentMultibuyGrowableTableState();
 }
 
-class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> {
-  String variantCode="";
-  String variantName="";
-  int? variantId;
-  bool isActive=false;
-  Barcode barcode=Barcode();
-  List<VariantModel>table=[];
+class SegmentMultibuyGrowableTableState extends State<SegmentMultibuyGrowableTable> {
+  List<Segment>table = [];
+  String segmentName = "";
+  String segmentCode = "";
+  bool isActive = false;
   bool onSaveActive = false;
   saveButtonActovde(String key,String val){
     print(key);
@@ -48,65 +47,77 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
 
     }
   }
-  clear(){
-    variantCode="";
-    variantName="";
-    isActive=false;
-    variantId=null;
-    table=[];
-    barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
+
+  clears() {
+    table = [];
+    segmentName = "";
+    segmentCode = "";
+    isActive = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
-
+    double h = MediaQuery
+        .of(context)
+        .size
+        .height;
+    double w = MediaQuery
+        .of(context)
+        .size
+        .width;
+    // if(!onChange){
+    //   print("welcome to the entire place");
+    //   setState(() {
+    //     keys=[];
+    //   });
+    //
+    //
+    //   if(widget.aboutProducts?.isNotEmpty==true){
+    //
+    //
+    //     setState(() {
+    //
+    //       headingController.text=widget.addNew?"":widget.aboutProducts?[0].name??"";
+    //     });
+    //     aboutProducts= widget.aboutProducts??[];
+    //     if(aboutProducts?[0].keyValues?.isNotEmpty==true)
+    //       keys=aboutProducts?[0].keyValues??[];
+    //
+    //   }
+    //
+    //
+    //
+    //
+    //
+    // }
+    // onChange=false;
     return
-      BlocConsumer<ReadCouponPromotionCubit, ReadCouponPromotionState>(
-  listener: (context, state) {
-    state.maybeWhen(
-        orElse: () {},
-        error: () {
-          print("error");
-        },
-        success: (data) {
-
-          print(data);
-
-
-
-          data.line != null ? table =List.from( data?.line ?? []) : table = [];
-          // data.lines != null ? variantTable2 =List.from( data?.lines ?? []) : variantTable2 = [];
-        });
-  },
-  builder: (context, state) {
-    return Builder(
+      Builder(
           builder: (context) {
-            return   Column(
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
                 Container(
                   // width: w/5,
-                  margin: EdgeInsets.symmetric(horizontal: w*.02),
+                  margin: EdgeInsets.symmetric(horizontal: w * .02),
                   child: customTable(
 
                     border: const TableBorder(
 
                       verticalInside: BorderSide(
-                          width:.5,
+                          width: .5,
                           color: Colors.black45,
                           style: BorderStyle.solid),
                       horizontalInside: BorderSide(
-                          width:.3,
+                          width: .3,
                           color: Colors.black45,
                           // color: Colors.blue,
                           style: BorderStyle.solid),),
 
                     tableWidth: .5,
 
-                    childrens:[
+                    childrens: [
                       TableRow(
 
                         // decoration: BoxDecoration(
@@ -121,63 +132,36 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
 
                           tableHeadtext(
 
-                            'Variant Id',
+                            'Segment Name',
 
+                            textColor: Colors.white,
+                            size: 13,
+                          ),
+                          tableHeadtext(
+                            'Segment Code',
                             // padding: EdgeInsets.all(7),
                             //
                             // height: 46,
-                            textColor: Colors.white,
-
-
-                            size: 13,
-
-
-                          ),
-                          tableHeadtext(
-
-                            'Variant Name',
-
-                            // padding: EdgeInsets.all(7),
-                            //
-                            // height: 46,
-                            textColor: Colors.white,
-
+                            // textColor: Colors.white,
 
                             size: 13,
-
-
                           ),
                           tableHeadtext(
-
-                            "Barcode",
-
-                            // padding: EdgeInsets.all(7),
-                            //
-                            // height: 46,
-                            textColor: Colors.white,
-
-
-                            size: 13,
-
-
-                          ),
-                          tableHeadtext(
-
                             "Is Active",
 
                             // padding: EdgeInsets.all(7),
-                            //
+
                             // height: 46,
-                            textColor: Colors.white,
+                            // textColor: Colors.white,
 
 
                             size: 13,
 
 
-                          ),       tableHeadtext(
+                          ), tableHeadtext(
 
                             "",
-
+                            //
                             // padding: EdgeInsets.all(7),
                             //
                             // height: 46,
@@ -188,15 +172,12 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
 
 
                           ),
-
-
-
 
 
                         ],
 
                       ),
-                      if (table.isNotEmpty==true ) ...[
+                      if (table?.isNotEmpty == true ) ...[
 
 
                         for (var i = 0; i < table.length; i++)
@@ -204,57 +185,52 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                               decoration: BoxDecoration(
                                   color: Pellet.tableRowColor,
                                   shape: BoxShape.rectangle,
-                                  border:  Border(
+                                  border: Border(
                                       left: BorderSide(
 
-                                          color: Color(0xff3E4F5B).withOpacity(.1),
+                                          color: Color(0xff3E4F5B)
+                                              .withOpacity(.1),
                                           width: .4,
                                           style: BorderStyle.solid),
                                       bottom: BorderSide(
 
-                                          color:   Color(0xff3E4F5B).withOpacity(.1),
+                                          color: Color(0xff3E4F5B)
+                                              .withOpacity(.1),
                                           style: BorderStyle.solid),
                                       right: BorderSide(
-                                          color:   Color(0xff3E4F5B).withOpacity(.1),
+                                          color: Color(0xff3E4F5B)
+                                              .withOpacity(.1),
                                           width: .4,
 
                                           style: BorderStyle.solid))),
                               children: [
 
                                 TableCell(
-                                  verticalAlignment: TableCellVerticalAlignment.middle,
+                                  verticalAlignment: TableCellVerticalAlignment
+                                      .middle,
 
                                   child:
                                   VariantIdTAble(
-                                    text:table[i].variantCode,
-                                    onTap: (){
-                                      List<String> list=[];
-
-                                      for (var val in widget.segmentList)
-                                        list.add(val.segmentCode.toString());
-                                      print("sasasaaaaaaaaaaaaaa"+list.toString());
-
-                                      PromotionVariantPostModel model=PromotionVariantPostModel(
-                                          applyingTypeCode: widget.applyingTypeCode,
-                                          applyinType: widget.applyingType,
-                                          searchElement: "",
-                                          segmentList:list,
-                                          inventoryId: Variable.inventory_ID
-                                      );
+                                    text: table[i].segmentName,
+                                    onTap: () {
                                       showDailogPopUp(
                                         context,
                                         TableConfigurePopup(
-                                          object: model,
+                                          list: table,
                                           // inventory: Variable.inventory_ID,
-                                          type: "VariantListPopup",
-                                          valueSelect: (SaleLines? va) {
+                                          type: "SegmentListTabalePopup",
 
-
+                                          valueSelect: (
+                                              salesOrderTypeModel? va) {
                                             setState(() {
-                                              table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName:va?.variantName??"",updateCheck: true,barcode: va?.barcode?.barcodeNumber  );
+                                              table[i] = table[i].copyWith(
+                                                  segmentCode: va?.code ?? "",
+                                                  segmentName: va?.name ?? "",
+                                                  updatecheck: true);
 
+                                              setState(() {
 
-
+                                              });
 
                                               // orderType = va!;
                                             });
@@ -263,24 +239,15 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                                       );
                                     },
                                   ),
-                                  // textPadding(table[i].variantCode.toString()??"")
-
-
-
-                                ),
-                                TableCell(
-                                    verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                    child:textPadding(table[i].variantName.toString())
-
 
 
                                 ),
                                 TableCell(
-                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                    verticalAlignment: TableCellVerticalAlignment
+                                        .middle,
 
-                                    child:textPadding(table[i].barcode.toString()??"")
-
+                                    child: textPadding(
+                                        table[i].segmentCode.toString())
 
 
                                 ),
@@ -293,25 +260,23 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                                           ? false
                                           : table?[i].isActive,
                                       onSelection: (bool? value) {
-                                        bool? isActive =table[i].isActive;
+                                        bool? isActive = table[i].isActive;
                                         setState(() {
                                           // widget.updateCheck(true);
                                           // print("aaaaaaaaaaa"+isActive.toString());
                                           // table1[i] = table1[i].copyWith(updatecheck: true);
-                                          table[i] = table[i].copyWith(updateCheck: true);
+                                          table[i] = table[i].copyWith(
+                                              updatecheck: true);
                                           setState(() {});
                                           isActive = !isActive!;
-                                          print("aaaaaaaaaaa"+isActive.toString());
+                                          print("aaaaaaaaaaa" +
+                                              isActive.toString());
                                           table[i] = table[i]
                                               .copyWith(
                                               isActive: isActive);
                                         });
-
-
-
                                       }),
                                 ),
-
                                 TableCell(
                                   verticalAlignment:
                                   TableCellVerticalAlignment.middle,
@@ -320,25 +285,28 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                                       Expanded(
                                         child: TableTextButton(
                                           onPress: () {
-
                                             setState(() {
                                               // widget.updateCheck(false);
-                                              table[i]=      table[i].copyWith(updateCheck: false);
+                                              table[i] = table[i].copyWith(
+                                                  updatecheck: false);
                                               widget.updation(table);
 
 
                                             });
-
                                           },
-                                          textColor:table[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
+                                          textColor: table[i].updatecheck == true
+                                              ? Pellet.tableBlueHeaderPrint
+                                              : Colors.grey,
                                           label:
-                                          table[i].updateCheck==true? "UPDATE":"",
+                                          table[i].updatecheck == true
+                                              ? "UPDATE"
+                                              : "",
                                         ),
                                       ),
                                       SizedBox(width: 4,),
 
 
-                                      if(widget.select!)    TableIconTextButton(
+                                      TableIconTextButton(
 
                                         // textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
                                         // buttonBagroundColor:upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
@@ -362,102 +330,68 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                                 )
 
 
-
-
-                              ]),],
+                              ]),
+                      ],
                       TableRow(
                           decoration: BoxDecoration(
                               color: Pellet.tableRowColor,
                               shape: BoxShape.rectangle,
-                              border:  Border(
+                              border: Border(
                                   left: BorderSide(
 
-                                      color: Color(0xff3E4F5B).withOpacity(.1),
+                                      color: Color(0xff3E4F5B).withOpacity(
+                                          .1),
                                       width: .4,
                                       style: BorderStyle.solid),
                                   bottom: BorderSide(
 
-                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                      color: Color(0xff3E4F5B).withOpacity(
+                                          .1),
                                       style: BorderStyle.solid),
                                   right: BorderSide(
-                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                      color: Color(0xff3E4F5B).withOpacity(
+                                          .1),
                                       width: .4,
 
                                       style: BorderStyle.solid))),
                           children: [
 
-                            TableCell(
-                              verticalAlignment: TableCellVerticalAlignment.middle,
+                            VariantIdTAble(
+                              text: segmentName,
+                              onTap: () {
+                                showDailogPopUp(
+                                  context,
+                                  TableConfigurePopup(
+                                    // inventory: Variable.inventory_ID,
+                                    type: "SegmentListTabalePopup",
+                                    list: table,
+                                    valueSelect: (salesOrderTypeModel? va) {
+                                      print(va!.id
+                                          .toString());
 
-                              child:
-                              VariantIdTAble(
-                                text:variantCode,
-                                onTap: (){
-                                  List<String> list=[];
-
-                                  for (var val in widget.segmentList)
-                                    list.add(val.segmentCode.toString());
-                                  print("sasasaaaaaaaaaaaaaa"+list.toString());
-
-                                  PromotionVariantPostModel model=PromotionVariantPostModel(
-                                      applyingTypeCode: widget.applyingTypeCode,
-                                      applyinType: widget.applyingType,
-                                      searchElement: "",
-                                      segmentList:list,
-                                      inventoryId: Variable.inventory_ID
-                                  );
-                                  showDailogPopUp(
-                                    context,
-                                    TableConfigurePopup(
-                                      object: model,
-                                      // inventory: Variable.inventory_ID,
-                                      type: "VariantListPopup",
-                                      valueSelect: (SaleLines? va) {
-
-
+                                      setState(() {
+                                        segmentCode = va?.code ?? "";
+                                        segmentName = va?.name ?? "";
+                                        saveButtonActovde(segmentCode,segmentName);
                                         setState(() {
-                                          variantCode=va?.variantCode??"";
-                                          variantName=va?.variantName??"";
 
-                                          variantId=va?.variantId??null;
-
-                                          print("barcodeeeeeeeeeeee");
-                                          print(variantId);
-                                          print(va?.barcode?.barcodeNumber??"");
-                                          barcode=      barcode.copyWith(barcodeNumber: va?.barcode?.barcodeNumber??"");
-                                          saveButtonActovde(variantCode,variantName);
-
-
-
-                                          // orderType = va!;
                                         });
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                              // UnderLinedInput(
-                              //   formatter: false,
-                              // ),
 
-
+                                        // orderType = va!;
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
                             ),
 
                             TableCell(
-                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                verticalAlignment: TableCellVerticalAlignment
+                                    .middle,
 
-                                child:textPadding(variantName??"")
-                              // UnderLinedInput(
-                              //   formatter: false,
-                              // ),
-
-
-                            ),
-
-                            TableCell(
-                                verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                child:textPadding(barcode?.barcodeNumber??"")
+                                child: textPadding(segmentCode.isEmpty
+                                    ? ""
+                                    : segmentCode)
                               // UnderLinedInput(
                               //   formatter: false,
                               // ),
@@ -478,6 +412,8 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                                 },
                               ),
                             ),
+
+
                             TableCell(
                               verticalAlignment:
                               TableCellVerticalAlignment.middle,
@@ -488,20 +424,22 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                                   label: "Save",
                                   onPress: () {
                                     setState(() {
-                                      if(variantCode.isNotEmpty && variantName.isNotEmpty){
-                                        table.add(VariantModel(
-                                          variantCode: variantCode,
-                                          variantId: variantId,
-                                          barcode: barcode.barcodeNumber,
-                                          variantName: variantName.isEmpty?"":variantName,
+                                      if(segmentName.isNotEmpty &&segmentCode.isNotEmpty){
+                                        table.add(Segment(
+
+                                          segmentCode: segmentCode.isEmpty
+                                              ? ""
+                                              : segmentCode,
+                                          segmentName: segmentName.isEmpty
+                                              ? ""
+                                              : segmentName,
                                           isActive: isActive,
                                         ));
-                                        variantCode="";
-                                        variantName="";
-                                        variantId=null;
-                                        barcode=barcode.copyWith(barcodeNumber: "",fileName: "");
+                                        segmentCode = "";
+                                        segmentName = "";
+                                        isActive = false;
                                         onSaveActive=false;
-                                        isActive=false;
+
                                         widget.updation(table);
                                       }
 
@@ -517,9 +455,8 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                     widths: {
                       0: FlexColumnWidth(3),
                       1: FlexColumnWidth(3),
-                      2: FlexColumnWidth(3),
+                      2: FlexColumnWidth(1.5),
                       3: FlexColumnWidth(1.5),
-                      4: FlexColumnWidth(1.5),
 
                     },
 
@@ -531,8 +468,5 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
             );
           }
       );
-  },
-);
-
   }
 }

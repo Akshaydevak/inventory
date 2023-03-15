@@ -191,6 +191,18 @@ _$_listAllSalesApis _$$_listAllSalesApisFromJson(Map<String, dynamic> json) =>
       bogoApplyingOn: (json['bogo_applying_on'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      couponType: (json['coupon_type'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      couponApplyingTo: (json['coupon_applying_to'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      couponApplyingOn: (json['coupon_applying_on'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      couponBasedOn: (json['coupon_based_on'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_listAllSalesApisToJson(_$_listAllSalesApis instance) =>
@@ -200,6 +212,10 @@ Map<String, dynamic> _$$_listAllSalesApisToJson(_$_listAllSalesApis instance) =>
       'sale_applying_to': instance.saleApplyingTo,
       'offer_applying_to': instance.offerApplyingTo,
       'bogo_applying_on': instance.bogoApplyingOn,
+      'coupon_type': instance.couponType,
+      'coupon_applying_to': instance.couponApplyingTo,
+      'coupon_applying_on': instance.couponApplyingOn,
+      'coupon_based_on': instance.couponBasedOn,
     };
 
 _$_PromotionSaleCreateModel _$$_PromotionSaleCreateModelFromJson(
@@ -477,6 +493,7 @@ _$_VariantModel _$$_VariantModelFromJson(Map<String, dynamic> json) =>
       variantName: json['variant_name'] as String?,
       offerGroupCode: json['offer_group_code'] as String?,
       buyMoreLineCode: json['buy_more_line_code'] as String?,
+      couponLineCode: json['coupon_line_code'] as String?,
       offerName: json['offer_name'] as String?,
       typeData: json['type_data'] as String?,
       updatedAt: json['updated_at'] as String?,
@@ -494,6 +511,7 @@ Map<String, dynamic> _$$_VariantModelToJson(_$_VariantModel instance) =>
       'variant_name': instance.variantName,
       'offer_group_code': instance.offerGroupCode,
       'buy_more_line_code': instance.buyMoreLineCode,
+      'coupon_line_code': instance.couponLineCode,
       'offer_name': instance.offerName,
       'type_data': instance.typeData,
       'updated_at': instance.updatedAt,

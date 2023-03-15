@@ -120,6 +120,10 @@ class listAllSalesApis with _$listAllSalesApis {
     @JsonKey(name: "sale_applying_to")final List<String>? saleApplyingTo,
     @JsonKey(name: "offer_applying_to")final List<String>? offerApplyingTo,
     @JsonKey(name: "bogo_applying_on")final List<String>? bogoApplyingOn,
+    @JsonKey(name: "coupon_type")final List<String>? couponType,
+    @JsonKey(name: "coupon_applying_to")final List<String>? couponApplyingTo,
+    @JsonKey(name: "coupon_applying_on")final List<String>? couponApplyingOn,
+    @JsonKey(name: "coupon_based_on")final List<String>? couponBasedOn,
 
   }) = _listAllSalesApis;
   factory listAllSalesApis.fromJson(Map<String, dynamic> json) =>
@@ -320,6 +324,7 @@ class VariantModel with _$VariantModel{
     @JsonKey(name: "variant_name") final String? variantName,
     @JsonKey(name: "offer_group_code") final String? offerGroupCode,
     @JsonKey(name: "buy_more_line_code") final String? buyMoreLineCode,
+    @JsonKey(name: "coupon_line_code") final String? couponLineCode,
     @JsonKey(name: "offer_name") final String? offerName,
     @JsonKey(name: "type_data") final String? typeData,
     @JsonKey(name: "updated_at") final String? updatedAt,

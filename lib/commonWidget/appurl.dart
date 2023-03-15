@@ -386,6 +386,10 @@ const createBogoApi = promotionLiveBaseUrl +"bogo/create-bogo";
 //coupon__________________________________________
 const verticalListCouponApi = promotionLiveBaseUrl +"coupon/list-coupon-by-inventory/";
 const readCouponApi = promotionLiveBaseUrl +"coupon/read-patch-coupon/";
+const createCouponApi = promotionLiveBaseUrl +"coupon/create-coupon";
+const couponShowvariantToDeactivateApi = promotionLiveBaseUrl +"coupon/show-variants-to-deactivate";
+const couponDeactivateApi = promotionLiveBaseUrl +"coupon/deactivate-previous-coupon-by-type ";
+
 
 
 

@@ -89,8 +89,9 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                   SelectableDropDownpopUp(
                     label: "Coupon Applying To Name",
                     type:"PromotionChannelListPopup",
-                    code: widget.couponApplyingToName.text,
-                    value: widget.couponApplyingTo.text,
+                    code: widget.couponApplyingTo.text,
+                    value: widget.couponApplyingToName.text,
+
                     onSelection: (ChannelListModel? va) {
                       print(
                           "+++++++++++++++++++++++");
@@ -108,7 +109,7 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                   ),
                   SelectableDropDownpopUp(
                     label: "Coupon Applying On",
-                    type:"SaleApplyingOnPromotionPopup",
+                    type:"CouponApplyingOnPromotionPopup",
                     value: widget.couponApplyingOn.text,
                     onSelection: (String? va) {
                       print(
@@ -121,7 +122,7 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                         widget.couponApplyingOn.text = va!;
                         widget.couponApplyingOnName.text="";
                         widget.couponApplyingOnNameCode.text="";
-                        widget.couponApplyingToNameId.text="";
+                        widget.couponApplyingOnNameId.text="";
                         widget.variantTableDatsClear();
                       });
                     },
@@ -236,10 +237,21 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                   SizedBox(
                     height: height * .030,
                   ),
-                  NewInputCard(
+                  SelectableDropDownpopUp(
+                    label: "Coupon Type",
+                    type:"CouponApplyingTypePromotionPopup",
+                    value: widget.couponType.text,
+                    onSelection: (String? va) {
 
-                      controller: widget.couponType,
-                      title: "Coupon Type"),
+                      setState(() {
+
+
+                        // onChange = true;
+                        widget.couponType.text = va!;
+
+                      });
+                    },
+                  ),
                   SizedBox(
                     height: height * .030,
                   ),
@@ -320,14 +332,13 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                   ),
                   SelectableDropDownpopUp(
                     label: "Coupon Applying To",
-                    type:"SaleApplyingPlacePopup",
+                    type:"promotion_coupon_applying_to",
 
                     value: widget.couponApplyingTo.text,
                     onSelection: (String? va) {
                       print("+++++++++++++++++++++++");
                       //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                       setState(() {
-
                         // onChange = true;
                         widget.couponApplyingTo.text = va!;
                         widget.couponApplyingToName.text = "";
@@ -352,7 +363,7 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                   ),
                   SelectableDropDownpopUp(
                     label: " Coupon Based On",
-                    type:"SaleBasedOnPromotionPopup",
+                    type:"CouponBasedOnPromotionPopup",
 
                     value: widget.couponBasedOn.text,
                     onSelection: (String? va) {
@@ -414,7 +425,7 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                         // Variable.popUp = false;
 
                         if (newFile.length <= 150000) {
-                          context.read<PromotionImageCubit>().postPromotionImage(Variable.imageName,  imageEncode);;
+                          context.read<PromotionImageCubit>().postPromotionImage(Variable.imageName,  imageEncode);
                           // loading
                           //     ? showDailogPopUp(context, DialoguePopUp())
                           //     : Navigator.pop(context);

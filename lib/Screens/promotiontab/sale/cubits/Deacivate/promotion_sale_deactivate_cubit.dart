@@ -11,10 +11,10 @@ part 'promotion_sale_deactivate_cubit.freezed.dart';
 class PromotionSaleDeactivateCubit extends Cubit<PromotionSaleDeactivateState> {
   PromotionSaleDeactivateCubit() : super(PromotionSaleDeactivateState.initial());
   final InventoryPromotionRepository repo = InventoryPromoRepoIml();
-  Future getVariantDeactivate(int type,String ? typeData, List<int?>idList) async {
+  Future getVariantDeactivate(int type,String ? typeData, List<int?>idList,{bool? isCoupon}) async {
     emit(PromotionSaleDeactivateState.initial());
     print("reead");
-    final result = await repo.getVariantDeactivate(type,typeData,idList);
+    final result = await repo.getVariantDeactivate(type,typeData,idList,isCoupon:isCoupon);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
 
   }

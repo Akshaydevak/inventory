@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/model/bogo_creation_model.dart';
 import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart';
+import 'package:inventory/Screens/promotiontab/coupon/model/crreateCouponModel.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/model/purchaseorder.dart';
@@ -32,7 +33,7 @@ abstract class InventoryPromotionRepository{
   Future<Either<Failure, DoubleResponse>> getPromotionSalePatch(PromotionSaleCreateModel model,int? id);
   Future<Either<Failure, PaginatedResponse<List<OfferGroupList>>>> getOfferGroupList(String? code, {String? type});
   Future<Either<Failure, ReadOfferGroup>> getOfferGroupRead(int orderId);
-  Future<Either<Failure, DoubleResponse>> getVariantDeactivate(int type,String ? typeData, List<int?>idList);
+  Future<Either<Failure, DoubleResponse>> getVariantDeactivate(int type,String ? typeData, List<int?>idList,{bool? isCoupon});
   Future<Either<Failure,List< ChannelListModel>>> getChannelList(String? code);
   Future<Either<Failure, PromotionSaleReadModel>> getPromotionSaleRead(int orderId);
   Future<Either<Failure, DoubleResponse>> patchOfferGroup(OfferGroupData model,int? id);
@@ -62,6 +63,11 @@ abstract class InventoryPromotionRepository{
   
   //Coupen
   Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getCouPenVerticalList(String? code,);
+  Future<Either<Failure, listAllSalesApis>> getListAllCouponApi({String? type});
+  Future<Either<Failure, DoubleResponse>> postCreatePromtionCoupon(PromotionCouponCreationModel model);
+  Future<Either<Failure, PromotionCouponCreationModel>> getPromotionCouponRead(int verticalId);
+  Future<Either<Failure, DoubleResponse>> couponPromotionPatch(PromotionCouponCreationModel model,int? id);
+
 
 
 }
@@ -212,8 +218,8 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> getVariantDeactivate(int type, String? typeData, List<int?> idList) {
-    return repoExecute<DoubleResponse>(() async => remoteDataSource.getVariantDeactivate(type,typeData,idList));
+  Future<Either<Failure, DoubleResponse>> getVariantDeactivate(int type, String? typeData, List<int?> idList,{bool? isCoupon}) {
+    return repoExecute<DoubleResponse>(() async => remoteDataSource.getVariantDeactivate(type,typeData,idList,isCoupon:isCoupon));
   }
 
   @override
@@ -318,6 +324,29 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getCouPenVerticalList(String? code) {
     return repoExecute<PaginatedResponse<List<OfferPeriodList>>>(
             () async => remoteDataSource.getCouPenVerticalList(code));
+  }
+
+  @override
+  Future<Either<Failure, listAllSalesApis>> getListAllCouponApi({String? type}) {
+    return repoExecute<listAllSalesApis>(
+            () async => remoteDataSource.getListAllCouponApi(type:type));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCreatePromtionCoupon(PromotionCouponCreationModel model) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.postCreatePromtionCoupon(model));
+  }
+
+  @override
+  Future<Either<Failure, PromotionCouponCreationModel>> getPromotionCouponRead(int verticalId) {
+    return repoExecute<PromotionCouponCreationModel>(() async => remoteDataSource.getPromotionCouponRead(verticalId));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> couponPromotionPatch(PromotionCouponCreationModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.couponPromotionPatch(model,id));
   }
   //
   // @override

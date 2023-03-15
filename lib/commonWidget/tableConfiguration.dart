@@ -1136,8 +1136,9 @@ class _SegmentListTabalePopup extends State<SegmentListTabalePopup> {
 
                         if(list1[i]==n.segmentCode){
 
-                          list1.removeAt(i);
+                          // list1.removeAt(i);
                           table.removeAt(i);
+
                           print("the able is"+table.toString());
                         }
 
@@ -4604,7 +4605,7 @@ class _VariantListPopup extends State<VariantListPopup> {
                 print("error");
               },
               success: (list) {
-                print("Welcome" + list.toString());
+                print("Welcome" + list.data.toString());
                 table = list.data;
                 list1 = list;
               });
@@ -4814,6 +4815,7 @@ class _VariantListPopup extends State<VariantListPopup> {
                                                 SaleLines model =
                                                 SaleLines(
                                                   id: table[i].id,
+                                                    variantId: table[i].variantId,
                                                     barcode: table[i].barcode,
                                                   variantName: table[i].variantName,
 
@@ -4837,11 +4839,12 @@ class _VariantListPopup extends State<VariantListPopup> {
                                               ontap: () {
                                                 SaleLines model =
                                                 SaleLines(
-                                                  id: table[i].id,
+                                                    id: table[i].id,
+                                                    variantId: table[i].variantId,
                                                     barcode: table[i].barcode,
-                                                  variantName: table[i].variantName,
+                                                    variantName: table[i].variantName,
 
-                                                  variantCode: table[i].variantCode
+                                                    variantCode: table[i].variantCode
                                                 );
                                                 Navigator.pop(context);
 
@@ -4861,11 +4864,11 @@ class _VariantListPopup extends State<VariantListPopup> {
                                               ontap: () {
                                                 SaleLines model =
                                                 SaleLines(
-                                                  id: table[i].id,
+                                                    id: table[i].id,
+                                                    variantId: table[i].variantId,
                                                     barcode: table[i].barcode,
-                                                  variantName: table[i].variantName,
-
-                                                  variantCode: table[i].variantCode
+                                                    variantName: table[i].variantName,
+                                                    variantCode: table[i].variantCode
                                                 );
                                                 Navigator.pop(context);
 

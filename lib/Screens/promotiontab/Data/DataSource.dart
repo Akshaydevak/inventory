@@ -4,6 +4,7 @@
 import 'package:dio/dio.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/model/bogo_creation_model.dart';
 import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart';
+import 'package:inventory/Screens/promotiontab/coupon/model/crreateCouponModel.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/commonWidget/appurl.dart';
@@ -32,7 +33,7 @@ abstract class PromotionDatasourse {
   Future<DoubleResponse> getPromotionSalePatch(PromotionSaleCreateModel model,int ? id);
   Future<PaginatedResponse<List<OfferGroupList>>> getOfferGroupList(String? code, {String? type});
   Future<ReadOfferGroup>getOfferGroupRead(int id);
-  Future<DoubleResponse>getVariantDeactivate(int type, String? typeData, List<int?> idList);
+  Future<DoubleResponse>getVariantDeactivate(int type, String? typeData, List<int?> idList,{bool? isCoupon=false});
   Future<List<ChannelListModel>>getChannelList(String? code);
   Future<PromotionSaleReadModel>getPromotionSaleRead(int id);
   Future<DoubleResponse> patchOfferGroup(OfferGroupData model,int? id);
@@ -65,6 +66,10 @@ abstract class PromotionDatasourse {
   Future<DoubleResponse> bogoPromotionPatch(PromotionBogoCreationModel model,int ? id);
   //Coupon______________________________
   Future<PaginatedResponse<List<OfferPeriodList>>> getCouPenVerticalList(String? code);
+  Future<listAllSalesApis> getListAllCouponApi({String? type });
+  Future<DoubleResponse> postCreatePromtionCoupon(PromotionCouponCreationModel model);
+  Future<PromotionCouponCreationModel>getPromotionCouponRead(int id);
+  Future<DoubleResponse> couponPromotionPatch(PromotionCouponCreationModel model,int ? id);
 
 
 
@@ -1175,8 +1180,15 @@ return data;
   }
 
   @override
-  Future<DoubleResponse> getVariantDeactivate(int type, String? typeData, List<int?> idList) async {
-    String path=type==1?promotionVariantDeactivateByTypeApi:promotionVariantDeactivateByVariantApi;
+  Future<DoubleResponse> getVariantDeactivate(int type, String? typeData, List<int?> idList,{bool? isCoupon=false}) async {
+    String path="";
+    if(isCoupon==true){
+       path=type==1?couponDeactivateApi:couponShowvariantToDeactivateApi;
+    }
+    else{
+       path=type==1?promotionVariantDeactivateByTypeApi:promotionVariantDeactivateByVariantApi;
+    }
+
     print(path);
     print(typeData);
     print(idList);
@@ -1237,21 +1249,17 @@ try{
     List<SaleLines> items = [];
 
     if(type!=1){
-
       (response.data['data'] as List).forEach((element) {
         items.add(SaleLines.fromJson(element));
         print("listOfferPeriod" + items.toString());
       });
-
     }
     else if
-
-
     (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
     }
     return DoubleResponse(
-        response.data['status'] == 'success',type!=1? items:response.data['message']);
+        response.data['status'] == 'success',type!=1?items:response.data['message']);
   }
 
   @override
@@ -2213,7 +2221,7 @@ try{
   @override
   Future<DoubleResponse> postPromtionBogo(PromotionBogoCreationModel model) async {
     print(createBogoApi);
-    try{
+   try{
       final response = await client.post(createBogoApi,
           data: model.toJson(),
           // data:{
@@ -2588,6 +2596,313 @@ try{
       response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
+  }
+
+  @override
+  Future<listAllSalesApis> getListAllCouponApi({String? type}) async {
+    final response = await client.get(
+      createCouponApi,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("response" + response.toString());
+    listAllSalesApis ordertype =
+    listAllSalesApis.fromJson(response.data['data']);
+    print("return OrderType+++++++++++++++++"+ordertype.toString());
+
+    return ordertype;
+  }
+
+  @override
+  Future<DoubleResponse> postCreatePromtionCoupon(PromotionCouponCreationModel model) async {
+    print(createCouponApi);
+    try{
+      final response = await client.post(createCouponApi,
+          data:
+          // model.toJson(),
+          {
+            "line":model.line,
+
+            "inventory_id": model.inventoryId,
+            "name": model.name,
+            "description": model.description,
+            "display_name": model.displayName,
+            "image": model.image,
+            "based_on": model.basedOn,
+            "coupon_type": model.couponType,
+            "price_or_percentage": model.priceOrPercentage,
+            "maximum_count": model.maximumCount,
+            "available_customer_groups": model.availableCustomerGroups,
+            "is_available_to_all": model.isAvailableToAll,
+            "can_apply_multiple_times": model.canApplyMultipleTimes,
+            "can_apply_together": model.canApplyTogether,
+            "total_value": model.totalValue,
+            "segments": model.segments,
+            "coupon_applying_on": model.couponApplyingOn,
+            "coupon_applying_on_id": model.couponApplyingOnId,
+            "coupon_applying_on_code": model.couponApplyingOnCode,
+            "coupon_applying_on_name": model.couponApplyingOnName,
+            "coupon_applied_to": model.couponAppliedTo,
+            "couon_applied_to_id": model.couponAppliedTo,
+            "coupon_applied_to_code": model.couponAppliedToCode,
+            "coupon_applied_to_name": model.couponAppliedToName,
+            "created_by": model.createdBy,
+            "is_active": model.isActive,
+            "offer_period_id": model.offerPeriodId
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      print(response.data);
+      if (response.data['status'] == 'failed') {
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
+
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+    }catch(e){
+      print(e);
+
+    }
+    final response = await client.post(createCouponApi,
+data:{
+        "line":model.line,
+
+        "inventory_id": model.inventoryId,
+        "name": model.name,
+        "description": model.description,
+        "display_name": model.displayName,
+        "image": model.image,
+        "based_on": model.basedOn,
+        "coupon_type": model.couponType,
+        "price_or_percentage": model.priceOrPercentage,
+        "maximum_count": model.maximumCount,
+        "available_customer_groups": model.availableCustomerGroups,
+        "is_available_to_all": model.isAvailableToAll,
+        "can_apply_multiple_times": model.canApplyMultipleTimes,
+        "can_apply_together": model.canApplyTogether,
+        "total_value": model.totalValue,
+        "segments": model.segments,
+        "coupon_applying_on": model.couponApplyingOn,
+        "coupon_applying_on_id": model.couponApplyingOnId,
+        "coupon_applying_on_code": model.couponApplyingOnCode,
+        "coupon_applying_on_name": model.couponApplyingOnName,
+        "coupon_applied_to": model.couponAppliedTo,
+        "couon_applied_to_id": model.couponAppliedTo,
+        "coupon_applied_to_code": model.couponAppliedToCode,
+        "coupon_applied_to_name": model.couponAppliedToName,
+        "created_by": model.createdBy,
+        "is_active": model.isActive,
+        "offer_period_id": model.offerPeriodId
+    },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+  }
+
+  @override
+  Future<PromotionCouponCreationModel> getPromotionCouponRead(int id) async {
+    String path=readCouponApi+id.toString();
+    print(path);
+    try{
+      final response = await client.get(path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      // print("response" + response.toString());
+      PromotionCouponCreationModel data = PromotionCouponCreationModel.fromJson(response.data['data']['coupon_data']);
+      print("far$data");
+      return data;
+    }catch(e){
+
+
+      print("the error is here is "+e.toString());
+    }
+    final response = await client.get(path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    // print("response" + response.toString());
+    PromotionCouponCreationModel data = PromotionCouponCreationModel.fromJson(response.data['data']['coupon_data']);
+    print("far$data");
+    return data;
+  }
+
+  @override
+  Future<DoubleResponse> couponPromotionPatch(PromotionCouponCreationModel model, int? id) async {
+    String path=readCouponApi+id.toString();
+    print(path);
+    print(model);
+
+    try{
+      final response = await client.patch(path,
+          data:
+          { "name": model.name,
+            "inventory_id": model.inventoryId,
+            "based_on": model.basedOn,
+            "price_or_percentage": model.priceOrPercentage,
+            "coupon_type": model.couponType,
+            "offer_period_id": model.offerPeriodId,
+            "image": model.image,
+            "is_available_to_all": model.isAvailableToAll,
+            "available_customer_groups": model.availableCustomerGroups,
+            "description": model.description,
+            "display_name": model.displayName,
+            "maximum_count": model.maximumCount,
+            "can_apply_multiple_times": model.canApplyMultipleTimes,
+            "can_apply_together": model.canApplyTogether,
+            "total_value": model.totalValue,
+            "segments": model.segments,
+            "created_by": model.createdBy,
+            "is_active": model.isActive,
+            "coupon_applying_on": model.couponApplyingOn,
+            "coupon_applying_on_id": model.couponApplyingOnId,
+            "coupon_applying_on_code": model.couponApplyingOnCode,
+            "coupon_applying_on_name": model.couponApplyingOnName,
+            "coupon_applied_to": model.couponAppliedTo,
+            "couon_applied_to_id": model.couponAppliedTo,
+            "coupon_applied_to_code": model.couponAppliedToCode,
+            "coupon_applied_to_name": model.couponAppliedToName,
+            "line": model.line,
+          },
+
+
+
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      print(response.data);
+      if (response.data['status'] == 'failed') {
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
+
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+    }catch(e){
+      print("the error is here"+e.toString());
+
+    }
+    final response = await client.patch(path,
+       data:{
+         "name": model.name,
+         "inventory_id": model.inventoryId,
+         "based_on": model.basedOn,
+         "price_or_percentage": model.priceOrPercentage,
+         "coupon_type": model.couponType,
+         "offer_period_id": model.offerPeriodId,
+         "image": model.image,
+         "is_available_to_all": model.isAvailableToAll,
+         "available_customer_groups": model.availableCustomerGroups,
+         "description": model.description,
+         "display_name": model.displayName,
+         "maximum_count": model.maximumCount,
+         "can_apply_multiple_times": model.canApplyMultipleTimes,
+         "can_apply_together": model.canApplyTogether,
+         "total_value": model.totalValue,
+         "segments": model.segments,
+         "created_by": model.createdBy,
+         "is_active": model.isActive,
+         "coupon_applying_on": model.couponApplyingOn,
+         "coupon_applying_on_id": model.couponApplyingOnId,
+         "coupon_applying_on_code": model.couponApplyingOnCode,
+         "coupon_applying_on_name": model.couponApplyingOnName,
+         "coupon_applied_to": model.couponAppliedTo,
+         "couon_applied_to_id": model.couponAppliedTo,
+         "coupon_applied_to_code": model.couponAppliedToCode,
+         "coupon_applied_to_name": model.couponAppliedToName,
+         "line": model.line,
+       },
+
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);;
   }
 
 

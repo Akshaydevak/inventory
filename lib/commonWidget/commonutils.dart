@@ -3517,7 +3517,7 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
                 }, error: () {
                   // context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  print(widget.linkedListItemTable);
+
                   if (data.data1==true) {
                     setState(() {
 
@@ -3533,7 +3533,7 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
                         additionCheck.clear();
                       }else{
                         Navigator.pop(context);
-                        context.showSnackBarSuccess(data.data2);
+                        context.showSnackBarSuccess(Variable.errorMessege);
 
                       }
 
@@ -3569,6 +3569,11 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
                     }
 
                     );
+                  }
+                  else{
+                    Navigator.pop(context);
+                    context.showSnackBarSuccess(data.data2);
+
                   }
 
                   // context.showSnackBarSuccess(data.data2);

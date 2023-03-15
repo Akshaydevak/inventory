@@ -137,7 +137,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
     });
   }
  countTableAssign(List<CountPricePercentageModel> table1) {
-    print("ethito");
+
 
     setState(() {
       countTable = List.from(table1);
@@ -146,7 +146,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
 
   }
   variantTableAssign(List<VariantModel> table1) {
-    print("ethito");
+
 
     setState(() {
       variantTable = List.from(table1);
@@ -341,6 +341,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                       print("akskskskks");
                       List<int?> list1=[];
                       for(var a in variantTable)
+                        if(a.isActive==true)
                         list1.add(a.variantId);
 
                       context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,Variable.type_data,list1);
@@ -364,6 +365,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                     onPressed:() async {
                       List<int?> list1=[];
                       for(var a in variantTable)
+                        if(a.isActive==true)
                         list1.add(a.variantId);
 
                       context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(1,Variable.type_data,list1);

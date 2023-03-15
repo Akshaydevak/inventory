@@ -297,6 +297,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                       print("akskskskks");
                       List<int?> list1=[];
                       for(var a in variantTable)
+                        if(a.isActive==true)
                         list1.add(a.variantId);
 
                       context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,Variable.type_data,list1);
@@ -320,6 +321,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                     onPressed:() async {
                       List<int?> list1=[];
                       for(var a in variantTable)
+                        if(a.isActive==true)
                         list1.add(a.variantId);
 
                       context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(1,Variable.type_data,list1);
