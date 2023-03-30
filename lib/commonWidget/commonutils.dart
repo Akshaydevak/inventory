@@ -43,6 +43,7 @@ import 'package:inventory/Screens/heirarchy/general/screens.dart';
 import 'package:inventory/Screens/logi/inventorylist/inventorylist_cubit.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/promotiontab/discount/cubit/customer_group/customer_group_cubit.dart';
+import 'package:inventory/Screens/promotiontab/discount/cubit/customergroup/customer_group_promotion_cubit.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
@@ -2954,7 +2955,7 @@ class _CustomGroupLinkedItem extends State<CustomGroupLinkedItem> {
       TextEditingController();
   TextEditingController searchContoller = TextEditingController();
   bool addNew = false;
-  List<CustomGroupReadModel>? table = [];
+  List<CustomerGroupModel>? table = [];
   List<int> list = [];
   List<AvailableCustomerGroups> list1 = [];
 
@@ -2987,14 +2988,14 @@ class _CustomGroupLinkedItem extends State<CustomGroupLinkedItem> {
         ),
 
         BlocProvider(
-          create: (context) => CustomerGroupCubit()..getCustomGroupRead(),
+          create: (context) => CustomerGroupPromotionCubit()..getPromotionCustomerGroupList(),
         ),
       ],
       child: Builder(builder: (context) {
 
         return MultiBlocListener(
           listeners: [
-            BlocListener<CustomerGroupCubit, CustomerGroupState>(
+            BlocListener<CustomerGroupPromotionCubit, CustomerGroupPromotionState>(
               listener: (context, state) {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
@@ -3020,7 +3021,7 @@ class _CustomGroupLinkedItem extends State<CustomGroupLinkedItem> {
                           print("entered1");
                           additionCheck.add(widget.linkedListItemTable![i].customerGroupName);
                           list1.add( AvailableCustomerGroups(
-                              customerGroupId:widget.linkedListItemTable![i].customerGroupId,
+                              customerGroupId:widget.linkedListItemTable![i].customerGroupCode,
                               customerGroupCode:widget.linkedListItemTable![i].customerGroupCode,
                           customerGroupName:widget.linkedListItemTable![i].customerGroupName ));
                           print("entered");
@@ -3110,7 +3111,7 @@ class _CustomGroupLinkedItem extends State<CustomGroupLinkedItem> {
               return Builder(builder: (context) {
                 return AlertDialog(
                   content: PopUpHeader(
-                    buttonVisible: false,
+
                     functionChane: true,
                     buttonCheck: true,
                     onTap: () {
@@ -3119,20 +3120,11 @@ class _CustomGroupLinkedItem extends State<CustomGroupLinkedItem> {
                     },
                     isDirectCreate: true,
                     addNew: addNew,
-                    label: "Linked Item",
+                    label: "Customer Group",
                     onApply: () {
-                      MaterialCreationtModel model = MaterialCreationtModel(
-                        description: descriptionContollercontroller?.text ?? "",
-                        image: imageContollercontroller.text,
-                        searchNmae: searchNamecontroller?.text ?? "",
-                        name: namecontroller?.text ?? "",
-                      );
-                      context
-                          .read<MaterialcraetionCubit>()
-                          .postCreateMaterial(model);
 
-                      // widget.onTap();
-                      setState(() {});
+                      widget.listAssign!(list1);
+                      Navigator.pop(context);
                     },
                     onEdit: () {
                       MaterialReadModel model = MaterialReadModel(
@@ -3274,21 +3266,32 @@ class _CustomGroupLinkedItem extends State<CustomGroupLinkedItem> {
 
                                                 child: CustomCheckBox(
                                                   key: UniqueKey(),
-                                                  value:additionCheck.contains(table![i].name),
+                                                  value:additionCheck.contains(table?[i].name),
                                                   onChange: (p0) {
-                                                    if (p0)
+                                                    if (p0) {
+                                                      print(p0);
                                                       list1.add(
                                                           AvailableCustomerGroups(
-                                                              customerGroupId: table![i].code,
-                                                              customerGroupCode: table![i].code,
-                                                              customerGroupName: table![i].name
+                                                            customerGroupId:table?[i]
+                                                              .code??"" ,
+                                                              customerGroupCode: table?[i]
+                                                                  .code??"",
+                                                              customerGroupName: table?[i]
+                                                                  .name??""
                                                           ));
-                                                    else
+                                                      additionCheck.add(
+                                                          table?[i].name??"");
+                                                    }
+                                                    else{
                                                       list1.removeWhere((element) =>
-                                                          element == list1[i]);
+                                                      element == list1[i]);
+                                                      additionCheck.removeWhere((element) =>
+                                                      element == table?[i].name);
+                                                    }
+
                                                     // list1.remove(table![i]);
 
-                                                    widget.listAssign!(list1);
+                                                    // widget.listAssign!(list1);
 
                                                     print(list1);
                                                   },
@@ -3431,7 +3434,7 @@ class VariantPromotionCreatativePopup extends StatefulWidget {
   final Function? listAssign;
   final List<LinkedItemListModel>?linkedListItemTable;
 
-  VariantPromotionCreatativePopup({
+    VariantPromotionCreatativePopup({
     Key? key,
   this.veritcalCode,
     required this.linkedListItemTable,
@@ -3471,7 +3474,7 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
   bool addNew = false;
   List<VariantModel> table = [];
   List<int> list = [];
-  List<VariantModel> list1 = [];
+  List<ViewAllProductsVariantModel> list1 = [];
 
   void changeAddNew(bool va) {
     addNew = va;
@@ -3520,18 +3523,20 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
 
                   if (data.data1==true) {
                     setState(() {
-
-
                       if(data.data2.runtimeType!=String){
                         List<SaleLines>responseList=data.data2;
                         for(var val in responseList){
-                          table.add(VariantModel(barcode: val.barcode?.barcodeNumber??"",
+                          table.add(VariantModel(barcode: val.barcode,
                           variantCode: val.variantCode??"",
                           variantId: val.variantId,
+                          typeData: val.typeData,
+                          couponname: val.couponname??"",
+                          offerName: val.offerName??"",
                           variantName: val.variantName));
                         }
                         additionCheck.clear();
                       }else{
+                        Navigator.pop(context);
                         Navigator.pop(context);
                         context.showSnackBarSuccess(Variable.errorMessege);
 
@@ -3649,6 +3654,7 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
                     addNew: addNew,
                     label: "Variant Item",
                     onApply: () {
+                      print(list1);
 
                       context
                           .read<DeActivateOfferPostCubit>()
@@ -3785,8 +3791,8 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
                                               onChange: (p0) {
                                                 if (p0)
                                                   list1.add(
-                                                      VariantModel(
-                                                          typeData: table![i].typeData,
+                                                      ViewAllProductsVariantModel(
+                                                          typeData: table[i].typeData,
                                                           variantId: table[i].variantId));
                                                 else
                                                   list1.removeWhere((element) =>
@@ -3823,7 +3829,7 @@ class _VariantPromotionCreatativePopup extends State<VariantPromotionCreatativeP
                                                   TableCellVerticalAlignment
                                                       .middle,
                                               child: textPadding(
-                                                  table[i].offerName ?? "",
+                                                  table[i].offerName?.isNotEmpty==true?table[i].offerName??"": table[i].couponname?? "",
                                                  )
                                               ),
                                         ]),
@@ -8878,7 +8884,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                    height: 180,
+                                                 height: MediaQuery.of(context).size.height*0.29,
 
 
                                                     child: VariantFrameWorkBottomTable(

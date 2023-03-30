@@ -252,7 +252,7 @@ class BuyMoreVariantGrowableTableState extends State<BuyMoreVariantGrowableTable
 
 
                                               setState(() {
-                                                table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName:va?.variantName??"",updateCheck: true,barcode: va?.barcode?.barcodeNumber  );
+                                                table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName:va?.variantName??"",updateCheck: true,barcode: va?.barcode ,variantId: va?.variantId );
 
 
 
@@ -280,7 +280,7 @@ class BuyMoreVariantGrowableTableState extends State<BuyMoreVariantGrowableTable
                                 TableCell(
                                     verticalAlignment: TableCellVerticalAlignment.middle,
 
-                                    child:textPadding(table[i].barcode.toString()??"")
+                                    child:textPadding(table[i].barcode?.barcodeNumber.toString()??"")
 
 
 
@@ -491,7 +491,7 @@ class BuyMoreVariantGrowableTableState extends State<BuyMoreVariantGrowableTable
                                         table.add(VariantModel(
                                           variantCode: variantCode,
                                           variantId: variantId,
-                                          barcode: barcode.barcodeNumber,
+                                          barcode: barcode,
                                           variantName: variantName.isEmpty?"":variantName,
                                           isActive: isActive,
                                         ));

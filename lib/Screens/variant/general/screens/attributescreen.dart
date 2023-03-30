@@ -135,7 +135,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
             });
       },
       child: Container(
-        height: 200,
+        // height: 200,
         // color: Colors.yellow,
         alignment: Alignment.topRight,
         width: MediaQuery.of(context).size.width - 60,
@@ -173,11 +173,12 @@ class _AttributeScreenState extends State<AttributeScreen> {
                         ),
                         if (graphArray[index].isNotEmpty == true)
                           Container(
-                            height: 100,
-                            // width: 600,
+                            // height: 100,
+                            // // width: 600,
                             // color: Colors.red,
 
                             child: GridView.builder(
+                              shrinkWrap:true,
 
                               scrollDirection: Axis.vertical,
                               itemCount: graphArray[index]!.length,

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
@@ -39,10 +40,12 @@ class PromotionByMoreStableTable extends StatefulWidget {
   final bool isActive;
   final bool isSelect;
   final List<Segment> table;
+  final List<AvailableCustomerGroups> customerGroupList;
   final Function activeChange;
+  final Function customGroupListAssign;
   final Function variantTableDatsClear;
 
-  PromotionByMoreStableTable({ required this.buyMoreCode,required this.variantTableDatsClear, required this.descripion, required this.buyMoreApplyingNmae, required this.offerPeriodId, required this.offerPeriodName, required this.basedOn, required this.image, required this.title, required this.buyMoreApplyinOn, required this.availableCustomerGroups, required this.isAvailableForAll, required this.isActive, required this.isSelect, required this.offerGroupName, required this.offerGroupId, required this.buyMoreApplyingPlace, required this.buyMoreApplyingPlaceName, required this.table, required this.buyMoreApplyingNameCode, required this.buyMoreApplyingNameId, required this.buyMoreApplyingPlaceCode, required this.buyMoreApplyingPlaceId, required this.activeChange, required this.imageNameController, required this.maximumCount});
+  PromotionByMoreStableTable({ required this.buyMoreCode,required this.variantTableDatsClear, required this.descripion, required this.buyMoreApplyingNmae, required this.offerPeriodId, required this.offerPeriodName, required this.basedOn, required this.image, required this.title, required this.buyMoreApplyinOn, required this.availableCustomerGroups, required this.isAvailableForAll, required this.isActive, required this.isSelect, required this.offerGroupName, required this.offerGroupId, required this.buyMoreApplyingPlace, required this.buyMoreApplyingPlaceName, required this.table, required this.buyMoreApplyingNameCode, required this.buyMoreApplyingNameId, required this.buyMoreApplyingPlaceCode, required this.buyMoreApplyingPlaceId, required this.activeChange, required this.imageNameController, required this.maximumCount, required this.customerGroupList, required this.customGroupListAssign});
 
 
   @override
@@ -97,60 +100,74 @@ class _PromotionByMoreStableTableState extends State<PromotionByMoreStableTable>
                     height: height * .030,
                   ),
                   NewInputCard(
-
-                      controller: widget.descripion,
-                      title: "Description"),
-                  SizedBox(
-                    height: height * .030,
-                  ),
-                  NewInputCard(
                     controller: widget.buyMoreApplyingNmae,
                     icondrop: true,
                     readOnly: true,
                     title: "Buy More Applying Name",
                     ontap: () {
-                      List<String> list=[];
+                      if(widget.buyMoreApplyingNmae.text.isNotEmpty){
+                        setState(() {
+                          widget.buyMoreApplyingNmae.text="";
+                          widget.buyMoreApplyingNameCode.text="";
+                          widget.buyMoreApplyingNameId.text="";
+                          widget. variantTableDatsClear();
 
-                      for (var val in widget.table){
-                        if(val.isActive==true)
-                          list.add(val.segmentCode.toString());
+                        });
+                      }
+                      else{
+                        List<String> list=[];
+
+                        for (var val in widget.table){
+                          if(val.isActive==true)
+                            list.add(val.segmentCode.toString());
+                        }
+
+                        print("sasasaaaaaaaaaaaaaa"+list.toString());
+
+                        salesOrderNamePostModel model=salesOrderNamePostModel(
+                          inventoryId: Variable.inventory_ID,
+                          searchElemet: null,
+                          type:  widget.buyMoreApplyinOn.text,
+                          segmentList:list,
+
+                        );
+                        print(model);
+                        showDailogPopUp(
+                          context,
+                          TableConfigurePopup(
+                            type: "SaleApplyingNamePeriodPopup",
+                            object: model,
+                            valueSelect: (OfferPeriodList va) {
+                              setState(() {
+                                widget.buyMoreApplyingNmae.text=va?.name??"";
+                                widget.buyMoreApplyingNameCode.text=va?.code??"";
+                                widget.buyMoreApplyingNameId.text=va?.id.toString()??"";
+                                widget. variantTableDatsClear();
+
+
+                                // widget.costingName.text =
+                                //     va.methodName ?? "";
+                                // setState(() {});
+
+                                // onChange = true;
+                                // orderType.text = va!;
+                              });
+                            },
+                          ),
+                        );
                       }
 
-                      print("sasasaaaaaaaaaaaaaa"+list.toString());
-
-                      salesOrderNamePostModel model=salesOrderNamePostModel(
-                        inventoryId: Variable.inventory_ID,
-                        searchElemet: null,
-                        type:  widget.buyMoreApplyinOn.text,
-                        segmentList:list,
-
-                      );
-                      print(model);
-                      showDailogPopUp(
-                        context,
-                        TableConfigurePopup(
-                          type: "SaleApplyingNamePeriodPopup",
-                          object: model,
-                          valueSelect: (OfferPeriodList va) {
-                            setState(() {
-                              widget.buyMoreApplyingNmae.text=va?.name??"";
-                              widget.buyMoreApplyingNameCode.text=va?.code??"";
-                              widget.buyMoreApplyingNameId.text=va?.id.toString()??"";
-                             widget. variantTableDatsClear();
-
-
-                              // widget.costingName.text =
-                              //     va.methodName ?? "";
-                              // setState(() {});
-
-                              // onChange = true;
-                              // orderType.text = va!;
-                            });
-                          },
-                        ),
-                      );
                     },
                   ),
+                  SizedBox(
+                    height: height * .030,
+                  ),
+
+                  NewInputCard(
+
+                      controller: widget.descripion,
+                      title: "Description"),
+
                   SizedBox(
                     height: height * .030,
                   ),
@@ -412,13 +429,28 @@ class _PromotionByMoreStableTableState extends State<PromotionByMoreStableTable>
             ),),
     Expanded(child:Column(
               children: [
-    Visibility(
-    visible: !widget.isAvailableForAll,
-      child: NewInputCard(
+                Visibility(
+                  visible: !widget.isAvailableForAll,
+                  child:
+                  NewInputCard(
+                      formatter: true,
+                      ontap: (){
+                        showDailogPopUp(
+                          context,
+                          ConfigurePopup(
+                            // code: widget.veritiacalCode,
+                            passingList:widget. customerGroupList,
+                            listAssign: (List<AvailableCustomerGroups> list1){
+                              widget.customGroupListAssign(list1);
 
-      controller: widget.availableCustomerGroups,
-      title: "Available Customer Groups"),
-    ),
+                            },
+                            type: "CustomGroupLinkedItem",
+                          ),
+                        );
+                      },
+
+                      controller: widget.availableCustomerGroups, title: "Available Customer Groups"),
+                ),
               ],
             ),),
             Expanded(child:Column(

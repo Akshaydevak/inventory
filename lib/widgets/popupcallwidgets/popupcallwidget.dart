@@ -21,6 +21,7 @@ import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_all_list_api/bogo_list_all_cubit.dart';
 import 'package:inventory/Screens/promotiontab/coupon/cubit/coupon_list_all_api/list_coupon_all_cubit.dart';
+import 'package:inventory/Screens/promotiontab/muttibuy/cubit/multibuy_all_list_cubit/multibuy_all_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/listallsalesapi/listallsalesapi_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
@@ -284,6 +285,16 @@ class _PopUpCallState extends State<PopUpCall> {
       case "promotion_coupon_applying_to":
         {
           data = CouponApplyingToPopup(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "promotion_multibuy_applying_to":
+        {
+          data = MultiBuyApplyingToPopup(
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -3106,19 +3117,24 @@ class _AttributeListPopUpCallState extends State<AttributeListPopUpCall> {
                 }
                 for(var i =0;i<=list.length-1;i++){
                   if( widget.  listOfList?.isNotEmpty==true){
-                    widget.  listOfList!.forEach((n) {
-                   print("AAAAAAAAAAAAAAAAAA"+n.toString());
-                   if(list[i]==n.name){
-                     print("AAAAAAAAAAAAAAAAAA"+n.name.toString());
-                     print("AAAAAAAAAAAAAAAAAA"+list[i].toString());
-                     list.removeAt(i);
-                     print(list);
-                   }
+                  for(var n=0;n<widget.listOfList!.length;n++){
 
-                    });
+                  print("AAAAAAAAAAAAAAAAAA"+n.toString());
+                  if(list[i]==widget?.listOfList?[n].name){
+
+                  list.removeAt(i);
+                  length=list.length;
+                  i=-1;
+                  break;
+
+
                   }
 
-                }
+
+                  }
+                  }}
+
+
 
                 AttributeListModel? onSellingBasedSelect(
                     var value, List<AttributeListModel> list) {
@@ -3769,6 +3785,151 @@ class _CouponApplyingToPopupState extends State<CouponApplyingToPopup> {
                       else {
                         widget.onSelection(onSellingBasedSelect(
                             suggestion.toString(), data!.couponApplyingTo!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+
+class MultiBuyApplyingToPopup extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const MultiBuyApplyingToPopup(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _MultiBuyApplyingToPopupState createState() => _MultiBuyApplyingToPopupState();
+}
+
+class _MultiBuyApplyingToPopupState extends State<MultiBuyApplyingToPopup> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<MultibuyAllListCubit>(
+        create: (context) => MultibuyAllListCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<MultibuyAllListCubit>().getListAllMultiBuyApi();
+            return BlocBuilder<MultibuyAllListCubit, MultibuyAllListState>(
+                builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.multiBuyAppliedTo?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.multiBuyAppliedTo![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    listAllSalesApis? newData;
+                    list.forEach((element) {
+                      newData?.saleApplyingTo?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType:
+                        TextInputType.phone ,
+                        inputFormatters:
+
+                        <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r""))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.multiBuyAppliedTo!));
                         // data.sellingPercntageBasedOn?.forEach((element) {
                         //   if (element == suggestion)
                         //     Variable.methodId = element.id;

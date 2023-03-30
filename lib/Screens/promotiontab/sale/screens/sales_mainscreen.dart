@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
@@ -43,6 +44,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
   TextEditingController  titleController=TextEditingController();
   TextEditingController  descriptionController=TextEditingController();
   TextEditingController  imageController=TextEditingController();
+  TextEditingController  imageNameController=TextEditingController();
   TextEditingController  basedOnController=TextEditingController();
   TextEditingController  discountPercentagePriceController=TextEditingController();
   TextEditingController  totalPricePriceController=TextEditingController();
@@ -114,6 +116,17 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
     });
 
   }
+  List<AvailableCustomerGroups> customerGroup=[];
+  void customGroupListAssign(List<AvailableCustomerGroups> customerGroupList){
+
+
+
+    setState(() {
+      customerGroup=List.from(customerGroupList);
+      print(customerGroup);
+
+    });
+  }
   variantTableDatsClear(){
     setState(() {
       variantTable.clear();
@@ -154,8 +167,8 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
      saleApplyingIdController.clear();
      offerPeriodNameController.clear();
      offerGroupNameController.clear();
-
-
+    customerGroup.clear();
+    imageNameController.clear();
     segmentTable.clear();
     priorityController.clear();
     descriptionController.clear();
@@ -164,9 +177,9 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
      totalPricePriceController.clear();
     availableCustomerGroupController.clear();
      basedOnController.clear();
+    variantTable2.clear();
    discountPercentagePriceController.clear();
     isAdminBased=false;
-     isAvailableForAll=false;
     maximumCountController.clear();
  offerGroupController.clear();
    offerPeriodController.clear();
@@ -178,6 +191,8 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
      saleCodeController.clear();
    titleController.clear();
     variantTable.clear();
+    _myWidgetState.currentState?.clear();
+    _segmnetState.currentState?.clears();
 
   }
   TextEditingController itemsearch = TextEditingController();
@@ -244,6 +259,8 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                 titleController.text=data.name??"";
                 descriptionController.text=data.description??"";
                 imageController.text=data.image??"";
+                offerPeriodNameController.text=data.offerPeriodname??"";
+                imageNameController.text=data.image??"";
                 basedOnController.text=data.basedOn??"";
                 saleApplyingPlaceController.text=data.salesApplyingPlace??"";
                 saleApplyingPlaceIdController.text=data.salesApplyingPlaceId?.toString()??"";
@@ -262,7 +279,9 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                 isAdminBased=data.isAdminBased??false;
                 isActive=data.isActive??false;
                 data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
+                data.availableCustomerGroups != null ? customerGroup =List.from( data?.availableCustomerGroups ?? []) : customerGroup = [];
                 data.saleLines != null ? variantTable =List.from( data?.saleLines ?? []) : variantTable = [];
+                data.saleLines != null ? variantTable2 =List.from( data?.saleLines ?? []) : variantTable2 = [];
 
               });
             });
@@ -536,8 +555,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                             setState(() {
                               select = true;
 
-                              _myWidgetState.currentState?.clear();
-                              _segmnetState.currentState?.clears();
+
                               clear();
                               isActive=true;
                               // // _myWidgetState.currentState?.cl();
@@ -566,6 +584,9 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                     SizedBox(height: height*.04,),
                     PromotionSaleStableTable(
                       isActive: isActive,
+                      customGroupListAssign: customGroupListAssign,
+                      customerGroupList: customerGroup,
+                      imageName: imageNameController,
                       variantTableDatsClear:variantTableDatsClear,
                       select: select,
                       offerGroupName: offerGroupNameController,
@@ -615,82 +636,82 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                     SaveUpdateResponsiveButton(
                       label:  select ? "SAVE":"UPDATE",
                       discardFunction: (){
-                        // showDailogPopUp(
-                        //     context,
-                        //     LogoutPopup(
-                        //       message: "Do you want to delete the order",
-                        //       // table:table,
-                        //       // clear:clear(),
-                        //       // verticalId: veritiaclid,
-                        //       onPressed: () {
-                        //         print("akshay");
-                        //         Navigator.pop(context);
-                        //
-                        //         context
-                        //             .read<DeleteOfferPeriodCubit>()
-                        //             .deleteOfferPeriod(veritiaclid,type:"3"
-                        //             );
-                        //         // context
-                        //         //     .read<
-                        //         //     SalesgeneraldeleteCubit>()
-                        //         //     .salesGeneralDelete(
-                        //         //     veritiaclid);
-                        //       },
-                        //     ));
-
-
                         showDailogPopUp(
                             context,
                             LogoutPopup(
-                              onLeftText: "View All Products",
-                              onRightText: "Deactivate",
-                              message: "Sorry,some of products  are already include in offer sale/discount",
-                              onLeftPress: (){
-                                List<int?> list1=[];
-                                for(var a in variantTable)
-                                  list1.add(a.variantId);
-
-                                context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,"sale",list1);
-                                showDailogPopUp(
-                                  context,
-                                  BlocProvider(
-                                    create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(1,"sale",list1),
-                                    child: ConfigurePopup(
-
-                                      // listAssign: listAssign,
-                                      type: "VariantPromotionCreatativePopup",
-                                    ),
-                                  ),
-                                );
-
-
-                              },
+                              message: "Do you want to delete the order",
                               // table:table,
                               // clear:clear(),
+                              // verticalId: veritiaclid,
+                              onPressed: () {
+                                print("akshay");
+                                Navigator.pop(context);
 
-                              onPressed:() async {
-                                List<int?> list1=[];
-                                for(var a in variantTable)
-                                  list1.add(a.variantId);
-
-                                context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,"sale",list1);
-                                showDailogPopUp(
-                                  context,
-                                  BlocProvider(
-  create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,"sale",list1),
-  child: ConfigurePopup(
-
-                                    // listAssign: listAssign,
-                                    type: "VariantPromotionCreatativePopup",
-                                  ),
-),
-                                );
-
-
+                                context
+                                    .read<DeleteOfferPeriodCubit>()
+                                    .deleteOfferPeriod(veritiaclid,type:"3"
+                                    );
+                                // context
+                                //     .read<
+                                //     SalesgeneraldeleteCubit>()
+                                //     .salesGeneralDelete(
+                                //     veritiaclid);
                               },
-
-
                             ));
+
+//
+//                         showDailogPopUp(
+//                             context,
+//                             LogoutPopup(
+//                               onLeftText: "View All Products",
+//                               onRightText: "Deactivate",
+//                               message: "Sorry,some of products  are already include in offer sale/discount",
+//                               onLeftPress: (){
+//                                 List<int?> list1=[];
+//                                 for(var a in variantTable)
+//                                   list1.add(a.variantId);
+//
+//                                 context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,"sale",list1);
+//                                 showDailogPopUp(
+//                                   context,
+//                                   BlocProvider(
+//                                     create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(1,"sale",list1),
+//                                     child: ConfigurePopup(
+//
+//                                       // listAssign: listAssign,
+//                                       type: "VariantPromotionCreatativePopup",
+//                                     ),
+//                                   ),
+//                                 );
+//
+//
+//                               },
+//                               // table:table,
+//                               // clear:clear(),
+//
+//                               onPressed:() async {
+//                                 List<int?> list1=[];
+//                                 for(var a in variantTable)
+//                                   list1.add(a.variantId);
+//
+//                                 context.read<PromotionSaleDeactivateCubit>().getVariantDeactivate(2,"sale",list1);
+//                                 showDailogPopUp(
+//                                   context,
+//                                   BlocProvider(
+//   create: (context) => PromotionSaleDeactivateCubit()..getVariantDeactivate(2,"sale",list1),
+//   child: ConfigurePopup(
+//
+//                                     // listAssign: listAssign,
+//                                     type: "VariantPromotionCreatativePopup",
+//                                   ),
+// ),
+//                                 );
+//
+//
+//                               },
+//
+//
+//                             ));
                       },
                       saveFunction: (){
                         var variantTable1=[
@@ -737,7 +758,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                           createdBy: Variable.created_by,
                           saleLines:select?variantTable1: variantTable,
                           segments: segmentTable1??[],
-                          availableCustomerGroup: "aaa",
+                          availableCustomerGroups: isAvailableForAll?[]:customerGroup,
                           salesApplyingPlace:saleApplyingPlaceController.text,
                           salesApplyingPlaceCode: saleApplyingPlaceCodedController.text,
                           salesApplyingPlaceName: saleApplyingPlaceNameController.text,

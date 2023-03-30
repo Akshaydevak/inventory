@@ -251,7 +251,7 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
 
 
                                             setState(() {
-                                              table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName:va?.variantName??"",updateCheck: true,barcode: va?.barcode?.barcodeNumber  );
+                                              table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName:va?.variantName??"",updateCheck: true,barcode: va?.barcode  );
 
 
 
@@ -279,7 +279,7 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                                 TableCell(
                                     verticalAlignment: TableCellVerticalAlignment.middle,
 
-                                    child:textPadding(table[i].barcode.toString()??"")
+                                    child:textPadding(table[i].barcode?.barcodeNumber.toString()??"")
 
 
 
@@ -492,7 +492,7 @@ class CouponVariantGrowableTableState extends State<CouponVariantGrowableTable> 
                                         table.add(VariantModel(
                                           variantCode: variantCode,
                                           variantId: variantId,
-                                          barcode: barcode.barcodeNumber,
+                                          barcode: barcode,
                                           variantName: variantName.isEmpty?"":variantName,
                                           isActive: isActive,
                                         ));

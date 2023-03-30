@@ -43,6 +43,7 @@ import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'Screens/logi/login.dart';
 import 'Screens/promotiontab/buy_more/cubit/buy_more_verticalList/buy_more_vertical_list_cubit.dart';
 import 'Screens/promotiontab/discount/cubit/PromotionDiscountVerticalList/promotion_discount_vertical_list_cubit.dart';
+import 'Screens/promotiontab/muttibuy/cubit/multibuyverticallist_cubit.dart';
 import 'Screens/promotiontab/sale/cubits/ListOfferPeriodGroup/list_offer_period_cubit.dart';
 import 'Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
 import 'Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
@@ -149,6 +150,8 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => ListstaticCubit(),
+        ),  BlocProvider(
+          create: (context) => MultibuyverticallistCubit(),
         ),
         BlocProvider(
           create: (context) => UomgruoplistCubit(),

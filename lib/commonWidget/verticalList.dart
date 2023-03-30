@@ -2617,6 +2617,186 @@ class _PromotionBuyMoreVerticalListState extends State<PromotionBuyMoreVerticalL
 }
 
 
+class PromotionMultiBuyVerticalList extends StatefulWidget {
+  final TextEditingController itemsearch;
+  final  PaginatedResponse<dynamic>? list;
+  final   List<OfferPeriodList> result ;
+  final Widget child;
+  final String? tab;
+  int selectedVertical;
+  // final bool suffixIconCheck;
+  // final bool select;
+  final Function(int) ontap;
+  final Function(String) search;
+  PromotionMultiBuyVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab, required this.child, required this.search});
+  @override
+  _PromotionMultiBuyVerticalListState createState() => _PromotionMultiBuyVerticalListState();
+}
+
+class _PromotionMultiBuyVerticalListState extends State<PromotionMultiBuyVerticalList> {
+  late AutoScrollController controller;
+  int? veritiaclid=0;
+  List<OfferPeriodList>result=[];
+  bool select=false;
+  int selectedVertical=0;
+  TextEditingController itemsearch=TextEditingController();
+  NavigationProvider vm = NavigationProvider();
+  @override
+  void initState() {
+
+    int verticalScrollIndex = 0;
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Static"+widget.result.toString());
+    Size size = MediaQuery.of(context).size;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    vm = Provider.of<NavigationProvider>(context);
+    return BlocProvider(
+      create: (context) => BaseuomlistCubit(),
+      child: Container(
+        //     child: BlocProvider(
+        // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+        child: Builder(
+            builder: (context) {
+              return BlocConsumer<BaseuomlistCubit, BaseuomlistState>(
+                listener: (context, state) {
+                  print("this portion is working");
+                  state.maybeWhen(orElse:(){},
+                      error: (){
+                        print("error");
+                      },
+                      success: (list){
+                        print("listtt"+list.toString());
+                        result=list.data;setState(() {
+                          print("Here is the result");
+                          print(result);
+
+                        });
+
+                      }
+                  );
+                },
+                builder: (context, state) {
+                  return Container(
+                    height: double.infinity,
+                    margin: EdgeInsets.all(10),
+                    child:
+                    Visibility(
+                      visible:  !vm.isCollapsed,
+                      child: Container(
+                        height: height,
+                        // height: double.minPositive,
+                        width:  width * .172,
+                        //width: 232,
+                        color: Color(0xffEDF1F2),
+                        child: Column(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.all(5),
+                                child:
+                                SearchTextfiled(
+                                  color: Color(0xffFAFAFA),
+                                  hintText: "Search...",
+                                  ctrlr:widget. itemsearch,
+                                  onChanged: (va) {
+                                    print("searching case"+va.toString());
+                                    widget.search(va);
+                                    // context
+                                    //     .read<BaseuomlistCubit>()
+                                    //     .searchUomList(widget.itemsearch.text,type: "all");
+                                    // if(va==""){
+                                    //   context
+                                    //       .read<BaseuomlistCubit>()
+                                    //       .getUomist();
+                                    //
+                                    // }
+
+                                  },
+                                )
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * .008,
+                            ),
+
+
+                            Expanded(
+                                child: Container(
+                                    height: 0,
+                                    child:
+                                    ListView.separated(
+
+
+
+                                      separatorBuilder: (context, index) {
+
+                                        return Divider(
+                                          height: 0,
+                                          color: Color(0xff2B3944)
+                                              .withOpacity(0.3),
+                                          // thickness: 1,
+                                        );
+                                      },
+                                      physics: ScrollPhysics(),
+                                      controller: controller,
+                                      itemBuilder: (context, index) {
+                                        return AutoScrollTag(
+                                            highlightColor: Colors.red,
+                                            controller: controller,
+                                            key: ValueKey(index),
+                                            index: index,
+                                            child: ItemCard(
+                                              index: index,
+                                              selectedVertical:widget. selectedVertical,
+                                              item: widget.result[index].name??widget.result[index].title,
+                                              id:widget. result[index]
+                                                  .id
+                                                  .toString(),
+                                              onClick: () {
+                                                widget.ontap( index);
+
+                                              },
+                                            ));
+                                      },
+                                      itemCount: widget.result.length,
+                                    )
+
+
+                                )),
+                            widget.child,
+
+
+
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+        ),
+
+      ),
+    );
+
+  }
+}
+
+
 
 
 

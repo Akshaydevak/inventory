@@ -6,6 +6,7 @@ import 'package:inventory/Screens/promotiontab/bogo_tab/model/bogo_creation_mode
 import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart';
 import 'package:inventory/Screens/promotiontab/coupon/model/crreateCouponModel.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
+import 'package:inventory/Screens/promotiontab/muttibuy/model/create_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/commonWidget/appurl.dart';
 import 'package:inventory/commonWidget/sharedpreference.dart';
@@ -23,13 +24,14 @@ abstract class PromotionDatasourse {
   Future<ReadOfferPeriod> getOfferGroupTypeTo();
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getPromotionSaleVerticalListt(String? code);
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getPromotionDiscountVerticalList(String? code);
+  Future<PaginatedResponse<List<CustomerGroupModel>>> getPromotionCustomerGroupList(String? code);
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getListSegment(String? code);
   // Future<OfferGroupType> getOfferGroupType();
   // Future<List<ChannelTypeList>> getChannelTypeOfferList(String val);
   // Future<ChannelList> getChannelListOffer();
   Future<DoubleResponse> postCreateOfferGroup(CreateOfferGroup model);
   Future<DoubleResponse> postPromotionSale(PromotionSaleCreateModel model);
-  Future<DoubleResponse> postCreatativeVariant(List<VariantModel> idList);
+  Future<DoubleResponse> postCreatativeVariant(List<ViewAllProductsVariantModel> idList);
   Future<DoubleResponse> getPromotionSalePatch(PromotionSaleCreateModel model,int ? id);
   Future<PaginatedResponse<List<OfferGroupList>>> getOfferGroupList(String? code, {String? type});
   Future<ReadOfferGroup>getOfferGroupRead(int id);
@@ -70,6 +72,14 @@ abstract class PromotionDatasourse {
   Future<DoubleResponse> postCreatePromtionCoupon(PromotionCouponCreationModel model);
   Future<PromotionCouponCreationModel>getPromotionCouponRead(int id);
   Future<DoubleResponse> couponPromotionPatch(PromotionCouponCreationModel model,int ? id);
+  //++++++++++++++++++++++++++multibuy ++++++++++++++++++++++++++++++++++++
+  Future<PaginatedResponse<List<OfferPeriodList>>> getMultiBuyVerticalList(String? code);
+  Future<listAllSalesApis> getListAllMultiBuyApi({String? type });
+  Future<PaginatedResponse<List<MultibuyVariantListModel>>> getMultiBuyVariantList(PromotionVariantPostModel model, String? code);
+
+  Future<DoubleResponse> postCreatePromtionMultiBuy(PromotionMultiBuyCreationModel model);
+  Future<PromotionMultiBuyReadModel>getPromotionMultiBuyRead(int id);
+  Future<DoubleResponse> multiBuyPromotionPatch(PromotionMultiBuyCreationModel model,int ? id);
 
 
 
@@ -303,6 +313,11 @@ return data;
       case "7":
         {
           url = readCouponApi;
+        }
+        break;
+      case "8":
+        {
+          url = readPromotionMultibuyApi;
         }
         break;
 
@@ -924,10 +939,15 @@ return data;
 
               "name":model.name,
               "offer_period_id":model.offerPeriodId,
+            "segments":model.segments,
               "offer_group_id":model.offerGroupId,
               "based_on":model.basedOn,
               "discount_percentage_or_price":model.discountPercentageOrPrice,
               "total_price":model.totalPrice,
+            "sales_applying_place":model.salesApplyingPlace,
+            "sales_applying_place_code":model.salesApplyingPlaceCode,
+            "sales_applying_place_name":model.salesApplyingPlaceName,
+
               "sales_applying_on":model.salesApplyingOn,
               "sales_applying_on_name":model.salesApplyingOnName,
               "sales_applying_on_id":model.salesApplyingOnId,
@@ -935,7 +955,7 @@ return data;
               "inventory_id":model.inventoryId,
               "image":model.image,
               "is_available_for_all":[model.isAvailableForAll],
-              "available_customer_groups":model.availableCustomerGroup,
+              "available_customer_groups":model.availableCustomerGroups,
               "maximum_count":model.maximumCount,
               "description":model.description,
               "created_by":model.createdBy,
@@ -1024,12 +1044,13 @@ return data;
             "sales_applying_on_code":model.salesApplyingOnCode,
 
             "inventory_id":model.inventoryId,
+            "segments":model.segments,
 
             "image":model.image,
 
             "is_available_for_all":model.isAvailableForAll,
 
-            "available_customer_groups":model.availableCustomerGroup,
+            "available_customer_groups":model.availableCustomerGroups,
 
             "maximum_count":model.maximumCount,
 
@@ -1230,7 +1251,7 @@ try{
 
 }
     catch(e){
-  print(e);
+  print("the error is here $e");
     }
     final response = await client.post(path,
       data:{
@@ -1263,8 +1284,9 @@ try{
   }
 
   @override
-  Future<DoubleResponse> postCreatativeVariant(List<VariantModel> idList) async {
+  Future<DoubleResponse> postCreatativeVariant(List<ViewAllProductsVariantModel> idList) async {
     print(deactivateOfferByVariantPostApi);
+    print(idList);
 
     try{
       final response = await client.post(deactivateOfferByVariantPostApi,
@@ -1315,7 +1337,7 @@ try{
     if (code == "")
       path = listDiscountVerticalListApi+Variable.inventory_ID;
     else
-      path = listDiscountVerticalListApi +Variable.inventory_ID+ "/?$code";
+      path = listDiscountVerticalListApi +Variable.inventory_ID+ "?$code";
 
 
 
@@ -1924,14 +1946,8 @@ try{
           "buy_more_applying_on_code":model.buyMoreApplyingOnCode,
           "maximum_count":model.maximumCount,
           "buy_more_applying_on":model.buyMoreApplyingOn,
-
-
-            "available_customer_groups":   {
-              "customer_group_code": null,
-              "customer_group_name": null
-            },
+            "available_customer_groups":model.availableCustomerGroups,
             // model.availableCustomerGroups,
-
             "image":model.image,
 
             "is_active":model.isActive,
@@ -2032,10 +2048,7 @@ try{
           "buy_more_applying_on_id":model.buyMoreApplyingOnId,
           "buy_more_applying_on_code":model.buyMoreApplyingOnCode,
           "maximum_count":model.maximumCount,
-          "available_customer_groups":  {
-            "customer_group_code": null,
-            "customer_group_name": null
-          },
+          "available_customer_groups": model.availableCustomerGroups,
 
           // model.availableCustomerGroups,
           "image":model.image,
@@ -2438,7 +2451,7 @@ try{
 
           "is_available_for_all": model.isAvailableForAll,
 
-          "available_customer_groups": [{"customer_group_code": "hai", "customer_group_name": "hello"}],
+          "available_customer_groups": model.availableCustomerGroups,
 
           "image": model.image,
 
@@ -2517,7 +2530,7 @@ try{
 
         "is_available_for_all": model.isAvailableForAll,
 
-        "available_customer_groups": [{"customer_group_code": "hai", "customer_group_name": "hello"}],
+        "available_customer_groups": model.availableCustomerGroups,
 
         "image": model.image,
 
@@ -2903,6 +2916,450 @@ data:{
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);;
+  }
+
+  @override
+  Future<PaginatedResponse<List<CustomerGroupModel>>> getPromotionCustomerGroupList(String? code) async {
+    code = code == null ? "" : code;
+    String path;
+
+    if (code == "")
+      path = "https://api-customergroup-application.hilalcart.com/";
+    else
+      path = "https://api-customergroup-application.hilalcart.com/"+ "?$code";
+
+
+
+
+    print(path);
+    try{
+      print("Inside");
+      final response = await client.get("https://api-customergroup-application.hilalcart.com/customerGroupinglist",
+        // verticalListCouponApi+"SBNU1001",
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      print("Inside");
+      // final response = await client.get("https://api-customergroup-application.hilalcart.com/",
+      //
+      //   options: Options(validateStatus: (value)=>true,
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'Accept': 'application/json',
+      //       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+      //       "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
+      //       "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+      //       "Access-Control-Allow-Methods": "POST, OPTIONS"
+      //     },
+      //   ),);
+      print(response);
+
+      List<CustomerGroupModel> items = [];
+      (response.data['data']['Group_Code_Name'] as List).forEach((element) {
+        items.add(CustomerGroupModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return PaginatedResponse<List<CustomerGroupModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],);
+    }
+    catch(e){
+      print("the error is here"+e.toString());
+    }
+
+    final response = await client.get(
+      "https://api-customergroup-application.hilalcart.com/customerGroupinglist",
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      ),
+    );
+    print(response);
+
+    List<CustomerGroupModel> items = [];
+    (response.data['data']['Group_Code_Name'] as List).forEach((element) {
+      items.add(CustomerGroupModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<CustomerGroupModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
+  }
+
+  @override
+  Future<PaginatedResponse<List<OfferPeriodList>>> getMultiBuyVerticalList(String? code) async {
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = verticalListMultiBuyApi+Variable.inventory_ID;
+    else
+      path = verticalListMultiBuyApi +Variable.inventory_ID+ "?$code";
+    print(path);
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<OfferPeriodList> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(OfferPeriodList.fromJson(element));
+      print("listOfferPeriod" + items.toString());
+    });
+    return PaginatedResponse<List<OfferPeriodList>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+  }
+
+  @override
+  Future<listAllSalesApis> getListAllMultiBuyApi({String? type}) async {
+    final response = await client.get(
+      createPromotionMultibuyApi,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("response" + response.toString());
+    listAllSalesApis ordertype =
+    listAllSalesApis.fromJson(response.data['data']);
+    print("return OrderType+++++++++++++++++"+ordertype.toString());
+
+    return ordertype;
+  }
+
+  @override
+  Future<PaginatedResponse<List<MultibuyVariantListModel>>> getMultiBuyVariantList(PromotionVariantPostModel model, String? code) async {
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = "https://api-uat-inventory.sidrabazar.com/inventory-product/list-variant-for-multy-buy";
+    else
+      path = "https://api-uat-inventory.sidrabazar.com/inventory-product/list-variant-for-multy-buy" + "?$code";
+    print(path);
+    try{
+      final response = await client.post(path,
+          data:
+          {
+            "segment_list":model.segmentList,
+            "search_element":model.searchElement,
+          },
+          // model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }));
+
+      List<MultibuyVariantListModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(MultibuyVariantListModel.fromJson(element));
+        print("listOfferPeriod" + items.toString());
+      });
+      return PaginatedResponse<List<MultibuyVariantListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],);
+    }
+    catch(e){
+      print(e);
+
+    }
+    final response = await client.post(path,
+        data:{
+    "segment_list":model.segmentList,
+    "search_element":model.searchElement,
+    },
+        // model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<MultibuyVariantListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(MultibuyVariantListModel.fromJson(element));
+      print("listOfferPeriod" + items.toString());
+    });
+    return PaginatedResponse<List<MultibuyVariantListModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
+
+
+
+  }
+
+  @override
+  Future<DoubleResponse> postCreatePromtionMultiBuy(model) async {
+    print(createPromotionMultibuyApi);
+    try{
+      final response = await client.post(createPromotionMultibuyApi,
+          data:
+          model.toJson(),
+
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      print(response.data);
+      if (response.data['status'] == 'failed') {
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
+
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+    }catch(e){
+      print(e);
+
+    }
+    final response = await client.post(createPromotionMultibuyApi,
+      data:  model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+  }
+
+  @override
+  Future<PromotionMultiBuyReadModel> getPromotionMultiBuyRead(int id) async {
+    String path=readPromotionMultibuyApi+id.toString();
+    print(path);
+    try{
+      final response = await client.get(path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      // print("response" + response.toString());
+      PromotionMultiBuyReadModel data = PromotionMultiBuyReadModel.fromJson(response.data['data']['multi_buy_data']);
+      print("far$data");
+      return data;
+    }catch(e){
+
+
+      print("the error is here is "+e.toString());
+    }
+    final response = await client.get(path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    // print("response" + response.toString());
+    PromotionMultiBuyReadModel data = PromotionMultiBuyReadModel.fromJson(response.data['data']['multi_buy_data']);
+    print("far$data");
+    return data;
+  }
+
+  @override
+  Future<DoubleResponse> multiBuyPromotionPatch(PromotionMultiBuyCreationModel model, int? id) async {
+    String path=readPromotionMultibuyApi+id.toString();
+    print(path);
+    print(model);
+
+    try{
+      final response = await client.patch(path,
+          data:
+          {
+            "inventory_id":model.inventoryId,
+
+            "multibuy_applied_to":model.multibuyAppliedTo,
+
+            "multibuy_applied_to_code":model.multibuyAppliedToCode,
+
+            "name":model.name,
+
+            "offer_period_id":model.offerPeriodId,
+
+            "offer_group_id":model.offerGroupId,
+
+            "is_available_for_all":model.isAvailableFor,
+
+            "available_customer_groups":model.availableCustomerGroups,
+
+            "selling_price":model.sellingPrice,
+
+            "total_cost":model.totalCost,
+
+            "image":model.image,
+
+            "segments":model.segments,
+
+            "display_name":model.displayName,
+
+            "description":model.description,
+
+            "maximum_quantity":100,
+
+            "is_active":model.isActive,
+
+            "created_by":model.createdBuy,
+
+            "get_lines":model.getLines,
+
+            "buy_lines":model.buyLines
+
+          } ,
+
+
+
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      print(response.data);
+      if (response.data['status'] == 'failed') {
+
+
+
+        if(response.data['is_another_promotion']==true){
+          Variable.errorMessege = response.data['message']['message'];
+          Variable.type_data = response.data['message']['type_data'];
+          Variable.isTypeDataCheck = true;
+
+        }
+        else{
+          Variable.errorMessege = response.data['message'];
+          Variable.isTypeDataCheck = false;
+        }
+
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);
+
+    }catch(e){
+      print("the error is here"+e.toString());
+
+    }
+    final response = await client.patch(path,
+        data:
+        {
+          "inventory_id":model.inventoryId,
+
+          "multibuy_applied_to":model.multibuyAppliedTo,
+
+          "multibuy_applied_to_code":model.multibuyAppliedToCode,
+
+          "name":model.name,
+
+          "offer_period_id":model.offerPeriodId,
+
+          "offer_group_id":model.offerGroupId,
+
+          "is_available_for_all":model.isAvailableFor,
+
+          "available_customer_groups":model.availableCustomerGroups,
+
+          "selling_price":model.sellingPrice,
+
+          "total_cost":model.totalCost,
+
+          "image":model.image,
+
+          "segments":model.segments,
+
+          "display_name":model.displayName,
+
+          "description":model.description,
+
+          "maximum_quantity":100,
+
+          "is_active":model.isActive,
+
+          "created_by":model.createdBuy,
+
+          "get_lines":model.getLines,
+
+          "buy_lines":model.buyLines
+
+        } ,
+
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    print(response.data);
+    if (response.data['status'] == 'failed') {
+
+
+
+      if(response.data['is_another_promotion']==true){
+        Variable.errorMessege = response.data['message']['message'];
+        Variable.type_data = response.data['message']['type_data'];
+        Variable.isTypeDataCheck = true;
+
+      }
+      else{
+        Variable.errorMessege = response.data['message'];
+        Variable.isTypeDataCheck = false;
+      }
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['status'] == 'success'? response.data['message']: Variable.errorMessege);;
+
   }
 
 

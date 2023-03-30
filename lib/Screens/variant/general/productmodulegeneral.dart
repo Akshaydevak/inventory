@@ -645,304 +645,302 @@ print("the list is"+variantList.toString());
                 return Builder(builder: (context) {
                   return Scaffold(
                     backgroundColor: Colors.white,
-                    body: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          VariantVerticalList(
-                            list: lists,
-                            selectedVertical: selectedVertical,
-                            itemsearch: itemsearch,
-                            suffixIconCheck:suffixIconCheck,
-                            ontap: (int index) {
+                    body: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        VariantVerticalList(
+                          list: lists,
+                          selectedVertical: selectedVertical,
+                          itemsearch: itemsearch,
+                          suffixIconCheck:suffixIconCheck,
+                          ontap: (int index) {
+                            setState(() {
+                              selectedVertical = index;
+                              variantController.clear();
+                              variantNameController.clear();
+                              variantFrameWorkNameController.clear();
+                              vals.clear();
+
+                              variantList.clear();
+
+                              // select=false;
+                              // clear();
+                              // exportCheck=false;
+                              // addNew=true;
+                              itemCode = result[index].code?.toString()??"";
+                              uomCode = result[index].uomCode?.toString()??"";
+
+                              // updateCheck=false;
+                              print("rijina" + result[index].id.toString());
+
+                              veritiaclid = result[index].id;
+                              Variable.variantSearchId = result[index].id;
+                              // clear();
+                              // select=true;
+                              //
+                              //
+
                               setState(() {
-                                selectedVertical = index;
-                                variantController.clear();
-                                variantNameController.clear();
-                                variantFrameWorkNameController.clear();
-                                vals.clear();
-
-                                variantList.clear();
-
-                                // select=false;
-                                // clear();
-                                // exportCheck=false;
-                                // addNew=true;
-                                itemCode = result[index].code?.toString()??"";
-                                uomCode = result[index].uomCode?.toString()??"";
-
-                                // updateCheck=false;
-                                print("rijina" + result[index].id.toString());
-
-                                veritiaclid = result[index].id;
-                                Variable.variantSearchId = result[index].id;
-                                // clear();
-                                // select=true;
-                                //
-                                //
-
-                                setState(() {
-                                  context
-                                      .read<VariantCreationReadCubit>()
-                                      .getVariantCreationRead(veritiaclid!);
-                                });
+                                context
+                                    .read<VariantCreationReadCubit>()
+                                    .getVariantCreationRead(veritiaclid!);
                               });
-                            },
-                            search: (String va) {
-                              print(va);
+                            });
+                          },
+                          search: (String va) {
+                            print(va);
+                            context
+                                .read<ListvariantCubit>()
+                                .searchVariantList(va);
+                            suffixIconCheck=true;
+
+                            if (va == "") {
                               context
                                   .read<ListvariantCubit>()
-                                  .searchVariantList(va);
-                              suffixIconCheck=true;
-
-                              if (va == "") {
-                                context
-                                    .read<ListvariantCubit>()
-                                    .getVariantCreationList();
-                                suffixIconCheck=false;
-                              }
-                            },
-                            result: result,
-                            child:           tablePagination(
-                                  () => context
+                                  .getVariantCreationList();
+                              suffixIconCheck=false;
+                            }
+                          },
+                          result: result,
+                          child:           tablePagination(
+                                () => context
+                                .read<ListvariantCubit>()
+                                .refresh(),
+                            back: lists?.previousUrl == null
+                                ? null
+                                : () {
+                              context
                                   .read<ListvariantCubit>()
-                                  .refresh(),
-                              back: lists?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<ListvariantCubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next: lists?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<ListvariantCubit>()
-                                    .nextslotSectionPageList();
-                              },
-                            ),
-
+                                  .previuosslotSectionPageList();
+                            },
+                            next: lists?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<ListvariantCubit>()
+                                  .nextslotSectionPageList();
+                            },
                           ),
-                          Expanded(
-                              child: SingleChildScrollView(
-                                child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 15),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: height / 14,
-                                  ),
-                                  Container(
-                                    // color: Colors.red,
-                                    width: width ,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: NewInputCard(
-                                            paddings:EdgeInsets.zero ,
-                                            controller: variantNameController,
-                                            icondrop: true,
-                                            title: "Variant",
-                                            ontap: () {
-                                              showDailogPopUp(
-                                                context,
-                                                TableConfigurePopup(
-                                                  type: "varientTabalePopup",
-                                                  valueSelect:
-                                                      (BrandListModel va) {
-                                                    setState(() {
-                                                      print(va?.id ?? "");
-                                                      variantController.text = va.code.toString();
-                                                      variantNameController.text = va.name??"";
-                                                      setState(() {});
 
-                                                      // onChange = true;
-                                                      // orderType.text = va!;
-                                                    });
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          // SelectableDropDownpopUp(
-                                          //   // controller:widget.division,
-                                          //   label: "Varients",
-                                          //   type:"VariantSelection_PopUpCall",
-                                          //   value: variantController.text,
-                                          //   onchange: (vale){
-                                          //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                          //   },
-                                          //   enable: true,
-                                          //   onSelection: (BrandListModel? va) {
-                                          //     setState(() {
-                                          //
-                                          //
-                                          //       // print(va?.id??"");
-                                          //       // divisionid=va?.id;
-                                          //       // Variable.divisionId=va?.id;
-                                          //       //
-                                          //       variantController.text=va?.name??"";
-                                          //       // setState(() {
-                                          //       //
-                                          //       // });
-                                          //
-                                          //
-                                          //       // onChange = true;
-                                          //       // orderType.text = va!;
-                                          //     });
-                                          //   },
-                                          //
-                                          // ),
+                        ),
+                        Expanded(
+                            child: SingleChildScrollView(
+                              child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: height / 14,
+                                ),
+                                Container(
+                                  // color: Colors.red,
+                                  width: width ,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: NewInputCard(
+                                          paddings:EdgeInsets.zero ,
+                                          controller: variantNameController,
+                                          icondrop: true,
+                                          title: "Variant",
+                                          ontap: () {
+                                            showDailogPopUp(
+                                              context,
+                                              TableConfigurePopup(
+                                                type: "varientTabalePopup",
+                                                valueSelect:
+                                                    (BrandListModel va) {
+                                                  setState(() {
+                                                    print(va?.id ?? "");
+                                                    variantController.text = va.code.toString();
+                                                    variantNameController.text = va.name??"";
+                                                    setState(() {});
+
+                                                    // onChange = true;
+                                                    // orderType.text = va!;
+                                                  });
+                                                },
+                                              ),
+                                            );
+                                          },
                                         ),
-                                        // Expanded(child: NewInputCard(controller: controller,title: "Varients"),),
-                                        Expanded(
-                                          child: NewInputCard(
-                                              readOnly: true,
-                                              controller:
-                                              variantFrameWorkNameController,
-                                              title: "Variant Frame Work"),
-                                        )
-                                      ],
-                                    ),
+                                        // SelectableDropDownpopUp(
+                                        //   // controller:widget.division,
+                                        //   label: "Varients",
+                                        //   type:"VariantSelection_PopUpCall",
+                                        //   value: variantController.text,
+                                        //   onchange: (vale){
+                                        //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                        //   },
+                                        //   enable: true,
+                                        //   onSelection: (BrandListModel? va) {
+                                        //     setState(() {
+                                        //
+                                        //
+                                        //       // print(va?.id??"");
+                                        //       // divisionid=va?.id;
+                                        //       // Variable.divisionId=va?.id;
+                                        //       //
+                                        //       variantController.text=va?.name??"";
+                                        //       // setState(() {
+                                        //       //
+                                        //       // });
+                                        //
+                                        //
+                                        //       // onChange = true;
+                                        //       // orderType.text = va!;
+                                        //     });
+                                        //   },
+                                        //
+                                        // ),
+                                      ),
+                                      // Expanded(child: NewInputCard(controller: controller,title: "Varients"),),
+                                      Expanded(
+                                        child: NewInputCard(
+                                            readOnly: true,
+                                            controller:
+                                            variantFrameWorkNameController,
+                                            title: "Variant Frame Work"),
+                                      )
+                                    ],
                                   ),
-                                  SizedBox(
-                                    height: height / 19,
-                                  ),
-                                  // TextButton.icon(
-                                  //     label: Text(
-                                  //       'Add New',
-                                  //       style: TextStyle(fontSize: 11),
-                                  //     ),
-                                  //     icon: Icon(
-                                  //       Icons.add,
-                                  //       size: 11,
-                                  //     ),
-                                  //     onPressed: () {
-                                  //       print('Pressed');
-                                  //     }),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  AttributeScreen(
-                                      attributes: attribute,
-                                      combination: combinationList),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  CombinationTable(list: vals),
-                                  SizedBox(
-                                    height: height / 9,
-                                  ),
-                                  SaveUpdateResponsiveButton(
-                                    label: "SAVE",
-                                    saveFunction: (){
-                                      print("filterList"+ result_value.toString());
-                                      if(result_value.isNotEmpty){
-                                        for (int i=0;i<result_value.length;i++){
-                                          if(vals[i].isActive==true){
-                                            variantList.add(result_value[i]);
+                                ),
+                                SizedBox(
+                                  height: height / 19,
+                                ),
+                                // TextButton.icon(
+                                //     label: Text(
+                                //       'Add New',
+                                //       style: TextStyle(fontSize: 11),
+                                //     ),
+                                //     icon: Icon(
+                                //       Icons.add,
+                                //       size: 11,
+                                //     ),
+                                //     onPressed: () {
+                                //       print('Pressed');
+                                //     }),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                AttributeScreen(
+                                    attributes: attribute,
+                                    combination: combinationList),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                CombinationTable(list: vals),
+                                SizedBox(
+                                  height: height / 9,
+                                ),
+                                SaveUpdateResponsiveButton(
+                                  label: "SAVE",
+                                  saveFunction: (){
+                                    print("filterList"+ result_value.toString());
+                                    if(result_value.isNotEmpty){
+                                      for (int i=0;i<result_value.length;i++){
+                                        if(vals[i].isActive==true){
+                                          variantList.add(result_value[i]);
 
-                                          }
                                         }
                                       }
-                                      // print("filterList"+uomCode.toString());
+                                    }
+                                    // print("filterList"+uomCode.toString());
 
 
 
-                                      context
-                                          .read<
-                                          VariantFrameworkcombinationpostCubit>()
-                                          .postCombinationFrameWork(
-                                          uomCode: uomCode,
-                                          itemCode: itemCode,
-                                          variantCode:
-                                          variantFrameWorkController.text,
-                                          variantlist: variantList);
-                                    },
-                                    discardFunction: (){
+                                    context
+                                        .read<
+                                        VariantFrameworkcombinationpostCubit>()
+                                        .postCombinationFrameWork(
+                                        uomCode: uomCode,
+                                        itemCode: itemCode,
+                                        variantCode:
+                                        variantFrameWorkController.text,
+                                        variantlist: variantList);
+                                  },
+                                  discardFunction: (){
 
-                                    },
-                                  ),
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.end,
-                                  //   children: [
-                                  //     Button(Icons.delete, Colors.red,
-                                  //         ctx: context,
-                                  //         text: "DISCARD",
-                                  //         onApply: () {},
-                                  //         height: 29,
-                                  //         width: 90,
-                                  //         labelcolor: Colors.red,
-                                  //         iconColor: Colors.red,
-                                  //         bdr: true),
-                                  //     SizedBox(
-                                  //       width: width * .008,
-                                  //     ),
-                                  //     Button(
-                                  //       Icons.check,
-                                  //       Colors.grey,
-                                  //       ctx: context,
-                                  //       text: "SAVE",
-                                  //       onApply: () {
-                                  //
-                                  //             var filterList;
-                                  //
-                                  //
-                                  //             print("filterList"+ result_value.toString());
-                                  //         if(result_value.isNotEmpty){
-                                  //           for (int i=0;i<result_value.length;i++){
-                                  //             if(vals[i].isActive==true){
-                                  //               variantList.add(result_value[i]);
-                                  //
-                                  //         }
-                                  //           }
-                                  //         }
-                                  //         print("filterList"+variantList.runtimeType.toString());
-                                  //
-                                  //
-                                  //
-                                  //         context
-                                  //             .read<
-                                  //                 VariantFrameworkcombinationpostCubit>()
-                                  //             .postCombinationFrameWork(
-                                  //                 uomCode: uomCode,
-                                  //                 itemCode: itemCode,
-                                  //                 variantCode:
-                                  //                     group.variantFrameWork,
-                                  //                 variantlist: variantList);
-                                  //
-                                  //         // showDailogPopUp(
-                                  //         //     context,
-                                  //         //     ProductModulePopUp(
-                                  //         //       // indexValue: temp,
-                                  //         //       // changeActive: onChangeActive,
-                                  //         //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                                  //         //       // changeExtendedWarranty: onChangeExtendedWarranty,
-                                  //         //     ));
-                                  //       },
-                                  //       height: 29,
-                                  //       Color: Color(0xff3E4F5B),
-                                  //       width: 90,
-                                  //       labelcolor: Colors.white,
-                                  //       iconColor: Colors.white,
-                                  //     ),
-                                  //     SizedBox(
-                                  //       width: width * .008,
-                                  //     ),
-                                  //   ],
-                                  // ),
+                                  },
+                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.end,
+                                //   children: [
+                                //     Button(Icons.delete, Colors.red,
+                                //         ctx: context,
+                                //         text: "DISCARD",
+                                //         onApply: () {},
+                                //         height: 29,
+                                //         width: 90,
+                                //         labelcolor: Colors.red,
+                                //         iconColor: Colors.red,
+                                //         bdr: true),
+                                //     SizedBox(
+                                //       width: width * .008,
+                                //     ),
+                                //     Button(
+                                //       Icons.check,
+                                //       Colors.grey,
+                                //       ctx: context,
+                                //       text: "SAVE",
+                                //       onApply: () {
+                                //
+                                //             var filterList;
+                                //
+                                //
+                                //             print("filterList"+ result_value.toString());
+                                //         if(result_value.isNotEmpty){
+                                //           for (int i=0;i<result_value.length;i++){
+                                //             if(vals[i].isActive==true){
+                                //               variantList.add(result_value[i]);
+                                //
+                                //         }
+                                //           }
+                                //         }
+                                //         print("filterList"+variantList.runtimeType.toString());
+                                //
+                                //
+                                //
+                                //         context
+                                //             .read<
+                                //                 VariantFrameworkcombinationpostCubit>()
+                                //             .postCombinationFrameWork(
+                                //                 uomCode: uomCode,
+                                //                 itemCode: itemCode,
+                                //                 variantCode:
+                                //                     group.variantFrameWork,
+                                //                 variantlist: variantList);
+                                //
+                                //         // showDailogPopUp(
+                                //         //     context,
+                                //         //     ProductModulePopUp(
+                                //         //       // indexValue: temp,
+                                //         //       // changeActive: onChangeActive,
+                                //         //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                                //         //       // changeExtendedWarranty: onChangeExtendedWarranty,
+                                //         //     ));
+                                //       },
+                                //       height: 29,
+                                //       Color: Color(0xff3E4F5B),
+                                //       width: 90,
+                                //       labelcolor: Colors.white,
+                                //       iconColor: Colors.white,
+                                //     ),
+                                //     SizedBox(
+                                //       width: width * .008,
+                                //     ),
+                                //   ],
+                                // ),
 
-                                ],
-                            ),
+                              ],
                           ),
-                              ))
-                        ],
-                      ),
+                        ),
+                            ))
+                      ],
                     ),
                   );
                 });

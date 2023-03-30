@@ -12,7 +12,7 @@ class CreatePromotionSaleCubit extends Cubit<CreatePromotionSaleState> {
   final InventoryPromotionRepository repo = InventoryPromoRepoIml();
   CreatePromotionSaleCubit() : super(CreatePromotionSaleState.initial());
   Future postPromotionSale(PromotionSaleCreateModel model) async {
-    emit(CreatePromotionSaleState.initial());
+
     print("post data");
     final result = await repo.postPromotionSale(model);
     print(result);
@@ -20,7 +20,7 @@ class CreatePromotionSaleCubit extends Cubit<CreatePromotionSaleState> {
   }
   Future getPromotionSalePatch(int? id, PromotionSaleCreateModel model) async {
     print("sunithi" + id.toString());
-    emit(CreatePromotionSaleState.initial());
+    // emit(CreatePromotionSaleState.initial());
     final result = await repo.getPromotionSalePatch(model, id);
     result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));
   }

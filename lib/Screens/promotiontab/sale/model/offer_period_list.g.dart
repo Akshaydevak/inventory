@@ -15,6 +15,7 @@ _$_OfferPeriodList _$$_OfferPeriodListFromJson(Map<String, dynamic> json) =>
       offerPeriodCode: json['offer_period_code'] as String?,
       buyMoreCode: json['buy_more_code'] as String?,
       bogoCode: json['bogo_code'] as String?,
+      multiCode: json['multi_code'] as String?,
     );
 
 Map<String, dynamic> _$$_OfferPeriodListToJson(_$_OfferPeriodList instance) =>
@@ -26,6 +27,7 @@ Map<String, dynamic> _$$_OfferPeriodListToJson(_$_OfferPeriodList instance) =>
       'offer_period_code': instance.offerPeriodCode,
       'buy_more_code': instance.buyMoreCode,
       'bogo_code': instance.bogoCode,
+      'multi_code': instance.multiCode,
     };
 
 _$_CreateOfferPeriod _$$_CreateOfferPeriodFromJson(Map<String, dynamic> json) =>
@@ -203,6 +205,9 @@ _$_listAllSalesApis _$$_listAllSalesApisFromJson(Map<String, dynamic> json) =>
       couponBasedOn: (json['coupon_based_on'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      multiBuyAppliedTo: (json['multibuy_applied_to'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_listAllSalesApisToJson(_$_listAllSalesApis instance) =>
@@ -216,6 +221,7 @@ Map<String, dynamic> _$$_listAllSalesApisToJson(_$_listAllSalesApis instance) =>
       'coupon_applying_to': instance.couponApplyingTo,
       'coupon_applying_on': instance.couponApplyingOn,
       'coupon_based_on': instance.couponBasedOn,
+      'multibuy_applied_to': instance.multiBuyAppliedTo,
     };
 
 _$_PromotionSaleCreateModel _$$_PromotionSaleCreateModelFromJson(
@@ -233,7 +239,11 @@ _$_PromotionSaleCreateModel _$$_PromotionSaleCreateModelFromJson(
       salesApplyingOnId: json['sales_applying_on_id'] as int?,
       salesApplyingPlaceCode: json['sales_applying_place_code'] as String?,
       salesApplyingPlaceName: json['sales_applying_place_name'] as String?,
-      availableCustomerGroup: json['available_customer_groups'] as String?,
+      availableCustomerGroups:
+          (json['available_customer_groups'] as List<dynamic>?)
+              ?.map((e) =>
+                  AvailableCustomerGroups.fromJson(e as Map<String, dynamic>))
+              .toList(),
       salesApplyingOn: json['sales_applying_on'] as String?,
       offerAppliedToCode: json['offer_applied_to_code'] as String?,
       salesApplyingOnName: json['sales_applying_on_name'] as String?,
@@ -268,7 +278,7 @@ Map<String, dynamic> _$$_PromotionSaleCreateModelToJson(
       'sales_applying_on_id': instance.salesApplyingOnId,
       'sales_applying_place_code': instance.salesApplyingPlaceCode,
       'sales_applying_place_name': instance.salesApplyingPlaceName,
-      'available_customer_groups': instance.availableCustomerGroup,
+      'available_customer_groups': instance.availableCustomerGroups,
       'sales_applying_on': instance.salesApplyingOn,
       'offer_applied_to_code': instance.offerAppliedToCode,
       'sales_applying_on_name': instance.salesApplyingOnName,
@@ -295,6 +305,7 @@ _$_SaleLines _$$_SaleLinesFromJson(Map<String, dynamic> json) => _$_SaleLines(
       offerGroupCode: json['offer_group_code'] as String?,
       offerName: json['offer_name'] as String?,
       typeData: json['type_data'] as String?,
+      couponname: json['coupon_name'] as String?,
       updateCheck: json['updateCheck'] as bool? ?? false,
       isActive: json['is_active'] as bool? ?? false,
     );
@@ -309,6 +320,45 @@ Map<String, dynamic> _$$_SaleLinesToJson(_$_SaleLines instance) =>
       'offer_group_code': instance.offerGroupCode,
       'offer_name': instance.offerName,
       'type_data': instance.typeData,
+      'coupon_name': instance.couponname,
+      'updateCheck': instance.updateCheck,
+      'is_active': instance.isActive,
+    };
+
+_$_MultibuyVariantListModel _$$_MultibuyVariantListModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_MultibuyVariantListModel(
+      id: json['id'] as int?,
+      barcode: json['barcode'] == null
+          ? null
+          : Barcode.fromJson(json['barcode'] as Map<String, dynamic>),
+      quantity: json['quantity'] as int?,
+      variantId: json['variant_id'] as int?,
+      multiBuyLineCode: json['multi_buy_line_code'] as String?,
+      typeEntry: json['type_entry'] as String?,
+      variantCode: json['variant_code'] as String?,
+      variantName: json['variant_name'] as String?,
+      uomName: json['uom_name'] as String?,
+      unitCost: (json['unit_cost'] as num?)?.toDouble(),
+      image1: json['image1'] as String?,
+      updateCheck: json['updateCheck'] as bool? ?? false,
+      isActive: json['is_active'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$_MultibuyVariantListModelToJson(
+        _$_MultibuyVariantListModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'barcode': instance.barcode,
+      'quantity': instance.quantity,
+      'variant_id': instance.variantId,
+      'multi_buy_line_code': instance.multiBuyLineCode,
+      'type_entry': instance.typeEntry,
+      'variant_code': instance.variantCode,
+      'variant_name': instance.variantName,
+      'uom_name': instance.uomName,
+      'unit_cost': instance.unitCost,
+      'image1': instance.image1,
       'updateCheck': instance.updateCheck,
       'is_active': instance.isActive,
     };
@@ -329,12 +379,18 @@ _$_PromotionSaleReadModel _$$_PromotionSaleReadModelFromJson(
           (json['discount_percentage_or_price'] as num?)?.toDouble(),
       inventoryId: json['inventory_id'] as String?,
       saleCode: json['sale_code'] as String?,
+      offerPeriodname: json['offer_period_name'] as String?,
       createdAt: json['created_at'] as String?,
       salesApplyingPlaceCode: json['sales_applying_place_code'] as String?,
       salesApplyingPlaceName: json['sales_applying_place_name'] as String?,
       salesApplyingPlaceId: json['sales_applying_place_id'] as int?,
       salesApplyingOn: json['sales_applying_on'] as String?,
       basedOn: json['based_on'] as String?,
+      availableCustomerGroups:
+          (json['available_customer_groups'] as List<dynamic>?)
+              ?.map((e) =>
+                  AvailableCustomerGroups.fromJson(e as Map<String, dynamic>))
+              .toList(),
       salesApplyingOnName: json['sales_applying_on_name'] as String?,
       salesApplyingPlace: json['sales_applying_place'] as String?,
       salesApplyingOnId: json['sales_applying_on_id'] as int?,
@@ -369,12 +425,14 @@ Map<String, dynamic> _$$_PromotionSaleReadModelToJson(
       'discount_percentage_or_price': instance.discountPercentage,
       'inventory_id': instance.inventoryId,
       'sale_code': instance.saleCode,
+      'offer_period_name': instance.offerPeriodname,
       'created_at': instance.createdAt,
       'sales_applying_place_code': instance.salesApplyingPlaceCode,
       'sales_applying_place_name': instance.salesApplyingPlaceName,
       'sales_applying_place_id': instance.salesApplyingPlaceId,
       'sales_applying_on': instance.salesApplyingOn,
       'based_on': instance.basedOn,
+      'available_customer_groups': instance.availableCustomerGroups,
       'sales_applying_on_name': instance.salesApplyingOnName,
       'sales_applying_place': instance.salesApplyingPlace,
       'sales_applying_on_id': instance.salesApplyingOnId,
@@ -486,7 +544,9 @@ Map<String, dynamic> _$$_PromotionVariantPostModelToJson(
 _$_VariantModel _$$_VariantModelFromJson(Map<String, dynamic> json) =>
     _$_VariantModel(
       id: json['id'] as int?,
-      barcode: json['barcode'] as String?,
+      barcode: json['barcode'] == null
+          ? null
+          : Barcode.fromJson(json['barcode'] as Map<String, dynamic>),
       variantId: json['variant_id'] as int?,
       buyMoreId: json['buy_more_id'] as int?,
       variantCode: json['variant_code'] as String?,
@@ -495,6 +555,7 @@ _$_VariantModel _$$_VariantModelFromJson(Map<String, dynamic> json) =>
       buyMoreLineCode: json['buy_more_line_code'] as String?,
       couponLineCode: json['coupon_line_code'] as String?,
       offerName: json['offer_name'] as String?,
+      couponname: json['coupon_name'] as String?,
       typeData: json['type_data'] as String?,
       updatedAt: json['updated_at'] as String?,
       updateCheck: json['updateCheck'] as bool? ?? false,
@@ -513,8 +574,23 @@ Map<String, dynamic> _$$_VariantModelToJson(_$_VariantModel instance) =>
       'buy_more_line_code': instance.buyMoreLineCode,
       'coupon_line_code': instance.couponLineCode,
       'offer_name': instance.offerName,
+      'coupon_name': instance.couponname,
       'type_data': instance.typeData,
       'updated_at': instance.updatedAt,
       'updateCheck': instance.updateCheck,
       'is_active': instance.isActive,
+    };
+
+_$_ViewAllProductsVariantModel _$$_ViewAllProductsVariantModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_ViewAllProductsVariantModel(
+      variantId: json['variant_id'] as int?,
+      typeData: json['type_data'] as String?,
+    );
+
+Map<String, dynamic> _$$_ViewAllProductsVariantModelToJson(
+        _$_ViewAllProductsVariantModel instance) =>
+    <String, dynamic>{
+      'variant_id': instance.variantId,
+      'type_data': instance.typeData,
     };

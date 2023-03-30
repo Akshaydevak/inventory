@@ -186,6 +186,7 @@ class _NewInputCardState extends State<NewInputCard> {
               textAlignVertical: TextAlignVertical.center,
               onTap: (){
                 print("www");
+                if(widget.controller.text.isEmpty)
                   widget.ontap!=null?widget.ontap!():null;
               },
               onChanged:(va){

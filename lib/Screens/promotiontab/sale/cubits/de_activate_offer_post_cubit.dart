@@ -11,7 +11,7 @@ part 'de_activate_offer_post_cubit.freezed.dart';
 class DeActivateOfferPostCubit extends Cubit<DeActivateOfferPostState> {
   DeActivateOfferPostCubit() : super(DeActivateOfferPostState.initial());
   final InventoryPromotionRepository repo = InventoryPromoRepoIml();
-  Future postCreatativeVariant(List<VariantModel> idList) async {
+  Future postCreatativeVariant(List<ViewAllProductsVariantModel> idList) async {
 
     print("post data");
     final result = await repo.postCreatativeVariant(idList);

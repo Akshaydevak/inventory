@@ -3,6 +3,7 @@ import 'package:inventory/Screens/promotiontab/bogo_tab/model/bogo_creation_mode
 import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart';
 import 'package:inventory/Screens/promotiontab/coupon/model/crreateCouponModel.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
+import 'package:inventory/Screens/promotiontab/muttibuy/model/create_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/widgets/failiure.dart';
@@ -21,6 +22,7 @@ abstract class InventoryPromotionRepository{
   Future<Either<Failure, ReadOfferPeriod>> getOfferGroupTypeTo();
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>> getPromotionSaleVerticalListt(String? code,);
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>> getPromotionDiscountVerticalList(String? code,);
+  Future<Either<Failure, PaginatedResponse<List<CustomerGroupModel>>>> getPromotionCustomerGroupList(String? code,);
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>> getListSegment(String? cod);
   Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getSaleApplyingName(salesOrderNamePostModel model,String? code);
   Future<Either<Failure, PaginatedResponse<List<SaleLines>>>> getVariantList(PromotionVariantPostModel model,String? code);
@@ -29,7 +31,7 @@ abstract class InventoryPromotionRepository{
   // Future<Either<Failure, ChannelList>> getChannelListOffer();
   Future<Either<Failure, DoubleResponse>> postCreateOfferGroup(CreateOfferGroup model);
   Future<Either<Failure, DoubleResponse>> postPromotionSale(PromotionSaleCreateModel model);
-  Future<Either<Failure, DoubleResponse>> postCreatativeVariant(List<VariantModel> idList);
+  Future<Either<Failure, DoubleResponse>> postCreatativeVariant(List<ViewAllProductsVariantModel> idList);
   Future<Either<Failure, DoubleResponse>> getPromotionSalePatch(PromotionSaleCreateModel model,int? id);
   Future<Either<Failure, PaginatedResponse<List<OfferGroupList>>>> getOfferGroupList(String? code, {String? type});
   Future<Either<Failure, ReadOfferGroup>> getOfferGroupRead(int orderId);
@@ -67,6 +69,15 @@ abstract class InventoryPromotionRepository{
   Future<Either<Failure, DoubleResponse>> postCreatePromtionCoupon(PromotionCouponCreationModel model);
   Future<Either<Failure, PromotionCouponCreationModel>> getPromotionCouponRead(int verticalId);
   Future<Either<Failure, DoubleResponse>> couponPromotionPatch(PromotionCouponCreationModel model,int? id);
+
+  //multibuy ***************************************************
+  Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getMultiBuyVerticalList(String? code,);
+  Future<Either<Failure, listAllSalesApis>> getListAllMultiBuyApi({String? type});
+  Future<Either<Failure, PaginatedResponse<List<MultibuyVariantListModel>>>> getMultiBuyVariantList(PromotionVariantPostModel model,String? code);
+  Future<Either<Failure, DoubleResponse>> postCreatePromtionMultiBuy(PromotionMultiBuyCreationModel model);
+  Future<Either<Failure, PromotionMultiBuyReadModel>> getPromotionMultiBuyRead(int verticalId);
+
+  Future<Either<Failure, DoubleResponse>> multiBuyPromotionPatch(PromotionMultiBuyCreationModel model,int? id);
 
 
 
@@ -223,7 +234,7 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> postCreatativeVariant(List<VariantModel> idList) {
+  Future<Either<Failure, DoubleResponse>> postCreatativeVariant(List<ViewAllProductsVariantModel> idList) {
     return repoExecute<DoubleResponse>(
             () async => remoteDataSource.postCreatativeVariant(idList));
   }
@@ -347,6 +358,48 @@ class InventoryPromoRepoIml extends InventoryPromotionRepository{
   Future<Either<Failure, DoubleResponse>> couponPromotionPatch(PromotionCouponCreationModel model, int? id) {
     return repoExecute<DoubleResponse>(
             () async => remoteDataSource.couponPromotionPatch(model,id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<CustomerGroupModel>>>> getPromotionCustomerGroupList(String? code) {
+    print("repo");
+    return repoExecute<PaginatedResponse<List<CustomerGroupModel>>>(
+            () async => remoteDataSource.getPromotionCustomerGroupList(code));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<OfferPeriodList>>>> getMultiBuyVerticalList(String? code) {
+    return repoExecute<PaginatedResponse<List<OfferPeriodList>>>(
+            () async => remoteDataSource.getMultiBuyVerticalList(code));
+  }
+
+  @override
+  Future<Either<Failure, listAllSalesApis>> getListAllMultiBuyApi({String? type}) {
+    return repoExecute<listAllSalesApis>(
+            () async => remoteDataSource.getListAllMultiBuyApi(type:type));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<MultibuyVariantListModel>>>> getMultiBuyVariantList(PromotionVariantPostModel model, String? code) {
+    return repoExecute<PaginatedResponse<List<MultibuyVariantListModel>>>(
+            () async => remoteDataSource.getMultiBuyVariantList(model,code));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCreatePromtionMultiBuy(PromotionMultiBuyCreationModel model) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.postCreatePromtionMultiBuy(model));
+  }
+
+  @override
+  Future<Either<Failure, PromotionMultiBuyReadModel>> getPromotionMultiBuyRead(int verticalId) {
+    return repoExecute<PromotionMultiBuyReadModel>(() async => remoteDataSource.getPromotionMultiBuyRead(verticalId));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> multiBuyPromotionPatch(PromotionMultiBuyCreationModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.multiBuyPromotionPatch(model,id));
   }
   //
   // @override

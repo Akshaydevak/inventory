@@ -18,6 +18,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruop
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 import 'package:inventory/Screens/promotiontab/discount/cubit/type_listing_on/type_id_list_cubit.dart';
+import 'package:inventory/Screens/promotiontab/muttibuy/cubit/variantlist/variant_list_multi_buy_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/listsegments/list_segments_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/offergroup/list_offer_group_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/saleapplyingname/sale_applying_name_cubit.dart';
@@ -195,6 +196,15 @@ class TableConfigurePopup extends StatelessWidget {
         break;  case "VariantListPopup":
         {
           data = VariantListPopup(
+            type: type,
+            model: object,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "MultibuyVariantListPopup":
+        {
+          data = MultibuyVariantListPopup(
             type: type,
             model: object,
             valueSelect: valueSelect,
@@ -1130,19 +1140,32 @@ class _SegmentListTabalePopup extends State<SegmentListTabalePopup> {
                     list1.add(list.data[i].code);
                   }
                   print(list1);
-                  for(var i=0;i<list1.length;i++){
+                  for(var i=0;i<length;i++){
                     if( widget.  list?.isNotEmpty==true){
-                      widget.  list!.forEach((n) {
+                      for(var n=0;n<widget.list!.length;n++){
 
-                        if(list1[i]==n.segmentCode){
-
-                          // list1.removeAt(i);
+                        if(list1[i]==widget.  list?[n].segmentCode){
+                          list1.removeAt(i);
                           table.removeAt(i);
+                          length=table.length;
+                          i=-1;
+                          break;
+
+                          print("the able is"+table.toString());
+
+
+
+
 
                           print("the able is"+table.toString());
                         }
 
-                      });
+
+
+
+                      }
+
+
                     }
 
                   }
@@ -4870,6 +4893,401 @@ class _VariantListPopup extends State<VariantListPopup> {
                                                     variantName: table[i].variantName,
                                                     variantCode: table[i].variantCode
                                                 );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].barcode?.barcodeNumber ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(3),
+                              2: FlexColumnWidth(3),
+                              3: FlexColumnWidth(3),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+
+
+class MultibuyVariantListPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final PromotionVariantPostModel model;
+
+  MultibuyVariantListPopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+    required this.model,
+  }) : super(key: key);
+
+  @override
+  _MultibuyVariantListPopup createState() => _MultibuyVariantListPopup();
+}
+
+class _MultibuyVariantListPopup extends State<MultibuyVariantListPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  bool suffixIconCheck=false;
+  List<MultibuyVariantListModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => VariantListMultiBuyCubit(),
+  child: Builder(builder: (context) {
+      context.read<VariantListMultiBuyCubit>().getMultiBuyVariantList(widget.model);
+      return BlocConsumer<VariantListMultiBuyCubit, VariantListMultiBuyState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.data.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Variant List",
+                onApply: () {
+                  costingTypeMethodeCheck = true;
+                  // showDailogPopUp(
+                  //   context,
+                  //   ConfigurePopup(
+                  //     type: "CreateOfferGroupPopUp",
+                  //   ),
+                  // );
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:           list1 != null?
+                tablePagination(
+                () => context.read<VariantListMultiBuyCubit>().refresh(widget.model,),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<VariantListMultiBuyCubit>()
+                .previuosslotSectionPageList(widget.model);
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<VariantListMultiBuyCubit>()
+                .nextslotSectionPageList(widget.model);
+            },
+            ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context.read<VariantListMultiBuyCubit>().getMultiBuyVariantList(widget.model.copyWith(searchElement: va));
+                              // context
+                              //     .read<VariantListPromotionCubit>()
+                              //     .searchVariantList(widget.model,searchContoller.text);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context.read<VariantListMultiBuyCubit>().getMultiBuyVariantList(widget.model);
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Variant Code',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  tableHeadtext(
+                                    'Variant Name',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  tableHeadtext(
+                                    'Barcode',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+
+                                                MultibuyVariantListModel model =
+
+                                                MultibuyVariantListModel(
+
+                                                    variantId: table[i].variantId,
+                                                    barcode: table[i].barcode,
+                                                  variantName: table[i].variantName,
+                                                  unitCost: table[i].unitCost,
+                                                  uomName: table[i].uomName,
+
+                                                  variantCode: table[i].variantCode
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].variantCode ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+
+                                                MultibuyVariantListModel model =
+
+                                                MultibuyVariantListModel(
+
+                                                    variantId: table[i].variantId,
+                                                    barcode: table[i].barcode,
+                                                    variantName: table[i].variantName,
+                                                    unitCost: table[i].unitCost,
+                                                    uomName: table[i].uomName,
+
+                                                    variantCode: table[i].variantCode
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].variantName ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                MultibuyVariantListModel model =
+                                                MultibuyVariantListModel(
+                                                    variantId: table[i].variantId,
+                                                    barcode: table[i].barcode,
+                                                    variantName: table[i].variantName,
+                                                    unitCost: table[i].unitCost,
+                                                    uomName: table[i].uomName,
+
+                                                    variantCode: table[i].variantCode
+                                                );
+
                                                 Navigator.pop(context);
 
                                                 widget.valueSelect(model);

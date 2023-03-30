@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
@@ -25,6 +26,8 @@ class PromotionDiscountStableTable extends StatefulWidget {
   final TextEditingController title;
   final TextEditingController description;
   final TextEditingController image;
+  final List<AvailableCustomerGroups> customerGroupList;
+
 
   final TextEditingController offerGroupName;
   final TextEditingController offerPeriodName;
@@ -40,6 +43,7 @@ class PromotionDiscountStableTable extends StatefulWidget {
 
   final Function activeChange;
   final Function imagePostCheck;
+  final Function customGroupListAssign;
 
 
 
@@ -64,7 +68,7 @@ class PromotionDiscountStableTable extends StatefulWidget {
   PromotionDiscountStableTable({
 
     required this.discountCode,
-required this.activeChange, required this.offerPeriod, required this.offerGroup, required this.offerApplyingType, required this.offerApplyingTo, required this.title, required this.description,  required this.basedOn, required this.discountPercenagePrice,   required this.availableCustomerGroup, required this.isAvailableforAll, required this.overridePriority,  required this.isActive,  required this.offerApplyingId, required this.offerApplyingCode, required this.offerGroupName, required this.offerPeriodName, required this.select, required this.image, required this.imagePostCheck, });
+required this.activeChange, required this.offerPeriod, required this.offerGroup, required this.offerApplyingType, required this.offerApplyingTo, required this.title, required this.description,  required this.basedOn, required this.discountPercenagePrice,   required this.availableCustomerGroup, required this.isAvailableforAll, required this.overridePriority,  required this.isActive,  required this.offerApplyingId, required this.offerApplyingCode, required this.offerGroupName, required this.offerPeriodName, required this.select, required this.image, required this.imagePostCheck, required this.customGroupListAssign, required this.customerGroupList, });
   @override
   _PromotionDiscountStableTableState createState() => _PromotionDiscountStableTableState();
 }
@@ -449,15 +453,19 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                       children: [
                         Visibility(
                           visible: !widget.isAvailableforAll,
-                          child: NewInputCard(
+                          child:
+                          NewInputCard(
                               formatter: true,
                               ontap: (){
                                 showDailogPopUp(
                                   context,
                                   ConfigurePopup(
                                     // code: widget.veritiacalCode,
-                                    passingList: [],
-                                    listAssign: (){},
+                                    passingList:widget. customerGroupList,
+                                    listAssign: (List<AvailableCustomerGroups> list1){
+                                      widget.customGroupListAssign(list1);
+
+                                    },
                                     type: "CustomGroupLinkedItem",
                                   ),
                                 );

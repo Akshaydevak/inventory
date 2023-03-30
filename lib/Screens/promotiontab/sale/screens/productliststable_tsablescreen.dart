@@ -298,13 +298,8 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                                           // inventory: Variable.inventory_ID,
                                           type: "VariantListPopup",
                                           valueSelect: (SaleLines? va) {
-
-
                                             setState(() {
-                                              table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName: va?.variantName??"",barcode:  va?.barcode,updateCheck: true);
-
-
-
+                                              table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName: va?.variantName??"",barcode:  va?.barcode,variantId:va?.variantId,updateCheck: true);
 
                                               // orderType = va!;
                                             });
@@ -471,8 +466,8 @@ class ProductListGrowableTableState extends State<ProductListGrowableTable> {
                                           variantCode=va?.variantCode??"";
                                           variantName=va?.variantName??"";
                                           variantId=va?.variantId??null;
-                                          print("barcodeeeeeeeeeeee");
-                                          print(va?.barcode?.barcodeNumber??"");
+
+                                          print(va?.variantId??"");
                                           barcode=      barcode.copyWith(barcodeNumber: va?.barcode?.barcodeNumber??"");
                                           saveButtonActovde(variantCode,variantName);
 

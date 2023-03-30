@@ -697,6 +697,9 @@ mixin _$PromotionDiscountReadModel {
   String? get code => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   List<Segment>? get segments => throw _privateConstructorUsedError;
+  @JsonKey(name: "available_customer_groups")
+  List<AvailableCustomerGroups>? get availableCustomerGroups =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: "offer_period_name")
   String? get offerPeriodName => throw _privateConstructorUsedError;
   @JsonKey(name: "offer_group_name")
@@ -747,6 +750,8 @@ abstract class $PromotionDiscountReadModelCopyWith<$Res> {
       String? code,
       String? title,
       List<Segment>? segments,
+      @JsonKey(name: "available_customer_groups")
+          List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "offer_period_name")
           String? offerPeriodName,
       @JsonKey(name: "offer_group_name")
@@ -798,6 +803,7 @@ class _$PromotionDiscountReadModelCopyWithImpl<$Res,
     Object? code = freezed,
     Object? title = freezed,
     Object? segments = freezed,
+    Object? availableCustomerGroups = freezed,
     Object? offerPeriodName = freezed,
     Object? offerGroupName = freezed,
     Object? inventoryId = freezed,
@@ -842,6 +848,10 @@ class _$PromotionDiscountReadModelCopyWithImpl<$Res,
           ? _value.segments
           : segments // ignore: cast_nullable_to_non_nullable
               as List<Segment>?,
+      availableCustomerGroups: freezed == availableCustomerGroups
+          ? _value.availableCustomerGroups
+          : availableCustomerGroups // ignore: cast_nullable_to_non_nullable
+              as List<AvailableCustomerGroups>?,
       offerPeriodName: freezed == offerPeriodName
           ? _value.offerPeriodName
           : offerPeriodName // ignore: cast_nullable_to_non_nullable
@@ -919,6 +929,8 @@ abstract class _$$_PromotionDiscountReadModelCopyWith<$Res>
       String? code,
       String? title,
       List<Segment>? segments,
+      @JsonKey(name: "available_customer_groups")
+          List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "offer_period_name")
           String? offerPeriodName,
       @JsonKey(name: "offer_group_name")
@@ -969,6 +981,7 @@ class __$$_PromotionDiscountReadModelCopyWithImpl<$Res>
     Object? code = freezed,
     Object? title = freezed,
     Object? segments = freezed,
+    Object? availableCustomerGroups = freezed,
     Object? offerPeriodName = freezed,
     Object? offerGroupName = freezed,
     Object? inventoryId = freezed,
@@ -1013,6 +1026,10 @@ class __$$_PromotionDiscountReadModelCopyWithImpl<$Res>
           ? _value._segments
           : segments // ignore: cast_nullable_to_non_nullable
               as List<Segment>?,
+      availableCustomerGroups: freezed == availableCustomerGroups
+          ? _value._availableCustomerGroups
+          : availableCustomerGroups // ignore: cast_nullable_to_non_nullable
+              as List<AvailableCustomerGroups>?,
       offerPeriodName: freezed == offerPeriodName
           ? _value.offerPeriodName
           : offerPeriodName // ignore: cast_nullable_to_non_nullable
@@ -1084,6 +1101,8 @@ class _$_PromotionDiscountReadModel implements _PromotionDiscountReadModel {
       this.code,
       this.title,
       final List<Segment>? segments,
+      @JsonKey(name: "available_customer_groups")
+          final List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "offer_period_name")
           this.offerPeriodName,
       @JsonKey(name: "offer_group_name")
@@ -1113,6 +1132,7 @@ class _$_PromotionDiscountReadModel implements _PromotionDiscountReadModel {
       @JsonKey(name: "is_available_for_all", defaultValue: false)
           this.isAvailableForAll})
       : _segments = segments,
+        _availableCustomerGroups = availableCustomerGroups,
         _offerLines = offerLines;
 
   factory _$_PromotionDiscountReadModel.fromJson(Map<String, dynamic> json) =>
@@ -1134,6 +1154,16 @@ class _$_PromotionDiscountReadModel implements _PromotionDiscountReadModel {
   @override
   List<Segment>? get segments {
     final value = _segments;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<AvailableCustomerGroups>? _availableCustomerGroups;
+  @override
+  @JsonKey(name: "available_customer_groups")
+  List<AvailableCustomerGroups>? get availableCustomerGroups {
+    final value = _availableCustomerGroups;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
@@ -1191,7 +1221,7 @@ class _$_PromotionDiscountReadModel implements _PromotionDiscountReadModel {
 
   @override
   String toString() {
-    return 'PromotionDiscountReadModel(id: $id, name: $name, description: $description, image: $image, code: $code, title: $title, segments: $segments, offerPeriodName: $offerPeriodName, offerGroupName: $offerGroupName, inventoryId: $inventoryId, basedOn: $basedOn, offerPeriodId: $offerPeriodId, discountPercentageOrPrice: $discountPercentageOrPrice, offerAppliedToId: $offerAppliedToId, offerAppliedTo: $offerAppliedTo, offerAppliedToCode: $offerAppliedToCode, discountCode: $discountCode, offerLines: $offerLines, offerGroupId: $offerGroupId, isActive: $isActive, isAvailableForAll: $isAvailableForAll)';
+    return 'PromotionDiscountReadModel(id: $id, name: $name, description: $description, image: $image, code: $code, title: $title, segments: $segments, availableCustomerGroups: $availableCustomerGroups, offerPeriodName: $offerPeriodName, offerGroupName: $offerGroupName, inventoryId: $inventoryId, basedOn: $basedOn, offerPeriodId: $offerPeriodId, discountPercentageOrPrice: $discountPercentageOrPrice, offerAppliedToId: $offerAppliedToId, offerAppliedTo: $offerAppliedTo, offerAppliedToCode: $offerAppliedToCode, discountCode: $discountCode, offerLines: $offerLines, offerGroupId: $offerGroupId, isActive: $isActive, isAvailableForAll: $isAvailableForAll)';
   }
 
   @override
@@ -1207,6 +1237,8 @@ class _$_PromotionDiscountReadModel implements _PromotionDiscountReadModel {
             (identical(other.code, code) || other.code == code) &&
             (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality().equals(other._segments, _segments) &&
+            const DeepCollectionEquality().equals(
+                other._availableCustomerGroups, _availableCustomerGroups) &&
             (identical(other.offerPeriodName, offerPeriodName) ||
                 other.offerPeriodName == offerPeriodName) &&
             (identical(other.offerGroupName, offerGroupName) ||
@@ -1248,6 +1280,7 @@ class _$_PromotionDiscountReadModel implements _PromotionDiscountReadModel {
         code,
         title,
         const DeepCollectionEquality().hash(_segments),
+        const DeepCollectionEquality().hash(_availableCustomerGroups),
         offerPeriodName,
         offerGroupName,
         inventoryId,
@@ -1289,6 +1322,8 @@ abstract class _PromotionDiscountReadModel
       final String? code,
       final String? title,
       final List<Segment>? segments,
+      @JsonKey(name: "available_customer_groups")
+          final List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "offer_period_name")
           final String? offerPeriodName,
       @JsonKey(name: "offer_group_name")
@@ -1335,6 +1370,9 @@ abstract class _PromotionDiscountReadModel
   String? get title;
   @override
   List<Segment>? get segments;
+  @override
+  @JsonKey(name: "available_customer_groups")
+  List<AvailableCustomerGroups>? get availableCustomerGroups;
   @override
   @JsonKey(name: "offer_period_name")
   String? get offerPeriodName;
@@ -3116,5 +3154,177 @@ abstract class _VariantsLinesDiscount implements VariantsLinesDiscount {
   @override
   @JsonKey(ignore: true)
   _$$_VariantsLinesDiscountCopyWith<_$_VariantsLinesDiscount> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CustomerGroupModel _$CustomerGroupModelFromJson(Map<String, dynamic> json) {
+  return _CustomerGroupModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CustomerGroupModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CustomerGroupModelCopyWith<CustomerGroupModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CustomerGroupModelCopyWith<$Res> {
+  factory $CustomerGroupModelCopyWith(
+          CustomerGroupModel value, $Res Function(CustomerGroupModel) then) =
+      _$CustomerGroupModelCopyWithImpl<$Res, CustomerGroupModel>;
+  @useResult
+  $Res call({int? id, String? name, String? code});
+}
+
+/// @nodoc
+class _$CustomerGroupModelCopyWithImpl<$Res, $Val extends CustomerGroupModel>
+    implements $CustomerGroupModelCopyWith<$Res> {
+  _$CustomerGroupModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? code = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CustomerGroupModelCopyWith<$Res>
+    implements $CustomerGroupModelCopyWith<$Res> {
+  factory _$$_CustomerGroupModelCopyWith(_$_CustomerGroupModel value,
+          $Res Function(_$_CustomerGroupModel) then) =
+      __$$_CustomerGroupModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? id, String? name, String? code});
+}
+
+/// @nodoc
+class __$$_CustomerGroupModelCopyWithImpl<$Res>
+    extends _$CustomerGroupModelCopyWithImpl<$Res, _$_CustomerGroupModel>
+    implements _$$_CustomerGroupModelCopyWith<$Res> {
+  __$$_CustomerGroupModelCopyWithImpl(
+      _$_CustomerGroupModel _value, $Res Function(_$_CustomerGroupModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? code = freezed,
+  }) {
+    return _then(_$_CustomerGroupModel(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_CustomerGroupModel implements _CustomerGroupModel {
+  const _$_CustomerGroupModel({this.id, this.name, this.code});
+
+  factory _$_CustomerGroupModel.fromJson(Map<String, dynamic> json) =>
+      _$$_CustomerGroupModelFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? name;
+  @override
+  final String? code;
+
+  @override
+  String toString() {
+    return 'CustomerGroupModel(id: $id, name: $name, code: $code)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CustomerGroupModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.code, code) || other.code == code));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, code);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CustomerGroupModelCopyWith<_$_CustomerGroupModel> get copyWith =>
+      __$$_CustomerGroupModelCopyWithImpl<_$_CustomerGroupModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CustomerGroupModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CustomerGroupModel implements CustomerGroupModel {
+  const factory _CustomerGroupModel(
+      {final int? id,
+      final String? name,
+      final String? code}) = _$_CustomerGroupModel;
+
+  factory _CustomerGroupModel.fromJson(Map<String, dynamic> json) =
+      _$_CustomerGroupModel.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get name;
+  @override
+  String? get code;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CustomerGroupModelCopyWith<_$_CustomerGroupModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

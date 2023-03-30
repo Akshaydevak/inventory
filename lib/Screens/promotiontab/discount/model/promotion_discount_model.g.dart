@@ -75,6 +75,11 @@ _$_PromotionDiscountReadModel _$$_PromotionDiscountReadModelFromJson(
       segments: (json['segments'] as List<dynamic>?)
           ?.map((e) => Segment.fromJson(e as Map<String, dynamic>))
           .toList(),
+      availableCustomerGroups:
+          (json['available_customer_groups'] as List<dynamic>?)
+              ?.map((e) =>
+                  AvailableCustomerGroups.fromJson(e as Map<String, dynamic>))
+              .toList(),
       offerPeriodName: json['offer_period_name'] as String?,
       offerGroupName: json['offer_group_name'] as String?,
       inventoryId: json['inventory_id'] as String?,
@@ -103,6 +108,7 @@ Map<String, dynamic> _$$_PromotionDiscountReadModelToJson(
       'code': instance.code,
       'title': instance.title,
       'segments': instance.segments,
+      'available_customer_groups': instance.availableCustomerGroups,
       'offer_period_name': instance.offerPeriodName,
       'offer_group_name': instance.offerGroupName,
       'inventory_id': instance.inventoryId,
@@ -259,4 +265,20 @@ Map<String, dynamic> _$$_VariantsLinesDiscountToJson(
       'variant_id': instance.variantIdd,
       'variant_name': instance.variantName,
       'variant_code': instance.variantCode,
+    };
+
+_$_CustomerGroupModel _$$_CustomerGroupModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_CustomerGroupModel(
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      code: json['code'] as String?,
+    );
+
+Map<String, dynamic> _$$_CustomerGroupModelToJson(
+        _$_CustomerGroupModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'code': instance.code,
     };

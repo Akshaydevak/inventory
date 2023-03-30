@@ -31,6 +31,8 @@ mixin _$OfferPeriodList {
   String? get buyMoreCode => throw _privateConstructorUsedError;
   @JsonKey(name: "bogo_code")
   String? get bogoCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "multi_code")
+  String? get multiCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +53,8 @@ abstract class $OfferPeriodListCopyWith<$Res> {
       @JsonKey(name: "title") String? title,
       @JsonKey(name: "offer_period_code") String? offerPeriodCode,
       @JsonKey(name: "buy_more_code") String? buyMoreCode,
-      @JsonKey(name: "bogo_code") String? bogoCode});
+      @JsonKey(name: "bogo_code") String? bogoCode,
+      @JsonKey(name: "multi_code") String? multiCode});
 }
 
 /// @nodoc
@@ -74,6 +77,7 @@ class _$OfferPeriodListCopyWithImpl<$Res, $Val extends OfferPeriodList>
     Object? offerPeriodCode = freezed,
     Object? buyMoreCode = freezed,
     Object? bogoCode = freezed,
+    Object? multiCode = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -104,6 +108,10 @@ class _$OfferPeriodListCopyWithImpl<$Res, $Val extends OfferPeriodList>
           ? _value.bogoCode
           : bogoCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      multiCode: freezed == multiCode
+          ? _value.multiCode
+          : multiCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -123,7 +131,8 @@ abstract class _$$_OfferPeriodListCopyWith<$Res>
       @JsonKey(name: "title") String? title,
       @JsonKey(name: "offer_period_code") String? offerPeriodCode,
       @JsonKey(name: "buy_more_code") String? buyMoreCode,
-      @JsonKey(name: "bogo_code") String? bogoCode});
+      @JsonKey(name: "bogo_code") String? bogoCode,
+      @JsonKey(name: "multi_code") String? multiCode});
 }
 
 /// @nodoc
@@ -144,6 +153,7 @@ class __$$_OfferPeriodListCopyWithImpl<$Res>
     Object? offerPeriodCode = freezed,
     Object? buyMoreCode = freezed,
     Object? bogoCode = freezed,
+    Object? multiCode = freezed,
   }) {
     return _then(_$_OfferPeriodList(
       id: freezed == id
@@ -174,6 +184,10 @@ class __$$_OfferPeriodListCopyWithImpl<$Res>
           ? _value.bogoCode
           : bogoCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      multiCode: freezed == multiCode
+          ? _value.multiCode
+          : multiCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -188,7 +202,8 @@ class _$_OfferPeriodList implements _OfferPeriodList {
       @JsonKey(name: "title") this.title,
       @JsonKey(name: "offer_period_code") this.offerPeriodCode,
       @JsonKey(name: "buy_more_code") this.buyMoreCode,
-      @JsonKey(name: "bogo_code") this.bogoCode});
+      @JsonKey(name: "bogo_code") this.bogoCode,
+      @JsonKey(name: "multi_code") this.multiCode});
 
   factory _$_OfferPeriodList.fromJson(Map<String, dynamic> json) =>
       _$$_OfferPeriodListFromJson(json);
@@ -211,10 +226,13 @@ class _$_OfferPeriodList implements _OfferPeriodList {
   @override
   @JsonKey(name: "bogo_code")
   final String? bogoCode;
+  @override
+  @JsonKey(name: "multi_code")
+  final String? multiCode;
 
   @override
   String toString() {
-    return 'OfferPeriodList(id: $id, name: $name, code: $code, title: $title, offerPeriodCode: $offerPeriodCode, buyMoreCode: $buyMoreCode, bogoCode: $bogoCode)';
+    return 'OfferPeriodList(id: $id, name: $name, code: $code, title: $title, offerPeriodCode: $offerPeriodCode, buyMoreCode: $buyMoreCode, bogoCode: $bogoCode, multiCode: $multiCode)';
   }
 
   @override
@@ -231,13 +249,15 @@ class _$_OfferPeriodList implements _OfferPeriodList {
             (identical(other.buyMoreCode, buyMoreCode) ||
                 other.buyMoreCode == buyMoreCode) &&
             (identical(other.bogoCode, bogoCode) ||
-                other.bogoCode == bogoCode));
+                other.bogoCode == bogoCode) &&
+            (identical(other.multiCode, multiCode) ||
+                other.multiCode == multiCode));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, code, title,
-      offerPeriodCode, buyMoreCode, bogoCode);
+      offerPeriodCode, buyMoreCode, bogoCode, multiCode);
 
   @JsonKey(ignore: true)
   @override
@@ -255,13 +275,15 @@ class _$_OfferPeriodList implements _OfferPeriodList {
 
 abstract class _OfferPeriodList implements OfferPeriodList {
   const factory _OfferPeriodList(
-      {final int? id,
-      final String? name,
-      final String? code,
-      @JsonKey(name: "title") final String? title,
-      @JsonKey(name: "offer_period_code") final String? offerPeriodCode,
-      @JsonKey(name: "buy_more_code") final String? buyMoreCode,
-      @JsonKey(name: "bogo_code") final String? bogoCode}) = _$_OfferPeriodList;
+          {final int? id,
+          final String? name,
+          final String? code,
+          @JsonKey(name: "title") final String? title,
+          @JsonKey(name: "offer_period_code") final String? offerPeriodCode,
+          @JsonKey(name: "buy_more_code") final String? buyMoreCode,
+          @JsonKey(name: "bogo_code") final String? bogoCode,
+          @JsonKey(name: "multi_code") final String? multiCode}) =
+      _$_OfferPeriodList;
 
   factory _OfferPeriodList.fromJson(Map<String, dynamic> json) =
       _$_OfferPeriodList.fromJson;
@@ -284,6 +306,9 @@ abstract class _OfferPeriodList implements OfferPeriodList {
   @override
   @JsonKey(name: "bogo_code")
   String? get bogoCode;
+  @override
+  @JsonKey(name: "multi_code")
+  String? get multiCode;
   @override
   @JsonKey(ignore: true)
   _$$_OfferPeriodListCopyWith<_$_OfferPeriodList> get copyWith =>
@@ -2201,6 +2226,8 @@ mixin _$listAllSalesApis {
   List<String>? get couponApplyingOn => throw _privateConstructorUsedError;
   @JsonKey(name: "coupon_based_on")
   List<String>? get couponBasedOn => throw _privateConstructorUsedError;
+  @JsonKey(name: "multibuy_applied_to")
+  List<String>? get multiBuyAppliedTo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -2223,7 +2250,8 @@ abstract class $listAllSalesApisCopyWith<$Res> {
       @JsonKey(name: "coupon_type") List<String>? couponType,
       @JsonKey(name: "coupon_applying_to") List<String>? couponApplyingTo,
       @JsonKey(name: "coupon_applying_on") List<String>? couponApplyingOn,
-      @JsonKey(name: "coupon_based_on") List<String>? couponBasedOn});
+      @JsonKey(name: "coupon_based_on") List<String>? couponBasedOn,
+      @JsonKey(name: "multibuy_applied_to") List<String>? multiBuyAppliedTo});
 }
 
 /// @nodoc
@@ -2248,6 +2276,7 @@ class _$listAllSalesApisCopyWithImpl<$Res, $Val extends listAllSalesApis>
     Object? couponApplyingTo = freezed,
     Object? couponApplyingOn = freezed,
     Object? couponBasedOn = freezed,
+    Object? multiBuyAppliedTo = freezed,
   }) {
     return _then(_value.copyWith(
       saleApplyingOn: freezed == saleApplyingOn
@@ -2286,6 +2315,10 @@ class _$listAllSalesApisCopyWithImpl<$Res, $Val extends listAllSalesApis>
           ? _value.couponBasedOn
           : couponBasedOn // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      multiBuyAppliedTo: freezed == multiBuyAppliedTo
+          ? _value.multiBuyAppliedTo
+          : multiBuyAppliedTo // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -2307,7 +2340,8 @@ abstract class _$$_listAllSalesApisCopyWith<$Res>
       @JsonKey(name: "coupon_type") List<String>? couponType,
       @JsonKey(name: "coupon_applying_to") List<String>? couponApplyingTo,
       @JsonKey(name: "coupon_applying_on") List<String>? couponApplyingOn,
-      @JsonKey(name: "coupon_based_on") List<String>? couponBasedOn});
+      @JsonKey(name: "coupon_based_on") List<String>? couponBasedOn,
+      @JsonKey(name: "multibuy_applied_to") List<String>? multiBuyAppliedTo});
 }
 
 /// @nodoc
@@ -2330,6 +2364,7 @@ class __$$_listAllSalesApisCopyWithImpl<$Res>
     Object? couponApplyingTo = freezed,
     Object? couponApplyingOn = freezed,
     Object? couponBasedOn = freezed,
+    Object? multiBuyAppliedTo = freezed,
   }) {
     return _then(_$_listAllSalesApis(
       saleApplyingOn: freezed == saleApplyingOn
@@ -2368,6 +2403,10 @@ class __$$_listAllSalesApisCopyWithImpl<$Res>
           ? _value._couponBasedOn
           : couponBasedOn // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      multiBuyAppliedTo: freezed == multiBuyAppliedTo
+          ? _value._multiBuyAppliedTo
+          : multiBuyAppliedTo // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -2376,15 +2415,26 @@ class __$$_listAllSalesApisCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_listAllSalesApis implements _listAllSalesApis {
   const _$_listAllSalesApis(
-      {@JsonKey(name: "sale_applying_on") final List<String>? saleApplyingOn,
-      @JsonKey(name: "based_on") final List<String>? basedOn,
-      @JsonKey(name: "sale_applying_to") final List<String>? saleApplyingTo,
-      @JsonKey(name: "offer_applying_to") final List<String>? offerApplyingTo,
-      @JsonKey(name: "bogo_applying_on") final List<String>? bogoApplyingOn,
-      @JsonKey(name: "coupon_type") final List<String>? couponType,
-      @JsonKey(name: "coupon_applying_to") final List<String>? couponApplyingTo,
-      @JsonKey(name: "coupon_applying_on") final List<String>? couponApplyingOn,
-      @JsonKey(name: "coupon_based_on") final List<String>? couponBasedOn})
+      {@JsonKey(name: "sale_applying_on")
+          final List<String>? saleApplyingOn,
+      @JsonKey(name: "based_on")
+          final List<String>? basedOn,
+      @JsonKey(name: "sale_applying_to")
+          final List<String>? saleApplyingTo,
+      @JsonKey(name: "offer_applying_to")
+          final List<String>? offerApplyingTo,
+      @JsonKey(name: "bogo_applying_on")
+          final List<String>? bogoApplyingOn,
+      @JsonKey(name: "coupon_type")
+          final List<String>? couponType,
+      @JsonKey(name: "coupon_applying_to")
+          final List<String>? couponApplyingTo,
+      @JsonKey(name: "coupon_applying_on")
+          final List<String>? couponApplyingOn,
+      @JsonKey(name: "coupon_based_on")
+          final List<String>? couponBasedOn,
+      @JsonKey(name: "multibuy_applied_to")
+          final List<String>? multiBuyAppliedTo})
       : _saleApplyingOn = saleApplyingOn,
         _basedOn = basedOn,
         _saleApplyingTo = saleApplyingTo,
@@ -2393,7 +2443,8 @@ class _$_listAllSalesApis implements _listAllSalesApis {
         _couponType = couponType,
         _couponApplyingTo = couponApplyingTo,
         _couponApplyingOn = couponApplyingOn,
-        _couponBasedOn = couponBasedOn;
+        _couponBasedOn = couponBasedOn,
+        _multiBuyAppliedTo = multiBuyAppliedTo;
 
   factory _$_listAllSalesApis.fromJson(Map<String, dynamic> json) =>
       _$$_listAllSalesApisFromJson(json);
@@ -2488,9 +2539,19 @@ class _$_listAllSalesApis implements _listAllSalesApis {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<String>? _multiBuyAppliedTo;
+  @override
+  @JsonKey(name: "multibuy_applied_to")
+  List<String>? get multiBuyAppliedTo {
+    final value = _multiBuyAppliedTo;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'listAllSalesApis(saleApplyingOn: $saleApplyingOn, basedOn: $basedOn, saleApplyingTo: $saleApplyingTo, offerApplyingTo: $offerApplyingTo, bogoApplyingOn: $bogoApplyingOn, couponType: $couponType, couponApplyingTo: $couponApplyingTo, couponApplyingOn: $couponApplyingOn, couponBasedOn: $couponBasedOn)';
+    return 'listAllSalesApis(saleApplyingOn: $saleApplyingOn, basedOn: $basedOn, saleApplyingTo: $saleApplyingTo, offerApplyingTo: $offerApplyingTo, bogoApplyingOn: $bogoApplyingOn, couponType: $couponType, couponApplyingTo: $couponApplyingTo, couponApplyingOn: $couponApplyingOn, couponBasedOn: $couponBasedOn, multiBuyAppliedTo: $multiBuyAppliedTo)';
   }
 
   @override
@@ -2514,7 +2575,9 @@ class _$_listAllSalesApis implements _listAllSalesApis {
             const DeepCollectionEquality()
                 .equals(other._couponApplyingOn, _couponApplyingOn) &&
             const DeepCollectionEquality()
-                .equals(other._couponBasedOn, _couponBasedOn));
+                .equals(other._couponBasedOn, _couponBasedOn) &&
+            const DeepCollectionEquality()
+                .equals(other._multiBuyAppliedTo, _multiBuyAppliedTo));
   }
 
   @JsonKey(ignore: true)
@@ -2529,7 +2592,8 @@ class _$_listAllSalesApis implements _listAllSalesApis {
       const DeepCollectionEquality().hash(_couponType),
       const DeepCollectionEquality().hash(_couponApplyingTo),
       const DeepCollectionEquality().hash(_couponApplyingOn),
-      const DeepCollectionEquality().hash(_couponBasedOn));
+      const DeepCollectionEquality().hash(_couponBasedOn),
+      const DeepCollectionEquality().hash(_multiBuyAppliedTo));
 
   @JsonKey(ignore: true)
   @override
@@ -2564,7 +2628,9 @@ abstract class _listAllSalesApis implements listAllSalesApis {
       @JsonKey(name: "coupon_applying_on")
           final List<String>? couponApplyingOn,
       @JsonKey(name: "coupon_based_on")
-          final List<String>? couponBasedOn}) = _$_listAllSalesApis;
+          final List<String>? couponBasedOn,
+      @JsonKey(name: "multibuy_applied_to")
+          final List<String>? multiBuyAppliedTo}) = _$_listAllSalesApis;
 
   factory _listAllSalesApis.fromJson(Map<String, dynamic> json) =
       _$_listAllSalesApis.fromJson;
@@ -2596,6 +2662,9 @@ abstract class _listAllSalesApis implements listAllSalesApis {
   @override
   @JsonKey(name: "coupon_based_on")
   List<String>? get couponBasedOn;
+  @override
+  @JsonKey(name: "multibuy_applied_to")
+  List<String>? get multiBuyAppliedTo;
   @override
   @JsonKey(ignore: true)
   _$$_listAllSalesApisCopyWith<_$_listAllSalesApis> get copyWith =>
@@ -2631,7 +2700,8 @@ mixin _$PromotionSaleCreateModel {
   @JsonKey(name: "sales_applying_place_name")
   String? get salesApplyingPlaceName => throw _privateConstructorUsedError;
   @JsonKey(name: "available_customer_groups")
-  String? get availableCustomerGroup => throw _privateConstructorUsedError;
+  List<AvailableCustomerGroups>? get availableCustomerGroups =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: "sales_applying_on")
   String? get salesApplyingOn => throw _privateConstructorUsedError;
   @JsonKey(name: "offer_applied_to_code")
@@ -2693,7 +2763,7 @@ abstract class $PromotionSaleCreateModelCopyWith<$Res> {
       @JsonKey(name: "sales_applying_place_name")
           String? salesApplyingPlaceName,
       @JsonKey(name: "available_customer_groups")
-          String? availableCustomerGroup,
+          List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "sales_applying_on")
           String? salesApplyingOn,
       @JsonKey(name: "offer_applied_to_code")
@@ -2747,7 +2817,7 @@ class _$PromotionSaleCreateModelCopyWithImpl<$Res,
     Object? salesApplyingOnId = freezed,
     Object? salesApplyingPlaceCode = freezed,
     Object? salesApplyingPlaceName = freezed,
-    Object? availableCustomerGroup = freezed,
+    Object? availableCustomerGroups = freezed,
     Object? salesApplyingOn = freezed,
     Object? offerAppliedToCode = freezed,
     Object? salesApplyingOnName = freezed,
@@ -2811,10 +2881,10 @@ class _$PromotionSaleCreateModelCopyWithImpl<$Res,
           ? _value.salesApplyingPlaceName
           : salesApplyingPlaceName // ignore: cast_nullable_to_non_nullable
               as String?,
-      availableCustomerGroup: freezed == availableCustomerGroup
-          ? _value.availableCustomerGroup
-          : availableCustomerGroup // ignore: cast_nullable_to_non_nullable
-              as String?,
+      availableCustomerGroups: freezed == availableCustomerGroups
+          ? _value.availableCustomerGroups
+          : availableCustomerGroups // ignore: cast_nullable_to_non_nullable
+              as List<AvailableCustomerGroups>?,
       salesApplyingOn: freezed == salesApplyingOn
           ? _value.salesApplyingOn
           : salesApplyingOn // ignore: cast_nullable_to_non_nullable
@@ -2903,7 +2973,7 @@ abstract class _$$_PromotionSaleCreateModelCopyWith<$Res>
       @JsonKey(name: "sales_applying_place_name")
           String? salesApplyingPlaceName,
       @JsonKey(name: "available_customer_groups")
-          String? availableCustomerGroup,
+          List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "sales_applying_on")
           String? salesApplyingOn,
       @JsonKey(name: "offer_applied_to_code")
@@ -2955,7 +3025,7 @@ class __$$_PromotionSaleCreateModelCopyWithImpl<$Res>
     Object? salesApplyingOnId = freezed,
     Object? salesApplyingPlaceCode = freezed,
     Object? salesApplyingPlaceName = freezed,
-    Object? availableCustomerGroup = freezed,
+    Object? availableCustomerGroups = freezed,
     Object? salesApplyingOn = freezed,
     Object? offerAppliedToCode = freezed,
     Object? salesApplyingOnName = freezed,
@@ -3019,10 +3089,10 @@ class __$$_PromotionSaleCreateModelCopyWithImpl<$Res>
           ? _value.salesApplyingPlaceName
           : salesApplyingPlaceName // ignore: cast_nullable_to_non_nullable
               as String?,
-      availableCustomerGroup: freezed == availableCustomerGroup
-          ? _value.availableCustomerGroup
-          : availableCustomerGroup // ignore: cast_nullable_to_non_nullable
-              as String?,
+      availableCustomerGroups: freezed == availableCustomerGroups
+          ? _value._availableCustomerGroups
+          : availableCustomerGroups // ignore: cast_nullable_to_non_nullable
+              as List<AvailableCustomerGroups>?,
       salesApplyingOn: freezed == salesApplyingOn
           ? _value.salesApplyingOn
           : salesApplyingOn // ignore: cast_nullable_to_non_nullable
@@ -3105,7 +3175,7 @@ class _$_PromotionSaleCreateModel implements _PromotionSaleCreateModel {
       @JsonKey(name: "sales_applying_place_name")
           this.salesApplyingPlaceName,
       @JsonKey(name: "available_customer_groups")
-          this.availableCustomerGroup,
+          final List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "sales_applying_on")
           this.salesApplyingOn,
       @JsonKey(name: "offer_applied_to_code")
@@ -3131,7 +3201,8 @@ class _$_PromotionSaleCreateModel implements _PromotionSaleCreateModel {
       @JsonKey(name: "sale_lines")
           final List<SaleLines>? saleLines,
       final List<Segment>? segments})
-      : _saleLines = saleLines,
+      : _availableCustomerGroups = availableCustomerGroups,
+        _saleLines = saleLines,
         _segments = segments;
 
   factory _$_PromotionSaleCreateModel.fromJson(Map<String, dynamic> json) =>
@@ -3170,9 +3241,16 @@ class _$_PromotionSaleCreateModel implements _PromotionSaleCreateModel {
   @override
   @JsonKey(name: "sales_applying_place_name")
   final String? salesApplyingPlaceName;
+  final List<AvailableCustomerGroups>? _availableCustomerGroups;
   @override
   @JsonKey(name: "available_customer_groups")
-  final String? availableCustomerGroup;
+  List<AvailableCustomerGroups>? get availableCustomerGroups {
+    final value = _availableCustomerGroups;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "sales_applying_on")
   final String? salesApplyingOn;
@@ -3227,7 +3305,7 @@ class _$_PromotionSaleCreateModel implements _PromotionSaleCreateModel {
 
   @override
   String toString() {
-    return 'PromotionSaleCreateModel(name: $name, description: $description, image: $image, offerAppliedToType: $offerAppliedToType, offerPeriodId: $offerPeriodId, totalPrice: $totalPrice, offerGroupId: $offerGroupId, salesApplyingPlace: $salesApplyingPlace, maximumCount: $maximumCount, salesApplyingOnId: $salesApplyingOnId, salesApplyingPlaceCode: $salesApplyingPlaceCode, salesApplyingPlaceName: $salesApplyingPlaceName, availableCustomerGroup: $availableCustomerGroup, salesApplyingOn: $salesApplyingOn, offerAppliedToCode: $offerAppliedToCode, salesApplyingOnName: $salesApplyingOnName, createdBy: $createdBy, salesApplyingOnCode: $salesApplyingOnCode, discountPercentageOrPrice: $discountPercentageOrPrice, isAvailableForAll: $isAvailableForAll, isAdminBased: $isAdminBased, isActive: $isActive, basedOn: $basedOn, inventoryId: $inventoryId, saleLines: $saleLines, segments: $segments)';
+    return 'PromotionSaleCreateModel(name: $name, description: $description, image: $image, offerAppliedToType: $offerAppliedToType, offerPeriodId: $offerPeriodId, totalPrice: $totalPrice, offerGroupId: $offerGroupId, salesApplyingPlace: $salesApplyingPlace, maximumCount: $maximumCount, salesApplyingOnId: $salesApplyingOnId, salesApplyingPlaceCode: $salesApplyingPlaceCode, salesApplyingPlaceName: $salesApplyingPlaceName, availableCustomerGroups: $availableCustomerGroups, salesApplyingOn: $salesApplyingOn, offerAppliedToCode: $offerAppliedToCode, salesApplyingOnName: $salesApplyingOnName, createdBy: $createdBy, salesApplyingOnCode: $salesApplyingOnCode, discountPercentageOrPrice: $discountPercentageOrPrice, isAvailableForAll: $isAvailableForAll, isAdminBased: $isAdminBased, isActive: $isActive, basedOn: $basedOn, inventoryId: $inventoryId, saleLines: $saleLines, segments: $segments)';
   }
 
   @override
@@ -3257,8 +3335,8 @@ class _$_PromotionSaleCreateModel implements _PromotionSaleCreateModel {
                 other.salesApplyingPlaceCode == salesApplyingPlaceCode) &&
             (identical(other.salesApplyingPlaceName, salesApplyingPlaceName) ||
                 other.salesApplyingPlaceName == salesApplyingPlaceName) &&
-            (identical(other.availableCustomerGroup, availableCustomerGroup) ||
-                other.availableCustomerGroup == availableCustomerGroup) &&
+            const DeepCollectionEquality().equals(
+                other._availableCustomerGroups, _availableCustomerGroups) &&
             (identical(other.salesApplyingOn, salesApplyingOn) ||
                 other.salesApplyingOn == salesApplyingOn) &&
             (identical(other.offerAppliedToCode, offerAppliedToCode) ||
@@ -3302,7 +3380,7 @@ class _$_PromotionSaleCreateModel implements _PromotionSaleCreateModel {
         salesApplyingOnId,
         salesApplyingPlaceCode,
         salesApplyingPlaceName,
-        availableCustomerGroup,
+        const DeepCollectionEquality().hash(_availableCustomerGroups),
         salesApplyingOn,
         offerAppliedToCode,
         salesApplyingOnName,
@@ -3357,7 +3435,7 @@ abstract class _PromotionSaleCreateModel implements PromotionSaleCreateModel {
       @JsonKey(name: "sales_applying_place_name")
           final String? salesApplyingPlaceName,
       @JsonKey(name: "available_customer_groups")
-          final String? availableCustomerGroup,
+          final List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "sales_applying_on")
           final String? salesApplyingOn,
       @JsonKey(name: "offer_applied_to_code")
@@ -3422,7 +3500,7 @@ abstract class _PromotionSaleCreateModel implements PromotionSaleCreateModel {
   String? get salesApplyingPlaceName;
   @override
   @JsonKey(name: "available_customer_groups")
-  String? get availableCustomerGroup;
+  List<AvailableCustomerGroups>? get availableCustomerGroups;
   @override
   @JsonKey(name: "sales_applying_on")
   String? get salesApplyingOn;
@@ -3487,6 +3565,8 @@ mixin _$SaleLines {
   String? get offerName => throw _privateConstructorUsedError;
   @JsonKey(name: "type_data")
   String? get typeData => throw _privateConstructorUsedError;
+  @JsonKey(name: "coupon_name")
+  String? get couponname => throw _privateConstructorUsedError;
   @JsonKey(name: "updateCheck", defaultValue: false)
   bool? get updateCheck => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
@@ -3512,6 +3592,7 @@ abstract class $SaleLinesCopyWith<$Res> {
       @JsonKey(name: "offer_group_code") String? offerGroupCode,
       @JsonKey(name: "offer_name") String? offerName,
       @JsonKey(name: "type_data") String? typeData,
+      @JsonKey(name: "coupon_name") String? couponname,
       @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 
@@ -3539,6 +3620,7 @@ class _$SaleLinesCopyWithImpl<$Res, $Val extends SaleLines>
     Object? offerGroupCode = freezed,
     Object? offerName = freezed,
     Object? typeData = freezed,
+    Object? couponname = freezed,
     Object? updateCheck = freezed,
     Object? isActive = freezed,
   }) {
@@ -3574,6 +3656,10 @@ class _$SaleLinesCopyWithImpl<$Res, $Val extends SaleLines>
       typeData: freezed == typeData
           ? _value.typeData
           : typeData // ignore: cast_nullable_to_non_nullable
+              as String?,
+      couponname: freezed == couponname
+          ? _value.couponname
+          : couponname // ignore: cast_nullable_to_non_nullable
               as String?,
       updateCheck: freezed == updateCheck
           ? _value.updateCheck
@@ -3615,6 +3701,7 @@ abstract class _$$_SaleLinesCopyWith<$Res> implements $SaleLinesCopyWith<$Res> {
       @JsonKey(name: "offer_group_code") String? offerGroupCode,
       @JsonKey(name: "offer_name") String? offerName,
       @JsonKey(name: "type_data") String? typeData,
+      @JsonKey(name: "coupon_name") String? couponname,
       @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 
@@ -3641,6 +3728,7 @@ class __$$_SaleLinesCopyWithImpl<$Res>
     Object? offerGroupCode = freezed,
     Object? offerName = freezed,
     Object? typeData = freezed,
+    Object? couponname = freezed,
     Object? updateCheck = freezed,
     Object? isActive = freezed,
   }) {
@@ -3677,6 +3765,10 @@ class __$$_SaleLinesCopyWithImpl<$Res>
           ? _value.typeData
           : typeData // ignore: cast_nullable_to_non_nullable
               as String?,
+      couponname: freezed == couponname
+          ? _value.couponname
+          : couponname // ignore: cast_nullable_to_non_nullable
+              as String?,
       updateCheck: freezed == updateCheck
           ? _value.updateCheck
           : updateCheck // ignore: cast_nullable_to_non_nullable
@@ -3701,6 +3793,7 @@ class _$_SaleLines implements _SaleLines {
       @JsonKey(name: "offer_group_code") this.offerGroupCode,
       @JsonKey(name: "offer_name") this.offerName,
       @JsonKey(name: "type_data") this.typeData,
+      @JsonKey(name: "coupon_name") this.couponname,
       @JsonKey(name: "updateCheck", defaultValue: false) this.updateCheck,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive});
 
@@ -3730,6 +3823,9 @@ class _$_SaleLines implements _SaleLines {
   @JsonKey(name: "type_data")
   final String? typeData;
   @override
+  @JsonKey(name: "coupon_name")
+  final String? couponname;
+  @override
   @JsonKey(name: "updateCheck", defaultValue: false)
   final bool? updateCheck;
   @override
@@ -3738,7 +3834,7 @@ class _$_SaleLines implements _SaleLines {
 
   @override
   String toString() {
-    return 'SaleLines(id: $id, barcode: $barcode, variantId: $variantId, variantCode: $variantCode, variantName: $variantName, offerGroupCode: $offerGroupCode, offerName: $offerName, typeData: $typeData, updateCheck: $updateCheck, isActive: $isActive)';
+    return 'SaleLines(id: $id, barcode: $barcode, variantId: $variantId, variantCode: $variantCode, variantName: $variantName, offerGroupCode: $offerGroupCode, offerName: $offerName, typeData: $typeData, couponname: $couponname, updateCheck: $updateCheck, isActive: $isActive)';
   }
 
   @override
@@ -3760,6 +3856,8 @@ class _$_SaleLines implements _SaleLines {
                 other.offerName == offerName) &&
             (identical(other.typeData, typeData) ||
                 other.typeData == typeData) &&
+            (identical(other.couponname, couponname) ||
+                other.couponname == couponname) &&
             (identical(other.updateCheck, updateCheck) ||
                 other.updateCheck == updateCheck) &&
             (identical(other.isActive, isActive) ||
@@ -3778,6 +3876,7 @@ class _$_SaleLines implements _SaleLines {
       offerGroupCode,
       offerName,
       typeData,
+      couponname,
       updateCheck,
       isActive);
 
@@ -3811,6 +3910,8 @@ abstract class _SaleLines implements SaleLines {
           final String? offerName,
       @JsonKey(name: "type_data")
           final String? typeData,
+      @JsonKey(name: "coupon_name")
+          final String? couponname,
       @JsonKey(name: "updateCheck", defaultValue: false)
           final bool? updateCheck,
       @JsonKey(name: "is_active", defaultValue: false)
@@ -3842,6 +3943,9 @@ abstract class _SaleLines implements SaleLines {
   @JsonKey(name: "type_data")
   String? get typeData;
   @override
+  @JsonKey(name: "coupon_name")
+  String? get couponname;
+  @override
   @JsonKey(name: "updateCheck", defaultValue: false)
   bool? get updateCheck;
   @override
@@ -3851,6 +3955,471 @@ abstract class _SaleLines implements SaleLines {
   @JsonKey(ignore: true)
   _$$_SaleLinesCopyWith<_$_SaleLines> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+MultibuyVariantListModel _$MultibuyVariantListModelFromJson(
+    Map<String, dynamic> json) {
+  return _MultibuyVariantListModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MultibuyVariantListModel {
+  int? get id => throw _privateConstructorUsedError;
+  Barcode? get barcode => throw _privateConstructorUsedError;
+  int? get quantity => throw _privateConstructorUsedError;
+  @JsonKey(name: "variant_id")
+  int? get variantId => throw _privateConstructorUsedError;
+  @JsonKey(name: "multi_buy_line_code")
+  String? get multiBuyLineCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "type_entry")
+  String? get typeEntry => throw _privateConstructorUsedError;
+  @JsonKey(name: "variant_code")
+  String? get variantCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "variant_name")
+  String? get variantName => throw _privateConstructorUsedError;
+  @JsonKey(name: "uom_name")
+  String? get uomName => throw _privateConstructorUsedError;
+  @JsonKey(name: "unit_cost")
+  double? get unitCost => throw _privateConstructorUsedError;
+  @JsonKey(name: "image1")
+  String? get image1 => throw _privateConstructorUsedError;
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  bool? get updateCheck => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MultibuyVariantListModelCopyWith<MultibuyVariantListModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MultibuyVariantListModelCopyWith<$Res> {
+  factory $MultibuyVariantListModelCopyWith(MultibuyVariantListModel value,
+          $Res Function(MultibuyVariantListModel) then) =
+      _$MultibuyVariantListModelCopyWithImpl<$Res, MultibuyVariantListModel>;
+  @useResult
+  $Res call(
+      {int? id,
+      Barcode? barcode,
+      int? quantity,
+      @JsonKey(name: "variant_id") int? variantId,
+      @JsonKey(name: "multi_buy_line_code") String? multiBuyLineCode,
+      @JsonKey(name: "type_entry") String? typeEntry,
+      @JsonKey(name: "variant_code") String? variantCode,
+      @JsonKey(name: "variant_name") String? variantName,
+      @JsonKey(name: "uom_name") String? uomName,
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "image1") String? image1,
+      @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
+
+  $BarcodeCopyWith<$Res>? get barcode;
+}
+
+/// @nodoc
+class _$MultibuyVariantListModelCopyWithImpl<$Res,
+        $Val extends MultibuyVariantListModel>
+    implements $MultibuyVariantListModelCopyWith<$Res> {
+  _$MultibuyVariantListModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? barcode = freezed,
+    Object? quantity = freezed,
+    Object? variantId = freezed,
+    Object? multiBuyLineCode = freezed,
+    Object? typeEntry = freezed,
+    Object? variantCode = freezed,
+    Object? variantName = freezed,
+    Object? uomName = freezed,
+    Object? unitCost = freezed,
+    Object? image1 = freezed,
+    Object? updateCheck = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      barcode: freezed == barcode
+          ? _value.barcode
+          : barcode // ignore: cast_nullable_to_non_nullable
+              as Barcode?,
+      quantity: freezed == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int?,
+      variantId: freezed == variantId
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      multiBuyLineCode: freezed == multiBuyLineCode
+          ? _value.multiBuyLineCode
+          : multiBuyLineCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      typeEntry: freezed == typeEntry
+          ? _value.typeEntry
+          : typeEntry // ignore: cast_nullable_to_non_nullable
+              as String?,
+      variantCode: freezed == variantCode
+          ? _value.variantCode
+          : variantCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      variantName: freezed == variantName
+          ? _value.variantName
+          : variantName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomName: freezed == uomName
+          ? _value.uomName
+          : uomName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unitCost: freezed == unitCost
+          ? _value.unitCost
+          : unitCost // ignore: cast_nullable_to_non_nullable
+              as double?,
+      image1: freezed == image1
+          ? _value.image1
+          : image1 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updateCheck: freezed == updateCheck
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BarcodeCopyWith<$Res>? get barcode {
+    if (_value.barcode == null) {
+      return null;
+    }
+
+    return $BarcodeCopyWith<$Res>(_value.barcode!, (value) {
+      return _then(_value.copyWith(barcode: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_MultibuyVariantListModelCopyWith<$Res>
+    implements $MultibuyVariantListModelCopyWith<$Res> {
+  factory _$$_MultibuyVariantListModelCopyWith(
+          _$_MultibuyVariantListModel value,
+          $Res Function(_$_MultibuyVariantListModel) then) =
+      __$$_MultibuyVariantListModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      Barcode? barcode,
+      int? quantity,
+      @JsonKey(name: "variant_id") int? variantId,
+      @JsonKey(name: "multi_buy_line_code") String? multiBuyLineCode,
+      @JsonKey(name: "type_entry") String? typeEntry,
+      @JsonKey(name: "variant_code") String? variantCode,
+      @JsonKey(name: "variant_name") String? variantName,
+      @JsonKey(name: "uom_name") String? uomName,
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "image1") String? image1,
+      @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
+
+  @override
+  $BarcodeCopyWith<$Res>? get barcode;
+}
+
+/// @nodoc
+class __$$_MultibuyVariantListModelCopyWithImpl<$Res>
+    extends _$MultibuyVariantListModelCopyWithImpl<$Res,
+        _$_MultibuyVariantListModel>
+    implements _$$_MultibuyVariantListModelCopyWith<$Res> {
+  __$$_MultibuyVariantListModelCopyWithImpl(_$_MultibuyVariantListModel _value,
+      $Res Function(_$_MultibuyVariantListModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? barcode = freezed,
+    Object? quantity = freezed,
+    Object? variantId = freezed,
+    Object? multiBuyLineCode = freezed,
+    Object? typeEntry = freezed,
+    Object? variantCode = freezed,
+    Object? variantName = freezed,
+    Object? uomName = freezed,
+    Object? unitCost = freezed,
+    Object? image1 = freezed,
+    Object? updateCheck = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_$_MultibuyVariantListModel(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      barcode: freezed == barcode
+          ? _value.barcode
+          : barcode // ignore: cast_nullable_to_non_nullable
+              as Barcode?,
+      quantity: freezed == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int?,
+      variantId: freezed == variantId
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      multiBuyLineCode: freezed == multiBuyLineCode
+          ? _value.multiBuyLineCode
+          : multiBuyLineCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      typeEntry: freezed == typeEntry
+          ? _value.typeEntry
+          : typeEntry // ignore: cast_nullable_to_non_nullable
+              as String?,
+      variantCode: freezed == variantCode
+          ? _value.variantCode
+          : variantCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      variantName: freezed == variantName
+          ? _value.variantName
+          : variantName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomName: freezed == uomName
+          ? _value.uomName
+          : uomName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unitCost: freezed == unitCost
+          ? _value.unitCost
+          : unitCost // ignore: cast_nullable_to_non_nullable
+              as double?,
+      image1: freezed == image1
+          ? _value.image1
+          : image1 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updateCheck: freezed == updateCheck
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_MultibuyVariantListModel implements _MultibuyVariantListModel {
+  const _$_MultibuyVariantListModel(
+      {this.id,
+      this.barcode,
+      this.quantity,
+      @JsonKey(name: "variant_id") this.variantId,
+      @JsonKey(name: "multi_buy_line_code") this.multiBuyLineCode,
+      @JsonKey(name: "type_entry") this.typeEntry,
+      @JsonKey(name: "variant_code") this.variantCode,
+      @JsonKey(name: "variant_name") this.variantName,
+      @JsonKey(name: "uom_name") this.uomName,
+      @JsonKey(name: "unit_cost") this.unitCost,
+      @JsonKey(name: "image1") this.image1,
+      @JsonKey(name: "updateCheck", defaultValue: false) this.updateCheck,
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive});
+
+  factory _$_MultibuyVariantListModel.fromJson(Map<String, dynamic> json) =>
+      _$$_MultibuyVariantListModelFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final Barcode? barcode;
+  @override
+  final int? quantity;
+  @override
+  @JsonKey(name: "variant_id")
+  final int? variantId;
+  @override
+  @JsonKey(name: "multi_buy_line_code")
+  final String? multiBuyLineCode;
+  @override
+  @JsonKey(name: "type_entry")
+  final String? typeEntry;
+  @override
+  @JsonKey(name: "variant_code")
+  final String? variantCode;
+  @override
+  @JsonKey(name: "variant_name")
+  final String? variantName;
+  @override
+  @JsonKey(name: "uom_name")
+  final String? uomName;
+  @override
+  @JsonKey(name: "unit_cost")
+  final double? unitCost;
+  @override
+  @JsonKey(name: "image1")
+  final String? image1;
+  @override
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  final bool? updateCheck;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  final bool? isActive;
+
+  @override
+  String toString() {
+    return 'MultibuyVariantListModel(id: $id, barcode: $barcode, quantity: $quantity, variantId: $variantId, multiBuyLineCode: $multiBuyLineCode, typeEntry: $typeEntry, variantCode: $variantCode, variantName: $variantName, uomName: $uomName, unitCost: $unitCost, image1: $image1, updateCheck: $updateCheck, isActive: $isActive)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_MultibuyVariantListModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity) &&
+            (identical(other.variantId, variantId) ||
+                other.variantId == variantId) &&
+            (identical(other.multiBuyLineCode, multiBuyLineCode) ||
+                other.multiBuyLineCode == multiBuyLineCode) &&
+            (identical(other.typeEntry, typeEntry) ||
+                other.typeEntry == typeEntry) &&
+            (identical(other.variantCode, variantCode) ||
+                other.variantCode == variantCode) &&
+            (identical(other.variantName, variantName) ||
+                other.variantName == variantName) &&
+            (identical(other.uomName, uomName) || other.uomName == uomName) &&
+            (identical(other.unitCost, unitCost) ||
+                other.unitCost == unitCost) &&
+            (identical(other.image1, image1) || other.image1 == image1) &&
+            (identical(other.updateCheck, updateCheck) ||
+                other.updateCheck == updateCheck) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      barcode,
+      quantity,
+      variantId,
+      multiBuyLineCode,
+      typeEntry,
+      variantCode,
+      variantName,
+      uomName,
+      unitCost,
+      image1,
+      updateCheck,
+      isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MultibuyVariantListModelCopyWith<_$_MultibuyVariantListModel>
+      get copyWith => __$$_MultibuyVariantListModelCopyWithImpl<
+          _$_MultibuyVariantListModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MultibuyVariantListModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _MultibuyVariantListModel implements MultibuyVariantListModel {
+  const factory _MultibuyVariantListModel(
+      {final int? id,
+      final Barcode? barcode,
+      final int? quantity,
+      @JsonKey(name: "variant_id")
+          final int? variantId,
+      @JsonKey(name: "multi_buy_line_code")
+          final String? multiBuyLineCode,
+      @JsonKey(name: "type_entry")
+          final String? typeEntry,
+      @JsonKey(name: "variant_code")
+          final String? variantCode,
+      @JsonKey(name: "variant_name")
+          final String? variantName,
+      @JsonKey(name: "uom_name")
+          final String? uomName,
+      @JsonKey(name: "unit_cost")
+          final double? unitCost,
+      @JsonKey(name: "image1")
+          final String? image1,
+      @JsonKey(name: "updateCheck", defaultValue: false)
+          final bool? updateCheck,
+      @JsonKey(name: "is_active", defaultValue: false)
+          final bool? isActive}) = _$_MultibuyVariantListModel;
+
+  factory _MultibuyVariantListModel.fromJson(Map<String, dynamic> json) =
+      _$_MultibuyVariantListModel.fromJson;
+
+  @override
+  int? get id;
+  @override
+  Barcode? get barcode;
+  @override
+  int? get quantity;
+  @override
+  @JsonKey(name: "variant_id")
+  int? get variantId;
+  @override
+  @JsonKey(name: "multi_buy_line_code")
+  String? get multiBuyLineCode;
+  @override
+  @JsonKey(name: "type_entry")
+  String? get typeEntry;
+  @override
+  @JsonKey(name: "variant_code")
+  String? get variantCode;
+  @override
+  @JsonKey(name: "variant_name")
+  String? get variantName;
+  @override
+  @JsonKey(name: "uom_name")
+  String? get uomName;
+  @override
+  @JsonKey(name: "unit_cost")
+  double? get unitCost;
+  @override
+  @JsonKey(name: "image1")
+  String? get image1;
+  @override
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  bool? get updateCheck;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive;
+  @override
+  @JsonKey(ignore: true)
+  _$$_MultibuyVariantListModelCopyWith<_$_MultibuyVariantListModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 PromotionSaleReadModel _$PromotionSaleReadModelFromJson(
@@ -3874,6 +4443,8 @@ mixin _$PromotionSaleReadModel {
   String? get inventoryId => throw _privateConstructorUsedError;
   @JsonKey(name: "sale_code")
   String? get saleCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "offer_period_name")
+  String? get offerPeriodname => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_applying_place_code")
@@ -3886,6 +4457,9 @@ mixin _$PromotionSaleReadModel {
   String? get salesApplyingOn => throw _privateConstructorUsedError;
   @JsonKey(name: "based_on")
   String? get basedOn => throw _privateConstructorUsedError;
+  @JsonKey(name: "available_customer_groups")
+  List<AvailableCustomerGroups>? get availableCustomerGroups =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: "sales_applying_on_name")
   String? get salesApplyingOnName => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_applying_place")
@@ -3941,6 +4515,8 @@ abstract class $PromotionSaleReadModelCopyWith<$Res> {
           String? inventoryId,
       @JsonKey(name: "sale_code")
           String? saleCode,
+      @JsonKey(name: "offer_period_name")
+          String? offerPeriodname,
       @JsonKey(name: "created_at")
           String? createdAt,
       @JsonKey(name: "sales_applying_place_code")
@@ -3953,6 +4529,8 @@ abstract class $PromotionSaleReadModelCopyWith<$Res> {
           String? salesApplyingOn,
       @JsonKey(name: "based_on")
           String? basedOn,
+      @JsonKey(name: "available_customer_groups")
+          List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "sales_applying_on_name")
           String? salesApplyingOnName,
       @JsonKey(name: "sales_applying_place")
@@ -4008,12 +4586,14 @@ class _$PromotionSaleReadModelCopyWithImpl<$Res,
     Object? discountPercentage = freezed,
     Object? inventoryId = freezed,
     Object? saleCode = freezed,
+    Object? offerPeriodname = freezed,
     Object? createdAt = freezed,
     Object? salesApplyingPlaceCode = freezed,
     Object? salesApplyingPlaceName = freezed,
     Object? salesApplyingPlaceId = freezed,
     Object? salesApplyingOn = freezed,
     Object? basedOn = freezed,
+    Object? availableCustomerGroups = freezed,
     Object? salesApplyingOnName = freezed,
     Object? salesApplyingPlace = freezed,
     Object? salesApplyingOnId = freezed,
@@ -4070,6 +4650,10 @@ class _$PromotionSaleReadModelCopyWithImpl<$Res,
           ? _value.saleCode
           : saleCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      offerPeriodname: freezed == offerPeriodname
+          ? _value.offerPeriodname
+          : offerPeriodname // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -4094,6 +4678,10 @@ class _$PromotionSaleReadModelCopyWithImpl<$Res,
           ? _value.basedOn
           : basedOn // ignore: cast_nullable_to_non_nullable
               as String?,
+      availableCustomerGroups: freezed == availableCustomerGroups
+          ? _value.availableCustomerGroups
+          : availableCustomerGroups // ignore: cast_nullable_to_non_nullable
+              as List<AvailableCustomerGroups>?,
       salesApplyingOnName: freezed == salesApplyingOnName
           ? _value.salesApplyingOnName
           : salesApplyingOnName // ignore: cast_nullable_to_non_nullable
@@ -4189,6 +4777,8 @@ abstract class _$$_PromotionSaleReadModelCopyWith<$Res>
           String? inventoryId,
       @JsonKey(name: "sale_code")
           String? saleCode,
+      @JsonKey(name: "offer_period_name")
+          String? offerPeriodname,
       @JsonKey(name: "created_at")
           String? createdAt,
       @JsonKey(name: "sales_applying_place_code")
@@ -4201,6 +4791,8 @@ abstract class _$$_PromotionSaleReadModelCopyWith<$Res>
           String? salesApplyingOn,
       @JsonKey(name: "based_on")
           String? basedOn,
+      @JsonKey(name: "available_customer_groups")
+          List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "sales_applying_on_name")
           String? salesApplyingOnName,
       @JsonKey(name: "sales_applying_place")
@@ -4255,12 +4847,14 @@ class __$$_PromotionSaleReadModelCopyWithImpl<$Res>
     Object? discountPercentage = freezed,
     Object? inventoryId = freezed,
     Object? saleCode = freezed,
+    Object? offerPeriodname = freezed,
     Object? createdAt = freezed,
     Object? salesApplyingPlaceCode = freezed,
     Object? salesApplyingPlaceName = freezed,
     Object? salesApplyingPlaceId = freezed,
     Object? salesApplyingOn = freezed,
     Object? basedOn = freezed,
+    Object? availableCustomerGroups = freezed,
     Object? salesApplyingOnName = freezed,
     Object? salesApplyingPlace = freezed,
     Object? salesApplyingOnId = freezed,
@@ -4317,6 +4911,10 @@ class __$$_PromotionSaleReadModelCopyWithImpl<$Res>
           ? _value.saleCode
           : saleCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      offerPeriodname: freezed == offerPeriodname
+          ? _value.offerPeriodname
+          : offerPeriodname // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -4341,6 +4939,10 @@ class __$$_PromotionSaleReadModelCopyWithImpl<$Res>
           ? _value.basedOn
           : basedOn // ignore: cast_nullable_to_non_nullable
               as String?,
+      availableCustomerGroups: freezed == availableCustomerGroups
+          ? _value._availableCustomerGroups
+          : availableCustomerGroups // ignore: cast_nullable_to_non_nullable
+              as List<AvailableCustomerGroups>?,
       salesApplyingOnName: freezed == salesApplyingOnName
           ? _value.salesApplyingOnName
           : salesApplyingOnName // ignore: cast_nullable_to_non_nullable
@@ -4419,6 +5021,8 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
           this.inventoryId,
       @JsonKey(name: "sale_code")
           this.saleCode,
+      @JsonKey(name: "offer_period_name")
+          this.offerPeriodname,
       @JsonKey(name: "created_at")
           this.createdAt,
       @JsonKey(name: "sales_applying_place_code")
@@ -4431,6 +5035,8 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
           this.salesApplyingOn,
       @JsonKey(name: "based_on")
           this.basedOn,
+      @JsonKey(name: "available_customer_groups")
+          final List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "sales_applying_on_name")
           this.salesApplyingOnName,
       @JsonKey(name: "sales_applying_place")
@@ -4458,7 +5064,8 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
       final List<Segment>? segments,
       @JsonKey(name: "sale_line")
           final List<SaleLines>? saleLines})
-      : _segments = segments,
+      : _availableCustomerGroups = availableCustomerGroups,
+        _segments = segments,
         _saleLines = saleLines;
 
   factory _$_PromotionSaleReadModel.fromJson(Map<String, dynamic> json) =>
@@ -4489,6 +5096,9 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
   @JsonKey(name: "sale_code")
   final String? saleCode;
   @override
+  @JsonKey(name: "offer_period_name")
+  final String? offerPeriodname;
+  @override
   @JsonKey(name: "created_at")
   final String? createdAt;
   @override
@@ -4506,6 +5116,16 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
   @override
   @JsonKey(name: "based_on")
   final String? basedOn;
+  final List<AvailableCustomerGroups>? _availableCustomerGroups;
+  @override
+  @JsonKey(name: "available_customer_groups")
+  List<AvailableCustomerGroups>? get availableCustomerGroups {
+    final value = _availableCustomerGroups;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "sales_applying_on_name")
   final String? salesApplyingOnName;
@@ -4563,7 +5183,7 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
 
   @override
   String toString() {
-    return 'PromotionSaleReadModel(id: $id, name: $name, description: $description, image: $image, test: $test, barcode: $barcode, totalPrice: $totalPrice, discountPercentage: $discountPercentage, inventoryId: $inventoryId, saleCode: $saleCode, createdAt: $createdAt, salesApplyingPlaceCode: $salesApplyingPlaceCode, salesApplyingPlaceName: $salesApplyingPlaceName, salesApplyingPlaceId: $salesApplyingPlaceId, salesApplyingOn: $salesApplyingOn, basedOn: $basedOn, salesApplyingOnName: $salesApplyingOnName, salesApplyingPlace: $salesApplyingPlace, salesApplyingOnId: $salesApplyingOnId, offerPriodId: $offerPriodId, offerGroupId: $offerGroupId, salesApplyingOnCode: $salesApplyingOnCode, maximumCount: $maximumCount, isAvailableForAll: $isAvailableForAll, overridePriority: $overridePriority, isApplyingToAllProducts: $isApplyingToAllProducts, isAdminBased: $isAdminBased, isActive: $isActive, segments: $segments, saleLines: $saleLines)';
+    return 'PromotionSaleReadModel(id: $id, name: $name, description: $description, image: $image, test: $test, barcode: $barcode, totalPrice: $totalPrice, discountPercentage: $discountPercentage, inventoryId: $inventoryId, saleCode: $saleCode, offerPeriodname: $offerPeriodname, createdAt: $createdAt, salesApplyingPlaceCode: $salesApplyingPlaceCode, salesApplyingPlaceName: $salesApplyingPlaceName, salesApplyingPlaceId: $salesApplyingPlaceId, salesApplyingOn: $salesApplyingOn, basedOn: $basedOn, availableCustomerGroups: $availableCustomerGroups, salesApplyingOnName: $salesApplyingOnName, salesApplyingPlace: $salesApplyingPlace, salesApplyingOnId: $salesApplyingOnId, offerPriodId: $offerPriodId, offerGroupId: $offerGroupId, salesApplyingOnCode: $salesApplyingOnCode, maximumCount: $maximumCount, isAvailableForAll: $isAvailableForAll, overridePriority: $overridePriority, isApplyingToAllProducts: $isApplyingToAllProducts, isAdminBased: $isAdminBased, isActive: $isActive, segments: $segments, saleLines: $saleLines)';
   }
 
   @override
@@ -4586,6 +5206,8 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
                 other.inventoryId == inventoryId) &&
             (identical(other.saleCode, saleCode) ||
                 other.saleCode == saleCode) &&
+            (identical(other.offerPeriodname, offerPeriodname) ||
+                other.offerPeriodname == offerPeriodname) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.salesApplyingPlaceCode, salesApplyingPlaceCode) ||
@@ -4597,6 +5219,8 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
             (identical(other.salesApplyingOn, salesApplyingOn) ||
                 other.salesApplyingOn == salesApplyingOn) &&
             (identical(other.basedOn, basedOn) || other.basedOn == basedOn) &&
+            const DeepCollectionEquality().equals(
+                other._availableCustomerGroups, _availableCustomerGroups) &&
             (identical(other.salesApplyingOnName, salesApplyingOnName) ||
                 other.salesApplyingOnName == salesApplyingOnName) &&
             (identical(other.salesApplyingPlace, salesApplyingPlace) ||
@@ -4641,12 +5265,14 @@ class _$_PromotionSaleReadModel implements _PromotionSaleReadModel {
         discountPercentage,
         inventoryId,
         saleCode,
+        offerPeriodname,
         createdAt,
         salesApplyingPlaceCode,
         salesApplyingPlaceName,
         salesApplyingPlaceId,
         salesApplyingOn,
         basedOn,
+        const DeepCollectionEquality().hash(_availableCustomerGroups),
         salesApplyingOnName,
         salesApplyingPlace,
         salesApplyingOnId,
@@ -4694,6 +5320,8 @@ abstract class _PromotionSaleReadModel implements PromotionSaleReadModel {
           final String? inventoryId,
       @JsonKey(name: "sale_code")
           final String? saleCode,
+      @JsonKey(name: "offer_period_name")
+          final String? offerPeriodname,
       @JsonKey(name: "created_at")
           final String? createdAt,
       @JsonKey(name: "sales_applying_place_code")
@@ -4706,6 +5334,8 @@ abstract class _PromotionSaleReadModel implements PromotionSaleReadModel {
           final String? salesApplyingOn,
       @JsonKey(name: "based_on")
           final String? basedOn,
+      @JsonKey(name: "available_customer_groups")
+          final List<AvailableCustomerGroups>? availableCustomerGroups,
       @JsonKey(name: "sales_applying_on_name")
           final String? salesApplyingOnName,
       @JsonKey(name: "sales_applying_place")
@@ -4762,6 +5392,9 @@ abstract class _PromotionSaleReadModel implements PromotionSaleReadModel {
   @JsonKey(name: "sale_code")
   String? get saleCode;
   @override
+  @JsonKey(name: "offer_period_name")
+  String? get offerPeriodname;
+  @override
   @JsonKey(name: "created_at")
   String? get createdAt;
   @override
@@ -4779,6 +5412,9 @@ abstract class _PromotionSaleReadModel implements PromotionSaleReadModel {
   @override
   @JsonKey(name: "based_on")
   String? get basedOn;
+  @override
+  @JsonKey(name: "available_customer_groups")
+  List<AvailableCustomerGroups>? get availableCustomerGroups;
   @override
   @JsonKey(name: "sales_applying_on_name")
   String? get salesApplyingOnName;
@@ -5995,7 +6631,7 @@ VariantModel _$VariantModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$VariantModel {
   int? get id => throw _privateConstructorUsedError;
-  String? get barcode => throw _privateConstructorUsedError;
+  Barcode? get barcode => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
   int? get variantId => throw _privateConstructorUsedError;
   @JsonKey(name: "buy_more_id")
@@ -6012,6 +6648,8 @@ mixin _$VariantModel {
   String? get couponLineCode => throw _privateConstructorUsedError;
   @JsonKey(name: "offer_name")
   String? get offerName => throw _privateConstructorUsedError;
+  @JsonKey(name: "coupon_name")
+  String? get couponname => throw _privateConstructorUsedError;
   @JsonKey(name: "type_data")
   String? get typeData => throw _privateConstructorUsedError;
   @JsonKey(name: "updated_at")
@@ -6035,7 +6673,7 @@ abstract class $VariantModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      String? barcode,
+      Barcode? barcode,
       @JsonKey(name: "variant_id") int? variantId,
       @JsonKey(name: "buy_more_id") int? buyMoreId,
       @JsonKey(name: "variant_code") String? variantCode,
@@ -6044,10 +6682,13 @@ abstract class $VariantModelCopyWith<$Res> {
       @JsonKey(name: "buy_more_line_code") String? buyMoreLineCode,
       @JsonKey(name: "coupon_line_code") String? couponLineCode,
       @JsonKey(name: "offer_name") String? offerName,
+      @JsonKey(name: "coupon_name") String? couponname,
       @JsonKey(name: "type_data") String? typeData,
       @JsonKey(name: "updated_at") String? updatedAt,
       @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
+
+  $BarcodeCopyWith<$Res>? get barcode;
 }
 
 /// @nodoc
@@ -6073,6 +6714,7 @@ class _$VariantModelCopyWithImpl<$Res, $Val extends VariantModel>
     Object? buyMoreLineCode = freezed,
     Object? couponLineCode = freezed,
     Object? offerName = freezed,
+    Object? couponname = freezed,
     Object? typeData = freezed,
     Object? updatedAt = freezed,
     Object? updateCheck = freezed,
@@ -6086,7 +6728,7 @@ class _$VariantModelCopyWithImpl<$Res, $Val extends VariantModel>
       barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Barcode?,
       variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
@@ -6119,6 +6761,10 @@ class _$VariantModelCopyWithImpl<$Res, $Val extends VariantModel>
           ? _value.offerName
           : offerName // ignore: cast_nullable_to_non_nullable
               as String?,
+      couponname: freezed == couponname
+          ? _value.couponname
+          : couponname // ignore: cast_nullable_to_non_nullable
+              as String?,
       typeData: freezed == typeData
           ? _value.typeData
           : typeData // ignore: cast_nullable_to_non_nullable
@@ -6137,6 +6783,18 @@ class _$VariantModelCopyWithImpl<$Res, $Val extends VariantModel>
               as bool?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BarcodeCopyWith<$Res>? get barcode {
+    if (_value.barcode == null) {
+      return null;
+    }
+
+    return $BarcodeCopyWith<$Res>(_value.barcode!, (value) {
+      return _then(_value.copyWith(barcode: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -6149,7 +6807,7 @@ abstract class _$$_VariantModelCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      String? barcode,
+      Barcode? barcode,
       @JsonKey(name: "variant_id") int? variantId,
       @JsonKey(name: "buy_more_id") int? buyMoreId,
       @JsonKey(name: "variant_code") String? variantCode,
@@ -6158,10 +6816,14 @@ abstract class _$$_VariantModelCopyWith<$Res>
       @JsonKey(name: "buy_more_line_code") String? buyMoreLineCode,
       @JsonKey(name: "coupon_line_code") String? couponLineCode,
       @JsonKey(name: "offer_name") String? offerName,
+      @JsonKey(name: "coupon_name") String? couponname,
       @JsonKey(name: "type_data") String? typeData,
       @JsonKey(name: "updated_at") String? updatedAt,
       @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
+
+  @override
+  $BarcodeCopyWith<$Res>? get barcode;
 }
 
 /// @nodoc
@@ -6185,6 +6847,7 @@ class __$$_VariantModelCopyWithImpl<$Res>
     Object? buyMoreLineCode = freezed,
     Object? couponLineCode = freezed,
     Object? offerName = freezed,
+    Object? couponname = freezed,
     Object? typeData = freezed,
     Object? updatedAt = freezed,
     Object? updateCheck = freezed,
@@ -6198,7 +6861,7 @@ class __$$_VariantModelCopyWithImpl<$Res>
       barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Barcode?,
       variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
@@ -6230,6 +6893,10 @@ class __$$_VariantModelCopyWithImpl<$Res>
       offerName: freezed == offerName
           ? _value.offerName
           : offerName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      couponname: freezed == couponname
+          ? _value.couponname
+          : couponname // ignore: cast_nullable_to_non_nullable
               as String?,
       typeData: freezed == typeData
           ? _value.typeData
@@ -6265,6 +6932,7 @@ class _$_VariantModel implements _VariantModel {
       @JsonKey(name: "buy_more_line_code") this.buyMoreLineCode,
       @JsonKey(name: "coupon_line_code") this.couponLineCode,
       @JsonKey(name: "offer_name") this.offerName,
+      @JsonKey(name: "coupon_name") this.couponname,
       @JsonKey(name: "type_data") this.typeData,
       @JsonKey(name: "updated_at") this.updatedAt,
       @JsonKey(name: "updateCheck", defaultValue: false) this.updateCheck,
@@ -6276,7 +6944,7 @@ class _$_VariantModel implements _VariantModel {
   @override
   final int? id;
   @override
-  final String? barcode;
+  final Barcode? barcode;
   @override
   @JsonKey(name: "variant_id")
   final int? variantId;
@@ -6302,6 +6970,9 @@ class _$_VariantModel implements _VariantModel {
   @JsonKey(name: "offer_name")
   final String? offerName;
   @override
+  @JsonKey(name: "coupon_name")
+  final String? couponname;
+  @override
   @JsonKey(name: "type_data")
   final String? typeData;
   @override
@@ -6316,7 +6987,7 @@ class _$_VariantModel implements _VariantModel {
 
   @override
   String toString() {
-    return 'VariantModel(id: $id, barcode: $barcode, variantId: $variantId, buyMoreId: $buyMoreId, variantCode: $variantCode, variantName: $variantName, offerGroupCode: $offerGroupCode, buyMoreLineCode: $buyMoreLineCode, couponLineCode: $couponLineCode, offerName: $offerName, typeData: $typeData, updatedAt: $updatedAt, updateCheck: $updateCheck, isActive: $isActive)';
+    return 'VariantModel(id: $id, barcode: $barcode, variantId: $variantId, buyMoreId: $buyMoreId, variantCode: $variantCode, variantName: $variantName, offerGroupCode: $offerGroupCode, buyMoreLineCode: $buyMoreLineCode, couponLineCode: $couponLineCode, offerName: $offerName, couponname: $couponname, typeData: $typeData, updatedAt: $updatedAt, updateCheck: $updateCheck, isActive: $isActive)';
   }
 
   @override
@@ -6342,6 +7013,8 @@ class _$_VariantModel implements _VariantModel {
                 other.couponLineCode == couponLineCode) &&
             (identical(other.offerName, offerName) ||
                 other.offerName == offerName) &&
+            (identical(other.couponname, couponname) ||
+                other.couponname == couponname) &&
             (identical(other.typeData, typeData) ||
                 other.typeData == typeData) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -6366,6 +7039,7 @@ class _$_VariantModel implements _VariantModel {
       buyMoreLineCode,
       couponLineCode,
       offerName,
+      couponname,
       typeData,
       updatedAt,
       updateCheck,
@@ -6388,7 +7062,7 @@ class _$_VariantModel implements _VariantModel {
 abstract class _VariantModel implements VariantModel {
   const factory _VariantModel(
       {final int? id,
-      final String? barcode,
+      final Barcode? barcode,
       @JsonKey(name: "variant_id")
           final int? variantId,
       @JsonKey(name: "buy_more_id")
@@ -6405,6 +7079,8 @@ abstract class _VariantModel implements VariantModel {
           final String? couponLineCode,
       @JsonKey(name: "offer_name")
           final String? offerName,
+      @JsonKey(name: "coupon_name")
+          final String? couponname,
       @JsonKey(name: "type_data")
           final String? typeData,
       @JsonKey(name: "updated_at")
@@ -6420,7 +7096,7 @@ abstract class _VariantModel implements VariantModel {
   @override
   int? get id;
   @override
-  String? get barcode;
+  Barcode? get barcode;
   @override
   @JsonKey(name: "variant_id")
   int? get variantId;
@@ -6446,6 +7122,9 @@ abstract class _VariantModel implements VariantModel {
   @JsonKey(name: "offer_name")
   String? get offerName;
   @override
+  @JsonKey(name: "coupon_name")
+  String? get couponname;
+  @override
   @JsonKey(name: "type_data")
   String? get typeData;
   @override
@@ -6461,4 +7140,182 @@ abstract class _VariantModel implements VariantModel {
   @JsonKey(ignore: true)
   _$$_VariantModelCopyWith<_$_VariantModel> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+ViewAllProductsVariantModel _$ViewAllProductsVariantModelFromJson(
+    Map<String, dynamic> json) {
+  return _ViewAllProductsVariantModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ViewAllProductsVariantModel {
+  @JsonKey(name: "variant_id")
+  int? get variantId => throw _privateConstructorUsedError;
+  @JsonKey(name: "type_data")
+  String? get typeData => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ViewAllProductsVariantModelCopyWith<ViewAllProductsVariantModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ViewAllProductsVariantModelCopyWith<$Res> {
+  factory $ViewAllProductsVariantModelCopyWith(
+          ViewAllProductsVariantModel value,
+          $Res Function(ViewAllProductsVariantModel) then) =
+      _$ViewAllProductsVariantModelCopyWithImpl<$Res,
+          ViewAllProductsVariantModel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: "variant_id") int? variantId,
+      @JsonKey(name: "type_data") String? typeData});
+}
+
+/// @nodoc
+class _$ViewAllProductsVariantModelCopyWithImpl<$Res,
+        $Val extends ViewAllProductsVariantModel>
+    implements $ViewAllProductsVariantModelCopyWith<$Res> {
+  _$ViewAllProductsVariantModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variantId = freezed,
+    Object? typeData = freezed,
+  }) {
+    return _then(_value.copyWith(
+      variantId: freezed == variantId
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      typeData: freezed == typeData
+          ? _value.typeData
+          : typeData // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ViewAllProductsVariantModelCopyWith<$Res>
+    implements $ViewAllProductsVariantModelCopyWith<$Res> {
+  factory _$$_ViewAllProductsVariantModelCopyWith(
+          _$_ViewAllProductsVariantModel value,
+          $Res Function(_$_ViewAllProductsVariantModel) then) =
+      __$$_ViewAllProductsVariantModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: "variant_id") int? variantId,
+      @JsonKey(name: "type_data") String? typeData});
+}
+
+/// @nodoc
+class __$$_ViewAllProductsVariantModelCopyWithImpl<$Res>
+    extends _$ViewAllProductsVariantModelCopyWithImpl<$Res,
+        _$_ViewAllProductsVariantModel>
+    implements _$$_ViewAllProductsVariantModelCopyWith<$Res> {
+  __$$_ViewAllProductsVariantModelCopyWithImpl(
+      _$_ViewAllProductsVariantModel _value,
+      $Res Function(_$_ViewAllProductsVariantModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? variantId = freezed,
+    Object? typeData = freezed,
+  }) {
+    return _then(_$_ViewAllProductsVariantModel(
+      variantId: freezed == variantId
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      typeData: freezed == typeData
+          ? _value.typeData
+          : typeData // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ViewAllProductsVariantModel implements _ViewAllProductsVariantModel {
+  const _$_ViewAllProductsVariantModel(
+      {@JsonKey(name: "variant_id") this.variantId,
+      @JsonKey(name: "type_data") this.typeData});
+
+  factory _$_ViewAllProductsVariantModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ViewAllProductsVariantModelFromJson(json);
+
+  @override
+  @JsonKey(name: "variant_id")
+  final int? variantId;
+  @override
+  @JsonKey(name: "type_data")
+  final String? typeData;
+
+  @override
+  String toString() {
+    return 'ViewAllProductsVariantModel(variantId: $variantId, typeData: $typeData)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ViewAllProductsVariantModel &&
+            (identical(other.variantId, variantId) ||
+                other.variantId == variantId) &&
+            (identical(other.typeData, typeData) ||
+                other.typeData == typeData));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, variantId, typeData);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ViewAllProductsVariantModelCopyWith<_$_ViewAllProductsVariantModel>
+      get copyWith => __$$_ViewAllProductsVariantModelCopyWithImpl<
+          _$_ViewAllProductsVariantModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ViewAllProductsVariantModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ViewAllProductsVariantModel
+    implements ViewAllProductsVariantModel {
+  const factory _ViewAllProductsVariantModel(
+          {@JsonKey(name: "variant_id") final int? variantId,
+          @JsonKey(name: "type_data") final String? typeData}) =
+      _$_ViewAllProductsVariantModel;
+
+  factory _ViewAllProductsVariantModel.fromJson(Map<String, dynamic> json) =
+      _$_ViewAllProductsVariantModel.fromJson;
+
+  @override
+  @JsonKey(name: "variant_id")
+  int? get variantId;
+  @override
+  @JsonKey(name: "type_data")
+  String? get typeData;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ViewAllProductsVariantModelCopyWith<_$_ViewAllProductsVariantModel>
+      get copyWith => throw _privateConstructorUsedError;
 }

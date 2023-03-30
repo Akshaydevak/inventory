@@ -148,18 +148,12 @@ class _PromotionTabScreenTabState extends State<PromotionTabScreenTab>with Ticke
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-
                             DiscountMainScreen(),
                             SalesMainScreen(),
                             PromotionBuyMoreMainScreen(),
                             PromotionBogoMnainScreen(),
                             PromotionCouponMainPAge(),
                             PromotionMultibuyMainScreen(),
-
-
-
-
-
                           ],
                         ),
                       ),

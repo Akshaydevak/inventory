@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/promotiontab/muttibuy/cubit/read/read_multibuy_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
@@ -92,7 +93,20 @@ class SegmentMultibuyGrowableTableState extends State<SegmentMultibuyGrowableTab
     // }
     // onChange=false;
     return
-      Builder(
+      BlocConsumer<ReadMultibuyCubit, ReadMultibuyState>(
+  listener: (context, state) {
+    state.maybeWhen(
+        orElse: () {},
+        error: () {
+          print("error");
+        },
+        success: (data) {
+          data.segments != null ? table =List.from( data?.segments ?? []) : table = [];
+
+        });
+  },
+  builder: (context, state) {
+    return Builder(
           builder: (context) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -468,5 +482,7 @@ class SegmentMultibuyGrowableTableState extends State<SegmentMultibuyGrowableTab
             );
           }
       );
+  },
+);
   }
 }

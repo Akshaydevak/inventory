@@ -48,6 +48,7 @@ class PromotionDiscountReadModel with _$PromotionDiscountReadModel{
     final String? code,
     final String? title,
     final List<Segment>? segments,
+    @JsonKey(name: "available_customer_groups") final List<AvailableCustomerGroups>? availableCustomerGroups,
     @JsonKey(name: "offer_period_name") final String? offerPeriodName,
     @JsonKey(name: "offer_group_name") final String? offerGroupName,
     @JsonKey(name: "inventory_id") final String? inventoryId,
@@ -172,6 +173,27 @@ class VariantsLinesDiscount with _$VariantsLinesDiscount{
   }) = _VariantsLinesDiscount;
   factory VariantsLinesDiscount.fromJson(Map<String, dynamic> json) =>
       _$VariantsLinesDiscountFromJson(json);
+
+
+
+
+}
+
+@freezed
+class CustomerGroupModel with _$CustomerGroupModel{
+  const factory CustomerGroupModel({
+    final int? id,
+    final String? name,
+    final String? code,
+
+
+
+
+
+
+  }) = _CustomerGroupModel;
+  factory CustomerGroupModel.fromJson(Map<String, dynamic> json) =>
+      _$CustomerGroupModelFromJson(json);
 
 
 

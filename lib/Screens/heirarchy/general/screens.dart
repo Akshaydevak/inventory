@@ -1576,22 +1576,16 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
     ),
                     ),
                     TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
+                        verticalAlignment: TableCellVerticalAlignment.middle,
 
-                      child:UnderLinedInput(
-                        readOnly: true,
-                        controller: type,
-                        formatter: false,
-                        onChanged: (va){
-                          print(va);
-                          // name.text=va;
-                          // setState(() {
-                          //
-                          // });
+                        child:textPadding(type?.text??"",
+                          fontSize: 12,
+                          padding: EdgeInsets.only(left: 1.5, top: 1.5),)
 
-                        },
-                      ),
+
+
                     ),
+
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
 

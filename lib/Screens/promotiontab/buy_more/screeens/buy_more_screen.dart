@@ -10,6 +10,7 @@ import 'package:inventory/Screens/promotiontab/buy_more/model/create_model.dart'
 import 'package:inventory/Screens/promotiontab/buy_more/screeens/buy_more_variant_list.dart';
 import 'package:inventory/Screens/promotiontab/buy_more/screeens/buymore_stable_table.dart';
 import 'package:inventory/Screens/promotiontab/buy_more/screeens/buymoresegmentscreen.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/discount/screens/segment_table.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
@@ -67,6 +68,17 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical=0;
   List<OfferPeriodList> result = [];
+  List<AvailableCustomerGroups> customerGroup=[];
+  void customGroupListAssign(List<AvailableCustomerGroups> customerGroupList){
+
+
+
+    setState(() {
+      customerGroup=List.from(customerGroupList);
+      print(customerGroup);
+
+    });
+  }
 
   segmentCleartymVariantAdd(){
     if(select==false){
@@ -174,6 +186,8 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
     buyMoreApplyingPlaceCodeController.text="";
     buyMoreCodeController.text="";
     imageController.text="";
+    customerGroup.clear();
+    customerGroup.clear();
     buyMoreApplyingOnController.text="";
     buyMoreApplyingNameController.text="";
     maximumCountController.clear();
@@ -182,6 +196,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
     offerPeriodIdController.text="";
     offerPeriodNameController.text="";
     offerGroupNameController.text="";
+    variantTable2.clear();
     buyMoreApplyingNameCodeController.text="";
     offerGroupIdController.text="";
     imageNameController.text="";
@@ -235,52 +250,53 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
         });
       },
     ),
-    BlocListener<ReadBuyMoreCubit, ReadBuyMoreState>(
-      listener: (context, state) {
-        print("state++++++++++++++++++++++++++++++++");
-        state.maybeWhen(
-            orElse: () {},
-            error: () {
-              print("error");
-            },
-            success: (data) {
-              setState(() {
-                print(data);
-
-                titleController.text=data.title??"";
-                descriptionController.text=data.description??"";
-                imageController.text=data?.image??"";
-                imageNameController.text=data?.image??"";
-                basedOnController.text=data.basedOn??"";
-                buyMoreApplyingPlaceController.text=data.offerAppliedTo??"";
-
-                buyMoreApplyingPlaceIdController.text=data.offerAppliedToId.toString()??"";
-                buyMoreApplyingPlaceCodeController.text=data.offerAppliedToCode.toString()??"";
-                buyMoreCodeController.text=data.buyMoreCode.toString()??"";
-                imageController.text=data.image.toString()??"";
-                buyMoreApplyingOnController.text=data.buyMoreApplyingOn??"";
-                buyMoreApplyingNameController.text=data.buyMoreApplyingOnName??"";
-                buyMoreApplyingNameCodeController.text=data.buyMoreApplyingOnCode??"";
-                maximumCountController.text=data.maximumCount==null?"":data.maximumCount?.toString()??"";
-                buyMoreApplyingNameIdController.text=data.buyMoreApplyingOnId.toString()??"";
-                offerPeriodIdController.text=data?.offerPeriodId.toString()??"";
-                offerGroupIdController.text=data?.offerGroupId.toString()??"";
-                offerGroupNameController.text=data?.offerGroupName.toString()??"";
-                offerPeriodNameController.text=data?.offerPeriodName.toString()??"";
-
-                isAvailableForAll=data.isAvailableForAll??false;
-              ;
-                isActive=data.isActive??false;
-                data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
-                data.countPricePercentage != null ? countTable =List.from( data?.countPricePercentage ?? []) : countTable = [];
-                data.lines != null ? variantTable =List.from( data?.lines ?? []) : variantTable = [];
-                data.lines != null ? variantTable2 =List.from( data?.lines ?? []) : variantTable2 = [];
-
-
-              });
-            });
-      },
-    ),
+    // BlocListener<ReadBuyMoreCubit, ReadBuyMoreState>(
+    //   listener: (context, state) {
+    //     print("state++++++++++++++++++++++++++++++++");
+    //     state.maybeWhen(
+    //         orElse: () {},
+    //         error: () {
+    //           print("error");
+    //         },
+    //         success: (data) {
+    //           setState(() {
+    //             print(data);
+    //
+    //             titleController.text=data.title??"";
+    //             descriptionController.text=data.description??"";
+    //             imageController.text=data?.image??"";
+    //             imageNameController.text=data?.image??"";
+    //             basedOnController.text=data.basedOn??"";
+    //             buyMoreApplyingPlaceController.text=data.offerAppliedTo??"";
+    //
+    //             buyMoreApplyingPlaceIdController.text=data.offerAppliedToId.toString()??"";
+    //             buyMoreApplyingPlaceCodeController.text=data.offerAppliedToCode.toString()??"";
+    //             buyMoreCodeController.text=data.buyMoreCode.toString()??"";
+    //             imageController.text=data.image.toString()??"";
+    //             buyMoreApplyingOnController.text=data.buyMoreApplyingOn??"";
+    //             buyMoreApplyingNameController.text=data.buyMoreApplyingOnName??"";
+    //             buyMoreApplyingNameCodeController.text=data.buyMoreApplyingOnCode??"";
+    //             maximumCountController.text=data.maximumCount==null?"":data.maximumCount?.toString()??"";
+    //             buyMoreApplyingNameIdController.text=data.buyMoreApplyingOnId.toString()??"";
+    //             offerPeriodIdController.text=data?.offerPeriodId.toString()??"";
+    //             offerGroupIdController.text=data?.offerGroupId.toString()??"";
+    //             offerGroupNameController.text=data?.offerGroupName.toString()??"";
+    //             offerPeriodNameController.text=data?.offerPeriodName.toString()??"";
+    //
+    //             isAvailableForAll=data.isAvailableForAll??false;
+    //           ;
+    //             isActive=data.isActive??false;
+    //             data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
+    //             data.countPricePercentage != null ? countTable =List.from( data?.countPricePercentage ?? []) : countTable = [];
+    //             data.availableCustomerGroups != null ? customerGroup =List.from( data?.availableCustomerGroups ?? []) : customerGroup = [];
+    //             data.lines != null ? variantTable =List.from( data?.lines ?? []) : variantTable = [];
+    //             data.lines != null ? variantTable2 =List.from( data?.lines ?? []) : variantTable2 = [];
+    //
+    //
+    //           });
+    //         });
+    //   },
+    // ),
     BlocListener<DeleteOfferPeriodCubit, DeleteOfferPeriodState>(
       listener: (context, state) {
         state.maybeWhen(orElse: () {
@@ -399,7 +415,54 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
     ),
 
   ],
-  child: BlocConsumer<BuyMoreVerticalListCubit, BuyMoreVerticalListState>(
+  child: BlocConsumer<ReadBuyMoreCubit, ReadBuyMoreState>(
+  listener: (context, state) {
+    print("state++++++++++++++++++++++++++++++++");
+    state.maybeWhen(
+        orElse: () {},
+        error: () {
+          print("error");
+        },
+        success: (data) {
+
+            print(data);
+
+            titleController.text=data.title??"";
+            descriptionController.text=data.description??"";
+            imageController.text=data?.image??"";
+            imageNameController.text=data?.image??"";
+            basedOnController.text=data.basedOn??"";
+            buyMoreApplyingPlaceController.text=data.offerAppliedTo??"";
+
+            buyMoreApplyingPlaceIdController.text=data.offerAppliedToId.toString()??"";
+            buyMoreApplyingPlaceCodeController.text=data.offerAppliedToCode.toString()??"";
+            buyMoreCodeController.text=data.buyMoreCode.toString()??"";
+            imageController.text=data.image.toString()??"";
+            buyMoreApplyingOnController.text=data.buyMoreApplyingOn??"";
+            buyMoreApplyingNameController.text=data.buyMoreApplyingOnName??"";
+            buyMoreApplyingNameCodeController.text=data.buyMoreApplyingOnCode??"";
+            maximumCountController.text=data.maximumCount==null?"":data.maximumCount?.toString()??"";
+            buyMoreApplyingNameIdController.text=data.buyMoreApplyingOnId.toString()??"";
+            offerPeriodIdController.text=data?.offerPeriodId.toString()??"";
+            offerGroupIdController.text=data?.offerGroupId.toString()??"";
+            offerGroupNameController.text=data?.offerGroupName.toString()??"";
+            offerPeriodNameController.text=data?.offerPeriodName.toString()??"";
+
+            isAvailableForAll=data.isAvailableForAll??false;
+            ;
+            isActive=data.isActive??false;
+            data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
+            data.countPricePercentage != null ? countTable =List.from( data?.countPricePercentage ?? []) : countTable = [];
+            data.availableCustomerGroups != null ? customerGroup =List.from( data?.availableCustomerGroups ?? []) : customerGroup = [];
+            data.lines != null ? variantTable =List.from( data?.lines ?? []) : variantTable = [];
+            data.lines != null ? variantTable2 =List.from( data?.lines ?? []) : variantTable2 = [];
+
+
+
+        });
+  },
+  builder: (context, state) {
+    return BlocConsumer<BuyMoreVerticalListCubit, BuyMoreVerticalListState>(
   listener: (context, state) {
     state.maybeWhen(
         orElse: () {},
@@ -412,12 +475,13 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
 
           result = list.data;
           print("seee"+result.toString());
-          setState(() {
+         
             if(result.isNotEmpty){
               if(select){  veritiaclid=result[result.length-1].id;
+                selectedVertical=result.length-1;
               context.read<ReadBuyMoreCubit>().getBuyMoreRead(veritiaclid!);}
               else{
-                veritiaclid=result[0].id;
+                veritiaclid=result[0].id;selectedVertical=0;
                 context.read<ReadBuyMoreCubit>().getBuyMoreRead(veritiaclid!);
               }
 
@@ -428,15 +492,14 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
               print("common");
               select=true;
               clear();
-              setState(() {
-              });
+
 
             }
 
 
-            setState(() {});
 
-          });
+
+
         });
   },
   builder: (context, state) {
@@ -584,7 +647,8 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                          image: imageController,
                         isAvailableForAll: isAvailableForAll,
                         availableCustomerGroups: availableCustomerGroupsController,
-                        isActive: isActive,
+                        isActive: isActive, customerGroupList: customerGroup,
+                        customGroupListAssign: customGroupListAssign,
                       ),
                       SizedBox(height: height*.06,),
                       CountBuyMoreGrowableTable(updation: countTableAssign,
@@ -595,6 +659,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                       SizedBox(height: height*.06,), 
                       BuyMoreVariantGrowableTable(
                         select:select,
+
                     key:_myWidgetState,
                     segmentList: segmentTable,
                     applyingTypeCode: buyMoreApplyingNameCodeController?.text??"",
@@ -646,9 +711,9 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                               if(variantTable[i].isActive==true){
                                 lines1.add(VariantModel(
                                   variantName:variantTable[i].variantName??"",
-                                  variantId: variantTable[i].id,
+                                  variantId: variantTable[i].variantId,
                                   variantCode: variantTable[i].variantCode,
-                                  barcode: variantTable[i].barcode.toString()
+                                  barcode: variantTable[i].barcode
 
                                 ));
                               }
@@ -689,7 +754,7 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
                             title: titleController.text,
                             description: descriptionController.text,
                             isAvailableForAll: isAvailableForAll,
-                            availableCustomerGroups: [],
+                            availableCustomerGroups: isAvailableForAll?[]:customerGroup,
                             countPricePercentage: countTable1??[],
                             image: imageController.text,
                             basedOn: basedOnController.text,
@@ -734,6 +799,8 @@ class _PromotionBuyMoreMainScreenState extends State<PromotionBuyMoreMainScreen>
         );
       }
     );
+  },
+);
   },
 ),
 ),

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 
 part 'offer_period_list.freezed.dart';
 part 'offer_period_list.g.dart';
@@ -12,6 +13,7 @@ class OfferPeriodList with _$OfferPeriodList{
     @JsonKey(name: "offer_period_code") final String? offerPeriodCode,
     @JsonKey(name: "buy_more_code") final String? buyMoreCode,
     @JsonKey(name: "bogo_code") final String? bogoCode,
+    @JsonKey(name: "multi_code") final String? multiCode,
 
   }) = _OfferPeriodList;
   factory OfferPeriodList.fromJson(Map<String, dynamic> json) =>
@@ -124,6 +126,7 @@ class listAllSalesApis with _$listAllSalesApis {
     @JsonKey(name: "coupon_applying_to")final List<String>? couponApplyingTo,
     @JsonKey(name: "coupon_applying_on")final List<String>? couponApplyingOn,
     @JsonKey(name: "coupon_based_on")final List<String>? couponBasedOn,
+    @JsonKey(name: "multibuy_applied_to")final List<String>? multiBuyAppliedTo,
 
   }) = _listAllSalesApis;
   factory listAllSalesApis.fromJson(Map<String, dynamic> json) =>
@@ -148,7 +151,7 @@ class PromotionSaleCreateModel with _$PromotionSaleCreateModel {
     @JsonKey(name: "sales_applying_on_id")final int? salesApplyingOnId,
     @JsonKey(name: "sales_applying_place_code")final String? salesApplyingPlaceCode,
     @JsonKey(name: "sales_applying_place_name")final String? salesApplyingPlaceName,
-    @JsonKey(name: "available_customer_groups")final String? availableCustomerGroup,
+    @JsonKey(name: "available_customer_groups")final List<AvailableCustomerGroups>? availableCustomerGroups,
     @JsonKey(name: "sales_applying_on")final String? salesApplyingOn,
 
     @JsonKey(name: "offer_applied_to_code")final String? offerAppliedToCode,
@@ -180,12 +183,43 @@ class SaleLines with _$SaleLines{
     @JsonKey(name: "offer_group_code") final String? offerGroupCode,
     @JsonKey(name: "offer_name") final String? offerName,
     @JsonKey(name: "type_data") final String? typeData,
+    @JsonKey(name: "coupon_name") final String? couponname,
     @JsonKey(name: "updateCheck",defaultValue: false) final bool? updateCheck,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
 
   }) = _SaleLines;
   factory SaleLines.fromJson(Map<String, dynamic> json) =>
       _$SaleLinesFromJson(json);
+
+
+
+
+}
+
+
+
+@freezed
+class MultibuyVariantListModel with _$MultibuyVariantListModel{
+  const factory MultibuyVariantListModel({
+    final int? id,
+    final Barcode? barcode,
+    final int? quantity,
+
+    @JsonKey(name: "variant_id") final int? variantId,
+    @JsonKey(name: "multi_buy_line_code") final String? multiBuyLineCode,
+    @JsonKey(name: "type_entry") final String? typeEntry,
+    @JsonKey(name: "variant_code") final String? variantCode,
+    @JsonKey(name: "variant_name") final String? variantName,
+    @JsonKey(name: "uom_name") final String? uomName,
+    @JsonKey(name: "unit_cost") final double? unitCost,
+    @JsonKey(name: "image1") final String? image1,
+
+    @JsonKey(name: "updateCheck",defaultValue: false) final bool? updateCheck,
+    @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
+
+  }) = _MultibuyVariantListModel;
+  factory MultibuyVariantListModel.fromJson(Map<String, dynamic> json) =>
+      _$MultibuyVariantListModelFromJson(json);
 
 
 
@@ -205,12 +239,14 @@ class PromotionSaleReadModel with _$PromotionSaleReadModel{
     @JsonKey(name: "discount_percentage_or_price") final double? discountPercentage,
     @JsonKey(name: "inventory_id") final String? inventoryId,
     @JsonKey(name: "sale_code") final String? saleCode,
+    @JsonKey(name: "offer_period_name") final String? offerPeriodname,
     @JsonKey(name: "created_at") final String? createdAt,
     @JsonKey(name: "sales_applying_place_code") final String? salesApplyingPlaceCode,
     @JsonKey(name: "sales_applying_place_name") final String? salesApplyingPlaceName,
     @JsonKey(name: "sales_applying_place_id") final int? salesApplyingPlaceId,
     @JsonKey(name: "sales_applying_on") final String? salesApplyingOn,
     @JsonKey(name: "based_on") final String? basedOn,
+    @JsonKey(name: "available_customer_groups") final List<AvailableCustomerGroups>? availableCustomerGroups,
     @JsonKey(name: "sales_applying_on_name") final String? salesApplyingOnName,
     @JsonKey(name: "sales_applying_place") final String? salesApplyingPlace,
     @JsonKey(name: "sales_applying_on_id") final int? salesApplyingOnId,
@@ -316,7 +352,7 @@ class  PromotionVariantPostModel with _$PromotionVariantPostModel{
 class VariantModel with _$VariantModel{
   const factory VariantModel({
     final int? id,
-    final String? barcode,
+    final Barcode? barcode,
 
     @JsonKey(name: "variant_id") final int? variantId,
     @JsonKey(name: "buy_more_id") final int? buyMoreId,
@@ -326,6 +362,7 @@ class VariantModel with _$VariantModel{
     @JsonKey(name: "buy_more_line_code") final String? buyMoreLineCode,
     @JsonKey(name: "coupon_line_code") final String? couponLineCode,
     @JsonKey(name: "offer_name") final String? offerName,
+    @JsonKey(name: "coupon_name") final String? couponname,
     @JsonKey(name: "type_data") final String? typeData,
     @JsonKey(name: "updated_at") final String? updatedAt,
 
@@ -335,6 +372,23 @@ class VariantModel with _$VariantModel{
   }) = _VariantModel;
   factory VariantModel.fromJson(Map<String, dynamic> json) =>
       _$VariantModelFromJson(json);
+
+
+
+
+}
+
+
+@freezed
+class ViewAllProductsVariantModel with _$ViewAllProductsVariantModel{
+  const factory ViewAllProductsVariantModel({
+    @JsonKey(name: "variant_id") final int? variantId,
+    @JsonKey(name: "type_data") final String? typeData,
+
+
+  }) = _ViewAllProductsVariantModel;
+  factory ViewAllProductsVariantModel.fromJson(Map<String, dynamic> json) =>
+      _$ViewAllProductsVariantModelFromJson(json);
 
 
 

@@ -81,7 +81,7 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
 
 
                           Container(
-                            width:MediaQuery.of(context).size.width/1.8,
+                            width:MediaQuery.of(context).size.width/1.6,
                             padding: EdgeInsets.only(top: height*.04),
                             height: height*.18,
 

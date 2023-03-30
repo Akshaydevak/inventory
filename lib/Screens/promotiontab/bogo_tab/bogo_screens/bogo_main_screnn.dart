@@ -10,6 +10,7 @@ import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_read/bogo_rea
 import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_verticallist/bogo_vertical_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/create_bogo_cubit.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/model/bogo_creation_model.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
@@ -23,7 +24,7 @@ import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 
 class PromotionBogoMnainScreen extends StatefulWidget {
-  const PromotionBogoMnainScreen({Key? key}) : super(key: key);
+  const   PromotionBogoMnainScreen({Key? key}) : super(key: key);
 
   @override
   State<PromotionBogoMnainScreen> createState() => _PromotionBogoMnainScreenState();
@@ -76,6 +77,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
     bogoApplyingPlaceCodeController.text="";
     bogoApplyingNameController.text="";
     bogoCodeController.text="";
+    variantTable2.clear();
     descriptionController.text="";
     imageController.text="";
     imageNameController.text="";
@@ -89,12 +91,24 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
     bogoApplyingNameCodeController.text="";
     bogoApplyingNameIdController.text="";
     variantTable.clear();
+    variantTable2.clear();
     _variantState?.currentState!.clear();
     _segmnetState?.currentState!.clears();
     segmentTable.clear();
     isAvailbaleForAll=true;
     isActive=false;
     isSegmentClear=false;
+    });
+  }
+  List<AvailableCustomerGroups> customerGroup=[];
+  void customGroupListAssign(List<AvailableCustomerGroups> customerGroupList){
+
+
+
+    setState(() {
+      customerGroup=List.from(customerGroupList);
+      print(customerGroup);
+
     });
   }
   segmentCleartymVariantAdd(){
@@ -253,6 +267,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                 isActive=data.isActive??false;
                 data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
                 data.lines != null ? variantTable =List.from( data?.lines ?? []) : variantTable = [];
+                data.availableCustomerGroups != null ? customerGroup =List.from( data?.availableCustomerGroups ?? []) : customerGroup = [];
                 data.lines != null ? variantTable2 =List.from( data?.lines ?? []) : variantTable2 = [];
 
 
@@ -365,6 +380,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
           print("checkingdata" + data.data1.toString());
           if (data.data1) {
             context.showSnackBarSuccess(data.data2);
+            isSegmentClear=false;
             // clear();
 
             context.read<BogoVerticalListCubit>().getBogoVerticalList();
@@ -539,6 +555,8 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                         updation: tableAssign),
                     SizedBox(height: height*.04,),
                     PromotionBogoStableTable(
+                      customGroupListAssign: customGroupListAssign,
+                      customerGroupList: customerGroup,
                       isActive: isActive,
                       select: select,
                       imageName: imageNameController,
@@ -591,9 +609,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                             context,
                             LogoutPopup(
                               message: "Do you want to delete the order",
-                              // table:table,
-                              // clear:clear(),
-                              // verticalId: veritiaclid,
+
                               onPressed: () {
                                 print("akshay");
                                 Navigator.pop(context);
@@ -621,9 +637,9 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                             if(variantTable[i].isActive==true){
                               lines1.add(VariantModel(
                                   variantName:variantTable[i].variantName??"",
-                                  variantId: variantTable[i].id,
+                                  variantId: variantTable[i].variantId,
                                   variantCode: variantTable[i].variantCode,
-                                  barcode: variantTable[i].barcode.toString()
+                                  barcode: variantTable[i].barcode,
 
                               ));
                             }
@@ -657,7 +673,7 @@ class _PromotionBogoMnainScreenState extends State<PromotionBogoMnainScreen> {
                           buyCount: int.tryParse(buyCountController.text),
                           maximumCount: int.tryParse(maximumCountController.text),
                           isAvailableForAll: isAvailbaleForAll,
-                          availableCustomerGroups:[],
+                          availableCustomerGroups:isAvailbaleForAll?[]:customerGroup,
                           image: imageController.text,
                           bogoApplyingOn: bogoApplyingOnController.text,
                           bogoApplyingOnName: bogoApplyingNameController.text,

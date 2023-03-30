@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
@@ -24,6 +25,7 @@ class PromotionSaleStableTable extends StatefulWidget {
   final TextEditingController saleApplyingPlaceCode;
   final TextEditingController title;
   final TextEditingController description;
+  final TextEditingController imageName;
   final TextEditingController image;
   final TextEditingController offerGroupName;
   final TextEditingController offerPeriodName;
@@ -39,8 +41,10 @@ class PromotionSaleStableTable extends StatefulWidget {
   final TextEditingController availableCustomerGroup;
   final TextEditingController priority;
  final List<Segment> table;
+ final List<AvailableCustomerGroups> customerGroupList;
  final Function activeChange;
  final Function variantTableDatsClear;
+ final Function customGroupListAssign;
 
 
 
@@ -63,7 +67,7 @@ class PromotionSaleStableTable extends StatefulWidget {
 
   PromotionSaleStableTable({
 
-    required this.salesCode,required this.table,required this.activeChange, required this.offerPeriod, required this.offerGroup, required this.saleApplyingPlace, required this.saleApplyingPlaceName, required this.title, required this.description, required this.image, required this.basedOn, required this.discountPercenagePrice, required this.totalprice, required this.saleApplyingOn, required this.saleApplyingName, required this.maximumCount, required this.availableCustomerGroup, required this.priority, required this.isAvailableforAll, required this.overridePriority, required this.isAdminBased, required this.isActive, required this.saleApplyingId, required this.saleApplyingCode, required this.saleApplyingPlaceId, required this.saleApplyingPlaceCode, required this.offerGroupName, required this.offerPeriodName, required this.select, required this.variantTableDatsClear});
+    required this.salesCode,required this.table,required this.activeChange, required this.offerPeriod, required this.offerGroup, required this.saleApplyingPlace, required this.saleApplyingPlaceName, required this.title, required this.description, required this.image, required this.basedOn, required this.discountPercenagePrice, required this.totalprice, required this.saleApplyingOn, required this.saleApplyingName, required this.maximumCount, required this.availableCustomerGroup, required this.priority, required this.isAvailableforAll, required this.overridePriority, required this.isAdminBased, required this.isActive, required this.saleApplyingId, required this.saleApplyingCode, required this.saleApplyingPlaceId, required this.saleApplyingPlaceCode, required this.offerGroupName, required this.offerPeriodName, required this.select, required this.variantTableDatsClear, required this.imageName, required this.customerGroupList, required this.customGroupListAssign});
   @override
   _PromotionSaleStableTableState createState() => _PromotionSaleStableTableState();
 }
@@ -135,23 +139,40 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
-                          NewInputCard(
-                              formatter: true,
+                          SelectableDropDownpopUp(
+                            label: "Sale Applying On",
+                            type:"SaleApplyingOnPromotionPopup",
+                            value: widget.saleApplyingOn.text,
+                            onSelection: (String? va) {
 
-
-
-                              controller: widget.totalprice, title: "Total Price"),
+                              setState(() {
+                                // onChange = true;
+                                widget.saleApplyingOn.text = va!;
+                                widget.saleApplyingName.text="";
+                                widget.saleApplyingCode.text="";
+                                widget.saleApplyingId.text="";
+                                widget.variantTableDatsClear();
+                              });
+                            },
+                          ),
+                          // NewInputCard(
+                          //
+                          //
+                          //
+                          //     controller: widget.saleApplyingOn, title: "Sale Applying On"),
                           SizedBox(
                             height: height * .030,
                           ),
+
                           FileUploadField(
 
-                              fileName:imageName1,
-                              fileUrl:imageName1,
+                              fileName:widget?.imageName.text??"",
+                              fileUrl:widget?.imageName.text??"",
                               onCancel: (){
 
                                 setState(() {
-                                  imageName1="";
+                                  widget?.imageName.text="";
+                                  widget?.image.text="";
                                   Variable.img1=null;
                                 });
 
@@ -209,8 +230,22 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
 
                           widget.isAvailableforAll?  SizedBox(
                             height: height * .107,
-                          ):  NewInputCard(
+                          ):   NewInputCard(
                               formatter: true,
+                              ontap: (){
+                                showDailogPopUp(
+                                  context,
+                                  ConfigurePopup(
+                                    // code: widget.veritiacalCode,
+                                    passingList:widget. customerGroupList,
+                                    listAssign: (List<AvailableCustomerGroups> list1){
+                                      widget.customGroupListAssign(list1);
+
+                                    },
+                                    type: "CustomGroupLinkedItem",
+                                  ),
+                                );
+                              },
 
                               controller: widget.availableCustomerGroup, title: "Available Customer Groups"),
 
@@ -302,30 +337,75 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                         SizedBox(
                           height: height * .030,
                         ),
-                        SelectableDropDownpopUp(
-                          label: "Sale Applying On",
-                          type:"SaleApplyingOnPromotionPopup",
-                          value: widget.saleApplyingOn.text,
-                          onSelection: (String? va) {
+                        NewInputCard(
+                          controller: widget.saleApplyingCode,
+                          icondrop: true,
+                          readOnly: true,
+                          title: "Sale Applying Name",
+                          ontap: () {
 
-                            setState(() {
-                              // onChange = true;
-                              widget.saleApplyingOn.text = va!;
-                              widget.saleApplyingName.text="";
-                              widget.saleApplyingCode.text="";
-                              widget.saleApplyingId.text="";
-                              widget.variantTableDatsClear();
-                            });
+
+                            if(widget.saleApplyingCode.text.isNotEmpty){
+                              setState(() {
+                                widget.saleApplyingName.text="";
+                                widget.saleApplyingCode.text="";
+
+                                widget.saleApplyingId.text="";
+                                widget.variantTableDatsClear();
+                              });
+
+                            }else{
+                              List<String> list=[];
+                              print("widget.table"+widget.table.toString());
+                              for (var val in widget.table){
+                                if(val.isActive==true)
+                                  list.add(val.segmentCode.toString());
+                              }
+
+                              print("sasasaaaaaaaaaaaaaa"+list.toString());
+
+                              salesOrderNamePostModel model=salesOrderNamePostModel(
+                                inventoryId: Variable.inventory_ID,
+                                searchElemet: null,
+                                type:  widget.saleApplyingOn.text,
+                                segmentList:list,
+
+                              );
+                              print(model);
+                              showDailogPopUp(
+                                context,
+                                TableConfigurePopup(
+                                  type: "SaleApplyingNamePeriodPopup",
+                                  object: model,
+                                  valueSelect: (OfferPeriodList va) {
+                                    setState(() {
+                                      widget.saleApplyingName.text=va?.name??"";
+                                      widget.saleApplyingCode.text=va?.code??"";
+                                      print("ssprint"+widget.saleApplyingCode.text.toString());
+                                      widget.saleApplyingId.text=va?.id.toString()??"";
+                                      widget.variantTableDatsClear();
+
+                                      // widget.costingName.text =
+                                      //     va.methodName ?? "";
+                                      // setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                              );
+                            }
+
                           },
                         ),
                         // NewInputCard(
                         //
-                        //
-                        //
-                        //     controller: widget.saleApplyingOn, title: "Sale Applying On"),
+                        //     controller: widget.saleApplyingName, title: "Sale Applying Name"),
                         SizedBox(
                           height: height * .030,
                         ),
+
 
                         NewInputCard(
                             formatter: true,
@@ -379,59 +459,15 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                           height: height * .030,
                         ),
                         NewInputCard(
-                          controller: widget.saleApplyingCode,
-                          icondrop: true,
-                          readOnly: true,
-                          title: "Sale Applying Name",
-                          ontap: () {
-                            List<String> list=[];
-                            print("widget.table"+widget.table.toString());
-                            for (var val in widget.table){
-                              if(val.isActive==true)
-                              list.add(val.segmentCode.toString());
-                            }
+                            formatter: true,
 
-                            print("sasasaaaaaaaaaaaaaa"+list.toString());
 
-                            salesOrderNamePostModel model=salesOrderNamePostModel(
-                              inventoryId: Variable.inventory_ID,
-                              searchElemet: null,
-                              type:  widget.saleApplyingOn.text,
-                              segmentList:list,
 
-                            );
-                            print(model);
-                            showDailogPopUp(
-                              context,
-                              TableConfigurePopup(
-                                type: "SaleApplyingNamePeriodPopup",
-                                object: model,
-                                valueSelect: (OfferPeriodList va) {
-                                  setState(() {
-                                    widget.saleApplyingName.text=va?.name??"";
-                                    widget.saleApplyingCode.text=va?.code??"";
-                                    print("ssprint"+widget.saleApplyingCode.text.toString());
-                                    widget.saleApplyingId.text=va?.id.toString()??"";
-                                    widget.variantTableDatsClear();
-
-                                    // widget.costingName.text =
-                                    //     va.methodName ?? "";
-                                    // setState(() {});
-
-                                    // onChange = true;
-                                    // orderType.text = va!;
-                                  });
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                        // NewInputCard(
-                        //
-                        //     controller: widget.saleApplyingName, title: "Sale Applying Name"),
+                            controller: widget.totalprice, title: "Total Price"),
                         SizedBox(
                           height: height * .030,
                         ),
+
                         PopUpSwitchTile(
                             value:widget?. isAvailableforAll??false,
                             title: "Is Available For All",

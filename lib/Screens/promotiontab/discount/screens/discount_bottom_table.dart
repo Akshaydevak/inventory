@@ -564,11 +564,13 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
                                                 passingList2: table[i].deletedVariants,
                                                 code:table[i].offerProductGroupCode ,
 
-                                                listAssign: (deletedlist,adedlist){
+                                                listAssign: ( List<VariantsLinesDiscount> deletedlist,List<VariantsLinesDiscount> adedlist){
                                                   // addedList.clear();
                                                   // deletedList.clear();
                                                   addedList=List.from(adedlist);
+                                                  addedList.addAll(table[i].addedVariant??[]);
                                                   deletedList=List.from(deletedlist);
+                                                  deletedList.addAll(table[i].deletedVariants??[]);
                                                   setState(() {
                                                     table[i]=table[i].copyWith(updateCheck: true,deletedVariants:deletedList,addedVariant: addedList );
                                                   });
@@ -882,7 +884,8 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
 
             },
             ),
-            ),   TableCell(
+            ),
+                              TableCell(
                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                     child:
                                     UnderLinedInput(

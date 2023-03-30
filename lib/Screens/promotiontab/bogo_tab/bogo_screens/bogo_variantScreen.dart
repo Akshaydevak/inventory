@@ -242,21 +242,14 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
                                           segmentList:list,
                                           inventoryId: Variable.inventory_ID
                                       );
-                                      showDailogPopUp(
-                                        context,
+                                      showDailogPopUp(context,
                                         TableConfigurePopup(
                                           object: model,
                                           // inventory: Variable.inventory_ID,
                                           type: "VariantListPopup",
                                           valueSelect: (SaleLines? va) {
-
-
                                             setState(() {
-                                              table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName:va?.variantName??"",updateCheck: true,barcode: va?.barcode?.barcodeNumber  );
-
-
-
-
+                                              table[i]=table[i].copyWith(variantCode:va?.variantCode??"",variantName:va?.variantName??"",updateCheck: true,barcode: va?.barcode,variantId: va?.variantId  );
                                               // orderType = va!;
                                             });
                                           },
@@ -280,7 +273,7 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
                                 TableCell(
                                     verticalAlignment: TableCellVerticalAlignment.middle,
 
-                                    child:textPadding(table[i].barcode.toString()??"")
+                                    child:textPadding(table[i].barcode?.barcodeNumber??"")
 
 
 
@@ -414,19 +407,14 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
                                       // inventory: Variable.inventory_ID,
                                       type: "VariantListPopup",
                                       valueSelect: (SaleLines? va) {
-
-
                                         setState(() {
                                           variantCode=va?.variantCode??"";
                                           variantId=va?.variantId??null;
                                           variantName=va?.variantName??"";
                                           print("barcodeeeeeeeeeeee");
-                                          print(va?.barcode?.barcodeNumber??"");
-                                          barcode=      barcode.copyWith(barcodeNumber: va?.barcode?.barcodeNumber??"");
+                                          print(variantId);
+                                          barcode= barcode.copyWith(barcodeNumber:va?.barcode?.barcodeNumber??"");
                                           saveButtonActovde(variantCode,variantName);
-
-
-
                                           // orderType = va!;
                                         });
                                       },
@@ -489,7 +477,8 @@ class BogoVariantGrowableTableState extends State<BogoVariantGrowableTable> {
                                       if(variantCode.isNotEmpty && variantName.isNotEmpty){
                                         table.add(VariantModel(
                                           variantCode: variantCode,
-                                          barcode: barcode.barcodeNumber,
+                                          barcode: barcode,
+                                          variantId: variantId,
                                           variantName: variantName.isEmpty?"":variantName,
                                           isActive: isActive,
                                         ));

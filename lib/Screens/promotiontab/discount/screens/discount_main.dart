@@ -68,6 +68,17 @@ class _DiscountMainScreenState extends State<DiscountMainScreen> {
    var list;
    List <SaleLinesDiscount>offerLines=[];
    List <SaleLinesDiscount>offerLines2=[];
+   List<AvailableCustomerGroups> customerGroup=[];
+   void customGroupListAssign(List<AvailableCustomerGroups> customerGroupList){
+
+
+
+     setState(() {
+       customerGroup=List.from(customerGroupList);
+       print(customerGroup);
+
+     });
+   }
 
 
    tableAssign(List<Segment> table1) {
@@ -134,10 +145,12 @@ offerGroupNameController.clear();
   isAvailableForAll=true;
      availableCustomerGroupController.clear();
      overidePriority=false;
+  offerLines2.clear();
    discountCodeController.clear();
       offerApplyingToCodeController.clear();
      offerApplyingToIdController.clear();
      offerGroupController.clear();
+  customerGroup.clear();
      bottomTableState.currentState?.clear();
      discountSegmnetState.currentState?.clears();
      img1=false;
@@ -393,47 +406,86 @@ offerGroupNameController.clear();
         });
       },
     ),
-    BlocListener<ReadPromotionDiscountCubit, ReadPromotionDiscountState>(
-      listener: (context, state) {
-        print("state++++++++++++++++++++++++++++++++");
-        state.maybeWhen(
-            orElse: () {},
-            error: () {
-              print("error");
-            },
-            success: (data) {
-              setState(() {
-                print("taskssss"+data.toString());
-
-                titleController.text=data.title??"";
-                offerPeriodNameController.text=data.offerPeriodName??"";
-                offerApplyingTypeController.text=data.offerAppliedTo??"";
-                offerApplyingToIdController.text=data.offerAppliedToId??"";
-                offerApplyingToCodeController.text=data.offerAppliedToCode??"";
-                discountCodeController.text=data.discountCode??"";
-                descriptionController.text=data.description??"";
-                imageController.text=data.image??"";
-                basedOnController.text=data.basedOn??"";
-                offerPeriodController.text=data.offerPeriodId.toString()??"";
-                offerGroupController.text=data.offerGroupId.toString()??"";
-                offerGroupNameController.text=data.offerGroupName??"";
-                discountPercentageOrPriceController.text=data.discountPercentageOrPrice.toString()??"";
-                isAvailableForAll=data.isAvailableForAll??false;
-                isActive=data.isActive??false;
-
-
-
-                data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
-                data.offerLines != null ? offerLines =List.from( data?.offerLines ?? []) : offerLines = [];
-                data.offerLines != null ? offerLines2 =List.from( data?.offerLines ?? []) : offerLines2 = [];
-
-              });
-            });
-      },
-    ),
+    // BlocListener<ReadPromotionDiscountCubit, ReadPromotionDiscountState>(
+    //   listener: (context, state) {
+    //     print("state++++++++++++++++++++++++++++++++");
+    //     state.maybeWhen(
+    //         orElse: () {},
+    //         error: () {
+    //           print("error");
+    //         },
+    //         success: (data) {
+    //
+    //             print("taskssss"+data.toString());
+    //
+    //             titleController.text=data.title??"";
+    //             offerPeriodNameController.text=data.offerPeriodName??"";
+    //             offerApplyingTypeController.text=data.offerAppliedTo??"";
+    //             offerApplyingToIdController.text=data.offerAppliedToId??"";
+    //             offerApplyingToCodeController.text=data.offerAppliedToCode??"";
+    //             discountCodeController.text=data.discountCode??"";
+    //             descriptionController.text=data.description??"";
+    //             imageController.text=data.image??"";
+    //             basedOnController.text=data.basedOn??"";
+    //             offerPeriodController.text=data.offerPeriodId.toString()??"";
+    //             offerGroupController.text=data.offerGroupId.toString()??"";
+    //             offerGroupNameController.text=data.offerGroupName??"";
+    //             discountPercentageOrPriceController.text=data.discountPercentageOrPrice.toString()??"";
+    //             isAvailableForAll=data.isAvailableForAll??false;
+    //             isActive=data.isActive??false;
+    //
+    //
+    //
+    //             data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
+    //             data.availableCustomerGroups != null ? customerGroup =List.from( data?.availableCustomerGroups ?? []) : customerGroup = [];
+    //             data.offerLines != null ? offerLines =List.from( data?.offerLines ?? []) : offerLines = [];
+    //             data.offerLines != null ? offerLines2 =List.from( data?.offerLines ?? []) : offerLines2 = [];
+    //
+    //
+    //         });
+    //   },
+    // ),
 
   ],
-  child: BlocConsumer<PromotionDiscountVerticalListCubit, PromotionDiscountVerticalListState>(
+  child: BlocConsumer<ReadPromotionDiscountCubit, ReadPromotionDiscountState>(
+  listener: (context, state) {
+    print("state++++++++++++++++++++++++++++++++");
+    state.maybeWhen(
+        orElse: () {},
+        error: () {
+          print("error");
+        },
+        success: (data) {
+          print("taskssss"+data.toString());
+
+          titleController.text=data.title??"";
+          offerPeriodNameController.text=data.offerPeriodName??"";
+          offerApplyingTypeController.text=data.offerAppliedTo??"";
+          offerApplyingToIdController.text=data.offerAppliedToId??"";
+          offerApplyingToCodeController.text=data.offerAppliedToCode??"";
+          discountCodeController.text=data.discountCode??"";
+          descriptionController.text=data.description??"";
+          imageController.text=data.image??"";
+          basedOnController.text=data.basedOn??"";
+          offerPeriodController.text=data.offerPeriodId.toString()??"";
+          offerGroupController.text=data.offerGroupId.toString()??"";
+          offerGroupNameController.text=data.offerGroupName??"";
+          discountPercentageOrPriceController.text=data.discountPercentageOrPrice.toString()??"";
+          isAvailableForAll=data.isAvailableForAll??false;
+          isActive=data.isActive??false;
+
+
+
+          data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
+          data.availableCustomerGroups != null ? customerGroup =List.from( data?.availableCustomerGroups ?? []) : customerGroup = [];
+          data.offerLines != null ? offerLines =List.from( data?.offerLines ?? []) : offerLines = [];
+          data.offerLines != null ? offerLines2 =List.from( data?.offerLines ?? []) : offerLines2 = [];
+
+
+        });
+  },
+  builder: (context, state) {
+    return BlocConsumer<PromotionDiscountVerticalListCubit, PromotionDiscountVerticalListState>(
             listener: (context, state) {
               state.maybeWhen(
                   orElse: () {},
@@ -446,14 +498,16 @@ offerGroupNameController.clear();
 
                     result = list.data;
                     print("seee" + result.toString());
-                    setState(() {
+
                       if (result.isNotEmpty) {
                         if(select){
+                          selectedVertical=result.length-1;
                           veritiaclid = result[result.length-1].id;
                           context.read<ReadPromotionDiscountCubit>().getPromotionDiscountRead(
                               veritiaclid!);
                         }
                         else{ veritiaclid = result[0].id;
+                          selectedVertical=0;
                         context.read<ReadPromotionDiscountCubit>().getPromotionDiscountRead(
                             veritiaclid!);}
 
@@ -462,16 +516,18 @@ offerGroupNameController.clear();
                       else {
                         print("common");
                         select = true;
+                        isActive=true;
                         clear();
                         setState(() {});
                       }
 
 
                       setState(() {});
-                    });
+
                   });
             },
   builder: (context, state) {
+
         return Builder(
           builder: (context) {
             return Scaffold(
@@ -568,16 +624,6 @@ offerGroupNameController.clear();
                                     clear();
                                     isActive=true;
 
-                                    // clear();
-                                    // // _myWidgetState.currentState?.cl();
-                                    // _myWidgetState.currentState?.table1=[];
-                                    //
-                                    // // updateCheck=false;
-                                    // // currentStock.clear();
-                                    // //
-                                    // //
-                                    // // table.clear();
-                                    // // clear();
                                   });
                                 },
                                 // icon: Icon(Icons.refresh),
@@ -598,6 +644,8 @@ offerGroupNameController.clear();
                           PromotionDiscountStableTable(
                             isActive: isActive,
                             select: select,
+                            customerGroupList:customerGroup,
+                            customGroupListAssign: customGroupListAssign,
                             activeChange:activeChange,
                             imagePostCheck:imagePostCheck,
                             offerPeriodName: offerPeriodNameController,
@@ -673,11 +721,7 @@ offerGroupNameController.clear();
                                 }
                                 print("post case"+offerLines.toString());
 
-
                               }
-
-
-
 
                               PromotionDiscountCreationModel model=PromotionDiscountCreationModel(
                                 isActive: isActive,
@@ -697,7 +741,7 @@ offerGroupNameController.clear();
                                 isAvailableFor: isAvailableForAll,
                                 createdBy: Variable.created_by,
                                 segments:segmentTable1,
-                                availableCustomerGroups: [],
+                                availableCustomerGroups:isAvailableForAll?[]: customerGroup,
                                 offerLines: select?offerLines1:offerLines,
 
                               );
@@ -731,6 +775,8 @@ offerGroupNameController.clear();
             ));
           }
         );
+  },
+);
   },
 ),
 ),

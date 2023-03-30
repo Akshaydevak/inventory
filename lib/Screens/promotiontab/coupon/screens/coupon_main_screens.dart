@@ -10,6 +10,7 @@ import 'package:inventory/Screens/promotiontab/coupon/model/crreateCouponModel.d
 import 'package:inventory/Screens/promotiontab/coupon/screens/coupon_Variant_table.dart';
 import 'package:inventory/Screens/promotiontab/coupon/screens/coupon_stable_table.dart';
 import 'package:inventory/Screens/promotiontab/coupon/screens/segment_coupon_screen.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
@@ -78,12 +79,25 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
     });
 
   }
+  List<AvailableCustomerGroups> customerGroup=[];
+  void customGroupListAssign(List<AvailableCustomerGroups> customerGroupList){
+
+
+
+    setState(() {
+      customerGroup=List.from(customerGroupList);
+      print(customerGroup);
+
+    });
+  }
   clear(){
     descriptionController.text="";
+    customerGroup.clear();
     offerPeriodNameController.text="";
     nameController.text="";
     couponCodeController.text="";
     displayNameController.text="";
+    variantTable2.clear();
     couponApplyinOnController.text="";
     couponApplyinOnNameController.text="";
     couponApplyinOnNameCodeController.text="";
@@ -318,7 +332,6 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
         });
       },
     ),
-
     BlocListener<DeleteOfferPeriodCubit, DeleteOfferPeriodState>(
       listener: (context, state) {
         state.maybeWhen(orElse: () {
@@ -343,7 +356,8 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
       },
     ),
   ],
-  child: BlocConsumer<ReadCouponPromotionCubit, ReadCouponPromotionState>(
+  child:
+  BlocConsumer<ReadCouponPromotionCubit, ReadCouponPromotionState>(
   listener: (context, state) {
     state.maybeWhen(
         orElse: () {},
@@ -382,6 +396,7 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
             totalValueController.text=data.totalValue==null?"":data.totalValue?.toString()??"";
             isActive=data.isActive??false;
             data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
+            data.availableCustomerGroups != null ? customerGroup =List.from( data?.availableCustomerGroups ?? []) : customerGroup = [];
             data.line != null ? variantTable =List.from( data?.line ?? []) : variantTable = [];
             data.line != null ? variantTable2 =List.from( data?.line ?? []) : variantTable2 = [];
           });
@@ -404,10 +419,11 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
           setState(() {
             if(result.isNotEmpty){
               if(select){  veritiaclid=result[result.length-1].id;
+                selectedVertical=result.length-1;
               context.read<ReadCouponPromotionCubit>().getPromotionCouponRead(veritiaclid!);
               }
               else{
-                veritiaclid=result[0].id;
+               // selectedVertical=veritiaclid;
                 context.read<ReadCouponPromotionCubit>().getPromotionCouponRead(veritiaclid!);
               }
 
@@ -418,8 +434,7 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
               print("common");
               select=true;
               clear();
-              setState(() {
-              });
+
 
             }
 
@@ -508,7 +523,6 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
                 Expanded(child: SingleChildScrollView(
                   child: Column(
                     children: [
-
                       Row(
                         mainAxisAlignment:
                         MainAxisAlignment.end,
@@ -551,6 +565,8 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
                       SizedBox(height: height*.06,),
                       PromotionCouponStableTable(
                         maximumCount: maximumCountController,
+                        customGroupListAssign: customGroupListAssign,
+                        customerGroupList: customerGroup,
                         imageName: imageNameController,
                         image: imageController,
                         activeChange: activeChange,
@@ -586,11 +602,12 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
                         select:select,
                         key:couponVariantState,
                         segmentList: segmentTable,
-                        applyingTypeCode: couponApplyinOnController?.text??"",
-                        applyingType:couponApplyinOnNameCodeController.text??"",
+                        applyingTypeCode:couponApplyinOnNameCodeController ?.text??"",
+                        applyingType:couponApplyinOnController.text??"",
                         updation: variantTableAssign,
                       ),
                       SizedBox(height: 50,),
+
                       SaveUpdateResponsiveButton(
                         label:  select? "SAVE":"UPDATE",
                         discardFunction: (){
@@ -630,7 +647,7 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
                                     variantName:variantTable[i].variantName??"",
                                     variantId: variantTable[i].variantId,
                                     variantCode: variantTable[i].variantCode,
-                                    barcode: variantTable[i].barcode.toString()
+                                    barcode: variantTable[i].barcode,
 
                                 ));
                               }
@@ -657,7 +674,7 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
                             couponType: couponTypeController?.text??null,
                             priceOrPercentage:double.tryParse( pricePercentageValueController.text),
                             maximumCount:int.tryParse( maximumCountController.text),
-                            availableCustomerGroups:null,
+                            availableCustomerGroups:isAvailableForAll?[]:customerGroup,
                             isAvailableToAll: isAvailableForAll,
                             canApplyMultipleTimes: canApplyMultiplTimes,
                             canApplyTogether: canApplyTogather,

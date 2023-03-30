@@ -390,6 +390,13 @@ const createCouponApi = promotionLiveBaseUrl +"coupon/create-coupon";
 const couponShowvariantToDeactivateApi = promotionLiveBaseUrl +"coupon/show-variants-to-deactivate";
 const couponDeactivateApi = promotionLiveBaseUrl +"coupon/deactivate-previous-coupon-by-type ";
 
+//++++++++++++++++++++++++multibuy +++++++++++++++++++++++++++++++++++++++++++++++
+const verticalListMultiBuyApi = promotionLiveBaseUrl +"multi-buy/side-list-multi-buy-by-inventory/";
+const createPromotionMultibuyApi = promotionLiveBaseUrl +"multi-buy/create-multi-buy";
+const readPromotionMultibuyApi = promotionLiveBaseUrl +"multi-buy/read-patch-delete-multi-buy/";
+
+
+
 
 
 

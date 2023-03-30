@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
@@ -36,7 +37,9 @@ class PromotionBogoStableTable extends StatefulWidget {
     final bool select;
 
   final List<Segment> table;
+  final    List<AvailableCustomerGroups> customerGroupList;
   final Function activeChange;
+  final Function customGroupListAssign;
   final Function variantTableDatsClear;
 
 
@@ -56,7 +59,7 @@ class PromotionBogoStableTable extends StatefulWidget {
 
   PromotionBogoStableTable({
 
-     required this.bogoCode, required this.offerPeriod, required this.title, required this.description, required this.bogoApplyingPlaceType, required this.bogoApplyingPlaceName, required this.bogoApplyingPlaceId, required this.bogoApplyingPlaceCode, required this.byCount, required this.geCount, required this.bogoApplyingOn, required this.bogoApplyingName, required this.bogoApplyingNameCode, required this.bogoApplyingNameId, required this.iamge, required this.maximumCount, required this.availableCustomer, required this.isAvailableForAll, required this.isActive, required this.table, required this.activeChange, required this.variantTableDatsClear, required this.offerPeriodName, required this.select, required this.imageName});
+     required this.bogoCode, required this.offerPeriod, required this.title, required this.description, required this.bogoApplyingPlaceType, required this.bogoApplyingPlaceName, required this.bogoApplyingPlaceId, required this.bogoApplyingPlaceCode, required this.byCount, required this.geCount, required this.bogoApplyingOn, required this.bogoApplyingName, required this.bogoApplyingNameCode, required this.bogoApplyingNameId, required this.iamge, required this.maximumCount, required this.availableCustomer, required this.isAvailableForAll, required this.isActive, required this.table, required this.activeChange, required this.variantTableDatsClear, required this.offerPeriodName, required this.select, required this.imageName, required this.customerGroupList, required this.customGroupListAssign});
   @override
   _PromotionBogoStableTableState createState() => _PromotionBogoStableTableState();
 }
@@ -114,47 +117,60 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
                             readOnly: true,
                             title: "BOGO Applying Name",
                             ontap: () {
-                              List<String> list=[];
-                              print("widget.table"+widget.table.toString());
-                              for (var val in widget.table){
-                                if(val.isActive==true)
-                                  list.add(val.segmentCode.toString());
+                              if(widget.bogoApplyingName.text.isNotEmpty){
+                                setState(() {
+                                  widget.bogoApplyingName.text="";
+                                  widget.bogoApplyingNameCode.text="";
+                                  // print("ssprint"+widget.saleApplyingCode.text.toString());
+                                  widget.bogoApplyingNameId.text="";
+                                  widget.variantTableDatsClear();
+                                });
 
                               }
+                              else{
+                                List<String> list=[];
+                                print("widget.table"+widget.table.toString());
+                                for (var val in widget.table){
+                                  if(val.isActive==true)
+                                    list.add(val.segmentCode.toString());
 
-                              print("sasasaaaaaaaaaaaaaa"+list.toString());
+                                }
 
-                              salesOrderNamePostModel model=salesOrderNamePostModel(
-                                inventoryId: Variable.inventory_ID,
-                                searchElemet: null,
-                                type:  widget.bogoApplyingOn.text,
-                                segmentList:list,
+                                print("sasasaaaaaaaaaaaaaa"+list.toString());
 
-                              );
-                              print(model);
-                              showDailogPopUp(
-                                context,
-                                TableConfigurePopup(
-                                  type: "SaleApplyingNamePeriodPopup",
-                                  object: model,
-                                  valueSelect: (OfferPeriodList va) {
-                                    setState(() {
-                                      widget.bogoApplyingName.text=va?.name??"";
-                                      widget.bogoApplyingNameCode.text=va?.code??"";
-                                      // print("ssprint"+widget.saleApplyingCode.text.toString());
-                                      widget.bogoApplyingNameId.text=va?.id.toString()??"";
-                                      widget.variantTableDatsClear();
+                                salesOrderNamePostModel model=salesOrderNamePostModel(
+                                  inventoryId: Variable.inventory_ID,
+                                  searchElemet: null,
+                                  type:  widget.bogoApplyingOn.text,
+                                  segmentList:list,
 
-                                      // widget.costingName.text =
-                                      //     va.methodName ?? "";
-                                      // setState(() {});
+                                );
+                                print(model);
+                                showDailogPopUp(
+                                  context,
+                                  TableConfigurePopup(
+                                    type: "SaleApplyingNamePeriodPopup",
+                                    object: model,
+                                    valueSelect: (OfferPeriodList va) {
+                                      setState(() {
+                                        widget.bogoApplyingName.text=va?.name??"";
+                                        widget.bogoApplyingNameCode.text=va?.code??"";
+                                        // print("ssprint"+widget.saleApplyingCode.text.toString());
+                                        widget.bogoApplyingNameId.text=va?.id.toString()??"";
+                                        widget.variantTableDatsClear();
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
-                                  },
-                                ),
-                              );
+                                        // widget.costingName.text =
+                                        //     va.methodName ?? "";
+                                        // setState(() {});
+
+                                        // onChange = true;
+                                        // orderType.text = va!;
+                                      });
+                                    },
+                                  ),
+                                );
+                              }
+
                             },
                           ),
                           // NewInputCard(
@@ -493,8 +509,11 @@ class _PromotionBogoStableTableState extends State<PromotionBogoStableTable> {
                                   context,
                                   ConfigurePopup(
                                     // code: widget.veritiacalCode,
-                                    passingList: [],
-                                    listAssign: (){},
+                                    passingList:widget. customerGroupList,
+                                    listAssign: (List<AvailableCustomerGroups> list1){
+                                      widget.customGroupListAssign(list1);
+
+                                    },
                                     type: "CustomGroupLinkedItem",
                                   ),
                                 );

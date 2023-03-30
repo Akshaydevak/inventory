@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -44,10 +45,13 @@ class PromotionCouponStableTable extends StatefulWidget {
   final bool isActive;
   final bool isSelect;
   final List<Segment> table;
+  final  List<AvailableCustomerGroups> customerGroupList;
+
   final Function activeChange;
   final Function variantTableDatsClear;
+  final Function customGroupListAssign;
 
-  PromotionCouponStableTable({required this.couponCode, required this.descripion, required this.name, required this.offerPeriodId, required this.offerPeriodName, required this.displayName, required this.couponApplyingTo, required this.couponApplyingToName, required this.couponApplyingToNameCode, required this.couponApplyingToNameId, required this.couponType, required this.totalValue, required this.couponApplyingOn, required this.couponApplyingOnName, required this.couponApplyingOnNameCode, required this.couponBasedOn, required this.priceOrpercentageValue, required this.maximumCount, required this.image, required this.imageName, required this.availableCustomerGroup, required this.isAvailableForAll, required this.canApplyMultipleTimes, required this.canApplyTogather, required this.isActive, required this.isSelect, required this.table, required this.activeChange, required this.variantTableDatsClear, required this.couponApplyingOnNameId});
+  PromotionCouponStableTable({required this.couponCode, required this.descripion, required this.name, required this.offerPeriodId, required this.offerPeriodName, required this.displayName, required this.couponApplyingTo, required this.couponApplyingToName, required this.couponApplyingToNameCode, required this.couponApplyingToNameId, required this.couponType, required this.totalValue, required this.couponApplyingOn, required this.couponApplyingOnName, required this.couponApplyingOnNameCode, required this.couponBasedOn, required this.priceOrpercentageValue, required this.maximumCount, required this.image, required this.imageName, required this.availableCustomerGroup, required this.isAvailableForAll, required this.canApplyMultipleTimes, required this.canApplyTogather, required this.isActive, required this.isSelect, required this.table, required this.activeChange, required this.variantTableDatsClear, required this.couponApplyingOnNameId, required this.customerGroupList, required this.customGroupListAssign});
 
 
   @override
@@ -133,7 +137,8 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                   NewInputCard(
                       formatter: true,
 
-                      controller: widget.priceOrpercentageValue, title: "Price or Percentage Value"),
+                      controller: widget.totalValue, title: "Total Value"),
+
 
 
                   // NewInputCard(
@@ -261,46 +266,58 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                     readOnly: true,
                     title: "Coupon Applying On Name",
                     ontap: () {
-                      List<String> list=[];
+                      if(widget.couponApplyingOnName.text.isNotEmpty){
+                        setState(() {
+                          widget.couponApplyingOnName.text="";
+                          widget.couponApplyingOnNameCode.text="";
+                          widget.couponApplyingOnNameId.text="";
+                          widget. variantTableDatsClear();
 
-                      for (var val in widget.table){
-                        if(val.isActive==true)
-                          list.add(val.segmentCode.toString());
+                        });
+                      }
+                      else{
+                        List<String> list=[];
+
+                        for (var val in widget.table){
+                          if(val.isActive==true)
+                            list.add(val.segmentCode.toString());
+                        }
+
+                        print("sasasaaaaaaaaaaaaaa"+list.toString());
+
+                        salesOrderNamePostModel model=salesOrderNamePostModel(
+                          inventoryId: Variable.inventory_ID,
+                          searchElemet: null,
+                          type:  widget.couponApplyingOn.text,
+                          segmentList:list,
+
+                        );
+                        print(model);
+                        showDailogPopUp(
+                          context,
+                          TableConfigurePopup(
+                            type: "SaleApplyingNamePeriodPopup",
+                            object: model,
+                            valueSelect: (OfferPeriodList va) {
+                              setState(() {
+                                widget.couponApplyingOnName.text=va?.name??"";
+                                widget.couponApplyingOnNameCode.text=va?.code??"";
+                                widget.couponApplyingOnNameId.text=va?.id.toString()??"";
+                                widget. variantTableDatsClear();
+
+
+                                // widget.costingName.text =
+                                //     va.methodName ?? "";
+                                // setState(() {});
+
+                                // onChange = true;
+                                // orderType.text = va!;
+                              });
+                            },
+                          ),
+                        );
                       }
 
-                      print("sasasaaaaaaaaaaaaaa"+list.toString());
-
-                      salesOrderNamePostModel model=salesOrderNamePostModel(
-                        inventoryId: Variable.inventory_ID,
-                        searchElemet: null,
-                        type:  widget.couponApplyingOn.text,
-                        segmentList:list,
-
-                      );
-                      print(model);
-                      showDailogPopUp(
-                        context,
-                        TableConfigurePopup(
-                          type: "SaleApplyingNamePeriodPopup",
-                          object: model,
-                          valueSelect: (OfferPeriodList va) {
-                            setState(() {
-                              widget.couponApplyingOnName.text=va?.name??"";
-                              widget.couponApplyingOnNameCode.text=va?.code??"";
-                              widget.couponApplyingOnNameId.text=va?.id.toString()??"";
-                              widget. variantTableDatsClear();
-
-
-                              // widget.costingName.text =
-                              //     va.methodName ?? "";
-                              // setState(() {});
-
-                              // onChange = true;
-                              // orderType.text = va!;
-                            });
-                          },
-                        ),
-                      );
                     },
                   ),
                   SizedBox(
@@ -309,7 +326,8 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                   NewInputCard(
                       formatter: true,
 
-                      controller: widget.maximumCount, title: "Maximum Count"),
+                      controller: widget.priceOrpercentageValue, title: "Price or Percentage Value"),
+
 
 
 
@@ -354,34 +372,6 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                   SizedBox(
                     height: height * .030,
                   ),
-                  NewInputCard(
-                      formatter: true,
-
-                      controller: widget.totalValue, title: "Total Value"),
-                  SizedBox(
-                    height: height * .030,
-                  ),
-                  SelectableDropDownpopUp(
-                    label: " Coupon Based On",
-                    type:"CouponBasedOnPromotionPopup",
-
-                    value: widget.couponBasedOn.text,
-                    onSelection: (String? va) {
-                      print(
-                          "+++++++++++++++++++++++");
-                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                      setState(() {
-
-
-                        // onChange = true;
-                        widget.couponBasedOn.text = va!;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: height * .030,
-                  ),
-
 
                   FileUploadField(
 
@@ -440,6 +430,36 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
                       onCreate: true,
                       label: "Image"),
 
+                  SizedBox(
+                    height: height * .030,
+                  ),
+                  SelectableDropDownpopUp(
+                    label: " Coupon Based On",
+                    type:"CouponBasedOnPromotionPopup",
+
+                    value: widget.couponBasedOn.text,
+                    onSelection: (String? va) {
+                      print(
+                          "+++++++++++++++++++++++");
+                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                      setState(() {
+
+
+                        // onChange = true;
+                        widget.couponBasedOn.text = va!;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: height * .030,
+                  ),
+                  NewInputCard(
+                      formatter: true,
+
+                      controller: widget.maximumCount, title: "Maximum Count"),
+
+
+
 
 
 
@@ -471,13 +491,28 @@ class _PromotionCouponStableTableState extends State<PromotionCouponStableTable>
             ),),
             Expanded(child:Column(
               children: [
-                Visibility(
-                  visible: !widget.isAvailableForAll,
-                  child: NewInputCard(
+    Visibility(
+    visible: !widget.isAvailableForAll,
+    child:
+    NewInputCard(
+    formatter: true,
+    ontap: (){
+    showDailogPopUp(
+    context,
+    ConfigurePopup(
+    // code: widget.veritiacalCode,
+    passingList:widget. customerGroupList,
+    listAssign: (List<AvailableCustomerGroups> list1){
+    widget.customGroupListAssign(list1);
 
-                      controller: widget.availableCustomerGroup,
-                      title: "Available Customer Groups"),
-                ),
+    },
+    type: "CustomGroupLinkedItem",
+    ),
+    );
+    },
+
+    controller: widget.availableCustomerGroup, title: "Available Customer Groups"),
+    ),
               ],
             ),),
             Expanded(child:Column(
