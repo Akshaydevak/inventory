@@ -82,7 +82,7 @@ _$_OrderLines _$$_OrderLinesFromJson(Map<String, dynamic> json) =>
       purchaseuom: json['purchase_uom'] as String?,
       cvd: json['cvd'] as String?,
       foc: (json['foc'] as num?)?.toDouble(),
-      discount: json['discount'] as int?,
+      discount: (json['discount'] as num?)?.toDouble(),
       requestedQty: json['requested_qty'] as int?,
       minimumQty: json['minimum_qty'] as int?,
       maximumQty: json['maximum_qty'] as int?,

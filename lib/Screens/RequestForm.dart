@@ -111,7 +111,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   double?foc1=0;
   double?vat1=0;
   double?excess1=0;
-  int?discount=0;
+  double?discount=0;
   int? recievedQty=0;
   int? minQty=0;
   int? maxQty=0;
@@ -207,14 +207,14 @@ var  paginatedList;
   }
 
 
-  vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,int? discount){
+  vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
     vatableAmount1 =double.parse( (((unitCost! *
         qty!) +
         excessTax!) -
         discount!).toStringAsFixed(2));
   }
 
-  double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,int? discount){
+  double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,double? discount){
     double vatableAmountupdation=0;
     vatableAmountupdation =double.parse( (((unitCost! *
         qty!) +
@@ -1803,7 +1803,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               setState(() {
 
                                                               });
-                                                              int? disc;
+                                                              double? disc;
                                                               if (va ==
                                                                   "") {
                                                                 print(
@@ -1813,7 +1813,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                               } else {
                                                                 disc =
-                                                                    int
+                                                                    double
                                                                         .tryParse(
                                                                         va);
 
@@ -2538,7 +2538,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             });
                                                           else {
                                                             setState(() {
-                                                              discount = int
+                                                              discount = double
                                                                   .tryParse(
                                                                   p0);
                                                             });

@@ -81,7 +81,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
   ScrollController scrollController = ScrollController();
   TextEditingController vendoraddress = TextEditingController();
   TextEditingController planned_receipt_date=TextEditingController() ;
+  TextEditingController planned_receipt_date2=TextEditingController() ;
   TextEditingController promised_receipt_date = TextEditingController();
+  TextEditingController promised_receipt_date2 = TextEditingController();
   TextEditingController remarks = TextEditingController();
   TextEditingController foc = TextEditingController();
   TextEditingController Variableamount = TextEditingController();
@@ -156,7 +158,7 @@ List<TextEditingController> vatController =[];
   int? Qty = 0;
   double? eTax = 0;
   double? vfoc = 0;
-  int? Vdiscount = 0;
+  double? Vdiscount = 0;
   int? vid = 0;
   String? vrefcod = "";
   String? salesUOM;
@@ -219,6 +221,7 @@ List<TextEditingController> vatController =[];
   clear(){
     requestedListControllers.clear();
     minListControllers.clear() ;
+    Paymentcode.clear();
 
     maxListControllers .clear();
     unitcostListControllers.clear();
@@ -304,7 +307,7 @@ List<TextEditingController> vatController =[];
     vatTestContoller.clear();
     // _value=false;
   }
-  vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,int? discount){
+  vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
     print(unitCost);
     print(qty);
     print(excessTax);
@@ -367,7 +370,7 @@ List<TextEditingController> vatController =[];
   }
 
 
-  double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,int? discount){
+  double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,double? discount){
     double vatableAmountupdation=0;
     vatableAmountupdation =double.parse( (((unitCost! *
         qty!) +
@@ -386,7 +389,7 @@ List<TextEditingController> vatController =[];
     return actualCost;
 
   }
-  
+
   assigniningDetails(String address,String trn){
     vendoraddress.text=address;
     vendortrnnumber.text=trn;
@@ -471,7 +474,6 @@ List<TextEditingController> vatController =[];
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
     vm = Provider.of<NavigationProvider>(context);
     double height = MediaQuery.of(context).size.height;
@@ -1139,24 +1141,36 @@ else{
                                                       title: "Vendor Code",
                                                       readOnly: true,
                                                       ontap: () {
-                                                        showDailogPopUp(
-                                                          context,
-                                                          TableConfigurePopup(type: "VendorDetails_Popup",
-                                                            valueSelect: (VendorDetailsModel va) {
-                                                              setState(() {
-                                                                vendorCode.text=va.manuFactureuserCode ?? "";
-                                                                vendorCodeName.text=va.manuFactureName ?? "";
-                                                                vendor_email=va?.email==""||va.email==null?va.alternativeEmail:va.email;
+                                                        if( vendorCode.text.isNotEmpty){
+                                                          setState(() {
+                                                            vendorCode.text = "";
+                                                            vendorCodeName.text = "";
+                                                            vendortrnnumber.text = "";
+                                                            vendor_email = "";
 
-                                                                // vendoraddress.text=va.address.;
-                                                                vendortrnnumber.text=va.trnNumber.toString();
+                                                          });
+                                                        }
+                                                        else{
+                                                          showDailogPopUp(
+                                                            context,
+                                                            TableConfigurePopup(type: "VendorDetails_Popup",
+                                                              valueSelect: (VendorDetailsModel va) {
+                                                                setState(() {
+                                                                  vendorCode.text=va.manuFactureuserCode ?? "";
+                                                                  vendorCodeName.text=va.manuFactureName ?? "";
+                                                                  vendor_email=va?.email==""||va.email==null?va.alternativeEmail:va.email;
 
-                                                                //                           setState(() {});ge = true;
-                                                                // orderType.text = va!;
-                                                              });
-                                                            },
-                                                          ),
-                                                        );
+                                                                  // vendoraddress.text=va.address.;
+                                                                  vendortrnnumber.text=va.trnNumber.toString();
+
+                                                                  //                           setState(() {});ge = true;
+                                                                  // orderType.text = va!;
+                                                                });
+                                                              },
+                                                            ),
+                                                          );
+                                                        }
+
                                                       },
                                                     ),
 
@@ -1224,17 +1238,20 @@ else{
                                                     PopUpDateFormField(
 
                                                         format:DateFormat('yyyy-MM-dd'),
-                                                        controller: promised_receipt_date,
+                                                        controller:    promised_receipt_date,
                                                         // initialValue:
                                                         //     DateTime.parse(fromDate!),
                                                         label: "Promised Receipt Date",
                                                         onSaved: (newValue) {
-                                                          promised_receipt_date.text = newValue
-                                                              ?.toIso8601String()
-                                                              .split("T")[0] ??
-                                                              "";
-                                                          print("promised_receipt_date.text"+promised_receipt_date.text.toString());
-                                                        },
+                                                          var formatter = new DateFormat('dd-MM-yyyy');
+                                                          print(newValue);
+                                                          // String ak =formatter.format(newValue!);
+                                                          // print("hi this inside ${ak.split("T")[0]}");
+                                                          // promised_receipt_date2.text=ak.toString();
+                                                          promised_receipt_date.text = newValue?.toIso8601String().split("T")[0] ?? "";
+                                                          // var list=promised_receipt_date.text.split('-');
+
+                                                          },
                                                         enable: true),
                                                     SizedBox(
                                                       height: height * .035,
@@ -1242,11 +1259,11 @@ else{
 
 
                                                     PopUpDateFormField(
-
                                                         format:DateFormat('yyyy-MM-dd'),
                                                         controller: planned_receipt_date,
                                                         // initialValue:
                                                         //     DateTime.parse(fromDate!),
+
                                                         label: "Planned Receipt Date",
                                                         onSaved: (newValue) {
                                                           planned_receipt_date.text = newValue
@@ -1330,7 +1347,7 @@ else{
                                                       maxLines: 3,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .13,
+                                                      height: height * .16,
                                                     ),
 
 
@@ -1403,7 +1420,7 @@ else{
                                                       height: height * .042,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .078,
+                                                      height: height * .088,
                                                     ),
                                                   ],
                                                 )),
@@ -1530,7 +1547,7 @@ else{
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
-                                                                'Is Recieved',
+                                                                'Is Received',
 
 
                                                                 size: 13,
@@ -2106,7 +2123,7 @@ else{
                                                                         setState(() {
 
                                                                         });
-                                                                        int? disc;
+                                                                        double? disc;
                                                                         if (va ==
                                                                             "") {
                                                                           print(
@@ -2119,7 +2136,7 @@ else{
                                                                                       .toString());
                                                                         } else {
                                                                           disc =
-                                                                              int
+                                                                              double
                                                                                   .tryParse(
                                                                                   va);
                                                                           print(
@@ -2725,7 +2742,7 @@ else{
                                                                         });
                                                                       else {
                                                                         setState(() {
-                                                                          Vdiscount = int.tryParse(p0);
+                                                                          Vdiscount = double.tryParse(p0);
                                                                         });
                                                                       }
                                                                       if(check==0 ||Qty==0){
@@ -2771,41 +2788,7 @@ else{
                                                                   child: textPadding(vvat!=0?vvat.toString():"",
                                                                       padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
-                                                                // TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                //   child: UnderLinedInput(controller:vatTestContoller,
-                                                                //     onChanged: (p0) {
-                                                                //       if (p0 == "") {
-                                                                //         setState(() {vvat = 0;
-                                                                //         });
-                                                                //       }
-                                                                //       else{
-                                                                //         vvat =double.tryParse( p0);
-                                                                //       }
-                                                                //       if(check==0 ||Qty==0){
-                                                                //         vactualCost=0;
-                                                                //         Vamount=0;
-                                                                //         Vgrnadtotal=0;
-                                                                //         setState(() {});
-                                                                //       }
-                                                                //       else{
-                                                                //         Vamount =double.parse(( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble()).toStringAsFixed(3));
-                                                                //         vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                                                //         Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                                                //         setState(() {});
-                                                                //       }
-                                                                //     },
-                                                                //     enable: true,
-                                                                //     onComplete: () {
-                                                                //       // table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
-                                                                //       print("vactualCost" +
-                                                                //           vactualCost
-                                                                //               .toString());
-                                                                //       print("+++++" +
-                                                                //           table.length
-                                                                //               .toString());
-                                                                //     },
-                                                                //   ),
-                                                                // ),
+
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(vactualCost.toString(),
@@ -2872,7 +2855,7 @@ else{
                                                                             "foc is allways less than requested qty");
                                                                       }
                                                                       else{
-                                                                        vendorCheckFunc();
+
                                                                         table..add(
                                                                             OrderLines(
                                                                               vendorRefCode: vendorRefCode??"",
@@ -2898,6 +2881,7 @@ else{
                                                                               currentQty: stockQty ?? 0,
                                                                               updateCheck: false
                                                                             ));
+                                                                        vendorCheckFunc();
                                                                         currentStock.add(stockQty??0);
                                                                         print("a"+currentStock.toString());
                                                                         requestedListControllers.clear();

@@ -140,7 +140,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   List<int?> currentStock = [];
   PurchaseCureentStockQty? purchaseCurrentStock;
   List<PurchaseOrder> result = [];
-  List<OrderLiness> orderLinses = [];
+
   List<RecievingLines> recievingLisnes = [];
   List<RecievingLines> additionalVariants = [];
   NavigationProvider vm = NavigationProvider();
@@ -2329,6 +2329,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                               onPress: () {
                                                                 print("recievdelines"+recievingLisnes.toString());
                                                                 List<RecievingLines>recieve=[];
+                                                                List<OrderLiness> orderLinses = [];
                                                                 bool popupCheck=false;
                                                                 for(var i=0;i<recievingLisnes.length;i++){
                                                                   if(recievingLisnes[i].isReceived==false){
@@ -2340,19 +2341,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                   }
                                                                 }
                                                                 print("visss"+orderLinses.toString());
-
-
-
-
-
                                                                  GenerateMissing model=GenerateMissing(
                                                                     receivinglineId: receivingId,
                                                                     note: noteController.text??"",
-
                                                                     inventoryId:inventoryId ??"",
                                                                     vendorMailId: Variable.email,
                                                                     vendorAddress: Variable.vendorAddress,
-                                                                    createdBy: Variable.inventory_ID,
+                                                                    createdBy: Variable.created_by,
                                                                     orderLinses: orderLinses
 
 
@@ -2374,10 +2369,6 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                         plannded:plannedRecieptDate,
                                                                         model:model,
                                                                         assign:assignCall
-
-
-
-
                                                                       // warranty: widget.warranty,
                                                                       // changeActive: onChangeActive,
                                                                       // changeAdditionalWarranty: onChangeAdditionalWarranty,
@@ -4401,6 +4392,8 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
   TextEditingController reason = TextEditingController();
   TextEditingController vendorCode = TextEditingController();
   TextEditingController vendorCodeName = TextEditingController();
+  TextEditingController promised = TextEditingController();
+  TextEditingController planned = TextEditingController();
   TextEditingController note = TextEditingController();
   TextEditingController vendoraddress = TextEditingController();
   TextEditingController vendortrnnumber = TextEditingController();
@@ -4445,6 +4438,9 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
           if (data.data1) {
+            setState(() {
+
+
 
             showDailogPopUp(
                 context,
@@ -4452,17 +4448,17 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                   content: data.data2,
                   // table:table,
                 ));
+
             context.read<InventorysearchCubit>().getInventorySearch("code");
             // context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
-            setState(() {
-
+           Navigator.pop(context);
             });
 
 
 
           }
           else {
-            context.showSnackBarError(data.data2);
+            // context.showSnackBarError(data.data2);
             showDailogPopUp(
                 context,
                 FailiurePopup(
@@ -4487,7 +4483,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                 print( "aaa"+widget.model.toString());
                 GenerateMissing? model=widget.model;
 
-                model = model?.copyWith(remarks: remarks?.text,plannedRecieptDate: widget.plannded?.text,promisedRecieptDate: widget.promised?.text,note: note.text,vendorId: vendorCode.text,vendorAddress: vendoraddress.text,vendorTrnNumber: vendortrnnumber.text);
+                model = model?.copyWith(remarks: remarks?.text,plannedRecieptDate: planned.text,promisedRecieptDate:promised.text,note: note.text,vendorId: vendorCode.text,vendorAddress: vendoraddress.text,vendorTrnNumber: vendortrnnumber.text);
                 print( "asap"+model.toString());
 
                 widget.assign(model);
@@ -4631,17 +4627,16 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                     PopUpDateFormField(
 
                                         format:DateFormat('yyyy-MM-dd'),
-                                        controller: widget.promised,
+                                        controller: promised,
                                         // initialValue:
                                         //     DateTime.parse(fromDate!),
                                         label: "Promised Receipt Date",
                                         onSaved: (newValue) {
                                           print("newValue"+newValue.toString());
-                                          widget.promised?.text = newValue
+                                          promised.text = newValue
                                               ?.toIso8601String()
                                               .split("T")[0] ??
                                               "";
-                                          print("promised_receipt_date.text"+ widget.promised!.text.toString());
                                         },
                                         enable: true),
 
@@ -4678,18 +4673,16 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                   children: [
                                     PopUpDateFormField(
                                         // row: true,
-
                                         format:DateFormat('yyyy-MM-dd'),
-                                        controller:  widget.plannded,
+                                        controller:planned,
                                         // initialValue:
                                         //     DateTime.parse(fromDate!),
-                                        label: "Planned Reciept Date",
+                                        label: "Planned Receipt Date",
                                         onSaved: (newValue) {
-                                          widget.plannded?.text = newValue
+                                          planned.text = newValue
                                               ?.toIso8601String()
                                               .split("T")[0] ??
                                               "";
-                                          print("promised_receipt_date.text"+  widget.plannded!.text.toString());
                                         },
                                         enable: true),
                                     // PopUpInputField(

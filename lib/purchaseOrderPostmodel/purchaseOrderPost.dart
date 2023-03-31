@@ -53,7 +53,7 @@ class OrderLines with _$OrderLines {
     @JsonKey(name: "purchase_uom") final String? purchaseuom,
     @JsonKey(name: "cvd") final String? cvd,
     @JsonKey(name: "foc") final double? foc,
-    @JsonKey(name: "discount") final int? discount,
+    @JsonKey(name: "discount") final double? discount,
     @JsonKey(name: "requested_qty") final int? requestedQty,
     @JsonKey(name: "minimum_qty") final int? minimumQty,
     @JsonKey(name: "maximum_qty") final int? maximumQty,

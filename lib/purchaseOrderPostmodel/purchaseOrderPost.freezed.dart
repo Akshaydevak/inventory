@@ -798,7 +798,7 @@ mixin _$OrderLines {
   @JsonKey(name: "foc")
   double? get foc => throw _privateConstructorUsedError;
   @JsonKey(name: "discount")
-  int? get discount => throw _privateConstructorUsedError;
+  double? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: "requested_qty")
   int? get requestedQty => throw _privateConstructorUsedError;
   @JsonKey(name: "minimum_qty")
@@ -846,7 +846,7 @@ abstract class $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "purchase_uom") String? purchaseuom,
       @JsonKey(name: "cvd") String? cvd,
       @JsonKey(name: "foc") double? foc,
-      @JsonKey(name: "discount") int? discount,
+      @JsonKey(name: "discount") double? discount,
       @JsonKey(name: "requested_qty") int? requestedQty,
       @JsonKey(name: "minimum_qty") int? minimumQty,
       @JsonKey(name: "maximum_qty") int? maximumQty,
@@ -961,7 +961,7 @@ class _$OrderLinesCopyWithImpl<$Res, $Val extends OrderLines>
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       requestedQty: freezed == requestedQty
           ? _value.requestedQty
           : requestedQty // ignore: cast_nullable_to_non_nullable
@@ -1026,7 +1026,7 @@ abstract class _$$_OrderLinesCopyWith<$Res>
       @JsonKey(name: "purchase_uom") String? purchaseuom,
       @JsonKey(name: "cvd") String? cvd,
       @JsonKey(name: "foc") double? foc,
-      @JsonKey(name: "discount") int? discount,
+      @JsonKey(name: "discount") double? discount,
       @JsonKey(name: "requested_qty") int? requestedQty,
       @JsonKey(name: "minimum_qty") int? minimumQty,
       @JsonKey(name: "maximum_qty") int? maximumQty,
@@ -1139,7 +1139,7 @@ class __$$_OrderLinesCopyWithImpl<$Res>
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       requestedQty: freezed == requestedQty
           ? _value.requestedQty
           : requestedQty // ignore: cast_nullable_to_non_nullable
@@ -1257,7 +1257,7 @@ class _$_OrderLines implements _OrderLines {
   final double? foc;
   @override
   @JsonKey(name: "discount")
-  final int? discount;
+  final double? discount;
   @override
   @JsonKey(name: "requested_qty")
   final int? requestedQty;
@@ -1417,7 +1417,7 @@ abstract class _OrderLines implements OrderLines {
       @JsonKey(name: "foc")
           final double? foc,
       @JsonKey(name: "discount")
-          final int? discount,
+          final double? discount,
       @JsonKey(name: "requested_qty")
           final int? requestedQty,
       @JsonKey(name: "minimum_qty")
@@ -1484,7 +1484,7 @@ abstract class _OrderLines implements OrderLines {
   double? get foc;
   @override
   @JsonKey(name: "discount")
-  int? get discount;
+  double? get discount;
   @override
   @JsonKey(name: "requested_qty")
   int? get requestedQty;
