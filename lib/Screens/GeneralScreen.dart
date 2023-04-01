@@ -89,6 +89,8 @@ class _GeneralScreenState extends State<GeneralScreen> {
   TextEditingController Variableamount = TextEditingController();
   TextEditingController note = TextEditingController();
   TextEditingController orderDate = TextEditingController();
+  TextEditingController orederDate2Controller = TextEditingController();
+
   TextEditingController vendorCode = TextEditingController();
   TextEditingController vendorCodeName = TextEditingController();
   TextEditingController Paymentcode = TextEditingController();
@@ -218,6 +220,46 @@ List<TextEditingController> vatController =[];
 
 
   }
+  tableDatasClear(){
+    vid = 0;
+    eTax = 0;
+    variantId = "";
+    varinatname = "";
+    vrefcod = "";
+    Vbarcode = "";
+    vendorRefCode="";
+    vvat=0;
+    focValue=0;
+    excessTAxValue=0;
+    check1 = "";
+    check = 0;
+    Qty = 0;
+    Vdiscount = 0;
+    unitCostCheck.text="";
+    Vamount = 0;
+    vmaxnqty=0;
+    vminqty=0;
+    Vgrnadtotal = 0;
+    vactualCost = 0;
+    unitcost = 0;
+    grands = 0;
+    actualValue = 0;
+    VatableValue = 0;
+    discountValue = 0;
+    vatValue = 0;
+    stockQty = 0;
+    vfoc=0;
+    _value = false;
+    requestedtTestContoller.clear();
+    minOrderTestContoller.clear();
+    maxOrderTestContoller.clear();
+    discountTestContoller.clear();
+    focTestContoller.clear();
+    excesstaxTestContoller.clear();
+    vatTestContoller.clear();
+    isRecieved = false;
+
+  }
   clear(){
     requestedListControllers.clear();
     minListControllers.clear() ;
@@ -247,6 +289,7 @@ List<TextEditingController> vatController =[];
     orderStatus.text="";
     Paymentstatus.clear();
     orderDate.text="";
+    orederDate2Controller.clear();
     ordercode.text="";
     note.text="";
     discount.text="";
@@ -303,6 +346,8 @@ List<TextEditingController> vatController =[];
     maxOrderTestContoller.clear();
     discountTestContoller.clear();
     focTestContoller.clear();
+    planned_receipt_date2.clear();
+    promised_receipt_date2.clear();
     excesstaxTestContoller.clear();
     vatTestContoller.clear();
     // _value=false;
@@ -757,6 +802,7 @@ List<TextEditingController> vatController =[];
                           orderType=data.data?.purchaseOrderType??"";
                           inventoryId.text=data.data?.iventoryId??"";
                           orderDate.text=data.data?.orderDate??"";
+                          orederDate2Controller=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.orderDate ??"")));
                           remarks.text=data.data?.remarks??"";
                           invoicestatus.text=data.data?.invoiceStatus??"";
                           orderStatus.text=data.data?.orderStatus??"";
@@ -836,9 +882,11 @@ List<TextEditingController> vatController =[];
                           Paymentstatus.text=data.data?.paymentStatus??"";
                           Paymentcode.text=data.data?.paymentcode??"";
                           promised_receipt_date=TextEditingController(text:data.data?.promisedReceiptdate??"");
+                          promised_receipt_date2=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??""!)));
+                         planned_receipt_date2=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??""!)));
                           planned_receipt_date=TextEditingController(text:data.data?.plannedRecieptDate??"");
-                          print("Invalid date formatsssssssssssssssssssssssss"+promised_receipt_date.text.toString());
-                          print("data.data?.promisedReceiptdate${ planned_receipt_date.text}");
+
+
                           address1=data.data?.address1??"";
                           address2=data.data?.address2??"";
 
@@ -1054,7 +1102,7 @@ else{
                                         select: select,
                                         vendorCode:vendorCode.text,
                                         orderCode:ordercode.text ,
-                                        orderDate: orderDate.text,
+                                        orderDate: orederDate2Controller.text,
                                         table:table,
                                         vat: double.tryParse( vat.text),
                                         actualCost:double.tryParse( actualcost.text),
@@ -1118,7 +1166,7 @@ else{
                                                       height: height * .035,
                                                     ),
                                                     NewInputCard(
-                                                      controller: orderDate,
+                                                      controller: orederDate2Controller,
                                                       title: "Order Date",
                                                       //label: "Place in setting",
                                                       readOnly: true,
@@ -1147,6 +1195,7 @@ else{
                                                             vendorCodeName.text = "";
                                                             vendortrnnumber.text = "";
                                                             vendor_email = "";
+                                                            tableDatasClear();
 
                                                           });
                                                         }
@@ -1234,38 +1283,82 @@ else{
                                                     SizedBox(
                                                       height: height * .035,
                                                     ),
-
                                                     PopUpDateFormField(
-
-                                                        format:DateFormat('yyyy-MM-dd'),
-                                                        controller:    promised_receipt_date,
+                                                        format:DateFormat('dd-MM-yyyy'),
+                                                        controller: promised_receipt_date2,
                                                         // initialValue:
                                                         //     DateTime.parse(fromDate!),
+
                                                         label: "Promised Receipt Date",
                                                         onSaved: (newValue) {
-                                                          var formatter = new DateFormat('dd-MM-yyyy');
-                                                          print(newValue);
-                                                          // String ak =formatter.format(newValue!);
-                                                          // print("hi this inside ${ak.split("T")[0]}");
-                                                          // promised_receipt_date2.text=ak.toString();
-                                                          promised_receipt_date.text = newValue?.toIso8601String().split("T")[0] ?? "";
-                                                          // var list=promised_receipt_date.text.split('-');
+                                                          promised_receipt_date2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
 
-                                                          },
+
+
+                                                          promised_receipt_date.text = newValue
+                                                              ?.toIso8601String()
+                                                              .split("T")[0] ??
+                                                              "";
+                                                          print("promised_receipt_date.text"+promised_receipt_date.text.toString());
+                                                        },
                                                         enable: true),
+
+                                                 //    PopUpDateFormField(
+                                                 //
+                                                 //        format:DateFormat('yyyy-MM-dd'),
+                                                 //        controller:     promised_receipt_date2,
+                                                 //        // initialValue:
+                                                 //        //     DateTime.parse(fromDate!),
+                                                 //        label: "Promised Receipt Date",
+                                                 //        onSaved: (newValue) {
+                                                 //          // var formatter = new DateFormat('dd-MM-yyyy');
+                                                 //          print(newValue);
+                                                 //
+                                                 //         var date = '${DateFormat('yyyy-MM-dd').format(newValue!)} -'
+                                                 //              ' ${DateFormat('yyyy-MM-dd').format(
+                                                 //              newValue ?? newValue)}';
+                                                 //         print(date);
+                                                 //
+                                                 //          // String ak =formatter.format(newValue!);
+                                                 //          // print(ak.runtimeType);
+                                                 //          // print("hi this inside ${ak.split("T")[0]}");
+                                                 // // var as=newValue?.toIso8601String().split("T")[0] ?? "";
+                                                 // //          var list=as.split('-');
+                                                 // //          print(list);
+                                                 // //          var theVal="";
+                                                 // //          if(list.isNotEmpty)
+                                                 // //            for(int i=list.length-1;i>-1;i--){
+                                                 // //              var a=theVal+list[i];
+                                                 // //              if(i!=0){
+                                                 // //                theVal=a+"-";
+                                                 // //              }
+                                                 // //              else{
+                                                 // //                theVal=a;
+                                                 // //              }
+                                                 // //
+                                                 // //            }
+                                                 // //          promised_receipt_date2.text=theVal;
+                                                 //
+                                                 //          // promised_receipt_date.text = newValue?.toIso8601String().split("T")[0] ?? "";
+                                                 //          // var list=promised_receipt_date.text.split('-');
+                                                 //
+                                                 //          },
+                                                 //        enable: true),
                                                     SizedBox(
                                                       height: height * .035,
                                                     ),
 
 
+
                                                     PopUpDateFormField(
-                                                        format:DateFormat('yyyy-MM-dd'),
-                                                        controller: planned_receipt_date,
+                                                        format:DateFormat('dd-MM-yyyy'),
+                                                        controller: planned_receipt_date2,
                                                         // initialValue:
                                                         //     DateTime.parse(fromDate!),
 
                                                         label: "Planned Receipt Date",
                                                         onSaved: (newValue) {
+                                                          planned_receipt_date2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
                                                           planned_receipt_date.text = newValue
                                                               ?.toIso8601String()
                                                               .split("T")[0] ??
@@ -2900,43 +2993,8 @@ else{
                                                                             table
                                                                                 .toString());
                                                                         addition();
-                                                                        vid = 0;
-                                                                        eTax = 0;
-                                                                        variantId = "";
-                                                                        varinatname = "";
-                                                                        vrefcod = "";
-                                                                        Vbarcode = "";
-                                                                        vendorRefCode="";
-                                                                        vvat=0;
-                                                                        focValue=0;
-                                                                        excessTAxValue=0;
-                                                                        check1 = "";
-                                                                        check = 0;
-                                                                        Qty = 0;
-                                                                        Vdiscount = 0;
-                                                                        unitCostCheck.text="";
-                                                                        Vamount = 0;
-                                                                        vmaxnqty=0;
-                                                                        vminqty=0;
-                                                                        Vgrnadtotal = 0;
-                                                                        vactualCost = 0;
-                                                                        unitcost = 0;
-                                                                        grands = 0;
-                                                                        actualValue = 0;
-                                                                        VatableValue = 0;
-                                                                        discountValue = 0;
-                                                                        vatValue = 0;
-                                                                        stockQty = 0;
-                                                                        vfoc=0;
-                                                                        _value = false;
-                                                                        requestedtTestContoller.clear();
-                                                                        minOrderTestContoller.clear();
-                                                                        maxOrderTestContoller.clear();
-                                                                        discountTestContoller.clear();
-                                                                        focTestContoller.clear();
-                                                                        excesstaxTestContoller.clear();
-                                                                        vatTestContoller.clear();
-                                                                        isRecieved = false;
+                                                                        tableDatasClear();
+
                                                                         setState(() {});
 
                                                                       }

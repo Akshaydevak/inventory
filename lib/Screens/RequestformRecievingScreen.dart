@@ -835,6 +835,7 @@ bool  recievlinequantityCheck=false;
                   expirydateControllerList2.clear();
   
                   additionalVariants.clear();
+                  recievingLisnes.clear();
   
                   selectedVertical=index;
   
@@ -1062,17 +1063,11 @@ bool  recievlinequantityCheck=false;
                           SizedBox(height: height*.040,),
   
                         ],)),
-  
+
                         Expanded(child:
   
                         Column(children: [
-  
-  
-  
-  
-  
-  
-  
+
                           NewInputCard(
   
   
@@ -6048,19 +6043,10 @@ bool  recievlinequantityCheck=false;
                             ],
   
                                             TableRow(
-  
-                                                decoration: BoxDecoration(
-  
-                                                    color: Pellet.tableRowColor,
-  
+                                                decoration: BoxDecoration(color: Pellet.tableRowColor,
                                                     shape: BoxShape.rectangle,
-  
                                                     border:  Border(
-  
                                                         left: BorderSide(
-  
-  
-  
                                                             color: Color(0xff3E4F5B).withOpacity(.1),
   
                                                             width: .4,
@@ -6112,64 +6098,22 @@ bool  recievlinequantityCheck=false;
                                                           type: "variantTabalePopup",
                                                           valueSelect: (VariantId? va) {
                                                             print(va!.id
-
                                                                 .toString());
-
-                                                            print("code" +
-
-                                                                va!.code
-
-                                                                    .toString());
-
-
-
+                                                            print("code" + va!.code.toString());
                                                             setState(() {
-
                                                               stockCheck=true;
-
-                                                              variantId =
-
-                                                                  va?.code;
-
+                                                              variantId = va?.code;
                                                               int? id = va!.id;
-
                                                               print("is is"+id.toString());
-
                                                               Variable.tableedit=false;
-
-
-
                                                               recievlinequantityCheck=false;
-
                                                               stockCheck=true;
-
                                                               variantIdcheck=false;
 
-                                                              // onChange = true;
-
-                                                              context
-
-                                                                  .read<
-
-                                                                  TableDetailsCubitDartCubit>()
-
-                                                                  .getTableDetails(
-
-                                                                  id);
-
+                                                              context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
                                                               setState(() {
-
                                                               });
-
-                                                              context
-
-                                                                  .read<PurchaseStockCubit>()
-
-                                                                  .getCurrentStock(Variable.inventory_ID, variantId);
-
-
-
-                                                              // orderType = va!;
+                                                              context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variantId);
 
                                                             });
                                                           },
@@ -6177,91 +6121,6 @@ bool  recievlinequantityCheck=false;
                                                       );
                                                     },
                                                   ),
-  
-                                                  // PopUpCall(
-                                                  //
-                                                  //   inventory: Variable.inventory_ID,
-                                                  //
-                                                  //   // label: "purchase UOM",
-                                                  //
-                                                  //   type:
-                                                  //
-                                                  //   "cost-method-list",
-                                                  //
-                                                  //   value: variantId,
-                                                  //
-                                                  //   onSelection:
-                                                  //
-                                                  //       (VariantId? va) {
-                                                  //
-                                                  //     print(va!.id
-                                                  //
-                                                  //         .toString());
-                                                  //
-                                                  //     print("code" +
-                                                  //
-                                                  //         va!.code
-                                                  //
-                                                  //             .toString());
-                                                  //
-                                                  //
-                                                  //
-                                                  //     setState(() {
-                                                  //
-                                                  //       stockCheck=true;
-                                                  //
-                                                  //       variantId =
-                                                  //
-                                                  //           va?.code;
-                                                  //
-                                                  //       int? id = va!.id;
-                                                  //
-                                                  //       print("is is"+id.toString());
-                                                  //
-                                                  //       Variable.tableedit=false;
-                                                  //
-                                                  //
-                                                  //
-                                                  //       recievlinequantityCheck=false;
-                                                  //
-                                                  //       stockCheck=true;
-                                                  //
-                                                  //       variantIdcheck=false;
-                                                  //
-                                                  //       // onChange = true;
-                                                  //
-                                                  //       context
-                                                  //
-                                                  //           .read<
-                                                  //
-                                                  //           TableDetailsCubitDartCubit>()
-                                                  //
-                                                  //           .getTableDetails(
-                                                  //
-                                                  //           id);
-                                                  //
-                                                  //       setState(() {
-                                                  //
-                                                  //       });
-                                                  //
-                                                  //       context
-                                                  //
-                                                  //           .read<PurchaseStockCubit>()
-                                                  //
-                                                  //           .getCurrentStock(Variable.inventory_ID, variantId);
-                                                  //
-                                                  //
-                                                  //
-                                                  //       // orderType = va!;
-                                                  //
-                                                  //     });
-                                                  //
-                                                  //   },
-                                                  //
-                                                  //   // restricted: true,
-                                                  //
-                                                  // ),
-  
                                                   TableCell(
   
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
@@ -7109,146 +6968,7 @@ bool  recievlinequantityCheck=false;
   
                                                   ),
   
-                                                  // TableCell(
-  
-                                                  //   verticalAlignment: TableCellVerticalAlignment.middle,
-  
-                                                  //   child: UnderLinedInput(
-  
-                                                  //
-  
-                                                  //
-  
-                                                  //     onChanged: (p0) {
-  
-                                                  //       if (p0 == '')
-  
-                                                  //         setState(() {
-  
-                                                  //           vat1 = 0;
-  
-                                                  //         });
-  
-                                                  //       else {
-  
-                                                  //         setState(() {
-  
-                                                  //           vat1 = double
-  
-                                                  //               .tryParse(
-  
-                                                  //               p0);
-  
-                                                  //         });
-  
-                                                  //       }
-  
-                                                  //
-  
-                                                  //       if(unitcost==0 ||recievedQty==0){
-  
-                                                  //         actualCost1=0;
-  
-                                                  //         vatableAmount1=0;
-  
-                                                  //         grandTotal1=0;
-  
-                                                  //       }
-  
-                                                  //       else{
-  
-                                                  //         if(foc1==0 ||foc1==""){
-  
-                                                  //           vatableAmount1 = (((unitcost! *
-  
-                                                  //               recievedQty!) +
-  
-                                                  //               excess1!) -
-  
-                                                  //               discount!)
-  
-                                                  //               .toDouble();
-  
-                                                  //           actualCost1 = (vatableAmount1! +
-  
-                                                  //               ((vatableAmount1! *
-  
-                                                  //                   vat1!) /
-  
-                                                  //                   100));
-  
-                                                  //           grandTotal1 = (vatableAmount1! +
-  
-                                                  //               ((vatableAmount1! *
-  
-                                                  //                   vat1!) /
-  
-                                                  //                   100));
-  
-                                                  //
-  
-                                                  //
-  
-                                                  //
-  
-                                                  //         }
-  
-                                                  //         else{
-  
-                                                  //
-  
-                                                  //           vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-  
-                                                  //           actualCost1 = (vatableAmount1! +
-  
-                                                  //               ((vatableAmount1! *
-  
-                                                  //                   vat1!) /
-  
-                                                  //                   100));
-  
-                                                  //           grandTotal1 = (vatableAmount1! +
-  
-                                                  //               ((vatableAmount1! *
-  
-                                                  //                   vat1!) /
-  
-                                                  //                   100));
-  
-                                                  //
-  
-                                                  //         }
-  
-                                                  //
-  
-                                                  //       }
-  
-                                                  //
-  
-                                                  //
-  
-                                                  //       setState(() {});
-  
-                                                  //       // print(Qty);
-  
-                                                  //     },
-  
-                                                  //     enable: true,
-  
-                                                  //     onComplete: () {
-  
-                                                  //       setState(() {});
-  
-                                                  //
-  
-                                                  //       setState(() {});
-  
-                                                  //     },
-  
-                                                  //   ),
-  
-                                                  // ),
-  
+
   
   
                                                   TableCell(
@@ -7572,67 +7292,25 @@ bool  recievlinequantityCheck=false;
                                           20: FlexColumnWidth(2),
   
                                           21: FlexColumnWidth(3),
-  
-  
-  
+
                                         },
-  
-  
-  
-  
-  
-  
-  
+
                                       ),
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
                                     ) ,
   
                                   ),
   
                                   SizedBox(height: 10,)
-  
-  
-  
+
                                 ],
-  
-  
-  
+
                               )
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
                           ),
-  
-  
-  
-  
-  
-  
-  
+
                         )
-  
-  
-  
-  
-  
-  
-  
+
                     ),
   
   

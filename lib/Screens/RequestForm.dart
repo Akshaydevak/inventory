@@ -46,7 +46,9 @@ class RequestFormScreen extends StatefulWidget {
 class _RequestFormScreenState extends State<RequestFormScreen> {
   TextEditingController controller = TextEditingController();
   TextEditingController plannedRecieptDate = TextEditingController();
+  TextEditingController plannedRecieptDate2 = TextEditingController();
   TextEditingController promisedRecieptDate = TextEditingController();
+  TextEditingController promisedRecieptDate2 = TextEditingController();
   TextEditingController orderTypeController = TextEditingController();
   TextEditingController ordereCodeController= TextEditingController();
   TextEditingController orderDateController = TextEditingController();
@@ -280,6 +282,8 @@ var  paginatedList;
     discountTestContoller.clear();
     vatTestContoller.clear();
     focTestContoller.clear();
+    promisedRecieptDate2.clear();
+    plannedRecieptDate2.clear();
     variantId="";
     varinatname="";
     barcode="";
@@ -442,10 +446,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
             orderDateController.text=data.data?.orderDate??"";
             inventoryIdController.text=data.data?.iventoryId??"";
             promisedRecieptDate.text=data.data?.promisedReceiptdate??"";
+           promisedRecieptDate2=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??""!)));
+           plannedRecieptDate2=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??""!)));
             plannedRecieptDate.text=data.data?.plannedRecieptDate??"";
             orderedPersonController.text=data.data?.orderedPereson??"";
 
             paymentCodeController.text=data.data?.paymentcode??"";
+
             paymentStatusController.text=data.data?.paymentStatus??"";
             orderStatusController.text=data.data?.orderStatus??"";
             receivingSattusController.text=data.data?.recievingStatus??"";
@@ -910,7 +917,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   "+++++++++++++++++++++++"+va.toString());
                                                               //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                                                               setState(() {
-                                                                orderedPersonController.text = va!.organisationCode.toString();
+                                                                orderedPersonController.text = va!.employeeCode.toString();
+
 
                                                                 // onChange = true;
 
@@ -944,11 +952,12 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     PopUpDateFormField(
 
                                                         format:DateFormat('yyyy-MM-dd'),
-                                                        controller: promisedRecieptDate,
+                                                        controller: promisedRecieptDate2,
                                                         // initialValue:promisedRecieptDate.text!=null||promisedRecieptDate.text!=""||promisedRecieptDate.text!="null"?
                                                         //     DateTime.parse(promisedRecieptDate.text):DateTime.parse("2022-05-26"),
                                                         label: "Promised Reciept Date",
                                                         onSaved: (newValue) {
+                                                          promisedRecieptDate2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
                                                           promisedRecieptDate.text = newValue
                                                               ?.toIso8601String()
                                                               .split("T")[0] ??
@@ -959,12 +968,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     SizedBox(height: height*.030,),
                                                   PopUpDateFormField(
 
-                                                      format:DateFormat('yyyy-MM-dd'),
-                                                      controller: plannedRecieptDate,
+                                                      format:DateFormat('dd-MM-yyyy'),
+                                                      controller: plannedRecieptDate2,
                                                       // initialValue:
                                                       //     DateTime.parse(fromDate!),
                                                       label: "Planned Reciept Date",
                                                       onSaved: (newValue) {
+                                                        plannedRecieptDate2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
                                                         plannedRecieptDate.text = newValue
                                                             ?.toIso8601String()
                                                             .split("T")[0] ??
@@ -1196,21 +1206,18 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     ),
                                                     tableHeadtext(
                                                       'Discount',
-
                                                       size: 13,
                                                       // color: Palette.containerDarknew,
                                                       // textColor: Palette.white
                                                     ),
                                                     tableHeadtext(
                                                       'FOC',
-
                                                       size: 13,
                                                       // color: Palette.containerDarknew,
                                                       // textColor: Palette.white
                                                     ),
                                                     tableHeadtext(
                                                       'Vatable Amount',
-
                                                       size: 13,
                                                       // color: Palette.containerDarknew,
                                                       // textColor: Palette.white
@@ -1218,7 +1225,6 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                     tableHeadtext(
                                                       'Vat',
-
                                                       size: 13,
                                                       // color: Palette.containerDarknew,
                                                       // textColor: Palette.white
@@ -1795,7 +1801,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: UnderLinedInput(
-                                                              initialCheck:true,
+                                                            initialCheck:true,
                                                             last: table[i].discount.toString() ?? "",
                                                             onChanged: (va) {
                                                               updateCheck=true;

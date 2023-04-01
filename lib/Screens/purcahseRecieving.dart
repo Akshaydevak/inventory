@@ -62,6 +62,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController orderCodeController = TextEditingController();
   TextEditingController recievingCodeController = TextEditingController();
   TextEditingController orederDateController = TextEditingController();
+  TextEditingController orederDate2Controller = TextEditingController();
   TextEditingController orderStatusController = TextEditingController();
   TextEditingController paymentStatusController = TextEditingController();
   TextEditingController invoiceStausController = TextEditingController();
@@ -83,6 +84,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController unitCostCheck = TextEditingController();//
   TextEditingController unitcost1 = TextEditingController(text: "0");
   TextEditingController expiryDate = TextEditingController(text: "0");
+  TextEditingController expiryDate2 = TextEditingController(text: "0");
   TextEditingController vendorCodeController = TextEditingController();
   TextEditingController recievedClearController = TextEditingController();
   TextEditingController unitCostClearController = TextEditingController();
@@ -260,7 +262,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   }
   clear(){
 
-
+    recievingLisnes.clear();
+    additionalVariants.clear();
       variantId="";
       varinatname="";
       unitCostCheck.text="";
@@ -271,6 +274,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
       discountClearController.clear();
       focClearController.clear();
       expiryDate.clear();
+      expiryDate2.clear();
       purchaseUomName="";
       supplierRefCode="";
       recievedQty=0;
@@ -379,7 +383,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           valueAddingRecievingTextEdingController();
                           if(recievingLisnes.isNotEmpty)
                           for(var i=0;i<recievingLisnes.length;i++){
-                            var date = new TextEditingController(text:recievingLisnes[i].expiryDate??"");
+                            var date = new TextEditingController(text:  recievingLisnes[i].expiryDate);
                             expirydateControllerList2.add(date);
 
                           }
@@ -392,6 +396,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           recievingCodeController.text = data.receivingCode ?? "";
                           receivingId=data.id;
                           orederDateController.text = data.orderCreatedDate ?? "";
+                          orederDate2Controller=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.orderCreatedDate ??"")));
                           orderStatusController.text = data.orderStatus ?? "";
 
                           invoiceStausController.text = data.invoiceStatus ?? "";
@@ -630,15 +635,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                               additionalVariants[Variable.tableindex] =
                                   additionalVariants[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,vat:purchaseTable?.vat,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
                               unitcostAdditionalListControllers[Variable.tableindex]=TextEditingController(text:purchaseTable?.unitCost.toString() );
-
                               var qty = additionalVariants[Variable.tableindex].receivedQty;
                               var vat = additionalVariants[Variable.tableindex].vat;
                               var foc = additionalVariants[Variable.tableindex].foc;
                               var excess = additionalVariants[Variable.tableindex].excessTax;
-
-
                               var unitcost = additionalVariants[Variable.tableindex].unitCost;
-
                               var Vdiscount = additionalVariants[Variable.tableindex].discount;
                               if(qty==0 || unitcost==0){
                                 print("ssssssssss");
@@ -806,7 +807,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                         print("error");
                       },
                       success: (list) {
-                        print("listtt" + list.toString());
+
                         paginatedList=list;
                         result = list.data;
                         setState(() {
@@ -909,7 +910,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                         // select: select,
                                                                         // vendorCode:vendorCode.text,
                                                                         orderCode:orderCodeController.text ,
-                                                                        orderDate:orederDateController .text,
+                                                                        orderDate:orederDate2Controller .text,
                                                                         // table:table,
                                                                         vat: double.tryParse( vatController.text),
                                                                         actualCost:double.tryParse( actualCostController.text),
@@ -918,18 +919,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                         unitCost:double.tryParse( unitCostController.text) ,
                                                                         excisetax:double.tryParse( excessTaxController.text) ,
                                                                         remarks: remarksController.text ,
-
-
-
-
-
                                                                       )),
                                                                 );
-
-
                                                               },
                                                             ),
-
                                                           ]
 
 
@@ -974,7 +967,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                             NewInputCard(
                                                                               readOnly: true,
                                                                               controller:
-                                                                              orederDateController,
+                                                                              orederDate2Controller,
                                                                               title:
                                                                               "Order Date",
                                                                               colors: Color(
@@ -1273,7 +1266,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           // textColor: Palette.white
                                                                                         ),
                                                                                         tableHeadtext(
-                                                                                          'Recieved Qty',
+                                                                                          'Received Qty',
 
                                                                                           size: 13,
                                                                                           // color: Palette.containerDarknew,
@@ -2138,7 +2131,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               verticalAlignment: TableCellVerticalAlignment.fill,
                                                                                               child: Tabledate(
 
-                                                                                                  format:DateFormat('yyyy-MM-dd'),
+                                                                                                  format:DateFormat('dd-MM-yyyy'),
                                                                                                   controller:recievingLisnes.length!=expirydateControllerList2.length?TextEditingController(text:""): expirydateControllerList2[i],
                                                                                                   label: "Promised reciept date",
                                                                                                   onSaved: (newValue) {
@@ -2147,6 +2140,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                     setState(() {
 
                                                                                                     });
+                                                                                                    expirydateControllerList2[i]=TextEditingController(text:DateFormat('dd-MM-yyyy').format(newValue!));
                                                                                                     recievingLisnes[i] =
                                                                                                         recievingLisnes[i]
                                                                                                             .copyWith(
@@ -3317,19 +3311,16 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               verticalAlignment: TableCellVerticalAlignment.fill,
                                                                                               child: Tabledate(
 
-                                                                                                  format:DateFormat('yyyy-MM-dd'),
+                                                                                                  format:DateFormat('dd-MM-yyyy'),
                                                                                                   controller: expiryDate2tControllers[i],
                                                                                                   label: "Promised reciept date",
                                                                                                   onSaved: (newValue) {
                                                                                                     updateCheck1=true;
-                                                                                                    additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                                    additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                                     setState(() {
 
                                                                                                     });
-                                                                                                    expiryDate2tControllers[i]=TextEditingController(text:newValue
-                                                                                                        ?.toIso8601String()
-                                                                                                        .split("T")[0] ??
-                                                                                                        ""  );
+                                                                                                    expiryDate2tControllers[i]=TextEditingController(text:DateFormat('dd-MM-yyyy').format(newValue!));
 
                                                                                                     additionalVariants[i] =
                                                                                                         additionalVariants[i]
@@ -4004,7 +3995,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           child:          Tabledate(
 
                                                                                               format:DateFormat('yyyy-MM-dd'),
-                                                                                              controller:expiryDate,
+                                                                                              controller:expiryDate2,
                                                                                               // initialValue:
                                                                                               //     DateTime.parse(fromDate!),
                                                                                               label: "Promised reciept date",
@@ -4393,7 +4384,9 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
   TextEditingController vendorCode = TextEditingController();
   TextEditingController vendorCodeName = TextEditingController();
   TextEditingController promised = TextEditingController();
+  TextEditingController promised2 = TextEditingController();
   TextEditingController planned = TextEditingController();
+  TextEditingController planned2 = TextEditingController();
   TextEditingController note = TextEditingController();
   TextEditingController vendoraddress = TextEditingController();
   TextEditingController vendortrnnumber = TextEditingController();
@@ -4439,19 +4432,18 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
         }, success: (data) {
           if (data.data1) {
             setState(() {
+              context.read<InventorysearchCubit>().getInventorySearch("code");
+              Navigator.pop(context);
+
+              context.showSnackBarSuccess(data.data2);
 
 
 
-            showDailogPopUp(
-                context,
-                SuccessPopup(
-                  content: data.data2,
-                  // table:table,
-                ));
 
-            context.read<InventorysearchCubit>().getInventorySearch("code");
+
+
             // context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
-           Navigator.pop(context);
+
             });
 
 
@@ -4626,13 +4618,13 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
 
                                     PopUpDateFormField(
 
-                                        format:DateFormat('yyyy-MM-dd'),
-                                        controller: promised,
+                                        format:DateFormat('dd-MM-yyyy'),
+                                        controller: promised2,
                                         // initialValue:
                                         //     DateTime.parse(fromDate!),
                                         label: "Promised Receipt Date",
                                         onSaved: (newValue) {
-                                          print("newValue"+newValue.toString());
+                                          promised2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
                                           promised.text = newValue
                                               ?.toIso8601String()
                                               .split("T")[0] ??
@@ -4673,12 +4665,13 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                   children: [
                                     PopUpDateFormField(
                                         // row: true,
-                                        format:DateFormat('yyyy-MM-dd'),
-                                        controller:planned,
+                                        format:DateFormat('dd-MM-yyyy'),
+                                        controller:planned2,
                                         // initialValue:
                                         //     DateTime.parse(fromDate!),
                                         label: "Planned Receipt Date",
                                         onSaved: (newValue) {
+                                          planned2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
                                           planned.text = newValue
                                               ?.toIso8601String()
                                               .split("T")[0] ??

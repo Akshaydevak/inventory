@@ -52,6 +52,7 @@ class OrderedPersonModel with _$OrderedPersonModel {
     final String? lname,
     @JsonKey(name:"user_login_id") final int? userLoginId,
     @JsonKey(name:"employee_usercode") final String? employeeUserCode,
+    @JsonKey(name:"employee_code") final String? employeeCode,
     @JsonKey(name:"organization_code") final String? organisationCode,
     @JsonKey(name:"designation_id") final int? designationId,
     @JsonKey(name:"is_active") final bool? isActive,

@@ -647,6 +647,8 @@ mixin _$OrderedPersonModel {
   int? get userLoginId => throw _privateConstructorUsedError;
   @JsonKey(name: "employee_usercode")
   String? get employeeUserCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "employee_code")
+  String? get employeeCode => throw _privateConstructorUsedError;
   @JsonKey(name: "organization_code")
   String? get organisationCode => throw _privateConstructorUsedError;
   @JsonKey(name: "designation_id")
@@ -672,6 +674,7 @@ abstract class $OrderedPersonModelCopyWith<$Res> {
       String? lname,
       @JsonKey(name: "user_login_id") int? userLoginId,
       @JsonKey(name: "employee_usercode") String? employeeUserCode,
+      @JsonKey(name: "employee_code") String? employeeCode,
       @JsonKey(name: "organization_code") String? organisationCode,
       @JsonKey(name: "designation_id") int? designationId,
       @JsonKey(name: "is_active") bool? isActive});
@@ -695,6 +698,7 @@ class _$OrderedPersonModelCopyWithImpl<$Res, $Val extends OrderedPersonModel>
     Object? lname = freezed,
     Object? userLoginId = freezed,
     Object? employeeUserCode = freezed,
+    Object? employeeCode = freezed,
     Object? organisationCode = freezed,
     Object? designationId = freezed,
     Object? isActive = freezed,
@@ -719,6 +723,10 @@ class _$OrderedPersonModelCopyWithImpl<$Res, $Val extends OrderedPersonModel>
       employeeUserCode: freezed == employeeUserCode
           ? _value.employeeUserCode
           : employeeUserCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      employeeCode: freezed == employeeCode
+          ? _value.employeeCode
+          : employeeCode // ignore: cast_nullable_to_non_nullable
               as String?,
       organisationCode: freezed == organisationCode
           ? _value.organisationCode
@@ -750,6 +758,7 @@ abstract class _$$_OrderedPersonModelCopyWith<$Res>
       String? lname,
       @JsonKey(name: "user_login_id") int? userLoginId,
       @JsonKey(name: "employee_usercode") String? employeeUserCode,
+      @JsonKey(name: "employee_code") String? employeeCode,
       @JsonKey(name: "organization_code") String? organisationCode,
       @JsonKey(name: "designation_id") int? designationId,
       @JsonKey(name: "is_active") bool? isActive});
@@ -771,6 +780,7 @@ class __$$_OrderedPersonModelCopyWithImpl<$Res>
     Object? lname = freezed,
     Object? userLoginId = freezed,
     Object? employeeUserCode = freezed,
+    Object? employeeCode = freezed,
     Object? organisationCode = freezed,
     Object? designationId = freezed,
     Object? isActive = freezed,
@@ -795,6 +805,10 @@ class __$$_OrderedPersonModelCopyWithImpl<$Res>
       employeeUserCode: freezed == employeeUserCode
           ? _value.employeeUserCode
           : employeeUserCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      employeeCode: freezed == employeeCode
+          ? _value.employeeCode
+          : employeeCode // ignore: cast_nullable_to_non_nullable
               as String?,
       organisationCode: freezed == organisationCode
           ? _value.organisationCode
@@ -821,6 +835,7 @@ class _$_OrderedPersonModel implements _OrderedPersonModel {
       this.lname,
       @JsonKey(name: "user_login_id") this.userLoginId,
       @JsonKey(name: "employee_usercode") this.employeeUserCode,
+      @JsonKey(name: "employee_code") this.employeeCode,
       @JsonKey(name: "organization_code") this.organisationCode,
       @JsonKey(name: "designation_id") this.designationId,
       @JsonKey(name: "is_active") this.isActive});
@@ -841,6 +856,9 @@ class _$_OrderedPersonModel implements _OrderedPersonModel {
   @JsonKey(name: "employee_usercode")
   final String? employeeUserCode;
   @override
+  @JsonKey(name: "employee_code")
+  final String? employeeCode;
+  @override
   @JsonKey(name: "organization_code")
   final String? organisationCode;
   @override
@@ -852,7 +870,7 @@ class _$_OrderedPersonModel implements _OrderedPersonModel {
 
   @override
   String toString() {
-    return 'OrderedPersonModel(id: $id, fname: $fname, lname: $lname, userLoginId: $userLoginId, employeeUserCode: $employeeUserCode, organisationCode: $organisationCode, designationId: $designationId, isActive: $isActive)';
+    return 'OrderedPersonModel(id: $id, fname: $fname, lname: $lname, userLoginId: $userLoginId, employeeUserCode: $employeeUserCode, employeeCode: $employeeCode, organisationCode: $organisationCode, designationId: $designationId, isActive: $isActive)';
   }
 
   @override
@@ -867,6 +885,8 @@ class _$_OrderedPersonModel implements _OrderedPersonModel {
                 other.userLoginId == userLoginId) &&
             (identical(other.employeeUserCode, employeeUserCode) ||
                 other.employeeUserCode == employeeUserCode) &&
+            (identical(other.employeeCode, employeeCode) ||
+                other.employeeCode == employeeCode) &&
             (identical(other.organisationCode, organisationCode) ||
                 other.organisationCode == organisationCode) &&
             (identical(other.designationId, designationId) ||
@@ -877,8 +897,17 @@ class _$_OrderedPersonModel implements _OrderedPersonModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, fname, lname, userLoginId,
-      employeeUserCode, organisationCode, designationId, isActive);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      fname,
+      lname,
+      userLoginId,
+      employeeUserCode,
+      employeeCode,
+      organisationCode,
+      designationId,
+      isActive);
 
   @JsonKey(ignore: true)
   @override
@@ -902,6 +931,7 @@ abstract class _OrderedPersonModel implements OrderedPersonModel {
           final String? lname,
           @JsonKey(name: "user_login_id") final int? userLoginId,
           @JsonKey(name: "employee_usercode") final String? employeeUserCode,
+          @JsonKey(name: "employee_code") final String? employeeCode,
           @JsonKey(name: "organization_code") final String? organisationCode,
           @JsonKey(name: "designation_id") final int? designationId,
           @JsonKey(name: "is_active") final bool? isActive}) =
@@ -922,6 +952,9 @@ abstract class _OrderedPersonModel implements OrderedPersonModel {
   @override
   @JsonKey(name: "employee_usercode")
   String? get employeeUserCode;
+  @override
+  @JsonKey(name: "employee_code")
+  String? get employeeCode;
   @override
   @JsonKey(name: "organization_code")
   String? get organisationCode;

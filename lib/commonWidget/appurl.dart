@@ -57,8 +57,7 @@ const vendorCodeUrl =
 const purchaseRecievingRead =
     purchaseOrderLiveBaseUrl + "purchase-order/read-receiving-by-purchase-order/";
 const purchaseRecievingPatch = purchaseOrderLiveBaseUrl + "purchase-order/patch-receiving/";
-const generatedPo =
-    purchaseOrderLiveBaseUrl + "purchase-order/create-missing-system-generated-lpo";
+const generatedPo = purchaseOrderLiveBaseUrl + "purchase-order/create-missing-system-generated-lpo";
 const additionalGeneratedPo =
     purchaseOrderLiveBaseUrl + "purchase-order/create-additional-system-generated-lpo";
 
