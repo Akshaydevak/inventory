@@ -102,7 +102,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
 
 
                     Container(
-                       width:MediaQuery.of(context).size.width/1.8,
+                       width:MediaQuery.of(context).size.width/1.2,
                        padding: EdgeInsets.only(top: height*.04),
                        height: height*.18,
                      // margin: EdgeInsets.only(top:width*.012),

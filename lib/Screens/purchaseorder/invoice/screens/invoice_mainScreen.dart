@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
@@ -9,6 +10,7 @@ import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventoryP
 import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventory_read_cubit.dart';
 import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventorypost_cubit.dart';
 import 'package:inventory/Screens/inventory_creation_tab/inventory_read_model.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/purchaseorder/invoice/screens/purchase_order_stabletable.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment_sale_post_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
@@ -18,6 +20,7 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -289,10 +292,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                           success: (data) {
 
                             setState(() {
-                              print("datasssssssssssssss"+data.toString());
+
                               readObject=data;
                               if(data.invoicedata!=null){
-                                print("entered 1st position");
+
                                 setState(() {
                                   invoiceId=data.invoicedata?.id;
                                   purchaseCodeController.text=data.invoicedata?.orderCode??"";
@@ -333,7 +336,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
 
                                 inventoryId=data.inventoryId??"";
-                                orderedDateController.text=data.orderDate??"";
+                                orderedDateController=TextEditingController(text:data.orderDate==null?"": DateFormat('dd-MM-yyyy').format(DateTime.parse(data.orderDate??"")));
                                 paymentCodeController.text=data.paymentCode??"";
                                 paymentStatusController.text=data.payementStatus??"";
                                 orderStatusController.text=data.orderStatus??"";
@@ -429,33 +432,21 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               clear();
                               selectedVertical=index;
 
-                              veritiaclid =
-                                  result[index].id;
+                              veritiaclid = result[index].id;
                               context
-                                  .read<
-                                  InventoryReadCubit>()
-                                  .getInventoryRead(
-                                  veritiaclid!);
+                                  .read<InventoryReadCubit>().getInventoryRead(veritiaclid!);
                             });
                           },result: result,
-                          child:     tablePagination(
-                                () => context
-                                .read<InventorysearchCubit>()
-                                .refresh(),
+                          child:     tablePagination(() => context.read<InventorysearchCubit>().refresh(),
                             back: paginatedList?.previousUrl == null
                                 ? null
-                                : () {
-                              context
-                                  .read<InventorysearchCubit>()
-                                  .previuosslotSectionPageList();
+                                : () {context.read<InventorysearchCubit>().previuosslotSectionPageList();
                             },
                             next:paginatedList?.nextPageUrl == null
                                 ? null
                                 : () {
                               // print(data.nextPageUrl);
-                              context
-                                  .read<InventorysearchCubit>()
-                                  .nextslotSectionPageList("");
+                              context.read<InventorysearchCubit>().nextslotSectionPageList("");
                             },
                           ),
                         ),
@@ -549,18 +540,36 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                   TextButtonLarge(
                                     text: "PREVIEW",
-                                    onPress: (){
-                                      print("Akshay");
+                                    onPress: () async {
+                                      InventoryListModel model=InventoryListModel();
+
+
+                                      UserPreferences userPref = UserPreferences();
+                                      await userPref.getInventoryList().then((user) {
+                                        print("entereeeeeeeeeeeeeeeeeeed");
+
+                                        if (user.isInventoryExist == true) {
+                                          model=user;
+                                          print("existing");
+                                          print(model.email);
+                                          // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                        } else {
+
+                                        }
+                                      });
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) =>
                                             InventoryPrintScreen(
                                               note: noteController.text,
                                               select: select,
-                                              // vendorCode:vend.text,
-                                              // orderCode:ord.text ,
                                               orderDate: orderedDateController.text,
                                               table:additionalVariants,
+                                              orderCode: purchaseCodeController.text,
                                               vat: double.tryParse( vatController.text),
                                               actualCost:double.tryParse( actualCostController.text),
                                               variableAmount:double.tryParse( variableAmountController.text) ,
@@ -568,6 +577,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                               unitCost:double.tryParse( unitCostController.text) ,
                                               excisetax:double.tryParse( exciseTaxController.text) ,
                                               remarks: remarksController.text ,
+                                              model: model,
                                             )),
                                       );
 
@@ -596,7 +606,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                 unitCostController: unitCostController,
                                 variableAmountController: variableAmountController,
                                 vatController: vatController,
-
                               ),
                               // Row(
                               //   children: [
@@ -812,7 +821,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
 
                                                           tableHeadtext(
-                                                            'Is Recieved',
+                                                            'Is Received',
 
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
@@ -844,7 +853,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
-                                                            'Variable Amount',
+                                                            'Vatable Amount',
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
@@ -960,42 +969,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                                     fontWeight: FontWeight.w500),
 
                                                               ),
-                                                              // TableCell(
-                                                              //   verticalAlignment: TableCellVerticalAlignment.middle,
-                                                              //   child: PopUpCall(
-                                                              //
-                                                              //     type:
-                                                              //     "cost-method-list",
-                                                              //     value: additionalVariants[i].variantId,
-                                                              //     onSelection:
-                                                              //         (VariantId? va) {
-                                                              //
-                                                              //       additionalVariants[i] = additionalVariants[i].copyWith(variantId:va?.code );
-                                                              //       setState(() {
-                                                              //         var  variant=
-                                                              //             va?.code;
-                                                              //         int? id = va!.id;
-                                                              //         Variable.tableindex =i;
-                                                              //         Variable.tableedit=true;
-                                                              //
-                                                              //
-                                                              //         // onChange = true;
-                                                              //         // context
-                                                              //         //     .read<
-                                                              //         //     TableDetailsCubitDartCubit>()
-                                                              //         //     .getTableDetails(
-                                                              //         //     id);
-                                                              //         // context
-                                                              //         //     .read<PurchaseStockCubit>()
-                                                              //         //     .getCurrentStock(1, variant);
-                                                              //
-                                                              //         // orderType = va!;
-                                                              //       });
-                                                              //     },
-                                                              //     onAddNew: () {},
-                                                              //     // restricted: true,
-                                                              //   ),
-                                                              // ),
+
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: textPadding(additionalVariants[i].receiveLineCode .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
@@ -1020,7 +994,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].receivedQty.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].totalQty.toString() ?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1038,29 +1014,46 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].unitCost .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].unitCost .toString()?? "", fontSize: 12,
+
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].excessTax .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].excessTax .toString()?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,
+                                                                    alighnment: Alignment.topRight),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].discount .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].discount .toString()?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,
+                                                                    alighnment: Alignment.topRight),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].foc .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].foc .toString()?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,
+                                                                    alighnment: Alignment.topRight),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].variableAmount .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].variableAmount .toString()?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                               ),
 
 
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].vat.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].vat.toString() ?? "",
+                                                                    fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                               ),
 
 
@@ -1068,11 +1061,17 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: textPadding(
-                                                                    additionalVariants[i].actualCost.toString() ?? "",fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                    additionalVariants[i].actualCost.toString() ?? "",fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,
+                                                                    alighnment: Alignment.topRight),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500,
+                                                                    alighnment: Alignment.topRight),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1173,10 +1172,11 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                     if(additionalVariants[i].isInvoiced==false){
                                       confirmationCheck=true;
                                     }
-                                    result = additionalVariants.where((o) => o.isInvoiced == true).toList();
+
 
 
                                   }
+                                  result = additionalVariants.where((o) => o.isInvoiced == true).toList();
                                   if(confirmationCheck){
                                   showDailogPopUp(
                                   context,
@@ -1202,7 +1202,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                       actualCost:double.tryParse( actualCostController.text),
                                       vat:double.tryParse( vatController.text),
                                       invoicedBy: Variable.created_by,
-                                      invoiceLines: result??[],
+                                      invoiceLines: additionalVariants??[],
 
 
 
@@ -1494,6 +1494,7 @@ class InventoryPrintScreen extends StatefulWidget {
   final double? unitCost;
   final double? excisetax;
   final  List<Lines> table;
+  final InventoryListModel? model;
 
   InventoryPrintScreen({
     this.vendorCode="",
@@ -1508,7 +1509,7 @@ class InventoryPrintScreen extends StatefulWidget {
     this.discount=0.00,
     this.vat=0.00,
     this.unitCost=0.00,
-    this.excisetax=0.00,
+    this.excisetax=0.00, this.model,
 
 
 
@@ -1545,7 +1546,7 @@ class _InventoryPrintScreenState extends State<InventoryPrintScreen> {
 
       body:PdfPreview(
         build: (format) => _generatePdf(format,"title",widget.orderDate, widget.orderCode,context,widget.vendorCode,
-            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table),
+            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table,widget.model!),
       ),
 
     );
@@ -1553,11 +1554,11 @@ class _InventoryPrintScreenState extends State<InventoryPrintScreen> {
 }
 Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDate,String orderCode,BuildContext context,String vendorCode,
     double? discount,double? actualCost,double? variableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<Lines> table) async {
+    ,double? excisetax,double? vat,String note,String remarks,List<Lines> table,InventoryListModel model) async {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-  // final font = await PdfGoogleFonts.nunitoExtraLight();
+  final font = await PdfGoogleFonts.nunitoExtraLight();
   //  final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
   //  _printPdfAsHtml() async {
   //   print('Print ...');
@@ -1585,25 +1586,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // PDF.assets(
-                      //   "assets/demo.pdf",
-                      //   // height: MediaQuery.of(context).size.height,
-                      //   // width: MediaQuery.of(context).size.width,
-                      //   placeHolder: Image.asset("assets/images/pdf.png",
-                      //       height: 200, width: 100),
-                      // ),
-                      // pw.  Container(
-                      //     height: 16,
-                      //     width: 16,
-                      //     // decoration: pw. BoxDecoration(
-                      //     //     image:pw. DecorationImage(
-                      //     //         image:pw. Image("https://i.pinimg.com/736x/d2/53/fb/d253fbcb29b2c743b57816b23746fe12--portugal-national-team-cristiano-ronaldo-portugal.jpg")
-                      //     //     )
-                      //     // ),
-                      //     child: pw. Container(
-                      //         child: pw.Image(image)),
-                      //   ),
-                      // _printPdfAsHtml,
+
                       pw. Spacer(),
                       pw. Container(
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -1660,14 +1643,16 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               child: pw.Column(
                                 crossAxisAlignment:pw. CrossAxisAlignment.start,
                                 children: [
-                                  pw.   Text("Ahlan cart company Limted",
+                                  pw.   Text(model.name??" ",
                                     style:  pw.TextStyle( fontSize:15,fontWeight:pw. FontWeight.bold ),),
                                   pw.  SizedBox(height: 2,),
-                                  pw.  Text("Shop no. 514 5th floor aditya arcademall",
+                                  pw.  Text(model.addressOne??"",
                                     style:  pw.TextStyle( fontSize:7 ),),
                                   pw.   SizedBox(height: 2,),
-                                  pw. Text("road mumai MUMBAI,400004",
-                                    style:  pw.TextStyle(fontSize:7),)
+                                  pw. Text(model.addressTwo??"",
+                                    style:  pw.TextStyle(fontSize:2),),
+                                  pw. Text(model.email??"",
+                                    style:  pw.TextStyle( font: font,fontSize:7),)
 
                                 ],
                               ),
@@ -1701,7 +1686,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                                 bottom:pw. BorderSide(width: .5,),
                                               )
                                           ),
-                                          width: 120,
+                                          width: 90,
                                           child: pw.Text(orderDate==""?DateTime.now()
                                               ?.toIso8601String()
                                               .split("T")[0] ??
@@ -1716,7 +1701,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                                 ),
                                               )
                                           ),
-                                          width: 120,
+                                          width: 90,
                                           child: pw.Text(orderCode==""?"":orderCode,style:  pw.TextStyle(fontSize:9))
                                       ),
 

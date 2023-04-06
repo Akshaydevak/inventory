@@ -6,10 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -434,20 +436,16 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                 : table = [];
 
             print("tablsssssssssssssssssse"+table.toString());
-            setState(() {
-
-            });
 
             //
             // inventoryId.text=data.data?.iventoryId??"";
-
             ordereCodeController.text=data.data?.orderCode??"";
             orderType.text=data.data?.purchaseOrderType??"";
-            orderDateController.text=data.data?.orderDate??"";
+            orderDateController=TextEditingController(text:data.data?.orderDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.orderDate??"")));
             inventoryIdController.text=data.data?.iventoryId??"";
             promisedRecieptDate.text=data.data?.promisedReceiptdate??"";
-           promisedRecieptDate2=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??""!)));
-           plannedRecieptDate2=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??""!)));
+           promisedRecieptDate2=TextEditingController(text: data.data?.promisedReceiptdate==null?"": DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??""!)));
+           plannedRecieptDate2=TextEditingController(text:data.data?.plannedRecieptDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??""!)));
             plannedRecieptDate.text=data.data?.plannedRecieptDate??"";
             orderedPersonController.text=data.data?.orderedPereson??"";
 
@@ -534,24 +532,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                     unitcost = purchaseTable?.unitCost;
                     vat1 = purchaseTable?.vat;
                     unitCostCheck.text=purchaseTable?.unitCost.toString()??"";
-                    // supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
-                    print(  supplierRefCode);
-                    print("unitttt"+unitcost.toString());
-
-                    // // vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
-                    // print(
-                    //     "vm.totalUnitcost" + vm.totalUnitcost.toString());
-                    //
                     purchaseUomName = purchaseTable?.purchaseUomName??"";
                     vrefcod = purchaseTable?.code??"";
-                    // vid = purchaseTable?.id;
-                    // purchaseTable?.excessTax != null
-                    //     ? eTax = purchaseTable?.excessTax
-                    //     : eTax = 0;
-                    //
-                    barcode =
-                        purchaseTable?.barCode?.barcodeNumber.toString()??"";
-
+                    barcode = purchaseTable?.barCode?.barcodeNumber.toString()??"";
     if(unitcost==0 ||recievedQty==0){
     actualCost1=0;
     vatableAmount1=0;
@@ -559,15 +542,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
     }
     else {
       vatableAmountCalculation(unitcost, recievedQty, excess1, discount);
-
       actualAndgrandTotal(vatableAmount1, vat1);
     }
                   });
-
                 }
-
-                //
-
               }
               );
             });
@@ -581,7 +559,6 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
             orElse: () {},
             error: () {
               if(stockCheck==false){
-                print("AKSKKSKSKSK");
                 currentStock.add(0);
                 setState(() {
 
@@ -800,15 +777,36 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                           ),
                           TextButtonLarge(
                             text: "PREVIEW",
-                            onPress: (){
+                            onPress: () async {
                               print("Akshay");
+                              print("Akshay");
+                              InventoryListModel model=InventoryListModel();
+
+
+                              UserPreferences userPref = UserPreferences();
+                              await userPref.getInventoryList().then((user) {
+                                print("entereeeeeeeeeeeeeeeeeeed");
+
+                                if (user.isInventoryExist == true) {
+                                  model=user;
+                                  print("existing");
+                                  print(model.email);
+                                  // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                } else {
+
+                                }
+                              });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) =>
                                     PrintScreen(
                                       note: noteController.text,
                                       select: select,
-                                      // vendorCode:vend.text,
+                                      model: model,
                                       orderCode:ordereCodeController.text ,
                                       orderDate: orderDateController.text,
                                       table:table,
@@ -819,10 +817,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                       unitCost:double.tryParse( unitCostController.text) ,
                                       excisetax:double.tryParse( excessTaxController.text) ,
                                       remarks: remarksController.text ,
-
-
-
-
+                                      pageName: "Purchase Order",
 
                                     )),
                               );
@@ -882,24 +877,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     NewInputCard(
                                                         readOnly: true,
                                                         controller: orderDateController, title: "Order Date"),
-                                                    // PopUpDateFormField(
-                                                    //
-                                                    //     format:DateFormat('yyyy-MM-dd'),
-                                                    //     controller: orderDateController,
-                                                    //     //initialValue:orderDateController.text!=null||orderDateController.text!=""||orderDateController.text!="null"?DateTime.parse(orderDateController.text):DateTime.parse("2022-05-26"),
-                                                    //     label: "Order Date",
-                                                    //     onSaved: (newValue) {
-                                                    //       print("new value"+newValue.toString());
-                                                    //       orderDateController.text = newValue
-                                                    //           ?.toIso8601String()
-                                                    //           .split("T")[0] ??
-                                                    //           "";
-                                                    //       print("promised_receipt_date.text"+orderDateController.text.toString());
-                                                    //     },
-                                                    //     enable: true),
-                                                    // SizedBox(height: height*.030,),
-                                                    // NewInputCard(
-                                                    //     controller: inventoryIdController, title: "Inventory  id"),
+
                                                     SizedBox(height: height*.030,),
                                                     NewInputCard(
                                                       controller: orderedPersonController,
@@ -917,6 +895,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   "+++++++++++++++++++++++"+va.toString());
                                                               //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                                                               setState(() {
+                                                                print(va.employeeCode);
                                                                 orderedPersonController.text = va!.employeeCode.toString();
 
 
@@ -951,7 +930,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     SizedBox(height: height*.030,),
                                                     PopUpDateFormField(
 
-                                                        format:DateFormat('yyyy-MM-dd'),
+                                                        format:DateFormat('dd-MM-yyyy'),
                                                         controller: promisedRecieptDate2,
                                                         // initialValue:promisedRecieptDate.text!=null||promisedRecieptDate.text!=""||promisedRecieptDate.text!="null"?
                                                         //     DateTime.parse(promisedRecieptDate.text):DateTime.parse("2022-05-26"),
@@ -990,8 +969,6 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     SizedBox(height: height*.030,),
                                                     SizedBox(height: height*.030,),
                                                     SizedBox(height: height*.194,),
-
-
                                                   ],
                                                 ),),
                                                 Expanded(child: Column(
@@ -1517,7 +1494,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
 
-                                                              fontWeight: FontWeight.w500),
+                                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                         ),
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1926,9 +1903,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   .variableAmount
                                                                   .toString(),
 
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w500),
+                                                              fontWeight: FontWeight.w500,
+                                                              alighnment: Alignment.topRight),
+
                                                         ),
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1939,7 +1916,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                               fontWeight:
                                                               FontWeight
-                                                                  .w500),
+                                                                  .w500,alighnment: Alignment.topRight
+                                                          ),
                                                         ),
 
                                                         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$  vat   **************************
@@ -2013,7 +1991,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                               fontWeight:
                                                               FontWeight
-                                                                  .w500),
+                                                                  .w500,alighnment: Alignment.topRight),
                                                         ),
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2631,8 +2609,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(vat1.toString()??"",
-
-                                                          fontWeight: FontWeight.w500),
+                                                          fontWeight: FontWeight.w500, alighnment: Alignment.topRight,),
                                                     ),
                                                     // TableCell(
                                                     //   verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2682,13 +2659,15 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(actualCost1.toString()??"",
 
-                                                          fontWeight: FontWeight.w500),
+                                                          fontWeight: FontWeight.w500,
+                                                        alighnment: Alignment.topRight,),
                                                     ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                       child: textPadding(grandTotal1.toString()??"",
 
-                                                          fontWeight: FontWeight.w500),
+                                                          fontWeight: FontWeight.w500,
+                                                        alighnment: Alignment.topRight),
                                                     ),
                                                     TableCell(
                                                       verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2749,11 +2728,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         else if(recievedQty==0||recievedQty==""){
                                                           context.showSnackBarError(
                                                               "the requested quantity not be 0 or empty");
-
                                                         }
                                                         else if(recievedQty!<foc1!){
                                                           context.showSnackBarError("the received qty allways greater than  foc");
-
                                                         }
                                                         else {
                                                           setState(() {

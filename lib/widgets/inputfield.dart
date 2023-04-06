@@ -284,12 +284,14 @@ class Tabledate extends StatefulWidget {
   final TextEditingController? controller;
   // final TextEditingController controller;
   final FormFieldSetter<DateTime>? onSaved;
+  final VoidCallback? onSuffixIconPressed;
   final DateFormat? format;
   const Tabledate(
       {Key? key,
         required this.label,
         this.controller,
         this.row=false,
+        this.onSuffixIconPressed,
         this.initialCheck=false,
 
         this.enable = true,
@@ -359,24 +361,25 @@ class _Tabledate extends State<Tabledate> {
 
       validator: (value) => value == null ? "* required" : null,
       decoration: InputDecoration(
-        //suffixIcon: Icon(Icons.calendar_today_outlined),
+        suffixIcon: IconButton(onPressed: () {
+
+        },icon:widget.controller?.text.isNotEmpty==true?Icon(Icons.clear):Icon(Icons.calendar_month) ,),
         contentPadding: null,
         labelStyle: TextStyle(color: Colors.black),
         // labelText: widget.initialValue?.toString().split(" ")[0],
         isDense: true,
         label: null,
         alignLabelWithHint: true,
-        enabledBorder: OutlineInputBorder(
-            borderRadius:BorderRadius.circular(2),
-
-            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-
-        focusedBorder: OutlineInputBorder(
-            borderRadius:BorderRadius.circular(2),
-
-            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-        border: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.001))),
+        // enabledBorder: OutlineInputBorder(
+        //     borderRadius:BorderRadius.circular(2),
+        //
+        //     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+        //
+        // focusedBorder: OutlineInputBorder(
+        //     borderRadius:BorderRadius.circular(2),
+        //
+        //     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+        border: InputBorder.none,
       ),
       format: mFormat,
       style: TextStyle(fontSize: 12), onChanged: widget.onSaved,

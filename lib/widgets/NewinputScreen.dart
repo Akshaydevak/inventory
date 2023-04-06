@@ -134,9 +134,11 @@ class _NewInputCardState extends State<NewInputCard> {
                 FilteringTextInputFormatter.digitsOnly
               ]:null,
               decoration: InputDecoration(
+                hintText:widget.icondrop?"-select-":"",
+
 
                 filled: true,
-                fillColor: widget.readOnly?Color(0xffF2F3F5).withOpacity(.2):Colors.white,
+                fillColor: widget.readOnly?Color(0xE3E3E3).withOpacity(.2):Colors.white,
                 suffixIcon: widget.password
                     ? IconButton(
                   icon: show
@@ -161,8 +163,8 @@ class _NewInputCardState extends State<NewInputCard> {
                 // label: Text(
                 //   widget.label,
                 // ),
-                hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
-                hintText: widget.label,
+                hintStyle: const TextStyle(fontSize: 15,color: Colors.black),
+                // hintText: widget.label,
                 enabledBorder:OutlineInputBorder(
                   borderRadius:BorderRadius.circular(2),
 
@@ -230,6 +232,7 @@ class _NewInputCardState extends State<NewInputCard> {
 
 
               decoration: InputDecoration(
+                hintText:widget.icondrop?"-select-":"",
                 counterText: '',
 
                 contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 16.5),
@@ -237,7 +240,7 @@ class _NewInputCardState extends State<NewInputCard> {
 
 
                 filled: true,
-                fillColor: widget.readOnly?Color(0xffF2F3F5).withOpacity(.2):Colors.white,
+                fillColor: widget.readOnly?Color(0xE3E3E3).withOpacity(.2):Colors.white,
                 suffixIcon: widget.password
                     ? IconButton(
                   icon: show
@@ -283,8 +286,8 @@ class _NewInputCardState extends State<NewInputCard> {
                 // label: Text(
                 //   widget.label,
                 // ),
-                hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
-                hintText: widget.label,
+                hintStyle: const TextStyle(fontSize: 15,color: Colors.grey),
+                // hintText: widget.label,
                 enabledBorder:OutlineInputBorder(
                     borderRadius:BorderRadius.circular(2),
 
@@ -926,11 +929,12 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
       children: [
         Container(
 
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
           // color: Colors.grey.shade200,
           child:widget.initialCheck?
           Center(
             child: TextFormField(
+              textAlign:TextAlign.right,
               readOnly: widget.readOnly,
               style:CommonTextStyle.normalTableFieldStyle,
 
@@ -958,7 +962,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                 isCollapsed: true,
 
 
-                contentPadding: EdgeInsets.all(20),
+                contentPadding: EdgeInsets.all(10),
                 isDense: true,
                 hintText: widget.hintText,
                 hintStyle: TextStyle(fontSize: 14),
@@ -968,9 +972,10 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
           ):
           Container(
 
-            alignment: Alignment.center,
+            alignment: Alignment.topRight,
             child: Center(
               child: TextFormField(
+                textAlign:TextAlign.right,
                 readOnly: widget.readOnly,
                 style: CommonTextStyle.normalTableFieldStyle,
 
@@ -1000,9 +1005,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                   filled: true,
                   fillColor: widget.filledColour,
                   suffixIcon: widget.suffixIconEnable?Icon(Icons.arrow_downward_outlined):null,
-
-
-                  contentPadding: EdgeInsets.all(20),
+                  contentPadding: EdgeInsets.all(10),
                   isDense: true,
                   hintText: widget.hintText,
                   hintStyle: TextStyle(fontSize: 14),

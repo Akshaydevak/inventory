@@ -10243,6 +10243,7 @@ class _RequestFormCstomGroupListPopup extends State<RequestFormCstomGroupListPop
                                                 OrderedPersonModel(
                                                   id: table[i].id,
                                                   organisationCode: table[i].organisationCode,
+                                                  employeeCode: table[i].employeeCode
 
                                                 );
                                                 Navigator.pop(context);

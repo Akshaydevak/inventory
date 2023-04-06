@@ -13,6 +13,7 @@ import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -53,6 +54,7 @@ import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 
 import '../printScreen.dart';
 import 'Dashboard.dart';
+import 'logi/model/inventorylistmodel.dart';
 
 class GeneralScreen extends StatefulWidget {
   final bool isCollapsed;
@@ -871,32 +873,21 @@ List<TextEditingController> vatController =[];
                           else{
                             setState(() {
                               discount.text = data.data?.discount?.toString()??"";
-
                             });
-
                           }
                           ordercode.text=data.data?.orderCode.toString()??"";
                           vendorCode.text=data.data?.vendorId.toString()??"";
-                          // vendorCodeName.text=data.data?.ve.toString()??"";
                           Recievingstatus.text=data.data?.recievingStatus??"";
                           Paymentstatus.text=data.data?.paymentStatus??"";
                           Paymentcode.text=data.data?.paymentcode??"";
                           promised_receipt_date=TextEditingController(text:data.data?.promisedReceiptdate??"");
-                          promised_receipt_date2=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??""!)));
-                         planned_receipt_date2=TextEditingController(text:  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??""!)));
+                          promised_receipt_date2=TextEditingController(text:data.data?.promisedReceiptdate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??"")));
+                         planned_receipt_date2=TextEditingController(text:data.data?.plannedRecieptDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??"")));
                           planned_receipt_date=TextEditingController(text:data.data?.plannedRecieptDate??"");
-
-
                           address1=data.data?.address1??"";
                           address2=data.data?.address2??"";
-
-                              print("entereddddddd");
-                              valueAddingTextEdingController();
+                          valueAddingTextEdingController();
                           _getCurrentUser();
-
-
-
-
                         });
                       });
                 },
@@ -1092,18 +1083,32 @@ else{
                                           ),
                             TextButtonLarge(
                               text: "PREVIEW",
-                              onPress: (){
+                              onPress: () async {
                                 print("Akshay");
+                                InventoryListModel model=InventoryListModel();
+                                UserPreferences userPref = UserPreferences();
+                                await userPref.getInventoryList().then((user) {
+                                  print("entereeeeeeeeeeeeeeeeeeed");
+                                  print(user.name);
+                                  if (user.isInventoryExist == true) {
+                                    model=user;
+                                    print("existing");
+                                    print(model.email);
+                                    // prefs.setString('token', user?.token ?? "");
+                                  } else {
+                                  }
+                                });
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) =>
                                       PrintScreen(
                                         note: note.text,
                                         select: select,
+                                        model:model,
                                         vendorCode:vendorCode.text,
                                         orderCode:ordercode.text ,
                                         orderDate: orederDate2Controller.text,
-                                        table:table,
+                                        table:table.isEmpty?[]:table,
                                         vat: double.tryParse( vat.text),
                                         actualCost:double.tryParse( actualcost.text),
                                         variableAmount:double.tryParse( Variableamount.text) ,
@@ -1111,6 +1116,7 @@ else{
                                         unitCost:double.tryParse( unitcourse.text) ,
                                         excisetax:double.tryParse( excesstax.text) ,
                                         remarks: remarks.text ,
+                                        pageName: "Purchase Order",
 
                                       )),
                                 );
@@ -1531,7 +1537,7 @@ else{
   builder: (context, state) {
 
     return Container(
-                                  margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
+                                  // margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
                                   child: CustomScrollBar(
                                     controller: controller,
 
@@ -1566,8 +1572,10 @@ else{
 
                                                             children: [
                                                               tableHeadtext(
-                                                                'Sno',
+                                                                'Sl.No',
                                                                 size: 13,
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white,
                                                               ),
@@ -1585,7 +1593,6 @@ else{
                                                               ),
                                                               tableHeadtext(
                                                                 'Vendor Ref Code',
-
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
@@ -1593,30 +1600,28 @@ else{
                                                               // tableHeadtext('description', size: 10, color: null),
                                                               tableHeadtext(
                                                                 'Barcode',
-
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
-
                                                               tableHeadtext(
                                                                 'Current Qty',
-
-
                                                                 size: 13,
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Purchase UOM',
-
-
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Requested qty',
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
 
 
                                                                 size: 13,
@@ -1625,7 +1630,8 @@ else{
                                                               ),
                                                               tableHeadtext(
                                                                 'Min Order Qty',
-
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
 
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
@@ -1633,6 +1639,8 @@ else{
                                                               ),
                                                               tableHeadtext(
                                                                 'Max Order Qty',
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
 
 
                                                                 size: 13,
@@ -1642,45 +1650,44 @@ else{
                                                               tableHeadtext(
                                                                 'Is Received',
 
-
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
-                                                                'Unit Cost',
-
-                                                                size: 13,
+                                                                'Unit Cost', size: 13,
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
-                                                                'Excise Tax',
-
-
-                                                                size: 13,
+                                                                'Excise Tax', size: 13,
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Discount',
-
-
                                                                 size: 13,
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'FOC',
-
-
                                                                 size: 13,
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Vatable Amount',
-
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
 
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
@@ -1689,6 +1696,8 @@ else{
 
                                                               tableHeadtext(
                                                                 'VAT',
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
 
 
                                                                 size: 13,
@@ -1697,6 +1706,8 @@ else{
                                                               ),
                                                               tableHeadtext(
                                                                 'Actual Cost',
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
 
 
                                                                 size: 13,
@@ -1705,6 +1716,8 @@ else{
                                                               ),
                                                               tableHeadtext(
                                                                 'Grand Total',
+                                                                center: true,
+                                                                padding: EdgeInsets.only(bottom:height*.0058),
 
 
                                                                 size: 13,
@@ -1850,24 +1863,31 @@ else{
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(
                                                                         table[i].variantName??"",
-                                                                         padding: EdgeInsets.only(left: 11.5,), fontWeight: FontWeight.w500),
+                                                                         // padding: EdgeInsets.only(left: 11.5,),
+                                                                        fontWeight: FontWeight.w500
+                                                                    ),
                                                                   ),
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(table[i].supplierCode.toString(),
-                                                                        padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
+                                                                        // padding: EdgeInsets.only(left: 11.5, ),
+                                                                        fontWeight: FontWeight.w500),
                                                                   ),
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(table[i].barcode??"",
-                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
+                                                                      // padding: EdgeInsets.only(left: 11.5, ),
+                                                                        fontWeight: FontWeight.w500),
                                                                   ),
 
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
-                                                                        padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
+                                                                        alighnment: Alignment.topRight,
+                                                                        // padding: EdgeInsets.only(left: 11.5, ),
+                                                                        fontWeight: FontWeight.w500),
                                                                   ),
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(table[i].purchaseuom??"",
-                                                                        padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
+                                                                        // padding: EdgeInsets.only(left: 11.5, ),
+                                                                        fontWeight: FontWeight.w500),
                                                                   ),
                                                                   //88888888888888888888                                   //**********************************************
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2219,51 +2239,24 @@ else{
                                                                         double? disc;
                                                                         if (va ==
                                                                             "") {
-                                                                          print(
-                                                                              "entered");
+
                                                                           disc =
                                                                           0;
-                                                                          print(
-                                                                              "disc" +
-                                                                                  disc
-                                                                                      .toString());
+
                                                                         } else {
                                                                           disc =
                                                                               double
                                                                                   .tryParse(
                                                                                   va);
-                                                                          print(
-                                                                              "disc1" +
-                                                                                  disc
-                                                                                      .toString());
-                                                                        }
 
-                                                                        var qty = table[i]
-                                                                            .requestedQty;
-                                                                        print(
-                                                                            "qty" +
-                                                                                qty
-                                                                                    .toString());
-                                                                        var excess = table[i]
-                                                                            .excessTax;
-                                                                        print(
-                                                                            "excess" +
-                                                                                excess
-                                                                                    .toString());
+                                                                        }
+                                                                        var qty = table[i].requestedQty;
+                                                                        var excess = table[i].excessTax;
                                                                         var unitcost = table[i]
                                                                             .unitCost;
-                                                                        print(
-                                                                            "unitcost" +
-                                                                                unitcost
-                                                                                    .toString());
                                                                         var vat = table[i].vat;
-                                                                        var foc = table[i]
-                                                                            .foc;
+                                                                        var foc = table[i].foc;
 
-                                                                        print(
-                                                                            "vat" +
-                                                                                vat
-                                                                                    .toString());
                                                                         if (unitcost ==
                                                                             0 ||
                                                                             qty ==
@@ -2361,32 +2354,18 @@ else{
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(
-                                                                        table[i]
-                                                                            .variableAmount
-                                                                            .toString(),
-                                                                        // padding: EdgeInsets
-                                                                        //     .only(
-                                                                        //     left:
-                                                                        //     11.5,
-                                                                        //     ),
-                                                                        fontWeight:
-                                                                        FontWeight
+                                                                        table[i].variableAmount.toString(),
+                                                                        alighnment: Alignment.topRight,
+                                                                        fontWeight: FontWeight
                                                                             .w500),
                                                                   ),
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(
-                                                                        table[i]
-                                                                            .vat
-                                                                            .toString(),
-                                                                        // padding: EdgeInsets
-                                                                        //     .only(
-                                                                        //     left:
-                                                                        //     11.5,
-                                                                        //     ),
+                                                                        table[i].vat.toString(),
+                                                                        alighnment: Alignment.topRight,
                                                                         fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                                        FontWeight.w500),
                                                                   ),
 
                                                                   //$$$$$$$$$$$$$$$$$$$$$$$$$$$$  vat   **************************
@@ -2461,6 +2440,7 @@ else{
                                                                             left:
                                                                             11.5,
                                                                            ),
+                                                                        alighnment: Alignment.topRight,
                                                                         fontWeight:
                                                                         FontWeight
                                                                             .w500),
@@ -2476,6 +2456,7 @@ else{
                                                                             left:
                                                                             11.5,
                                                                          ),
+                                                                        alighnment: Alignment.topRight,
                                                                         fontWeight:
                                                                         FontWeight
                                                                             .w500),
@@ -2564,18 +2545,18 @@ else{
 
                                                                             });
                                                                             updateCheck=false;
-                                                                            focValue=0;
-                                                                            excessTAxValue=0;
-                                                                            Vdiscount = 0;
-                                                                            Vamount = 0;
-                                                                            Vgrnadtotal = 0;
-                                                                            vactualCost = 0;
-                                                                            unitcost = 0;
-                                                                            grands = 0;
-                                                                            actualValue = 0;
-                                                                            VatableValue = 0;
-                                                                            discountValue = 0;
-                                                                            vatValue = 0;
+                                                                            // focValue=0;
+                                                                            // excessTAxValue=0;
+                                                                            // Vdiscount = 0;
+                                                                            // Vamount = 0;
+                                                                            // Vgrnadtotal = 0;
+                                                                            // vactualCost = 0;
+                                                                            // unitcost = 0;
+                                                                            // grands = 0;
+                                                                            // actualValue = 0;
+                                                                            // VatableValue = 0;
+                                                                            // discountValue = 0;
+                                                                            // vatValue = 0;
                                                                             setState(() {});
                                                                           }
                                                                         },
@@ -2663,24 +2644,30 @@ else{
                                                                   // ),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(varinatname??"",  padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
+                                                                  child: textPadding(varinatname??"",
+                                                                      // padding: EdgeInsets.only(left: 11.5, ),
+                                                                      fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(vendorRefCode??"",
-                                                                      padding: EdgeInsets.only(left: 11.5,), fontWeight: FontWeight.w500),
+                                                                      // padding: EdgeInsets.only(left: 11.5,),
+                                                                      fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(Vbarcode.toString(),
-                                                                      padding: EdgeInsets.only(left: 11.5, ),
+                                                                      // padding: EdgeInsets.only(left: 11.5, ),
                                                                       fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(stockQty.toString(),
-                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
+                                                                      padding: EdgeInsets.only(left: 11.5, ),
+                                                                      alighnment: Alignment.topRight,
+                                                                      fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(check1!,
-                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
+                                                                  child: textPadding(check1??"",
+                                                                      // padding: EdgeInsets.only(left: 11.5, ),
+                                                                      fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(controller:requestedtTestContoller ,
@@ -2875,22 +2862,30 @@ else{
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(Vamount.toString(),
+                                                                      alighnment: Alignment.topRight,
                                                                       padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(vvat!=0?vvat.toString():"",
+                                                                      alighnment: Alignment.topRight,
                                                                       padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
                                                                 ),
 
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(vactualCost.toString(),
-                                                                      padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
+                                                                      alighnment: Alignment.topRight,
+                                                                      padding: EdgeInsets.only(left: 11.5, ),
+
+                                                                      fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(Vgrnadtotal.toString()??"",
+                                                                  child: textPadding(Vgrnadtotal?.toString()??"",
+
+
                                                                       padding: EdgeInsets.only(left: 11.5, ),
+                                                                      alighnment: Alignment.topRight,
                                                                       fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(

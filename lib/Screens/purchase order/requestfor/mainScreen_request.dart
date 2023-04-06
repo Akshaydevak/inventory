@@ -6,10 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -699,34 +701,50 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                     ),
                                                     TextButtonLarge(
                                                       text: "PREVIEW",
-                                                      onPress: (){
+                                                      onPress: () async {
                                                         print("Akshay");
+                                                        print("Akshay");
+                                                        InventoryListModel model=InventoryListModel();
+
+
+                                                        UserPreferences userPref = UserPreferences();
+                                                        await userPref.getInventoryList().then((user) {
+                                                          print("entereeeeeeeeeeeeeeeeeeed");
+
+                                                          if (user.isInventoryExist == true) {
+                                                            model=user;
+                                                            print("existing");
+                                                            print(model.email);
+                                                            // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                                          } else {
+
+                                                          }
+                                                        });
                                                         Navigator.push(
                                                           context,
                                                           MaterialPageRoute(builder: (context) =>
                                                               PrintScreen(
                                                                 note: noteController.text,
                                                                 select: select,
+                                                                pageName: "Purchase Order",
                                                                 // vendorCode:vend.text,
                                                                 orderCode:ordereCodeController.text ,
                                                                 orderDate: orderDateController.text,
                                                                 table:table,
+                                                                model: model,
                                                                 vat: double.tryParse( vatController.text),
                                                                 actualCost:double.tryParse( actualCostController.text),
                                                                 variableAmount:double.tryParse( vatableAmountController.text) ,
                                                                 discount:double.tryParse( discountController.text) ,
                                                                 unitCost:double.tryParse( unitCostController.text) ,
                                                                 excisetax:double.tryParse( excessTaxController.text) ,
-                                                                remarks: remarksController.text ,
-
-
-
-
-
+                                                                remarks: remarksController.text,
                                                               )),
                                                         );
-
-
                                                       },
                                                     ),
                                                   ],
@@ -734,7 +752,6 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                               ),
                                               SizedBox(height: 10,),
                                               Container(
-
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   crossAxisAlignment:

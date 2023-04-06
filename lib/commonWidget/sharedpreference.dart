@@ -19,19 +19,8 @@ print(user);
     prefs.setString('email', user?.email??"");
     prefs.setString('empcode', user?.employeeCode??"");
     prefs.setString('mobile', user?.mobile??"");
-
-
     prefs.setBool("isLoggedIn", true);
-    // prefs.setString("token", user.t);
-    // prefs.setString("role", user.role);
-    // prefs.setString("firstname", user.firstname);
-    // prefs.setString("lastname", user.lastname);
-    // prefs.setString(" email", user. email);
-    // prefs.setString("password", user.password);
-    // prefs.setString("msg", user.msg);
-    // prefs.setString("address", user.address);
-    //
-    // prefs.setString("mobile", user.mobile);
+
     return prefs.commit();
   }  Future<bool> SaveInventoryList(InventoryListModel user) async {
     print("prefs.getString(username) in Saving :");
@@ -42,43 +31,10 @@ print(user);
         user.businessUnitCode.toString());
     prefs.setString("inventory_name", user.name.toString());
 
-    // prefs.setString("token", user.t);
-    // prefs.setString("role", user.role);
-    // prefs.setString("firstname", user.firstname);
-    // prefs.setString("lastname", user.lastname);
-    // prefs.setString(" email", user. email);
-    // prefs.setString("password", user.password);
-    // prefs.setString("msg", user.msg);
-    // prefs.setString("address", user.address);
-    //
-    // prefs.setString("mobile", user.mobile);
     return prefs.commit();
   }
 
-  // Future<bool> saveInventry(List<InventoryListModel> buisness) async {
-  //   print("prefs.getString(username) in Saving :");
-  //
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //
-  //   //prefs.setInt("userId", user.userId);
-  //   prefs.setStringList('inventory', user?.fname??"");
-  //
-  //
-  //
-  //
-  //   prefs.setBool("isLoggedIn", true);
-  //   // prefs.setString("token", user.t);
-  //   // prefs.setString("role", user.role);
-  //   // prefs.setString("firstname", user.firstname);
-  //   // prefs.setString("lastname", user.lastname);
-  //   // prefs.setString(" email", user. email);
-  //   // prefs.setString("password", user.password);
-  //   // prefs.setString("msg", user.msg);
-  //   // prefs.setString("address", user.address);
-  //   //
-  //   // prefs.setString("mobile", user.mobile);
-  //   return prefs.commit();
-  // }
+
 
 
 
@@ -95,18 +51,6 @@ print(user);
     String?  emplCode = prefs.getString("empcode");
     String?  email = prefs.getString("email");
     String?  phoneNumber = prefs.getString("mobile");
-
-    print("username"+token.toString());
-    // String password = prefs.getString("password");
-    // print("password"+password.toString());
-    // String msg = prefs.getString("msg");
-    // print("password"+msg.toString());
-
-
-    // String address = prefs.getString("address");
-    // print("password"+address.toString());
-    // String mobile = prefs.getString("mobile");
-    // print("password"+mobile.toString());
     return RegisterModel(
       fname: username,
       isLoggedIn: isLoggedIn,
@@ -125,4 +69,52 @@ print(user);
 
   }
 
+
+
+  Future<bool> saveInventoryList(InventoryListModel model) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("############################");
+
+    prefs.setString('contact', model?.contact?.primary??"");
+    prefs.setString('addressOne', model?.addressOne??"");
+    prefs.setString('addressTwo', model?.addressTwo??"");
+    prefs.setString('landmark', model?.landMark??"");
+    prefs.setString('name', model?.name??"");
+    prefs.setString('inventoryEmail', model?.email??"");
+    prefs.setBool("isInventoryListExist", true);
+
+
+    return prefs.commit();
+
+  }
+  Future<InventoryListModel> getInventoryList() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("############################");
+
+    String?  contact = prefs.getString("contact");
+
+    String?  addressOne = prefs.getString("addressOne");
+    String?  addressTwo = prefs.getString("addressTwo");
+    String?  landMark = prefs.getString("landmark");
+    String?  name = prefs.getString("name");
+    String?  inventoryEmail = prefs.getString("inventoryEmail");
+    bool?  inventoryExist = prefs.getBool("isInventoryListExist");
+
+    return InventoryListModel(
+
+      addressOne: addressOne,
+      addressTwo: addressTwo,
+      landMark: landMark,
+      email: inventoryEmail,
+      isInventoryExist:inventoryExist,
+      name: name
+
+
+
+    );
+
+  }
+
 }
+
+

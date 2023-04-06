@@ -42,9 +42,10 @@ class tableHeadtext extends StatelessWidget {
   Widget build(BuildContext context) {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
-    return Container(  alignment: center?Alignment.topLeft:Alignment.topLeft,
+    return Container( alignment: center?Alignment.center:Alignment.topLeft,
+
       height: height,
-      padding: padding ?? EdgeInsets.only(left: 12,top: 12,bottom:h*.002,right:  5),
+      padding: padding ?? EdgeInsets.only(left: 12,top: h*.0128,bottom:h*.0058,right:  5),
       color: color,
       child: Text(
         label,
@@ -79,14 +80,16 @@ Widget textPadding(String label,
     {double fontSize = 14,
       EdgeInsets? padding,
       double? height,
+    Alignment? alighnment,
       Color color= const Color(0xffF2F3F5),
       FontWeight fontWeight = FontWeight.w100}) =>
     Container(
+      margin: EdgeInsets.symmetric(horizontal: 12,vertical: 5),
       height: height,
-      alignment: Alignment.topLeft,
+      alignment:alighnment?? Alignment.topLeft,
 
       color: color,
-      padding: padding ?? EdgeInsets.fromLTRB(15, 3, 0, 0),
+      padding: padding ?? EdgeInsets.fromLTRB(0, 3, 0, 0),
       child:label=="0"||label=="null"?Text(''):Text(
         label,
         textAlign: TextAlign.left,

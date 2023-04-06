@@ -80,6 +80,7 @@ import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -169,6 +170,7 @@ class _OpenSettingsState extends State<OpenSettings> {
               print("inventory list");
               print(data.data);
               inventoryList = data.data;
+
               // if(inventoryList?.isNotEmpty==true){
               //   Variable.inventory_ID=inventoryList![0]?.businessUnitCode??"";
               // }
@@ -194,22 +196,13 @@ class _OpenSettingsState extends State<OpenSettings> {
             }, success: (d) {
               if (d.data.length != null)
                 for (var i = 0; i < d.data.length; i++) {
-                  print(d.data.length);
-
-                  //   if (inventoryList?[i].inventoryCode ==
-                  //       Variable.inventory_ID) grpValue = i;
-                  //   // setState(() {});
-                  // }
-
                   if (inventoryList?[i].businessUnitCode ==
                       Variable.inventory_ID) grpValue = i;
                   // setState(() {});
                 }
               return Container(
                 margin:EdgeInsets.symmetric(horizontal: 7),
-
                 alignment: Alignment.topLeft,
-
                 child: Container(
                   alignment: Alignment.topLeft,
                     child: ListView.separated(
@@ -217,7 +210,6 @@ class _OpenSettingsState extends State<OpenSettings> {
                         return SizedBox(height: 5,);
                       } ,
                       padding: EdgeInsets.all(0),
-
                   itemCount: inventoryList?.length??1,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -254,6 +246,7 @@ class _OpenSettingsState extends State<OpenSettings> {
                                 prefs.setString("inventory_name",
                                     inventoryList![index].name.toString());
                                 var val=  prefs.getInt('index');
+                                UserPreferences().saveInventoryList(inventoryList![index]);
 
                                 Navigator.pop(context);
                                 Navigator.pushReplacement(

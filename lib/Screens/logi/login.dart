@@ -124,6 +124,7 @@ List<  InventoryListModel> inventoryList=[];
                     name: inventoryList[0]?.name??""
                   );
                   UserPreferences().SaveInventoryList(model);
+                  UserPreferences().saveInventoryList(inventoryList[0]);
 
 
 
