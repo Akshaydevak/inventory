@@ -324,10 +324,7 @@ var  paginatedList;
     if(table.isNotEmpty) {
 
       for (var i = 0; i < table.length; i++) {
-        print("variantaaaaaa" + table[i].variantId.toString());
-        print("variantaaaaaa" + inventoryIdController.text.toString());
         var b = await context.read<PurchaseStockCubit>().getCurrentStock(inventoryIdController.text, table[i].variantId);
-        print("b" + b.toString());
       }
       setState(() {});
     }
@@ -368,7 +365,6 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
     listener: (context, state) {
       print("postssssssss" + state.toString());
       state.maybeWhen(orElse: () {
-        // context.
         context.showSnackBarError("Loading");
       }, error: () {
         context.showSnackBarError(Variable.errorMessege);

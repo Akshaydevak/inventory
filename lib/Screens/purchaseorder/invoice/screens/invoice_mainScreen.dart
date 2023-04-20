@@ -1100,12 +1100,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                       vat:double.tryParse( vatController.text),
                                       invoicedBy: Variable.created_by,
                                       invoiceLines: additionalVariants??[],
-
-
-
-
-
-                                      // orderLines: table,
+ // orderLines: table,
                                     );
 
 
@@ -1158,17 +1153,12 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                         .postInventory(model);
                                   }  },
                                 discardFunction: (){
-                                  print("Akkk");
-
                                 },
                                 label: "SAVE",
                               ),
-
-
                             ],
                           ),
                         )),
-
                       ],
                     )
 
