@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
 import 'package:inventory/Screens/purchaseorder/invoice/screens/invoice_mainScreen.dart';
+import 'package:inventory/Screens/sales/general/cubit/payment_verticallist/payement_vertical_list_cubit.dart';
 import 'package:inventory/Screens/sales/invoice/ipayment_list.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -43,6 +44,9 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
     BlocProvider(
       create: (context) =>
       InventorysearchCubit()..getInventorySearch("code"),
+    ),
+    BlocProvider(
+      create: (context) => PayementVerticalListCubit(),
     ),
   ],
   child: BlocListener<TableDetailsCubitDartCubit, TableDetailsCubitDartState>(
@@ -144,44 +148,16 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                               ),
                              // insets: EdgeInsets.only(left: width*.014, right: width*.017)
                           ),
-
-
-
                           controller: _tabController,
                           tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: width*.011),),
                             Text("Purchase Receiving",style: TextStyle(color: Colors.black,fontSize: width*.011),),
                             Text("Request Form",style: TextStyle(color:Colors.black,fontSize: width*.011),),
                             Text("Request Form Receiving",style: TextStyle(color: Colors.black,fontSize: width*.011),),
-
                             Text("Inventory invoice",style: TextStyle(color:Colors.black,fontSize: width*.011),),
                             Text("Payment Status",style: TextStyle(color:Colors.black,fontSize: width*.011),)
                           ]),
                     ),
-                    // Divider(
-                    //   color: Colors.red,
-                    //   thickness: 2,
-                    // ),
-                    // Container(
-                    //
-                    //   child: Row(
-                    //     children: [
-                    //       TitleIcon( image:"asset/purchase.png",color: Colors.black54,top:0,size: 0.010,),
-                    //       SizedBox(width: width*.011,),
-                    //       TitleIcon( image:"asset/purchase2.png",color: Colors.black54,top:0,size: 0.010,),
-                    //       SizedBox(width: width*.011,),
-                    //       TitleIcon( image:"asset/purchase3.png",color: Colors.black54,top:0,size: 0.010,),
-                    //       SizedBox(width: width*.011,),
-                    //       TitleIcon( image:"asset/purchase4.png",color: Colors.black54,top:0,size: 0.010,),
-                    //       SizedBox(width: width*.011,),
-                    //       TitleIcon( image:"asset/purchase5.png",color: Colors.black54,top:0,size: 0.010,),
-                    //       SizedBox(width: width*.011,),
-                    //       TitleIcon( image:"asset/purchase6.png",color: Colors.black54,top:0,size: 0.010,),
-                    //       SizedBox(width: width*.011,),
-                    //
-                    //
-                    //     ],
-                    //   ),
-                    // )
+
                   ],
                 ),
               ),

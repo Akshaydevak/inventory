@@ -775,6 +775,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
             'Accept': 'application/json',
           }));
 
+
       if (response.data['status'] == 'failed') {
         Variable.errorMessege = response.data['message'];
       }
@@ -829,7 +830,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
-    print(response);
+
 
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
@@ -1156,23 +1157,43 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     String path =
         "https://api-uat-user.sidrabazar.com/user-employee_employeeuserlogin/inventory";
     print(path);
+    try{
+      final response = await client.post(path,
+          data: {"email": username, "password": password, "code": empCode},
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
 
+      print(response);
+      print("TGE sTATUS IS HERE OF LOGIN==="+response.data['status'].toString());
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      RegisterModel dataa = RegisterModel.fromJson(response.data['data']);
+
+      return DoubleResponse(response.data['status'] == 'success', dataa);
+    }catch(e){
+      print("the error is here"+e.toString());
+    }
     final response = await client.post(path,
         data: {"email": username, "password": password, "code": empCode},
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
-    print("++++++++amnnnannana+++");
+
     print(response);
-    print(response.data['message']);
+    print("TGE sTATUS IS HERE OF LOGIN==="+response.data['status'].toString());
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
     }
     RegisterModel dataa = RegisterModel.fromJson(response.data['data']);
 
     return DoubleResponse(response.data['status'] == 'success', dataa);
-    ;
+
+
+
   }
 
   @override
@@ -7748,6 +7769,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       token = value.token;
       print("token is here222 exist" + token.toString());
     });
+    print(model);
     print(path);
     try {
       final response = await client.put(

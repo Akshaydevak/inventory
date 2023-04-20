@@ -886,6 +886,8 @@ class UnderLinedInput extends StatefulWidget {
   final bool suffixIconEnable;
   final bool readOnly;
   final Color filledColour;
+  final AlignmentGeometry alignment;
+  final TextAlign textAlighn;
   // final String? tileName;
   final int maxLines;
   final TextEditingController? controller;
@@ -898,6 +900,7 @@ class UnderLinedInput extends StatefulWidget {
         this.last="",
         this.readOnly=false,
         this.integerOnly=false,
+        this.alignment=Alignment.topRight,
         this.filledColour=const Color(0xffF2F3F5),
         this.suffixIconEnable=false,
         this.enable = true,
@@ -906,6 +909,7 @@ class UnderLinedInput extends StatefulWidget {
         this.maxLines = 1,
         this.controller,
         this.onChanged,
+        this.textAlighn=TextAlign.right,
         this.onComplete,
         this.initialCheck=false,
         this.formatter= true,
@@ -934,7 +938,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
           child:widget.initialCheck?
           Center(
             child: TextFormField(
-              textAlign:TextAlign.right,
+              textAlign: widget.textAlighn,
               readOnly: widget.readOnly,
               style:CommonTextStyle.normalTableFieldStyle,
 
@@ -972,10 +976,10 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
           ):
           Container(
 
-            alignment: Alignment.topRight,
+            alignment: widget.alignment,
             child: Center(
               child: TextFormField(
-                textAlign:TextAlign.right,
+                textAlign: widget.textAlighn,
                 readOnly: widget.readOnly,
                 style: CommonTextStyle.normalTableFieldStyle,
 
@@ -1008,7 +1012,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                   contentPadding: EdgeInsets.all(10),
                   isDense: true,
                   hintText: widget.hintText,
-                  hintStyle: TextStyle(fontSize: 14),
+                  hintStyle: TextStyle(fontSize: 12),
                   border:InputBorder.none,
                 ).copyWith(isDense: true),
               ),
@@ -1701,6 +1705,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       width: width*.085,
       alignment: Alignment.center,
       decoration: BoxDecoration(
+        // color: Colors.red,
 
         borderRadius: BorderRadius.all(Radius.circular(5)),
        // color:   widget.clr,
@@ -1734,8 +1739,10 @@ class _CustomDropDownState extends State<CustomDropDown> {
           // Down Arrow Icon
           icon: const Icon(Icons.keyboard_arrow_down,size: 13,),
        hint: Container(
+         // width: 150,
+         color: Colors.black26,
 
-         child: Text(widget.choosenValue.toString(),style: TextStyle(color: widget.choosenValue!="_Select_"?Colors.black:Colors.grey,fontSize:widget.choosenValue!="_Select_"?16:13 ), ),
+         child: Text(widget.choosenValue.toString(),style: TextStyle(color: widget.choosenValue!="_Select_"?Colors.black:Colors.grey,fontSize:widget.choosenValue!="_Select_"?16:13 ),overflow: TextOverflow.ellipsis, ),
        ),
 
           // Array list of items

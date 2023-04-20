@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -69,19 +70,19 @@ class PrintScreen extends StatefulWidget {
 }
 
 class _PrintScreenState extends State<PrintScreen> {
-  late AutoScrollController _scrollController;
-  @override
-  void initState() {
-
-    _scrollController = AutoScrollController(
-        viewportBoundaryGetter: () =>
-            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
-        axis: Axis.vertical);
-    super.initState();
-    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
-    //   print("ak test"+value.toString());
-    // });
-  }
+  // late AutoScrollController _scrollController;
+  // @override
+  // void initState() {
+  //
+  //   _scrollController = AutoScrollController(
+  //       viewportBoundaryGetter: () =>
+  //           Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+  //       axis: Axis.vertical);
+  //   super.initState();
+  //   // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+  //   //   print("ak test"+value.toString());
+  //   // });
+  // }
 
 
   @override
@@ -106,12 +107,10 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-  final font = await PdfGoogleFonts.nunitoExtraLight();
-
-
-
+  var url = "http://sidra-bazar-uat-products.s3.ap-south-1.amazonaws.com/logo/MicrosoftTeams-image_87.png";
+  // final netImage = await networkImage(model.companyLogo??"");
+  // final font = await PdfGoogleFonts.nunitoExtraLight();
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
-
   pdf.addPage(
     pw.Page(
       pageFormat:    format.copyWith(marginLeft: 0, marginTop: 0, marginRight: 0, marginBottom: 0),
@@ -124,13 +123,19 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
               children: [
 
               pw.  Container(
-                  height:height*.155 ,
+                  height:height*.105 ,
 
 
                 color: PdfColor.fromInt(0xAAF7F7F7),
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
+                      // pw.Container(
+                      //   margin: pw.EdgeInsets.symmetric(vertical: 7),
+                      //   height:70 ,
+                      //  width: 70,
+                      //  child:pw.Image(netImage),
+                      // ),
 
                      pw. Spacer(),
                      pw. Container(
@@ -140,26 +145,25 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                         child:pw. Column(
                           crossAxisAlignment:pw. CrossAxisAlignment.end,
                           children: [
-                          pw.  SizedBox(height: height*.06,),
+                          pw.  SizedBox(height: height*.03,),
                           pw.  Text(Variable.mobileNumber,
                               style: pw.TextStyle(
-                                font: font,
+
                                  // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                           pw.  SizedBox(height: height*.005,),
                            pw. Text(Variable.email,
 
                               style:pw. TextStyle(
-                                  font: font,
+
                                   // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                          pw.   SizedBox(height: height*.009,),
                            pw. Text(pageName??"",
                               style:pw. TextStyle(
-                                font: font,
 
                                   color: PdfColor.fromInt(0xff3E4F5B),
-                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 2.0,),),
+                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 1.0,),),
                          pw.  SizedBox(height: height*.009,)
 
                           ],
@@ -194,15 +198,15 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 children: [
                                   pw.   Text(model.name??""
                                     ,
-                                    style:  pw.TextStyle(  font: font,fontSize:15,fontWeight:pw. FontWeight.bold ),),
+                                    style:  pw.TextStyle( fontSize:14,fontWeight:pw. FontWeight.bold ),),
                                   pw.  SizedBox(height: 2,),
                                   pw.  Text(model.addressOne??"",
-                                    style:  pw.TextStyle(  font: font,fontSize:7 ),),
+                                    style:  pw.TextStyle(  fontSize:9 ),),
                                   pw.  Text(model.addressTwo??"",
-                                    style:  pw.TextStyle(  font: font,fontSize:7 ),),
+                                    style:  pw.TextStyle(  fontSize:9 ),),
                                   pw.   SizedBox(height: 2,),
                                   pw. Text(model.email??"",
-                                    style:  pw.TextStyle( font: font,fontSize:7),)
+                                    style:  pw.TextStyle( fontSize:9),)
 
                                 ],
                               ),
@@ -219,11 +223,11 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       pw. Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("Date :",style:  pw.TextStyle( font: font,fontSize:9))),
+                                          child:  pw.Text("Date : ",style:  pw.TextStyle( fontSize:9))),
                                       pw.  Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("purchase order code :",style:  pw.TextStyle( font: font,fontSize:9))),
+                                          child:  pw.Text("purchase order code : ",style:  pw.TextStyle(fontSize:9))),
 
                                     ],
                                   ),
@@ -240,8 +244,8 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                                 bottom:pw. BorderSide(width: .3,),
                                               )
                                           ),
-                                          width: 85,
-                                          child: pw.Text(orderDate==""? DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9, font: font,))
+                                          width: 80,
+                                          child: pw.Text(orderDate==""? DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9,))
                                       ),
                                       pw.  Container(
                                           padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
@@ -252,8 +256,8 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                                 ),
                                               )
                                           ),
-                                          width: 85,
-                                          child: pw.Text(orderCode?.toString()??"",style:  pw.TextStyle( font: font,fontSize:9))
+                                          width: 80,
+                                          child: pw.Text(orderCode?.toString()??"",style:  pw.TextStyle( fontSize:9))
                                       ),
 
                                     ],
@@ -293,7 +297,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
 
                                     margin:pw. EdgeInsets.only(left: width*.01,top: 8),
-                                    child: pw.Text("Basic Details",style:pw. TextStyle( font: font,fontSize:8,color: PdfColors.white,),)),
+                                    child: pw.Text("Basic Details",style:pw. TextStyle( fontSize:9,color: PdfColors.white,),)),
                               ),
 
                             ),
@@ -309,12 +313,11 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       crossAxisAlignment:  pw.CrossAxisAlignment.start,
                                       children: [
                                         pw. Text("SUPPLIER",
-                                            style:
-                                        pw. TextStyle( font: font,fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                            style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
                                         )),
 
                                         pw.SizedBox(height: 3,),
-                                        pw.Text(vendorCode,style:  pw.TextStyle( font: font,fontWeight:pw. FontWeight.bold,fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)),),
+                                        pw.Text(vendorCode,style:  pw.TextStyle( fontWeight:pw. FontWeight.bold,fontSize:height*.014,color: PdfColor.fromInt(0xAA565555)),),
                                       ],
                                     ),
                                     pw.  SizedBox(width: 12,),
@@ -322,13 +325,13 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       mainAxisAlignment:  pw.MainAxisAlignment.center,
                                       crossAxisAlignment: pw. CrossAxisAlignment.start,
                                       children: [
-                                        pw.Text("ORDER CODE",style: pw. TextStyle( font: font,fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                        pw.Text("ORDER CODE",style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
                                           // color:Color(0xff565555),
                                         )),
                                         pw. SizedBox(height: 3,),
                                         pw. Text(orderCode??"",style: pw. TextStyle(
-                                            font: font,
-                                            fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
+
+                                            fontSize:height*.014,color: PdfColor.fromInt(0xAA565555),
                                             // color: Colors.black,
                                             fontWeight: pw.FontWeight.bold),),
                                       ],
@@ -338,14 +341,12 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       mainAxisAlignment: pw. MainAxisAlignment.center,
                                       crossAxisAlignment:  pw.CrossAxisAlignment.start,
                                       children: [
-                                        pw. Text("ORDER DATE",style:pw. TextStyle(
-                                            font: font,
-                                            fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                        pw. Text("ORDER DATE",style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
                                           ),),
                                         pw.SizedBox(height: 3,),
-                                        pw.  Text(orderDate??"",style: pw. TextStyle(
-                                            font: font,
-                                            fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
+                                        pw.  Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate,style: pw. TextStyle(
+
+                                            fontSize:height*.014,color: PdfColor.fromInt(0xAA565555),
                                             // color: pw.C.black,
                                             fontWeight: pw.FontWeight.bold),),
                                       ],
@@ -358,7 +359,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           ],
                         ),
                       ),
-        pw.SizedBox(height: 10),
+        pw.SizedBox(height: 15),
         pw.Container(
           // height: 400,
           margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -395,11 +396,11 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
            // tableWidth:.5,
            columnWidths: {
 
-             0: pw.FlexColumnWidth(2),
-             1:pw. FlexColumnWidth(3),
+             0: pw.FlexColumnWidth(1.5),
+             1:pw. FlexColumnWidth(4),
              2:pw. FlexColumnWidth(3),
              3: pw.FlexColumnWidth(4),
-             4:pw. FlexColumnWidth(3),
+             4:pw. FlexColumnWidth(2.5),
              5:pw. FlexColumnWidth(2),
              6: pw.FlexColumnWidth(2),
              7:pw. FlexColumnWidth(2),
@@ -424,88 +425,88 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                      color:  PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text( 'Sl.No',style:pw. TextStyle( font: font,fontSize:height*.012, color: PdfColors.white,)),
+                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.012, color: PdfColors.white,)),
                      height: 30,
 
                    ),
                    pw. Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
 
                      color:  PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text(  'Variant Id ',style:pw. TextStyle( font: font,fontSize:height*.012,color: PdfColors.white,)),
+                     child:pw.Text(  'Variant Id ',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
                      height: 30,
                    ),
 
 
                    pw.  Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color: PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text(   'Barcode',style:pw. TextStyle( font: font,fontSize:height*.012,color: PdfColors.white,)),
+                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                      height: 30,
                    ),
                    pw.  Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color:  PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle( font: font,fontSize: height*.012,color: PdfColors.white,)),
+                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
                      height: 30,
 
                    ),
                    pw.  Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color:  PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text( 'Requested Qty',style:pw. TextStyle( font: font,fontSize: height*.012,color: PdfColors.white,)),
+                     child:pw.Text( 'Requested Qty',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
                      height: 30,
                    ),
 
 
 
                    pw.   Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color: PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text(   'Unit cost',style:pw. TextStyle( font: font,fontSize: height*.012,color: PdfColors.white,)),
+                     child:pw.Text(   'Unit cost',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
                      height: 30,
                    ),
                    pw.  Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color:  PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text(  'Exsise tax',style:pw. TextStyle( font: font,fontSize:height*.012,color: PdfColors.white,)),
+                     child:pw.Text(  'Exsise tax',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
                      height: 30,
                    ),
                    pw.  Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color: PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text('Discount',style:pw. TextStyle( font: font,fontSize:height*.012,color: PdfColors.white,)),
+                     child:pw.Text('Disc.',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
                      height: 30,
 
                    ),
 
                    pw.  Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color: PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text( 'Vatable amount',style:pw. TextStyle( font: font,fontSize: height*.012,color: PdfColors.white,)),
+                     child:pw.Text( 'VAT.Amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                      height: 30,
                    ),
                    pw.       Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color:  PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text( 'Vat',style:pw. TextStyle( font: font,fontSize: height*.012,color: PdfColors.white,)),
+                     child:pw.Text( 'VAT',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
                      height: 30,
 
                    ),
                    pw. Container(
-                     padding: pw.EdgeInsets.all(10),
+                     padding: pw.EdgeInsets.all(5),
                      color:  PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text( 'Actual cost',style:pw. TextStyle( font: font,fontSize: 7,color: PdfColors.white,)),
+                     child:pw.Text( 'Actual cost',style:pw. TextStyle( fontSize: 7,color: PdfColors.white,)),
                      height: 30,
                    ),
 
@@ -533,7 +534,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          alignment:pw. Alignment.center,
 
                          child: pw.Text(   (i + 1)
-                             .toString(),style:pw. TextStyle( font: font,fontSize: height*.013)),
+                             .toString(),style:pw. TextStyle(fontSize: height*.013)),
 
 
                        ),
@@ -543,28 +544,28 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          alignment:pw. Alignment.center,
                          height: 40,
                          child:pw. Text(
-                             table[i].variantId??"",style:pw. TextStyle( font: font,fontSize: height*.013)),
+                             table[i].variantId??"",style:pw. TextStyle(fontSize: height*.013)),
                        ),
                        pw.   Container(
                          // padding: pw.EdgeInsets.only(top: height*.014),
                          alignment:pw. Alignment.center,
                          height: 40,
                          child:pw. Text(
-                             table[i].barcode??"",style:pw. TextStyle( font: font,fontSize: height*.013)),
+                             table[i].barcode??"",style:pw. TextStyle( fontSize: height*.013)),
 
                        ),
                        pw.   Container(
                          padding: pw.EdgeInsets.only(top: height*.019),
                          alignment:pw. Alignment.center,
                          child:pw. Text(
-                             table[i].purchaseuom??"",style:pw. TextStyle( font: font,fontSize: height*.013)),
+                             table[i].purchaseuom??"",style:pw. TextStyle( fontSize: height*.013)),
 
                        ),
                        pw.  Container(
                          padding: pw.EdgeInsets.only(top: height*.019),
                          alignment:pw. Alignment.center,
                          child: pw.Text(
-                             table[i].requestedQty?.toString()??"",style:pw. TextStyle( font: font,fontSize: height*.013)),
+                             table[i].requestedQty?.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
 
                        ),
 
@@ -572,7 +573,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          padding: pw.EdgeInsets.only(top:height*.019),
                          alignment:pw. Alignment.center,
                          child: pw.Text(
-                             table[i].unitCost?.toString()??"",style:pw. TextStyle( font: font,fontSize:height*.013)),
+                             table[i].unitCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
 
 
                        ),
@@ -581,7 +582,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                          alignment:pw. Alignment.center,
                          child: pw.Text(
-                             table[i].excessTax?.toString()??"",style:pw. TextStyle( font: font,fontSize: 8)),
+                             table[i].excessTax?.toString()??"",style:pw. TextStyle( fontSize: 8)),
                          // fontSize: 12,
 
 
@@ -590,21 +591,21 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          padding: pw.EdgeInsets.only(top:height*.019),
                          alignment:pw. Alignment.center,
                          child:pw. Text(
-                             table[i].discount?.toString()??"",style:pw. TextStyle( font: font,fontSize: 8)),
+                             table[i].discount?.toString()??"",style:pw. TextStyle( fontSize: 8)),
                        ),
 
                        pw. Container(
                          alignment:pw. Alignment.center,
                          padding: pw.EdgeInsets.only(top:height*.019),
                          child:pw. Text(
-                             table[i].variableAmount?.toString()??"",style:pw. TextStyle( font: font,fontSize: height*.013)),
+                             table[i].variableAmount?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
                          // fontSize: 12,
                        ),
                        pw.  Container(
                          padding: pw.EdgeInsets.only(top: height*.019),
                          alignment:pw. Alignment.center,
                          child: pw.Text(
-                             table[i].vat?.toString()??"",style:pw. TextStyle( font: font,fontSize: height*.013)),
+                             table[i].vat?.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
                          // fontSize: 12,
 
                        ),
@@ -612,7 +613,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          padding: pw.EdgeInsets.only(top:height*.019),
                          alignment:pw. Alignment.center,
                          child:pw. Text(
-                             table[i].actualCost?.toString()??"",style:pw. TextStyle( font: font,fontSize:height*.013)),
+                             table[i].actualCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
 
                        ),
 
@@ -682,7 +683,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
          // width: width,
 
         ),
-                      pw.SizedBox(height: 3),
+                      pw.SizedBox(height: 8),
 
                     pw.  Container(
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -701,8 +702,8 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.Text("Discount: ",style: pw.TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw. Text(discount?.toString()??"",style: pw.TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
+                                    pw.Text("Discount: ",style: pw.TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
+                                    pw. Text(discount?.toString()??"",style: pw.TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
                                   ],
                                 ),
                               ),
@@ -710,40 +711,40 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               pw. Container(
                                 child: pw.Row(
                                   children: [
-                                    pw. Text("Unit Cost: ",style: pw.TextStyle( font: font,fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
-                                    pw. Text(unitCost?.toString()??"",style:pw. TextStyle( font: font,fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
+                                    pw. Text("Unit Cost: ",style: pw.TextStyle( fontWeight:pw.FontWeight.normal ,fontSize: 8 ),),
+                                    pw. Text(unitCost?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
                                   ],
                                 ),
                               ),
                               pw.  Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Excise Tax: ",style:pw. TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw. Text(excisetax?.toString()??"",style: pw.TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+                                    pw. Text(excisetax?.toString()??"",style: pw.TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("VAT Amount: ",style:pw. TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw.Text(vat?.toString()??"",style:pw. TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw. Text("VAT Amount: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+                                    pw.Text(vat?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Vatable Amount: ",style:pw. TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw.Text(variableAmount?.toString()??"",style:pw. TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.  Text("Vatable Amount: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
+                                    pw.Text(variableAmount?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("Actual cost: ",style:pw. TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw.Text(actualCost?.toString()??"",style: pw.TextStyle( font: font,fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw. Text("Actual cost: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+                                    pw.Text(actualCost?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               )
@@ -752,7 +753,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           )
                       ),
                       //calculation
-                      pw.  SizedBox(height: height*0.15,),
+                      pw.  SizedBox(height: height*0.1,),
                       //
                       pw.  Row(
                         children: [
@@ -761,28 +762,8 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                             child:pw. Column(
                               crossAxisAlignment:pw. CrossAxisAlignment.start,
                               children: [
-                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.01,),
-                                pw.Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw. Row(
-                                        children: [
 
 
-                                          pw.Text(remarks??"",style: pw.TextStyle(
-                                            // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.009,),
-
-                                    ],
-                                  ),
-                                ),
-                                pw.  SizedBox(height: height*.009,),
                                 pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
                                 pw. SizedBox(height: height*0.01,),
                                 pw. Container(
@@ -799,11 +780,33 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                                         ],
                                       ),
-                                      pw.  SizedBox(width: width*.009,),
+                                      pw.  SizedBox(width: width*.02,),
 
                                     ],
                                   ),
-                                )
+                                ),
+                                pw.  SizedBox(height: height*.03,),
+                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.01,),
+                                pw.Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw. Row(
+                                        children: [
+
+
+                                          pw.Text(remarks??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(height: height*.03,),
+
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -832,7 +835,6 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       left:height*.015,
                                     ),
                                     child: pw.Text("Authorized by:",style:pw. TextStyle(
-                                      font: font,
                                       // color: Colors.black,
                                       fontWeight:pw. FontWeight.normal,fontSize:height*.016,),)),
                                 //
@@ -962,7 +964,9 @@ class PurchaseReturnPrintScreen extends StatefulWidget {
   final double? variableAmount;
   final double? actualCost;
   final double? unitCost;
+  final String pageName;
   final double? excisetax;
+  final InventoryListModel? model;
   final  List<Liness> table;
 
   PurchaseReturnPrintScreen({
@@ -978,7 +982,7 @@ class PurchaseReturnPrintScreen extends StatefulWidget {
     this.discount=0.00,
     this.vat=0.00,
     this.unitCost=0.00,
-    this.excisetax=0.00,
+    this.excisetax=0.00, required this.pageName, this.model,
 
 
 
@@ -1015,7 +1019,8 @@ class _PurchaseReturnPrintScreenState extends State<PurchaseReturnPrintScreen> {
 
       body:PdfPreview(
         build: (format) => _generatesPdf(format,"title",widget.orderDate, widget.orderCode,context,widget.vendorCode,
-            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table),
+            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table,
+            widget.pageName,widget.model!),
       ),
 
     );
@@ -1023,11 +1028,13 @@ class _PurchaseReturnPrintScreenState extends State<PurchaseReturnPrintScreen> {
 }
 Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderDate,String orderCode,BuildContext context,String vendorCode,
     double? discount,double? actualCost,double? variableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<Liness> table) async {
+    ,double? excisetax,double? vat,String note,String remarks,List<Liness> table,
+    String pageName,InventoryListModel model) async {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   final font = await PdfGoogleFonts.nunitoExtraLight();
+  // final netImage = await networkImage(model.companyLogo??"");
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
 
   pdf.addPage(
@@ -1039,29 +1046,24 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
 
             // backgroundColor: Colors.white,
             child:pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              mainAxisAlignment: pw.MainAxisAlignment.start,
               children: [
 
                 pw.  Container(
-                  height:height*.155 ,
+                  height:height*.105 ,
 
 
                   color: PdfColor.fromInt(0xAAF7F7F7),
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // pw.  Container(
-                      //
-                      //     height: 16,
-                      //     width: 16,
-                      //     // decoration: pw. BoxDecoration(
-                      //     //     image:pw. DecorationImage(
-                      //     //         image: NetworkImage("https://i.pinimg.com/736x/d2/53/fb/d253fbcb29b2c743b57816b23746fe12--portugal-national-team-cristiano-ronaldo-portugal.jpg")
-                      //     //     )
-                      //     // ),
-                      //     child: pw. Container(
-                      //         child: pw.Image(logo)),
-                      //
-                      //   ),
+                      // pw.Container(
+                      //   margin: pw.EdgeInsets.symmetric(vertical: 7),
+                      //   height:70 ,
+                      //   width: 70,
+                      //   child:pw.Image(netImage),
+                      // ),
                       pw. Spacer(),
                       pw. Container(
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -1070,7 +1072,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                         child:pw. Column(
                           crossAxisAlignment:pw. CrossAxisAlignment.end,
                           children: [
-                            pw.  SizedBox(height: height*.06,),
+                            pw.  SizedBox(height: height*.03,),
                             pw.  Text(Variable.mobileNumber,
                               style: pw.TextStyle(
                                 // color:Color(0xff565555) ,
@@ -1081,11 +1083,11 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.   SizedBox(height: height*.009,),
-                            pw. Text("PURCHASE ORDER",
+                            pw. Text(pageName??"",
                               style:pw. TextStyle(
 
-                                color: PdfColor.fromInt(0xAA1F6BA9),
-                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 2.0,),),
+                                color: PdfColor.fromInt(0xff3E4F5B),
+                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 1.0,),),
                             pw.  SizedBox(height: height*.009,)
 
                           ],
@@ -1118,13 +1120,15 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                               child: pw.Column(
                                 crossAxisAlignment:pw. CrossAxisAlignment.start,
                                 children: [
-                                  pw.   Text("Ahlan cart company Limetd",
-                                    style:  pw.TextStyle( fontSize:15,fontWeight:pw. FontWeight.bold ),),
+                                  pw.   Text(model.name??"",
+                                    style:  pw.TextStyle( fontSize:14,fontWeight:pw. FontWeight.bold ),),
                                   pw.  SizedBox(height: 2,),
-                                  pw.  Text("Shop no. 514 5th floor aditya arcademall",
-                                    style:  pw.TextStyle( fontSize:7 ),),
+                                  pw.  Text(model.addressOne??"",
+                                    style:  pw.TextStyle( fontSize:9 ),),
+                                  pw.  Text(model.addressTwo??"",
+                                    style:  pw.TextStyle( fontSize:9 ),),
                                   pw.   SizedBox(height: 2,),
-                                  pw. Text("road mumai MUMBAI,400004",
+                                  pw. Text(model.email??"",
                                     style:  pw.TextStyle(fontSize:7),)
 
                                 ],
@@ -1142,11 +1146,11 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                       pw. Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("Date :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("Date : ",style:  pw.TextStyle(fontSize:9))),
                                       pw.  Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("purchase order code :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("purchase order code : ",style:  pw.TextStyle(fontSize:9))),
 
                                     ],
                                   ),
@@ -1164,10 +1168,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                               )
                                           ),
                                           width: 120,
-                                          child: pw.Text(orderDate==""?DateTime.now()
-                                              ?.toIso8601String()
-                                              .split("T")[0] ??
-                                              "".toString():orderDate.toString(),style:  pw.TextStyle(fontSize:9))
+                                          child: pw.Text(orderDate==""? DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9))
                                       ),
                                       pw.  Container(
                                           padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
@@ -1212,7 +1213,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                             pw.Container(
                               height:height*.04,
                               width: width,
-                              color: PdfColor.fromInt(0xAA1F6BA9),
+                            color: PdfColor.fromInt(0xff3E4F5B) ,
                               child:  pw.Center(
                                 child: pw. Container(
                                     alignment:  pw.Alignment.topLeft,
@@ -1236,11 +1237,12 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                       children: [
                                         pw. Text("Supplier",
                                             style:
-                                            pw. TextStyle(fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                            pw. TextStyle(fontSize:height*.014,fontWeight:pw. FontWeight.bold,
+                                                // color: PdfColor.fromInt(0xAA565555)
                                             )),
 
                                         pw.SizedBox(height: 3,),
-                                        pw.Text(vendorCode,style:  pw.TextStyle(fontWeight:pw. FontWeight.bold,fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)),),
+                                        pw.Text(vendorCode,style:  pw.TextStyle(fontWeight:pw. FontWeight.bold,fontSize:height*.014,color: PdfColor.fromInt(0xAA565555)),),
                                       ],
                                     ),
                                     pw.  SizedBox(width: 12,),
@@ -1248,7 +1250,8 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                       mainAxisAlignment:  pw.MainAxisAlignment.center,
                                       crossAxisAlignment: pw. CrossAxisAlignment.start,
                                       children: [
-                                        pw.Text("ORDER CODE",style: pw. TextStyle(fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                        pw.Text("ORDER CODE",style: pw. TextStyle(fontSize:height*.014,fontWeight:pw. FontWeight.bold,
+                                            // color: PdfColor.fromInt(0xAA565555)
                                           // color:Color(0xff565555),
                                         )),
                                         pw. SizedBox(height: 3,),
@@ -1264,11 +1267,12 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                       crossAxisAlignment:  pw.CrossAxisAlignment.start,
                                       children: [
                                         pw. Text("ORDER DATE",style:pw. TextStyle(
-                                            fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                            fontSize:height*.014,fontWeight:pw. FontWeight.bold,
+                                            // color: PdfColor.fromInt(0xAA565555)
                                         ),),
                                         pw.SizedBox(height: 3,),
-                                        pw.  Text(orderDate??"",style: pw. TextStyle(
-                                            fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
+                                        pw.  Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate,style: pw. TextStyle(
+                                            fontSize:height*.014,color: PdfColor.fromInt(0xAA565555),
                                             // color: pw.C.black,
                                             fontWeight: pw.FontWeight.bold),),
                                       ],
@@ -1281,7 +1285,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                           ],
                         ),
                       ),
-                      pw.SizedBox(height: 3),
+                      pw.SizedBox(height: 15),
                       pw.Container(
                         // height: 400,
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -1343,15 +1347,14 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                             pw. TableRow(
 
                                 children: [
-                                  pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                  pw. Container(color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.013, color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -1359,20 +1362,20 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
 
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                  color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -1381,19 +1384,19 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
 
 
                                   pw.   Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -1401,37 +1404,79 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                   ),
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.       Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
                                     height: 35,
                                   ),
 
 
-                                  // tableHeadtext(
-                                  //   'Is free',
-                                  //   padding:
-                                  //   EdgeInsets.all(15),
-                                  //   height: 80,
-                                  //   size: 13,
-                                  //     color:  Color(0xff1F6BA9)
-                                  // ),
-
-
                                 ]),
+                            if(table.isEmpty)...[
+                              pw. TableRow(
+                                  children: [
+
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                  ])
+
+                            ],
+
                             if (table != null)...[
                               for (var i = 0;
                               i < table.length;
@@ -1523,7 +1568,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            actualCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                            table[i].actualCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
 
                                       ),
 
@@ -1614,7 +1659,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                         // width: width,
 
                       ),
-                      pw.SizedBox(height: 3),
+                      pw.SizedBox(height: 8),
 
                       pw.  Container(
                           margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -1633,7 +1678,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.Text("Discount:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
+                                    pw.Text("Discount: ",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
                                     pw. Text(discount.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
                                   ],
                                 ),
@@ -1642,7 +1687,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                               pw. Container(
                                 child: pw.Row(
                                   children: [
-                                    pw. Text("UnitCost:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
+                                    pw. Text("UnitCost: ",style: pw.TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
                                     pw. Text(unitCost?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
                                   ],
                                 ),
@@ -1650,7 +1695,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                               pw.  Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Excise Tax:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
                                     pw. Text(excisetax?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -1658,7 +1703,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("VAT Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw. Text("VAT Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
                                     pw.Text(vat?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -1666,7 +1711,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Vatable Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
+                                    pw.  Text("Vatable Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
                                     pw.Text(variableAmount?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -1674,7 +1719,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("Actual cost:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw. Text("Actual cost: ",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
                                     pw.Text(actualCost?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -1688,6 +1733,59 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                       //
                       pw.  Row(
                         children: [
+                          pw.  Container(
+                            margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
+                            child:pw. Column(
+                              crossAxisAlignment:pw. CrossAxisAlignment.start,
+                              children: [
+
+
+                                pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.01,),
+                                pw. Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
+                                    children: [
+                                      pw.  Row(
+                                        children: [
+
+
+                                          pw.  Text(note??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(width: width*.02,),
+
+                                    ],
+                                  ),
+                                ),
+                                pw.  SizedBox(height: height*.03,),
+                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.01,),
+                                pw.Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw. Row(
+                                        children: [
+
+
+                                          pw.Text(remarks??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(height: height*.03,),
+
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 
                           pw.  Spacer(),
                           pw. Container(
@@ -1780,6 +1878,8 @@ class PurchaseReturnInvoicePrintScreen extends StatefulWidget {
   final double? unitCost;
   final double? excisetax;
   final  List<Order> table;
+  final InventoryListModel? model;
+  final String pageName;
 
   PurchaseReturnInvoicePrintScreen({
     this.vendorCode="",
@@ -1794,7 +1894,7 @@ class PurchaseReturnInvoicePrintScreen extends StatefulWidget {
     this.discount=0.00,
     this.vat=0.00,
     this.unitCost=0.00,
-    this.excisetax=0.00,
+    this.excisetax=0.00, this.model, required this.pageName,
 
 
 
@@ -1831,7 +1931,7 @@ class _PurchaseReturnInvoicePrintScreenState extends State<PurchaseReturnInvoice
 
       body:PdfPreview(
         build: (format) => _generatesInvoicePdf(format,"title",widget.orderDate, widget.orderCode,context,widget.vendorCode,
-            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table),
+            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table,widget.pageName,widget.model!),
       ),
 
     );
@@ -1839,11 +1939,12 @@ class _PurchaseReturnInvoicePrintScreenState extends State<PurchaseReturnInvoice
 }
 Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String orderDate,String orderCode,BuildContext context,String vendorCode,
     double? discount,double? actualCost,double? variableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<Order> table) async {
+    ,double? excisetax,double? vat,String note,String remarks,List<Order> table,String pageName,InventoryListModel model) async {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   final font = await PdfGoogleFonts.nunitoExtraLight();
+  // final netImage = await networkImage(model.companyLogo??"");
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
 
   pdf.addPage(
@@ -1855,29 +1956,24 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
 
             // backgroundColor: Colors.white,
             child:pw.Column(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
 
                 pw.  Container(
-                  height:height*.155 ,
+                  height:height*.105 ,
 
 
                   color: PdfColor.fromInt(0xAAF7F7F7),
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // pw.  Container(
-                      //
-                      //     height: 16,
-                      //     width: 16,
-                      //     // decoration: pw. BoxDecoration(
-                      //     //     image:pw. DecorationImage(
-                      //     //         image: NetworkImage("https://i.pinimg.com/736x/d2/53/fb/d253fbcb29b2c743b57816b23746fe12--portugal-national-team-cristiano-ronaldo-portugal.jpg")
-                      //     //     )
-                      //     // ),
-                      //     child: pw. Container(
-                      //         child: pw.Image(logo)),
-                      //
-                      //   ),
+                      // pw.Container(
+                      //   margin: pw.EdgeInsets.symmetric(vertical: 7),
+                      //   height:70 ,
+                      //   width: 70,
+                      //   child:pw.Image(netImage),
+                      // ),
                       pw. Spacer(),
                       pw. Container(
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -1887,17 +1983,17 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                           crossAxisAlignment:pw. CrossAxisAlignment.end,
                           children: [
                             pw.  SizedBox(height: height*.06,),
-                            pw.  Text("8606200441",
+                            pw.  Text(Variable.mobileNumber,
                               style: pw.TextStyle(
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.  SizedBox(height: height*.005,),
-                            pw. Text("akshaygmail,com",
+                            pw. Text(Variable.email,
                               style:pw. TextStyle(
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.   SizedBox(height: height*.009,),
-                            pw. Text("PURCHASE ORDER",
+                            pw. Text(pageName,
                               style:pw. TextStyle(
 
                                 color: PdfColor.fromInt(0xAA1F6BA9),
@@ -1934,14 +2030,17 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                               child: pw.Column(
                                 crossAxisAlignment:pw. CrossAxisAlignment.start,
                                 children: [
-                                  pw.   Text("Ahlan cart company Limted",
-                                    style:  pw.TextStyle( fontSize:15,fontWeight:pw. FontWeight.bold ),),
+                                  pw.   Text(model.name??""
+                                    ,
+                                    style:  pw.TextStyle( fontSize:14,fontWeight:pw. FontWeight.bold ),),
                                   pw.  SizedBox(height: 2,),
-                                  pw.  Text("Shop no. 514 5th floor aditya arcademall",
-                                    style:  pw.TextStyle( fontSize:7 ),),
+                                  pw.  Text(model.addressOne??"",
+                                    style:  pw.TextStyle(  fontSize:9 ),),
+                                  pw.  Text(model.addressTwo??"",
+                                    style:  pw.TextStyle(  fontSize:9 ),),
                                   pw.   SizedBox(height: 2,),
-                                  pw. Text("road mumai MUMBAI,400004",
-                                    style:  pw.TextStyle(fontSize:7),)
+                                  pw. Text(model.email??"",
+                                    style:  pw.TextStyle( fontSize:9),)
 
                                 ],
                               ),
@@ -1958,11 +2057,11 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                       pw. Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("Date :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("Date : ",style:  pw.TextStyle(fontSize:9))),
                                       pw.  Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("purchase order code :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("purchase order code : ",style:  pw.TextStyle(fontSize:9))),
 
                                     ],
                                   ),
@@ -1980,10 +2079,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                               )
                                           ),
                                           width: 120,
-                                          child: pw.Text(orderDate==""?DateTime.now()
-                                              ?.toIso8601String()
-                                              .split("T")[0] ??
-                                              "".toString():orderDate.toString(),style:  pw.TextStyle(fontSize:9))
+                                          child: pw.Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate,style:  pw.TextStyle(fontSize:9))
                                       ),
                                       pw.  Container(
                                           padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
@@ -2028,7 +2124,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                             pw.Container(
                               height:height*.04,
                               width: width,
-                              color: PdfColor.fromInt(0xAA1F6BA9),
+                            color: PdfColor.fromInt(0xff3E4F5B),
                               child:  pw.Center(
                                 child: pw. Container(
                                     alignment:  pw.Alignment.topLeft,
@@ -2083,7 +2179,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
                                         ),),
                                         pw.SizedBox(height: 3,),
-                                        pw.  Text(orderDate??"",style: pw. TextStyle(
+                                        pw.  Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate,style: pw. TextStyle(
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
                                             // color: pw.C.black,
                                             fontWeight: pw.FontWeight.bold),),
@@ -2160,14 +2256,14 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
 
                                 children: [
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.013, color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -2175,20 +2271,20 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
 
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -2197,19 +2293,19 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
 
 
                                   pw.   Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -2217,20 +2313,20 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                   ),
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.       Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
                                     height: 35,
@@ -2248,6 +2344,59 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
 
 
                                 ]),
+                            if(table.isEmpty)...[
+                              pw. TableRow(
+                                  children: [
+
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                  ])
+
+                            ],
+
+
                             if (table != null)...[
                               for (var i = 0;
                               i < table.length;
@@ -2277,7 +2426,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                         alignment:pw. Alignment.center,
                                         height: 40,
                                         child:pw. Text(
-                                            table[i].barcode??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].barcode==null?"":     table[i].barcode??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
                                       pw.   Container(
@@ -2291,7 +2440,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].totalQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i]?.totalQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
 
@@ -2299,7 +2448,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].unitCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                            table[i]?.unitCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
 
 
                                       ),
@@ -2308,7 +2457,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
 
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].excessTax.toString()??"",style:pw. TextStyle(fontSize: 8)),
+                                            table[i]?.excessTax.toString()??"",style:pw. TextStyle(fontSize: 8)),
                                         // fontSize: 12,
 
 
@@ -2317,21 +2466,21 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            table[i].discount.toString()??"",style:pw. TextStyle(fontSize: 8)),
+                                            table[i]?.discount.toString()??"",style:pw. TextStyle(fontSize: 8)),
                                       ),
 
                                       pw. Container(
                                         alignment:pw. Alignment.center,
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         child:pw. Text(
-                                            table[i].vatableAmount.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i]?.vatableAmount.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
                                         // fontSize: 12,
                                       ),
                                       pw.  Container(
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].vat.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].vat?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
                                         // fontSize: 12,
 
                                       ),
@@ -2339,7 +2488,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            actualCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                            table[i].actualCost?.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
 
                                       ),
 
@@ -2357,7 +2506,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                         // width: width,
 
                       ),
-                      pw.SizedBox(height: 3),
+                      pw.SizedBox(height: 15),
 
                       pw.  Container(
                           margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -2376,7 +2525,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.Text("Discount:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
+                                    pw.Text("Discount: ",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
                                     pw. Text(discount.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
                                   ],
                                 ),
@@ -2385,7 +2534,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                               pw. Container(
                                 child: pw.Row(
                                   children: [
-                                    pw. Text("UnitCost:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
+                                    pw. Text("UnitCost: ",style: pw.TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
                                     pw. Text(unitCost.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
                                   ],
                                 ),
@@ -2393,7 +2542,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                               pw.  Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Excise Tax:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
                                     pw. Text(excisetax.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -2401,7 +2550,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("VAT Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw. Text("VAT Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
                                     pw.Text(vat.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -2409,7 +2558,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Vatable Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
+                                    pw.  Text("Vatable Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
                                     pw.Text(variableAmount.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -2417,7 +2566,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("Actual cost:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw. Text("Actual cost: ",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
                                     pw.Text(actualCost.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -2431,6 +2580,59 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                       //
                       pw.  Row(
                         children: [
+                          pw.  Container(
+                            margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
+                            child:pw. Column(
+                              crossAxisAlignment:pw. CrossAxisAlignment.start,
+                              children: [
+
+
+                                pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.01,),
+                                pw. Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
+                                    children: [
+                                      pw.  Row(
+                                        children: [
+
+
+                                          pw.  Text(note??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(width: width*.02,),
+
+                                    ],
+                                  ),
+                                ),
+                                pw.  SizedBox(height: height*.03,),
+                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.01,),
+                                pw.Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw. Row(
+                                        children: [
+
+
+                                          pw.Text(remarks??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(height: height*.03,),
+
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 
                           pw.  Spacer(),
                           pw. Container(
@@ -2523,7 +2725,10 @@ class SalePrintScreen extends StatefulWidget {
   final double? sellingPrice;
   final double? unitCost;
   final double? excisetax;
+  final InventoryListModel? model;
+  final String pageName;
   final  List<dynamic> table;
+
 
   SalePrintScreen({
     this.vendorCode="",
@@ -2538,7 +2743,7 @@ class SalePrintScreen extends StatefulWidget {
     this.discount=0.00,
     this.vat=0.00,
     this.unitCost=0.00,
-    this.excisetax=0.00,
+    this.excisetax=0.00, this.model, required this.pageName,
 
 
 
@@ -2575,7 +2780,7 @@ class _SalePrintScreenState extends State<SalePrintScreen> {
 
       body:PdfPreview(
         build: (format) => _generateSalePdf(format,"title",widget.orderDate, widget.orderCode,context,widget.vendorCode,
-            widget.discount,widget.sellingPrice,widget.taxableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table),
+            widget.discount,widget.sellingPrice,widget.taxableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table,widget.pageName,widget.model!),
       ),
 
     );
@@ -2583,7 +2788,7 @@ class _SalePrintScreenState extends State<SalePrintScreen> {
 }
 Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String orderDate,String orderCode,BuildContext context,String vendorCode,
     double? discount,double? sellingPirce,double? taxableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<dynamic> table) async {
+    ,double? excisetax,double? vat,String note,String remarks,List<dynamic> table,String pageName,InventoryListModel model) async {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
@@ -2602,7 +2807,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
               children: [
 
                 pw.  Container(
-                  height:height*.155 ,
+                  height:height*.105 ,
 
 
                   color: PdfColor.fromInt(0xAAF7F7F7),
@@ -2630,27 +2835,31 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                         child:pw. Column(
                           crossAxisAlignment:pw. CrossAxisAlignment.end,
                           children: [
-                            pw.  SizedBox(height: height*.06,),
-                            pw.  Text("8606200441",
+                            pw.  SizedBox(height: height*.03,),
+                            pw.  Text(Variable.mobileNumber,
                               style: pw.TextStyle(
+
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.  SizedBox(height: height*.005,),
-                            pw. Text("akshaygmail,com",
+                            pw. Text(Variable.email,
+
                               style:pw. TextStyle(
+
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.   SizedBox(height: height*.009,),
-                            pw. Text("PURCHASE ORDER",
+                            pw. Text(pageName??"",
                               style:pw. TextStyle(
 
-                                color: PdfColor.fromInt(0xAA1F6BA9),
-                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 2.0,),),
+                                color: PdfColor.fromInt(0xff3E4F5B),
+                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 1.0,),),
                             pw.  SizedBox(height: height*.009,)
 
                           ],
                         ),
                       ),
+
 
 
 
@@ -2678,14 +2887,17 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                               child: pw.Column(
                                 crossAxisAlignment:pw. CrossAxisAlignment.start,
                                 children: [
-                                  pw.   Text("Ahlan cart company Limetd",
-                                    style:  pw.TextStyle( fontSize:15,fontWeight:pw. FontWeight.bold ),),
+                                  pw.   Text(model.name??""
+                                    ,
+                                    style:  pw.TextStyle( fontSize:14,fontWeight:pw. FontWeight.bold ),),
                                   pw.  SizedBox(height: 2,),
-                                  pw.  Text("Shop no. 514 5th floor aditya arcademall",
-                                    style:  pw.TextStyle( fontSize:7 ),),
+                                  pw.  Text(model.addressOne??"",
+                                    style:  pw.TextStyle(  fontSize:9 ),),
+                                  pw.  Text(model.addressTwo??"",
+                                    style:  pw.TextStyle(  fontSize:9 ),),
                                   pw.   SizedBox(height: 2,),
-                                  pw. Text("road mumai MUMBAI,400004",
-                                    style:  pw.TextStyle(fontSize:7),)
+                                  pw. Text(model.email??"",
+                                    style:  pw.TextStyle( fontSize:9),)
 
                                 ],
                               ),
@@ -2702,11 +2914,11 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                       pw. Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("Date :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("Date : ",style:  pw.TextStyle( fontSize:9))),
                                       pw.  Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("purchase order code :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("purchase order code : ",style:  pw.TextStyle(fontSize:9))),
 
                                     ],
                                   ),
@@ -2720,26 +2932,23 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                             // color:PdfColor.fromInt(0xAAACACAC),
 
                                               border: pw.Border(
-                                                bottom:pw. BorderSide(width: .5,),
+                                                bottom:pw. BorderSide(width: .3,),
                                               )
                                           ),
-                                          width: 120,
-                                          child: pw.Text(orderDate==""?DateTime.now()
-                                              ?.toIso8601String()
-                                              .split("T")[0] ??
-                                              "".toString():orderDate.toString(),style:  pw.TextStyle(fontSize:9))
+                                          width: 80,
+                                          child: pw.Text(orderDate==""? DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9,))
                                       ),
                                       pw.  Container(
                                           padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
                                           decoration: pw. BoxDecoration(
                                               border: pw.Border(
-                                                bottom: pw. BorderSide(width: .5,
+                                                bottom: pw. BorderSide(width: .3,
                                                   // color: Color(0xffACACAC66).withOpacity(.4)
                                                 ),
                                               )
                                           ),
-                                          width: 120,
-                                          child: pw.Text(orderCode?.toString()??"",style:  pw.TextStyle(fontSize:9))
+                                          width: 80,
+                                          child: pw.Text(orderCode?.toString()??"",style:  pw.TextStyle( fontSize:9))
                                       ),
 
                                     ],
@@ -2754,7 +2963,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                       // pw. SizedBox(height: 30,),
                       pw. Container(
                         width: width,
-                        height: height*.15,
+                        height: height*.11,
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
                         decoration: pw. BoxDecoration(
 
@@ -2772,7 +2981,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                             pw.Container(
                               height:height*.04,
                               width: width,
-                              color: PdfColor.fromInt(0xAA1F6BA9),
+                              color: PdfColor.fromInt(0xff3E4F5B),
                               child:  pw.Center(
                                 child: pw. Container(
                                     alignment:  pw.Alignment.topLeft,
@@ -2841,7 +3050,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                           ],
                         ),
                       ),
-                      pw.SizedBox(height: 3),
+                      pw.SizedBox(height: 15),
                       pw.Container(
                         // height: 400,
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -2904,14 +3113,16 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
 
                                 children: [
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.012, color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
@@ -2919,20 +3130,23 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
 
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Sales UOM',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Qty',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
@@ -2941,19 +3155,22 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
 
 
                                   pw.   Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Excess tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
@@ -2961,20 +3178,23 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                   ),
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Taxable amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.       Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    padding: pw.EdgeInsets.all(5),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Selling Price',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
                                     height: 35,
@@ -3083,7 +3303,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            table[i].sellingPrice.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                           "",style:pw. TextStyle(fontSize:height*.013)),
 
                                       ),
 
@@ -3227,6 +3447,60 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                       //
                       pw.  Row(
                         children: [
+                          pw.  Container(
+                            margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
+                            child:pw. Column(
+                              crossAxisAlignment:pw. CrossAxisAlignment.start,
+                              children: [
+
+
+                                pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.01,),
+                                pw. Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
+                                    children: [
+                                      pw.  Row(
+                                        children: [
+
+
+                                          pw.  Text(note??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(width: width*.02,),
+
+                                    ],
+                                  ),
+                                ),
+                                pw.  SizedBox(height: height*.03,),
+                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.01,),
+                                pw.Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw. Row(
+                                        children: [
+
+
+                                          pw.Text(remarks??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(height: height*.03,),
+
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
 
                           pw.  Spacer(),
                           pw. Container(

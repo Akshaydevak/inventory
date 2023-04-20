@@ -31,7 +31,7 @@ dependencies:
     sdk: flutter
   desktop_window: ^0.4.0
   scroll_to_index: ^2.1.0
-  printing: ^5.10.1
+  printing:
   # syncfusion_flutter_datagrid: ^19.4.56
   datetime_picker_formfield: 2.0.0
   provider: ^5.0.0
@@ -47,7 +47,7 @@ dependencies:
   http: ^0.13.5
   google_fonts: ^3.0.1
   freezed_annotation:
-  pdf: ^3.9.0
+  pdf: ^3.10.1
   bloc: ^7.1.0
   dio: 4.0.0
   intl: ^0.17.0

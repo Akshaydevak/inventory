@@ -25,6 +25,9 @@ _$_PurchaseReturnInvoicePostModel _$$_PurchaseReturnInvoicePostModelFromJson(
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
       actualCost: (json['actual_cost'] as num?)?.toDouble(),
       vendorTrnNumber: json['vendor_trn_number'] as String?,
+      paymentCode: json['payment_code'] as String?,
+      paymentMethod: json['payment_method'] as String?,
+      paymentStatus: json['payment_status'] as String?,
       lines: (json['invoice_lines'] as List<dynamic>?)
           ?.map((e) => Order.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -49,6 +52,9 @@ Map<String, dynamic> _$$_PurchaseReturnInvoicePostModelToJson(
       'excess_tax': instance.excessTax,
       'actual_cost': instance.actualCost,
       'vendor_trn_number': instance.vendorTrnNumber,
+      'payment_code': instance.paymentCode,
+      'payment_method': instance.paymentMethod,
+      'payment_status': instance.paymentStatus,
       'invoice_lines': instance.lines,
     };
 

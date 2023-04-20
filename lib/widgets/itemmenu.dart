@@ -47,7 +47,7 @@ class _ItemCardState extends State<ItemCard> {
         setState(() {});
       },
       child: Material(
-        color:isHover?Colors.grey: Colors.transparent,
+        color:isHover?Colors.grey.shade700: Colors.transparent,
         child: InkWell(
           onTap:widget.onClick,
           //widget.onClick,

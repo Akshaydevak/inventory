@@ -1385,7 +1385,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         options: Options(
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+
           },
         ),
       );

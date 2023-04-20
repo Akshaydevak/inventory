@@ -32,6 +32,9 @@ class PurchaseReturnGeneralPost with _$PurchaseReturnGeneralPost {
     @JsonKey(name:"vendor_address") final String? vendorAddress,
     @JsonKey(name:"created_by") final String? createdBy,
     @JsonKey(name:"edited_by") final String? editedBy,
+    @JsonKey(name:"payment_code") final String? paymentCode,
+    @JsonKey(name:"payment_method") final String? paymentMethod,
+    @JsonKey(name:"payment_status") final String? paymentStaus,
 
 
     @JsonKey(name: "order_lines") final List<Liness>? lines,

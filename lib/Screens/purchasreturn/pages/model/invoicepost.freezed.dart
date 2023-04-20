@@ -47,8 +47,13 @@ mixin _$PurchaseReturnInvoicePostModel {
   @JsonKey(name: "actual_cost")
   double? get actualCost => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_trn_number")
-  String? get vendorTrnNumber =>
-      throw _privateConstructorUsedError; // @JsonKey(name: "purchase_invoice_line_id") final String? purchaseInvoiceLineId,
+  String? get vendorTrnNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_code")
+  String? get paymentCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_status")
+  String? get paymentStatus => throw _privateConstructorUsedError;
   @JsonKey(name: "invoice_lines")
   List<Order>? get lines => throw _privateConstructorUsedError;
 
@@ -83,6 +88,9 @@ abstract class $PurchaseReturnInvoicePostModelCopyWith<$Res> {
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
+      @JsonKey(name: "payment_code") String? paymentCode,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "payment_status") String? paymentStatus,
       @JsonKey(name: "invoice_lines") List<Order>? lines});
 }
 
@@ -116,6 +124,9 @@ class _$PurchaseReturnInvoicePostModelCopyWithImpl<$Res,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
     Object? vendorTrnNumber = freezed,
+    Object? paymentCode = freezed,
+    Object? paymentMethod = freezed,
+    Object? paymentStatus = freezed,
     Object? lines = freezed,
   }) {
     return _then(_value.copyWith(
@@ -183,6 +194,18 @@ class _$PurchaseReturnInvoicePostModelCopyWithImpl<$Res,
           ? _value.vendorTrnNumber
           : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
+      paymentCode: freezed == paymentCode
+          ? _value.paymentCode
+          : paymentCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStatus: freezed == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
       lines: freezed == lines
           ? _value.lines
           : lines // ignore: cast_nullable_to_non_nullable
@@ -217,6 +240,9 @@ abstract class _$$_PurchaseReturnInvoicePostModelCopyWith<$Res>
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
+      @JsonKey(name: "payment_code") String? paymentCode,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "payment_status") String? paymentStatus,
       @JsonKey(name: "invoice_lines") List<Order>? lines});
 }
 
@@ -249,6 +275,9 @@ class __$$_PurchaseReturnInvoicePostModelCopyWithImpl<$Res>
     Object? excessTax = freezed,
     Object? actualCost = freezed,
     Object? vendorTrnNumber = freezed,
+    Object? paymentCode = freezed,
+    Object? paymentMethod = freezed,
+    Object? paymentStatus = freezed,
     Object? lines = freezed,
   }) {
     return _then(_$_PurchaseReturnInvoicePostModel(
@@ -316,6 +345,18 @@ class __$$_PurchaseReturnInvoicePostModelCopyWithImpl<$Res>
           ? _value.vendorTrnNumber
           : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
+      paymentCode: freezed == paymentCode
+          ? _value.paymentCode
+          : paymentCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStatus: freezed == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
       lines: freezed == lines
           ? _value._lines
           : lines // ignore: cast_nullable_to_non_nullable
@@ -345,6 +386,9 @@ class _$_PurchaseReturnInvoicePostModel
       @JsonKey(name: "excess_tax") this.excessTax,
       @JsonKey(name: "actual_cost") this.actualCost,
       @JsonKey(name: "vendor_trn_number") this.vendorTrnNumber,
+      @JsonKey(name: "payment_code") this.paymentCode,
+      @JsonKey(name: "payment_method") this.paymentMethod,
+      @JsonKey(name: "payment_status") this.paymentStatus,
       @JsonKey(name: "invoice_lines") final List<Order>? lines})
       : _lines = lines;
 
@@ -395,9 +439,16 @@ class _$_PurchaseReturnInvoicePostModel
   @override
   @JsonKey(name: "vendor_trn_number")
   final String? vendorTrnNumber;
-// @JsonKey(name: "purchase_invoice_line_id") final String? purchaseInvoiceLineId,
+  @override
+  @JsonKey(name: "payment_code")
+  final String? paymentCode;
+  @override
+  @JsonKey(name: "payment_method")
+  final String? paymentMethod;
+  @override
+  @JsonKey(name: "payment_status")
+  final String? paymentStatus;
   final List<Order>? _lines;
-// @JsonKey(name: "purchase_invoice_line_id") final String? purchaseInvoiceLineId,
   @override
   @JsonKey(name: "invoice_lines")
   List<Order>? get lines {
@@ -409,7 +460,7 @@ class _$_PurchaseReturnInvoicePostModel
 
   @override
   String toString() {
-    return 'PurchaseReturnInvoicePostModel(foc: $foc, discount: $discount, vat: $vat, notes: $notes, remarks: $remarks, purchaseInvoiceId: $purchaseInvoiceId, returnOrderCode: $returnOrderCode, inventoryId: $inventoryId, invoicedBy: $invoicedBy, venderId: $venderId, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, vendorTrnNumber: $vendorTrnNumber, lines: $lines)';
+    return 'PurchaseReturnInvoicePostModel(foc: $foc, discount: $discount, vat: $vat, notes: $notes, remarks: $remarks, purchaseInvoiceId: $purchaseInvoiceId, returnOrderCode: $returnOrderCode, inventoryId: $inventoryId, invoicedBy: $invoicedBy, venderId: $venderId, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, vendorTrnNumber: $vendorTrnNumber, paymentCode: $paymentCode, paymentMethod: $paymentMethod, paymentStatus: $paymentStatus, lines: $lines)';
   }
 
   @override
@@ -445,30 +496,40 @@ class _$_PurchaseReturnInvoicePostModel
                 other.actualCost == actualCost) &&
             (identical(other.vendorTrnNumber, vendorTrnNumber) ||
                 other.vendorTrnNumber == vendorTrnNumber) &&
+            (identical(other.paymentCode, paymentCode) ||
+                other.paymentCode == paymentCode) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
             const DeepCollectionEquality().equals(other._lines, _lines));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      foc,
-      discount,
-      vat,
-      notes,
-      remarks,
-      purchaseInvoiceId,
-      returnOrderCode,
-      inventoryId,
-      invoicedBy,
-      venderId,
-      unitCost,
-      grandTotal,
-      vatableAmount,
-      excessTax,
-      actualCost,
-      vendorTrnNumber,
-      const DeepCollectionEquality().hash(_lines));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        foc,
+        discount,
+        vat,
+        notes,
+        remarks,
+        purchaseInvoiceId,
+        returnOrderCode,
+        inventoryId,
+        invoicedBy,
+        venderId,
+        unitCost,
+        grandTotal,
+        vatableAmount,
+        excessTax,
+        actualCost,
+        vendorTrnNumber,
+        paymentCode,
+        paymentMethod,
+        paymentStatus,
+        const DeepCollectionEquality().hash(_lines)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -504,6 +565,9 @@ abstract class _PurchaseReturnInvoicePostModel
           @JsonKey(name: "excess_tax") final double? excessTax,
           @JsonKey(name: "actual_cost") final double? actualCost,
           @JsonKey(name: "vendor_trn_number") final String? vendorTrnNumber,
+          @JsonKey(name: "payment_code") final String? paymentCode,
+          @JsonKey(name: "payment_method") final String? paymentMethod,
+          @JsonKey(name: "payment_status") final String? paymentStatus,
           @JsonKey(name: "invoice_lines") final List<Order>? lines}) =
       _$_PurchaseReturnInvoicePostModel;
 
@@ -553,7 +617,16 @@ abstract class _PurchaseReturnInvoicePostModel
   @override
   @JsonKey(name: "vendor_trn_number")
   String? get vendorTrnNumber;
-  @override // @JsonKey(name: "purchase_invoice_line_id") final String? purchaseInvoiceLineId,
+  @override
+  @JsonKey(name: "payment_code")
+  String? get paymentCode;
+  @override
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod;
+  @override
+  @JsonKey(name: "payment_status")
+  String? get paymentStatus;
+  @override
   @JsonKey(name: "invoice_lines")
   List<Order>? get lines;
   @override

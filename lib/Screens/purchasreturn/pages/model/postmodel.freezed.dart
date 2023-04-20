@@ -57,6 +57,12 @@ mixin _$PurchaseReturnGeneralPost {
   String? get createdBy => throw _privateConstructorUsedError;
   @JsonKey(name: "edited_by")
   String? get editedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_code")
+  String? get paymentCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_status")
+  String? get paymentStaus => throw _privateConstructorUsedError;
   @JsonKey(name: "order_lines")
   List<Liness>? get lines => throw _privateConstructorUsedError;
 
@@ -94,6 +100,9 @@ abstract class $PurchaseReturnGeneralPostCopyWith<$Res> {
       @JsonKey(name: "vendor_address") String? vendorAddress,
       @JsonKey(name: "created_by") String? createdBy,
       @JsonKey(name: "edited_by") String? editedBy,
+      @JsonKey(name: "payment_code") String? paymentCode,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "payment_status") String? paymentStaus,
       @JsonKey(name: "order_lines") List<Liness>? lines});
 }
 
@@ -132,6 +141,9 @@ class _$PurchaseReturnGeneralPostCopyWithImpl<$Res,
     Object? vendorAddress = freezed,
     Object? createdBy = freezed,
     Object? editedBy = freezed,
+    Object? paymentCode = freezed,
+    Object? paymentMethod = freezed,
+    Object? paymentStaus = freezed,
     Object? lines = freezed,
   }) {
     return _then(_value.copyWith(
@@ -219,6 +231,18 @@ class _$PurchaseReturnGeneralPostCopyWithImpl<$Res,
           ? _value.editedBy
           : editedBy // ignore: cast_nullable_to_non_nullable
               as String?,
+      paymentCode: freezed == paymentCode
+          ? _value.paymentCode
+          : paymentCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStaus: freezed == paymentStaus
+          ? _value.paymentStaus
+          : paymentStaus // ignore: cast_nullable_to_non_nullable
+              as String?,
       lines: freezed == lines
           ? _value.lines
           : lines // ignore: cast_nullable_to_non_nullable
@@ -258,6 +282,9 @@ abstract class _$$_PurchaseReturnGeneralPostCopyWith<$Res>
       @JsonKey(name: "vendor_address") String? vendorAddress,
       @JsonKey(name: "created_by") String? createdBy,
       @JsonKey(name: "edited_by") String? editedBy,
+      @JsonKey(name: "payment_code") String? paymentCode,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "payment_status") String? paymentStaus,
       @JsonKey(name: "order_lines") List<Liness>? lines});
 }
 
@@ -295,6 +322,9 @@ class __$$_PurchaseReturnGeneralPostCopyWithImpl<$Res>
     Object? vendorAddress = freezed,
     Object? createdBy = freezed,
     Object? editedBy = freezed,
+    Object? paymentCode = freezed,
+    Object? paymentMethod = freezed,
+    Object? paymentStaus = freezed,
     Object? lines = freezed,
   }) {
     return _then(_$_PurchaseReturnGeneralPost(
@@ -382,6 +412,18 @@ class __$$_PurchaseReturnGeneralPostCopyWithImpl<$Res>
           ? _value.editedBy
           : editedBy // ignore: cast_nullable_to_non_nullable
               as String?,
+      paymentCode: freezed == paymentCode
+          ? _value.paymentCode
+          : paymentCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStaus: freezed == paymentStaus
+          ? _value.paymentStaus
+          : paymentStaus // ignore: cast_nullable_to_non_nullable
+              as String?,
       lines: freezed == lines
           ? _value._lines
           : lines // ignore: cast_nullable_to_non_nullable
@@ -415,6 +457,9 @@ class _$_PurchaseReturnGeneralPost implements _PurchaseReturnGeneralPost {
       @JsonKey(name: "vendor_address") this.vendorAddress,
       @JsonKey(name: "created_by") this.createdBy,
       @JsonKey(name: "edited_by") this.editedBy,
+      @JsonKey(name: "payment_code") this.paymentCode,
+      @JsonKey(name: "payment_method") this.paymentMethod,
+      @JsonKey(name: "payment_status") this.paymentStaus,
       @JsonKey(name: "order_lines") final List<Liness>? lines})
       : _lines = lines;
 
@@ -478,6 +523,15 @@ class _$_PurchaseReturnGeneralPost implements _PurchaseReturnGeneralPost {
   @override
   @JsonKey(name: "edited_by")
   final String? editedBy;
+  @override
+  @JsonKey(name: "payment_code")
+  final String? paymentCode;
+  @override
+  @JsonKey(name: "payment_method")
+  final String? paymentMethod;
+  @override
+  @JsonKey(name: "payment_status")
+  final String? paymentStaus;
   final List<Liness>? _lines;
   @override
   @JsonKey(name: "order_lines")
@@ -490,7 +544,7 @@ class _$_PurchaseReturnGeneralPost implements _PurchaseReturnGeneralPost {
 
   @override
   String toString() {
-    return 'PurchaseReturnGeneralPost(id: $id, foc: $foc, discount: $discount, vat: $vat, note: $note, remarks: $remarks, invoiceCode: $invoiceCode, orderType: $orderType, purchaseInvoiceId: $purchaseInvoiceId, inventoryId: $inventoryId, vendorCode: $vendorCode, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, vendorAddress: $vendorAddress, createdBy: $createdBy, editedBy: $editedBy, lines: $lines)';
+    return 'PurchaseReturnGeneralPost(id: $id, foc: $foc, discount: $discount, vat: $vat, note: $note, remarks: $remarks, invoiceCode: $invoiceCode, orderType: $orderType, purchaseInvoiceId: $purchaseInvoiceId, inventoryId: $inventoryId, vendorCode: $vendorCode, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, vendorAddress: $vendorAddress, createdBy: $createdBy, editedBy: $editedBy, paymentCode: $paymentCode, paymentMethod: $paymentMethod, paymentStaus: $paymentStaus, lines: $lines)';
   }
 
   @override
@@ -535,6 +589,12 @@ class _$_PurchaseReturnGeneralPost implements _PurchaseReturnGeneralPost {
                 other.createdBy == createdBy) &&
             (identical(other.editedBy, editedBy) ||
                 other.editedBy == editedBy) &&
+            (identical(other.paymentCode, paymentCode) ||
+                other.paymentCode == paymentCode) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.paymentStaus, paymentStaus) ||
+                other.paymentStaus == paymentStaus) &&
             const DeepCollectionEquality().equals(other._lines, _lines));
   }
 
@@ -563,6 +623,9 @@ class _$_PurchaseReturnGeneralPost implements _PurchaseReturnGeneralPost {
         vendorAddress,
         createdBy,
         editedBy,
+        paymentCode,
+        paymentMethod,
+        paymentStaus,
         const DeepCollectionEquality().hash(_lines)
       ]);
 
@@ -604,6 +667,9 @@ abstract class _PurchaseReturnGeneralPost implements PurchaseReturnGeneralPost {
           @JsonKey(name: "vendor_address") final String? vendorAddress,
           @JsonKey(name: "created_by") final String? createdBy,
           @JsonKey(name: "edited_by") final String? editedBy,
+          @JsonKey(name: "payment_code") final String? paymentCode,
+          @JsonKey(name: "payment_method") final String? paymentMethod,
+          @JsonKey(name: "payment_status") final String? paymentStaus,
           @JsonKey(name: "order_lines") final List<Liness>? lines}) =
       _$_PurchaseReturnGeneralPost;
 
@@ -667,6 +733,15 @@ abstract class _PurchaseReturnGeneralPost implements PurchaseReturnGeneralPost {
   @override
   @JsonKey(name: "edited_by")
   String? get editedBy;
+  @override
+  @JsonKey(name: "payment_code")
+  String? get paymentCode;
+  @override
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod;
+  @override
+  @JsonKey(name: "payment_status")
+  String? get paymentStaus;
   @override
   @JsonKey(name: "order_lines")
   List<Liness>? get lines;

@@ -304,6 +304,7 @@ List<TextEditingController> vatController =[];
     actualcost.text="";
     vendorCode.text="";
     vendorCodeName.text="";
+    vendor_email="";
     Recievingstatus.text="";
     variantId = "";
     varinatname =
@@ -384,7 +385,7 @@ List<TextEditingController> vatController =[];
   }
   valueAddingTextEdingController(){
     if(table.isNotEmpty){
-      print("checking case11");
+
       for(var i=0;i<table.length;i++){
         var requsted = new TextEditingController(text: table[i].requestedQty.toString()??"");
         requestedListControllers.add(requsted);
@@ -877,6 +878,7 @@ List<TextEditingController> vatController =[];
                           }
                           ordercode.text=data.data?.orderCode.toString()??"";
                           vendorCode.text=data.data?.vendorId.toString()??"";
+                          vendor_email=data.data?.vendorMailId.toString()??"";
                           Recievingstatus.text=data.data?.recievingStatus??"";
                           Paymentstatus.text=data.data?.paymentStatus??"";
                           Paymentcode.text=data.data?.paymentcode??"";
@@ -1116,7 +1118,7 @@ else{
                                         unitCost:double.tryParse( unitcourse.text) ,
                                         excisetax:double.tryParse( excesstax.text) ,
                                         remarks: remarks.text ,
-                                        pageName: "Purchase Order",
+                                        pageName: "GENERAL",
 
                                       )),
                                 );
@@ -1134,8 +1136,8 @@ else{
                                               children: [
                                                 Expanded(
                                                     child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
                                                   children: [
 
                                                     SelectableDropDownpopUp(
@@ -1229,59 +1231,10 @@ else{
                                                       },
                                                     ),
 
-                                                    // SelectableDropDownpopUp(
-                                                    //   label: "Vendor Code",
-                                                    //   type:"VendorCodeGeneral",
-                                                    //   value: vendorCodeName.text==null|| vendorCodeName.text=="null"?"":vendorCodeName.text,
-                                                    //   onSelection: (Result? va) {
-                                                    //
-                                                    //     print(
-                                                    //         "+++++++++++++++++++++++"+va.toString());
-                                                    //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                                    //     // setState(() {
-                                                    //     vendorCode.text=va?.partnerCode??"";
-                                                    //     vendorCodeName.text=va?.name??"";
-                                                    //     var id=va?.partnerCode;
-                                                    //
-                                                    //     print("vendorssss"+id.toString());
-                                                    //     setState(() {
-                                                    //       context.read<VariantIdCubitDartCubit>().getVariantId(vendorId: vendorCode.text);
-                                                    //       context
-                                                    //           .read<
-                                                    //           VendordetailsCubit>()
-                                                    //           .getVendorDetails(
-                                                    //           id);
-                                                    //
-                                                    //     });
-                                                    //     showDailogPopUp(
-                                                    //         context,
-                                                    //         VendorPopup(
-                                                    //           assign:  assigniningDetails,
-                                                    //
-                                                    //         ));
-                                                    //
-                                                    //
-                                                    //
-                                                    //
-                                                    //
-                                                    //
-                                                    //   },
-                                                    //
-                                                    // ),
 
                                                     SizedBox(
                                                       height: height * .035,
                                                     ),
-                                                    // NewInputCard(
-                                                    //   readOnly: true,
-                                                    //   controller: vendoraddress,
-                                                    //   title: "Vender Address",
-                                                    //   height: 90,
-                                                    //   maxLines: 3,
-                                                    // ),
-                                                    // SizedBox(
-                                                    //   height: height * .035,
-                                                    // ),
                                                     NewInputCard(
                                                         readOnly: true,
                                                         controller: vendortrnnumber,
@@ -1309,47 +1262,6 @@ else{
                                                         },
                                                         enable: true),
 
-                                                 //    PopUpDateFormField(
-                                                 //
-                                                 //        format:DateFormat('yyyy-MM-dd'),
-                                                 //        controller:     promised_receipt_date2,
-                                                 //        // initialValue:
-                                                 //        //     DateTime.parse(fromDate!),
-                                                 //        label: "Promised Receipt Date",
-                                                 //        onSaved: (newValue) {
-                                                 //          // var formatter = new DateFormat('dd-MM-yyyy');
-                                                 //          print(newValue);
-                                                 //
-                                                 //         var date = '${DateFormat('yyyy-MM-dd').format(newValue!)} -'
-                                                 //              ' ${DateFormat('yyyy-MM-dd').format(
-                                                 //              newValue ?? newValue)}';
-                                                 //         print(date);
-                                                 //
-                                                 //          // String ak =formatter.format(newValue!);
-                                                 //          // print(ak.runtimeType);
-                                                 //          // print("hi this inside ${ak.split("T")[0]}");
-                                                 // // var as=newValue?.toIso8601String().split("T")[0] ?? "";
-                                                 // //          var list=as.split('-');
-                                                 // //          print(list);
-                                                 // //          var theVal="";
-                                                 // //          if(list.isNotEmpty)
-                                                 // //            for(int i=list.length-1;i>-1;i--){
-                                                 // //              var a=theVal+list[i];
-                                                 // //              if(i!=0){
-                                                 // //                theVal=a+"-";
-                                                 // //              }
-                                                 // //              else{
-                                                 // //                theVal=a;
-                                                 // //              }
-                                                 // //
-                                                 // //            }
-                                                 // //          promised_receipt_date2.text=theVal;
-                                                 //
-                                                 //          // promised_receipt_date.text = newValue?.toIso8601String().split("T")[0] ?? "";
-                                                 //          // var list=promised_receipt_date.text.split('-');
-                                                 //
-                                                 //          },
-                                                 //        enable: true),
                                                     SizedBox(
                                                       height: height * .035,
                                                     ),
@@ -1377,16 +1289,13 @@ else{
 
 
                                                     SizedBox(
-                                                      height: height * .065,
-                                                    ),    SizedBox(
-                                                      height: height * .17,
+                                                      height: height * .093,
                                                     ),
-
-
                                                   ],
                                                 )),
                                                 Expanded(
                                                     child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
                                                     // SizedBox(height: height*.032,),
 
@@ -1446,14 +1355,18 @@ else{
                                                       maxLines: 3,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .16,
+                                                      height: height * .028,
                                                     ),
+
+
 
 
                                                   ],
                                                 )),
                                                 Expanded(
                                                     child: Column(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment.start,
                                                   children: [
 
                                                     NewInputCard(
@@ -1515,12 +1428,7 @@ else{
                                                       title: "Grand Total",
                                                       readOnly: true,
                                                     ),
-                                                    SizedBox(
-                                                      height: height * .042,
-                                                    ),
-                                                    SizedBox(
-                                                      height: height * .088,
-                                                    ),
+
                                                   ],
                                                 )),
                                               ],
@@ -1531,7 +1439,7 @@ else{
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: height/20,),
+                                SizedBox(height: height*.10,),
                                 BlocBuilder<TableDetailsCubitDartCubit, TableDetailsCubitDartState>(
 
   builder: (context, state) {
@@ -1717,7 +1625,7 @@ else{
                                                               tableHeadtext(
                                                                 'Grand Total',
                                                                 center: true,
-                                                                padding: EdgeInsets.only(bottom:height*.0058),
+                                                                padding: EdgeInsets.only(bottom:height*.0198),
 
 
                                                                 size: 13,
@@ -2904,20 +2812,11 @@ else{
 
                                                                     onSelection: (val) {
                                                                       setState(() {
-                                                                        if (vminqty! >
-                                                                            vmaxnqty!) {
-                                                                          print("enterd");
-                                                                          if(vminqty!=0 &&vmaxnqty!=0){
-                                                                            context.showSnackBarError(
-                                                                                "the minimum order is always less than maximum order");}
-                                                                        }
-                                                                        else {
                                                                           _value =
                                                                           !_value;
                                                                           setState(() {
 
                                                                           });
-                                                                        }
 
                                                                       });
                                                                     },
@@ -2927,7 +2826,14 @@ else{
                                                                   child: TableTextButton(
 
                                                                       onPress: () {
-                                                                      if(  variantId=="null"||check==0||vvat==0)
+                                                                        if (vminqty! >
+                                                                            vmaxnqty!) {
+                                                                          print("enterd");
+                                                                          if(vminqty!=0 &&vmaxnqty!=0){
+                                                                            context.showSnackBarError(
+                                                                                "the minimum order is always less than maximum order");}
+                                                                        }
+                                                                    else  if(  variantId=="null"||check==0||vvat==0)
                                                                         context.showSnackBarError(
                                                                             "please fill all the fields");
                                                                       else if(Qty==0||Qty==""){

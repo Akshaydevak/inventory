@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment_sale_post_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/sales/invoice/cubits/invoicepost/invoicepost_cubit.dart';
@@ -15,6 +17,7 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
@@ -193,14 +196,16 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                   //       // table:table,
                   //     ));
 
-             if(isPaymentStatusSuccessCall)     context.read<PaymentTransactionSuccessPostCubit>().postPaymentTransactionSuccess(veritiaclid,Variable.methodCode, data.data2,1);
-             else
-                showDailogPopUp(
+             if(isPaymentStatusSuccessCall) {
+               context.read<PaymentTransactionSuccessPostCubit>().postPaymentTransactionSuccess(veritiaclid,Variable.methodCode, data.data2,1);
+             } else {
+               showDailogPopUp(
                     context,
                     SuccessPopup(
                       content: "success",
                       // table:table,
                     ));
+             }
 
 
 
@@ -302,7 +307,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                           : table = [];
                       inventoryId.text=data.invoicedData?.inventoryId??"";
                       invoiceCodeController.text=data.invoicedData?.invoiceCode??"";
-                      invoiceDateController.text=data.invoicedData?.createdDate??"";
+                      // invoiceDateController.text=data.invoicedData?.createdDate??"";
+                      invoiceDateController=TextEditingController(text:data.invoicedData?.createdDate ==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.invoicedData?.createdDate??"")));
                       noteController.text=data.invoicedData?.notes??"";
                       remarksController.text=data.invoicedData?.remarks??"";
                       invoiceStatusController.text=data.invoicedData?.invoiceStatus??"";
@@ -329,7 +335,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                       customerIdController.text=data.customerId??"";
                       trnController.text=data.trnNumber??"";
                       orderStatusController.text=data.orderStatus??"";
-                      orderStatusController.text=data.orderStatus??"";
+
                       unitCostController.text=data.unitCost.toString()??"";
                       discountController.text=data.discount.toString()??"";
                       exciseTaxController.text=data.excessTax.toString()??"";
@@ -534,8 +540,17 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                       TextButtonLarge(
                                         marginCheck: true,
                                         text: "PREVIEW",
-                                        onPress: (){
-                                          print("Akshay");
+                                        onPress: () async {
+                                          InventoryListModel model=InventoryListModel();
+
+
+                                          UserPreferences userPref = UserPreferences();
+                                          await userPref.getInventoryList().then((user) {
+                                            if (user.isInventoryExist == true) {
+                                              model=user;
+                                            } else {
+                                            }
+                                          });
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(builder: (context) =>
@@ -552,6 +567,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                                   unitCost:double.tryParse( unitCostController.text) ,
                                                   excisetax:double.tryParse( exciseTaxController.text) ,
                                                   remarks: remarksController.text ,
+                                                  pageName: "INVOICE",
+                                                  model: model,
 
 
 

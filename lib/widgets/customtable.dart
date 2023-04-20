@@ -36,14 +36,16 @@ class tableHeadtext extends StatelessWidget {
   final Color textColor;
   final Color? color;
   final EdgeInsets? padding;
-  tableHeadtext( this.label,{this.center=false,this.height=46,this.size,this.textColor=Colors.white,this.color =  Pellet.tableBlueHeaderPrint,this.padding});
+  final AlignmentGeometry alignment;
+  tableHeadtext( this.label,{this.center=false,this.height=46,this.size,this.textColor=Colors.white,this.color =  Pellet.tableBlueHeaderPrint,this.padding,
+  this.alignment=Alignment.topLeft});
 
   @override
   Widget build(BuildContext context) {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
-    return Container( alignment: center?Alignment.center:Alignment.topLeft,
-
+    return Container(
+      alignment: center?Alignment.center:alignment,
       height: height,
       padding: padding ?? EdgeInsets.only(left: 12,top: h*.0128,bottom:h*.0058,right:  5),
       color: color,
@@ -56,26 +58,6 @@ class tableHeadtext extends StatelessWidget {
 }
 
 
-// Widget tableHeadtext(
-//     String label, {
-//       bool center=false,
-//       double height = 46,
-//       double? size,
-//       Color? textColor = Colors.white,
-//        Color? color =  Pellet.tableBlueHeaderPrint,
-//       EdgeInsets? padding,
-//     }) =>
-//     Container(
-//       alignment: center?Alignment.topLeft:Alignment.topLeft,
-//       height: height,
-//       padding: padding ?? EdgeInsets.only(left: 12,top: 12,bottom:5,right:  12),
-//       color: color,
-//       child: Text(
-//         label,
-//         // textAlign: TextAlign.center,
-//         style: TextStyle(fontSize: size, color: textColor,),
-//       ),
-//     );
 Widget textPadding(String label,
     {double fontSize = 14,
       EdgeInsets? padding,
@@ -109,7 +91,9 @@ class VariantIdTAble extends StatelessWidget {
         onTap();
       },
       child: ListTile(
-        title:Text(text=="null"?"": text??""),
+          title:Container(
+              margin: EdgeInsets.symmetric(vertical: 5),
+              child: Text(text=="null"?"-select-": text??"text",style: TextStyle(color:text=="null"?Colors.grey:Colors.black,fontSize: text=="null"?12:14),)),
         trailing: Icon(Icons.arrow_drop_down,size: 15,),
 
       ),

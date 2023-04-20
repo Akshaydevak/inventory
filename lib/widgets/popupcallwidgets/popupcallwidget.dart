@@ -5478,6 +5478,7 @@ class PurchaseInvoices extends StatefulWidget {
 
 class _PurchaseInvoiceState extends State<PurchaseInvoices> {
   String? label;
+  int dataList=0;
   TextEditingController _controller = TextEditingController();
   @override
   void initState() {
@@ -5502,14 +5503,19 @@ class _PurchaseInvoiceState extends State<PurchaseInvoices> {
               ),
               // error: () => {errorLoader(widget.onAddNew)},
               success: (data) {
+                dataList=data.length;
                 print("data===sssssssss" + data.toString());
                 List<String?> list = [];
                 int length = data.length;
-                // list=data.orderTypes;
-
-                for (var i = 0; i < length; i++) {
-                  list.add(data[i].invoiceCode);
+                if(length!=0){
+                  for (var i = 0; i < length; i++) {
+                    list.add(data[i].invoiceCode);
+                  }
                 }
+                else{
+                  list.add("No Data Found");
+                }
+
 
                 PurchaseInvoice? onSellingBasedSelect(
                     var value, List<PurchaseInvoice> list) {
@@ -5557,7 +5563,7 @@ class _PurchaseInvoiceState extends State<PurchaseInvoices> {
                               borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                           suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
-                    print("suggestion" + suggestion.toString());
+
                     if (suggestion == "Add new")
                       widget.onAddNew!();
                     else {
@@ -5575,9 +5581,11 @@ class _PurchaseInvoiceState extends State<PurchaseInvoices> {
                     //     leading: Icon(Icons.add_circle_outline_outlined),
                     //     title: Text(suggestion.toString()),
                     //   );
-                    return ListTile(
-                      ////leading: Icon(Icons.shopping_cart_outlined),
+                    return
+                        ListTile(
+                      //leading: Icon(Icons.shopping_cart_outlined),
                       title: Text(suggestion.toString()),
+
                     );
                   },
                   suggestionsCallback: (String value) async {

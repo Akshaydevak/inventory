@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/generalpost_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/generalread_cubit.dart';
@@ -19,6 +20,7 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -294,7 +296,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
           orderTypeController.text=data.orderType??"";
           inventory.text=data.inventoryId??"";
-          orderDateController.text=data.returnOrderDate??"";
+          orderDateController=TextEditingController(text:data.returnOrderDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.returnOrderDate??"")));
           purchaseInvoiceIdController.text=data.purchaseInvoiceId??"";
           vendorCodeController.text=data.vendorCode??"";
           vendorAddressController.text=data.vendorAddress??"";
@@ -311,65 +313,53 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
             unitCostController.text =='';
           }
           else{
-            setState(() {
               unitCostController.text  = data.unitCost.toString()??"";
-            });
           }
           if(data.excessTax==null||data.excessTax=="null"){
             excessTaxController.text =='';
           }
           else{
-            setState(() {
               excessTaxController.text  = data.excessTax.toString()??"";
-            });
           }
           if(data.actualCost==null||data.actualCost=="null"){
             actualCostController.text =='';
           }
           else{
-            setState(() {
               actualCostController.text  = data.actualCost.toString()??"";
-            });
           }
           if(data.vat==null||data.vat=="null"){
             vatController.text =='';
           }
           else{
-            setState(() {
               vatController.text  = data.vat.toString()??"";
-            });
+
           }
           if(data.grandTotal==null||data.grandTotal=="null"){
             grandTotalCostController.text =='';
           }
           else{
-            setState(() {
               grandTotalCostController.text  = data.grandTotal.toString()??"";
-            });
           }
           if(data.vatableAmount==null||data.vatableAmount=="null"){
             vatableAmountController.text =='';
           }
           else{
-            setState(() {
               vatableAmountController.text  = data.vatableAmount.toString()??"";
-            });
+
           }
           if(data.foc==null||data.foc=="null"){
             focController.text =='';
           }
           else{
-            setState(() {
+
               focController.text  = data.foc.toString()??"";
-            });
+
           }
           if(data.discount==null||data.discount=="null"){
             discountController.text =='';
           }
           else{
-            setState(() {
               discountController.text  = data.discount.toString()??"";
-            });
           }
           _getCurrentUser();
               });
@@ -445,23 +435,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                 setState(() {});
 
 
-              // else{
-              //   if(Variable.tableedit==false){
-              //     print("findinf");
-              //     stock=stockQty;
-              //     print("st"+stock.toString());
-              //     setState(() {
-              //
-              //     });
-              //
-              //   }
-              //   else{
-              //     // additionalVariants[Variable.tableindex] =         additionalVariants[Variable.tableindex].copyWith(currentStock:purchaseCurrentStock?.StockQty   );
-              //
-              //   }
-              //
-              //
-              //
+
               // }
 
 
@@ -486,20 +460,14 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
               if(result.isNotEmpty){
                 veritiaclid=result[0].id;
               Variable.verticalid=result[0].id;
-              print("Variable.ak"+Variable.verticalid.toString());
               context.read<GeneralreadCubit>().getGeneralPurchaseReturnRead(veritiaclid!);
                 select = false;
               }
               else{
-                print("common");
                 select=true;
                 setState(() {
                 });
-
               }
-
-
-              setState(() {});
 
             });
           });
@@ -516,22 +484,17 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                   children: [
 
                     PurchaseVerticalList(
-
                       selectedVertical: selectedVertical,
                       select: select,
-
                       itemsearch: itemsearch,ontap: (int index){
                       setState(() {
                         selectedVertical=index;
                         select=false;
+                        clear();
                         updateCheck=false;
                         lines.clear();
-
-
                         veritiaclid = result[index].id;
                         currentStock.clear();
-
-
                         context.read<GeneralreadCubit>().getGeneralPurchaseReturnRead(veritiaclid!);
                         setState(() {
 
@@ -597,13 +560,31 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                     text: "CREATE",                                  ),
                                   TextButtonLarge(
                                     text: "PREVIEW",
-                                    onPress: (){
-                                      print("Akshay");
+                                    onPress: () async {
+                                      InventoryListModel model=InventoryListModel();
+
+
+                                      UserPreferences userPref = UserPreferences();
+                                      await userPref.getInventoryList().then((user) {
+                                        print("entereeeeeeeeeeeeeeeeeeed");
+
+                                        if (user.isInventoryExist == true) {
+                                          model=user;
+                                          print("existing");
+                                          print(model.email);
+                                          // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                        } else {
+
+                                        }
+                                      });
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) =>
                                             PurchaseReturnPrintScreen(
-
                                               select: select,
                                               vendorCode:vendorCodeController.text,
                                               orderCode:orderCodeController.text ,
@@ -615,17 +596,13 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                               discount:double.tryParse( discountController.text) ,
                                               unitCost:double.tryParse( unitCostController.text) ,
                                               excisetax:double.tryParse( excessTaxController.text) ,
-                                              // remarks: remarks.text ,
-
-
-
-
-
+                                              pageName: "GENERAL",
+                                              model: model,
+                                              remarks: remarksController.text ,
+                                              note: noteController.text,
                                             )
                                         ),
                                       );
-
-
                                     },
                                   ),
                                 ],
@@ -702,7 +679,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                     tableHeadtext(
 
-                                                      'Sno',
+                                                      'Sl.No',
                                                       size: 13,
 
                                                       // color: Palette.containerDarknew,
@@ -1845,7 +1822,7 @@ widget.currentUser();
                   maxLines: 3,),
 
                 SizedBox(
-                  height: height * .065,
+                  height: height * .080,
                 ),
                 SizedBox(
                   height: height * .078,
@@ -1903,6 +1880,9 @@ widget.currentUser();
                 NewInputCard(
                   readOnly: true,
                     controller: widget.grandToatl, title: "Grand Total"),
+                SizedBox(
+                  height: height * .003,
+                ),
 
               ],))
 

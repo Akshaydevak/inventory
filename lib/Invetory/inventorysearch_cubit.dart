@@ -15,8 +15,7 @@ class InventorysearchCubit extends Cubit<InventorysearchState> {
   Future getInventorySearch(String code,{String? tab=""}) async {
     next = null;
     prev = null;
-    print("there is an hope");
-    print("tab"+tab.toString());
+    emit(InventorysearchState.initial());
     final result = await _repos.getInventorySearch(code,tab:tab);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -25,8 +24,7 @@ class InventorysearchCubit extends Cubit<InventorysearchState> {
     });
   }
   Future getSearch(String code,{String? tab=""}) async {
-    print("solidstate"+code.toString());
-    print("saerchingApi"+tab.toString());
+    emit(InventorysearchState.initial());
     final result = await _repos.getSearch("code="+code,tab:tab);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -35,7 +33,7 @@ class InventorysearchCubit extends Cubit<InventorysearchState> {
     });
   }
   Future nextslotSectionPageList(String nextURL) async {
-    print(next);
+    emit(InventorysearchState.initial());
     final result = await _repos.getSearch(next==null?nextURL:next);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -46,7 +44,7 @@ class InventorysearchCubit extends Cubit<InventorysearchState> {
   }
 
   Future previuosslotSectionPageList() async {
-    // print(previous);
+    emit(InventorysearchState.initial());
     final result = await _repos.getSearch(prev);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/invoice_read_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/invoicepost_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -125,6 +127,36 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
     vatableAmountController.text = VatableValue.toString();
     // _value=false;
   }
+
+  clear(){
+setState(() {
+
+lines.clear();
+    purchaseReturnOrderCodeController.text = "";
+    orderDateController.text =  "";
+    paymentCodeController.text =  "";
+    paymentCodeController.text =  "";
+    paymentStatusController.text =  "";
+    paymentmethodController.text ="";
+    invoiceStatusController.text = "";
+    discountController.text = "";
+    focController.text =  "";
+    unitCostController.text =  "";
+    vatableAmountController.text =  "";
+    excessTaxController.text = "";
+    vatController.text = "";
+    actualCostController.text = "";
+    grandTotalCostController.text = "";
+    noteController.text =  "";
+    remarksController.clear();
+    inventoryContoller.text =  "";
+    vendoridContoller.text =  "";
+    vendorTrnnumberController.text = "";
+    returnInvoiceCodeController.clear();
+    purchaseInvoiceidController.text =  "";
+orderStatusController.clear();
+});
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -152,17 +184,12 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                   },
                   success: (data) {
                     setState(() {
-
-
                       if (data.invoicedata!=null) {
-                        print("aaaaaaaaa");
                         data.invoicedata?.orderLiness != null
                             ? lines =List.from( data.invoicedata?.orderLiness ?? [])
                             : lines =List.from( []);
-
                         purchaseReturnOrderCodeController.text = data.invoicedata?.returnOrderCode ?? "";
                         orderDateController.text = data.invoicedata?.invoicedDate ?? "";
-
                         paymentCodeController.text = data.invoicedata?.payementCode ?? "";
                         paymentCodeController.text = data.invoicedata?.payementCode ?? "";
                         paymentStatusController.text = data.invoicedata?.paymentStatus ?? "";
@@ -173,19 +200,18 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                         unitCostController.text = data.invoicedata?.unitCost.toString() ?? "";
                         vatableAmountController.text = data.invoicedata?.vatableAmount.toString() ?? "";
                         excessTaxController.text = data.invoicedata?.excessTax.toString() ?? "";
-                        vatController.text =
-                            data.invoicedata?.vat.toString() ?? "";
-                        actualCostController.text =
-                            data.invoicedata?.actualCost.toString() ?? "";
-                        grandTotalCostController.text =
-                            data.invoicedata?.grandTotal.toString() ?? "";
+                        vatController.text = data.invoicedata?.vat.toString() ?? "";
+                        actualCostController.text = data.invoicedata?.actualCost.toString() ?? "";
+                        grandTotalCostController.text = data.invoicedata?.grandTotal.toString() ?? "";
                         noteController.text = data.invoicedata?.notes.toString() ?? "";
+                        remarksController.text = data.invoicedata?.remarks.toString() ?? "";
                         inventoryContoller.text = data.invoicedata?.inventoryId.toString() ?? "";
                         vendoridContoller.text = data.invoicedata?.vendorId.toString() ?? "";
                         vendorTrnnumberController.text = data.invoicedata?.vendorTrnNumber.toString() ?? "";
                         purchaseInvoiceidController.text = data.invoicedata?.purchaseInvoiceId.toString() ?? "";
+                        returnInvoiceCodeController.text = data.invoicedata?.returnOrderCode.toString() ?? "";
+                        orderStatusController.text=data.invoicedata?.returnOrderStatus??"";
                       } else {
-                        print("aaaaaaaaa2");
                         data?.orderLiness != null
                             ? lines =List.from( data?.orderLiness ?? [])
                             : lines = List.from([]);
@@ -207,90 +233,15 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                         vendoridContoller.text = data.vendorCode.toString() ?? "";
                         vendorTrnnumberController.text = data.vendorTrnNumber.toString() ?? "";
                         purchaseInvoiceidController.text = data.purchaseInvoiceId.toString() ?? "";
+                        returnInvoiceCodeController.text = data.returnOrderCode.toString() ?? "";
+                        remarksController.text = data.remarks.toString() ?? "";
+                        noteController.text = data.notes.toString() ?? "";
+                        orderStatusController.text=data.returnOrderStatus??"";
                         setState(() {
 
                         });
                       }
-                      // stockCheck=false;
-                      //
-                      // print("datasssssssssssssss"+data.toString());
-                      // data.data?.orderLines != null ? table = data.data?.orderLines ?? [] : table = [];
-                      // print("tablsssssssssssssssssse"+table.toString());
-                      // Variable.inventory_ID =data.data?.iventoryId??"";
-                      // vendortrnnumber.text=data.data?.vendorTrnNumber??"";
-                      // vendoraddress.text=data.data?.vendorAddress??"";
-                      // note.text=data.data?.note??"";
-                      // purchaseUom=data.data?.purchaseOrderType??"";
-                      // orderType=data.data?.purchaseOrderType??"";
-                      // inventoryId.text=data.data?.iventoryId??"";
-                      // orderDate.text=data.data?.orderDate??"";
-                      // remarks.text=data.data?.remarks??"";
-                      // if(data.data?.unitcost==null||data.data?.unitcost=="null"){
-                      //   unitcourse.text =='';
-                      // }
-                      // else{
-                      //   setState(() {
-                      //     unitcourse.text = data.data?.unitcost.toString()??"";
-                      //   });
-                      // }
-                      // if(data.data?.excessTax==null||data.data?.excessTax=="null"){
-                      //   excesstax.text =='';
-                      // }
-                      // else{
-                      //   setState(() {
-                      //     excesstax.text = data.data?.excessTax.toString()??"";
-                      //   });
-                      // }
-                      // if(data.data?.actualCost==null||data.data?.actualCost=="null"){
-                      //   actualcost.text =='';
-                      // }
-                      // else{
-                      //   setState(() {
-                      //     actualcost.text = data.data?.actualCost.toString()??"";
-                      //   });
-                      // }
-                      // if(data.data?.vat==null||data.data?.vat=="null"){
-                      //   vat.text =='';
-                      // }
-                      // else{
-                      //   setState(() {
-                      //     vat.text = data.data?.vat.toString()??"";
-                      //   });
-                      // }
-                      // if(data.data?.grandTotal==null||data.data?.grandTotal=="null"){
-                      //   grandtotal.text =='';
-                      // }
-                      // else{
-                      //   setState(() {
-                      //     grandtotal.text = data.data?.grandTotal.toString()??"";
-                      //   });
-                      // }
-                      // if(data.data?.variableAmount==null||data.data?.variableAmount=="null"){
-                      //   Variableamount.text =='';
-                      // }
-                      // else{
-                      //   setState(() {
-                      //     Variableamount.text = data.data?.variableAmount.toString()??"";
-                      //   });
-                      // }
-                      // if(data.data?.foc ==null||data.data?.foc =="null"){
-                      //   foc.text =='';
-                      // }
-                      // else{
-                      //   setState(() {
-                      //     foc.text = data.data?.foc.toString()??"";
-                      //   });
-                      // }
-                      // if(data.data?.discount! ==null||data.data?.discount! =="null"){
-                      //   discount.text =='';
-                      // }
-                      // else{
-                      //   setState(() {
-                      //     discount.text = data.data?.discount.toString()??"";
-                      //
-                      //   });
-                      //
-                      // }
+
                     });
                   });
             },
@@ -342,17 +293,14 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                     if (result.isNotEmpty) {
                       veritiaclid = result[0].id;
                       Variable.verticalid = result[0].id;
-                      print("Variable.ak" + Variable.verticalid.toString());
-                      context
-                          .read<InvoiceReadCubit>()
-                          .getInvoiceRead(veritiaclid!);
+                      context.read<InvoiceReadCubit>().getInvoiceRead(veritiaclid!);
                     } else {
                       print("common");
                       // select=true;
                       setState(() {});
                     }
 
-                    setState(() {});
+
                   });
                 });
           },
@@ -372,60 +320,27 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                           setState(() {
                             updateCheck=false;
                             selectedVertical = index;
-                            lines.clear();
-
-
+                            clear();
                             veritiaclid = result[index].id;
-
                             context.read<InvoiceReadCubit>().getInvoiceRead(veritiaclid!);
                             setState(() {});
                           });
                         },
                         result: result,
-                        child:     tablePagination(
-                              () => context
-                              .read<VertiacalCubit>()
-                              .refresh(),
+                        child:     tablePagination(() => context.read<VertiacalCubit>().refresh(),
                           back: paginatedList?.previousUrl == null
                               ? null
                               : () {
-                            context
-                                .read<VertiacalCubit>()
-                                .previuosslotSectionPageList();
+                            context.read<VertiacalCubit>().previuosslotSectionPageList();
                           },
                           next:paginatedList?.nextPageUrl == null
                               ? null
                               : () {
-                            // print(data.nextPageUrl);
-                            context
-                                .read<VertiacalCubit>()
-                                .nextslotSectionPageList();
+                            context.read<VertiacalCubit>().nextslotSectionPageList();
                           },
                         ),
                       ),
-                      // VerticalList(
-                      //   tab:"RF",
-                      //   selectedVertical: selectedVertical,
-                      //   itemsearch: itemsearch,ontap: (int index){
-                      //   setState(() {
-                      //     print("taped");
-                      //     select=false;
-                      //     clear();
-                      //     selectedVertical=index;
-                      //     updateCheck=false;
-                      //     currentStock.clear();
-                      //
-                      //     veritiaclid =
-                      //         result[index].id;
-                      //     Variable.verticalid2=result[index].id;
-                      //     context
-                      //         .read<
-                      //         RequestformreadCubit>()
-                      //         .getRequestFormRead(
-                      //         veritiaclid!);
-                      //   });
-                      // },result: result,
-                      // ),
+
                       Expanded(
                         child: SingleChildScrollView(
                           child: Container(
@@ -433,37 +348,48 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
 
                                     TextButtonLarge(
                                       marginCheck: true,
                                       text: "PREVIEW",
-                                      onPress: () {
-                                        print("Akshay");
+                                      onPress: () async {
+                                        InventoryListModel model=InventoryListModel();
+
+
+                                        UserPreferences userPref = UserPreferences();
+                                        await userPref.getInventoryList().then((user) {
+                                          print("entereeeeeeeeeeeeeeeeeeed");
+
+                                          if (user.isInventoryExist == true) {
+                                            model=user;
+
+                                            // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                          } else {
+
+                                          }
+                                        });
+
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) =>
                                               PurchaseReturnInvoicePrintScreen(
-
-
-                                                // vendorCode:vendorCodeController.text,
-                                                // orderCode:or.text ,
-                                                // orderDate: orderDateController.text,
                                                 table:lines,
+                                                pageName: "INVOICE SCREEN",
+                                                orderCode: purchaseInvoiceidController.text??"",
                                                 vat: double.tryParse( vatController.text),
                                                 actualCost:double.tryParse( actualCostController.text),
                                                 variableAmount:double.tryParse( vatableAmountController.text) ,
                                                 discount:double.tryParse( discountController.text) ,
                                                 unitCost:double.tryParse( unitCostController.text) ,
                                                 excisetax:double.tryParse( excessTaxController.text) ,
+                                                model:model,
                                                 // remarks: remarks.text ,
-
-
-
-
-
                                               )
                                           ),
                                         );
@@ -551,7 +477,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           ),
                                                           tableHeadtext(
                                                             'Return Order line Id',
-
                                                             size: 13,
                                                           ),
 
@@ -881,63 +806,84 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                                             .w500),
                                                               ),
                                                               TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: UnderLinedInput(
-                                                                  initialCheck:true,
-                                                                  integerOnly: true,
-                                                                  // controller: requestedListControllers[i],
-                                                                  last: lines?[i].totalQty.toString()??"",
-                                                                  onChanged: (va) {
-                                                                    updateCheck=true;
-                                                                    lines[i]=lines[i].copyWith(updateCheck: true);
-                                                                    print(va);
-                                                                    if (va == "") {
-                                                                      print("entered");
-                                                                      lines[i] = lines[i].copyWith(totalQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
-                                                                    } else {
-                                                                      var qty = int.tryParse(va);
-                                                                      var dis = lines[i].discount;
-                                                                      var excess = lines[i].excessTax;
-                                                                      var unitcost = lines[i].unitCost;
-                                                                      var vat = lines[i].vat;
-                                                                      var foc = lines[i].foc;
-                                                                      if (qty == 0 || unitcost == 0 ||unitcost=="") {
-                                                                        lines[i] = lines[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
-                                                                      }else {
-                                                                        var Vamount;
-                                                                        var vactualCost;
-
-                                                                        Vamount  = (((unitcost! *
-                                                                            qty!) +
-                                                                            excess!) -
-                                                                            dis!)
-                                                                            .toDouble();
-                                                                        if(vat==0 ||vat==""){
-                                                                          vactualCost=Vamount;
-                                                                        }
-                                                                        else{
-                                                                          vactualCost  = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
-                                                                        }
-
-
-                                                                        lines[i] = lines[i].copyWith(
-                                                                                vatableAmount: Vamount,
-                                                                                actualCost: vactualCost,
-                                                                                grandTotal: vactualCost,
-                                                                                totalQty: qty);
-                                                                      }
-
-
-
-                                                                    }
-
-                                                                    setState(() {});
-                                                                  },
-                                                                ),
+                                                                verticalAlignment:
+                                                                TableCellVerticalAlignment
+                                                                    .middle,
+                                                                child: textPadding(
+                                                                    lines?[i].totalQty.toString() ??
+                                                                        "",
+                                                                    fontSize:
+                                                                    12,
+                                                                    padding: EdgeInsets.only(
+                                                                        left:
+                                                                        11.5,
+                                                                        top:
+                                                                        1.5),
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
                                                               ),
+
+
+
+                                                              // TableCell(
+                                                              //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                              //   child: UnderLinedInput(
+                                                              //     initialCheck:true,
+                                                              //     integerOnly: true,
+                                                              //     // controller: requestedListControllers[i],
+                                                              //     last: lines?[i].totalQty.toString()??"",
+                                                              //     onChanged: (va) {
+                                                              //       updateCheck=true;
+                                                              //       lines[i]=lines[i].copyWith(updateCheck: true);
+                                                              //       print(va);
+                                                              //       if (va == "") {
+                                                              //         print("entered");
+                                                              //         lines[i] = lines[i].copyWith(totalQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                              //       } else {
+                                                              //         var qty = int.tryParse(va);
+                                                              //         var dis = lines[i].discount;
+                                                              //         var excess = lines[i].excessTax;
+                                                              //         var unitcost = lines[i].unitCost;
+                                                              //         var vat = lines[i].vat;
+                                                              //         var foc = lines[i].foc;
+                                                              //         if (qty == 0 || unitcost == 0 ||unitcost=="") {
+                                                              //           lines[i] = lines[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                              //         }else {
+                                                              //           var Vamount;
+                                                              //           var vactualCost;
+                                                              //
+                                                              //           Vamount  = (((unitcost! *
+                                                              //               qty!) +
+                                                              //               excess!) -
+                                                              //               dis!)
+                                                              //               .toDouble();
+                                                              //           if(vat==0 ||vat==""){
+                                                              //             vactualCost=Vamount;
+                                                              //           }
+                                                              //           else{
+                                                              //             vactualCost  = (Vamount! +
+                                                              //                 ((Vamount! *
+                                                              //                     vat!) /
+                                                              //                     100));
+                                                              //           }
+                                                              //
+                                                              //
+                                                              //           lines[i] = lines[i].copyWith(
+                                                              //                   vatableAmount: Vamount,
+                                                              //                   actualCost: vactualCost,
+                                                              //                   grandTotal: vactualCost,
+                                                              //                   totalQty: qty);
+                                                              //         }
+                                                              //
+                                                              //
+                                                              //
+                                                              //       }
+                                                              //
+                                                              //       setState(() {});
+                                                              //     },
+                                                              //   ),
+                                                              // ),
 
                                                               // TableCell(
                                                               //   verticalAlignment:
@@ -1224,12 +1170,13 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                               onPressed:(){
                                                 PurchaseReturnInvoicePostModel model =
                                                 PurchaseReturnInvoicePostModel(
-                                                    purchaseInvoiceId:purchaseInvoiceidController.text??"",
-                                                    returnOrderCode:purchaseReturnOrderCodeController?.text??"",
-                                                    inventoryId: inventoryContoller?.text??"",
+                                                    purchaseInvoiceId:purchaseInvoiceidController?.text??null,
+                                                    returnOrderCode:purchaseReturnOrderCodeController?.text??null,
+                                                    inventoryId: inventoryContoller?.text??null,
                                                     invoicedBy: Variable.created_by,
-                                                    venderId: vendoridContoller?.text??"",
-                                                    notes:noteController?.text??"",
+                                                    venderId: vendoridContoller?.text??null,
+                                                    notes:noteController?.text??null,
+
                                                     remarks: remarksController?.text??"",
                                                     unitCost: double.tryParse( unitCostController?.text??""),
                                                     foc: double.tryParse( focController?.text??""),
@@ -1239,7 +1186,11 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                     excessTax: double.tryParse( excessTaxController?.text??""),
                                                     actualCost:  double.tryParse( actualCostController?.text??""),
                                                     vat:  double.tryParse( vatController?.text??""),
-                                                    vendorTrnNumber: vendorTrnnumberController?.text??"",
+                                                    vendorTrnNumber: vendorTrnnumberController?.text??null,
+                                                    paymentCode: paymentCodeController?.text??null,
+                                                    paymentMethod: paymentmethodController?.text??null,
+                                                    paymentStatus:paymentStatusController?.text??null ,
+
                                                     lines: result
 
                                                 );
@@ -1290,6 +1241,9 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                 vatController?.text ?? ""),
                                             vendorTrnNumber: vendorTrnnumberController
                                                 ?.text ?? "",
+                                            paymentCode: paymentCodeController?.text??null,
+                                            paymentMethod: paymentmethodController?.text??null,
+                                            paymentStatus:paymentStatusController?.text??null ,
                                             lines: result
 
                                         );
@@ -1480,19 +1434,16 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
                 height: height * .030,
               ),
               NewInputCard(
-                  readOnly: true,
                   controller: widget.paymentCode, title: "Payment Code"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                readOnly: true,
                   controller: widget.paymentStatus, title: "Payment Status"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  readOnly: true,
                   controller: widget.paymentMethod,
                   title: "Payment Method"),
               SizedBox(

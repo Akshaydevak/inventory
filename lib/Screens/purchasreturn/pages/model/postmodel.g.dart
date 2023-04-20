@@ -30,6 +30,9 @@ _$_PurchaseReturnGeneralPost _$$_PurchaseReturnGeneralPostFromJson(
       vendorAddress: json['vendor_address'] as String?,
       createdBy: json['created_by'] as String?,
       editedBy: json['edited_by'] as String?,
+      paymentCode: json['payment_code'] as String?,
+      paymentMethod: json['payment_method'] as String?,
+      paymentStaus: json['payment_status'] as String?,
       lines: (json['order_lines'] as List<dynamic>?)
           ?.map((e) => Liness.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -59,5 +62,8 @@ Map<String, dynamic> _$$_PurchaseReturnGeneralPostToJson(
       'vendor_address': instance.vendorAddress,
       'created_by': instance.createdBy,
       'edited_by': instance.editedBy,
+      'payment_code': instance.paymentCode,
+      'payment_method': instance.paymentMethod,
+      'payment_status': instance.paymentStaus,
       'order_lines': instance.lines,
     };

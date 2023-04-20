@@ -10,7 +10,7 @@ class LogincubitCubit extends Cubit<LogincubitState> {
   LogincubitCubit() : super(LogincubitState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getLogin(String username, String password,String empCode) async {
-    emit(_Loading());
+    emit(LogincubitState.initial());
     final result = await repo.getLogin(username, password,empCode);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

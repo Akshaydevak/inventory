@@ -217,6 +217,7 @@ class _VariantChannelAllocationScreenState
                     },
                     success: (data) {
                       setState(() {
+                        selectAll=false;
                         print("Akshay real " + data.data.toString());
                         table = data.data;
                         paginated = data;

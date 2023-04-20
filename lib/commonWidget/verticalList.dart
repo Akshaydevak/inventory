@@ -151,68 +151,14 @@ class _VerticalListState extends State<VerticalList> {
                             height:
                             MediaQuery.of(context).size.height * .008,
                           ),
-                          // Container(
-                          //   margin: EdgeInsets.only(
-                          //     left: width * 0.009,
-                          //     right: width * 0.007,
-                          //   ),
-                          //   child: Row(
-                          //     //mainAxisAlignment: MainAxisAlignment.center,
-                          //     children: [
-                          //       RectangleContainer(
-                          //           "asset/rect1.png", context),
-                          //       SizedBox(
-                          //         width: width * .003,
-                          //       ),
-                          //       Container(
-                          //         color: Color(0xffFFFFFF),
-                          //
-                          //         height: width * .0197,
-                          //         width: width * .111,
-                          //         child: Row(
-                          //           mainAxisAlignment:
-                          //           MainAxisAlignment.center,
-                          //           children: [
-                          //             SizedBox(
-                          //               width: width * .001,
-                          //             ),
-                          //             Icon(
-                          //               Icons.add,
-                          //               color: Colors.black,
-                          //               size: 14,
-                          //             ),
-                          //             SizedBox(
-                          //               width: width * .007,
-                          //             ),
-                          //             Container(
-                          //               child: Text(
-                          //                 "Add a Varient",
-                          //                 style: TextStyle(
-                          //                     color: Colors.black,
-                          //                     fontSize: width * .010,
-                          //                     overflow:
-                          //                     TextOverflow.ellipsis),
-                          //               ),
-                          //             )
-                          //           ],
-                          //         ),
-                          //       ),
-                          //       SizedBox(
-                          //         width: width * .003,
-                          //       ),
-                          //       RectangleContainer(
-                          //           "asset/rect2.png", context),
-                          //     ],
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: height * .015,
-                          // ),
+
 
                           Expanded(
                               child: Container(
                                   height: 0,
-                                  child: ListView.separated(
+                                  child:widget.result.isEmpty?Container(
+                                    margin: EdgeInsets.all(5),
+                                      child: Text("No Data Found",style: TextStyle(color: Colors.grey,fontSize: 18),)): ListView.separated(
                                     separatorBuilder: (context, index) {
                                       return Divider(
                                         height: 0,

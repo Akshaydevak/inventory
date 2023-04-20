@@ -308,6 +308,8 @@ class Tabledate extends StatefulWidget {
 class _Tabledate extends State<Tabledate> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     print("wiiiii"+widget.controller!.text);
     widget.controller?.text= widget.controller!.text==null||widget.controller!.text=="null"?"":widget.controller!.text;
 
@@ -354,47 +356,92 @@ class _Tabledate extends State<Tabledate> {
         return date ?? currentValue;
       },
     ):
-    DateTimeField(
-     // initialValue: widget.initialValue,
-      controller: widget.controller,
-      enabled: widget.enable,
+    Container(
 
-      validator: (value) => value == null ? "* required" : null,
-      decoration: InputDecoration(
-        suffixIcon: IconButton(onPressed: () {
+      child: Row(
+        children: [
+          Container(
+            width: width*.05,
+            height: 34,
+            child: DateTimeField(
+             // initialValue: widget.initialValue,
+              controller: widget.controller,
+              enabled: widget.enable,
 
-        },icon:widget.controller?.text.isNotEmpty==true?Icon(Icons.clear):Icon(Icons.calendar_month) ,),
-        contentPadding: null,
-        labelStyle: TextStyle(color: Colors.black),
-        // labelText: widget.initialValue?.toString().split(" ")[0],
-        isDense: true,
-        label: null,
-        alignLabelWithHint: true,
-        // enabledBorder: OutlineInputBorder(
-        //     borderRadius:BorderRadius.circular(2),
-        //
-        //     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-        //
-        // focusedBorder: OutlineInputBorder(
-        //     borderRadius:BorderRadius.circular(2),
-        //
-        //     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-        border: InputBorder.none,
+              validator: (value) => value == null ? "* required" : null,
+              decoration: InputDecoration(
+                isDense: true,
+                // suffix: IconButton(
+                //   icon: Icon(Icons.visibility_rounded),
+                //   onPressed: () {
+                //
+                //     setState(() {
+                //       print("Akshayayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+                //       // hideState = !hideState;
+                //     });
+                //   },
+                // ),
+
+//                 suffixIcon: Container(
+//                   height: 40,
+//                   width: 40,
+//                   color: Colors.red,
+//                   child: GestureDetector(onTap: () {
+// print("colsed");
+// setState(() {
+//   widget.controller?.clear();
+// });
+//
+//
+//
+//                   },
+//                   child:Icon(Icons.clear),),
+//                 ),
+                contentPadding: null,
+                labelStyle: TextStyle(color: Colors.black),
+                // labelText: widget.initialValue?.toString().split(" ")[0],
+
+                label: null,
+                alignLabelWithHint: true,
+                enabledBorder: UnderlineInputBorder(
+
+                    borderRadius:BorderRadius.circular(2),
+
+
+                    borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1), width: 3, )),
+
+                focusedBorder: UnderlineInputBorder(
+                    borderRadius:BorderRadius.circular(2),
+
+                    borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1),width: 3, )),
+                // border: InputBorder.none,
+              ),
+              format: mFormat,
+              style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
+              //  onFieldSubmitted: widget.onSaved,
+              onShowPicker: (context, currentValue) async {
+                DateTime? date;
+                if (widget.enable)
+                  date = await showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(2100));
+
+                return date ?? currentValue;
+              },
+            ),
+          ),
+          IconButton(onPressed:(){
+            setState(() {
+              widget.controller?.text="";
+              if(widget.onSuffixIconPressed!=null)
+                widget. onSuffixIconPressed!();
+            });
+
+          } , icon: widget.controller!.text.isNotEmpty?Icon(Icons.clear,color: Colors.grey,size: height*.024,):Icon(Icons.calendar_month,color: Colors.grey))
+        ],
       ),
-      format: mFormat,
-      style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
-      //  onFieldSubmitted: widget.onSaved,
-      onShowPicker: (context, currentValue) async {
-        DateTime? date;
-        if (widget.enable)
-          date = await showDatePicker(
-              context: context,
-              firstDate: DateTime(1900),
-              initialDate: currentValue ?? DateTime.now(),
-              lastDate: DateTime(2100));
-
-        return date ?? currentValue;
-      },
     );
 
 

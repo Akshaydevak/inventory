@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/salesreturn/cubit/cubit/salesreturngeneraldelete_cubit.dart';
 import 'package:inventory/Screens/salesreturn/cubit/salesgeneralread/salesgeneralread_cubit.dart';
 
@@ -13,6 +15,7 @@ import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -268,7 +271,8 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                 : table =List.from(  []);
                             orderTypeController.text= data?.orderType??"";
                             orderModeController.text= data?.orderMode??"";
-                            orderDateController.text= data?.returnOrderDate??"";
+                            // orderDateController.text= data?.returnOrderDate??"";
+                            orderDateController=TextEditingController(text:data?.returnOrderDate ==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data?.returnOrderDate??"")));
                             cstomerIdController.text= data?.customerId??"";
                             trnController.text= data?.trnNumber??"";
                             salesInvoiceCodeController.text= data?.salesInvoiceId??"";
@@ -497,8 +501,27 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                           ),
                                           TextButtonLarge(
                                             text: "PREVIEW",
-                                            onPress: (){
-                                              print("Akshay");
+                                            onPress: () async {
+                                              InventoryListModel model=InventoryListModel();
+
+
+                                              UserPreferences userPref = UserPreferences();
+                                              await userPref.getInventoryList().then((user) {
+                                                print("entereeeeeeeeeeeeeeeeeeed");
+
+                                                if (user.isInventoryExist == true) {
+                                                  model=user;
+                                                  print("existing");
+                                                  print(model.email);
+                                                  // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                                } else {
+
+                                                }
+                                              });
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(builder: (context) =>
@@ -516,6 +539,8 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                                       unitCost:double.tryParse( unitCostController.text) ,
                                                       excisetax:double.tryParse( exciseTAxController.text) ,
                                                       remarks: remarksController.text ,
+                                                      model: model,
+                                                      pageName: "GENERAL",
 
 
 

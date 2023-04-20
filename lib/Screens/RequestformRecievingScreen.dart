@@ -8,6 +8,7 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -32,6 +33,7 @@ import 'package:inventory/model/purchaseorder.dart';
 
 import '../commonWidget/Colors.dart';
 import 'heirarchy/general/generalscreen.dart';
+import 'logi/model/inventorylistmodel.dart';
 
 class RequestFormReceivigScreen extends StatefulWidget {
   @override
@@ -761,7 +763,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                       orElse: () {},
                       error: () {
                         if (stockCheck == false) {
-                          print("Stockcheck==false");
+
                           currentStock.add(0);
                           setState(() {});
                         } else if (recievlinequantityCheck) {
@@ -800,6 +802,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                             print("Variable==false");
                             print("findinf");
                             stock = stockQty;
+                            setState(() {});
                           } else if (Variable.tableedit == true) {
                             print("Variable==true");
                             additionalVariants[Variable.tableindex] =
@@ -820,8 +823,13 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                   }, error: () {
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
-                    if (data.data1)
+                    if (data.data1){
+                      clear();
+                      context.read<InventorysearchCubit>().getInventorySearch("code", tab: "RF");
+
                       context.showSnackBarSuccess(data.data2);
+                    }
+
                     else {
                       context.showSnackBarError(data.data2);
                       print(data.data1);
@@ -896,8 +904,21 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                               children: [
                                 TextButtonLarge(
                                   text: "PREVIEW",
-                                  onPress: () {
+                                  onPress: () async {
                                     print("Akshay");
+                                    InventoryListModel model=InventoryListModel();
+                                    UserPreferences userPref = UserPreferences();
+                                    await userPref.getInventoryList().then((user) {
+                                      print("entereeeeeeeeeeeeeeeeeeed");
+                                      print(user.name);
+                                      if (user.isInventoryExist == true) {
+                                        model=user;
+                                        print("existing");
+                                        print(model.email);
+                                        // prefs.setString('token', user?.token ?? "");
+                                      } else {
+                                      }
+                                    });
 
                                     Navigator.push(
                                       context,
@@ -940,6 +961,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                     excessTaxController.text),
 
                                                 remarks: remarksController.text,
+                                                model: model,
+                                                pageName: "REQUEST FORM RECEIVING",
                                               )),
                                     );
                                   },
@@ -1113,64 +1136,62 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                               TextButtonLarge(
                                 text: "PREVIEW",
-                                onPress: () {
+                                onPress: () async {
                                   print("Akshay");
 
-                                  List<RecievingLines> recievingLisnes1 = [];
-
-                                  if (recievingLisnes.isNotEmpty) {
-                                    for (var i = 0;
-                                        i < recievingLisnes.length;
-                                        i++) {
-                                      if (recievingLisnes[i].isReceived ==
-                                          false) {
-                                        recievingLisnes1
-                                            .add(recievingLisnes[i]);
-                                      }
+                                  // List<RecievingLines> recievingLisnes1 = [];
+                                  //
+                                  // if (recievingLisnes.isNotEmpty) {
+                                  //   for (var i = 0;
+                                  //       i < recievingLisnes.length;
+                                  //       i++) {
+                                  //     if (recievingLisnes[i].isReceived ==
+                                  //         false) {
+                                  //       recievingLisnes1
+                                  //           .add(recievingLisnes[i]);
+                                  //     }
+                                  //   }
+                                  // }
+                                  InventoryListModel model=InventoryListModel();
+                                  UserPreferences userPref = UserPreferences();
+                                  await userPref.getInventoryList().then((user) {
+                                    print("entereeeeeeeeeeeeeeeeeeed");
+                                    print(user.name);
+                                    if (user.isInventoryExist == true) {
+                                      model=user;
+                                      print("existing");
+                                      print(model.email);
+                                      // prefs.setString('token', user?.token ?? "");
+                                    } else {
                                     }
-                                  }
+                                  });
+
+
 
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             PurchaseReceivingPrintScreen2(
-                                              table: recievingLisnes1,
-
+                                              table: recievingLisnes,
+                                              isRecieved: true,
                                               note: noteController.text,
-
-                                              // select: select,
-
-                                              // vendorCode:vendorCode.text,
-
-                                              orderCode:
-                                                  orderCodeController.text,
-
-                                              orderDate:
-                                                  orderDateController.text,
-
-                                              // table:table,
-
+                                              orderCode: orderCodeController.text,
+                                              orderDate: orderDateController.text,
                                               vat: double.tryParse(
                                                   vatController.text),
-
                                               actualCost: double.tryParse(
                                                   actualCostController.text),
-
-                                              variableAmount: double.tryParse(
-                                                  variableAmountController
-                                                      .text),
-
+                                              variableAmount: double.tryParse(variableAmountController.text),
                                               discount: double.tryParse(
                                                   discountController.text),
-
                                               unitCost: double.tryParse(
                                                   unitCostController.text),
-
                                               excisetax: double.tryParse(
                                                   excessTaxController.text),
-
                                               remarks: remarksController.text,
+                                              model: model,
+                                              pageName: "REQUEST FORM RECEIVING",
                                             )),
                                   );
                                 },
@@ -1205,46 +1226,27 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                               childrens: [
                                                 TableRow(
 
-                                                    // decoration: BoxDecoration(
-
-                                                    //     color: Colors.green.shade200,
-
-                                                    //     shape: BoxShape.rectangle,
-
-                                                    //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
                                                     children: [
                                                       tableHeadtext(
-                                                        'Sno',
+                                                        'Sl.No',
                                                         size: 13,
                                                       ),
-
                                                       tableHeadtext(
                                                         'Order line Id',
                                                         size: 13,
                                                       ),
-
                                                       tableHeadtext(
                                                         'Variant Id',
                                                       ),
-
                                                       tableHeadtext(
                                                         'Variant Name',
-
                                                         size: 13,
-
                                                       ),
-
                                                       // tableHeadtext('description', size: 10, color: null),
 
                                                       tableHeadtext(
                                                         'Barcode',
-
                                                         size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
                                                       ),
 
                                                       tableHeadtext(
@@ -1269,39 +1271,23 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                       tableHeadtext(
                                                         'Vendor  Id',
-
                                                         size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
                                                       ),
-
                                                       tableHeadtext(
                                                         'Received Qty',
-
                                                         size: 13,
-
                                                         // color: Palette.containerDarknew,
-
                                                         // textColor: Palette.white
                                                       ),
-
                                                       tableHeadtext(
                                                         'Is Received',
-
-                                                        size: 13,
-
+                                                        size: 13
                                                         // color: Palette.containerDarknew,
-
                                                         // textColor: Palette.white
                                                       ),
-
                                                       tableHeadtext(
                                                         'Unit Cost',
-
                                                         size: 13,
-
                                                         // color: Palette.containerDarknew,
 
                                                         // textColor: Palette.white
@@ -1708,46 +1694,21 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               TableCellVerticalAlignment
                                                                   .middle,
                                                           child:
-                                                              UnderLinedInput(
-                                                            suffixIconEnable:
-                                                                true,
-                                                            formatter: false,
-                                                            controller: TextEditingController(
-                                                                text: recievingLisnes[
-                                                                            i]
-                                                                        .vendorId ??
-                                                                    ""),
-                                                            onClick: () {
+                                                          VariantIdTAble(text: recievingLisnes[i].vendorId ?? "",
+                                                          onTap: () {
                                                               showDailogPopUp(
                                                                 context,
                                                                 ConfigurePopup(
                                                                   listAssign:
                                                                       (VendorDetailsModel
                                                                           model) {
-                                                                    print(
-                                                                        "akkk");
-
-                                                                    print(model
-                                                                        .toString());
-
                                                                     setState(
                                                                         () {
-                                                                      updateCheck =
-                                                                          true;
-
-                                                                      recievingLisnes[
-                                                                          i] = recievingLisnes[
-                                                                              i]
-                                                                          .copyWith(updateCheck: true);
-
-                                                                      setState(
-                                                                          () {});
-
+                                                                      updateCheck = true;
+                                                                      recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
                                                                       recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                          vendorId: model.manuFactureuserCode ??
-                                                                              "",
-                                                                          vendorTrnNumber:
-                                                                              model.trnNumber.toString());
+                                                                          vendorId: model.manuFactureuserCode ?? "",
+                                                                          vendorTrnNumber: model.trnNumber.toString());
 
                                                                       setState(
                                                                           () {
@@ -1808,103 +1769,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                           ),
                                                         ),
 
-                                                        // TableCell(
 
-                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                        //   child: PopUpCall(
-
-                                                        //
-
-                                                        //     type:
-
-                                                        //     "VendorCodeGeneral",
-
-                                                        //     value: recievingLisnes[i].vendorId ??"",
-
-                                                        //     onSelection:
-
-                                                        //         (Result? va) {
-
-                                                        //           updateCheck=true;
-
-                                                        //           recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
-
-                                                        //           setState(() {
-
-                                                        //
-
-                                                        //           });
-
-                                                        //
-
-                                                        //           recievingLisnes[i] = recievingLisnes[i].copyWith(vendorId:va?.partnerCode??"" );
-
-                                                        //       setState(() {
-
-                                                        //         var  variant=
-
-                                                        //             va?.partnerCode;
-
-                                                        //         int? id = va!.id;
-
-                                                        //         Variable.tableindex =i;
-
-                                                        //         Variable.tableedit=true;
-
-                                                        //         vendorcheck=true;
-
-                                                        //         context.read<
-
-                                                        //             VendordetailsCubit>()
-
-                                                        //             .getVendorDetails(
-
-                                                        //             variant);
-
-                                                        //
-
-                                                        //
-
-                                                        //         showDailogPopUp(
-
-                                                        //             context,
-
-                                                        //             VendorPopup(
-
-                                                        //               assign:  assigniningDetails,
-
-                                                        //
-
-                                                        //             ));
-
-                                                        //         // context
-
-                                                        //         //     .read<
-
-                                                        //         //     TableDetailsCubitDartCubit>()
-
-                                                        //         //     .getTableDetails(
-
-                                                        //         //     id);
-
-                                                        //         // context
-
-                                                        //         //     .read<PurchaseStockCubit>()
-
-                                                        //         //     .getCurrentStock(Variable.inventory_ID, variant);
-
-                                                        //
-
-                                                        //         // orderType = va!;
-
-                                                        //       });
-
-                                                        //     }, // restricted: true,
-
-                                                        //   ),
-
-                                                        // ),
 
                                                         TableCell(
                                                           verticalAlignment:
@@ -2264,18 +2129,12 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                           i]
                                                                       .vat;
 
-                                                              print("vat" +
-                                                                  vat.toString());
 
-                                                              print("qty" +
-                                                                  qty.toString());
+
 
                                                               if (qty == 0 ||
                                                                   qty ==
                                                                       null) {
-                                                                print(
-                                                                    "checking case");
-
                                                                 recievingLisnes[
                                                                     i] = recievingLisnes[
                                                                         i]
@@ -2302,28 +2161,11 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                       excess,
                                                                       disc);
 
-                                                                  // (((unitcost! *
-
-                                                                  //     qty!) +
-
-                                                                  //     excess!) -
-
-                                                                  //     disc!)
-
-                                                                  //     .toDouble();
-
                                                                   var vactualCost =
                                                                       actualAndgrandTotalUpdation(
                                                                           Vamount,
                                                                           vat);
 
-                                                                  // (Vamount! +
-
-                                                                  //     ((Vamount! *
-
-                                                                  //         vat!) /
-
-                                                                  //         100));
 
                                                                   print("vactualCost" +
                                                                       vactualCost
@@ -3177,7 +3019,13 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               format: DateFormat(
                                                                   'dd-MM-yyyy'),
                                                               onSuffixIconPressed: (){
-                                                                print("Akshay the next super star");
+                                                                setState(() {
+
+                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck:recievingLisnes[i].expiryDate!=null||recievingLisnes[i].updateCheck==true? true:false,expiryDate: null);
+                                                                  expirydateControllerList2[i]=TextEditingController(text: "");
+                                                                });
+
+
                                                               },
                                                               controller: recievingLisnes
                                                                           .length !=
@@ -3297,14 +3145,6 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               updateCheck =
                                                                   true;
 
-                                                              recievingLisnes[
-                                                                  i] = recievingLisnes[
-                                                                      i]
-                                                                  .copyWith(
-                                                                      updateCheck:
-                                                                          true);
-
-                                                              setState(() {});
 
                                                               bool? isActive =
                                                                   recievingLisnes[
@@ -3320,7 +3160,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         i]
                                                                     .copyWith(
                                                                         isActive:
-                                                                            isActive);
+                                                                            isActive,updateCheck: true);
 
                                                                 setState(
                                                                     () {});
@@ -3406,25 +3246,25 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               } else {
                                                                 updateCheck =
                                                                     false;
+                                                                recievingLisnes[
+                                                                i] = recievingLisnes[
+                                                                i]
+                                                                    .copyWith(
+                                                                    updateCheck:
+                                                                    false);
 
                                                                 addition();
 
                                                                 unitcost1 = 0;
 
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        updateCheck:
-                                                                            false);
+
 
                                                                 setState(
                                                                     () {});
 
                                                                 grands = 0;
 
-                                                                actualValue =
-                                                                    0;
+                                                                actualValue = 0;
 
                                                                 vatValue = 0;
 
@@ -3453,8 +3293,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                               widths: {
                                                 0: FlexColumnWidth(2),
                                                 1: FlexColumnWidth(3),
-                                                2: FlexColumnWidth(3),
-                                                3: FlexColumnWidth(6),
+                                                2: FlexColumnWidth(4),
+                                                3: FlexColumnWidth(5),
                                                 4: FlexColumnWidth(4),
                                                 5: FlexColumnWidth(3),
                                                 6: FlexColumnWidth(3),
@@ -3688,12 +3528,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                (i + 1)
-                                                                    .toString(),
+                                                                (i + 1).toString(),
                                                                 // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                                fontWeight: FontWeight.w500),
                                                           ),
 
                                                           TableCell(
@@ -3702,8 +3539,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                       .middle,
                                                               child:
                                                                   VariantIdTAble(
-                                                                text: additionalVariants[
-                                                                        i]
+                                                                text: additionalVariants[i]
                                                                     .variantId
                                                                     .toString(),
                                                                 onTap: () {
@@ -3893,16 +3729,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child:
-                                                                UnderLinedInput(
-                                                              suffixIconEnable:
-                                                                  true,
-                                                              formatter: false,
-                                                              controller: TextEditingController(
-                                                                  text: additionalVariants[
-                                                                              i]
-                                                                          .vendorId ??
-                                                                      ""),
-                                                              onClick: () {
+                                                            VariantIdTAble(
+                                                                  text: additionalVariants[i].vendorId ?? "",
+                                                              onTap: () {
                                                                 showDailogPopUp(
                                                                   context,
                                                                   ConfigurePopup(
@@ -5061,8 +4890,15 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 controller:
                                                                     expirydateControllerList[
                                                                         i],
-                                                                label:
-                                                                    "Promised reciept date",
+                                                                label: "Promised Receipt Date",
+                                                                onSuffixIconPressed: (){
+                                                                  setState(() {
+                                                                    additionalVariants[i] = additionalVariants[i].copyWith(updateCheck:additionalVariants[i].expiryDate!=null ||additionalVariants[i].updateCheck==true? true:false,expiryDate: null);
+                                                                    expirydateControllerList[i]=TextEditingController(text: "");
+                                                                  });
+
+
+                                                                },
                                                                 onSaved:
                                                                     (newValue) {
                                                                   expirydateControllerList[i] = TextEditingController(
@@ -5130,7 +4966,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     .middle,
                                                             child:
                                                                 TableTextButton(
-                                                              label: "Update",
+                                                              label: "",
                                                               onPress: () {},
                                                             ),
                                                           )
@@ -5178,37 +5014,21 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     .w500),
                                                       ),
                                                       VariantIdTAble(
-                                                        text: variantId
-                                                            .toString(),
+                                                        text: variantId.toString(),
                                                         onTap: () {
-                                                          showDailogPopUp(
-                                                            context,
+                                                          showDailogPopUp(context,
                                                             TableConfigurePopup(
-                                                              inventory: Variable
-                                                                  .inventory_ID,
-                                                              type:
-                                                                  "variantTabalePopup",
+                                                              inventory: Variable.inventory_ID,
+                                                              type: "variantTabalePopup",
                                                               valueSelect:
                                                                   (VariantId?
                                                                       va) {
-                                                                print(va!.id
-                                                                    .toString());
-                                                                print("code" +
-                                                                    va!.code
-                                                                        .toString());
                                                                 setState(() {
-                                                                  stockCheck =
-                                                                      true;
-                                                                  variantId =
-                                                                      va?.code;
-                                                                  int? id =
-                                                                      va!.id;
-                                                                  print("is is" +
-                                                                      id.toString());
-                                                                  Variable.tableedit =
-                                                                      false;
-                                                                  recievlinequantityCheck =
-                                                                      false;
+                                                                  stockCheck = true;
+                                                                  variantId = va?.code;
+                                                                  int? id = va!.id;
+                                                                  Variable.tableedit = false;
+                                                                  recievlinequantityCheck = false;
                                                                   stockCheck =
                                                                       true;
                                                                   variantIdcheck =
@@ -5304,31 +5124,23 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                         verticalAlignment:
                                                             TableCellVerticalAlignment
                                                                 .middle,
-                                                        child: UnderLinedInput(
-                                                          suffixIconEnable:
-                                                              true,
-                                                          formatter: false,
-                                                          controller:
-                                                              TextEditingController(
+                                                        child: VariantIdTAble(
+
+
                                                                   text:
-                                                                      vendorCode),
-                                                          onClick: () {
+                                                                      vendorCode,
+                                                          onTap: () {
                                                             showDailogPopUp(
                                                               context,
-                                                              ConfigurePopup(
-                                                                listAssign:
+                                                              ConfigurePopup(listAssign:
                                                                     (VendorDetailsModel
                                                                         model) {
                                                                   setState(() {
-                                                                    vendorCode =
-                                                                        model?.manuFactureuserCode ??
-                                                                            "";
+                                                                    vendorCode = model?.manuFactureuserCode ?? "";
 
                                                                     // vendorAddress=address;
 
-                                                                    vendorTrn = model
-                                                                        .trnNumber
-                                                                        .toString();
+                                                                    vendorTrn = model.trnNumber.toString();
 
                                                                     Variable.tableedit =
                                                                         false;
@@ -5366,8 +5178,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                                   //     ));
                                                                 },
-                                                                type:
-                                                                    "vendorDetailList_popup",
+                                                                type: "vendorDetailList_popup",
                                                               ),
                                                             );
                                                           },
@@ -5943,8 +5754,14 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                             //     DateTime.parse(fromDate!),
 
-                                                            label:
-                                                                "Promised reciept date",
+                                                            label: "Promised Receipt Date",
+                                                            onSuffixIconPressed: (){
+                                                              setState(() {
+                                                                expirydate2Controller.clear();
+                                                              });
+
+
+                                                            },
                                                             onSaved:
                                                                 (newValue) {
                                                               expirydate2Controller
@@ -6186,19 +6003,19 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                             label: "SAVE",
                             isDelete: true,
                             saveFunction: () {
-                              List<RecievingLines> recieve = [];
-
-                              if (recievingLisnes.isNotEmpty) {
-                                for (var i = 0;
-                                    i < recievingLisnes.length;
-                                    i++) {
-                                  if (recievingLisnes[i].isReceived == true) {
-                                    recieve.add(recievingLisnes[i]);
-
-                                    setState(() {});
-                                  }
-                                }
-                              }
+                              // List<RecievingLines> recieve = [];
+                              //
+                              // if (recievingLisnes.isNotEmpty) {
+                              //   for (var i = 0;
+                              //       i < recievingLisnes.length;
+                              //       i++) {
+                              //     if (recievingLisnes[i].isReceived == true) {
+                              //       recieve.add(recievingLisnes[i]);
+                              //
+                              //       setState(() {});
+                              //     }
+                              //   }
+                              // }
 
                               if (updateCheck == true) {
                                 context
@@ -6226,7 +6043,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                         vat:
                                             double.tryParse(vatController.text),
                                         remarks: remarksController.text ?? "",
-                                        receivingLines: recieve ?? []);
+                                        receivingLines: recievingLisnes ?? []);
 
                                 print(model);
 

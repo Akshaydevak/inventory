@@ -35,10 +35,12 @@ class _PurchaseOrderStabletableState extends State<PurchaseOrderStabletable> {
     double width=MediaQuery.of(context).size.width;
     double height=MediaQuery.of(context).size.height;
     return Container(
+
       child:    Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           Expanded(child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
 
             children: [
 
@@ -64,14 +66,12 @@ class _PurchaseOrderStabletableState extends State<PurchaseOrderStabletable> {
             SizedBox(height: height*.035,),
             NewInputCard(
                 readOnly: true, controller:widget. paymentMethodController, title: "Payment Method"),
-            SizedBox(height: height*.030,),
-            SizedBox(height: height*.030,),
-            SizedBox(height: height*.030,),
-            SizedBox(height: height*.030,),
+
 
 
           ],)),
-          Expanded(child: Column(children: [
+          Expanded(child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,children: [
 
             NewInputCard(
                 readOnly: true,
@@ -96,14 +96,11 @@ class _PurchaseOrderStabletableState extends State<PurchaseOrderStabletable> {
             NewInputCard(
                 readOnly: true,
                 controller:widget. variableAmountController, title: "Variable Amount"),
-            SizedBox(height: height*.030,),
-            SizedBox(height: height*.030,),
-            SizedBox(height: height*.030,),
-            SizedBox(height: height*.030,),
 
 
           ],)),
-          Expanded(child: Column(children: [
+          Expanded(child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,children: [
 
             NewInputCard(
                 readOnly: true,
@@ -128,7 +125,7 @@ class _PurchaseOrderStabletableState extends State<PurchaseOrderStabletable> {
             NewInputCard(
 
               controller: widget.remarksController, title: "Remarks",height: 90,maxLines: 2,),
-            SizedBox(height: height*.070,),
+            SizedBox(height: height*.018,),
 
 
 

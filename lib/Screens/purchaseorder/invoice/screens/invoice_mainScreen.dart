@@ -205,7 +205,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                         // context.showSnackBarError(Variable.errorMessege);
                       }, success: (data) {
-                        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                         if (data.data1) {
                           // showDailogPopUp(
                           //     context,
@@ -255,7 +254,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                         // context.showSnackBarError(Variable.errorMessege);
                       }, success: (data) {
-                        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                         if (data.data1) {
                           showDailogPopUp(
                               context,
@@ -515,6 +513,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                           ),
                                         );
                                       }
+                                      else{
+                                        context.showSnackBarError("The Order Does Not Invoiced");
+                                      }
 
 
                                       // Navigator.push(
@@ -578,6 +579,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                               excisetax:double.tryParse( exciseTaxController.text) ,
                                               remarks: remarksController.text ,
                                               model: model,
+                                              pageName: "INVOICE",
                                             )),
                                       );
 
@@ -607,108 +609,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                 variableAmountController: variableAmountController,
                                 vatController: vatController,
                               ),
-                              // Row(
-                              //   children: [
-                              //     Expanded(child: Column(children: [
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: invoiceCodeController, title: "Invoice code"),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: purchaseCodeController, title: "purchase order code"),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: orderedDateController, title: "ordered date"),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //
-                              //           controller: paymentCodeController, title: "payment code"),
-                              //       SizedBox(height: height*.035,),
-                              //       NewInputCard(
-                              //           readOnly: true, controller: paymentStatusController, title: "payment status"),
-                              //       SizedBox(height: height*.035,),
-                              //       NewInputCard(
-                              //           readOnly: true, controller: paymentMethodController, title: "payment method"),
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //
-                              //
-                              //     ],)),
-                              //     Expanded(child: Column(children: [
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: orderStatusController, title: "order status"),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: invoiceStatusController, title: "invoice status"),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: discountController, title: "discount"),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: focController, title: "foc"),
-                              //       SizedBox(height: height*.035,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: unitCostController, title: "unit cost"),
-                              //       SizedBox(height: height*.035,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: variableAmountController, title: "variable amount"),
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //
-                              //
-                              //     ],)),
-                              //     Expanded(child: Column(children: [
-                              //       SizedBox(height: height*.030,),
-                              //       SizedBox(height: height*.030,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: exciseTaxController, title: "excise tax"),
-                              //       SizedBox(height: height*.020,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: vatController, title: "vat"),
-                              //       SizedBox(height: height*.020,),
-                              //       NewInputCard(    readOnly: true,
-                              //
-                              //           controller: actualCostController, title: "actual cost"),
-                              //       SizedBox(height: height*.020,),
-                              //       NewInputCard(
-                              //           readOnly: true,
-                              //           controller: grandTotalController, title: "grand total"),
-                              //       SizedBox(height: height*.020,),
-                              //       NewInputCard(
-                              //
-                              //         controller: noteController, title: "note",height: 90,maxLines: 2,),
-                              //       SizedBox(height: height*.010,),
-                              //       NewInputCard(
-                              //
-                              //         controller: remarksController, title: "remarks",height: 90,maxLines: 2,),
-                              //
-                              //
-                              //
-                              //
-                              //     ],)),
-                              //
-                              //   ],
-                              // ),
-                              SizedBox(height: 35,),
+
+                              SizedBox(height: height*.1,),
                               Row(mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TextWidget(text: "Receiving lines"),
@@ -737,54 +639,25 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                 width: 2200,
                                                 // padding: EdgeInsets.all(10),
                                                 child:customTable(
-                                                  // border: const TableBorder(
-                                                  //   verticalInside: BorderSide(
-                                                  //       width:.5,
-                                                  //       color: Colors.black45,
-                                                  //       // color: Colors.blue,
-                                                  //       style:
-                                                  //       BorderStyle.solid),
-                                                  //
-                                                  //   horizontalInside:
-                                                  //   BorderSide(
-                                                  //       width:.3,
-                                                  //       color: Colors.black45,
-                                                  //       // color: Colors.blue,
-                                                  //       style:
-                                                  //       BorderStyle.solid),),
+
                                                   tableWidth: .5,
                                                   childrens: [
                                                     TableRow(
-                                                      // decoration: BoxDecoration(
-                                                      //     color: Colors.green.shade200,
-                                                      //     shape: BoxShape.rectangle,
-                                                      //     border: const Border(      top: BorderSide(
-                                                      //         width: .5,
-                                                      //         color: Colors.black45,
-                                                      //         // color: Colors.blue,
-                                                      //         style: BorderStyle.solid
-                                                      //     ),)),
+
                                                         children: [
                                                           tableHeadtext(
-                                                            'Sno',
+                                                            'Sl.No',
                                                             size: 13,
-
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white,
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
                                                           ),
                                                           tableHeadtext(
                                                             'Receiving Line Id',
-
                                                             size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Variant Id',
-
                                                             size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Variant Name',
@@ -813,6 +686,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                           ),
                                                           tableHeadtext(
                                                             'Requested Qty',
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
 
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
@@ -829,6 +704,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                           ),
                                                           tableHeadtext(
                                                             'Unit Cost',
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
 
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
@@ -837,24 +714,32 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                           tableHeadtext(
                                                             'Exccess Tax',
                                                             size: 13,
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Discount',
                                                             size: 13,
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'FOC',
                                                             size: 13,
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Vatable Amount',
                                                             size: 13,
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
@@ -862,18 +747,24 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                           tableHeadtext(
                                                             'VAT',
                                                             size: 13,
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Actual Cost',
                                                             size: 13,
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Grand Total',
                                                             size: 13,
+                                                            center: true,
+                                                            padding: EdgeInsets.only(bottom:height*.0198),
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
@@ -976,21 +867,29 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].variantId ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].variantId ?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500),
                                                               ),
 
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].barcode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].barcode ?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500),
                                                               ),
 
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "", fontSize: 12,
+                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                    fontWeight: FontWeight.w500),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1125,8 +1024,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                   widths: {
                                                     0: FlexColumnWidth(2),
                                                     1: FlexColumnWidth(4),
-                                                    2: FlexColumnWidth(6),
-                                                    3: FlexColumnWidth(3),
+                                                    2: FlexColumnWidth(4),
+                                                    3: FlexColumnWidth(5),
                                                     4: FlexColumnWidth(3),
                                                     5: FlexColumnWidth(3),
                                                     6: FlexColumnWidth(3),
@@ -1165,9 +1064,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               SizedBox(height: 20,),
                               SaveUpdateResponsiveButton(
                                   isDelete:true,
-                                saveFunction: (){
-                                  List<Lines>? result;
-                                  bool confirmationCheck=false;
+                                saveFunction: (){bool confirmationCheck=false;
                                   for(var i=0;i<additionalVariants.length;i++){
                                     if(additionalVariants[i].isInvoiced==false){
                                       confirmationCheck=true;
@@ -1176,7 +1073,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
 
                                   }
-                                  result = additionalVariants.where((o) => o.isInvoiced == true).toList();
+                                  // result = additionalVariants.where((o) => o.isInvoiced == true).toList();
                                   if(confirmationCheck){
                                   showDailogPopUp(
                                   context,
@@ -1248,7 +1145,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                           actualCostController.text),
                                       vat: double.tryParse(vatController.text),
                                       invoicedBy: Variable.created_by,
-                                      invoiceLines: result ?? [],
+                                      invoiceLines: additionalVariants ?? [],
 
 
                                       // orderLines: table,
@@ -1268,210 +1165,13 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               ),
 
 
-                              // Container(
-                              //   margin: EdgeInsets.only(right:width*.011,),
-                              //   child: Row(
-                              //     children: [
-                              //       Spacer(),
-                              //       Button(Icons.delete, Colors.red,ctx: context,
-                              //           text: "DISCARD",height: 29,
-                              //           bdr: true,
-                              //           onApply: (){print("Akkk");},
-                              //           width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                              //       SizedBox(width: width*.008,),
-                              //
-                              //       Button(Icons.check, Colors.grey,ctx: context,
-                              //           onApply: (){
-                              //             List<Lines>? result;
-                              //             for(var i=0;i<additionalVariants.length;i++){
-                              //                result = additionalVariants.where((o) => o.isInvoiced == true).toList();
-                              //
-                              //
-                              //             }
-                              //             print("additionalvariants"+additionalVariants.toString());
-                              //             InventoryPostModel model =
-                              //             InventoryPostModel(
-                              //               purchaseOrderCode: purchaseCodeController.text??"",
-                              //               inventoryId: inventoryId??"",
-                              //               // invoicedBy: ,
-                              //               notes: noteController.text,
-                              //               remarks: remarksController.text,
-                              //               unitCost:double.tryParse( unitCostController.text),
-                              //               foc:double.tryParse( focController.text),
-                              //               discount:double.tryParse( discountController.text),
-                              //               grandtotal:double.tryParse( grandTotalController.text),
-                              //               vatableAmount:double.tryParse( variableAmountController.text),
-                              //               excessTax:double.tryParse( exciseTaxController.text),
-                              //               actualCost:double.tryParse( actualCostController.text),
-                              //               vat:double.tryParse( vatController.text),
-                              //               invoicedBy: Variable.created_by,
-                              //               invoiceLines: result??[],
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //               // orderLines: table,
-                              //             );
-                              //
-                              //
-                              //             print(model);
-                              //             context.read<InventorypostCubit>().postInventory(model);
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //           },
-                              //           text: "SAVE",height: 29,
-                              //           width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
-                              //       SizedBox(width: width*.008,),
-                              //     ],
-                              //   ),
-                              // )
-
                             ],
                           ),
                         )),
 
                       ],
                     )
-                  // Column(
-                  //   children: [Row(
-                  //     children: [
-                  //       // VerticalList(selectedVertical: selectedVertical,
-                  //       //   itemsearch: itemsearch,ontap: (int index){
-                  //       //     setState(() {
-                  //       //       print("taped");
-                  //       //       select=false;
-                  //       //       selectedVertical=index;
-                  //       //
-                  //       //       veritiaclid =
-                  //       //           result[index].id;
-                  //       //       context
-                  //       //           .read<
-                  //       //           RequestformreadCubit>()
-                  //       //           .getRequestFormRead(
-                  //       //           veritiaclid!);
-                  //       //     });
-                  //       //   },result: result,
-                  //       // ),
-                  //
-                  //
-                  //       Expanded(child: Column(children: [
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "Invoice code"),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "purchase order code"),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "ordered date"),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "payment code"),
-                  //         SizedBox(height: height*.035,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "payment status"),
-                  //         SizedBox(height: height*.035,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "payment method"),
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //
-                  //
-                  //       ],)),
-                  //       Expanded(child: Column(children: [
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "order status"),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "invoice status"),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "discount"),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "foc"),
-                  //         SizedBox(height: height*.035,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "unit cost"),
-                  //         SizedBox(height: height*.035,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "variable amount"),
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //
-                  //
-                  //       ],)),
-                  //       Expanded(child: Column(children: [
-                  //         SizedBox(height: height*.030,),
-                  //         SizedBox(height: height*.030,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "excise tax"),
-                  //         SizedBox(height: height*.020,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "vat"),
-                  //         SizedBox(height: height*.020,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "actual cost"),
-                  //         SizedBox(height: height*.020,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "grand total"),
-                  //         SizedBox(height: height*.020,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "note",height: 90,maxLines: 2,),
-                  //         SizedBox(height: height*.010,),
-                  //         NewInputCard(
-                  //             controller: controller, title: "remarks",height: 90,maxLines: 2,),
-                  //
-                  //
-                  //
-                  //
-                  //       ],)),
-                  //     ],
-                  //   ),
-                  //     SizedBox(height: 80,),
-                  //     Row(mainAxisAlignment: MainAxisAlignment.start,
-                  //       children: [
-                  //         TextWidget(text: "recieving lines"),
-                  //       ],
-                  //     ),
-                  //     Divider(color: Colors.grey,thickness: 1,),
-                  //     SizedBox(height: 5,),
-                  //    // ScrollableTable(),
-                  //     SizedBox(height: 100,),
-                  //
-                  //     Row(
-                  //       children: [
-                  //         Spacer(),
-                  //         // Button(Icons.delete, Colors.red,ctx: context,
-                  //         //     text: "Discard",height: 29,
-                  //         //     onApply: (){print("Akkk");},
-                  //         //     width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                  //         SizedBox(width: width*.008,),
-                  //
-                  //         // Button(Icons.check, Colors.grey,ctx: context,
-                  //         //     onApply: (){print("Akkk");},
-                  //         //     text: "Discard",height: 29,
-                  //         //     width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
-                  //         SizedBox(width: width*.008,),
-                  //       ],
-                  //     )
-                  //   ],
-                  //
-                  // ),
+
                 ),
               );
             }
@@ -1487,6 +1187,7 @@ class InventoryPrintScreen extends StatefulWidget {
   final String orderCode;
   final String orderDate;
   final String remarks;
+  final String pageName;
   final double? discount;
   final double? vat;
   final double? variableAmount;
@@ -1509,7 +1210,7 @@ class InventoryPrintScreen extends StatefulWidget {
     this.discount=0.00,
     this.vat=0.00,
     this.unitCost=0.00,
-    this.excisetax=0.00, this.model,
+    this.excisetax=0.00, this.model, required this.pageName,
 
 
 
@@ -1546,7 +1247,7 @@ class _InventoryPrintScreenState extends State<InventoryPrintScreen> {
 
       body:PdfPreview(
         build: (format) => _generatePdf(format,"title",widget.orderDate, widget.orderCode,context,widget.vendorCode,
-            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table,widget.model!),
+            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table,widget.model!,widget.pageName),
       ),
 
     );
@@ -1554,11 +1255,12 @@ class _InventoryPrintScreenState extends State<InventoryPrintScreen> {
 }
 Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDate,String orderCode,BuildContext context,String vendorCode,
     double? discount,double? actualCost,double? variableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<Lines> table,InventoryListModel model) async {
+    ,double? excisetax,double? vat,String note,String remarks,List<Lines> table,InventoryListModel model,String pageName) async {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   final font = await PdfGoogleFonts.nunitoExtraLight();
+  final netImage = await networkImage(model.companyLogo??"");
   //  final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
   //  _printPdfAsHtml() async {
   //   print('Print ...');
@@ -1581,11 +1283,17 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
             child:pw.Column(
               children: [
                 pw.  Container(
-                  height:height*.155 ,
+                  height:height*.105 ,
                   color: PdfColor.fromInt(0xAAF7F7F7),
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
+                      // pw.Container(
+                      //   margin:pw. EdgeInsets.symmetric(vertical: 5),
+                      //   height:70 ,
+                      //   width: 70,
+                      //   child:pw.Image(netImage),
+                      // ),
 
                       pw. Spacer(),
                       pw. Container(
@@ -1606,7 +1314,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.   SizedBox(height: height*.009,),
-                            pw. Text("PURCHASE ORDER",
+                            pw. Text(pageName,
                               style:pw. TextStyle(
 
                                 color: PdfColor.fromInt(0xff3E4F5B),
@@ -1644,15 +1352,15 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 crossAxisAlignment:pw. CrossAxisAlignment.start,
                                 children: [
                                   pw.   Text(model.name??" ",
-                                    style:  pw.TextStyle( fontSize:15,fontWeight:pw. FontWeight.bold ),),
+                                    style:  pw.TextStyle( fontSize:14,fontWeight:pw. FontWeight.bold ),),
                                   pw.  SizedBox(height: 2,),
                                   pw.  Text(model.addressOne??"",
-                                    style:  pw.TextStyle( fontSize:7 ),),
+                                    style:  pw.TextStyle( fontSize:9),),
                                   pw.   SizedBox(height: 2,),
                                   pw. Text(model.addressTwo??"",
-                                    style:  pw.TextStyle(fontSize:2),),
+                                    style:  pw.TextStyle(fontSize:9),),
                                   pw. Text(model.email??"",
-                                    style:  pw.TextStyle( font: font,fontSize:7),)
+                                    style:  pw.TextStyle( font: font,fontSize:9),)
 
                                 ],
                               ),
@@ -1669,11 +1377,11 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       pw. Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("Date :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("Date : ",style:  pw.TextStyle(fontSize:9))),
                                       pw.  Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("purchase order code :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("Purchase order code : ",style:  pw.TextStyle(fontSize:9))),
 
                                     ],
                                   ),
@@ -1686,11 +1394,8 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                                 bottom:pw. BorderSide(width: .5,),
                                               )
                                           ),
-                                          width: 90,
-                                          child: pw.Text(orderDate==""?DateTime.now()
-                                              ?.toIso8601String()
-                                              .split("T")[0] ??
-                                              "".toString():orderDate.toString(),style:  pw.TextStyle(fontSize:9))
+                                          width: 85,
+                                          child: pw.Text(orderDate==""?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9))
                                       ),
                                       pw.  Container(
                                           padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
@@ -1701,7 +1406,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                                 ),
                                               )
                                           ),
-                                          width: 90,
+                                          width: 85,
                                           child: pw.Text(orderCode==""?"":orderCode,style:  pw.TextStyle(fontSize:9))
                                       ),
 
@@ -1723,9 +1428,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                             border: pw. Border.all(
                               width: .6,
-
                               color: PdfColor.fromInt(0xAAACACAC),
-
 
                             )
                         ),
@@ -1733,7 +1436,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           crossAxisAlignment:  pw.CrossAxisAlignment.start,
                           children: [
                             pw.Container(
-                              height:height*.04,
+                                                                                                                                                                                                                                                            height:height*.04,
                               width: width,
                               color: PdfColor.fromInt(0xff3E4F5B),
                               child:  pw.Center(
@@ -1757,9 +1460,8 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       mainAxisAlignment: pw. MainAxisAlignment.center,
                                       crossAxisAlignment:  pw.CrossAxisAlignment.start,
                                       children: [
-                                        pw. Text("Supplier",
-                                            style:
-                                            pw. TextStyle(fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                        pw. Text("SUPPLIER",
+                                            style: pw. TextStyle(fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
                                             )),
 
                                         pw.SizedBox(height: 3,),
@@ -1790,7 +1492,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
                                         ),),
                                         pw.SizedBox(height: 3,),
-                                        pw.  Text(orderDate??"",style: pw. TextStyle(
+                                        pw.  Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate??"",style: pw. TextStyle(
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
                                             // color: pw.C.black,
                                             fontWeight: pw.FontWeight.bold),),
@@ -1804,7 +1506,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           ],
                         ),
                       ),
-                      pw.SizedBox(height: 3),
+                      pw.SizedBox(height: 8),
                       pw.Container(
                         // height: 400,
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -1870,14 +1572,14 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.013, color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
 
                                   ),
                                   pw. Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
 
 
@@ -1885,20 +1587,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
 
                                   ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
 
 
@@ -1907,19 +1609,19 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
                                   pw.  Container(
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
 
                                   ),
 
@@ -1927,20 +1629,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
                                   pw.       Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
 
                                   ),
                                   pw. Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
 
 
@@ -1984,7 +1686,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                         alignment:pw. Alignment.center,
                                         height: 40,
                                         child:pw. Text(
-                                            table[i].barcode??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i]?.barcode??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
                                       pw.   Container(
@@ -1998,7 +1700,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].receivedQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i]?.totalQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
 
@@ -2006,7 +1708,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].unitCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                            table[i]?.unitCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
 
 
                                       ),
@@ -2015,7 +1717,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].excessTax.toString()??"",style:pw. TextStyle(fontSize: 8)),
+                                            table[i]?.excessTax.toString()??"",style:pw. TextStyle(fontSize: 8)),
                                         // fontSize: 12,
 
 
@@ -2024,21 +1726,21 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            table[i].discount.toString()??"",style:pw. TextStyle(fontSize: 8)),
+                                            table[i]?.discount.toString()??"",style:pw. TextStyle(fontSize: 8)),
                                       ),
 
                                       pw. Container(
                                         alignment:pw. Alignment.center,
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         child:pw. Text(
-                                            table[i].variableAmount.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i]?.variableAmount.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
                                         // fontSize: 12,
                                       ),
                                       pw.  Container(
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].vat.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].vat?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
                                         // fontSize: 12,
 
                                       ),
@@ -2046,7 +1748,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            actualCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                            table[i].vat.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
 
                                       ),
 
@@ -2057,6 +1759,58 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                                     ]
                                 )
+                            ]else...[
+                              pw. TableRow(
+                                  children: [
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                    pw.    Container(
+                                      padding: pw.EdgeInsets.only(top: height*.019),
+                                      height: 40,
+                                    ),
+                                  ]
+                              )
+
                             ]
 
                           ],
@@ -2144,28 +1898,8 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                             child:pw. Column(
                               crossAxisAlignment:pw. CrossAxisAlignment.start,
                               children: [
-                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.01,),
-                                pw.Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw. Row(
-                                        children: [
 
 
-                                          pw.Text(remarks??"",style: pw.TextStyle(
-                                            // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.009,),
-
-                                    ],
-                                  ),
-                                ),
-                                pw.  SizedBox(height: height*.009,),
                                 pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
                                 pw. SizedBox(height: height*0.01,),
                                 pw. Container(
@@ -2186,7 +1920,27 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                                     ],
                                   ),
-                                )
+                                ),
+                                pw.  SizedBox(height: height*.02,),
+                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.02,),
+                                pw.Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw. Row(
+                                        children: [
+                                          pw.Text(remarks??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(width: width*.02,),
+
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),

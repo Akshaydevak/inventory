@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
@@ -25,6 +27,8 @@ class SalesPaymentListPActh extends StatefulWidget {
 class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
   bool suffixIconCheck = false;
   TextEditingController searchContoller = TextEditingController();
+
+  var transactionCodeControllers = <TextEditingController>[];
   List<PaymentListSalesModel> table = [];
   var items = [
     'payment_completed',
@@ -33,14 +37,19 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
   String selectval = "Tokyo";
   var list1;
   @override
+  void initState() {
+    context
+        .read<PayementVerticalListCubit>()
+        .getSalePaymentVerticalList();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return MultiBlocProvider(
   providers: [
-    BlocProvider(
-  create: (context) => PayementVerticalListCubit()..getSalePaymentVerticalList(),
-),
+
     BlocProvider(
       create: (context) => PaymentPacthCubit(),
     ),
@@ -60,6 +69,7 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
+          print("the payment success method");
           if (data.data1) {
             context.showSnackBarSuccess(data.data2);
 
@@ -82,64 +92,41 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
           print("error");
         },
         success: (list) {
-          print("Welcome" + list.toString());
-          table = list.data;
-          list1 = list;
+          print("Welcome" + list.data.toString());
+
+
+
+            table = list.data;
+            if(table.isNotEmpty){
+              transactionCodeControllers.clear();
+              for(var i=0;i<table.length;i++) {
+
+                var requsted = new TextEditingController(text: table[i]
+                    .transactionCode.toString() ?? "");
+                transactionCodeControllers.add(requsted);
+                list1 = list;
+              }
+            }
+
+
         });
   },
   builder: (context, state) {
     return Scaffold(
       backgroundColor: Pellet.bagroundColor,
           body:
-             Container(
-               margin:  EdgeInsets.symmetric(horizontal:w *.0155 ),
-              // color: Colors.red,
-              // width: 700,
-              child: Column(
-                children: [
-                  SizedBox(height: 20,),
+             SingleChildScrollView(
+               child: Container(
+                 margin:  EdgeInsets.symmetric(horizontal:w *.0155 ),
+                // color: Colors.red,
+                // width: 700,
+                child: Column(
+                  children: [
+                    SizedBox(height: 20,),
 
-                  // Container(
-                  //   // margin: EdgeInsets.all(5),
-                  //     child: SearchTextfiled(
-                  //       color: Color(0xffFAFAFA),
-                  //       h: 40,
-                  //       // suffixIconCheck: suffixIconCheck,
-                  //       w: MediaQuery.of(context).size.width/2.11,
-                  //       hintText: "Search Transaction Id..",
-                  //       ctrlr: searchContoller,
-                  //       onChanged: (va) {
-                  //         print("searching case" + va.toString());
-                  //         // context
-                  //         //     .read<DevisionListCubit>()
-                  //         //     .searchDevisionList(searchContoller.text);
-                  //         suffixIconCheck=true;
-                  //         if (va == "") {
-                  //           // context
-                  //           //     .read<DevisionListCubit>()
-                  //           //     .getDevisionList();
-                  //           suffixIconCheck=false;
-                  //         }
-                  //       },
-                  //     )),
-                  SizedBox(height: 20,),
-                  Container(
-                    height: h / 1.86,
-                    // width: w/7,
-                    margin: EdgeInsets.symmetric(horizontal: w*.006),
-                    child: SingleChildScrollView(
+                    SingleChildScrollView(
                       child: customTable(
-                        // border: const TableBorder(
-                        //   verticalInside: BorderSide(
-                        //       width: .5,
-                        //       color: Colors.black45,
-                        //       style: BorderStyle.solid),
-                        //   horizontalInside: BorderSide(
-                        //       width: .3,
-                        //       color: Colors.black45,
-                        //       // color: Colors.blue,
-                        //       style: BorderStyle.solid),
-                        // ),
+
                         tableWidth: .5,
                         childrens: [
                           TableRow(
@@ -153,28 +140,20 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
 
                             children: [
                               tableHeadtext(
-                                'Sl No',
-                                // padding: EdgeInsets.all(7),
-                                //
-                                // height: 44,
-                                // textColor: Colors.black,
-                                // color: Color(0xffE5E5E5),
+                                'Sl.No',
+
                                 size: 13,
                               ),
 
                               tableHeadtext(
                                 'Transaction Code',
-                                // textColor: Colors.black,
-                                // padding: EdgeInsets.all(7),
-                                // height: 44,
+
                                 size: 13,
-                                // color: Color(0xffE5E5E5),
+
                               ),
                               tableHeadtext(
                                 'Mobile Number',
-                                // textColor: Colors.black,
-                                // padding: EdgeInsets.all(7),
-                                // height: 46,
+
                                 size: 13,
                                 // color: Color(0xffE5E5E5),
                               ),
@@ -196,9 +175,7 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                               ),
                               tableHeadtext(
                                 '',
-                                // textColor: Colors.black,
-                                // padding: EdgeInsets.all(7),
-                                // height: 46,
+
                                 size: 13,
                                 // color: Color(0xffE5E5E5),
                               ),
@@ -231,7 +208,7 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                                         TableCellVerticalAlignment
                                             .middle,
                                         child:
-                                        textPadding((i + 1).toString(),)
+                                        textPadding((i + 1).toString(),alighnment: Alignment.center)
                                       // Text(keys[i].key??"")
 
                                     ),
@@ -240,10 +217,11 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                                       verticalAlignment:
                                       TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(
-                                        initialCheck:true,
-                                        formatter: false,
 
-                                        last: table[i].transactionCode  ?? "",
+                                        formatter: false,
+                                        textAlighn: TextAlign.left,
+                                        alignment: Alignment.topLeft,
+                                        controller:transactionCodeControllers[i],
                                         onChanged: (va) {
                                           // widget.updateCheck(true);
                                           table[i] = table[i].copyWith(transactionCode: va,updateCheck: true);
@@ -318,26 +296,20 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                                       child: TableTextButton(
                                         onPress: () {
                                           setState(() {
-                                            // widget.updateCheck(false);
-                                            table[i] = table[i].copyWith(
-                                                updateCheck: false);
-                                            PurchasePaymentPostModel model=PurchasePaymentPostModel(
-                                              processId: table[i].id,
-                                              customerCode: table[i].customerCode,
-                                              orderId: table[i].postResponse?.orderId,
-                                              status: table[i].paymentStatus,
-                                              tranSactionCode: table[i].transactionCode
-
-
-                                            );
-
-                                     if(  table[i].updateCheck == true)   context.read<PaymentPacthCubit>().patchPayment(model);
-
-
-                                            table[i] = table[i].copyWith(
-                                                updateCheck: false);
-                                            // widget.updation(table);
-
+                                            if(table[i].updateCheck==true){
+                                              table[i] = table[i].copyWith(
+                                                  updateCheck: false);
+                                              PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                                                  processId: table[i].id,
+                                                  customerCode: table[i].customerCode,
+                                                  orderId: table[i].postResponse?.orderId,
+                                                  status: table[i].paymentStatus,
+                                                  tranSactionCode: table[i].transactionCode
+                                              );
+                                              context.read<PaymentPacthCubit>().patchPayment(model);
+                                              table[i] = table[i].copyWith(
+                                                  updateCheck: false);
+                                            }
 
                                           });
                                         },
@@ -355,44 +327,50 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                         ],
                         widths: {
                           0: FlexColumnWidth(1),
-                          1: FlexColumnWidth(2),
-                          2: FlexColumnWidth(2),
-                          3: FlexColumnWidth(3),
-                          4: FlexColumnWidth(3),
+                          1: FlexColumnWidth(3),
+                          2: FlexColumnWidth(3),
+                          3: FlexColumnWidth(2),
+                          4: FlexColumnWidth(2),
                           5: FlexColumnWidth(2),
 
                         },
                       ),
                     ),
-                  ),
-                  list1!=null?    Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      tablePagination(
-                            () => context.read<PayementVerticalListCubit>().refresh(),
-                        back: list1?.previousUrl == null
-                            ? null
-                            : () {
-                          context
-                              .read<PayementVerticalListCubit>()
-                              .previuosslotSectionPageList();
-                        },
-                        next: list1.nextPageUrl == null
-                            ? null
-                            : () {
-                          // print(data.nextPageUrl);
-                          context
-                              .read<PayementVerticalListCubit>()
-                              .nextslotSectionPageList();
-                        },
-                      ),
-                    ],
-                  ):Container()
+                    list1!=null?    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        tablePagination(
+                              () => context.read<PayementVerticalListCubit>().refresh(),
+                          back: list1?.previousUrl == null
+                              ? null
+                              : () {
+                            context
+                                .read<PayementVerticalListCubit>()
+                                .previuosslotSectionPageList();
+                          },
+                          next: list1.nextPageUrl == null
+                              ? null
+                              : () {
+                                setState(() {
+                                  // table.clear();
+                                  context
+                                      .read<PayementVerticalListCubit>()
+                                      .nextslotSectionPageList();
+                                });
 
 
-                ],
-              ),
+
+
+                          },
+                        ),
+                      ],
+                    ):Container()
+
+
+                  ],
+                ),
             ),
+             ),
 
         );
   },

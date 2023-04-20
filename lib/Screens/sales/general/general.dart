@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 
 import 'package:inventory/Screens/sales/general/cubit/generalread/salesgeneralread_cubit.dart';
 import 'package:inventory/Screens/sales/general/cubit/salesgeneraldelete/salesgeneraldelete_cubit.dart';
@@ -16,6 +18,7 @@ import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/printScreen.dart';
@@ -303,7 +306,9 @@ class _SalesGeneralState extends State<SalesGeneral> {
                       orderTypeController.text = data.salesOrderData?.orderType ?? "";
                       orderModeController.text = data.salesOrderData?.orderMode ?? "";
                       orderCodeController.text = data.salesOrderData?.salesOrderCode ?? "";
-                      orderDateController.text = data.salesOrderData?.orderedDate ?? "";
+                      // orderDateController.text = data.salesOrderData?.orderedDate ?? "";
+
+                      orderDateController=TextEditingController(text:data.salesOrderData?.orderedDate ==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.salesOrderData?.orderedDate??"")));
                       invemtoryIdController.text = data.salesOrderData?.inventoryid ?? "";
                       cstomerIdController.text = data.salesOrderData?.customerId ?? "";
                       trnController.text = data.salesOrderData?.trnNumber ?? "";
@@ -491,14 +496,6 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                           select = true;
                                           clears();
 
-
-
-                                          // updateCheck=false;
-                                          // currentStock.clear();
-                                          //
-                                          //
-                                          // table.clear();
-                                          // clear();
                                         });
                                       },
                                       // icon: Icon(Icons.refresh),
@@ -507,16 +504,33 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                     ),
                                     TextButtonLarge(
                                       text: "PREVIEW",
-                                      onPress: (){
-                                        print("Akshay");
+                                      onPress: () async {
+                                        InventoryListModel model=InventoryListModel();
+
+
+                                        UserPreferences userPref = UserPreferences();
+                                        await userPref.getInventoryList().then((user) {
+                                          print("entereeeeeeeeeeeeeeeeeeed");
+
+                                          if (user.isInventoryExist == true) {
+                                            model=user;
+                                            print("existing");
+                                            print(model.email);
+                                            // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                          } else {
+
+                                          }
+                                        });
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) =>
                                               SalePrintScreen(
                                                 note: noteController.text,
                                                 select: select,
-                                                // vendorCode:vend.text,
-                                                // orderCode:ordereCodeController.text ,
                                                 orderDate: orderDateController.text,
                                                 table:table,
                                                 vat: double.tryParse( vatController.text),
@@ -526,15 +540,10 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                                 unitCost:double.tryParse( unitCostController.text) ,
                                                 excisetax:double.tryParse( exciseTAxController.text) ,
                                                 remarks: remarksController.text ,
-
-
-
-
-
+                                                pageName: "GENERAL",
+                                                model: model,
                                               )),
                                         );
-
-
                                       },
                                     ),
                                   ],
@@ -586,17 +595,11 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                     key:_myWidgetState,
                                     currenStock: currentStock),
                                 // ScrollableTable(),
+
+
                                 Container(
                                   color: Colors.white,
-                                  height: 5,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [],
-                                ),
-                                Container(
-                                  color: Colors.white,
-                                  height: 50,
+                                  height: 55,
                                 ),
                                 SaveUpdateResponsiveButton(
                                   discardFunction: (){
@@ -687,110 +690,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                   label:  select ? "SAVE" : "UPDATE",
                                 )
 
-                                // Container(
-                                //   margin: EdgeInsets.only(right:width*.015,),
-                                //   child: Row(
-                                //     mainAxisAlignment: MainAxisAlignment.end,
-                                //     children: [
-                                //       Button(Icons.delete, Colors.red,
-                                //           ctx: context,
-                                //           text: "DISCARD", onApply: () {
-                                //         if(updateCheck){
-                                //           clears();
-                                //
-                                //
-                                //         }
-                                //             showDailogPopUp(
-                                //                 context,
-                                //                 ConfirmationPopup(
-                                //                   // table:table,
-                                //                   // clear:clear(),
-                                //                   verticalId: veritiaclid,
-                                //                   onPressed: () {
-                                //                     print("akshay");
-                                //                     Navigator.pop(context);
-                                //                     context
-                                //                         .read<
-                                //                         SalesgeneraldeleteCubit>()
-                                //                         .salesGeneralDelete(
-                                //                         veritiaclid);
-                                //                   },
-                                //                 ));
-                                //           },
-                                //           height: 29,
-                                //           width: 90,
-                                //           labelcolor: Colors.red,
-                                //           iconColor: Colors.red,
-                                //           bdr: true),
-                                //       SizedBox(
-                                //         width: width * .008,
-                                //       ),
-                                //       Button(Icons.check, Colors.grey,
-                                //           ctx: context,
-                                //           text: select ? "SAVE" : "UPDATE",
-                                //           height: 29,
-                                //           Color: Color(0xff3E4F5B),
-                                //           width: 90,
-                                //           labelcolor: Colors.white,
-                                //           iconColor: Colors.white, onApply: () {
-                                //             print("updateCheck" +
-                                //                 remarksController.text.toString());
-                                //             if (updateCheck)
-                                //               context.showSnackBarError(
-                                //                   "please click the update button ");
-                                //             else {
-                                //               SalesGeneralPostModel model = SalesGeneralPostModel(
-                                //                   orderType:
-                                //                   orderTypeController?.text ?? "",
-                                //                   orderMode:
-                                //                   orderModeController?.text ?? "",
-                                //                   inventoryid:
-                                //                   Variable.inventory_ID ??
-                                //                       "",
-                                //                   customerId:
-                                //                   cstomerIdController?.text ?? "",
-                                //                   trnNumber:
-                                //                   trnController?.text ?? "",
-                                //                   shippingAddressId:
-                                //                   shippingAddressIdController?.text ??
-                                //                       "",
-                                //                   billingAddressId: billingAddressIdController?.text??"",
-                                //                   salesQuotesId:
-                                //                   slaesQuotesController?.text ??
-                                //                       "",
-                                //                   note: noteController?.text ?? "",
-                                //                   remarks:
-                                //                   remarksController?.text ?? "",
-                                //                   discount: double.tryParse(
-                                //                       discountController?.text ?? ""),
-                                //                   unitCost: double.tryParse(
-                                //                       unitCostController?.text ?? ""),
-                                //                   excessTax: double.tryParse(
-                                //                       exciseTAxController?.text ?? ""),
-                                //                   taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
-                                //                   vat: double.tryParse(vatController?.text ?? ""),
-                                //                   sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
-                                //                   totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
-                                //                   createdBy: Variable.created_by,
-                                //                   // editedBy: "",
-                                //                   orderLines: table);
-                                //               print("modelllls" + model.toString());
-                                //               select
-                                //                   ? context
-                                //                   .read<PostcubitCubit>()
-                                //                   .postSalesGeneral(model)
-                                //                   : context
-                                //                   .read<SalesgeneralpatcvhCubit>()
-                                //                   .getSalesGeneralPatch(
-                                //                   veritiaclid, model);
-                                //             }
-                                //           }),
-                                //       SizedBox(
-                                //         width: width * .008,
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
+
                               ],
                             ),
                           ),
@@ -2460,7 +2360,10 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                             },
                                           ),
                                         ),
-                                        table1[i].isInvoiced!=true?         PopUpCall(
+                                        TableCell(
+                                            verticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                            child:table1[i].isInvoiced!=true?         PopUpCall(
                                           type: "PriceTypePopUpCall",
                                           value: table1[i].discountType??"",
                                           onSelection: (String va) {
@@ -2530,13 +2433,13 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                             });
                                           },
                                         ): textPadding(
-                                            table1[i].discountType
+                                            table1[i]?.discountType
                                                 .toString() ??
                                                 "",
                                             fontSize: 12,
                                             padding: EdgeInsets.only(
                                                 left: 11.5, top: 1.5),
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w500)),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,

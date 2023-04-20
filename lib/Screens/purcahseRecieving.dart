@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/vendormodel.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -51,6 +52,7 @@ import '../commonWidget/tableConfiguration.dart';
 import '../printScreen.dart';
 import 'Dashboard.dart';
 import 'heirarchy/general/generalscreen.dart';
+import 'logi/model/inventorylistmodel.dart';
 
 class PurchaseRecievinScreen extends StatefulWidget {
   @override
@@ -84,7 +86,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController unitCostCheck = TextEditingController();//
   TextEditingController unitcost1 = TextEditingController(text: "0");
   TextEditingController expiryDate = TextEditingController(text: "0");
-  TextEditingController expiryDate2 = TextEditingController(text: "0");
+  TextEditingController expiryDate2 = TextEditingController(text: "");
   TextEditingController vendorCodeController = TextEditingController();
   TextEditingController recievedClearController = TextEditingController();
   TextEditingController unitCostClearController = TextEditingController();
@@ -348,8 +350,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
     super.initState();
   }
-  assignCall(GenerateMissing model){
-    print("aaaaaaaaaaaaaaa");
+  assignCall(){
+    context.read<InventorysearchCubit>().getInventorySearch("code");
     // context.read<PurchasegeneratingCubit>().generatePost(model!);
 
   }
@@ -523,17 +525,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                   listener: (context, state) {
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingg");
+                      context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1) {
                         context.showSnackBarSuccess(data.data2);
+                        clear();
 
                         context.read<InventorysearchCubit>().getInventorySearch(
                             "code");
-                        context.read<PurchaserecievigReadCubit>()
-                            .getGeneralPurchaseRecievingRead(veritiaclid);
+
                       }
                       else {
                         context.showSnackBarError(data.data2);
@@ -608,8 +610,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           print("Akshayaaaaa" + data.toString());
                           purchaseCurrentStock = data;
                           var stockQty = purchaseCurrentStock?.StockQty??0;
-                          print("stockqty" + stockQty.toString());
-                          print("stockCheck"+stockCheck.toString());
+
                           if(stockCheck==false){
                             currentStock.add(stockQty??0);
                           }
@@ -648,10 +649,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                         },
                         success: (data) {
                           purchaseTable = data;
-
                           setState(() {
-
-
                             if(Variable.tableedit==true) {
                               var vendorDetailList=purchaseTable?.vendorDetails;
                               print(vendorDetailList);
@@ -874,6 +872,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                   supplierRefCode="";
                                   currentStock.clear();
                                   recievingLisnes.clear();
+                                  unitcostReceivingListControllers.clear();
 
                                   additionalVariants.clear();
 
@@ -930,8 +929,21 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                           children: [
                                                             TextButtonLarge(
                                                               text: "PREVIEW",
-                                                              onPress: (){
+                                                              onPress: () async {
                                                                 print("Akshay");
+                                                                InventoryListModel model=InventoryListModel();
+                                                                UserPreferences userPref = UserPreferences();
+                                                                await userPref.getInventoryList().then((user) {
+                                                                  print("entereeeeeeeeeeeeeeeeeeed");
+                                                                  print(user.name);
+                                                                  if (user.isInventoryExist == true) {
+                                                                    model=user;
+                                                                    print("existing");
+                                                                    print(model.email);
+                                                                    // prefs.setString('token', user?.token ?? "");
+                                                                  } else {
+                                                                  }
+                                                                });
                                                                 Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(builder: (context) =>
@@ -946,6 +958,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                         unitCost:double.tryParse( unitCostController.text) ,
                                                                         excisetax:double.tryParse( excessTaxController.text) ,
                                                                         remarks: remarksController.text ,
+                                                                        model: model,
+                                                                        pageName: "GENERAL",
                                                                       )),
                                                                 );
                                                               },
@@ -961,11 +975,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             Expanded(
                                                               child: Container(
                                                                 child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  // mainAxisAlignment: MainAxisAlignment.start,
+                                                                  // crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Expanded(
                                                                         child: Column(
+                                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                                           children: [
 
 
@@ -1033,28 +1049,22 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 invoiceStausController,
                                                                                 title:
                                                                                 "Invoice Status"),
-                                                                            SizedBox(
-                                                                              height: height *
-                                                                                  .180,
-                                                                            ),
 
                                                                           ],
                                                                         )),
                                                                     Expanded(
                                                                         child: Column(
+                                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                                           children: [
-
-
                                                                             //  SizedBox(height: height*.030,),
-
                                                                             NewInputCard(
                                                                                     readOnly: true,
                                                                                 controller:
                                                                                 receivedController,
                                                                                 title: "Receiving Status"),
                                                                             SizedBox(
-                                                                              height: height *
-                                                                                  .030,
+                                                                              height: height * .030,
                                                                             ),
                                                                             NewInputCard(
                                                                                 readOnly: true,
@@ -1062,23 +1072,20 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 focController,
                                                                                 title: "FOC"),
                                                                             SizedBox(
-                                                                              height: height *
-                                                                                  .030,
+                                                                              height: height * .030,
                                                                             ),
                                                                             NewInputCard(
-                                                                                    readOnly: true,
+                                                                                readOnly: true,
                                                                                 controller:
                                                                                 discountController,
                                                                                 title:
                                                                                 "Discount"),
                                                                             SizedBox(
-                                                                              height: height *
-                                                                                  .030,
+                                                                              height: height * .030,
                                                                             ),
                                                                             NewInputCard(
                                                                                     readOnly: true,
-                                                                                controller:
-                                                                                unitCostController,
+                                                                                controller: unitCostController,
                                                                                 title:
                                                                                 "Unit Cost"),
                                                                             SizedBox(
@@ -1101,15 +1108,14 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 excessTaxController,
                                                                                 title:
                                                                                 "Excess Tax"),
-                                                                            SizedBox(
-                                                                              height: height *
-                                                                                  .180,
-                                                                            ),
+                                                                          
 
                                                                           ],
                                                                         )),
                                                                     Expanded(
                                                                         child: Column(
+                                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                                           children: [
 
 
@@ -1165,12 +1171,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                               height: 90,
                                                                               maxLines: 3,
                                                                             ),
-                                                                            SizedBox(
-                                                                              height: height *
-                                                                                  .23,
-                                                                            ),
-
-                                                                            // SizedBox(height: height*.010,),
+                                                                         
+                                                                            SizedBox(height: height*.030,),
                                                                           ],
                                                                         )),
                                                                   ],
@@ -1178,6 +1180,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                               ),
                                                             )
                                                           ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: height * .10,
                                                         ),
 
                                                         TextWidget(
@@ -1231,7 +1236,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                   TableRow(
                                                                                       children: [
                                                                                         tableHeadtext(
-                                                                                          'Sno',
+                                                                                          'Sl.No',
                                                                                           size: 13,
                                                                                         ),
                                                                                         tableHeadtext(
@@ -1257,6 +1262,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         tableHeadtext(
                                                                                           'Current Qty',
                                                                                           size: 13,
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
 
                                                                                         ),
                                                                                         tableHeadtext(
@@ -1266,6 +1273,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         tableHeadtext(
                                                                                           'Received Qty',
                                                                                           size: 13,
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
                                                                                         ),
                                                                                         tableHeadtext(
                                                                                           'Is Received',
@@ -1277,39 +1286,55 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         tableHeadtext(
                                                                                           'Unit Cost',
                                                                                           size: 13,
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
                                                                                         ),
                                                                                         tableHeadtext(
                                                                                           'Excise Tax',
                                                                                           size: 13,
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
                                                                                         ),
                                                                                         tableHeadtext(
                                                                                           'Discount',
                                                                                           size: 13,
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
                                                                                         ),
 
                                                                                         tableHeadtext(
                                                                                           'FOC',
                                                                                           size: 13,
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
 
                                                                                         ),
 
                                                                                         tableHeadtext(
                                                                                           'Vatable Amount',
                                                                                           size: 13,
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
                                                                                           // color: Palette.containerDarknew,
                                                                                           // textColor: Palette.white
                                                                                         ),
                                                                                         tableHeadtext(
                                                                                           'VAT',
                                                                                           size: 13,
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
                                                                                         ),
                                                                                         tableHeadtext(
                                                                                           'Actual Cost',
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
 
                                                                                           size: 13,
                                                                                         ),
                                                                                         tableHeadtext(
                                                                                           'Grand Total',
+                                                                                          center: true,
+                                                                                          padding: EdgeInsets.only(bottom:height*.0198),
 
                                                                                           size: 13,
                                                                                           // color: Palette.containerDarknew,
@@ -1528,7 +1553,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                               child: textPadding(currentStock.length!=recievingLisnes.length?"":currentStock[i].toString(),
                                                                                                   // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                                                  fontWeight: FontWeight.w500),
+                                                                                                  fontWeight: FontWeight.w500,
+                                                                                                  alighnment: Alignment.topRight),
                                                                                             ),
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2115,7 +2141,18 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                                   format:DateFormat('dd-MM-yyyy'),
                                                                                                   controller:recievingLisnes.length!=expirydateControllerList2.length?TextEditingController(text:""): expirydateControllerList2[i],
-                                                                                                  label: "Promised reciept date",
+                                                                                                  label: "Promised Receipt date",
+                                                                                                  onSuffixIconPressed: (){
+                                                                                                    setState(() {
+
+
+
+                                                                                                      recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck:recievingLisnes[i].expiryDate!=null||recievingLisnes[i].updateCheck==true? true:false,expiryDate: null);
+                                                                                                      expirydateControllerList2[i]=TextEditingController(text: "");
+                                                                                                    });
+
+
+                                                                                                  },
                                                                                                   onSaved: (newValue) {
                                                                                                     updateCheck=true;
                                                                                                     recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
@@ -2172,18 +2209,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 valueChanger: recievingLisnes[i].isActive == null ? false : recievingLisnes[i].isActive,
                                                                                                 onSelection
                                                                                                     : (bool? value) {
-                                                                                                  // updateCheck=true;
-                                                                                                  // recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
-                                                                                                  // setState(() {
-                                                                                                  //
-                                                                                                  // });
-                                                                                                  // bool? isActive = recievingLisnes[i].isActive;
-                                                                                                  // setState(() {
-                                                                                                  //   isActive = !isActive!;
-                                                                                                  //   recievingLisnes[i] = recievingLisnes[i].copyWith(isActive: isActive);
-                                                                                                  //
-                                                                                                  //
-                                                                                                  // });
+                                                                                                  updateCheck=true;
+
+                                                                                                  bool? isActive = recievingLisnes[i].isActive;
+                                                                                                  setState(() {
+                                                                                                    isActive = !isActive!;
+                                                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(isActive: isActive,updateCheck: true);
+
+
+                                                                                                  });
                                                                                                 },
                                                                                               ),
                                                                                             ),
@@ -2369,12 +2403,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             ),
                                                           ],
                                                         ),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
+
 
                                                         SizedBox(
-                                                          height: height * .020,
+                                                          height: height * .10,
                                                         ),
                                                         TextWidget(
                                                             text: "Additional Variants"),
@@ -2411,9 +2443,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                   children: [
                                                                                     tableHeadtext(
-                                                                                      'Sno',
-
+                                                                                      'Sl.No',
                                                                                       size: 13,
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white,
                                                                                     ),
@@ -2451,6 +2484,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       'Current Qty',
 
                                                                                       size: 13,
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
@@ -2462,13 +2497,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Recieved Qty',
+                                                                                      'Received Qty',
                                                                                       size: 13,
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Is Recieved',
+                                                                                      'Is Received',
 
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
@@ -2478,57 +2515,62 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       'Unit Cost',
 
                                                                                       size: 13,
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Excess Tax',
-
                                                                                       size: 13,
-                                                                                      // color: Palette.containerDarknew,
-                                                                                      // textColor: Palette.white
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Discount',
 
                                                                                       size: 13,
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
 
                                                                                     tableHeadtext(
                                                                                       'FOC',
-
                                                                                       size: 13,
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
 
                                                                                     tableHeadtext(
                                                                                       'Vatable Amount',
-
                                                                                       size: 13,
-                                                                                      // color: Palette.containerDarknew,
-                                                                                      // textColor: Palette.white
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'VAT',
-
                                                                                       size: 13,
-                                                                                      // color: Palette.containerDarknew,
-                                                                                      // textColor: Palette.white
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
+
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Actual Cost',
-
                                                                                       size: 13,
+                                                                                      center: true,
+                                                                                      padding: EdgeInsets.only(bottom:height*.0198),
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Grand Total',
-
                                                                                       size: 13,
+                                                                                        center: true,
+                                                                                        padding: EdgeInsets.only(bottom:height*.0198),
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
@@ -3268,7 +3310,18 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                               format:DateFormat('dd-MM-yyyy'),
                                                                                               controller: expiryDate2tControllers[i],
-                                                                                              label: "Promised reciept date",
+                                                                                              label: "Promised receipt date",
+                                                                                              onSuffixIconPressed: (){
+                                                                                                setState(() {
+
+
+                                                                                                  additionalVariants[i] = additionalVariants[i].copyWith(updateCheck:additionalVariants[i].expiryDate!=null ||additionalVariants[i].updateCheck==true? true:false,expiryDate: null);
+                                                                                                  expiryDate2tControllers[i]=TextEditingController(text: "");
+                                                                                                });
+
+
+                                                                                              },
+
                                                                                               onSaved: (newValue) {
                                                                                                 updateCheck1=true;
                                                                                                 additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
@@ -3480,38 +3533,26 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: textPadding(varinatname??"",
-                                                                                          // fontSize: 12, padding: EdgeInsets.only(
-                                                                                          // left: 11.5,
-                                                                                          // top: 11.5),
                                                                                           fontWeight: FontWeight.w500),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: textPadding(supplierRefCode.toString()??"",
-                                                                                          // fontSize: 12,
-                                                                                          // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                           fontWeight: FontWeight.w500),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: textPadding(barcode??"",
-                                                                                          // fontSize: 12,
-                                                                                          // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                           fontWeight: FontWeight.w500),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: textPadding(stock.toString()??"",
-                                                                                          // fontSize: 12,
-                                                                                          // padding: EdgeInsets.only(left: 11.5, top: 1.5),  // fontSize: 12,
-                                                                                          // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                           fontWeight: FontWeight.w500),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: textPadding(purchaseUomName??"",
-                                                                                          // fontSize: 12,
-                                                                                          // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                                           fontWeight: FontWeight.w500),
                                                                                     ),
                                                                                     TableCell(
@@ -3567,22 +3608,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 }
                                                                                                 else{
                                                                                                   vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
-                                                                                                  // vatableAmount1 = (((unitcost! *
-                                                                                                  //     recievedQty!) +
-                                                                                                  //     excess1!) -
-                                                                                                  //     discount!)
-                                                                                                  //     .toDouble();
                                                                                                   actualAndgrandTotal(vatableAmount1,vat1);
-                                                                                                  // vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
-                                                                                                  // actualCost1 = double.parse((vatableAmount1! +
-                                                                                                  //     ((vatableAmount1! *
-                                                                                                  //         vat1!) /
-                                                                                                  //         100)).toStringAsFixed(2));
-                                                                                                  // grandTotal1 =double.parse( (vatableAmount1! +
-                                                                                                  //     ((vatableAmount1! *
-                                                                                                  //         vat1!) /
-                                                                                                  //         100)).toStringAsFixed(2));
-
                                                                                                 }
 
                                                                                               }
@@ -3594,9 +3620,6 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         },
                                                                                         enable: true,
                                                                                         onComplete: () {
-                                                                                          setState(() {});
-
-                                                                                          setState(() {});
                                                                                         },
                                                                                       ),
                                                                                     ),
@@ -3605,20 +3628,16 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       child: CheckedBoxs(
                                                                                         valueChanger: isReceived1,
                                                                                         onSelection: (bool? value) {
-
                                                                                           setState(() {
                                                                                             isReceived1 = !isReceived1!;
-
                                                                                           });
                                                                                         },
                                                                                       ),
                                                                                     ),
-
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
                                                                                         controller:unitCostCheck,
-
                                                                                         onChanged: (p0) {
                                                                                           if (p0 == '')
                                                                                             setState(() {
@@ -3640,24 +3659,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
                                                                                               vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
-
                                                                                               actualAndgrandTotal(vatableAmount1,vat1);
-
-
-
                                                                                             }
                                                                                             else{
                                                                                               vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
-
                                                                                               actualAndgrandTotal(vatableAmount1,vat1);
-
                                                                                             }
-
                                                                                           }
-
-
-                                                                                          setState(() {});
-                                                                                          // print(Qty);
                                                                                         },
                                                                                         enable: true,
                                                                                         onComplete: () {
@@ -3694,16 +3702,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
                                                                                               vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
-
                                                                                               actualAndgrandTotal(vatableAmount1,vat1);
-
-
 
                                                                                             }
                                                                                             else{
-
                                                                                               vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
-
                                                                                               actualAndgrandTotal(vatableAmount1,vat1);
 
                                                                                             }
@@ -3781,8 +3784,6 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
                                                                                           controller:focClearController,
-
-
                                                                                         onChanged: (p0) {
                                                                                           if (p0 == '')
                                                                                             setState(() {
@@ -3795,7 +3796,6 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   p0);
                                                                                             });
                                                                                           }
-
                                                                                           if(unitcost==0 ||recievedQty==0){
                                                                                             actualCost1=0;
                                                                                             vatableAmount1=0;
@@ -3805,43 +3805,28 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             if(foc1==0 ||foc1==""){
                                                                                               vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
                                                                                               actualAndgrandTotal(vatableAmount1,vat1);
-
-
                                                                                             }
                                                                                             else{
                                                                                               vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
-
                                                                                               actualAndgrandTotal(vatableAmount1,vat1);
-
                                                                                             }
-
                                                                                           }
-
-
-                                                                                          setState(() {});
                                                                                           // print(Qty);
                                                                                         },
                                                                                         enable: true,
                                                                                         onComplete: () {
-                                                                                          setState(() {});
-
-                                                                                          setState(() {});
                                                                                         },
                                                                                       ),
                                                                                     ),
 
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                      child: textPadding(vatableAmount1.toString()??"",
-                                                                                          // fontSize: 12,
-                                                                                          // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                      child: textPadding(vatableAmount1?.toString()??"",
                                                                                           fontWeight: FontWeight.w500),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                      child: textPadding(vat1.toString()??"",
-                                                                                          // fontSize: 12,
-                                                                                          // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                      child: textPadding(vat1?.toString()??"",
                                                                                           fontWeight: FontWeight.w500),
                                                                                     ),
                                                                                     // TableCell(
@@ -3925,34 +3910,36 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                      child: textPadding(grandTotal1.toString()??"",
-                                                                                          // fontSize: 12,
-                                                                                          // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                      child: textPadding(grandTotal1?.toString()??"",
                                                                                           fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: CheckedBoxs(
-
                                                                                        valueChanger : isInvoiced1,
                                                                                         onSelection: (bool? value) {
-
                                                                                           setState(() {
                                                                                            // isInvoiced1 = !isInvoiced1!;
-
                                                                                           });
                                                                                         },
                                                                                       ),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                      child:          Tabledate(
-
+                                                                                      child:Tabledate(
                                                                                           format:DateFormat('dd-MM-yyyy'),
                                                                                           controller:expiryDate2,
                                                                                           // initialValue:
                                                                                           //     DateTime.parse(fromDate!),
-                                                                                          label: "Promised reciept date",
+                                                                                          label: "Promised Receipt date",
+                                                                                          onSuffixIconPressed: (){
+                                                                                            setState(() {
+                                                                                              expiryDate2.clear();
+                                                                                            });
+
+
+                                                                                          },
+
                                                                                           onSaved: (newValue) {
                                                                                             expiryDate2.text= newValue==null?"":  DateFormat('dd-MM-yyyy').format(newValue!);
 
@@ -4083,7 +4070,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                             ]
                                                                           , widths: {
-                                                                          0: FlexColumnWidth(2),
+                                                                          0: FlexColumnWidth(1.5),
                                                                           1: FlexColumnWidth(3),
                                                                           2: FlexColumnWidth(3),
                                                                           3: FlexColumnWidth(4),
@@ -4385,6 +4372,8 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
         }, success: (data) {
           if (data.data1) {
             setState(() {
+              widget.assign();
+
               context.read<InventorysearchCubit>().getInventorySearch("code");
               Navigator.pop(context);
 
@@ -4431,7 +4420,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                 model = model?.copyWith(remarks: remarks?.text,plannedRecieptDate: planned.text,promisedRecieptDate:promised.text,note: note.text,vendorId: vendorCode.text,vendorAddress: vendoraddress.text,vendorTrnNumber: vendortrnnumber.text);
                 print( "asap"+model.toString());
 
-                widget.assign(model);
+                // widget.assign(model);
                 context.read<PurchasegeneratingCubit>().generatePost(model!);
                 // Navigator.pop(context);
 
@@ -5140,6 +5129,7 @@ class PurchaseReceivingPrintScreen2 extends StatefulWidget {
   final String vendorCode;
   final String note;
   final bool select;
+  final bool isRecieved;
   final String orderCode;
   final String orderDate;
   final String remarks;
@@ -5149,6 +5139,8 @@ class PurchaseReceivingPrintScreen2 extends StatefulWidget {
   final double? actualCost;
   final double? unitCost;
   final double? excisetax;
+  final String pageName;
+  final InventoryListModel? model;
   final  List<RecievingLines> table;
 
   PurchaseReceivingPrintScreen2({
@@ -5162,19 +5154,14 @@ class PurchaseReceivingPrintScreen2 extends StatefulWidget {
     this.variableAmount=0.00,
     this.select=false,
     this.discount=0.00,
+    this.isRecieved=false,
     this.vat=0.00,
     this.unitCost=0.00,
-    this.excisetax=0.00,
-
-
-
-
+    this.excisetax=0.00, this.model, required this.pageName,
   });
-
   @override
   _PurchaseReceivingPrintScreen2State createState() => _PurchaseReceivingPrintScreen2State();
 }
-
 class _PurchaseReceivingPrintScreen2State extends State<PurchaseReceivingPrintScreen2> {
   late AutoScrollController _scrollController;
   @override
@@ -5201,7 +5188,7 @@ class _PurchaseReceivingPrintScreen2State extends State<PurchaseReceivingPrintSc
 
       body:PdfPreview(
         build: (format) => _generatePdf(format,"title",widget.orderDate, widget.orderCode,context,widget.vendorCode,
-            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table),
+            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table,widget.model!,widget.isRecieved,widget.pageName),
       ),
 
     );
@@ -5209,11 +5196,12 @@ class _PurchaseReceivingPrintScreen2State extends State<PurchaseReceivingPrintSc
 }
 Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDate,String? orderCode,BuildContext context,String vendorCode,
     double? discount,double? actualCost,double? variableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<RecievingLines> table) async {
+    ,double? excisetax,double? vat,String note,String remarks,List<RecievingLines> table,InventoryListModel model,bool isRecieved,String pageName) async {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   final font = await PdfGoogleFonts.nunitoExtraLight();
+  // final netImage = await networkImage(model.companyLogo??"");
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
 
   pdf.addPage(
@@ -5228,26 +5216,19 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
               children: [
 
                 pw.  Container(
-                  height:height*.155 ,
+                  height:height*.105 ,
 
 
                   color: PdfColor.fromInt(0xAAF7F7F7),
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // pw.  Container(
-                      //
-                      //     height: 16,
-                      //     width: 16,
-                      //     // decoration: pw. BoxDecoration(
-                      //     //     image:pw. DecorationImage(
-                      //     //         image: NetworkImage("https://i.pinimg.com/736x/d2/53/fb/d253fbcb29b2c743b57816b23746fe12--portugal-national-team-cristiano-ronaldo-portugal.jpg")
-                      //     //     )
-                      //     // ),
-                      //     child: pw. Container(
-                      //         child: pw.Image(logo)),
-                      //
-                      //   ),
+                      // pw.Container(
+                      //   margin: pw.EdgeInsets.symmetric(vertical: 5),
+                      //   height:60 ,
+                      //   width: 60,
+                      //   child:pw.Image(netImage),
+                      // ),
                       pw. Spacer(),
                       pw. Container(
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -5267,7 +5248,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.   SizedBox(height: height*.009,),
-                            pw. Text("PURCHASE ORDER",
+                            pw. Text(pageName,
                               style:pw. TextStyle(
 
                                 color: PdfColor.fromInt(0xff3E4F5B),
@@ -5305,14 +5286,16 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               child: pw.Column(
                                 crossAxisAlignment:pw. CrossAxisAlignment.start,
                                 children: [
-                                  pw.   Text("Ahlan cart company Limted",
-                                    style:  pw.TextStyle( fontSize:15,fontWeight:pw. FontWeight.bold ),),
+                                  pw.   Text(model.name??"",
+                                    style:  pw.TextStyle(  fontSize:14,fontWeight:pw. FontWeight.bold ),),
                                   pw.  SizedBox(height: 2,),
-                                  pw.  Text("Shop no. 514 5th floor aditya arcademall",
-                                    style:  pw.TextStyle( fontSize:7 ),),
+                                  pw.  Text(model.addressOne??"",
+                                    style:  pw.TextStyle(  font: font,fontSize:9 ),),
+                                  pw.  Text(model.addressTwo??"",
+                                    style:  pw.TextStyle(  font: font,fontSize:9 ),),
                                   pw.   SizedBox(height: 2,),
-                                  pw. Text("road mumai MUMBAI,400004",
-                                    style:  pw.TextStyle(fontSize:7),)
+                                  pw. Text(model.email??"",
+                                    style:  pw.TextStyle( font: font,fontSize:9),)
 
                                 ],
                               ),
@@ -5329,11 +5312,11 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       pw. Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("Date :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("Date : ",style:  pw.TextStyle(fontSize:9))),
                                       pw.  Container(
                                           padding: pw. EdgeInsets.only(top: 9),
 
-                                          child:  pw.Text("purchase order code :",style:  pw.TextStyle(fontSize:9))),
+                                          child:  pw.Text("purchase order code : ",style:  pw.TextStyle(fontSize:9))),
 
                                     ],
                                   ),
@@ -5346,7 +5329,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                                 bottom:pw. BorderSide(width: .5,),
                                               )
                                           ),
-                                          width: 120,
+                                          width: 80,
                                           child: pw.Text(orderDate==""?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9))
                                       ),
                                       pw.  Container(
@@ -5358,7 +5341,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                                 ),
                                               )
                                           ),
-                                          width: 120,
+                                          width: 85,
                                           child: pw.Text(orderCode.toString()??"",style:  pw.TextStyle(fontSize:9))
                                       ),
 
@@ -5415,8 +5398,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       crossAxisAlignment:  pw.CrossAxisAlignment.start,
                                       children: [
                                         pw. Text("Supplier",
-                                            style:
-                                            pw. TextStyle(fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                            style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018
                                             )),
 
                                         pw.SizedBox(height: 3,),
@@ -5428,7 +5410,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       mainAxisAlignment:  pw.MainAxisAlignment.center,
                                       crossAxisAlignment: pw. CrossAxisAlignment.start,
                                       children: [
-                                        pw.Text("ORDER CODE",style: pw. TextStyle(fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                        pw.Text("ORDER CODE",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018
                                           // color:Color(0xff565555),
                                         )),
                                         pw. SizedBox(height: 3,),
@@ -5443,11 +5425,10 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                       mainAxisAlignment: pw. MainAxisAlignment.center,
                                       crossAxisAlignment:  pw.CrossAxisAlignment.start,
                                       children: [
-                                        pw. Text("ORDER DATE",style:pw. TextStyle(
-                                            fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                        pw. Text("ORDER DATE",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018
                                         ),),
                                         pw.SizedBox(height:orderDate==""?9: 3,),
-                                        pw.  Text(orderDate??"",style: pw. TextStyle(
+                                        pw.  Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate,style: pw. TextStyle(
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
                                             // color: pw.C.black,
                                             fontWeight: pw.FontWeight.bold),),
@@ -5461,7 +5442,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           ],
                         ),
                       ),
-                      pw.SizedBox(height: 3),
+                      pw.SizedBox(height: 15),
                       pw.Container(
                         // height: 400,
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -5498,11 +5479,11 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           // tableWidth:.5,
                           columnWidths: {
 
-                            0: pw.FlexColumnWidth(2),
-                            1:pw. FlexColumnWidth(3),
+                            0: pw.FlexColumnWidth(1.5),
+                            1:pw. FlexColumnWidth(4),
                             2:pw. FlexColumnWidth(5),
                             3: pw.FlexColumnWidth(3),
-                            4:pw. FlexColumnWidth(3),
+                            4:pw. FlexColumnWidth(2.5),
                             5:pw. FlexColumnWidth(2),
                             6: pw.FlexColumnWidth(2),
                             7:pw. FlexColumnWidth(2),
@@ -5527,14 +5508,14 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.012, color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
 
                                   ),
                                   pw. Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
 
 
@@ -5542,20 +5523,27 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
 
                                   ),
+                                  if(isRecieved)
+                                    pw.  Container(
+                                      color:  PdfColor.fromInt(0xff3E4F5B),
+                                      alignment:pw. Alignment.center,
+                                      child:pw.Text( 'Is Received',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
+                                      height: 30,
+                                    ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
 
 
@@ -5564,19 +5552,19 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
                                   pw.  Container(
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
 
                                   ),
 
@@ -5584,20 +5572,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
                                   ),
                                   pw.       Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30,
 
                                   ),
                                   pw. Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 35,
+                                    height: 30 ,
                                   ),
 
 
@@ -5651,7 +5639,13 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                             table[i].supplierCode??table[i].purchaseUom??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
-                                      pw.  Container(
+
+                                      if(isRecieved)  pw.  Container(
+                                        padding: pw.EdgeInsets.only(top: height*.019),
+                                        alignment:pw. Alignment.center,
+                                        child: pw.Checkbox(name: "",value: table[i].isReceived??false),
+
+                                      ),  pw.  Container(
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
@@ -5721,7 +5715,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                         // width: width,
 
                       ),
-                      pw.SizedBox(height: 3),
+                      pw.SizedBox(height: 8),
 
                       pw.  Container(
                           margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -5757,7 +5751,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               pw.  Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Excise Tax:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
                                     pw. Text(excisetax?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -5765,7 +5759,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("VAT Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw. Text("VAT Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
                                     pw.Text(vat?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -5773,7 +5767,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Vatable Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
+                                    pw.  Text("Vatable Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
                                     pw.Text(variableAmount?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -5781,7 +5775,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("Actual cost:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
+                                    pw. Text("Actual cost: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
                                     pw.Text(actualCost?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -5795,6 +5789,59 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                       //
                       pw.  Row(
                         children: [
+                          pw.  Container(
+                            margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
+                            child:pw. Column(
+                              crossAxisAlignment:pw. CrossAxisAlignment.start,
+                              children: [
+
+                                pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.008,),
+                                pw. Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
+                                    children: [
+                                      pw.  Row(
+                                        children: [
+
+
+                                          pw.  Text(note??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(width: height*.02,),
+
+                                    ],
+                                  ),
+                                ),
+                                pw.  SizedBox(height: height*.02,),
+                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
+                                pw. SizedBox(height: height*0.008,),
+                                pw.Container(
+                                  child:pw. Column(
+                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw. Row(
+                                        children: [
+
+
+                                          pw.Text(remarks??"",style: pw.TextStyle(
+                                            // color: Color(0xff252525),
+                                              fontSize: height*.015),),
+
+                                        ],
+                                      ),
+                                      pw.  SizedBox(width: width*.02,),
+
+                                    ],
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
 
 
                           pw.  Spacer(),

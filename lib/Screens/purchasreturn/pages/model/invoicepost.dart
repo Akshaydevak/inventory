@@ -25,8 +25,9 @@ class PurchaseReturnInvoicePostModel with _$PurchaseReturnInvoicePostModel {
     @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "actual_cost") final double? actualCost,
     @JsonKey(name: "vendor_trn_number") final String? vendorTrnNumber,
-    // @JsonKey(name: "purchase_invoice_line_id") final String? purchaseInvoiceLineId,
-
+    @JsonKey(name: "payment_code") final String? paymentCode,
+    @JsonKey(name: "payment_method") final String? paymentMethod,
+    @JsonKey(name: "payment_status") final String? paymentStatus,
     @JsonKey(name: "invoice_lines") final List<Order>? lines,
   }) = _PurchaseReturnInvoicePostModel;
   factory PurchaseReturnInvoicePostModel.fromJson(Map<String, dynamic> json) =>

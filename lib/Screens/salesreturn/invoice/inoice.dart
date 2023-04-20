@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/sales/invoice/model/invoicepostmodel.dart';
 import 'package:inventory/Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import 'package:inventory/Screens/salesreturn/invoice/cubit/invoicepost/salesreturninvoicepost_cubit.dart';
@@ -14,6 +16,7 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -165,6 +168,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
             salesReturnOrderCode=data.invoicedData?.salesReturnOrderCode??"";
             invoiceCodeController.text=data.invoicedData?.salesReturnInvoiceCode??"";
             invoicedDateController.text=data.invoicedData?.createdDate??"";
+            invoicedDateController=TextEditingController(text:data.invoicedData?.createdDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.invoicedData?.createdDate??"")));
             paymentIdController.text=data.invoicedData?.paymentCode??"";
             paymentStatusController.text=data.invoicedData?.paymentStatus??"";
             paymentMethodController.text=data.invoicedData?.paymentMethod??"";
@@ -366,8 +370,27 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                   children: [
                                     TextButtonLarge(
                                       text: "PREVIEW",
-                                      onPress: (){
-                                        print("Akshay");
+                                      onPress: () async {
+                                        InventoryListModel model=InventoryListModel();
+
+
+                                        UserPreferences userPref = UserPreferences();
+                                        await userPref.getInventoryList().then((user) {
+                                          print("entereeeeeeeeeeeeeeeeeeed");
+
+                                          if (user.isInventoryExist == true) {
+                                            model=user;
+                                            print("existing");
+                                            print(model.email);
+                                            // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                          } else {
+
+                                          }
+                                        });
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) =>
@@ -385,6 +408,8 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                                 unitCost:double.tryParse( unitCostController.text) ,
                                                 excisetax:double.tryParse( exciseTaxController.text) ,
                                                 remarks: remarksController.text ,
+                                                model: model,
+                                                pageName: "INVOICE",
 
 
 

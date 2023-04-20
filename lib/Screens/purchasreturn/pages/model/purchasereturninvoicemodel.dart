@@ -9,8 +9,11 @@ class PurchaseInvoiceReadModel with _$PurchaseInvoiceReadModel {
     final double? vat,
     final double? foc,
     final double? discount,
+    final String? notes,
+    final String? remarks,
     @JsonKey(name: "return_order_code") final String? returnOrderCode,
     @JsonKey(name: "inventory_id") final String? inventoryId,
+    @JsonKey(name: "return_order_status") final String? returnOrderStatus,
     @JsonKey(name: "purchase_invoice_id") final String? purchaseInvoiceId,
     @JsonKey(name: "vendor_code") final String? vendorCode,
     @JsonKey(name: "vendor_address") final String? vendorAddress,
@@ -87,17 +90,13 @@ class InvoiceDatas with _$InvoiceDatas {
     @JsonKey(name: "payment_code") final String? payementCode,
     @JsonKey(name: "payment_method") final String? paymentMethod,
     @JsonKey(name: "vendor_id") final String? vendorId,
-
     @JsonKey(name: "invoice_status") final String? invoiceStatus,
     @JsonKey(name: "invoiced_date") final String? invoicedDate,
-
-
-
-
     @JsonKey(name: "vendor_address") final String? vendorAddress,
     @JsonKey(name: "vendor_trn_number") final String? vendorTrnNumber,
     @JsonKey(name: "vendor_mail_id") final String? vendorMailId,
     @JsonKey(name: "unit_cost") final double? unitCost,
+    @JsonKey(name: "return_order_status") final String? returnOrderStatus,
     @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "actual_cost") final double? actualCost,
     @JsonKey(name: "grand_total") final double? grandTotal,
