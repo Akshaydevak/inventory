@@ -9570,10 +9570,10 @@ class _StatePopUpCall extends State<StatePopUpCall> {
                         // context.read<MaterialListCubit>().searchMaterialList(va);
                       },
                       controller: _controller,
-                      keyboardType: TextInputType.phone,
-                      inputFormatters:  <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp(r" "))
-                      ],
+                      keyboardType: TextInputType.name,
+                      // inputFormatters:  <TextInputFormatter>[
+                      //   FilteringTextInputFormatter.allow(RegExp(r" "))
+                      // ],
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,

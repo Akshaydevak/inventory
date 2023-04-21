@@ -25,6 +25,7 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
   late AutoScrollController recieveController;
   bool editionchek=false;
   var unitcostListControllers = <TextEditingController>[];
+  List<OrderLinesInvoice> table1=List.from([]);
   valueAddingTextEdingController(){
     unitcostListControllers.clear();
 
@@ -63,7 +64,7 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
     setState(() {});
     return totalPrice1;
   }
-  List<OrderLinesInvoice> table1=[];
+
   void initState() {
 
     recieveController = AutoScrollController(
@@ -88,20 +89,19 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                 print("error");
               },
               success: (data) {
-                print("algorithm" + data.toString());
+                table1 .clear();
                 if(data.invoicedData!=null)
                 {
-                  print(data?.invoicedData?.lines.toString());
-                  table1 = [];
+
                   data.invoicedData?.lines != null
-                      ? table1 =List.from(  data.invoicedData?.lines ?? [])
-                      : table1 = [];
+                      ? table1 =List.from(  data.invoicedData?.lines ??List.from( []))
+                      : table1 =List.from( []);
                   valueAddingTextEdingController();
                 }
                 else{
-                  table1 = [];
+
                   print(  data.lines.toString());
-                  data.lines != null ? table1 = List.from( data.lines ?? []) : table1 = [];
+                  data.lines != null ? table1 = List.from( data.lines ?? []) : table1 = List.from([]);
                   valueAddingTextEdingController();
                 }
 
@@ -142,19 +142,10 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                       children: [
 
                                         tableHeadtext('Variant Id',  size: 13,),
-                                        tableHeadtext('Barcode',  size: 13,
-                                        ),
-                                        tableHeadtext('Sales Order Line Code', size: 13,
-                                        ),
-
+                                        tableHeadtext('Barcode',  size: 13,),
+                                        tableHeadtext('Sales Order Line Code', size: 13,),
                                         tableHeadtext('Return Based On', size: 13,),
-                                        tableHeadtext(
-                                          'Return time ',
-
-                                          size: 13,
-
-
-                                        ),
+                                        tableHeadtext('Return time ', size: 13,),
 
                                         tableHeadtext(
 

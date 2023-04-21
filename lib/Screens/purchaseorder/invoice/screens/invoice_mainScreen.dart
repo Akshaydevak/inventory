@@ -11,6 +11,7 @@ import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventory_
 import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventorypost_cubit.dart';
 import 'package:inventory/Screens/inventory_creation_tab/inventory_read_model.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
+import 'package:inventory/Screens/purchaseorder/invoice/screens/purchase_order_invoice_growable.dart';
 import 'package:inventory/Screens/purchaseorder/invoice/screens/purchase_order_stabletable.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment_sale_post_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
@@ -62,19 +63,31 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
   TextEditingController grandTotalController = TextEditingController();
   TextEditingController noteController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
+  final GlobalKey< PurchaseOrderInvoiceGrowableTableState> _myWidgetState = GlobalKey< PurchaseOrderInvoiceGrowableTableState>();
   List<PurchaseOrder>result=[];
    var paginatedList;
    bool isPaymentStatusSuccessCall=false;
   InventoryRead readObject=InventoryRead();
-
   int selectedVertical=0;
   String inventoryId="";
   int? invoiceId;
   int? veritiaclid=0;
   bool select=false;
+  bool updateCheck=false;
   List<Lines> additionalVariants = [];
   TextEditingController itemsearch=TextEditingController();
   late AutoScrollController recieveController;
+  updateCheckFucction(bool value) {
+    updateCheck = value;
+    setState(() {});
+  }
+  tableAssign(List<Lines> table1) {
+    print("ethito");
+    additionalVariants = table1;
+    setState(() {
+      addition();
+    });
+  }
   addition() {
     print("enterd");
     print("+==" + additionalVariants.toString());
@@ -124,6 +137,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
     variableAmountController.text = VatableValue.toString();
     // _value=false;
   }
+
   clear(){
     actualCostController.clear();
     discountController.clear();
@@ -428,6 +442,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               print("taped");
                               select=false;
                               clear();
+                              _myWidgetState.currentState?.tableClear();
                               selectedVertical=index;
 
                               veritiaclid = result[index].id;
@@ -457,8 +472,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                   TextButtonLarge(
                                     marginCheck: true,
                                     clr: Colors.green,
-
-
                                     onPress: () {
                                       if(readObject.invoicedata!=null){
                                         showDailogPopUp(
@@ -517,24 +530,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                         context.showSnackBarError("The Order Does Not Invoiced");
                                       }
 
-
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(builder: (context) =>
-                                      //       PurchaseReturnInvoicePaymentPopUp(type: '"',
-                                      //         customerCode: customerIdController.text,
-                                      //         customerName: "",
-                                      //         orderId: veritiaclid.toString(),
-                                      //         status: "",
-                                      //         totalPrice: double.tryParse(totalPricePriceController.text)??0,
-                                      //         transactionCode: "",
-                                      //
-                                      //       )),
-                                      // );
-
-
-
-
                                     },
                                     text: "PAYMENT",                                  ),
 
@@ -543,8 +538,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                     text: "PREVIEW",
                                     onPress: () async {
                                       InventoryListModel model=InventoryListModel();
-
-
                                       UserPreferences userPref = UserPreferences();
                                       await userPref.getInventoryList().then((user) {
                                         print("entereeeeeeeeeeeeeeeeeeed");
@@ -553,10 +546,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                           model=user;
                                           print("existing");
                                           print(model.email);
-                                          // prefs.setString('token', user?.token ?? "");
-
-
-
 
                                         } else {
 
@@ -609,7 +598,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                 variableAmountController: variableAmountController,
                                 vatController: vatController,
                               ),
-
                               SizedBox(height: height*.1,),
                               Row(mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -618,448 +606,455 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               ),
                               // Divider(color: Colors.grey,thickness: 1,),
                               SizedBox(height: height*.01,),
-                              CustomScrollBar(
-                                  controller: recieveController,
-
-                                  childs:Container(
-                                      color: Colors.white,
-                                      alignment: Alignment.topRight,
-
-                                      child:SingleChildScrollView(
-                                        controller: recieveController,
-                                        physics: ScrollPhysics(),
-                                        scrollDirection: Axis.horizontal,
-
-                                        child:
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            SingleChildScrollView(
-                                              child: Container(
-                                                width: 2200,
-                                                // padding: EdgeInsets.all(10),
-                                                child:customTable(
-
-                                                  tableWidth: .5,
-                                                  childrens: [
-                                                    TableRow(
-
-                                                        children: [
-                                                          tableHeadtext(
-                                                            'Sl.No',
-                                                            size: 13,
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Receiving Line Id',
-                                                            size: 13,
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Variant Id',
-                                                            size: 13,
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Variant Name',
-
-                                                            size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-
-                                                          // tableHeadtext('description', size: 10, color: null),
-                                                          tableHeadtext(
-                                                            'Barcode',
-
-                                                            size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-
-
-                                                          tableHeadtext(
-                                                            'Purchase UOM',
-
-                                                            size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Requested Qty',
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-
-                                                            size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-
-
-                                                          tableHeadtext(
-                                                            'Is Received',
-
-                                                            size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Unit Cost',
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-
-                                                            size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Exccess Tax',
-                                                            size: 13,
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Discount',
-                                                            size: 13,
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'FOC',
-                                                            size: 13,
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Vatable Amount',
-                                                            size: 13,
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-
-                                                          tableHeadtext(
-                                                            'VAT',
-                                                            size: 13,
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Actual Cost',
-                                                            size: 13,
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Grand Total',
-                                                            size: 13,
-                                                            center: true,
-                                                            padding: EdgeInsets.only(bottom:height*.0198),
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Is Invoiced',
-                                                            size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-                                                          tableHeadtext(
-                                                            'Is Free',
-                                                            size: 13,
-                                                            // color: Palette.containerDarknew,
-                                                            // textColor: Palette.white
-                                                          ),
-
-                                                          // if (widget.onAddNew) textPadding(''),
-                                                        ]),
-
-                                                    if(additionalVariants.isEmpty)...[
-                                                      TableRow(
-                                                        decoration: BoxDecoration(
-                                                            color: Pellet.tableRowColor,
-                                                            shape: BoxShape.rectangle,
-                                                            border:  Border(
-                                                                left: BorderSide(
-
-                                                                    color: Color(0xff3E4F5B).withOpacity(.1),
-                                                                    width: .4,
-                                                                    style: BorderStyle.solid),
-                                                                bottom: BorderSide(
-
-                                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                                    style: BorderStyle.solid),
-                                                                right: BorderSide(
-                                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                                    width: .4,
-
-                                                                    style: BorderStyle.solid))),
-
-                                                        children: [
-
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          Container(height: 48,),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                          textPadding(""),
-                                                        ],
-                                                      )
-
-
-                                                    ],
-                                                    if (additionalVariants != null)...[
-                                                      for(var i=0;i<additionalVariants.length;i++)
-                                                        TableRow(
-                                                            decoration: BoxDecoration(
-                                                                color: Pellet.tableRowColor,
-                                                                shape: BoxShape.rectangle,
-                                                                border:  Border(
-                                                                    left: BorderSide(
-
-                                                                        color: Color(0xff3E4F5B).withOpacity(.1),
-                                                                        width: .4,
-                                                                        style: BorderStyle.solid),
-                                                                    bottom: BorderSide(
-
-                                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                                        style: BorderStyle.solid),
-                                                                    right: BorderSide(
-                                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                                        width: .4,
-
-                                                                        style: BorderStyle.solid))),
-                                                            children: [
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding((i + 1).toString(),
-                                                                    fontSize: 12,
-                                                                    padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500),
-
-                                                              ),
-
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].receiveLineCode .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].variantId ?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500),
-                                                              ),
-
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].barcode ?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500),
-                                                              ),
-
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].totalQty.toString() ?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: CheckedBoxs(
-                                                                  valueChanger: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
-                                                                  onSelection: (bool? value) {
-                                                                    // bool? isRecieved = additionalVariants[i].isReceived;
-                                                                    // setState(() {
-                                                                    //   isRecieved = !isRecieved!;
-                                                                    //   additionalVariants[i] = additionalVariants[i].copyWith(isReceived: isRecieved);
-                                                                    //   print(additionalVariants);
-                                                                    // });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].unitCost .toString()?? "", fontSize: 12,
-
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].excessTax .toString()?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,
-                                                                    alighnment: Alignment.topRight),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].discount .toString()?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,
-                                                                    alighnment: Alignment.topRight),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].foc .toString()?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,
-                                                                    alighnment: Alignment.topRight),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].variableAmount .toString()?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                                                              ),
-
-
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].vat.toString() ?? "",
-                                                                    fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                                                              ),
-
-
-
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(
-                                                                    additionalVariants[i].actualCost.toString() ?? "",fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,
-                                                                    alighnment: Alignment.topRight),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12,
-                                                                    // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                    fontWeight: FontWeight.w500,
-                                                                    alighnment: Alignment.topRight),
-                                                              ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: CheckedBoxs(
-                                                                  valueChanger: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
-                                                                  onSelection: (bool? value) {
-                                                                    bool? isInvoiced = additionalVariants[i].isInvoiced??false;
-                                                                    setState(() {
-                                                                      isInvoiced = !isInvoiced!;
-                                                                      additionalVariants[i] = additionalVariants[i].copyWith(isInvoiced: isInvoiced);
-                                                                      addition();
-
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-
-
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: CheckedBoxs(
-                                                                  valueChanger: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
-                                                                  onSelection: (bool? value) {
-                                                                    setState(() {});
-                                                                  },
-                                                                ),
-                                                              ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                            ]
-                                                        ),
-                                                    ]
-
-
-                                                  ],
-                                                  widths: {
-                                                    0: FlexColumnWidth(2),
-                                                    1: FlexColumnWidth(4),
-                                                    2: FlexColumnWidth(4),
-                                                    3: FlexColumnWidth(5),
-                                                    4: FlexColumnWidth(3),
-                                                    5: FlexColumnWidth(3),
-                                                    6: FlexColumnWidth(3),
-                                                    7: FlexColumnWidth(3),
-                                                    8: FlexColumnWidth(3),
-                                                    9: FlexColumnWidth(3),
-                                                    10: FlexColumnWidth(3),
-                                                    11: FlexColumnWidth(3),
-                                                    12: FlexColumnWidth(3),
-                                                    13: FlexColumnWidth(3),
-                                                    14: FlexColumnWidth(3),
-                                                    15: FlexColumnWidth(3),
-                                                    16: FlexColumnWidth(3),
-                                                    17: FlexColumnWidth(3),
-                                                    18: FlexColumnWidth(2),
-                                                    19: FlexColumnWidth(2),
-                                                    20: FlexColumnWidth(2),
-                                                    21: FlexColumnWidth(2.4),
-
-                                                  },
-
-                                                ) ,
-                                              ),
-                                            ),
-                                            SizedBox(height: 20,)
-                                            ,
-
-                                          ],
-                                        )
-                                        ,
-
-                                      )
-                                  )
+                              // Divider(color: Colors.grey,thickness: 1,),
+                              PurchaseOrderInvoiceGrowableTable(
+                                table:additionalVariants,
+                                updateCheck: updateCheckFucction,
+                                key: _myWidgetState,
+                                updation: tableAssign,
                               ),
+                              // CustomScrollBar(
+                              //     controller: recieveController,
+                              //
+                              //     childs:Container(
+                              //         color: Colors.white,
+                              //         alignment: Alignment.topRight,
+                              //
+                              //         child:SingleChildScrollView(
+                              //           controller: recieveController,
+                              //           physics: ScrollPhysics(),
+                              //           scrollDirection: Axis.horizontal,
+                              //
+                              //           child:
+                              //           Column(
+                              //             crossAxisAlignment: CrossAxisAlignment.start,
+                              //             children: [
+                              //               SingleChildScrollView(
+                              //                 child: Container(
+                              //                   width: 2200,
+                              //                   // padding: EdgeInsets.all(10),
+                              //                   child:customTable(
+                              //
+                              //                     tableWidth: .5,
+                              //                     childrens: [
+                              //                       TableRow(
+                              //
+                              //                           children: [
+                              //                             tableHeadtext(
+                              //                               'Sl.No',
+                              //                               size: 13,
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Receiving Line Id',
+                              //                               size: 13,
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Variant Id',
+                              //                               size: 13,
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Variant Name',
+                              //
+                              //                               size: 13,
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //
+                              //                             // tableHeadtext('description', size: 10, color: null),
+                              //                             tableHeadtext(
+                              //                               'Barcode',
+                              //
+                              //                               size: 13,
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //
+                              //
+                              //                             tableHeadtext(
+                              //                               'Purchase UOM',
+                              //
+                              //                               size: 13,
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Requested Qty',
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //
+                              //                               size: 13,
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //
+                              //
+                              //                             tableHeadtext(
+                              //                               'Is Received',
+                              //
+                              //                               size: 13,
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Unit Cost',
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //
+                              //                               size: 13,
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Exccess Tax',
+                              //                               size: 13,
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Discount',
+                              //                               size: 13,
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'FOC',
+                              //                               size: 13,
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Vatable Amount',
+                              //                               size: 13,
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //
+                              //                             tableHeadtext(
+                              //                               'VAT',
+                              //                               size: 13,
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Actual Cost',
+                              //                               size: 13,
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Grand Total',
+                              //                               size: 13,
+                              //                               center: true,
+                              //                               padding: EdgeInsets.only(bottom:height*.0198),
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Is Invoiced',
+                              //                               size: 13,
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //                             tableHeadtext(
+                              //                               'Is Free',
+                              //                               size: 13,
+                              //                               // color: Palette.containerDarknew,
+                              //                               // textColor: Palette.white
+                              //                             ),
+                              //
+                              //                             // if (widget.onAddNew) textPadding(''),
+                              //                           ]),
+                              //
+                              //                       if(additionalVariants.isEmpty)...[
+                              //                         TableRow(
+                              //                           decoration: BoxDecoration(
+                              //                               color: Pellet.tableRowColor,
+                              //                               shape: BoxShape.rectangle,
+                              //                               border:  Border(
+                              //                                   left: BorderSide(
+                              //
+                              //                                       color: Color(0xff3E4F5B).withOpacity(.1),
+                              //                                       width: .4,
+                              //                                       style: BorderStyle.solid),
+                              //                                   bottom: BorderSide(
+                              //
+                              //                                       color:   Color(0xff3E4F5B).withOpacity(.1),
+                              //                                       style: BorderStyle.solid),
+                              //                                   right: BorderSide(
+                              //                                       color:   Color(0xff3E4F5B).withOpacity(.1),
+                              //                                       width: .4,
+                              //
+                              //                                       style: BorderStyle.solid))),
+                              //
+                              //                           children: [
+                              //
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             Container(height: 48,),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                             textPadding(""),
+                              //                           ],
+                              //                         )
+                              //
+                              //
+                              //                       ],
+                              //                       if (additionalVariants != null)...[
+                              //                         for(var i=0;i<additionalVariants.length;i++)
+                              //                           TableRow(
+                              //                               decoration: BoxDecoration(
+                              //                                   color: Pellet.tableRowColor,
+                              //                                   shape: BoxShape.rectangle,
+                              //                                   border:  Border(
+                              //                                       left: BorderSide(
+                              //
+                              //                                           color: Color(0xff3E4F5B).withOpacity(.1),
+                              //                                           width: .4,
+                              //                                           style: BorderStyle.solid),
+                              //                                       bottom: BorderSide(
+                              //
+                              //                                           color:   Color(0xff3E4F5B).withOpacity(.1),
+                              //                                           style: BorderStyle.solid),
+                              //                                       right: BorderSide(
+                              //                                           color:   Color(0xff3E4F5B).withOpacity(.1),
+                              //                                           width: .4,
+                              //
+                              //                                           style: BorderStyle.solid))),
+                              //                               children: [
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding((i + 1).toString(),
+                              //                                       fontSize: 12,
+                              //                                       padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500),
+                              //
+                              //                                 ),
+                              //
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].receiveLineCode .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].variantId ?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500),
+                              //                                 ),
+                              //
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].barcode ?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500),
+                              //                                 ),
+                              //
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].totalQty.toString() ?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: CheckedBoxs(
+                              //                                     valueChanger: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
+                              //                                     onSelection: (bool? value) {
+                              //                                       // bool? isRecieved = additionalVariants[i].isReceived;
+                              //                                       // setState(() {
+                              //                                       //   isRecieved = !isRecieved!;
+                              //                                       //   additionalVariants[i] = additionalVariants[i].copyWith(isReceived: isRecieved);
+                              //                                       //   print(additionalVariants);
+                              //                                       // });
+                              //                                     },
+                              //                                   ),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].unitCost .toString()?? "", fontSize: 12,
+                              //
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].excessTax .toString()?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,
+                              //                                       alighnment: Alignment.topRight),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].discount .toString()?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,
+                              //                                       alighnment: Alignment.topRight),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].foc .toString()?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,
+                              //                                       alighnment: Alignment.topRight),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].variableAmount .toString()?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                              //                                 ),
+                              //
+                              //
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].vat.toString() ?? "",
+                              //                                       fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                              //                                 ),
+                              //
+                              //
+                              //
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(
+                              //                                       additionalVariants[i].actualCost.toString() ?? "",fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,
+                              //                                       alighnment: Alignment.topRight),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12,
+                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                              //                                       fontWeight: FontWeight.w500,
+                              //                                       alighnment: Alignment.topRight),
+                              //                                 ),
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: CheckedBoxs(
+                              //                                     valueChanger: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
+                              //                                     onSelection: (bool? value) {
+                              //                                       bool? isInvoiced = additionalVariants[i].isInvoiced??false;
+                              //                                       setState(() {
+                              //                                         isInvoiced = !isInvoiced!;
+                              //                                         additionalVariants[i] = additionalVariants[i].copyWith(isInvoiced: isInvoiced);
+                              //                                         addition();
+                              //
+                              //                                       });
+                              //                                     },
+                              //                                   ),
+                              //                                 ),
+                              //
+                              //
+                              //                                 TableCell(
+                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                              //                                   child: CheckedBoxs(
+                              //                                     valueChanger: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
+                              //                                     onSelection: (bool? value) {
+                              //                                       setState(() {});
+                              //                                     },
+                              //                                   ),
+                              //                                 ),
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //                               ]
+                              //                           ),
+                              //                       ]
+                              //
+                              //
+                              //                     ],
+                              //                     widths: {
+                              //                       0: FlexColumnWidth(2),
+                              //                       1: FlexColumnWidth(4),
+                              //                       2: FlexColumnWidth(4),
+                              //                       3: FlexColumnWidth(5),
+                              //                       4: FlexColumnWidth(3),
+                              //                       5: FlexColumnWidth(3),
+                              //                       6: FlexColumnWidth(3),
+                              //                       7: FlexColumnWidth(3),
+                              //                       8: FlexColumnWidth(3),
+                              //                       9: FlexColumnWidth(3),
+                              //                       10: FlexColumnWidth(3),
+                              //                       11: FlexColumnWidth(3),
+                              //                       12: FlexColumnWidth(3),
+                              //                       13: FlexColumnWidth(3),
+                              //                       14: FlexColumnWidth(3),
+                              //                       15: FlexColumnWidth(3),
+                              //                       16: FlexColumnWidth(3),
+                              //                       17: FlexColumnWidth(3),
+                              //                       18: FlexColumnWidth(2),
+                              //                       19: FlexColumnWidth(2),
+                              //                       20: FlexColumnWidth(2),
+                              //                       21: FlexColumnWidth(2.4),
+                              //
+                              //                     },
+                              //
+                              //                   ) ,
+                              //                 ),
+                              //               ),
+                              //               SizedBox(height: 20,)
+                              //               ,
+                              //
+                              //             ],
+                              //           )
+                              //           ,
+                              //
+                              //         )
+                              //     )
+                              // ),
                               // ScrollableTable(),
                               SizedBox(height: 20,),
                               SaveUpdateResponsiveButton(

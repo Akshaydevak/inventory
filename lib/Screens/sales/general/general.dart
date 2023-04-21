@@ -508,23 +508,10 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                       text: "PREVIEW",
                                       onPress: () async {
                                         InventoryListModel model=InventoryListModel();
-
-
                                         UserPreferences userPref = UserPreferences();
                                         await userPref.getInventoryList().then((user) {
-                                          print("entereeeeeeeeeeeeeeeeeeed");
-
-                                          if (user.isInventoryExist == true) {
-                                            model=user;
-                                            print("existing");
-                                            print(model.email);
-                                            // prefs.setString('token', user?.token ?? "");
-
-
-
-
+                                          if (user.isInventoryExist == true) {model=user;
                                           } else {
-
                                           }
                                         });
                                         Navigator.push(
@@ -877,6 +864,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                   enable: true,
                                   onSelection: (VariantReadModel? va) {
                                     setState(() {
+                                      state.clear();
                                       country?.text = va?.name.toString() ?? "";
                                       countryCode = va?.code.toString() ?? "";
 
@@ -907,11 +895,9 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                 SelectableDropDownpopUp(
                                   row: true,
                                   code: countryCode,
-
                                   controller:state,
                                   label: "State",
                                   type: "StatePop_UpCall",
-                                  // id: base_uom ?? 0,
                                   value: state?.text??"",
                                   onchange: (vale) {
                                     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
@@ -922,12 +908,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                       print(va?.code.toString());
                                       state?.text = va?.name.toString() ?? "";
                                       stateCode = va?.code.toString() ?? "";
-
-
                                       setState(() {});
-
-                                      // onChange = true;
-                                      // orderType.text = va!;
                                     });
                                   },
                                 ),

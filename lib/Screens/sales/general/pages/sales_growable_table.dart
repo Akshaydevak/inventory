@@ -1340,11 +1340,19 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           TableCellVerticalAlignment.middle,
                                           child: TableTextButton(
                                             onPress: () {
-
                                               setState(() {
-                                                widget.updateCheck(false);
-                                                table1[i]=      table1[i].copyWith(updatecheck: false);
-                                                widget.updation(table1);
+                                                if(table1[i].quantity==0||table1[i].quantity==""||table1[i].quantity==null)
+                                                  context.showSnackBarError("Please enter the quantity");
+                                                else if(table1[i].unitCost==0||table1[i].unitCost==""||table1[i].unitCost==null)
+                                                  context.showSnackBarError("Please enter the unitcost");
+                                                else if(table1[i].vat==0||table1[i].vat==""||table1[i].vat==null){
+                                                  context.showSnackBarError("VAT is required");
+                                                }
+                                                else{
+                                                  widget.updateCheck(false);
+                                                  table1[i]=      table1[i].copyWith(updatecheck: false);
+                                                  widget.updation(table1);
+                                                }
 
 
                                               });
@@ -1838,9 +1846,11 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                   context.showSnackBarError("Please enter the quantity");
                                                 else if(unitcost1==0||unitcost1==""||unitcost1==null)
                                                   context.showSnackBarError("Please enter the unitcost");
+                                                else if(vat1==0||vat1==""||vat1==null){
+                                                  context.showSnackBarError("VAT is required");
+
+                                                }
                                                 else{
-
-
                                                   table1.add(SalesOrderLines(
                                                     variantId: variantId ?? "",
                                                     stockId: stockId.toString(),

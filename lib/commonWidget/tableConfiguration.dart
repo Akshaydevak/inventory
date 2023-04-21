@@ -9733,7 +9733,6 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                 print("error");
               },
               success: (list) {
-                print("Welcomessssssssssssssss" + list.data.toString());
                 table = list.data;
                 list1 = list;
               });

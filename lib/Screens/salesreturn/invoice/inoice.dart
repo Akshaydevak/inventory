@@ -397,9 +397,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                               SalePrintScreen(
                                                 note: noteController.text,
                                                 // select: select,
-                                                // vendorCode:vend.text,
-                                                // orderCode:ordereCodeController.text ,
-                                                // orderDate: orderDateController.text,
+
                                                 table:table,
                                                 vat: double.tryParse( vatController.text),
                                                 sellingPrice:double.tryParse( sellingPriceController.text),
@@ -410,10 +408,6 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                                 remarks: remarksController.text ,
                                                 model: model,
                                                 pageName: "INVOICE",
-
-
-
-
 
                                               )),
                                         );

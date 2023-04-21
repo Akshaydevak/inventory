@@ -13,6 +13,7 @@ import 'package:inventory/Screens/sales/invoice/cubits/payment_suucess_post/paym
 
 import 'package:inventory/Screens/sales/invoice/cubits/read/invoiceread_cubit.dart';
 import 'package:inventory/Screens/sales/invoice/pages/sales_invoice_growable.dart';
+import 'package:inventory/Screens/sales/invoice/pages/sales_invoice_stable.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
@@ -68,11 +69,11 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
   int selectedVertical=0;
   bool isPaymentStatusSuccessCall=false;
   SalesReturnInvoiceReadModel readInvoiceObject=SalesReturnInvoiceReadModel();
-  List<OrderLinesInvoice>table=[];
+  List<OrderLinesInvoice>table=List.from([]);
   TextEditingController itemsearch = TextEditingController();
   tableAssign(List<OrderLinesInvoice> table1) {
     print("ethito");
-    table = table1;
+    table = List.from(table1);
     setState(() {
       addition();
     });
@@ -98,6 +99,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
      exciseTaxController.clear();
      taxableController.clear();
      trnController.clear();
+     table.clear();
+     updateCheck=false;
   }
   addition() {
     print("enterd");
@@ -304,8 +307,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                     if(data.invoicedData!=null)
                     {
                       data.invoicedData?.lines != null
-                          ? table =  data.invoicedData?.lines ?? []
-                          : table = [];
+                          ? table = List.from( data.invoicedData?.lines ?? [])
+                          : table =  List.from([]);
                       inventoryId.text=data.invoicedData?.inventoryId??"";
                       invoiceCodeController.text=data.invoicedData?.invoiceCode??"";
                       // invoiceDateController.text=data.invoicedData?.createdDate??"";
@@ -326,8 +329,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                     }
                     else{
                       data.lines != null
-                          ? table =  data.lines ?? []
-                          : table = [];
+                          ? table =  List.from( data.lines ?? [])
+                          : table = List.from( []);
                       paymentIdController.text=data.paymentId??"";
 
                       inventoryId.text=data.inventoryId??"";
@@ -346,11 +349,6 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                       totalPricePriceController.text=data.totalPrice.toString()??"";
                       trnController.text=data.trnNumber??"";
                       orderStatusController.text=data.orderStatus??"";
-
-
-
-
-
                     }
 
 
@@ -380,14 +378,10 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                     if(result.isNotEmpty){
                       veritiaclid=result[0].id;
                       Variable.verticalid=result[0].id;
-                      print("Variable.ak"+Variable.verticalid.toString());
                       context.read<InvoicereadCubit>().getSalesInvoiceRead(veritiaclid!);
                     }
                     else{
                       print("common");
-                      // select=true;
-                      // setState(() {
-                      // });
 
                     }
 
@@ -408,24 +402,15 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SalesGeneralVerticalList(
-
                             selectedVertical: selectedVertical,
                             itemsearch: itemsearch,ontap: (int index){
                             setState(() {
                               selectedVertical=index;
-                              // select=false;
-
-
-
                               veritiaclid = result[index].id;
                               clear();
-                              _myWidgetState.currentState?.table1=[];
-                              // currentStock.clear();
-                              //
+                              _myWidgetState.currentState?.table1=List.from([]);
                               context.read<InvoicereadCubit>().getSalesInvoiceRead(veritiaclid!);
-                              setState(() {
 
-                              });
                             });
                           },result: result,
                             child:     tablePagination(
@@ -512,29 +497,9 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                                       .read<PaymentSalePostCubit>()
                                                       .postSaleOrderPaymentPost(model);
                                                 },
-
                                               ),
                                             );
                                           }
-
-
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(builder: (context) =>
-                                          //       PurchaseReturnInvoicePaymentPopUp(type: '"',
-                                          //         customerCode: customerIdController.text,
-                                          //         customerName: "",
-                                          //         orderId: veritiaclid.toString(),
-                                          //         status: "",
-                                          //         totalPrice: double.tryParse(totalPricePriceController.text)??0,
-                                          //         transactionCode: "",
-                                          //
-                                          //       )),
-                                          // );
-
-
-
-
                                         },
                                         text: "PAYMENT",                                  ),
 
@@ -543,8 +508,6 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                         text: "PREVIEW",
                                         onPress: () async {
                                           InventoryListModel model=InventoryListModel();
-
-
                                           UserPreferences userPref = UserPreferences();
                                           await userPref.getInventoryList().then((user) {
                                             if (user.isInventoryExist == true) {
@@ -557,10 +520,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                             MaterialPageRoute(builder: (context) =>
                                                 SalePrintScreen(
                                                   note: noteController.text,
-                                                  // vendorCode:vend.text,
-                                                  // orderCode:ordereCodeController.text ,
-                                                  // orderDate: orderDateController.text,
                                                   table:table,
+                                                  orderCode: invoiceCodeController.text,
                                                   vat: double.tryParse( vatController.text),
                                                   sellingPrice:double.tryParse( sellingPriceController.text),
                                                   taxableAmount:double.tryParse( taxableController.text) ,
@@ -570,15 +531,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                                   remarks: remarksController.text ,
                                                   pageName: "INVOICE",
                                                   model: model,
-
-
-
-
-
                                                 )),
                                           );
-
-
                                         },
                                       ),
                                     ],
@@ -806,191 +760,3 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
 
 
 
-class InvoiceSalesStableTable extends StatefulWidget {
-  final TextEditingController invoiceCode;
-  final TextEditingController invoiceDate;
-  final TextEditingController paymentId;
-  final TextEditingController paymentStatus;
-  final TextEditingController paymentMethod;
-  final TextEditingController customerId;
-  final TextEditingController trn;
-  final TextEditingController orderStatus;
-  final TextEditingController invoiceStatus;
-  final TextEditingController assignedto;
-  final TextEditingController note;
-  final TextEditingController remarks;
-  final TextEditingController unitCost;
-  final TextEditingController discount;
-  final TextEditingController excise;
-  final TextEditingController taxable;
-  final TextEditingController vat;
-  final TextEditingController sellingPrice;
-  final TextEditingController totalPrice;
-  InvoiceSalesStableTable({required this.invoiceCode,required this.invoiceDate,required this.totalPrice,required this.discount,required this.orderStatus,
-    required this.customerId,required this.paymentStatus,required this.paymentId,required this.sellingPrice,required this.vat,required this.invoiceStatus,required this.note,
-    required this.remarks,required this.paymentMethod,required this.trn,required this.assignedto,required this.excise,required this.taxable,required this.unitCost,});
-  @override
-  _InvoiceSalesStableTableState createState() => _InvoiceSalesStableTableState();
-}
-
-class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
-  TextEditingController controller=TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return
-      Container(
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(child: Column(
-              children: [
-
-                NewInputCard(
-                  readOnly: true,
-                    controller: widget.invoiceCode
-                    , title: "Invoice Code"),
-                SizedBox(
-                  height: height * .030,
-                ),
-                NewInputCard(
-                    readOnly: true,
-                    controller: widget.invoiceDate, title: "Invoice Date"),
-                SizedBox(
-                  height: height * .030,
-                ),
-                NewInputCard(
-                    readOnly: true,
-                    controller: widget.paymentId, title: "Payment Id"),
-                SizedBox(
-                  height: height * .030,
-                ),
-                NewInputCard(
-                    readOnly: true,
-                    controller: widget.paymentStatus, title: "Payment Status"),
-                SizedBox(
-                  height: height * .030,
-                ),
-                NewInputCard(
-                    readOnly: true,
-                    controller: widget.paymentMethod, title: "Payment Method"),
-                SizedBox(
-                  height: height * .030,
-                ),
-                NewInputCard(
-                    readOnly: true,
-                    controller: widget.customerId, title: "Customer Id"),
-                SizedBox(
-                  height: height * .119,
-                ),
-
-
-
-              ],
-            )),
-            Expanded(child: Column(children: [
-              SizedBox(
-                height: height * .015,
-              ),
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.trn, title: "TRN Number"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.orderStatus, title: "Order Status"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.invoiceStatus, title: "Invoice Status"),
-              // SizedBox(
-              //   height: height * .030,
-              // ),
-              // NewInputCard(
-              //     readOnly: true,
-              //     controller: widget.assignedto, title: "Assigned To"),
-              SizedBox(
-                height: height * .030,
-              ),
-
-              NewInputCard(
-
-                controller: widget.note, title: "Note",
-                height: 90,
-                maxLines: 3,),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                controller: widget.remarks, title: "Remarks",
-                height: 90,
-                maxLines: 3,),
-              SizedBox(
-                height: height * .15,
-              ),
-
-
-
-
-            ],)),
-            Expanded(child: Column(children: [
-              SizedBox(
-                height: height * .015,
-              ),
-
-
-
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.unitCost, title: "Unit Cost"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.discount, title: "Discount"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.excise, title: "Excess Tax"),
-              SizedBox(
-                height: height * .030,
-              ),
-
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.taxable, title: "Taxable  Amount"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.vat, title: "VAT"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.sellingPrice, title: "Selling Price Total"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  readOnly: true,
-                  controller: widget.totalPrice, title: "Total Price"),
-
-            ],))
-
-          ],
-        ),
-      );
-  }
-}

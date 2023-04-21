@@ -479,22 +479,12 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                         children: [
                                           TextButtonLarge(
                                       marginCheck:true,
-
                                             onPress: () {
                                               setState(() {
                                                 select = true;
-
                                                 table= [];
                                                 clear();
-                                                // _myWidgetState.currentState?.cl();
                                                 _myWidgetState.currentState?.table1=[];
-
-                                                // updateCheck=false;
-                                                // currentStock.clear();
-                                                //
-                                                //
-                                                // table.clear();
-                                                // clear();
                                               });
                                             },
                                             // icon: Icon(Icons.refresh),

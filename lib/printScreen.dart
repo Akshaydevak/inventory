@@ -108,7 +108,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   var url = "http://sidra-bazar-uat-products.s3.ap-south-1.amazonaws.com/logo/MicrosoftTeams-image_87.png";
-  // final netImage = await networkImage(model.companyLogo??"");
+  final netImage = await networkImage(model.companyLogo??"");
   // final font = await PdfGoogleFonts.nunitoExtraLight();
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
   pdf.addPage(
@@ -130,12 +130,12 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // pw.Container(
-                      //   margin: pw.EdgeInsets.symmetric(vertical: 7),
-                      //   height:70 ,
-                      //  width: 70,
-                      //  child:pw.Image(netImage),
-                      // ),
+                      pw.Container(
+                        margin: pw.EdgeInsets.symmetric(vertical: 7),
+                        height:70 ,
+                       width: 70,
+                       child:pw.Image(netImage),
+                      ),
 
                      pw. Spacer(),
                      pw. Container(
@@ -1944,7 +1944,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   final font = await PdfGoogleFonts.nunitoExtraLight();
-  // final netImage = await networkImage(model.companyLogo??"");
+  final netImage = await networkImage(model.companyLogo??"");
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
 
   pdf.addPage(
@@ -1968,12 +1968,12 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // pw.Container(
-                      //   margin: pw.EdgeInsets.symmetric(vertical: 7),
-                      //   height:70 ,
-                      //   width: 70,
-                      //   child:pw.Image(netImage),
-                      // ),
+                      pw.Container(
+                        margin: pw.EdgeInsets.symmetric(vertical: 7),
+                        height:70 ,
+                        width: 70,
+                        child:pw.Image(netImage),
+                      ),
                       pw. Spacer(),
                       pw. Container(
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),

@@ -150,8 +150,6 @@ class _StableTableState extends State<StableTable> {
                                   setState(() {
                                     widget.orderType.text = va;
 
-                                    // onChange = true;
-                                    // orderType = va!;
                                   });
                                 },
                                 restricted: false,
@@ -199,24 +197,44 @@ class _StableTableState extends State<StableTable> {
                                 height: height * .030,
                               ),
 
-                              NewInputCard(controller: widget.customerName,
+                              NewInputCard(controller: widget.customerId,
                                 readOnly: true,
                                 icondrop:true,title: "Customer id",ontap: (){
-                                  showDailogPopUp(
-                                    context,
-                                    TableConfigurePopup(
-                                      type: "customerId_ListPopup", valueSelect: (CustomerIdListModel va){
-                                      setState(() {
-                                        widget.customerName.text=va?.customerName!=""&&va?.customerName!=null?va?.customerName??"":va.businessData?.buisnessMeta?.fullmae??"";
-                                        widget.customerId.text=va?.id.toString()??"";
-                                        customerUserCode=va?.customerUserCode??"";
-                                        widget.trnNumber.text=va?.businessData?.taxId??"";
-                                      });
-                                    },
-                                    ),
+                                  if(widget.customerId.text.isNotEmpty){
+                                    setState(() {
+                                      widget.customerName.text="";
+                                      widget.customerId.text="";
+                                      customerUserCode="";
+                                      widget.trnNumber.text="";
+                                      widget.shipping.text="";
+                                      widget.shippingName.text="";
+                                      widget.billingAddressId.text="";
+                                      widget.billingName.text="";
+
+                                    });
+                                  }
+                                  else{
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "customerId_ListPopup", valueSelect: (CustomerIdListModel va){
+                                        setState(() {
+                                          widget.shipping.text="";
+                                          widget.shippingName.text="";
+                                          widget.billingAddressId.text="";
+                                          widget.billingName.text="";
+                                          widget.customerName.text=va?.customerName!=""&&va?.customerName!=null?va?.customerName??"":va.businessData?.buisnessMeta?.fullmae??"";
+                                          widget.customerId.text=va?.customerUserCode.toString()??"";
+                                          customerUserCode=va?.customerUserCode??"";
+                                          widget.trnNumber.text=va?.businessData?.taxId??"";
+                                        });
+                                      },
+                                      ),
 
 
-                                  );
+                                    );
+                                  }
+
 
                                 },),
 
@@ -327,32 +345,42 @@ class _StableTableState extends State<StableTable> {
                               NewInputCard(controller: widget.shipping,
                                 readOnly: true,
                                 icondrop:true,title: "Shipping Address Id",ontap: (){
-                                  showDailogPopUp(
-                                    context,
-                                    TableConfigurePopup(
-                                      code:customerUserCode,
+                                  if(widget.shipping.text.isNotEmpty){
+                                    setState(() {
+                                      widget.shipping.text="";
+                                      widget.shippingName.text="";
 
-                                      id: int.tryParse(widget.customerId.text),
-                                      type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
+                                    });
+                                  }
+                                else{
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        code:customerUserCode,
 
-                                      setState(() {
+                                        id: int.tryParse(widget.customerId.text),
+                                        type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
-                                        widget.shipping.text=va?.id.toString()??"";
-                                        widget.shippingName.text=va?.fullName.toString()??"";
                                         setState(() {
 
+                                          widget.shipping.text=va?.id.toString()??"";
+                                          widget.shippingName.text=va?.fullName.toString()??"";
+                                          setState(() {
+
+                                          });
+
+
+                                          // onChange = true;
+                                          // orderType.text = va!;
                                         });
 
-
-                                        // onChange = true;
-                                        // orderType.text = va!;
-                                      });
-
-                                    },
-                                    ),
+                                      },
+                                      ),
 
 
-                                  );
+                                    );
+                                  }
+
 
                                 },),
 
@@ -403,31 +431,41 @@ class _StableTableState extends State<StableTable> {
                               NewInputCard(controller: widget.billingAddressId,
                                 readOnly: true,
                                 icondrop:true,title: "Billing Address Id",ontap: (){
-                                  showDailogPopUp(
-                                    context,
-                                    TableConfigurePopup(
-                                      code: customerUserCode,
+                                  if(widget.shipping.text.isNotEmpty){
+                                    setState(() {
+                                      widget.shipping.text="";
+                                      widget.shippingName.text="";
 
-                                      type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
+                                    });
+                                  }
+                                  else{
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        code: customerUserCode,
 
-                                      setState(() {
+                                        type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
-                                        widget.billingAddressId.text=va?.id.toString()??"";
-                                        widget.billingName.text=va?.fullName.toString()??"";
                                         setState(() {
 
+                                          widget.billingAddressId.text=va?.id.toString()??"";
+                                          widget.billingName.text=va?.fullName.toString()??"";
+                                          setState(() {
+
+                                          });
+
+
+                                          // onChange = true;
+                                          // orderType.text = va!;
                                         });
 
-
-                                        // onChange = true;
-                                        // orderType.text = va!;
-                                      });
-
-                                    },
-                                    ),
+                                      },
+                                      ),
 
 
-                                  );
+                                    );
+                                  }
+
 
                                 },),
 

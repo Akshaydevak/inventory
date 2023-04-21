@@ -233,9 +233,6 @@ class _OpenSettingsState extends State<OpenSettings> {
                                     .toString();
                                 Variable.inventory_Name =
                                     inventoryList![index].name.toString();
-
-
-
                                 final SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                                 prefs.setString(

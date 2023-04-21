@@ -8,22 +8,28 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-class SalesInvoiceGrowableTable extends StatefulWidget {
+class PurchaseOrderInvoiceGrowableTable extends StatefulWidget {
   List<Lines> table;
   final Function updation;
   final Function updateCheck;
   // final Function updation;
-  SalesInvoiceGrowableTable({required Key key,required this.table,required this.updation,required this.updateCheck});
+  PurchaseOrderInvoiceGrowableTable({required Key key,required this.table,required this.updation,required this.updateCheck});
 
   @override
-  SalesInvoiceGrowableTableState createState() => SalesInvoiceGrowableTableState();
+  PurchaseOrderInvoiceGrowableTableState createState() => PurchaseOrderInvoiceGrowableTableState();
 }
 
-class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
+class PurchaseOrderInvoiceGrowableTableState extends State<PurchaseOrderInvoiceGrowableTable> {
   late AutoScrollController recieveController;
   bool editionchek=false;
   var unitcostListControllers = <TextEditingController>[];
   List<Lines> additionalVariants = [];
+  tableClear(){
+
+    setState(() {
+      additionalVariants.clear();
+    });
+  }
 
 
 
@@ -51,15 +57,9 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                 print("error");
               },
               success: (data) {
-
                 setState(() {
-
-
                   if(data.invoicedata!=null){
-
                     setState(() {
-
-
                       data.invoicedata?.invoiceLines != null
                           ? additionalVariants = List.from(data.invoicedata?.invoiceLines ?? [])
                           : additionalVariants = [];
@@ -454,7 +454,7 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                       setState(() {
                                                         isInvoiced = !isInvoiced!;
                                                         additionalVariants[i] = additionalVariants[i].copyWith(isInvoiced: isInvoiced);
-                                                        // addition();
+                                                        widget.updation(additionalVariants);
 
                                                       });
                                                     },
