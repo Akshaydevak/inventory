@@ -1636,33 +1636,32 @@ class _TopStableTableState extends State<TopStableTable> {
     widget.unitCost.text =='';
   }
   else{
-    setState(() {
+
       widget.unitCost.text = data.unitCost.toString()??"";
-    });
+
   }
   if(data.grandTotal==null||data.grandTotal=="null"){
     widget.grandToatl.text =='';
   }
   else{
-    setState(() {
+
       widget.grandToatl.text = data.grandTotal.toString()??"";
-    });
+
   }
   if(data.vatableAmount==null||data.vatableAmount=="null"){
     widget.vatableAmount.text =='';
   }
   else{
-    setState(() {
+
       widget.vatableAmount.text = data.vatableAmount.toString()??"";
-    });
+
   }
   if(data.excessTax==null||data.excessTax=="null"){
     widget.excessTax.text =='';
   }
   else{
-    setState(() {
+
       widget.excessTax.text = data.excessTax.toString()??"";
-    });
   }
 widget.currentUser();
 
@@ -1881,7 +1880,7 @@ widget.currentUser();
                   readOnly: true,
                     controller: widget.grandToatl, title: "Grand Total"),
                 SizedBox(
-                  height: height * .003,
+                  height: height * .012,
                 ),
 
               ],))

@@ -1269,6 +1269,16 @@ mixin _$InvoicedData {
   String? get invoiceCode => throw _privateConstructorUsedError;
   @JsonKey(name: "inventory_id")
   String? get inventoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "customer_id")
+  String? get customerId => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_status")
+  String? get paymentStaus => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_code")
+  String? get paymentCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "trn_number")
+  String? get trnNumber => throw _privateConstructorUsedError;
   @JsonKey(name: "created_date")
   String? get createdDate => throw _privateConstructorUsedError;
   @JsonKey(name: "invoice_status")
@@ -1313,6 +1323,11 @@ abstract class $InvoicedDataCopyWith<$Res> {
       @JsonKey(name: "sales_order_id") int? slaesOrderId,
       @JsonKey(name: "invoice_code") String? invoiceCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
+      @JsonKey(name: "customer_id") String? customerId,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "payment_status") String? paymentStaus,
+      @JsonKey(name: "payment_code") String? paymentCode,
+      @JsonKey(name: "trn_number") String? trnNumber,
       @JsonKey(name: "created_date") String? createdDate,
       @JsonKey(name: "invoice_status") String? invoiceStatus,
       @JsonKey(name: "assigned_to") String? assignedTo,
@@ -1348,6 +1363,11 @@ class _$InvoicedDataCopyWithImpl<$Res, $Val extends InvoicedData>
     Object? slaesOrderId = freezed,
     Object? invoiceCode = freezed,
     Object? inventoryId = freezed,
+    Object? customerId = freezed,
+    Object? paymentMethod = freezed,
+    Object? paymentStaus = freezed,
+    Object? paymentCode = freezed,
+    Object? trnNumber = freezed,
     Object? createdDate = freezed,
     Object? invoiceStatus = freezed,
     Object? assignedTo = freezed,
@@ -1399,6 +1419,26 @@ class _$InvoicedDataCopyWithImpl<$Res, $Val extends InvoicedData>
       inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerId: freezed == customerId
+          ? _value.customerId
+          : customerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStaus: freezed == paymentStaus
+          ? _value.paymentStaus
+          : paymentStaus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentCode: freezed == paymentCode
+          ? _value.paymentCode
+          : paymentCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      trnNumber: freezed == trnNumber
+          ? _value.trnNumber
+          : trnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
       createdDate: freezed == createdDate
           ? _value.createdDate
@@ -1463,6 +1503,11 @@ abstract class _$$_InvoicedDataCopyWith<$Res>
       @JsonKey(name: "sales_order_id") int? slaesOrderId,
       @JsonKey(name: "invoice_code") String? invoiceCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
+      @JsonKey(name: "customer_id") String? customerId,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "payment_status") String? paymentStaus,
+      @JsonKey(name: "payment_code") String? paymentCode,
+      @JsonKey(name: "trn_number") String? trnNumber,
       @JsonKey(name: "created_date") String? createdDate,
       @JsonKey(name: "invoice_status") String? invoiceStatus,
       @JsonKey(name: "assigned_to") String? assignedTo,
@@ -1496,6 +1541,11 @@ class __$$_InvoicedDataCopyWithImpl<$Res>
     Object? slaesOrderId = freezed,
     Object? invoiceCode = freezed,
     Object? inventoryId = freezed,
+    Object? customerId = freezed,
+    Object? paymentMethod = freezed,
+    Object? paymentStaus = freezed,
+    Object? paymentCode = freezed,
+    Object? trnNumber = freezed,
     Object? createdDate = freezed,
     Object? invoiceStatus = freezed,
     Object? assignedTo = freezed,
@@ -1547,6 +1597,26 @@ class __$$_InvoicedDataCopyWithImpl<$Res>
       inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerId: freezed == customerId
+          ? _value.customerId
+          : customerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentStaus: freezed == paymentStaus
+          ? _value.paymentStaus
+          : paymentStaus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      paymentCode: freezed == paymentCode
+          ? _value.paymentCode
+          : paymentCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      trnNumber: freezed == trnNumber
+          ? _value.trnNumber
+          : trnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
       createdDate: freezed == createdDate
           ? _value.createdDate
@@ -1606,6 +1676,11 @@ class _$_InvoicedData implements _InvoicedData {
       @JsonKey(name: "sales_order_id") this.slaesOrderId,
       @JsonKey(name: "invoice_code") this.invoiceCode,
       @JsonKey(name: "inventory_id") this.inventoryId,
+      @JsonKey(name: "customer_id") this.customerId,
+      @JsonKey(name: "payment_method") this.paymentMethod,
+      @JsonKey(name: "payment_status") this.paymentStaus,
+      @JsonKey(name: "payment_code") this.paymentCode,
+      @JsonKey(name: "trn_number") this.trnNumber,
       @JsonKey(name: "created_date") this.createdDate,
       @JsonKey(name: "invoice_status") this.invoiceStatus,
       @JsonKey(name: "assigned_to") this.assignedTo,
@@ -1645,6 +1720,21 @@ class _$_InvoicedData implements _InvoicedData {
   @JsonKey(name: "inventory_id")
   final String? inventoryId;
   @override
+  @JsonKey(name: "customer_id")
+  final String? customerId;
+  @override
+  @JsonKey(name: "payment_method")
+  final String? paymentMethod;
+  @override
+  @JsonKey(name: "payment_status")
+  final String? paymentStaus;
+  @override
+  @JsonKey(name: "payment_code")
+  final String? paymentCode;
+  @override
+  @JsonKey(name: "trn_number")
+  final String? trnNumber;
+  @override
   @JsonKey(name: "created_date")
   final String? createdDate;
   @override
@@ -1683,7 +1773,7 @@ class _$_InvoicedData implements _InvoicedData {
 
   @override
   String toString() {
-    return 'InvoicedData(id: $id, quantity: $quantity, barcode: $barcode, notes: $notes, remarks: $remarks, discount: $discount, vat: $vat, slaesOrderId: $slaesOrderId, invoiceCode: $invoiceCode, inventoryId: $inventoryId, createdDate: $createdDate, invoiceStatus: $invoiceStatus, assignedTo: $assignedTo, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice, lines: $lines)';
+    return 'InvoicedData(id: $id, quantity: $quantity, barcode: $barcode, notes: $notes, remarks: $remarks, discount: $discount, vat: $vat, slaesOrderId: $slaesOrderId, invoiceCode: $invoiceCode, inventoryId: $inventoryId, customerId: $customerId, paymentMethod: $paymentMethod, paymentStaus: $paymentStaus, paymentCode: $paymentCode, trnNumber: $trnNumber, createdDate: $createdDate, invoiceStatus: $invoiceStatus, assignedTo: $assignedTo, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice, lines: $lines)';
   }
 
   @override
@@ -1706,6 +1796,16 @@ class _$_InvoicedData implements _InvoicedData {
                 other.invoiceCode == invoiceCode) &&
             (identical(other.inventoryId, inventoryId) ||
                 other.inventoryId == inventoryId) &&
+            (identical(other.customerId, customerId) ||
+                other.customerId == customerId) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.paymentStaus, paymentStaus) ||
+                other.paymentStaus == paymentStaus) &&
+            (identical(other.paymentCode, paymentCode) ||
+                other.paymentCode == paymentCode) &&
+            (identical(other.trnNumber, trnNumber) ||
+                other.trnNumber == trnNumber) &&
             (identical(other.createdDate, createdDate) ||
                 other.createdDate == createdDate) &&
             (identical(other.invoiceStatus, invoiceStatus) ||
@@ -1741,6 +1841,11 @@ class _$_InvoicedData implements _InvoicedData {
         slaesOrderId,
         invoiceCode,
         inventoryId,
+        customerId,
+        paymentMethod,
+        paymentStaus,
+        paymentCode,
+        trnNumber,
         createdDate,
         invoiceStatus,
         assignedTo,
@@ -1782,6 +1887,16 @@ abstract class _InvoicedData implements InvoicedData {
           final String? invoiceCode,
       @JsonKey(name: "inventory_id")
           final String? inventoryId,
+      @JsonKey(name: "customer_id")
+          final String? customerId,
+      @JsonKey(name: "payment_method")
+          final String? paymentMethod,
+      @JsonKey(name: "payment_status")
+          final String? paymentStaus,
+      @JsonKey(name: "payment_code")
+          final String? paymentCode,
+      @JsonKey(name: "trn_number")
+          final String? trnNumber,
       @JsonKey(name: "created_date")
           final String? createdDate,
       @JsonKey(name: "invoice_status")
@@ -1829,6 +1944,21 @@ abstract class _InvoicedData implements InvoicedData {
   @override
   @JsonKey(name: "inventory_id")
   String? get inventoryId;
+  @override
+  @JsonKey(name: "customer_id")
+  String? get customerId;
+  @override
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod;
+  @override
+  @JsonKey(name: "payment_status")
+  String? get paymentStaus;
+  @override
+  @JsonKey(name: "payment_code")
+  String? get paymentCode;
+  @override
+  @JsonKey(name: "trn_number")
+  String? get trnNumber;
   @override
   @JsonKey(name: "created_date")
   String? get createdDate;

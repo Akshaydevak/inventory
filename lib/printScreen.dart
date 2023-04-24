@@ -136,7 +136,6 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                        width: 70,
                        child:pw.Image(netImage),
                       ),
-
                      pw. Spacer(),
                      pw. Container(
                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -3303,8 +3302,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                         padding: pw.EdgeInsets.only(top:height*.019),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                           "",style:pw. TextStyle(fontSize:height*.013)),
-
+                                            table[i].sellingPrice.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
                                       ),
 
 

@@ -5971,7 +5971,8 @@ class _PriceTypePopUpCallState extends State<PriceTypePopUpCall> {
                   if (widget.onAddNew != null) list.add("");
                   _controller = TextEditingController(text: label);
                   return Container(
-                    margin: EdgeInsets.only(top: 12, left: 9),
+                    alignment: Alignment.center,
+                    // margin: EdgeInsets.only(top: 12, left: 9),
                     child: TypeAheadFormField(
                       enabled: widget.enable,
                       validator: (value) {

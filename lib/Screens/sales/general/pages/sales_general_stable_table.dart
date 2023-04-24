@@ -241,96 +241,7 @@ class _StableTableState extends State<StableTable> {
 
 
 
-                              // SelectableDropDownpopUp(
-                              //   label: "customer id",
-                              //
-                              //   type:"CustomerId_ListPopUpCall",
-                              //   value: widget.customerName.text,
-                              //   enable: true,
-                              //   onSelection: (CustomerIdCreationModel? va) {
-                              //     setState(() {
-                              //       widget.customerName.text=va?.customerUserCode??"";
-                              //       widget.customerId.text=va?.id.toString()??"";
-                              //       widget.trnNumber.text=va?.taxId??"";
-                              //
-                              //       // onChange = true;
-                              //       // orderType.text = va!;
-                              //     });
-                              //   },
-                              //   onAddNew: () {
-                              //
-                              //     showDailogPopUp(
-                              //         context,
-                              //         CustomerIdCreationPopUp(
-                              //             accesssite: accessSiteController,
-                              //             buisnessmode: buisnessmodeController,
-                              //             buisnessname: buisnessnameController,
-                              //             buisnessuser: buisnessUserController,
-                              //             country: country,
-                              //             designation: designation,
-                              //             email: email,
-                              //             fname: fnameController,
-                              //             gender: gender,
-                              //             lname: lanameController,
-                              //             mobile: mobileController,
-                              //             password: passwordController,
-                              //             taxid: taxidController,
-                              //             ontap:(){
-                              //               CustomerIdCreation2Model model=CustomerIdCreation2Model(
-                              //                 email: email?.text??"",
-                              //                 password: passwordController?.text??"",
-                              //                 mobile: mobileController?.text??"",
-                              //                 fname: fnameController?.text,
-                              //                 lname: lanameController?.text,
-                              //                 country: country?.text,
-                              //                 gender: gender?.text,
-                              //                 accessSite: accessSiteController?.text,
-                              //                 taxId: taxidController?.text,
-                              //                 buisnessMode: buisnessUserController?.text,
-                              //                 designation: designation?.text,
-                              //
-                              //               );
-                              //
-                              //               context
-                              //                   .read<CustomeridcreationCubit>()
-                              //                   .postCustomerIdCreation(model);
-                              //
-                              //
-                              //             }
-                              //
-                              //         ));
-                              //   },
-                              // ),
-                              // SelectableDropDownpopUp(
-                              //   label: "shipping address id",
-                              //   type:"ShippingAddressPopUpCall",
-                              //   value: widget.shipping.text,
-                              //   enable: true,
-                              //   onSelection: (ShippingAddressModel? va) {
-                              //     print(
-                              //         "+++++++++++++++++++++++");
-                              //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                              //     setState(() {
-                              //       widget.shipping.text=va?.id.toString()??"";
-                              //
-                              //
-                              //       // onChange = true;
-                              //       // orderType.text = va!;
-                              //     });
-                              //   },
-                              //   onAddNew: () {
-                              //
-                              //     showDailogPopUp(
-                              //         context,
-                              //         WarrantyDetailsPopUp(
-                              //           // indexValue: temp,
-                              //           // changeActive: onChangeActive,
-                              //           // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                              //           // changeExtendedWarranty: onChangeExtendedWarranty,
-                              //         ));
-                              //   },
-                              // ),
-                              // NewInputCard(controller: widget.customerId, title: "customer id"),
+
                               SizedBox(
                                 height: height * .030,
                               ),
@@ -417,7 +328,7 @@ class _StableTableState extends State<StableTable> {
                               //   },
                               // ),
                               SizedBox(
-                                height: height * .187,
+                                height: height * .15,
                               ),
 
                               // NewInputCard(
@@ -431,10 +342,10 @@ class _StableTableState extends State<StableTable> {
                               NewInputCard(controller: widget.billingAddressId,
                                 readOnly: true,
                                 icondrop:true,title: "Billing Address Id",ontap: (){
-                                  if(widget.shipping.text.isNotEmpty){
+                                  if(widget.billingAddressId.text.isNotEmpty){
                                     setState(() {
-                                      widget.shipping.text="";
-                                      widget.shippingName.text="";
+                                      widget.billingAddressId.text="";
+                                      widget.billingName.text="";
 
                                     });
                                   }
@@ -447,11 +358,9 @@ class _StableTableState extends State<StableTable> {
                                         type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
                                         setState(() {
-
                                           widget.billingAddressId.text=va?.id.toString()??"";
                                           widget.billingName.text=va?.fullName.toString()??"";
                                           setState(() {
-
                                           });
 
 
@@ -469,39 +378,7 @@ class _StableTableState extends State<StableTable> {
 
                                 },),
 
-                              // SelectableDropDownpopUp(
-                              //   label: "billing address id",
-                              //   type:"ShippingAddressPopUpCall",
-                              //   value: widget.billingName.text,
-                              //   enable: true,
-                              //   onSelection: (ShippingAddressModel? va) {
-                              //     print(
-                              //         "+++++++++++++++++++++++");
-                              //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                              //     setState(() {
-                              //       widget.billingAddressId.text=va?.id.toString()??"";
-                              //       widget.billingName.text=va?.fullName.toString()??"";
-                              //
-                              //
-                              //       // onChange = true;
-                              //       // orderType.text = va!;
-                              //     });
-                              //   },
-                              //   onAddNew: () {
-                              //
-                              //     showDailogPopUp(
-                              //         context,
-                              //         WarrantyDetailsPopUp(
-                              //           // indexValue: temp,
-                              //           // changeActive: onChangeActive,
-                              //           // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                              //           // changeExtendedWarranty: onChangeExtendedWarranty,
-                              //         ));
-                              //   },
-                              // ),
-                              // NewInputCard(
-                              //     controller: widget.billingAddressId,
-                              //     title: "billing address id"),
+
                               SizedBox(
                                 height: height * .030,
                               ),
@@ -549,7 +426,6 @@ class _StableTableState extends State<StableTable> {
                               SizedBox(
                                 height: height * .1799,
                               ),
-
                             ],
                           )),
                       Expanded(

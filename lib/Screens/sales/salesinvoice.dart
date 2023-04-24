@@ -101,6 +101,10 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
      trnController.clear();
      table.clear();
      updateCheck=false;
+     _myWidgetState.currentState?.table1=[];
+     setState(() {
+
+     });
   }
   addition() {
     print("enterd");
@@ -311,6 +315,10 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                           : table =  List.from([]);
                       inventoryId.text=data.invoicedData?.inventoryId??"";
                       invoiceCodeController.text=data.invoicedData?.invoiceCode??"";
+                      paymentStatusController.text=data.invoicedData?.paymentStaus??"";
+                      customerIdController.text=data.invoicedData?.customerId??"";
+                      paymentIdController.text=data.invoicedData?.paymentCode??"";
+                      trnController.text=data.invoicedData?.trnNumber??"";
                       // invoiceDateController.text=data.invoicedData?.createdDate??"";
                       invoiceDateController=TextEditingController(text:data.invoicedData?.createdDate ==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.invoicedData?.createdDate??"")));
                       noteController.text=data.invoicedData?.notes??"";
@@ -408,7 +416,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                               selectedVertical=index;
                               veritiaclid = result[index].id;
                               clear();
-                              _myWidgetState.currentState?.table1=List.from([]);
+
                               context.read<InvoicereadCubit>().getSalesInvoiceRead(veritiaclid!);
 
                             });
@@ -578,12 +586,11 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                     table:table,
                                     updateCheck: updateCheckFucction,
                                     key: _myWidgetState,
-                                    // table: table,
-                                    // select:select,
                                     updation: tableAssign,
                                   ),
                                   SizedBox(height: height*.04,),
                                   SaveUpdateResponsiveButton(
+                                    isDelete: true,
                                     label:"SAVE" ,
                                     saveFunction: (){
                                       if (updateCheck)
@@ -593,7 +600,6 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                         List<Postlines>  table1=[];
                                         if(table.isNotEmpty){
                                           for(var i=0;i<table.length;i++)
-                                            if(table[i].isInvoiced==true){
                                               table1.add(Postlines(
                                                 isInvoiced: table[i].isInvoiced??false,
                                                 quantity: table[i].quantity ,
@@ -606,9 +612,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                                 unitCost: table[i].unitCost,
                                                 excessTax: table[i].excessTax,
                                                 salesOrderLineCode: table[i].salesOrderLineCode,
-
                                               ));
-                                            }
 
 
                                         }
