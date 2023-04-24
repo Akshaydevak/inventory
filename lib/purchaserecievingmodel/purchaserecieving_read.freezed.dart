@@ -1009,7 +1009,7 @@ mixin _$RecievingLines {
   @JsonKey(name: "grand_total")
   double? get grandTotal => throw _privateConstructorUsedError;
   @JsonKey(name: "received_qty")
-  int? get receivedQty => throw _privateConstructorUsedError;
+  int? get requestedQty => throw _privateConstructorUsedError;
   @JsonKey(name: "expiry_date")
   String? get expiryDate => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_id")
@@ -1064,7 +1064,7 @@ abstract class $RecievingLinesCopyWith<$Res> {
       @JsonKey(name: "is_received") bool? isReceived,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "received_qty") int? receivedQty,
+      @JsonKey(name: "received_qty") int? requestedQty,
       @JsonKey(name: "expiry_date") String? expiryDate,
       @JsonKey(name: "vendor_id") String? vendorId,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
@@ -1108,7 +1108,7 @@ class _$RecievingLinesCopyWithImpl<$Res, $Val extends RecievingLines>
     Object? isReceived = freezed,
     Object? unitCost = freezed,
     Object? grandTotal = freezed,
-    Object? receivedQty = freezed,
+    Object? requestedQty = freezed,
     Object? expiryDate = freezed,
     Object? vendorId = freezed,
     Object? vendorTrnNumber = freezed,
@@ -1187,9 +1187,9 @@ class _$RecievingLinesCopyWithImpl<$Res, $Val extends RecievingLines>
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      receivedQty: freezed == receivedQty
-          ? _value.receivedQty
-          : receivedQty // ignore: cast_nullable_to_non_nullable
+      requestedQty: freezed == requestedQty
+          ? _value.requestedQty
+          : requestedQty // ignore: cast_nullable_to_non_nullable
               as int?,
       expiryDate: freezed == expiryDate
           ? _value.expiryDate
@@ -1268,7 +1268,7 @@ abstract class _$$_RecievingLinesCopyWith<$Res>
       @JsonKey(name: "is_received") bool? isReceived,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "received_qty") int? receivedQty,
+      @JsonKey(name: "received_qty") int? requestedQty,
       @JsonKey(name: "expiry_date") String? expiryDate,
       @JsonKey(name: "vendor_id") String? vendorId,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
@@ -1310,7 +1310,7 @@ class __$$_RecievingLinesCopyWithImpl<$Res>
     Object? isReceived = freezed,
     Object? unitCost = freezed,
     Object? grandTotal = freezed,
-    Object? receivedQty = freezed,
+    Object? requestedQty = freezed,
     Object? expiryDate = freezed,
     Object? vendorId = freezed,
     Object? vendorTrnNumber = freezed,
@@ -1389,9 +1389,9 @@ class __$$_RecievingLinesCopyWithImpl<$Res>
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      receivedQty: freezed == receivedQty
-          ? _value.receivedQty
-          : receivedQty // ignore: cast_nullable_to_non_nullable
+      requestedQty: freezed == requestedQty
+          ? _value.requestedQty
+          : requestedQty // ignore: cast_nullable_to_non_nullable
               as int?,
       expiryDate: freezed == expiryDate
           ? _value.expiryDate
@@ -1465,7 +1465,7 @@ class _$_RecievingLines implements _RecievingLines {
       @JsonKey(name: "is_received") this.isReceived,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "grand_total") this.grandTotal,
-      @JsonKey(name: "received_qty") this.receivedQty,
+      @JsonKey(name: "received_qty") this.requestedQty,
       @JsonKey(name: "expiry_date") this.expiryDate,
       @JsonKey(name: "vendor_id") this.vendorId,
       @JsonKey(name: "vendor_trn_number") this.vendorTrnNumber,
@@ -1526,7 +1526,7 @@ class _$_RecievingLines implements _RecievingLines {
   final double? grandTotal;
   @override
   @JsonKey(name: "received_qty")
-  final int? receivedQty;
+  final int? requestedQty;
   @override
   @JsonKey(name: "expiry_date")
   final String? expiryDate;
@@ -1566,7 +1566,7 @@ class _$_RecievingLines implements _RecievingLines {
 
   @override
   String toString() {
-    return 'RecievingLines(id: $id, currentStock: $currentStock, barcode: $barcode, foc: $foc, discount: $discount, vat: $vat, orderLineCode: $orderLineCode, receivinglineCode: $receivinglineCode, vendorRefCode: $vendorRefCode, variantId: $variantId, variantName: $variantName, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isReceived: $isReceived, unitCost: $unitCost, grandTotal: $grandTotal, receivedQty: $receivedQty, expiryDate: $expiryDate, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorAddress: $vendorAddress, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, purchaseOrderLineId: $purchaseOrderLineId, updateCheck: $updateCheck)';
+    return 'RecievingLines(id: $id, currentStock: $currentStock, barcode: $barcode, foc: $foc, discount: $discount, vat: $vat, orderLineCode: $orderLineCode, receivinglineCode: $receivinglineCode, vendorRefCode: $vendorRefCode, variantId: $variantId, variantName: $variantName, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isReceived: $isReceived, unitCost: $unitCost, grandTotal: $grandTotal, requestedQty: $requestedQty, expiryDate: $expiryDate, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorAddress: $vendorAddress, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, purchaseOrderLineId: $purchaseOrderLineId, updateCheck: $updateCheck)';
   }
 
   @override
@@ -1602,8 +1602,8 @@ class _$_RecievingLines implements _RecievingLines {
                 other.unitCost == unitCost) &&
             (identical(other.grandTotal, grandTotal) ||
                 other.grandTotal == grandTotal) &&
-            (identical(other.receivedQty, receivedQty) ||
-                other.receivedQty == receivedQty) &&
+            (identical(other.requestedQty, requestedQty) ||
+                other.requestedQty == requestedQty) &&
             (identical(other.expiryDate, expiryDate) ||
                 other.expiryDate == expiryDate) &&
             (identical(other.vendorId, vendorId) ||
@@ -1649,7 +1649,7 @@ class _$_RecievingLines implements _RecievingLines {
         isReceived,
         unitCost,
         grandTotal,
-        receivedQty,
+        requestedQty,
         expiryDate,
         vendorId,
         vendorTrnNumber,
@@ -1707,7 +1707,7 @@ abstract class _RecievingLines implements RecievingLines {
       @JsonKey(name: "grand_total")
           final double? grandTotal,
       @JsonKey(name: "received_qty")
-          final int? receivedQty,
+          final int? requestedQty,
       @JsonKey(name: "expiry_date")
           final String? expiryDate,
       @JsonKey(name: "vendor_id")
@@ -1780,7 +1780,7 @@ abstract class _RecievingLines implements RecievingLines {
   double? get grandTotal;
   @override
   @JsonKey(name: "received_qty")
-  int? get receivedQty;
+  int? get requestedQty;
   @override
   @JsonKey(name: "expiry_date")
   String? get expiryDate;

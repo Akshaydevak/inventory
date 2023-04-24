@@ -2061,7 +2061,7 @@ mixin _$Lines {
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;
   @JsonKey(name: "total_qty")
-  int? get totalQty => throw _privateConstructorUsedError;
+  int? get requestedQty => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
   double? get unitCost => throw _privateConstructorUsedError;
   @JsonKey(name: "grand_total")
@@ -2106,7 +2106,7 @@ abstract class $LinesCopyWith<$Res> {
       @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
       @JsonKey(name: "variant_name") String? variantName,
-      @JsonKey(name: "total_qty") int? totalQty,
+      @JsonKey(name: "total_qty") int? requestedQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") double? variableAmount,
@@ -2144,7 +2144,7 @@ class _$LinesCopyWithImpl<$Res, $Val extends Lines>
     Object? purchaseOrderLineid = freezed,
     Object? invoiceLineCode = freezed,
     Object? variantName = freezed,
-    Object? totalQty = freezed,
+    Object? requestedQty = freezed,
     Object? unitCost = freezed,
     Object? grandTotal = freezed,
     Object? variableAmount = freezed,
@@ -2205,9 +2205,9 @@ class _$LinesCopyWithImpl<$Res, $Val extends Lines>
           ? _value.variantName
           : variantName // ignore: cast_nullable_to_non_nullable
               as String?,
-      totalQty: freezed == totalQty
-          ? _value.totalQty
-          : totalQty // ignore: cast_nullable_to_non_nullable
+      requestedQty: freezed == requestedQty
+          ? _value.requestedQty
+          : requestedQty // ignore: cast_nullable_to_non_nullable
               as int?,
       unitCost: freezed == unitCost
           ? _value.unitCost
@@ -2272,7 +2272,7 @@ abstract class _$$_LinesCopyWith<$Res> implements $LinesCopyWith<$Res> {
       @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
       @JsonKey(name: "variant_name") String? variantName,
-      @JsonKey(name: "total_qty") int? totalQty,
+      @JsonKey(name: "total_qty") int? requestedQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") double? variableAmount,
@@ -2306,7 +2306,7 @@ class __$$_LinesCopyWithImpl<$Res> extends _$LinesCopyWithImpl<$Res, _$_Lines>
     Object? purchaseOrderLineid = freezed,
     Object? invoiceLineCode = freezed,
     Object? variantName = freezed,
-    Object? totalQty = freezed,
+    Object? requestedQty = freezed,
     Object? unitCost = freezed,
     Object? grandTotal = freezed,
     Object? variableAmount = freezed,
@@ -2367,9 +2367,9 @@ class __$$_LinesCopyWithImpl<$Res> extends _$LinesCopyWithImpl<$Res, _$_Lines>
           ? _value.variantName
           : variantName // ignore: cast_nullable_to_non_nullable
               as String?,
-      totalQty: freezed == totalQty
-          ? _value.totalQty
-          : totalQty // ignore: cast_nullable_to_non_nullable
+      requestedQty: freezed == requestedQty
+          ? _value.requestedQty
+          : requestedQty // ignore: cast_nullable_to_non_nullable
               as int?,
       unitCost: freezed == unitCost
           ? _value.unitCost
@@ -2431,7 +2431,7 @@ class _$_Lines implements _Lines {
       @JsonKey(name: "purchase_order_line_id") this.purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") this.invoiceLineCode,
       @JsonKey(name: "variant_name") this.variantName,
-      @JsonKey(name: "total_qty") this.totalQty,
+      @JsonKey(name: "total_qty") this.requestedQty,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "grand_total") this.grandTotal,
       @JsonKey(name: "vatable_amount") this.variableAmount,
@@ -2480,7 +2480,7 @@ class _$_Lines implements _Lines {
   final String? variantName;
   @override
   @JsonKey(name: "total_qty")
-  final int? totalQty;
+  final int? requestedQty;
   @override
   @JsonKey(name: "unit_cost")
   final double? unitCost;
@@ -2514,7 +2514,7 @@ class _$_Lines implements _Lines {
 
   @override
   String toString() {
-    return 'Lines(id: $id, foc: $foc, discount: $discount, vat: $vat, barcode: $barcode, receiveLineCode: $receiveLineCode, variantId: $variantId, receivedQty: $receivedQty, receiveLineId: $receiveLineId, purchaseOrderLineid: $purchaseOrderLineid, invoiceLineCode: $invoiceLineCode, variantName: $variantName, totalQty: $totalQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isReceived: $isReceived)';
+    return 'Lines(id: $id, foc: $foc, discount: $discount, vat: $vat, barcode: $barcode, receiveLineCode: $receiveLineCode, variantId: $variantId, receivedQty: $receivedQty, receiveLineId: $receiveLineId, purchaseOrderLineid: $purchaseOrderLineid, invoiceLineCode: $invoiceLineCode, variantName: $variantName, requestedQty: $requestedQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isReceived: $isReceived)';
   }
 
   @override
@@ -2542,8 +2542,8 @@ class _$_Lines implements _Lines {
                 other.invoiceLineCode == invoiceLineCode) &&
             (identical(other.variantName, variantName) ||
                 other.variantName == variantName) &&
-            (identical(other.totalQty, totalQty) ||
-                other.totalQty == totalQty) &&
+            (identical(other.requestedQty, requestedQty) ||
+                other.requestedQty == requestedQty) &&
             (identical(other.unitCost, unitCost) ||
                 other.unitCost == unitCost) &&
             (identical(other.grandTotal, grandTotal) ||
@@ -2581,7 +2581,7 @@ class _$_Lines implements _Lines {
         purchaseOrderLineid,
         invoiceLineCode,
         variantName,
-        totalQty,
+        requestedQty,
         unitCost,
         grandTotal,
         variableAmount,
@@ -2622,7 +2622,7 @@ abstract class _Lines implements Lines {
       @JsonKey(name: "purchase_order_line_id") final int? purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") final String? invoiceLineCode,
       @JsonKey(name: "variant_name") final String? variantName,
-      @JsonKey(name: "total_qty") final int? totalQty,
+      @JsonKey(name: "total_qty") final int? requestedQty,
       @JsonKey(name: "unit_cost") final double? unitCost,
       @JsonKey(name: "grand_total") final double? grandTotal,
       @JsonKey(name: "vatable_amount") final double? variableAmount,
@@ -2669,7 +2669,7 @@ abstract class _Lines implements Lines {
   String? get variantName;
   @override
   @JsonKey(name: "total_qty")
-  int? get totalQty;
+  int? get requestedQty;
   @override
   @JsonKey(name: "unit_cost")
   double? get unitCost;

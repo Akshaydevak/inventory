@@ -19,6 +19,7 @@ import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
 import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/model/variantid.dart';
+import 'package:inventory/printScreen.dart';
 import 'package:inventory/purchaserecievingmodel/purchaserecieving_read.dart';
 import 'package:inventory/requestformrecieving/cubit/generaterequestform_cubit.dart';
 import 'package:inventory/requestformrecieving/cubit/patchreceive_cubit.dart';
@@ -515,7 +516,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                     text: purchaseTable?.unitCost.toString());
 
                             var qty = additionalVariants[Variable.tableindex]
-                                .receivedQty;
+                                .requestedQty;
 
                             var vat =
                                 additionalVariants[Variable.tableindex].vat;
@@ -600,7 +601,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                     text: purchaseTable?.unitCost.toString());
 
                             var qty = recievingLisnes[Variable.tableindex]
-                                .receivedQty;
+                                .requestedQty;
 
                             var vat = recievingLisnes[Variable.tableindex].vat;
 
@@ -924,7 +925,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              PurchaseReceivingPrintScreen2(
+                                              PrintScreen(
                                                 table: recievingLisnes,
 
                                                 note: noteController.text,
@@ -1782,7 +1783,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 true,
                                                             last: recievingLisnes[
                                                                         i]
-                                                                    .receivedQty
+                                                                    .requestedQty
                                                                     .toString() ??
                                                                 "",
                                                             onChanged: (va) {
@@ -1808,7 +1809,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     i] = recievingLisnes[
                                                                         i]
                                                                     .copyWith(
-                                                                        receivedQty:
+                                                                        requestedQty:
                                                                             0,
                                                                         vatableAmount:
                                                                             0,
@@ -1909,7 +1910,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                             vactualCost,
                                                                         grandTotal:
                                                                             vactualCost,
-                                                                        receivedQty:
+                                                                        requestedQty:
                                                                             qty);
                                                                   } else {
                                                                     var Vamount = vatableAmountFocUpdation(
@@ -1940,7 +1941,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                             vactualCost,
                                                                         grandTotal:
                                                                             vactualCost,
-                                                                        receivedQty:
+                                                                        requestedQty:
                                                                             qty);
                                                                   }
                                                                 }
@@ -2100,7 +2101,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               var qty =
                                                                   recievingLisnes[
                                                                           i]
-                                                                      .receivedQty;
+                                                                      .requestedQty;
 
                                                               print("qty" +
                                                                   qty.toString());
@@ -2269,7 +2270,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               var qty =
                                                                   recievingLisnes[
                                                                           i]
-                                                                      .receivedQty;
+                                                                      .requestedQty;
 
                                                               var vat =
                                                                   recievingLisnes[
@@ -2435,7 +2436,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               var qty =
                                                                   recievingLisnes[
                                                                           i]
-                                                                      .receivedQty;
+                                                                      .requestedQty;
 
                                                               var excess =
                                                                   recievingLisnes[
@@ -2624,7 +2625,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               var qty =
                                                                   recievingLisnes[
                                                                           i]
-                                                                      .receivedQty;
+                                                                      .requestedQty;
 
                                                               var vat =
                                                                   recievingLisnes[
@@ -3210,7 +3211,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                               var qty =
                                                                   recievingLisnes[i]
-                                                                          .receivedQty ??
+                                                                          .requestedQty ??
                                                                       0;
 
                                                               var foc =
@@ -3892,7 +3893,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               integerOnly: true,
                                                               last: additionalVariants[
                                                                           i]
-                                                                      .receivedQty
+                                                                      .requestedQty
                                                                       .toString() ??
                                                                   "",
                                                               onChanged: (va) {
@@ -3906,7 +3907,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                       i] = additionalVariants[
                                                                           i]
                                                                       .copyWith(
-                                                                          receivedQty:
+                                                                          requestedQty:
                                                                               0,
                                                                           vatableAmount:
                                                                               0,
@@ -3997,7 +3998,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                               vactualCost,
                                                                           grandTotal:
                                                                               vactualCost,
-                                                                          receivedQty:
+                                                                          requestedQty:
                                                                               qty);
                                                                     } else {
                                                                       var Vamount = vatableAmountFocUpdation(
@@ -4026,7 +4027,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                               vactualCost,
                                                                           grandTotal:
                                                                               vactualCost,
-                                                                          receivedQty:
+                                                                          requestedQty:
                                                                               qty);
                                                                     }
                                                                   }
@@ -4131,7 +4132,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                   var qty =
                                                                       additionalVariants[
                                                                               i]
-                                                                          .receivedQty;
+                                                                          .requestedQty;
 
                                                                   print("qty" +
                                                                       qty.toString());
@@ -4293,7 +4294,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 var qty =
                                                                     additionalVariants[
                                                                             i]
-                                                                        .receivedQty;
+                                                                        .requestedQty;
 
                                                                 var vat =
                                                                     additionalVariants[
@@ -4411,7 +4412,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 var qty =
                                                                     additionalVariants[
                                                                             i]
-                                                                        .receivedQty;
+                                                                        .requestedQty;
 
                                                                 var excess =
                                                                     additionalVariants[
@@ -4548,7 +4549,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 var qty =
                                                                     additionalVariants[
                                                                             i]
-                                                                        .receivedQty;
+                                                                        .requestedQty;
 
                                                                 var vat =
                                                                     additionalVariants[
@@ -5888,7 +5889,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                   purchaseUom:
                                                                       purchaseUomName ??
                                                                           "",
-                                                                  receivedQty:
+                                                                  requestedQty:
                                                                       recievedQty,
                                                                   isReceived:
                                                                       isReceived1,

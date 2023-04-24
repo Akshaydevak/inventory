@@ -146,7 +146,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
         discountValue = discountValue + table[i].discount!;
         focValue = focValue + table[i].foc!;
 
-        VatableValue = VatableValue + table[i].variableAmount!;
+        VatableValue = VatableValue + table[i].vatableAmount!;
         print("excessTaxvalue"+excessTAxValue.toString());
         excessTAxValue = excessTAxValue + table[i].excessTax!;
       }
@@ -468,7 +468,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
 
                                 if(Variable.tableedit==true) {
                                   table[Variable.tableindex] =
-                                      table[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",vat:purchaseTable?.vat,unitCost:purchaseTable?.unitCost,purchaseuom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                                      table[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",vat:purchaseTable?.vat,unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
                                   setState(() {
 
                                   });
@@ -1223,8 +1223,8 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                       });
 
                                                                                       table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
-                                                                                          variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
-                                                                                          ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                                          vatableAmount: table[i].vatableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                                          ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseUom: table[i].purchaseUom,discount: table[i].discount
                                                                                       )]);
                                                                                       setState(() {
 
@@ -1266,7 +1266,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                           table[i] =
                                                                                               table[i]
                                                                                                   .copyWith(
-                                                                                                  variableAmount: 0,
+                                                                                                  vatableAmount: 0,
                                                                                                   actualCost: 0,
                                                                                                   grandTotal: 0,
                                                                                                   discount: disc);
@@ -1282,7 +1282,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                           table[i] =
                                                                                               table[i]
                                                                                                   .copyWith(
-                                                                                                  variableAmount: Vamount,
+                                                                                                  vatableAmount: Vamount,
                                                                                                   actualCost: vactualCost,
                                                                                                   grandTotal: vactualCost,
                                                                                                   discount: disc);
@@ -1333,7 +1333,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                   child: textPadding(
                                                                                       table[i]
-                                                                                          .purchaseuom??"",
+                                                                                          .purchaseUom??"",
                                                                                       padding: EdgeInsets
                                                                                           .only(
                                                                                           left:
@@ -1362,7 +1362,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                       print(va);
                                                                                       if (va == "") {
                                                                                         print("entered");
-                                                                                        table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                                                        table[i] = table[i].copyWith(requestedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                                       } else {
                                                                                         var qty = int.tryParse(va);
                                                                                         var dis = table[i].discount;
@@ -1371,7 +1371,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                         var vat = table[i].vat;
                                                                                         var foc = table[i].foc;
                                                                                         if (qty == 0 || unitcost == 0 ||unitcost=="") {
-                                                                                          table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                                                          table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                                         }else {
                                                                                           var Vamount;
                                                                                           var vactualCost;
@@ -1388,7 +1388,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                           table[i] =
                                                                                               table[i]
                                                                                                   .copyWith(
-                                                                                                  variableAmount: Vamount,
+                                                                                                  vatableAmount: Vamount,
                                                                                                   actualCost: vactualCost,
                                                                                                   grandTotal: vactualCost,
                                                                                                   requestedQty: qty);
@@ -1517,7 +1517,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                         print("entered");
                                                                                         unitcost = 0;
                                                                                         print("disc" + unitcost.toString());
-                                                                                        table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                                                        table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                                                       }
                                                                                       unitcost = double.tryParse(va);
                                                                                       print("unitcost" + unitcost.toString());
@@ -1535,7 +1535,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                       if (qty == 0 || qty == null) {
                                                                                         print("checking case");
 
-                                                                                        table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                                                        table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                                                         setState(() {});
                                                                                       } else {
                                                                                         var Vamount =         vatableAmountUpdation(unitcost,qty,excess,disc);
@@ -1546,7 +1546,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                         table[i] =
                                                                                             table[i]
                                                                                                 .copyWith(
-                                                                                                variableAmount: Vamount,
+                                                                                                vatableAmount: Vamount,
                                                                                                 actualCost: vactualCost,
                                                                                                 grandTotal: vactualCost,
                                                                                                 unitCost: unitcost);
@@ -1585,7 +1585,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                       print("unitcost" + unitcost.toString());
                                                                                       var Vdiscount = table[i].discount;
                                                                                       if(qty==0 || unitcost==0){
-                                                                                        table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                                                                                        table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
                                                                                         setState(() {
 
                                                                                         });
@@ -1603,7 +1603,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                                 .copyWith(
                                                                                                 actualCost: vactualCost,
                                                                                                 grandTotal: vactualCost,
-                                                                                                variableAmount: Vamount,
+                                                                                                vatableAmount: Vamount,
                                                                                                 excessTax: excess);
                                                                                         setState(() {});
                                                                                       } },
@@ -1659,7 +1659,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                         table[i] =
                                                                                             table[i]
                                                                                                 .copyWith(
-                                                                                                variableAmount: 0,
+                                                                                                vatableAmount: 0,
                                                                                                 actualCost: 0,
                                                                                                 grandTotal: 0,
                                                                                                 discount: disc);
@@ -1675,7 +1675,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                         table[i] =
                                                                                             table[i]
                                                                                                 .copyWith(
-                                                                                                variableAmount: Vamount,
+                                                                                                vatableAmount: Vamount,
                                                                                                 actualCost: vactualCost,
                                                                                                 grandTotal: vactualCost,
                                                                                                 discount: disc);
@@ -1736,7 +1736,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                   child: textPadding(
                                                                                       table[i]
-                                                                                          .variableAmount
+                                                                                          .vatableAmount
                                                                                           .toString(),
                                                                                       padding: EdgeInsets
                                                                                           .only(
@@ -1918,7 +1918,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                 ),
                                                                                 TableTextButton(label:table[i].updateCheck==true?'Update':"",
                                                                                   onPress: (){
-                                                                                    var Vamount = table[i].variableAmount??0;
+                                                                                    var Vamount = table[i].vatableAmount??0;
                                                                                     var variant = table[i].variantId??0;
                                                                                     var mins = table[i].minimumQty??0;
                                                                                     var maxs = table[i].maximumQty??0;
@@ -2559,13 +2559,13 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                                           barcode: barcode ?? "",
                                                                                           minimumQty: minQty,
                                                                                           maximumQty: maxQty,
-                                                                                          purchaseuom: purchaseUomName ?? "",
+                                                                                          purchaseUom: purchaseUomName ?? "",
                                                                                           requestedQty: recievedQty,
                                                                                           isRecieved: isReceived1,
                                                                                           discount: discount,
                                                                                           foc: foc1,
                                                                                           unitCost: unitcost,
-                                                                                          variableAmount: vatableAmount1,
+                                                                                          vatableAmount: vatableAmount1,
                                                                                           vat: vat1,
                                                                                           excessTax: excess1,
                                                                                           actualCost: actualCost1,

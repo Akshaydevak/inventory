@@ -366,7 +366,7 @@ class PurchaseOrderInvoiceGrowableTableState extends State<PurchaseOrderInvoiceG
                                                 ),
                                                 TableCell(
                                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                                                  child: textPadding(additionalVariants[i].totalQty.toString() ?? "", fontSize: 12,
+                                                  child: textPadding(additionalVariants[i].requestedQty.toString() ?? "", fontSize: 12,
                                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                 ),

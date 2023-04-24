@@ -89,8 +89,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
     });
   }
   addition() {
-    print("enterd");
-    print("+==" + additionalVariants.toString());
     double  unitcost=0;
     double grands=0;
     double actualValue=0;
@@ -110,17 +108,13 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
           var focValue1= additionalVariants[i].foc??0;
           var VatableValue1= additionalVariants[i].variableAmount??0;
           var excessTAxValue1= additionalVariants[i].excessTax??0;
-
           unitcost = unitcost +unicost1;
-
           grands = grands + grands1;
           actualValue = actualValue + actualValue1;
           vatValue = vatValue + vatValue1;
           discountValue = discountValue + discountValue1;
           focValue = focValue + focValue1;
-
           VatableValue = VatableValue + VatableValue1;
-          print("excessTaxvalue"+excessTAxValue.toString());
           excessTAxValue = excessTAxValue + excessTAxValue1;
         }
       }
@@ -213,20 +207,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                             context,
                             FailiurePopup(
                               content: Variable.errorMessege,
-                              // table:table,
                             ));
 
-
-                        // context.showSnackBarError(Variable.errorMessege);
                       }, success: (data) {
                         if (data.data1) {
-                          // showDailogPopUp(
-                          //     context,
-                          //     SuccessPopup(
-                          //       content: data.data2.toString(),
-                          //       // table:table,
-                          //     ));
-
                          if( isPaymentStatusSuccessCall)context.read<PaymentTransactionSuccessPostCubit>().postPaymentTransactionSuccess(invoiceId,Variable.methodCode, data.data2,1);
                          else
                         showDailogPopUp(
@@ -235,9 +219,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               content: "success",
                               // table:table,
                             ));
-
-
-
                         }
                         else {
                           showDailogPopUp(
@@ -314,7 +295,6 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                   inventoryId=data.invoicedata?.inventoryId??"";
                                   invoiceCodeController.text=data.invoicedata?.invoicedCode??"";
                                   invoiceStatusController.text=data.invoicedata?.invoiceStatus??"";
-
                                   noteController.text=data.invoicedata?.notes??"";
                                   remarksController.text=data.invoicedata?.remarks??"";
                                   unitCostController.text=data.invoicedata?.unitCost.toString()??"";
@@ -329,17 +309,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                   paymentStatusController.text=data.invoicedata?.payementStatus??"";
                                   paymentCodeController.text=data.invoicedata?.paymentCode??"";
                                   orderStatusController.text=data.invoicedata?.orderStatus??"";
-
                                   data.invoicedata?.invoiceLines != null
                                       ? additionalVariants = List.from(data.invoicedata?.invoiceLines ?? [])
                                       : additionalVariants = [];
-
-
                                 });
-
-
-
-
                               }
                               else{
                                 print("entered 2ndst position");
@@ -1273,18 +1246,10 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // pw.Container(
-                      //   margin:pw. EdgeInsets.symmetric(vertical: 5),
-                      //   height:70 ,
-                      //   width: 70,
-                      //   child:pw.Image(netImage),
-                      // ),
-
                       pw. Spacer(),
                       pw. Container(
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
                         // padding:pw. EdgeInsets.only(right: width*.01),
-
                         child:pw. Column(
                           crossAxisAlignment:pw. CrossAxisAlignment.end,
                           children: [
@@ -1309,10 +1274,6 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           ],
                         ),
                       ),
-
-
-
-
                     ],
                   ),
                 ),
@@ -1685,7 +1646,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i]?.totalQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i]?.requestedQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
 

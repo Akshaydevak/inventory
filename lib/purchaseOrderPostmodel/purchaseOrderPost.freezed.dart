@@ -792,7 +792,7 @@ mixin _$OrderLines {
   @JsonKey(name: "barcode")
   String? get barcode => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_uom")
-  String? get purchaseuom => throw _privateConstructorUsedError;
+  String? get purchaseUom => throw _privateConstructorUsedError;
   @JsonKey(name: "cvd")
   String? get cvd => throw _privateConstructorUsedError;
   @JsonKey(name: "foc")
@@ -810,7 +810,7 @@ mixin _$OrderLines {
   @JsonKey(name: "grand_total")
   double? get grandTotal => throw _privateConstructorUsedError;
   @JsonKey(name: "vatable_amount")
-  double? get variableAmount => throw _privateConstructorUsedError;
+  double? get vatableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "excess_tax")
   double? get excessTax => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
@@ -843,7 +843,7 @@ abstract class $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
-      @JsonKey(name: "purchase_uom") String? purchaseuom,
+      @JsonKey(name: "purchase_uom") String? purchaseUom,
       @JsonKey(name: "cvd") String? cvd,
       @JsonKey(name: "foc") double? foc,
       @JsonKey(name: "discount") double? discount,
@@ -852,7 +852,7 @@ abstract class $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "maximum_qty") int? maximumQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "vatable_amount") double? variableAmount,
+      @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "updatecheck", defaultValue: false) bool? updateCheck});
@@ -883,7 +883,7 @@ class _$OrderLinesCopyWithImpl<$Res, $Val extends OrderLines>
     Object? vendorRefCode = freezed,
     Object? variantName = freezed,
     Object? barcode = freezed,
-    Object? purchaseuom = freezed,
+    Object? purchaseUom = freezed,
     Object? cvd = freezed,
     Object? foc = freezed,
     Object? discount = freezed,
@@ -892,7 +892,7 @@ class _$OrderLinesCopyWithImpl<$Res, $Val extends OrderLines>
     Object? maximumQty = freezed,
     Object? unitCost = freezed,
     Object? grandTotal = freezed,
-    Object? variableAmount = freezed,
+    Object? vatableAmount = freezed,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
     Object? updateCheck = freezed,
@@ -946,9 +946,9 @@ class _$OrderLinesCopyWithImpl<$Res, $Val extends OrderLines>
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseuom: freezed == purchaseuom
-          ? _value.purchaseuom
-          : purchaseuom // ignore: cast_nullable_to_non_nullable
+      purchaseUom: freezed == purchaseUom
+          ? _value.purchaseUom
+          : purchaseUom // ignore: cast_nullable_to_non_nullable
               as String?,
       cvd: freezed == cvd
           ? _value.cvd
@@ -982,9 +982,9 @@ class _$OrderLinesCopyWithImpl<$Res, $Val extends OrderLines>
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      variableAmount: freezed == variableAmount
-          ? _value.variableAmount
-          : variableAmount // ignore: cast_nullable_to_non_nullable
+      vatableAmount: freezed == vatableAmount
+          ? _value.vatableAmount
+          : vatableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
       excessTax: freezed == excessTax
           ? _value.excessTax
@@ -1023,7 +1023,7 @@ abstract class _$$_OrderLinesCopyWith<$Res>
       @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
-      @JsonKey(name: "purchase_uom") String? purchaseuom,
+      @JsonKey(name: "purchase_uom") String? purchaseUom,
       @JsonKey(name: "cvd") String? cvd,
       @JsonKey(name: "foc") double? foc,
       @JsonKey(name: "discount") double? discount,
@@ -1032,7 +1032,7 @@ abstract class _$$_OrderLinesCopyWith<$Res>
       @JsonKey(name: "maximum_qty") int? maximumQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "vatable_amount") double? variableAmount,
+      @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "updatecheck", defaultValue: false) bool? updateCheck});
@@ -1061,7 +1061,7 @@ class __$$_OrderLinesCopyWithImpl<$Res>
     Object? vendorRefCode = freezed,
     Object? variantName = freezed,
     Object? barcode = freezed,
-    Object? purchaseuom = freezed,
+    Object? purchaseUom = freezed,
     Object? cvd = freezed,
     Object? foc = freezed,
     Object? discount = freezed,
@@ -1070,7 +1070,7 @@ class __$$_OrderLinesCopyWithImpl<$Res>
     Object? maximumQty = freezed,
     Object? unitCost = freezed,
     Object? grandTotal = freezed,
-    Object? variableAmount = freezed,
+    Object? vatableAmount = freezed,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
     Object? updateCheck = freezed,
@@ -1124,9 +1124,9 @@ class __$$_OrderLinesCopyWithImpl<$Res>
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseuom: freezed == purchaseuom
-          ? _value.purchaseuom
-          : purchaseuom // ignore: cast_nullable_to_non_nullable
+      purchaseUom: freezed == purchaseUom
+          ? _value.purchaseUom
+          : purchaseUom // ignore: cast_nullable_to_non_nullable
               as String?,
       cvd: freezed == cvd
           ? _value.cvd
@@ -1160,9 +1160,9 @@ class __$$_OrderLinesCopyWithImpl<$Res>
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      variableAmount: freezed == variableAmount
-          ? _value.variableAmount
-          : variableAmount // ignore: cast_nullable_to_non_nullable
+      vatableAmount: freezed == vatableAmount
+          ? _value.vatableAmount
+          : vatableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
       excessTax: freezed == excessTax
           ? _value.excessTax
@@ -1196,7 +1196,7 @@ class _$_OrderLines implements _OrderLines {
       @JsonKey(name: "vendor_reference_code") this.vendorRefCode,
       @JsonKey(name: "variant_name") this.variantName,
       @JsonKey(name: "barcode") this.barcode,
-      @JsonKey(name: "purchase_uom") this.purchaseuom,
+      @JsonKey(name: "purchase_uom") this.purchaseUom,
       @JsonKey(name: "cvd") this.cvd,
       @JsonKey(name: "foc") this.foc,
       @JsonKey(name: "discount") this.discount,
@@ -1205,7 +1205,7 @@ class _$_OrderLines implements _OrderLines {
       @JsonKey(name: "maximum_qty") this.maximumQty,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "grand_total") this.grandTotal,
-      @JsonKey(name: "vatable_amount") this.variableAmount,
+      @JsonKey(name: "vatable_amount") this.vatableAmount,
       @JsonKey(name: "excess_tax") this.excessTax,
       @JsonKey(name: "actual_cost") this.actualCost,
       @JsonKey(name: "updatecheck", defaultValue: false) this.updateCheck});
@@ -1248,7 +1248,7 @@ class _$_OrderLines implements _OrderLines {
   final String? barcode;
   @override
   @JsonKey(name: "purchase_uom")
-  final String? purchaseuom;
+  final String? purchaseUom;
   @override
   @JsonKey(name: "cvd")
   final String? cvd;
@@ -1275,7 +1275,7 @@ class _$_OrderLines implements _OrderLines {
   final double? grandTotal;
   @override
   @JsonKey(name: "vatable_amount")
-  final double? variableAmount;
+  final double? vatableAmount;
   @override
   @JsonKey(name: "excess_tax")
   final double? excessTax;
@@ -1288,7 +1288,7 @@ class _$_OrderLines implements _OrderLines {
 
   @override
   String toString() {
-    return 'OrderLines(vat: $vat, currentQty: $currentQty, id: $id, isActive: $isActive, isRecieved: $isRecieved, supplierCode: $supplierCode, isFree: $isFree, isInvoiced: $isInvoiced, variantId: $variantId, vendorRefCode: $vendorRefCode, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost, updateCheck: $updateCheck)';
+    return 'OrderLines(vat: $vat, currentQty: $currentQty, id: $id, isActive: $isActive, isRecieved: $isRecieved, supplierCode: $supplierCode, isFree: $isFree, isInvoiced: $isInvoiced, variantId: $variantId, vendorRefCode: $vendorRefCode, variantName: $variantName, barcode: $barcode, purchaseUom: $purchaseUom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, updateCheck: $updateCheck)';
   }
 
   @override
@@ -1316,8 +1316,8 @@ class _$_OrderLines implements _OrderLines {
             (identical(other.variantName, variantName) ||
                 other.variantName == variantName) &&
             (identical(other.barcode, barcode) || other.barcode == barcode) &&
-            (identical(other.purchaseuom, purchaseuom) ||
-                other.purchaseuom == purchaseuom) &&
+            (identical(other.purchaseUom, purchaseUom) ||
+                other.purchaseUom == purchaseUom) &&
             (identical(other.cvd, cvd) || other.cvd == cvd) &&
             (identical(other.foc, foc) || other.foc == foc) &&
             (identical(other.discount, discount) ||
@@ -1332,8 +1332,8 @@ class _$_OrderLines implements _OrderLines {
                 other.unitCost == unitCost) &&
             (identical(other.grandTotal, grandTotal) ||
                 other.grandTotal == grandTotal) &&
-            (identical(other.variableAmount, variableAmount) ||
-                other.variableAmount == variableAmount) &&
+            (identical(other.vatableAmount, vatableAmount) ||
+                other.vatableAmount == vatableAmount) &&
             (identical(other.excessTax, excessTax) ||
                 other.excessTax == excessTax) &&
             (identical(other.actualCost, actualCost) ||
@@ -1358,7 +1358,7 @@ class _$_OrderLines implements _OrderLines {
         vendorRefCode,
         variantName,
         barcode,
-        purchaseuom,
+        purchaseUom,
         cvd,
         foc,
         discount,
@@ -1367,7 +1367,7 @@ class _$_OrderLines implements _OrderLines {
         maximumQty,
         unitCost,
         grandTotal,
-        variableAmount,
+        vatableAmount,
         excessTax,
         actualCost,
         updateCheck
@@ -1411,7 +1411,7 @@ abstract class _OrderLines implements OrderLines {
       @JsonKey(name: "barcode")
           final String? barcode,
       @JsonKey(name: "purchase_uom")
-          final String? purchaseuom,
+          final String? purchaseUom,
       @JsonKey(name: "cvd")
           final String? cvd,
       @JsonKey(name: "foc")
@@ -1429,7 +1429,7 @@ abstract class _OrderLines implements OrderLines {
       @JsonKey(name: "grand_total")
           final double? grandTotal,
       @JsonKey(name: "vatable_amount")
-          final double? variableAmount,
+          final double? vatableAmount,
       @JsonKey(name: "excess_tax")
           final double? excessTax,
       @JsonKey(name: "actual_cost")
@@ -1475,7 +1475,7 @@ abstract class _OrderLines implements OrderLines {
   String? get barcode;
   @override
   @JsonKey(name: "purchase_uom")
-  String? get purchaseuom;
+  String? get purchaseUom;
   @override
   @JsonKey(name: "cvd")
   String? get cvd;
@@ -1502,7 +1502,7 @@ abstract class _OrderLines implements OrderLines {
   double? get grandTotal;
   @override
   @JsonKey(name: "vatable_amount")
-  double? get variableAmount;
+  double? get vatableAmount;
   @override
   @JsonKey(name: "excess_tax")
   double? get excessTax;

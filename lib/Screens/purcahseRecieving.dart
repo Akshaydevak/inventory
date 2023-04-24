@@ -453,9 +453,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                             excessTaxController.text =='';
                           }
                           else{
-                            setState(() {
+
                               excessTaxController.text =  data?.excessTax.toString()??"";
-                            });
+
                           }
                           if( data?.unitCost==null|| data?.unitCost=="null"){
                             unitCostController.text =='';
@@ -657,7 +657,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                               additionalVariants[Variable.tableindex] =
                                   additionalVariants[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,vat:purchaseTable?.vat,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"", supplierCode:supplierRefCode  );
                               unitcostAdditionalListControllers[Variable.tableindex]=TextEditingController(text:purchaseTable?.unitCost.toString() );
-                              var qty = additionalVariants[Variable.tableindex].receivedQty;
+                              var qty = additionalVariants[Variable.tableindex].requestedQty;
                               var vat = additionalVariants[Variable.tableindex].vat;
                               var foc = additionalVariants[Variable.tableindex].foc;
                               var excess = additionalVariants[Variable.tableindex].excessTax;
@@ -717,7 +717,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                               recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",vat:purchaseTable?.vat,unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"", supplierCode: supplierRefCode  );
                               unitcostReceivingListControllers[Variable.tableindex]=TextEditingController(text:purchaseTable?.unitCost.toString() );
 
-                              var qty = recievingLisnes[Variable.tableindex].receivedQty;
+                              var qty = recievingLisnes[Variable.tableindex].requestedQty;
                               var vat = recievingLisnes[Variable.tableindex].vat;
                               var foc = recievingLisnes[Variable.tableindex].foc;
                               var excess = recievingLisnes[Variable.tableindex].excessTax;
@@ -947,7 +947,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                 Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(builder: (context) =>
-                                                                      PurchaseReceivingPrintScreen2(table:recievingLisnes,
+                                                                      PrintScreen(table:recievingLisnes,
                                                                         note: noteController.text,
                                                                         orderCode:orderCodeController.text ,
                                                                         orderDate:orederDate2Controller .text,
@@ -959,7 +959,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                         excisetax:double.tryParse( excessTaxController.text) ,
                                                                         remarks: remarksController.text ,
                                                                         model: model,
-                                                                        pageName: "GENERAL",
+                                                                        pageName: "PURCHASE RECEIVING",
                                                                       )),
                                                                 );
                                                               },
@@ -1566,7 +1566,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               child: UnderLinedInput(
                                                                                                 initialCheck:true,
                                                                                                 integerOnly: true,
-                                                                                                last: recievingLisnes[i].receivedQty.toString() ?? "",
+                                                                                                last: recievingLisnes[i].requestedQty.toString() ?? "",
                                                                                                 onChanged: (va) {
                                                                                                   updateCheck=true;
                                                                                                   recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
@@ -1576,7 +1576,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   print(va);
                                                                                                   if (va == "") {
                                                                                                     print("entered");
-                                                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(receivedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(requestedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                                                   } else {
                                                                                                     var qty = int.tryParse(va);
                                                                                                     var dis = recievingLisnes[i].discount??0;
@@ -1612,7 +1612,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                               vatableAmount: Vamount,
                                                                                                               actualCost: vactualCost,
                                                                                                               grandTotal: vactualCost,
-                                                                                                              receivedQty: qty);
+                                                                                                              requestedQty: qty);
                                                                                                     }
                                                                                                     else{
 
@@ -1628,7 +1628,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                               vatableAmount: Vamount,
                                                                                                               actualCost: vactualCost,
                                                                                                               grandTotal: vactualCost,
-                                                                                                              receivedQty: qty);
+                                                                                                              requestedQty: qty);
                                                                                                     }
 
 
@@ -1702,7 +1702,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   unitcost = double.tryParse(va);
                                                                                                   print("unitcost" + unitcost.toString());
 
-                                                                                                  var qty = recievingLisnes[i].receivedQty;
+                                                                                                  var qty = recievingLisnes[i].requestedQty;
                                                                                                   print("qty" + qty.toString());
                                                                                                   var excess = recievingLisnes[i].excessTax;
                                                                                                   print("excess" + excess.toString());
@@ -1779,7 +1779,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                     setState(() {});
                                                                                                   }
 
-                                                                                                  var qty = recievingLisnes[i].receivedQty;
+                                                                                                  var qty = recievingLisnes[i].requestedQty;
                                                                                                   var vat = recievingLisnes[i].vat;
                                                                                                   var foc = recievingLisnes[i].foc;
 
@@ -1860,7 +1860,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   }
 
                                                                                                   var qty = recievingLisnes[i]
-                                                                                                      .receivedQty;
+                                                                                                      .requestedQty;
 
                                                                                                   var excess = recievingLisnes[i]
                                                                                                       .excessTax;
@@ -1952,7 +1952,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                     foc  = double.tryParse(va);
                                                                                                     recievingLisnes[i] = recievingLisnes[i].copyWith(foc: foc);
                                                                                                   }
-                                                                                                  var qty = recievingLisnes[i].receivedQty;
+                                                                                                  var qty = recievingLisnes[i].requestedQty;
                                                                                                   var vat = recievingLisnes[i].vat;
                                                                                                   print("qty" + qty.toString());
                                                                                                   var excess = recievingLisnes[i].excessTax;
@@ -2234,7 +2234,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                     var excess = recievingLisnes[i].excessTax??0;
                                                                                                     print("excess" + excess.toString());
                                                                                                     var unitcosts = recievingLisnes[i].unitCost??0;
-                                                                                                    var qty = recievingLisnes[i].receivedQty??0;
+                                                                                                    var qty = recievingLisnes[i].requestedQty??0;
                                                                                                     var foc = recievingLisnes[i].foc??0;
                                                                                                     var dis = recievingLisnes[i].discount??0;
                                                                                                     if(variant=="null"||unitcosts==0){
@@ -2763,7 +2763,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
                                                                                             initialCheck:true,
-                                                                                            last: additionalVariants[i].receivedQty.toString() ?? "",
+                                                                                            last: additionalVariants[i].requestedQty.toString() ?? "",
                                                                                             integerOnly: true,
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
@@ -2773,7 +2773,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               print(va);
                                                                                               if (va == "") {
                                                                                                 print("entered");
-                                                                                                additionalVariants[i] = additionalVariants[i].copyWith(receivedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                                                                additionalVariants[i] = additionalVariants[i].copyWith(requestedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                                               } else {
                                                                                                 var qty = int.tryParse(va);
                                                                                                 var dis = additionalVariants[i].discount;
@@ -2810,7 +2810,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                             vatableAmount: Vamount,
                                                                                                             actualCost: vactualCost,
                                                                                                             grandTotal: vactualCost,
-                                                                                                            receivedQty: qty);
+                                                                                                            requestedQty: qty);
                                                                                                   }
                                                                                                   else{
 
@@ -2826,7 +2826,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                             vatableAmount: Vamount,
                                                                                                             actualCost: vactualCost,
                                                                                                             grandTotal: vactualCost,
-                                                                                                            receivedQty: qty);
+                                                                                                            requestedQty: qty);
                                                                                                   }
 
 
@@ -2878,7 +2878,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               unitcost = double.tryParse(va);
 
 
-                                                                                              var qty = additionalVariants[i].receivedQty;
+                                                                                              var qty = additionalVariants[i].requestedQty;
 
                                                                                               var excess = additionalVariants[i].excessTax;
 
@@ -2954,7 +2954,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 setState(() {});
                                                                                               }
 
-                                                                                              var qty = additionalVariants[i].receivedQty;
+                                                                                              var qty = additionalVariants[i].requestedQty;
                                                                                               var vat = additionalVariants[i].vat;
                                                                                               var foc = additionalVariants[i].foc;
 
@@ -3031,7 +3031,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               }
 
                                                                                               var qty = additionalVariants[i]
-                                                                                                  .receivedQty;
+                                                                                                  .requestedQty;
                                                                                               print(
                                                                                                   "qty" +
                                                                                                       qty
@@ -3137,7 +3137,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 foc  = double.tryParse(va);
                                                                                                 additionalVariants[i] = additionalVariants[i].copyWith(foc: foc);
                                                                                               }
-                                                                                              var qty = additionalVariants[i].receivedQty;
+                                                                                              var qty = additionalVariants[i].requestedQty;
                                                                                               var vat = additionalVariants[i].vat;
                                                                                               print("qty" + qty.toString());
                                                                                               var excess = additionalVariants[i].excessTax;
@@ -4016,7 +4016,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 variantName: varinatname??"",
                                                                                                 barcode: barcode??"",
                                                                                                 purchaseUom: purchaseUomName??"",
-                                                                                                receivedQty: recievedQty,
+                                                                                                requestedQty: recievedQty,
                                                                                                 isReceived: isReceived1,
                                                                                                 discount: discount,
                                                                                                 foc: foc1,
@@ -5649,7 +5649,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].receivedQty?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].requestedQty?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
 

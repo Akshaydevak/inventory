@@ -485,7 +485,7 @@ List<TextEditingController> vatController =[];
             var actualValue1 = table[i].actualCost ?? 0;
             var discountValue1 = table[i].discount ?? 0;
             var focValue1 = table[i].foc ?? 0;
-            var VatableValue1 = table[i].variableAmount ?? 0;
+            var VatableValue1 = table[i].vatableAmount ?? 0;
             var excessTAxValue1 = table[i].excessTax ?? 0;
 
             unitcost = double.parse((unitcost + unicost1).toStringAsFixed(2));
@@ -634,7 +634,7 @@ List<TextEditingController> vatController =[];
                               print("the casssssssssssssssss");
                               print(qty);
                               print(unitcost);
-                              table[Variable.tableindex] = table[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                              table[Variable.tableindex] = table[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
                               setState(() {
 
                               });
@@ -658,7 +658,7 @@ List<TextEditingController> vatController =[];
                                       .copyWith(
                                       actualCost: vactualCost,
                                       grandTotal: Vgrnadtotal,
-                                      variableAmount: Vamount,
+                                      vatableAmount: Vamount,
                                       excessTax: excess);
                               setState(() {});
                             }
@@ -1793,7 +1793,7 @@ else{
                                                                         fontWeight: FontWeight.w500),
                                                                   ),
                                                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: textPadding(table[i].purchaseuom??"",
+                                                                    child: textPadding(table[i].purchaseUom??"",
                                                                         // padding: EdgeInsets.only(left: 11.5, ),
                                                                         fontWeight: FontWeight.w500),
                                                                   ),
@@ -1811,7 +1811,7 @@ else{
                                                                       });
     if (va == "") {
     print("entered");
-    table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
+    table[i] = table[i].copyWith(requestedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
     } else {
     var qty = int.tryParse(va);
     var dis = table[i].discount;
@@ -1820,7 +1820,7 @@ else{
     var vat = table[i].vat;
     var foc = table[i].foc;
     if (qty == 0 || unitcost == 0 ||unitcost=="") {
-    table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0);
+    table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
     }else {
     var Vamount;
     var vactualCost;
@@ -1843,7 +1843,7 @@ else{
     }
     table[i] =
         table[i].copyWith(
-            variableAmount: Vamount,
+            vatableAmount: Vamount,
             actualCost: vactualCost,
             grandTotal: vactualCost, requestedQty:qty ,
 
@@ -1947,7 +1947,7 @@ else{
                                                                           print("entered");
                                                                           unitcost = 0;
                                                                           print("disc" + unitcost.toString());
-                                                                          table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                                          table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                                           setState(() {});
                                                                         }
                                                                         unitcost = double.tryParse(va);
@@ -1966,7 +1966,7 @@ else{
                                                                         if (qty == 0 || qty == null) {
                                                                           print("checking case");
 
-                                                                          table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                                          table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                                           setState(() {});
                                                                         } else {
                                                                           double Vamount;
@@ -1983,7 +1983,7 @@ else{
 
                                                                           table[i] =
                                                                               table[i].copyWith(
-                                                                                  variableAmount: Vamount,
+                                                                                  vatableAmount: Vamount,
                                                                                   actualCost: vactualCost,
                                                                                   grandTotal: vactualCost,
                                                                                   unitCost: unitcost);
@@ -2028,7 +2028,7 @@ else{
                                                                         print("unitcost" + unitcost.toString());
                                                                         var Vdiscount = table[i].discount;
                                                                         if(qty==0 || unitcost==0){
-                                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
                                                                           setState(() {
 
                                                                           });
@@ -2059,7 +2059,7 @@ else{
                                                                                   .copyWith(
                                                                                   actualCost: vactualCost,
                                                                                   grandTotal: Vgrnadtotal,
-                                                                                  variableAmount: Vamount,
+                                                                                  vatableAmount: Vamount,
                                                                                   excessTax: excess);
                                                                           setState(() {});
                                                                         } },
@@ -2096,7 +2096,7 @@ else{
                                                                         print("unitcost" + unitcost.toString());
                                                                         var Vdiscount = table[i].discount;
                                                                         if(qty==0 || unitcost==0){
-                                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
                                                                           setState(() {
 
                                                                           });
@@ -2125,7 +2125,7 @@ else{
                                                                                   .copyWith(
                                                                                   actualCost: vactualCost,
                                                                                   grandTotal: Vgrnadtotal,
-                                                                                  variableAmount: Vamount,
+                                                                                  vatableAmount: Vamount,
                                                                                   excessTax: excess);
                                                                           setState(() {});
                                                                         } },
@@ -2172,7 +2172,7 @@ else{
                                                                           table[i] =
                                                                               table[i]
                                                                                   .copyWith(
-                                                                                  variableAmount: 0,
+                                                                                  vatableAmount: 0,
                                                                                   actualCost: 0,
                                                                                   grandTotal: 0,
                                                                                   discount: disc);
@@ -2203,7 +2203,7 @@ else{
                                                                           table[i] =
                                                                               table[i]
                                                                                   .copyWith(
-                                                                                  variableAmount: Vamount,
+                                                                                  vatableAmount: Vamount,
                                                                                   actualCost: vactualCost,
                                                                                   grandTotal: vactualCost,
                                                                                   discount: disc);
@@ -2262,7 +2262,7 @@ else{
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(
-                                                                        table[i].variableAmount.toString(),
+                                                                        table[i].vatableAmount.toString(),
                                                                         alighnment: Alignment.topRight,
                                                                         fontWeight: FontWeight
                                                                             .w500),
@@ -2419,7 +2419,7 @@ else{
                                                                       bagroundColor: table?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
 
                                                                         onPress: () {
-                                                                          var Vamount = table[i].variableAmount??0;
+                                                                          var Vamount = table[i].vatableAmount??0;
                                                                           var variant = table[i].variantId??0;
                                                                           var mins = table[i].minimumQty??0;
                                                                           var maxs = table[i].maximumQty??0;
@@ -2866,12 +2866,12 @@ else{
                                                                               excessTax: eTax ?? 0,
                                                                               vat: vvat ?? 0,
                                                                               actualCost: vactualCost ?? 0,
-                                                                              purchaseuom: check1 ?? "",
+                                                                              purchaseUom: check1 ?? "",
                                                                               discount: Vdiscount ?? 0,
                                                                               requestedQty: Qty ?? 0,
                                                                               unitCost: check! ?? 0,
                                                                               grandTotal: Vgrnadtotal ?? 0,
-                                                                              variableAmount: Vamount ?? 0,
+                                                                              vatableAmount: Vamount ?? 0,
                                                                               currentQty: stockQty ?? 0,
                                                                               updateCheck: false
                                                                             ));

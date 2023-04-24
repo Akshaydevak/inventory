@@ -40,7 +40,7 @@ class PrintScreen extends StatefulWidget {
   final double? unitCost;
   final double? excisetax;
   final InventoryListModel? model;
-  final  List<OrderLines> table;
+  final  List<dynamic> table;
 
   PrintScreen({
     this.vendorCode="",
@@ -103,7 +103,7 @@ class _PrintScreenState extends State<PrintScreen> {
 }
 Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDate,String orderCode,BuildContext context,String vendorCode,
     double? discount,double? actualCost,double? variableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<OrderLines> table,String pageName,InventoryListModel model) async {
+    ,double? excisetax,double? vat,String note,String remarks,List<dynamic> table,String pageName,InventoryListModel model) async {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
@@ -474,7 +474,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                      padding: pw.EdgeInsets.all(5),
                      color:  PdfColor.fromInt(0xff3E4F5B),
                      alignment:pw. Alignment.center,
-                     child:pw.Text(  'Exsise tax',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
+                     child:pw.Text(  'Excise tax',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
                      height: 30,
                    ),
                    pw.  Container(
@@ -543,28 +543,28 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          alignment:pw. Alignment.center,
                          height: 40,
                          child:pw. Text(
-                             table[i].variantId??"",style:pw. TextStyle(fontSize: height*.013)),
+                                    table[i].variantId??"",style:pw. TextStyle(fontSize: height*.013)),
                        ),
                        pw.   Container(
                          // padding: pw.EdgeInsets.only(top: height*.014),
                          alignment:pw. Alignment.center,
                          height: 40,
                          child:pw. Text(
-                             table[i].barcode??"",style:pw. TextStyle( fontSize: height*.013)),
+                             table[i].barcode==null||table[i].barcode=="null"?"":    table[i].barcode??"",style:pw. TextStyle( fontSize: height*.013)),
 
                        ),
                        pw.   Container(
                          padding: pw.EdgeInsets.only(top: height*.019),
                          alignment:pw. Alignment.center,
                          child:pw. Text(
-                             table[i].purchaseuom??"",style:pw. TextStyle( fontSize: height*.013)),
+                             table[i].purchaseUom==null||table[i].purchaseUom=="null"?"": table[i].purchaseUom??"",style:pw. TextStyle( fontSize: height*.013)),
 
                        ),
                        pw.  Container(
                          padding: pw.EdgeInsets.only(top: height*.019),
                          alignment:pw. Alignment.center,
                          child: pw.Text(
-                             table[i].requestedQty?.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
+                             table[i]?.requestedQty.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
 
                        ),
 
@@ -572,7 +572,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          padding: pw.EdgeInsets.only(top:height*.019),
                          alignment:pw. Alignment.center,
                          child: pw.Text(
-                             table[i].unitCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
+                             table[i].unitCost==null||table[i].unitCost=="null"?"": table[i].unitCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
 
 
                        ),
@@ -581,7 +581,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                          alignment:pw. Alignment.center,
                          child: pw.Text(
-                             table[i].excessTax?.toString()??"",style:pw. TextStyle( fontSize: 8)),
+                             table[i].excessTax==null||table[i].excessTax=="null"?"": table[i].excessTax?.toString()??"",style:pw. TextStyle( fontSize: 8)),
                          // fontSize: 12,
 
 
@@ -590,21 +590,21 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          padding: pw.EdgeInsets.only(top:height*.019),
                          alignment:pw. Alignment.center,
                          child:pw. Text(
-                             table[i].discount?.toString()??"",style:pw. TextStyle( fontSize: 8)),
+                             table[i].discount==null||table[i].discount=="null"?"":   table[i].discount?.toString()??"",style:pw. TextStyle( fontSize: 8)),
                        ),
 
                        pw. Container(
                          alignment:pw. Alignment.center,
                          padding: pw.EdgeInsets.only(top:height*.019),
                          child:pw. Text(
-                             table[i].variableAmount?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                             table[i].vatableAmount==null||table[i].vatableAmount=="null"?"":      table[i].vatableAmount?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
                          // fontSize: 12,
                        ),
                        pw.  Container(
                          padding: pw.EdgeInsets.only(top: height*.019),
                          alignment:pw. Alignment.center,
                          child: pw.Text(
-                             table[i].vat?.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
+                             table[i].vat==null||table[i].vat=="null"?"":       table[i].vat?.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
                          // fontSize: 12,
 
                        ),
@@ -612,7 +612,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                          padding: pw.EdgeInsets.only(top:height*.019),
                          alignment:pw. Alignment.center,
                          child:pw. Text(
-                             table[i].actualCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
+                             table[i].actualCost==null||table[i].actualCost=="null"?"":   table[i].actualCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
 
                        ),
 

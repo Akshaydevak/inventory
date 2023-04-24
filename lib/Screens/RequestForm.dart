@@ -148,7 +148,7 @@ var  paginatedList;
           var actualValue1= table[i].actualCost??0;
           var discountValue1= table[i].discount??0;
           var focValue1= table[i].foc??0;
-          var VatableValue1= table[i].variableAmount??0;
+          var VatableValue1= table[i].vatableAmount??0;
           var excessTAxValue1= table[i].excessTax??0;
           unitcost2 = unitcost2 + unicost1;
 
@@ -485,7 +485,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                 if(Variable.tableedit==true) {
                   print("thre error cae");
                   table[Variable.tableindex] =
-                      table[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",vat:purchaseTable?.vat,unitCost:purchaseTable?.unitCost,purchaseuom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                      table[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",vat:purchaseTable?.vat,unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
                   unitcostListControllers[Variable.tableindex]=TextEditingController(text:purchaseTable?.unitCost.toString() );
                   var qty = table[Variable.tableindex].requestedQty;
                   var vat = table[Variable.tableindex].vat;
@@ -496,7 +496,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                   // print("unitcost" + unitcost.toString());
                   var Vdiscount = table[Variable.tableindex].discount;
                   if(qty==0 || unitcost==0){
-                    table[Variable.tableindex] = table[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                    table[Variable.tableindex] = table[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
                     setState(() {
 
                     });
@@ -514,7 +514,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                             .copyWith(
                             actualCost: vactualCost,
                             grandTotal: vactualCost,
-                            variableAmount: Vamount,
+                            vatableAmount: Vamount,
                             excessTax: excess);
                     setState(() {});
                   }
@@ -1304,8 +1304,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               });
 
                                                               table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
-                                                                  variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
-                                                                  ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                  vatableAmount: table[i].vatableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                  ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseUom: table[i].purchaseUom,discount: table[i].discount
                                                               )]);
                                                               setState(() {
 
@@ -1347,7 +1347,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   table[i] =
                                                                       table[i]
                                                                           .copyWith(
-                                                                          variableAmount: 0,
+                                                                          vatableAmount: 0,
                                                                           actualCost: 0,
                                                                           grandTotal: 0,
                                                                           discount: disc);
@@ -1363,7 +1363,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   table[i] =
                                                                       table[i]
                                                                           .copyWith(
-                                                                          variableAmount: Vamount,
+                                                                          vatableAmount: Vamount,
                                                                           actualCost: vactualCost,
                                                                           grandTotal: vactualCost,
                                                                           discount: disc);
@@ -1496,7 +1496,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                     child: textPadding(
                                                         table[i]
-                                                            .purchaseuom??"",
+                                                            .purchaseUom??"",
 
                                                         fontWeight:
                                                         FontWeight
@@ -1521,7 +1521,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         print(va);
                                                         if (va == "") {
                                                           print("entered");
-                                                          table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                          table[i] = table[i].copyWith(requestedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                         }
                                                         else {
                                                           var qty = int.tryParse(va);
@@ -1531,7 +1531,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           var vat = table[i].vat;
                                                           var foc = table[i].foc;
                                                           if (qty == 0 || unitcost == 0 ||unitcost=="") {
-                                                            table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                            table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                           }else {
                                                             var Vamount;
                                                             var vactualCost;
@@ -1548,7 +1548,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             table[i] =
                                                                 table[i]
                                                                     .copyWith(
-                                                                    variableAmount: Vamount,
+                                                                    vatableAmount: Vamount,
                                                                     actualCost: vactualCost,
                                                                     grandTotal: vactualCost,
                                                                     requestedQty: qty);
@@ -1677,7 +1677,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           print("entered");
                                                           unitcost = 0;
                                                           print("disc" + unitcost.toString());
-                                                          table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                          table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                         }
                                                         unitcost = double.tryParse(va);
                                                         print("unitcost" + unitcost.toString());
@@ -1695,7 +1695,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         if (qty == 0 || qty == null) {
                                                           print("checking case");
 
-                                                          table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                          table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                           setState(() {});
                                                         } else {
                                                           var Vamount =         vatableAmountUpdation(unitcost,qty,excess,disc);
@@ -1706,7 +1706,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           table[i] =
                                                               table[i]
                                                                   .copyWith(
-                                                                  variableAmount: Vamount,
+                                                                  vatableAmount: Vamount,
                                                                   actualCost: vactualCost,
                                                                   grandTotal: vactualCost,
                                                                   unitCost: unitcost);
@@ -1745,7 +1745,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         print("unitcost" + unitcost.toString());
                                                         var Vdiscount = table[i].discount;
                                                         if(qty==0 || unitcost==0){
-                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
                                                           setState(() {
 
                                                           });
@@ -1763,7 +1763,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   .copyWith(
                                                                   actualCost: vactualCost,
                                                                   grandTotal: vactualCost,
-                                                                  variableAmount: Vamount,
+                                                                  vatableAmount: Vamount,
                                                                   excessTax: excess);
                                                           setState(() {});
                                                         } },
@@ -1819,7 +1819,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           table[i] =
                                                               table[i]
                                                                   .copyWith(
-                                                                  variableAmount: 0,
+                                                                  vatableAmount: 0,
                                                                   actualCost: 0,
                                                                   grandTotal: 0,
                                                                   discount: disc);
@@ -1835,7 +1835,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           table[i] =
                                                               table[i]
                                                                   .copyWith(
-                                                                  variableAmount: Vamount,
+                                                                  vatableAmount: Vamount,
                                                                   actualCost: vactualCost,
                                                                   grandTotal: vactualCost,
                                                                   discount: disc);
@@ -1896,7 +1896,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                     child: textPadding(
                                                         table[i]
-                                                            .variableAmount
+                                                            .vatableAmount
                                                             .toString(),
 
                                                         fontWeight: FontWeight.w500,
@@ -2063,7 +2063,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                     child: TableTextButton(label:table[i].updateCheck==true?'Update':"",
                                                     onPress: (){
-                                                      var Vamount = table[i].variableAmount??0;
+                                                      var Vamount = table[i].vatableAmount??0;
                                                       var variant = table[i].variantId??0;
                                                       var mins = table[i].minimumQty??0;
                                                       var maxs = table[i].maximumQty??0;
@@ -2647,13 +2647,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             barcode: barcode ?? "",
                                                             minimumQty: minQty,
                                                             maximumQty: maxQty,
-                                                            purchaseuom: purchaseUomName ?? "",
+                                                            purchaseUom: purchaseUomName ?? "",
                                                             requestedQty: recievedQty,
                                                             isRecieved: isReceived1,
                                                             discount: discount,
                                                             foc: foc1,
                                                             unitCost: unitcost,
-                                                            variableAmount: vatableAmount1,
+                                                            vatableAmount: vatableAmount1,
                                                             vat: vat1,
                                                             excessTax: excess1,
                                                             actualCost: actualCost1,

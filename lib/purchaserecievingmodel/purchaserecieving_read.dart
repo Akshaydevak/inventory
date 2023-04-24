@@ -56,6 +56,7 @@ class RecievingLines with _$RecievingLines {
     final double? foc,
     final double? discount,
     final double? vat,
+
     @JsonKey(name:"order_line_code") final String? orderLineCode,
     @JsonKey(name:"receiving_line_code") final String? receivinglineCode,
     @JsonKey(name:"vendor_reference_code") final String? vendorRefCode,
@@ -67,7 +68,7 @@ class RecievingLines with _$RecievingLines {
     @JsonKey(name:"is_received") final bool? isReceived,
     @JsonKey(name:"unit_cost") final double? unitCost,
     @JsonKey(name:"grand_total") final double? grandTotal,
-    @JsonKey(name:"received_qty") final int? receivedQty,
+    @JsonKey(name:"received_qty") final int? requestedQty,
     @JsonKey(name:"expiry_date") final String? expiryDate,
     @JsonKey(name:"vendor_id") final String? vendorId,
     @JsonKey(name:"vendor_trn_number") final String? vendorTrnNumber,
