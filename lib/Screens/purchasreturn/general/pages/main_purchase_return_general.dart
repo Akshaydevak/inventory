@@ -212,14 +212,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
   }
 
-  // double vatCalcutatingMethod(int reqQty,double unitCst,double exTaxx,int disct){
-  // double   VatAmounts = (((reqQty*unitCst)+exTaxx)-disct);
-  //  return VatAmounts;
-  // }
-  // double ActualGrandTotal(double VatAmounts,double vatt){
-  //  double ActualGC = (VatAmounts+((VatAmounts*vatt)/100));
-  //  return ActualGC;
-  // }
 
 
   @override
@@ -401,7 +393,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
-                      print("checkingdata"+data.data1.toString());
                       if (data.data1) {
                         context.showSnackBarSuccess(data.data2);
                         context.read<VertiacalCubit>().getGeneralVertical();
@@ -533,21 +524,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                           Row(
                                             mainAxisAlignment:MainAxisAlignment.end,
                                             children: [
-
-                                              // TextButtonLarge(
-                                              //   marginCheck: true,
-                                              //   clr: Colors.green,
-                                              //
-                                              //
-                                              //   onPress: () {
-                                              //
-                                              //
-                                              //   },
-                                              //   text: "PAYMENT",                                  ),
-
                                               TextButtonLarge(
                                                 marginCheck: true,
-
                                                 onPress: () {
                                                   select=true;
                                                   updateCheck=false;
@@ -564,29 +542,17 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                 text: "PREVIEW",
                                                 onPress: () async {
                                                   InventoryListModel model=InventoryListModel();
-
-
                                                   UserPreferences userPref = UserPreferences();
                                                   await userPref.getInventoryList().then((user) {
-                                                    print("entereeeeeeeeeeeeeeeeeeed");
-
                                                     if (user.isInventoryExist == true) {
                                                       model=user;
-                                                      print("existing");
-                                                      print(model.email);
-                                                      // prefs.setString('token', user?.token ?? "");
-
-
-
-
                                                     } else {
-
                                                     }
                                                   });
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(builder: (context) =>
-                                                        PurchaseReturnPrintScreen(
+                                                        PrintScreen(
                                                           select: select,
                                                           vendorCode:vendorCodeController.text,
                                                           orderCode:orderCodeController.text ,
@@ -610,8 +576,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                             ],
                                           ),
                                           SizedBox(height: 20,),
-
-
                                           TopStableTable(
                                             orderType: orderTypeController,vendorCode: vendorCodeController,inventory: inventory,select:select,
                                             orderCode: orderCodeController,vendorAddress: vendorAddressController,vendorMailId:vendorMailId,
@@ -630,12 +594,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                             TextWidget(text: "Order Lines"),
                                           ],),
                                           SizedBox(height: height*.01,),
-
-                                          // Divider(color: Colors.grey,thickness: 1,),
-                                          // GrowableTable(lines:lines,updation: update,),
                                           CustomScrollBar(
                                             controller: recieveController,
-
                                             childs: Container(
                                               color: Colors.white,
                                               alignment: Alignment.topRight,
@@ -651,42 +611,16 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                         width: 2200,
                                                         // padding: EdgeInsets.all(10),
                                                         child: customTable(
-
-                                                          // border: const TableBorder(
-                                                          //
-                                                          //   verticalInside: BorderSide(
-                                                          //       width:.5,
-                                                          //       color: Colors.black45,
-                                                          //       style: BorderStyle.solid),
-                                                          //   horizontalInside: BorderSide(
-                                                          //       width:.3,
-                                                          //       color: Colors.black45,
-                                                          //       // color: Colors.blue,
-                                                          //       style: BorderStyle.solid),),
-
                                                             tableWidth: .5,
 
                                                             childrens:[
                                                               TableRow(
-
-                                                                // decoration: BoxDecoration(
-
-                                                                //     color: Colors.green.shade200,
-
-                                                                //     shape: BoxShape.rectangle,
-
-                                                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
                                                                   children: [
 
                                                                     tableHeadtext(
 
                                                                       'Sl.No',
                                                                       size: 13,
-
-                                                                      // color: Palette.containerDarknew,
-
-                                                                      // textColor: Palette.white,
 
                                                                     ),
 
@@ -698,20 +632,12 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                                       size: 13,
 
-                                                                      // color: Palette.containerDarknew,
-
-                                                                      // textColor: Palette.white
-
                                                                     ),
 
                                                                     tableHeadtext(
 
                                                                       'Variant Name',
                                                                       size: 13,
-
-                                                                      // color: Palette.containerDarknew,
-
-                                                                      // textColor: Palette.white
 
                                                                     ),
 
@@ -744,10 +670,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                                       size: 13,
 
-                                                                      // color: Palette.containerDarknew,
-
-                                                                      // textColor: Palette.white
-
                                                                     ),
 
                                                                     tableHeadtext(
@@ -755,10 +677,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                       'Qty',
 
                                                                       size: 13,
-
-                                                                      // color: Palette.containerDarknew,
-
-                                                                      // textColor: Palette.white
 
                                                                     ),
 
@@ -768,10 +686,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
 
                                                                       size: 13,
-
-                                                                      // color: Palette.containerDarknew,
-
-                                                                      // textColor: Palette.white
 
                                                                     ),
 
@@ -856,10 +770,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                                       size: 13,
 
-                                                                      // color: Palette.containerDarknew,
-
-                                                                      // textColor: Palette.white
-
                                                                     ),
 
                                                                     tableHeadtext(
@@ -874,21 +784,13 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                                     tableHeadtext(
                                                                       '',
-
                                                                       size: 13,
-                                                                      // color: Palette.containerDarknew,
-                                                                      // textColor: Palette.white
                                                                     ),
                                                                     tableHeadtext(
                                                                       '',
                                                                       size: 13,
-                                                                      // color: Palette.containerDarknew,
-                                                                      // textColor: Palette.white
+
                                                                     ),
-
-
-                                                                    // if (widget.onAddNew) textPadding(''),
-
                                                                   ]),
                                                               if(lines.isEmpty)...[
                                                                 TableRow(
@@ -962,16 +864,10 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                         TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding((i + 1).toString(),
-                                                                              // fontSize: 12,
-                                                                              // padding: EdgeInsets.only(left: 11.5, top:
-                                                                              // 1.5),
                                                                               fontWeight: FontWeight.w500),
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].variantId??"",
-                                                                              // fontSize: 12,
-                                                                              // padding: EdgeInsets.only(left: 11.5, top:
-                                                                              // 1.5),
                                                                               fontWeight: FontWeight.w500),
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1002,14 +898,14 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                             readOnly:lines[i].isInvoiced==true?true:false ,
 
                                                                             // controller: requestedListControllers[i],
-                                                                            last: lines?[i].totalQty.toString()??"",
+                                                                            last: lines?[i].requestedQty.toString()??"",
                                                                             onChanged: (va) {
                                                                               updateCheck=true;
                                                                               lines[i]=lines[i].copyWith(upDateCheck: true);
                                                                               print(va);
                                                                               if (va == "") {
                                                                                 print("entered");
-                                                                                lines[i] = lines[i].copyWith(totalQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                                                lines[i] = lines[i].copyWith(requestedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                               } else {
                                                                                 var qty = int.tryParse(va);
                                                                                 var dis = lines[i].discount;
@@ -1024,20 +920,11 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                                   var vactualCost;
 
                                                                                   Vamount  =vatableAmountUpdation(unitcost,qty,excess,dis);
-                                                                                  // (((unitcost! *
-                                                                                  // qty!) +
-                                                                                  // excess!) -
-                                                                                  // // dis!)
-                                                                                  // .toDouble();
                                                                                   if(vat==0 ||vat==""){
                                                                                     vactualCost=Vamount;
                                                                                   }
                                                                                   else{
                                                                                     vactualCost  =actualAndgrandTotalUpdation(Vamount,vat);
-                                                                                    // (Vamount! +
-                                                                                    //     ((Vamount! *
-                                                                                    //         vat!) /
-                                                                                    //         100));
                                                                                   }
 
 
@@ -1047,7 +934,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                                           vatableAmount: Vamount,
                                                                                           actualCost: vactualCost,
                                                                                           grandTotal: vactualCost,
-                                                                                          totalQty: qty);
+                                                                                          requestedQty: qty);
                                                                                 }
 
 
@@ -1058,12 +945,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                             },
                                                                           ),
                                                                         ),
-                                                                        // TableCell(
-                                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                        //   child: textPadding(lines?[i].totalQty.toString()??"", fontSize: 12,
-                                                                        //       padding: EdgeInsets.only(left: 11.5, top:
-                                                                        //       1.5), fontWeight: FontWeight.w500),
-                                                                        // ),
                                                                         TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].unitCost.toString()??"", fontSize: 12,
@@ -1260,7 +1141,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                   for (var i = 0; i < lines.length; i++) {
                                                     patchLists.add(PatchLiness(
                                                       foc: lines[i].foc ?? 0,
-                                                      totalQty: lines[i].totalQty ?? 0,
+                                                      totalQty: lines[i].requestedQty ?? 0,
                                                       returnOrderLineCode: lines[i]
                                                           .returnOrderLineCode ?? "",
                                                       isActive: lines[i].isActive ?? false,
@@ -1281,8 +1162,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                   });
                                                 }
-                                                print("patcghhhhhj"+patchLists.toString());
-
                                                 ReturnGeneralPatchModel model1 = ReturnGeneralPatchModel(
                                                   note: noteController.text??"",
                                                   remarks: remarksController.text??"",
@@ -1290,19 +1169,12 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                   grandTotal: double.tryParse( grandTotalCostController.text),
                                                   vatableAmount: double.tryParse( vatableAmountController.text),
                                                   discount: double.tryParse( discountController.text),
-
                                                   excessTax: double.tryParse(excessTaxController.text),
                                                   actualCost: double.tryParse(actualCostController.text),
                                                   vat: double.tryParse(vatController.text),
-
-
                                                   foc: double.tryParse(focController.text),
                                                   editedBy: Variable.created_by,
                                                   lines: patchLists??[],
-
-
-
-
                                                 );
                                                 PurchaseReturnGeneralPost model = PurchaseReturnGeneralPost(
                                                   orderType: orderTypeController?.text??"",

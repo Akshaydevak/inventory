@@ -585,7 +585,7 @@ mixin _$Liness {
   @JsonKey(name: "vendor_reference_code")
   String? get vendorRefrencecode => throw _privateConstructorUsedError;
   @JsonKey(name: "quantity")
-  int? get totalQty => throw _privateConstructorUsedError;
+  int? get requestedQty => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
   double? get unitCost => throw _privateConstructorUsedError;
   @JsonKey(name: "vatable_amount")
@@ -643,7 +643,7 @@ abstract class $LinessCopyWith<$Res> {
       @JsonKey(name: "vendor_reference_code")
           String? vendorRefrencecode,
       @JsonKey(name: "quantity")
-          int? totalQty,
+          int? requestedQty,
       @JsonKey(name: "unit_cost")
           double? unitCost,
       @JsonKey(name: "vatable_amount")
@@ -695,7 +695,7 @@ class _$LinessCopyWithImpl<$Res, $Val extends Liness>
     Object? variantId = freezed,
     Object? variantName = freezed,
     Object? vendorRefrencecode = freezed,
-    Object? totalQty = freezed,
+    Object? requestedQty = freezed,
     Object? unitCost = freezed,
     Object? vatableAmount = freezed,
     Object? excessTax = freezed,
@@ -758,9 +758,9 @@ class _$LinessCopyWithImpl<$Res, $Val extends Liness>
           ? _value.vendorRefrencecode
           : vendorRefrencecode // ignore: cast_nullable_to_non_nullable
               as String?,
-      totalQty: freezed == totalQty
-          ? _value.totalQty
-          : totalQty // ignore: cast_nullable_to_non_nullable
+      requestedQty: freezed == requestedQty
+          ? _value.requestedQty
+          : requestedQty // ignore: cast_nullable_to_non_nullable
               as int?,
       unitCost: freezed == unitCost
           ? _value.unitCost
@@ -842,7 +842,7 @@ abstract class _$$_LinessCopyWith<$Res> implements $LinessCopyWith<$Res> {
       @JsonKey(name: "vendor_reference_code")
           String? vendorRefrencecode,
       @JsonKey(name: "quantity")
-          int? totalQty,
+          int? requestedQty,
       @JsonKey(name: "unit_cost")
           double? unitCost,
       @JsonKey(name: "vatable_amount")
@@ -891,7 +891,7 @@ class __$$_LinessCopyWithImpl<$Res>
     Object? variantId = freezed,
     Object? variantName = freezed,
     Object? vendorRefrencecode = freezed,
-    Object? totalQty = freezed,
+    Object? requestedQty = freezed,
     Object? unitCost = freezed,
     Object? vatableAmount = freezed,
     Object? excessTax = freezed,
@@ -954,9 +954,9 @@ class __$$_LinessCopyWithImpl<$Res>
           ? _value.vendorRefrencecode
           : vendorRefrencecode // ignore: cast_nullable_to_non_nullable
               as String?,
-      totalQty: freezed == totalQty
-          ? _value.totalQty
-          : totalQty // ignore: cast_nullable_to_non_nullable
+      requestedQty: freezed == requestedQty
+          ? _value.requestedQty
+          : requestedQty // ignore: cast_nullable_to_non_nullable
               as int?,
       unitCost: freezed == unitCost
           ? _value.unitCost
@@ -1026,7 +1026,7 @@ class _$_Liness implements _Liness {
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_name") this.variantName,
       @JsonKey(name: "vendor_reference_code") this.vendorRefrencecode,
-      @JsonKey(name: "quantity") this.totalQty,
+      @JsonKey(name: "quantity") this.requestedQty,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "vatable_amount") this.vatableAmount,
       @JsonKey(name: "excess_tax") this.excessTax,
@@ -1077,7 +1077,7 @@ class _$_Liness implements _Liness {
   final String? vendorRefrencecode;
   @override
   @JsonKey(name: "quantity")
-  final int? totalQty;
+  final int? requestedQty;
   @override
   @JsonKey(name: "unit_cost")
   final double? unitCost;
@@ -1117,7 +1117,7 @@ class _$_Liness implements _Liness {
 
   @override
   String toString() {
-    return 'Liness(id: $id, foc: $foc, discount: $discount, vat: $vat, invoiceLineCode: $invoiceLineCode, purchaseInvoiceLineCode: $purchaseInvoiceLineCode, purchaseInvoiceLineId: $purchaseInvoiceLineId, purchaseInvoiceId: $purchaseInvoiceId, returnOrderLineCode: $returnOrderLineCode, variantId: $variantId, variantName: $variantName, vendorRefrencecode: $vendorRefrencecode, totalQty: $totalQty, unitCost: $unitCost, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, grandTotal: $grandTotal, barcode: $barcode, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isActive: $isActive, isInvoiced: $isInvoiced, upDateCheck: $upDateCheck)';
+    return 'Liness(id: $id, foc: $foc, discount: $discount, vat: $vat, invoiceLineCode: $invoiceLineCode, purchaseInvoiceLineCode: $purchaseInvoiceLineCode, purchaseInvoiceLineId: $purchaseInvoiceLineId, purchaseInvoiceId: $purchaseInvoiceId, returnOrderLineCode: $returnOrderLineCode, variantId: $variantId, variantName: $variantName, vendorRefrencecode: $vendorRefrencecode, requestedQty: $requestedQty, unitCost: $unitCost, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, grandTotal: $grandTotal, barcode: $barcode, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isActive: $isActive, isInvoiced: $isInvoiced, upDateCheck: $upDateCheck)';
   }
 
   @override
@@ -1147,8 +1147,8 @@ class _$_Liness implements _Liness {
                 other.variantName == variantName) &&
             (identical(other.vendorRefrencecode, vendorRefrencecode) ||
                 other.vendorRefrencecode == vendorRefrencecode) &&
-            (identical(other.totalQty, totalQty) ||
-                other.totalQty == totalQty) &&
+            (identical(other.requestedQty, requestedQty) ||
+                other.requestedQty == requestedQty) &&
             (identical(other.unitCost, unitCost) ||
                 other.unitCost == unitCost) &&
             (identical(other.vatableAmount, vatableAmount) ||
@@ -1189,7 +1189,7 @@ class _$_Liness implements _Liness {
         variantId,
         variantName,
         vendorRefrencecode,
-        totalQty,
+        requestedQty,
         unitCost,
         vatableAmount,
         excessTax,
@@ -1241,7 +1241,7 @@ abstract class _Liness implements Liness {
       @JsonKey(name: "vendor_reference_code")
           final String? vendorRefrencecode,
       @JsonKey(name: "quantity")
-          final int? totalQty,
+          final int? requestedQty,
       @JsonKey(name: "unit_cost")
           final double? unitCost,
       @JsonKey(name: "vatable_amount")
@@ -1303,7 +1303,7 @@ abstract class _Liness implements Liness {
   String? get vendorRefrencecode;
   @override
   @JsonKey(name: "quantity")
-  int? get totalQty;
+  int? get requestedQty;
   @override
   @JsonKey(name: "unit_cost")
   double? get unitCost;

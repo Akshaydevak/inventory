@@ -43,15 +43,10 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
   bool assignCheck = false;
   PurchaseOrderTableModel? purchaseTable;
   List<Liness>lines=List.from([]);
-
-
   PurchaseCureentStockQty? purchaseCurrentStock;
   List<int?> currentStock = [];
-
   TextEditingController unicostController = TextEditingController();
   var unitcostListControllers = <TextEditingController>[];
-
-
   Future _getCurrentUser() async {
     if (lines.isNotEmpty) {
       for (var i = 0; i < lines.length; i++) {
@@ -73,8 +68,6 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
 
 
   }
-
-
   double actualAndgrandTotalUpdation(double? vatableAmount,double? vat){
     double actualCost=0;
     actualCost = double.parse((vatableAmount! +
@@ -84,8 +77,6 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
     return actualCost;
 
   }
-
-
   void initState() {
     recieveController = AutoScrollController(
         viewportBoundaryGetter: () =>
@@ -93,21 +84,10 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
         axis: Axis.vertical);
     super.initState();
   }
-
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    // if(widget.select){
-    //   table1=[];
-    //   clears();
-    //
-    // }
-    // widget.select=false;
-
-
-    // clear=
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -133,12 +113,6 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                       var stockQty = purchaseCurrentStock?.StockQty;
                       currentStock.add(stockQty??0);
                       setState(() {});
-
-
-
-                      // }
-
-
                     });
               },
             ),
@@ -152,8 +126,6 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                     },
                     success: (data) {
                       print("data" + data.toString());
-                      // setState(() {
-                      //   print("taskssss");
                       data.lines != null ? lines =List.from( data?.lines ?? []) : lines = [];
                       _getCurrentUser();
 
@@ -168,7 +140,6 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
           child:
           CustomScrollBar(
             controller: recieveController,
-
             childs: Container(
               color: Colors.white,
               alignment: Alignment.topRight,
@@ -185,36 +156,15 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                         // padding: EdgeInsets.all(10),
                         child: customTable(
 
-
-
                             tableWidth: .5,
 
                             childrens:[
                               TableRow(
-
-                                // decoration: BoxDecoration(
-
-                                //     color: Colors.green.shade200,
-
-                                //     shape: BoxShape.rectangle,
-
-                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
                                   children: [
-
                                     tableHeadtext(
-
                                       'Sl.No',
                                       size: 13,
-
-                                      // color: Palette.containerDarknew,
-
-                                      // textColor: Palette.white,
-
                                     ),
-
-
-
                                     tableHeadtext(
                                       'Variant Id',
                                       size: 13,
@@ -314,49 +264,11 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                     tableHeadtext(
 
                                       'Is Invoiced',
-
-
-                                      size: 13,
-
-
-                                    ),
-
-                                    tableHeadtext(
-
-                                      'Is Free',
-
-
-                                      size: 13,
-
-                                      // color: Palette.containerDarknew,
-
-                                      // textColor: Palette.white
-
-                                    ),
-
-                                    tableHeadtext(
-
-                                      'Is Active',
-
-
-                                      size: 13,
-
-
-                                    ),
-
-                                    tableHeadtext(
-                                      '',
-
-                                      size: 13,
-                                      // color: Palette.containerDarknew,
-                                      // textColor: Palette.white
-                                    ),
-                                    tableHeadtext(
-                                      '',
-                                      size: 13,
-                                      // color: Palette.containerDarknew,
-                                      // textColor: Palette.white
-                                    ),
+                                      size: 13,),
+                                    tableHeadtext('Is Free', size: 13,),
+                                    tableHeadtext('Is Active', size: 13),
+                                    tableHeadtext('', size: 13,),
+                                    tableHeadtext('', size: 13,),
 
 
                                     // if (widget.onAddNew) textPadding(''),
@@ -369,18 +281,15 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                         shape: BoxShape.rectangle,
                                         border:  Border(
                                             left: BorderSide(
-
                                                 color: Color(0xff3E4F5B).withOpacity(.1),
                                                 width: .4,
                                                 style: BorderStyle.solid),
                                             bottom: BorderSide(
-
                                                 color:   Color(0xff3E4F5B).withOpacity(.1),
                                                 style: BorderStyle.solid),
                                             right: BorderSide(
                                                 color:   Color(0xff3E4F5B).withOpacity(.1),
                                                 width: .4,
-
                                                 style: BorderStyle.solid))),
                                     children: [
                                       textPadding(""),
@@ -434,16 +343,10 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: textPadding((i + 1).toString(),
-                                              // fontSize: 12,
-                                              // padding: EdgeInsets.only(left: 11.5, top:
-                                              // 1.5),
                                               fontWeight: FontWeight.w500),
                                         ),    TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: textPadding(lines?[i].variantId??"",
-                                              // fontSize: 12,
-                                              // padding: EdgeInsets.only(left: 11.5, top:
-                                              // 1.5),
                                               fontWeight: FontWeight.w500),
                                         ),    TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -474,14 +377,14 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                             readOnly:lines[i].isInvoiced==true?true:false ,
 
                                             // controller: requestedListControllers[i],
-                                            last: lines?[i].totalQty.toString()??"",
+                                            last: lines?[i].requestedQty.toString()??"",
                                             onChanged: (va) {
 
                                               lines[i]=lines[i].copyWith(upDateCheck: true);
                                               print(va);
                                               if (va == "") {
                                                 print("entered");
-                                                lines[i] = lines[i].copyWith(totalQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                lines[i] = lines[i].copyWith(requestedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                               } else {
                                                 var qty = int.tryParse(va);
                                                 var dis = lines[i].discount;
@@ -496,30 +399,20 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                                   var vactualCost;
 
                                                   Vamount  =vatableAmountUpdation(unitcost,qty,excess,dis);
-                                                  // (((unitcost! *
-                                                  // qty!) +
-                                                  // excess!) -
-                                                  // // dis!)
-                                                  // .toDouble();
+
                                                   if(vat==0 ||vat==""){
                                                     vactualCost=Vamount;
                                                   }
                                                   else{
                                                     vactualCost  =actualAndgrandTotalUpdation(Vamount,vat);
-                                                    // (Vamount! +
-                                                    //     ((Vamount! *
-                                                    //         vat!) /
-                                                    //         100));
                                                   }
-
-
                                                   lines[i] =
                                                       lines[i]
                                                           .copyWith(
                                                           vatableAmount: Vamount,
                                                           actualCost: vactualCost,
                                                           grandTotal: vactualCost,
-                                                          totalQty: qty);
+                                                          requestedQty: qty);
                                                 }
 
 

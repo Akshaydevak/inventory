@@ -145,13 +145,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
     setState(() {
       lines.clear();
       _myWidgetState.currentState?.lines.clear();
-      print("_myWidgetState.currentState?.lines.length");
-      print(_myWidgetState.currentState?.lines.length);
-
-
-
-
-
       purchaseReturnOrderCodeController.text = "";
       orderDateController.text =  "";
       paymentCodeController.text =  "";
@@ -187,10 +180,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
           create: (context) => InvoiceReadCubit(),
         ),
         BlocProvider(
-          create: (context) => InvoicepostCubit(),
-        ),
-
-
+          create: (context) => InvoicepostCubit(),),
       ],
       child: MultiBlocListener(
         listeners: [
@@ -376,20 +366,10 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                       text: "PREVIEW",
                                       onPress: () async {
                                         InventoryListModel model=InventoryListModel();
-
-
                                         UserPreferences userPref = UserPreferences();
                                         await userPref.getInventoryList().then((user) {
-                                          print("entereeeeeeeeeeeeeeeeeeed");
-
                                           if (user.isInventoryExist == true) {
                                             model=user;
-
-                                            // prefs.setString('token', user?.token ?? "");
-
-
-
-
                                           } else {
 
                                           }
@@ -398,7 +378,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) =>
-                                              PurchaseReturnInvoicePrintScreen(
+                                              PrintScreen(
                                                 table:lines,
                                                 pageName: "INVOICE SCREEN",
                                                 orderCode: purchaseInvoiceidController.text??"",
@@ -409,7 +389,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                 unitCost:double.tryParse( unitCostController.text) ,
                                                 excisetax:double.tryParse( excessTaxController.text) ,
                                                 model:model,
-                                                // remarks: remarks.text ,
                                               )
                                           ),
                                         );
@@ -417,7 +396,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                     ),
                                   ],
                                 ),
-
                                 InvoiceStableTable(
                                   returnInvoiceCode:
                                   returnInvoiceCodeController,
@@ -519,7 +497,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
 
                                             ));
-
                                       }
                                       else {
                                         PurchaseReturnInvoicePostModel model =

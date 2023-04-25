@@ -1519,7 +1519,7 @@ Future<Uint8List> _generatesPdf(PdfPageFormat format, String title,String orderD
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].totalQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].requestedQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
 
@@ -2439,7 +2439,7 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
                                         padding: pw.EdgeInsets.only(top: height*.019),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i]?.totalQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i]?.requestedQty.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
 
@@ -2792,6 +2792,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   final font = await PdfGoogleFonts.nunitoExtraLight();
+  final netImage = await networkImage(model.companyLogo??"");
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
 
   pdf.addPage(
@@ -2813,19 +2814,12 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      // pw.  Container(
-                      //
-                      //     height: 16,
-                      //     width: 16,
-                      //     // decoration: pw. BoxDecoration(
-                      //     //     image:pw. DecorationImage(
-                      //     //         image: NetworkImage("https://i.pinimg.com/736x/d2/53/fb/d253fbcb29b2c743b57816b23746fe12--portugal-national-team-cristiano-ronaldo-portugal.jpg")
-                      //     //     )
-                      //     // ),
-                      //     child: pw. Container(
-                      //         child: pw.Image(logo)),
-                      //
-                      //   ),
+                      pw.Container(
+                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103,vertical: 7),
+                        height:70 ,
+                        width: 70,
+                        child:pw.Image(netImage),
+                      ),
                       pw. Spacer(),
                       pw. Container(
                         margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
@@ -3200,14 +3194,6 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                   ),
 
 
-                                  // tableHeadtext(
-                                  //   'Is free',
-                                  //   padding:
-                                  //   EdgeInsets.all(15),
-                                  //   height: 80,
-                                  //   size: 13,
-                                  //     color:  Color(0xff1F6BA9)
-                                  // ),
 
 
                                 ]),
@@ -3390,8 +3376,8 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.Text("Discount:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw. Text(discount.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
+                                    pw.Text("Discount: ",style: pw.TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
+                                    pw. Text(discount?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
                                   ],
                                 ),
                               ),
@@ -3399,40 +3385,40 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                               pw. Container(
                                 child: pw.Row(
                                   children: [
-                                    pw. Text("UnitCost:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
-                                    pw. Text(unitCost.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
+                                    pw. Text("UnitCost: ",style: pw.TextStyle(fontWeight:pw.FontWeight.normal ,fontSize: 8 ),),
+                                    pw. Text(unitCost?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
                                   ],
                                 ),
                               ),
                               pw.  Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Excise Tax:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw. Text(excisetax.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+                                    pw. Text(excisetax?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
                               pw.Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("VAT Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw.Text(vat.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw. Text("VAT Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+                                    pw.Text(vat?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Taxable Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw.Text(taxableAmount.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.  Text("Taxable Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
+                                    pw.Text(taxableAmount?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
                               pw. Container(
                                 child:pw. Row(
                                   children: [
-                                    pw. Text("Selling Price:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw.Text(sellingPirce.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw. Text("Selling Price: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+                                    pw.Text(sellingPirce?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               )

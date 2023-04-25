@@ -250,7 +250,6 @@ var  paginatedList;
 
   }
   clear(){
-    // print("shammmma"+table.toString());
     orderTypeController.text="";
     orderType.text="";
     unitcostListControllers.clear();
@@ -490,8 +489,6 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                   var qty = table[Variable.tableindex].requestedQty;
                   var vat = table[Variable.tableindex].vat;
                   var excess = table[Variable.tableindex].excessTax;
-                  // var foc = table[i].foc;
-
                   var unitcost = table[Variable.tableindex].unitCost;
                   // print("unitcost" + unitcost.toString());
                   var Vdiscount = table[Variable.tableindex].discount;
@@ -578,10 +575,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
               print("Akshayaaaaa" + data.toString());
               purchaseCurrentStock = data;
               var stockQty = purchaseCurrentStock?.StockQty;
-              print("stockqty" + stockQty.toString());
-              print("stockCheck"+stockCheck.toString());
               if(stockCheck==false){
-                print("AKSKKSKSKSK");
+
                 currentStock.add(stockQty);
                 setState(() {
 

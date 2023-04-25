@@ -518,7 +518,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                           TableCellVerticalAlignment
                                               .middle,
                                           child: textPadding(
-                                              lines?[i].totalQty.toString() ??
+                                              lines?[i].requestedQty.toString() ??
                                                   "",
                                               fontSize:
                                               12,
@@ -534,85 +534,6 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
 
 
 
-                                        // TableCell(
-                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
-                                        //   child: UnderLinedInput(
-                                        //     initialCheck:true,
-                                        //     integerOnly: true,
-                                        //     // controller: requestedListControllers[i],
-                                        //     last: lines?[i].totalQty.toString()??"",
-                                        //     onChanged: (va) {
-                                        //       updateCheck=true;
-                                        //       lines[i]=lines[i].copyWith(updateCheck: true);
-                                        //       print(va);
-                                        //       if (va == "") {
-                                        //         print("entered");
-                                        //         lines[i] = lines[i].copyWith(totalQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
-                                        //       } else {
-                                        //         var qty = int.tryParse(va);
-                                        //         var dis = lines[i].discount;
-                                        //         var excess = lines[i].excessTax;
-                                        //         var unitcost = lines[i].unitCost;
-                                        //         var vat = lines[i].vat;
-                                        //         var foc = lines[i].foc;
-                                        //         if (qty == 0 || unitcost == 0 ||unitcost=="") {
-                                        //           lines[i] = lines[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
-                                        //         }else {
-                                        //           var Vamount;
-                                        //           var vactualCost;
-                                        //
-                                        //           Vamount  = (((unitcost! *
-                                        //               qty!) +
-                                        //               excess!) -
-                                        //               dis!)
-                                        //               .toDouble();
-                                        //           if(vat==0 ||vat==""){
-                                        //             vactualCost=Vamount;
-                                        //           }
-                                        //           else{
-                                        //             vactualCost  = (Vamount! +
-                                        //                 ((Vamount! *
-                                        //                     vat!) /
-                                        //                     100));
-                                        //           }
-                                        //
-                                        //
-                                        //           lines[i] = lines[i].copyWith(
-                                        //                   vatableAmount: Vamount,
-                                        //                   actualCost: vactualCost,
-                                        //                   grandTotal: vactualCost,
-                                        //                   totalQty: qty);
-                                        //         }
-                                        //
-                                        //
-                                        //
-                                        //       }
-                                        //
-                                        //       setState(() {});
-                                        //     },
-                                        //   ),
-                                        // ),
-
-                                        // TableCell(
-                                        //   verticalAlignment:
-                                        //       TableCellVerticalAlignment
-                                        //           .middle,
-                                        //   child: textPadding(
-                                        //       lines?[i]
-                                        //               .totalQty
-                                        //               .toString() ??
-                                        //           "",
-                                        //       fontSize:
-                                        //           12,
-                                        //       padding: EdgeInsets.only(
-                                        //           left:
-                                        //               11.5,
-                                        //           top:
-                                        //               1.5),
-                                        //       fontWeight:
-                                        //           FontWeight
-                                        //               .w500),
-                                        // ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment

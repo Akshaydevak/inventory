@@ -48,7 +48,7 @@ class Liness with _$Liness {
     @JsonKey(name:"variant_id") final String? variantId,
     @JsonKey(name:"variant_name") final String? variantName,
     @JsonKey(name:"vendor_reference_code") final String? vendorRefrencecode,
-    @JsonKey(name:"quantity") final int? totalQty,
+    @JsonKey(name:"quantity") final int? requestedQty,
     @JsonKey(name:"unit_cost") final double? unitCost,
     @JsonKey(name:"vatable_amount") final double? vatableAmount,
     @JsonKey(name:"excess_tax") final double? excessTax,
