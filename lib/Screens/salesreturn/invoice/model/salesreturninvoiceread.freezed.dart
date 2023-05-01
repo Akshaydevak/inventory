@@ -729,19 +729,23 @@ mixin _$SalesReturnLinesOrderLines {
   @JsonKey(name: "warranty_id")
   String? get warrantyId => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_uom")
-  String? get salesUOM => throw _privateConstructorUsedError;
+  String? get salesUom => throw _privateConstructorUsedError;
   @JsonKey(name: "discount_type")
   String? get discountType => throw _privateConstructorUsedError;
   @JsonKey(name: "return_type")
   String? get returnType => throw _privateConstructorUsedError;
   @JsonKey(name: "return_time")
-  String? get returnTime => throw _privateConstructorUsedError;
+  int? get returnTime => throw _privateConstructorUsedError;
   @JsonKey(name: "total_qty")
   int? get totalQty => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_return_order_id")
   int? get salesReturnOrderLineId => throw _privateConstructorUsedError;
   @JsonKey(name: "is_invoiced", defaultValue: false)
   bool? get isInvoiced => throw _privateConstructorUsedError;
+  @JsonKey(name: "update_check", defaultValue: false)
+  bool? get updateCheck => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_Edited", defaultValue: false)
+  bool? get isEdit => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
   double? get unitCost => throw _privateConstructorUsedError;
   @JsonKey(name: "excess_tax")
@@ -749,7 +753,7 @@ mixin _$SalesReturnLinesOrderLines {
   @JsonKey(name: "taxable_amount")
   double? get taxableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "selling_price")
-  double? get sellingPriceTotal => throw _privateConstructorUsedError;
+  double? get sellingPrice => throw _privateConstructorUsedError;
   @JsonKey(name: "total_price")
   double? get totalPrice => throw _privateConstructorUsedError;
   @JsonKey(name: "warranty_price")
@@ -789,19 +793,23 @@ abstract class $SalesReturnLinesOrderLinesCopyWith<$Res> {
       @JsonKey(name: "warranty_id")
           String? warrantyId,
       @JsonKey(name: "sales_uom")
-          String? salesUOM,
+          String? salesUom,
       @JsonKey(name: "discount_type")
           String? discountType,
       @JsonKey(name: "return_type")
           String? returnType,
       @JsonKey(name: "return_time")
-          String? returnTime,
+          int? returnTime,
       @JsonKey(name: "total_qty")
           int? totalQty,
       @JsonKey(name: "sales_return_order_id")
           int? salesReturnOrderLineId,
       @JsonKey(name: "is_invoiced", defaultValue: false)
           bool? isInvoiced,
+      @JsonKey(name: "update_check", defaultValue: false)
+          bool? updateCheck,
+      @JsonKey(name: "is_Edited", defaultValue: false)
+          bool? isEdit,
       @JsonKey(name: "unit_cost")
           double? unitCost,
       @JsonKey(name: "excess_tax")
@@ -809,7 +817,7 @@ abstract class $SalesReturnLinesOrderLinesCopyWith<$Res> {
       @JsonKey(name: "taxable_amount")
           double? taxableAmount,
       @JsonKey(name: "selling_price")
-          double? sellingPriceTotal,
+          double? sellingPrice,
       @JsonKey(name: "total_price")
           double? totalPrice,
       @JsonKey(name: "warranty_price")
@@ -842,17 +850,19 @@ class _$SalesReturnLinesOrderLinesCopyWithImpl<$Res,
     Object? invoiceReturnLineCode = freezed,
     Object? stockId = freezed,
     Object? warrantyId = freezed,
-    Object? salesUOM = freezed,
+    Object? salesUom = freezed,
     Object? discountType = freezed,
     Object? returnType = freezed,
     Object? returnTime = freezed,
     Object? totalQty = freezed,
     Object? salesReturnOrderLineId = freezed,
     Object? isInvoiced = freezed,
+    Object? updateCheck = freezed,
+    Object? isEdit = freezed,
     Object? unitCost = freezed,
     Object? excessTax = freezed,
     Object? taxableAmount = freezed,
-    Object? sellingPriceTotal = freezed,
+    Object? sellingPrice = freezed,
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
   }) {
@@ -905,9 +915,9 @@ class _$SalesReturnLinesOrderLinesCopyWithImpl<$Res,
           ? _value.warrantyId
           : warrantyId // ignore: cast_nullable_to_non_nullable
               as String?,
-      salesUOM: freezed == salesUOM
-          ? _value.salesUOM
-          : salesUOM // ignore: cast_nullable_to_non_nullable
+      salesUom: freezed == salesUom
+          ? _value.salesUom
+          : salesUom // ignore: cast_nullable_to_non_nullable
               as String?,
       discountType: freezed == discountType
           ? _value.discountType
@@ -920,7 +930,7 @@ class _$SalesReturnLinesOrderLinesCopyWithImpl<$Res,
       returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       totalQty: freezed == totalQty
           ? _value.totalQty
           : totalQty // ignore: cast_nullable_to_non_nullable
@@ -932,6 +942,14 @@ class _$SalesReturnLinesOrderLinesCopyWithImpl<$Res,
       isInvoiced: freezed == isInvoiced
           ? _value.isInvoiced
           : isInvoiced // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      updateCheck: freezed == updateCheck
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isEdit: freezed == isEdit
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
               as bool?,
       unitCost: freezed == unitCost
           ? _value.unitCost
@@ -945,9 +963,9 @@ class _$SalesReturnLinesOrderLinesCopyWithImpl<$Res,
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: freezed == sellingPriceTotal
-          ? _value.sellingPriceTotal
-          : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
+      sellingPrice: freezed == sellingPrice
+          ? _value.sellingPrice
+          : sellingPrice // ignore: cast_nullable_to_non_nullable
               as double?,
       totalPrice: freezed == totalPrice
           ? _value.totalPrice
@@ -991,19 +1009,23 @@ abstract class _$$_SalesReturnLinesOrderLinesCopyWith<$Res>
       @JsonKey(name: "warranty_id")
           String? warrantyId,
       @JsonKey(name: "sales_uom")
-          String? salesUOM,
+          String? salesUom,
       @JsonKey(name: "discount_type")
           String? discountType,
       @JsonKey(name: "return_type")
           String? returnType,
       @JsonKey(name: "return_time")
-          String? returnTime,
+          int? returnTime,
       @JsonKey(name: "total_qty")
           int? totalQty,
       @JsonKey(name: "sales_return_order_id")
           int? salesReturnOrderLineId,
       @JsonKey(name: "is_invoiced", defaultValue: false)
           bool? isInvoiced,
+      @JsonKey(name: "update_check", defaultValue: false)
+          bool? updateCheck,
+      @JsonKey(name: "is_Edited", defaultValue: false)
+          bool? isEdit,
       @JsonKey(name: "unit_cost")
           double? unitCost,
       @JsonKey(name: "excess_tax")
@@ -1011,7 +1033,7 @@ abstract class _$$_SalesReturnLinesOrderLinesCopyWith<$Res>
       @JsonKey(name: "taxable_amount")
           double? taxableAmount,
       @JsonKey(name: "selling_price")
-          double? sellingPriceTotal,
+          double? sellingPrice,
       @JsonKey(name: "total_price")
           double? totalPrice,
       @JsonKey(name: "warranty_price")
@@ -1043,17 +1065,19 @@ class __$$_SalesReturnLinesOrderLinesCopyWithImpl<$Res>
     Object? invoiceReturnLineCode = freezed,
     Object? stockId = freezed,
     Object? warrantyId = freezed,
-    Object? salesUOM = freezed,
+    Object? salesUom = freezed,
     Object? discountType = freezed,
     Object? returnType = freezed,
     Object? returnTime = freezed,
     Object? totalQty = freezed,
     Object? salesReturnOrderLineId = freezed,
     Object? isInvoiced = freezed,
+    Object? updateCheck = freezed,
+    Object? isEdit = freezed,
     Object? unitCost = freezed,
     Object? excessTax = freezed,
     Object? taxableAmount = freezed,
-    Object? sellingPriceTotal = freezed,
+    Object? sellingPrice = freezed,
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
   }) {
@@ -1106,9 +1130,9 @@ class __$$_SalesReturnLinesOrderLinesCopyWithImpl<$Res>
           ? _value.warrantyId
           : warrantyId // ignore: cast_nullable_to_non_nullable
               as String?,
-      salesUOM: freezed == salesUOM
-          ? _value.salesUOM
-          : salesUOM // ignore: cast_nullable_to_non_nullable
+      salesUom: freezed == salesUom
+          ? _value.salesUom
+          : salesUom // ignore: cast_nullable_to_non_nullable
               as String?,
       discountType: freezed == discountType
           ? _value.discountType
@@ -1121,7 +1145,7 @@ class __$$_SalesReturnLinesOrderLinesCopyWithImpl<$Res>
       returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       totalQty: freezed == totalQty
           ? _value.totalQty
           : totalQty // ignore: cast_nullable_to_non_nullable
@@ -1133,6 +1157,14 @@ class __$$_SalesReturnLinesOrderLinesCopyWithImpl<$Res>
       isInvoiced: freezed == isInvoiced
           ? _value.isInvoiced
           : isInvoiced // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      updateCheck: freezed == updateCheck
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isEdit: freezed == isEdit
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
               as bool?,
       unitCost: freezed == unitCost
           ? _value.unitCost
@@ -1146,9 +1178,9 @@ class __$$_SalesReturnLinesOrderLinesCopyWithImpl<$Res>
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: freezed == sellingPriceTotal
-          ? _value.sellingPriceTotal
-          : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
+      sellingPrice: freezed == sellingPrice
+          ? _value.sellingPrice
+          : sellingPrice // ignore: cast_nullable_to_non_nullable
               as double?,
       totalPrice: freezed == totalPrice
           ? _value.totalPrice
@@ -1186,7 +1218,7 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
       @JsonKey(name: "warranty_id")
           this.warrantyId,
       @JsonKey(name: "sales_uom")
-          this.salesUOM,
+          this.salesUom,
       @JsonKey(name: "discount_type")
           this.discountType,
       @JsonKey(name: "return_type")
@@ -1199,6 +1231,10 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
           this.salesReturnOrderLineId,
       @JsonKey(name: "is_invoiced", defaultValue: false)
           this.isInvoiced,
+      @JsonKey(name: "update_check", defaultValue: false)
+          this.updateCheck,
+      @JsonKey(name: "is_Edited", defaultValue: false)
+          this.isEdit,
       @JsonKey(name: "unit_cost")
           this.unitCost,
       @JsonKey(name: "excess_tax")
@@ -1206,7 +1242,7 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
       @JsonKey(name: "taxable_amount")
           this.taxableAmount,
       @JsonKey(name: "selling_price")
-          this.sellingPriceTotal,
+          this.sellingPrice,
       @JsonKey(name: "total_price")
           this.totalPrice,
       @JsonKey(name: "warranty_price")
@@ -1248,7 +1284,7 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
   final String? warrantyId;
   @override
   @JsonKey(name: "sales_uom")
-  final String? salesUOM;
+  final String? salesUom;
   @override
   @JsonKey(name: "discount_type")
   final String? discountType;
@@ -1257,7 +1293,7 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
   final String? returnType;
   @override
   @JsonKey(name: "return_time")
-  final String? returnTime;
+  final int? returnTime;
   @override
   @JsonKey(name: "total_qty")
   final int? totalQty;
@@ -1267,6 +1303,12 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
   @override
   @JsonKey(name: "is_invoiced", defaultValue: false)
   final bool? isInvoiced;
+  @override
+  @JsonKey(name: "update_check", defaultValue: false)
+  final bool? updateCheck;
+  @override
+  @JsonKey(name: "is_Edited", defaultValue: false)
+  final bool? isEdit;
   @override
   @JsonKey(name: "unit_cost")
   final double? unitCost;
@@ -1278,7 +1320,7 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
   final double? taxableAmount;
   @override
   @JsonKey(name: "selling_price")
-  final double? sellingPriceTotal;
+  final double? sellingPrice;
   @override
   @JsonKey(name: "total_price")
   final double? totalPrice;
@@ -1288,7 +1330,7 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
 
   @override
   String toString() {
-    return 'SalesReturnLinesOrderLines(id: $id, quantity: $quantity, barcode: $barcode, discount: $discount, vat: $vat, variantId: $variantId, inventoryId: $inventoryId, invoiceLineId: $invoiceLineId, salesReturnOrderLineCode: $salesReturnOrderLineCode, invoiceReturnLineCode: $invoiceReturnLineCode, stockId: $stockId, warrantyId: $warrantyId, salesUOM: $salesUOM, discountType: $discountType, returnType: $returnType, returnTime: $returnTime, totalQty: $totalQty, salesReturnOrderLineId: $salesReturnOrderLineId, isInvoiced: $isInvoiced, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice)';
+    return 'SalesReturnLinesOrderLines(id: $id, quantity: $quantity, barcode: $barcode, discount: $discount, vat: $vat, variantId: $variantId, inventoryId: $inventoryId, invoiceLineId: $invoiceLineId, salesReturnOrderLineCode: $salesReturnOrderLineCode, invoiceReturnLineCode: $invoiceReturnLineCode, stockId: $stockId, warrantyId: $warrantyId, salesUom: $salesUom, discountType: $discountType, returnType: $returnType, returnTime: $returnTime, totalQty: $totalQty, salesReturnOrderLineId: $salesReturnOrderLineId, isInvoiced: $isInvoiced, updateCheck: $updateCheck, isEdit: $isEdit, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPrice: $sellingPrice, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice)';
   }
 
   @override
@@ -1317,8 +1359,8 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
             (identical(other.stockId, stockId) || other.stockId == stockId) &&
             (identical(other.warrantyId, warrantyId) ||
                 other.warrantyId == warrantyId) &&
-            (identical(other.salesUOM, salesUOM) ||
-                other.salesUOM == salesUOM) &&
+            (identical(other.salesUom, salesUom) ||
+                other.salesUom == salesUom) &&
             (identical(other.discountType, discountType) ||
                 other.discountType == discountType) &&
             (identical(other.returnType, returnType) ||
@@ -1331,14 +1373,17 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
                 other.salesReturnOrderLineId == salesReturnOrderLineId) &&
             (identical(other.isInvoiced, isInvoiced) ||
                 other.isInvoiced == isInvoiced) &&
+            (identical(other.updateCheck, updateCheck) ||
+                other.updateCheck == updateCheck) &&
+            (identical(other.isEdit, isEdit) || other.isEdit == isEdit) &&
             (identical(other.unitCost, unitCost) ||
                 other.unitCost == unitCost) &&
             (identical(other.excessTax, excessTax) ||
                 other.excessTax == excessTax) &&
             (identical(other.taxableAmount, taxableAmount) ||
                 other.taxableAmount == taxableAmount) &&
-            (identical(other.sellingPriceTotal, sellingPriceTotal) ||
-                other.sellingPriceTotal == sellingPriceTotal) &&
+            (identical(other.sellingPrice, sellingPrice) ||
+                other.sellingPrice == sellingPrice) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
             (identical(other.warrentyPrice, warrentyPrice) ||
@@ -1361,17 +1406,19 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
         invoiceReturnLineCode,
         stockId,
         warrantyId,
-        salesUOM,
+        salesUom,
         discountType,
         returnType,
         returnTime,
         totalQty,
         salesReturnOrderLineId,
         isInvoiced,
+        updateCheck,
+        isEdit,
         unitCost,
         excessTax,
         taxableAmount,
-        sellingPriceTotal,
+        sellingPrice,
         totalPrice,
         warrentyPrice
       ]);
@@ -1414,19 +1461,23 @@ abstract class _SalesReturnLinesOrderLines
       @JsonKey(name: "warranty_id")
           final String? warrantyId,
       @JsonKey(name: "sales_uom")
-          final String? salesUOM,
+          final String? salesUom,
       @JsonKey(name: "discount_type")
           final String? discountType,
       @JsonKey(name: "return_type")
           final String? returnType,
       @JsonKey(name: "return_time")
-          final String? returnTime,
+          final int? returnTime,
       @JsonKey(name: "total_qty")
           final int? totalQty,
       @JsonKey(name: "sales_return_order_id")
           final int? salesReturnOrderLineId,
       @JsonKey(name: "is_invoiced", defaultValue: false)
           final bool? isInvoiced,
+      @JsonKey(name: "update_check", defaultValue: false)
+          final bool? updateCheck,
+      @JsonKey(name: "is_Edited", defaultValue: false)
+          final bool? isEdit,
       @JsonKey(name: "unit_cost")
           final double? unitCost,
       @JsonKey(name: "excess_tax")
@@ -1434,7 +1485,7 @@ abstract class _SalesReturnLinesOrderLines
       @JsonKey(name: "taxable_amount")
           final double? taxableAmount,
       @JsonKey(name: "selling_price")
-          final double? sellingPriceTotal,
+          final double? sellingPrice,
       @JsonKey(name: "total_price")
           final double? totalPrice,
       @JsonKey(name: "warranty_price")
@@ -1476,7 +1527,7 @@ abstract class _SalesReturnLinesOrderLines
   String? get warrantyId;
   @override
   @JsonKey(name: "sales_uom")
-  String? get salesUOM;
+  String? get salesUom;
   @override
   @JsonKey(name: "discount_type")
   String? get discountType;
@@ -1485,7 +1536,7 @@ abstract class _SalesReturnLinesOrderLines
   String? get returnType;
   @override
   @JsonKey(name: "return_time")
-  String? get returnTime;
+  int? get returnTime;
   @override
   @JsonKey(name: "total_qty")
   int? get totalQty;
@@ -1495,6 +1546,12 @@ abstract class _SalesReturnLinesOrderLines
   @override
   @JsonKey(name: "is_invoiced", defaultValue: false)
   bool? get isInvoiced;
+  @override
+  @JsonKey(name: "update_check", defaultValue: false)
+  bool? get updateCheck;
+  @override
+  @JsonKey(name: "is_Edited", defaultValue: false)
+  bool? get isEdit;
   @override
   @JsonKey(name: "unit_cost")
   double? get unitCost;
@@ -1506,7 +1563,7 @@ abstract class _SalesReturnLinesOrderLines
   double? get taxableAmount;
   @override
   @JsonKey(name: "selling_price")
-  double? get sellingPriceTotal;
+  double? get sellingPrice;
   @override
   @JsonKey(name: "total_price")
   double? get totalPrice;
@@ -1569,8 +1626,8 @@ mixin _$InvoicedDatasSalesReturn {
   double? get totalPrice => throw _privateConstructorUsedError;
   @JsonKey(name: "warranty_price")
   double? get warrentyPrice => throw _privateConstructorUsedError;
-  @JsonKey(name: "invoice_lines")
-  List<SalesReturnLinesOrderLines>? get lines =>
+  @JsonKey(name: "return_invoice_lines")
+  List<SalesReturnLinesOrderLines>? get returnInvoicelines =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1629,8 +1686,8 @@ abstract class $InvoicedDatasSalesReturnCopyWith<$Res> {
           double? totalPrice,
       @JsonKey(name: "warranty_price")
           double? warrentyPrice,
-      @JsonKey(name: "invoice_lines")
-          List<SalesReturnLinesOrderLines>? lines});
+      @JsonKey(name: "return_invoice_lines")
+          List<SalesReturnLinesOrderLines>? returnInvoicelines});
 }
 
 /// @nodoc
@@ -1672,7 +1729,7 @@ class _$InvoicedDatasSalesReturnCopyWithImpl<$Res,
     Object? sellingPriceTotal = freezed,
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
-    Object? lines = freezed,
+    Object? returnInvoicelines = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1775,9 +1832,9 @@ class _$InvoicedDatasSalesReturnCopyWithImpl<$Res,
           ? _value.warrentyPrice
           : warrentyPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      lines: freezed == lines
-          ? _value.lines
-          : lines // ignore: cast_nullable_to_non_nullable
+      returnInvoicelines: freezed == returnInvoicelines
+          ? _value.returnInvoicelines
+          : returnInvoicelines // ignore: cast_nullable_to_non_nullable
               as List<SalesReturnLinesOrderLines>?,
     ) as $Val);
   }
@@ -1836,8 +1893,8 @@ abstract class _$$_InvoicedDatasSalesReturnCopyWith<$Res>
           double? totalPrice,
       @JsonKey(name: "warranty_price")
           double? warrentyPrice,
-      @JsonKey(name: "invoice_lines")
-          List<SalesReturnLinesOrderLines>? lines});
+      @JsonKey(name: "return_invoice_lines")
+          List<SalesReturnLinesOrderLines>? returnInvoicelines});
 }
 
 /// @nodoc
@@ -1877,7 +1934,7 @@ class __$$_InvoicedDatasSalesReturnCopyWithImpl<$Res>
     Object? sellingPriceTotal = freezed,
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
-    Object? lines = freezed,
+    Object? returnInvoicelines = freezed,
   }) {
     return _then(_$_InvoicedDatasSalesReturn(
       id: freezed == id
@@ -1980,9 +2037,9 @@ class __$$_InvoicedDatasSalesReturnCopyWithImpl<$Res>
           ? _value.warrentyPrice
           : warrentyPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      lines: freezed == lines
-          ? _value._lines
-          : lines // ignore: cast_nullable_to_non_nullable
+      returnInvoicelines: freezed == returnInvoicelines
+          ? _value._returnInvoicelines
+          : returnInvoicelines // ignore: cast_nullable_to_non_nullable
               as List<SalesReturnLinesOrderLines>?,
     ));
   }
@@ -2035,9 +2092,9 @@ class _$_InvoicedDatasSalesReturn implements _InvoicedDatasSalesReturn {
           this.totalPrice,
       @JsonKey(name: "warranty_price")
           this.warrentyPrice,
-      @JsonKey(name: "invoice_lines")
-          final List<SalesReturnLinesOrderLines>? lines})
-      : _lines = lines;
+      @JsonKey(name: "return_invoice_lines")
+          final List<SalesReturnLinesOrderLines>? returnInvoicelines})
+      : _returnInvoicelines = returnInvoicelines;
 
   factory _$_InvoicedDatasSalesReturn.fromJson(Map<String, dynamic> json) =>
       _$$_InvoicedDatasSalesReturnFromJson(json);
@@ -2110,11 +2167,11 @@ class _$_InvoicedDatasSalesReturn implements _InvoicedDatasSalesReturn {
   @override
   @JsonKey(name: "warranty_price")
   final double? warrentyPrice;
-  final List<SalesReturnLinesOrderLines>? _lines;
+  final List<SalesReturnLinesOrderLines>? _returnInvoicelines;
   @override
-  @JsonKey(name: "invoice_lines")
-  List<SalesReturnLinesOrderLines>? get lines {
-    final value = _lines;
+  @JsonKey(name: "return_invoice_lines")
+  List<SalesReturnLinesOrderLines>? get returnInvoicelines {
+    final value = _returnInvoicelines;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
@@ -2122,7 +2179,7 @@ class _$_InvoicedDatasSalesReturn implements _InvoicedDatasSalesReturn {
 
   @override
   String toString() {
-    return 'InvoicedDatasSalesReturn(id: $id, quantity: $quantity, barcode: $barcode, notes: $notes, remarks: $remarks, discount: $discount, vat: $vat, salesReturnOrderCode: $salesReturnOrderCode, salesReturnInvoiceCode: $salesReturnInvoiceCode, inventoryId: $inventoryId, customerId: $customerId, customerTrnNumber: $customerTrnNumber, invoicedBy: $invoicedBy, createdDate: $createdDate, invoiceStatus: $invoiceStatus, paymentMethod: $paymentMethod, paymentStatus: $paymentStatus, paymentCode: $paymentCode, assignedTo: $assignedTo, excessTax: $excessTax, unitCost: $unitCost, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice, lines: $lines)';
+    return 'InvoicedDatasSalesReturn(id: $id, quantity: $quantity, barcode: $barcode, notes: $notes, remarks: $remarks, discount: $discount, vat: $vat, salesReturnOrderCode: $salesReturnOrderCode, salesReturnInvoiceCode: $salesReturnInvoiceCode, inventoryId: $inventoryId, customerId: $customerId, customerTrnNumber: $customerTrnNumber, invoicedBy: $invoicedBy, createdDate: $createdDate, invoiceStatus: $invoiceStatus, paymentMethod: $paymentMethod, paymentStatus: $paymentStatus, paymentCode: $paymentCode, assignedTo: $assignedTo, excessTax: $excessTax, unitCost: $unitCost, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice, returnInvoicelines: $returnInvoicelines)';
   }
 
   @override
@@ -2175,7 +2232,8 @@ class _$_InvoicedDatasSalesReturn implements _InvoicedDatasSalesReturn {
                 other.totalPrice == totalPrice) &&
             (identical(other.warrentyPrice, warrentyPrice) ||
                 other.warrentyPrice == warrentyPrice) &&
-            const DeepCollectionEquality().equals(other._lines, _lines));
+            const DeepCollectionEquality()
+                .equals(other._returnInvoicelines, _returnInvoicelines));
   }
 
   @JsonKey(ignore: true)
@@ -2207,7 +2265,7 @@ class _$_InvoicedDatasSalesReturn implements _InvoicedDatasSalesReturn {
         sellingPriceTotal,
         totalPrice,
         warrentyPrice,
-        const DeepCollectionEquality().hash(_lines)
+        const DeepCollectionEquality().hash(_returnInvoicelines)
       ]);
 
   @JsonKey(ignore: true)
@@ -2270,8 +2328,8 @@ abstract class _InvoicedDatasSalesReturn implements InvoicedDatasSalesReturn {
               final double? totalPrice,
           @JsonKey(name: "warranty_price")
               final double? warrentyPrice,
-          @JsonKey(name: "invoice_lines")
-              final List<SalesReturnLinesOrderLines>? lines}) =
+          @JsonKey(name: "return_invoice_lines")
+              final List<SalesReturnLinesOrderLines>? returnInvoicelines}) =
       _$_InvoicedDatasSalesReturn;
 
   factory _InvoicedDatasSalesReturn.fromJson(Map<String, dynamic> json) =
@@ -2346,8 +2404,8 @@ abstract class _InvoicedDatasSalesReturn implements InvoicedDatasSalesReturn {
   @JsonKey(name: "warranty_price")
   double? get warrentyPrice;
   @override
-  @JsonKey(name: "invoice_lines")
-  List<SalesReturnLinesOrderLines>? get lines;
+  @JsonKey(name: "return_invoice_lines")
+  List<SalesReturnLinesOrderLines>? get returnInvoicelines;
   @override
   @JsonKey(ignore: true)
   _$$_InvoicedDatasSalesReturnCopyWith<_$_InvoicedDatasSalesReturn>

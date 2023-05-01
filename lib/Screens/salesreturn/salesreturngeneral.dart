@@ -276,6 +276,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                             // orderDateController.text= data?.returnOrderDate??"";
                             orderDateController=TextEditingController(text:data?.returnOrderDate ==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data?.returnOrderDate??"")));
                             cstomerIdController.text= data?.customerId??"";
+                            returnOrderCodeController.text= data?.salesReturnOrderCode??"";
                             trnController.text= data?.trnNumber??"";
                             salesInvoiceCodeController.text= data?.salesInvoiceId??"";
                             shippingAddressIdController.text= data?.shippingAddressId??"";
@@ -435,6 +436,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                       clear();
                                       // _myWidgetState.currentState?.cl();
                                       _myWidgetState.currentState?.table1=[];
+                                      _myWidgetState.currentState?.currentStock=[];
 
                                       veritiaclid = result[index].id;
                                       context
@@ -485,6 +487,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                                 table= [];
                                                 clear();
                                                 _myWidgetState.currentState?.table1=[];
+                                                _myWidgetState.currentState?.currentStock=[];
                                               });
                                             },
                                             // icon: Icon(Icons.refresh),

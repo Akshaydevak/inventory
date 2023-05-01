@@ -15759,7 +15759,7 @@ class _PurchaseReturnInvoicePaymentPopUpState extends State<PurchaseReturnInvoic
                     print("error");
                   },
                   success: (list) {
-                    print("successssssssssssssssssssssss");
+                    print("PAYMENYT STATUSSSSSSSSSSSSSSSSSSSSSSSSSSS");
                     results=list.data;
                     if(results.isNotEmpty){
                       methodCode=results[0].code??"";

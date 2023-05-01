@@ -47,20 +47,22 @@ class SalesReturnLinesOrderLines with _$SalesReturnLinesOrderLines {
     @JsonKey(name: "invoice_return_line_code") final String? invoiceReturnLineCode,
     @JsonKey(name: "stock_id") final String? stockId,
     @JsonKey(name: "warranty_id") final String? warrantyId,
-    @JsonKey(name: "sales_uom") final String? salesUOM,
+    @JsonKey(name: "sales_uom") final String? salesUom,
     @JsonKey(name: "discount_type") final String? discountType,
     @JsonKey(name: "return_type") final String? returnType,
-    @JsonKey(name: "return_time") final String? returnTime,
+    @JsonKey(name: "return_time") final int? returnTime,
     @JsonKey(name: "total_qty") final int? totalQty,
     @JsonKey(name: "sales_return_order_id") final int? salesReturnOrderLineId,
     @JsonKey(name: "is_invoiced",defaultValue: false) final bool? isInvoiced,
+    @JsonKey(name: "update_check",defaultValue: false) final bool? updateCheck,
+    @JsonKey(name: "is_Edited",defaultValue: false) final bool? isEdit,
 
 
 
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "taxable_amount") final double? taxableAmount,
-    @JsonKey(name: "selling_price") final double? sellingPriceTotal,
+    @JsonKey(name: "selling_price") final double? sellingPrice,
     @JsonKey(name: "total_price") final double? totalPrice,
     @JsonKey(name: "warranty_price") final double? warrentyPrice,
   }) = _SalesReturnLinesOrderLines;
@@ -97,7 +99,7 @@ class InvoicedDatasSalesReturn with _$InvoicedDatasSalesReturn {
     @JsonKey(name: "selling_price_total") final double? sellingPriceTotal,
     @JsonKey(name: "total_price") final double? totalPrice,
     @JsonKey(name: "warranty_price") final double? warrentyPrice,
-    @JsonKey(name: "invoice_lines") final List<SalesReturnLinesOrderLines>? lines,
+    @JsonKey(name: "return_invoice_lines") final List<SalesReturnLinesOrderLines>? returnInvoicelines,
   }) = _InvoicedDatasSalesReturn;
   factory InvoicedDatasSalesReturn.fromJson(Map<String, dynamic> json) =>
       _$InvoicedDatasSalesReturnFromJson(json);

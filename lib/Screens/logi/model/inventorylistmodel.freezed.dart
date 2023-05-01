@@ -41,6 +41,8 @@ mixin _$InventoryListModel {
   String? get landMark => throw _privateConstructorUsedError;
   @JsonKey(name: "company_logo")
   String? get companyLogo => throw _privateConstructorUsedError;
+  @JsonKey(name: "store_logo")
+  String? get storeLogo => throw _privateConstructorUsedError;
   @JsonKey(name: "user_id")
   String? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: "business_addres")
@@ -73,6 +75,7 @@ abstract class $InventoryListModelCopyWith<$Res> {
       @JsonKey(name: "address_two") String? addressTwo,
       @JsonKey(name: "land_mark") String? landMark,
       @JsonKey(name: "company_logo") String? companyLogo,
+      @JsonKey(name: "store_logo") String? storeLogo,
       @JsonKey(name: "user_id") String? userId,
       @JsonKey(name: "business_addres") int? businessAddress});
 
@@ -106,6 +109,7 @@ class _$InventoryListModelCopyWithImpl<$Res, $Val extends InventoryListModel>
     Object? addressTwo = freezed,
     Object? landMark = freezed,
     Object? companyLogo = freezed,
+    Object? storeLogo = freezed,
     Object? userId = freezed,
     Object? businessAddress = freezed,
   }) {
@@ -166,6 +170,10 @@ class _$InventoryListModelCopyWithImpl<$Res, $Val extends InventoryListModel>
           ? _value.companyLogo
           : companyLogo // ignore: cast_nullable_to_non_nullable
               as String?,
+      storeLogo: freezed == storeLogo
+          ? _value.storeLogo
+          : storeLogo // ignore: cast_nullable_to_non_nullable
+              as String?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -213,6 +221,7 @@ abstract class _$$_InventoryListModelCopyWith<$Res>
       @JsonKey(name: "address_two") String? addressTwo,
       @JsonKey(name: "land_mark") String? landMark,
       @JsonKey(name: "company_logo") String? companyLogo,
+      @JsonKey(name: "store_logo") String? storeLogo,
       @JsonKey(name: "user_id") String? userId,
       @JsonKey(name: "business_addres") int? businessAddress});
 
@@ -245,6 +254,7 @@ class __$$_InventoryListModelCopyWithImpl<$Res>
     Object? addressTwo = freezed,
     Object? landMark = freezed,
     Object? companyLogo = freezed,
+    Object? storeLogo = freezed,
     Object? userId = freezed,
     Object? businessAddress = freezed,
   }) {
@@ -305,6 +315,10 @@ class __$$_InventoryListModelCopyWithImpl<$Res>
           ? _value.companyLogo
           : companyLogo // ignore: cast_nullable_to_non_nullable
               as String?,
+      storeLogo: freezed == storeLogo
+          ? _value.storeLogo
+          : storeLogo // ignore: cast_nullable_to_non_nullable
+              as String?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -335,6 +349,7 @@ class _$_InventoryListModel implements _InventoryListModel {
       @JsonKey(name: "address_two") this.addressTwo,
       @JsonKey(name: "land_mark") this.landMark,
       @JsonKey(name: "company_logo") this.companyLogo,
+      @JsonKey(name: "store_logo") this.storeLogo,
       @JsonKey(name: "user_id") this.userId,
       @JsonKey(name: "business_addres") this.businessAddress});
 
@@ -377,6 +392,9 @@ class _$_InventoryListModel implements _InventoryListModel {
   @JsonKey(name: "company_logo")
   final String? companyLogo;
   @override
+  @JsonKey(name: "store_logo")
+  final String? storeLogo;
+  @override
   @JsonKey(name: "user_id")
   final String? userId;
   @override
@@ -385,7 +403,7 @@ class _$_InventoryListModel implements _InventoryListModel {
 
   @override
   String toString() {
-    return 'InventoryListModel(name: $name, id: $id, status: $status, state: $state, email: $email, contact: $contact, isInventoryExist: $isInventoryExist, isActive: $isActive, isOffline: $isOffline, businessUnitCode: $businessUnitCode, addressOne: $addressOne, addressTwo: $addressTwo, landMark: $landMark, companyLogo: $companyLogo, userId: $userId, businessAddress: $businessAddress)';
+    return 'InventoryListModel(name: $name, id: $id, status: $status, state: $state, email: $email, contact: $contact, isInventoryExist: $isInventoryExist, isActive: $isActive, isOffline: $isOffline, businessUnitCode: $businessUnitCode, addressOne: $addressOne, addressTwo: $addressTwo, landMark: $landMark, companyLogo: $companyLogo, storeLogo: $storeLogo, userId: $userId, businessAddress: $businessAddress)';
   }
 
   @override
@@ -415,6 +433,8 @@ class _$_InventoryListModel implements _InventoryListModel {
                 other.landMark == landMark) &&
             (identical(other.companyLogo, companyLogo) ||
                 other.companyLogo == companyLogo) &&
+            (identical(other.storeLogo, storeLogo) ||
+                other.storeLogo == storeLogo) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.businessAddress, businessAddress) ||
                 other.businessAddress == businessAddress));
@@ -438,6 +458,7 @@ class _$_InventoryListModel implements _InventoryListModel {
       addressTwo,
       landMark,
       companyLogo,
+      storeLogo,
       userId,
       businessAddress);
 
@@ -479,6 +500,8 @@ abstract class _InventoryListModel implements InventoryListModel {
           final String? landMark,
       @JsonKey(name: "company_logo")
           final String? companyLogo,
+      @JsonKey(name: "store_logo")
+          final String? storeLogo,
       @JsonKey(name: "user_id")
           final String? userId,
       @JsonKey(name: "business_addres")
@@ -522,6 +545,9 @@ abstract class _InventoryListModel implements InventoryListModel {
   @override
   @JsonKey(name: "company_logo")
   String? get companyLogo;
+  @override
+  @JsonKey(name: "store_logo")
+  String? get storeLogo;
   @override
   @JsonKey(name: "user_id")
   String? get userId;

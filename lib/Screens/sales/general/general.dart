@@ -520,6 +520,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                               SalePrintScreen(
                                                 note: noteController.text,
                                                 select: select,
+                                                orderCode: orderCodeController.text??"",
                                                 orderDate: orderDateController.text,
                                                 table:table,
                                                 vat: double.tryParse( vatController.text),

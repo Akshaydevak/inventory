@@ -184,9 +184,6 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                         tableHeadtext(
 
                                           'Quantity',
-
-
-
                                           size: 13,
 
 
@@ -281,11 +278,7 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                           // textColor: Palette.white
 
                                         ),
-                                        tableHeadtext(
-                                          'Warranty Price',
 
-                                          size: 13,
-                                        ),
 
 
 
@@ -343,28 +336,23 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                             TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1?[i].variantId??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                               fontWeight: FontWeight.w500),
                                             ),    TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1?[i].barcode??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                 fontWeight: FontWeight.w500),
                                             ),    TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1[i].salesOrderLineCode??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                 fontWeight: FontWeight.w500),
                                             ),    TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1[i].returnType??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                  fontWeight: FontWeight.w500),
                                             ),    TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1[i].returnTime.toString()??""??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                 fontWeight: FontWeight.w500),
                                             ),
 
                                             TableCell(
@@ -373,27 +361,26 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                   valueChanger:table1[i].isInvoiced??false,
 
                                                   onSelection:(bool ? value){
-                                                    editionchek=true;
-                                                    widget.updateCheck(true);
-                                                    table1[i] = table1[i].copyWith(updatecheck: true);
-                                                    bool isinvoiced =table1[i].isInvoiced??false;
-                                                    setState(() {
-                                                      isinvoiced = !isinvoiced!;
-                                                      table1[i] = table1[i].copyWith(isInvoiced: isinvoiced);
-                                                      setState(() {});
-                                                    });
-                                                  }),
+    if(table1[i].isInvoiced==false ||table1[i].isEdit==true) {
+      editionchek = true;
+      widget.updateCheck(true);
+      table1[i] = table1[i].copyWith(updatecheck: true,isEdit: true);
+      bool isinvoiced = table1[i].isInvoiced ?? false;
+      setState(() {
+        isinvoiced = !isinvoiced!;
+        table1[i] = table1[i].copyWith(isInvoiced: isinvoiced);
+        setState(() {});
+      });
+    } }),
                                             ),   TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1[i].salesUom??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                  fontWeight: FontWeight.w500),
                                             ),
                                             TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1[i]?.quantity.toString()??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                   fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                             ),
 
                                             // TableCell(
@@ -481,15 +468,13 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                             TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1[i]?.unitCost.toString()??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                 fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                             ),     //   ),
                                             // ),
                                             TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1[i]?.discountType.toString()??"price", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                  fontWeight: FontWeight.w500,),
                                             ),
 
                                             // TableCell(
@@ -648,8 +633,7 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                             TableCell(
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: textPadding(table1[i]?.discount.toString()??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
+                                                 fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                             ),
 
                                             // TableCell(
@@ -788,8 +772,7 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
               TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
               child: textPadding(table1[i]?.excessTax.toString()??"", fontSize: 12,
-              padding: EdgeInsets.only(left: 11.5, top:
-              1.5), fontWeight: FontWeight.w500),
+              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
               ),
                                             TableCell(
                                               verticalAlignment:
@@ -800,9 +783,8 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                       .toString() ??
                                                       "",
                                                   fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
+
+                                                  fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                             ),
                                             TableCell(
                                               verticalAlignment:
@@ -810,36 +792,22 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                               child: textPadding(
                                                   table1?[i].vat.toString() ?? "",
                                                   fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
+
+                                                  fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                             ),
                                             TableCell(
                                               verticalAlignment:
                                               TableCellVerticalAlignment.middle,
                                               child: textPadding(
                                                   table1?[i]
-                                                      .sellingPriceTotal
+                                                      .sellingPrice
                                                       .toString() ??
                                                       "",
                                                   fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
+
+                                                  fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                             ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: textPadding(
-                                                  table1?[i]
-                                                      .warrentyPrice
-                                                      .toString() ??
-                                                      "",
-                                                  fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
-                                            ),
+
                                             TableCell(
                                               verticalAlignment:
                                               TableCellVerticalAlignment.middle,
@@ -848,10 +816,8 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                       .totalPrice
                                                       .toString() ??
                                                       "",
-                                                  fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
+
+                                                  fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                             ),
                                             TableCell(
                                               verticalAlignment:
@@ -862,19 +828,20 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                       ? false
                                                       : table1?[i].isActive,
                                                   onSelection: (bool? value) {
-                                                    bool? isActive =
-                                                        table1[i].isActive;
-                                                    setState(() {
-                                                      widget.updateCheck(true);
-                                                      table1[i] = table1[i].copyWith(updatecheck: true);
-                                                      // table1[i] = table1[i].copyWith(updateCheck: true);
-                                                      setState(() {});
-                                                      isActive = !isActive!;
-                                                      table1[i] = table1[i]
-                                                          .copyWith(
-                                                          isActive: isActive);
-                                                    });
-                                                  }),
+    if(table1[i].isInvoiced==false ||table1[i].isEdit==true) {
+      bool? isActive =
+          table1[i].isActive;
+      setState(() {
+        widget.updateCheck(true);
+        table1[i] = table1[i].copyWith(updatecheck: true);
+        // table1[i] = table1[i].copyWith(updateCheck: true);
+        setState(() {});
+        isActive = !isActive!;
+        table1[i] = table1[i]
+            .copyWith(
+            isActive: isActive);
+      });
+    }}),
                                             ),
                                             TableCell(
                                               verticalAlignment:
@@ -891,7 +858,8 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                             )
 
 
-                                          ]
+                                          ],
+
                                       )
                                   ],
 
@@ -934,14 +902,37 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                           textPadding(""),
                                           textPadding(""),
                                           textPadding(""),
-                                          textPadding(""),
                                           Container(height: 50,)
 
 
                                         ])
 
 
-                                ]
+                                ],
+                              widths: {
+                                0: FlexColumnWidth(3),
+                                1: FlexColumnWidth(4),
+                                2: FlexColumnWidth(4),
+                                3: FlexColumnWidth(2),
+                                4: FlexColumnWidth(2),
+                                5: FlexColumnWidth(2),
+                                6: FlexColumnWidth(4),
+                                7: FlexColumnWidth(2),
+                                8: FlexColumnWidth(2),
+                                9: FlexColumnWidth(2),
+                                10: FlexColumnWidth(2),
+                                11: FlexColumnWidth(2),
+                                12: FlexColumnWidth(2),
+                                13: FlexColumnWidth(2),
+                                14: FlexColumnWidth(2),
+                                15: FlexColumnWidth(3),
+                                16: FlexColumnWidth(3),
+                                17: FlexColumnWidth(2),
+                                18: FlexColumnWidth(2),
+                                
+                                // 21: FlexColumnWidth(3),
+
+                              },
 
                             ),
                           ),

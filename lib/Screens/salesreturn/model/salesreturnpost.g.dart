@@ -101,6 +101,7 @@ _$_SalesReturnOrderLines _$$_SalesReturnOrderLinesFromJson(
       isActive: json['is_active'] as bool? ?? false,
       isInvoiced: json['is_invoiced'] as bool? ?? false,
       updatecheck: json['updatecheck'] as bool? ?? false,
+      isEdit: json['is_edit'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_SalesReturnOrderLinesToJson(
@@ -133,4 +134,5 @@ Map<String, dynamic> _$$_SalesReturnOrderLinesToJson(
       'is_active': instance.isActive,
       'is_invoiced': instance.isInvoiced,
       'updatecheck': instance.updatecheck,
+      'is_edit': instance.isEdit,
     };

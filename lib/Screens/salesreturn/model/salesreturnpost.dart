@@ -75,6 +75,7 @@ class SalesReturnOrderLines with _$SalesReturnOrderLines {
     @JsonKey(name: "is_invoiced", defaultValue: false) final bool? isInvoiced,
 
     @JsonKey(name: "updatecheck", defaultValue: false) final bool? updatecheck,
+    @JsonKey(name: "is_edit", defaultValue: false) final bool? isEdit,
   }) = _SalesReturnOrderLines;
   factory SalesReturnOrderLines.fromJson(Map<String, dynamic> json) =>
       _$SalesReturnOrderLinesFromJson(json);

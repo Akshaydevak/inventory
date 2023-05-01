@@ -324,7 +324,7 @@ class _Tabledate extends State<Tabledate> {
       decoration: InputDecoration(
         //suffixIcon: Icon(Icons.calendar_today_outlined),
         contentPadding: null,
-        labelStyle: TextStyle(color: Colors.black),
+        labelStyle:  CommonTextStyle.normalTableFieldStyle,
         // labelText: widget.initialValue?.toString().split(" ")[0],
         isDense: true,
         label: null,
@@ -357,12 +357,15 @@ class _Tabledate extends State<Tabledate> {
       },
     ):
     Container(
-
+      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: width*.05,
+            width: width*.041,
             height: 34,
+
+
             child: DateTimeField(
              // initialValue: widget.initialValue,
               controller: widget.controller,
@@ -398,7 +401,7 @@ class _Tabledate extends State<Tabledate> {
 //                   child:Icon(Icons.clear),),
 //                 ),
                 contentPadding: null,
-                labelStyle: TextStyle(color: Colors.black),
+                labelStyle: CommonTextStyle.normalTableFieldStyle,
                 // labelText: widget.initialValue?.toString().split(" ")[0],
 
                 label: null,

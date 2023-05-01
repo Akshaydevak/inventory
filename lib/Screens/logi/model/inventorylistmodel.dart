@@ -21,6 +21,7 @@ class InventoryListModel with _$InventoryListModel {
     @JsonKey(name: "address_two" ) final String? addressTwo,
     @JsonKey(name: "land_mark" ) final String? landMark,
     @JsonKey(name: "company_logo" ) final String? companyLogo,
+    @JsonKey(name: "store_logo" ) final String? storeLogo,
     @JsonKey(name: "user_id", ) final String? userId,
     @JsonKey(name: "business_addres", ) final int? businessAddress,
   }) = _InventoryListModel;

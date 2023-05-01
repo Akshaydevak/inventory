@@ -64,6 +64,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
   TextEditingController totalPricePriceController=TextEditingController();
   TextEditingController inventoryId=TextEditingController();
   int? veritiaclid=0;
+  InvoicedData? object=InvoicedData();
   bool updateCheck=false;
   List<salesOrderTypeModel> result = [];
   int selectedVertical=0;
@@ -120,13 +121,13 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
     double excessTAxValue = 0;
     if (table.isNotEmpty)
       for (var i = 0; i < table.length; i++) {
-        if (table[i].isInvoiced == true && table[i].updatecheck == false) {
+        if (table[i].isInvoiced == true && table[i].updatecheck != true) {
           var unicost1 = table[i].unitCost ?? 0;
           var vatValue1 = table[i].vat ?? 0;
           var discountValue1 = table[i].discount ?? 0;
           var taxableAmount1 = table[i].taxableAmount ?? 0;
           var excessTAxValue1 = table[i].excessTax ?? 0;
-          var sellingprice1 = table[i].sellingPriceTotal ?? 0;
+          var sellingprice1 = table[i].sellingPrice ?? 0;
           var totalAmount1 = table[i].totalPrice ?? 0;
           var warrentyprice1 = table[i].warrentyPrice ?? 0;
 
@@ -205,7 +206,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                   //     ));
 
              if(isPaymentStatusSuccessCall) {
-               context.read<PaymentTransactionSuccessPostCubit>().postPaymentTransactionSuccess(veritiaclid,Variable.methodCode, data.data2,1);
+               context.read<PaymentTransactionSuccessPostCubit>().postPaymentTransactionSuccess(object?.id,Variable.methodCode, data.data2,2);
              } else {
                showDailogPopUp(
                     context,
@@ -214,7 +215,6 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                       // table:table,
                     ));
              }
-
 
 
                 }
@@ -313,6 +313,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                       data.invoicedData?.lines != null
                           ? table = List.from( data.invoicedData?.lines ?? [])
                           : table =  List.from([]);
+                      object=data.invoicedData;
                       inventoryId.text=data.invoicedData?.inventoryId??"";
                       invoiceCodeController.text=data.invoicedData?.invoiceCode??"";
                       paymentStatusController.text=data.invoicedData?.paymentStaus??"";
@@ -476,7 +477,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                                       customerCode: customerIdController.text,
                                                       customerName: "",
                                                       methodCode: Variable.methodCode,
-                                                      orderId:  veritiaclid.toString(),
+                                                      orderId: object?.id.toString(),
                                                       status: "payment_completed",
                                                       totalAmount: double.tryParse(totalPricePriceController.text)??0,
                                                       tranSactionCode: "");
@@ -495,7 +496,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                                       customerCode: customerIdController.text,
                                                       customerName: "",
                                                       methodCode: Variable.methodCode,
-                                                      orderId:  veritiaclid.toString(),
+                                                      orderId: object?.id.toString(),
                                                       status: "payment_pending",
                                                       totalAmount: double.tryParse(totalPricePriceController.text)??0,
                                                       tranSactionCode: "");
@@ -606,11 +607,12 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                                 isActive: table[i].isInvoiced??false,
                                                 totalPrice: table[i].totalPrice,
                                                 warrentyPrice: table[i].warrentyPrice,
-                                                sellingPrice: table[i].sellingPriceTotal,
+                                                sellingPrice: table[i].sellingPrice,
                                                 vat: table[i].vat,
                                                 taxableAmoubt: table[i].taxableAmount,
                                                 unitCost: table[i].unitCost,
                                                 excessTax: table[i].excessTax,
+                                                discount: table[i].discount,
                                                 salesOrderLineCode: table[i].salesOrderLineCode,
                                               ));
 

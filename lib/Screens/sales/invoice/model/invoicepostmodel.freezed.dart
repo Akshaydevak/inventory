@@ -511,6 +511,8 @@ mixin _$Postlines {
   double? get warrentyPrice => throw _privateConstructorUsedError;
   @JsonKey(name: "selling_price")
   double? get sellingPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: "discount")
+  double? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: "taxable_amount")
   double? get taxableAmoubt => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
@@ -538,6 +540,7 @@ abstract class $PostlinesCopyWith<$Res> {
       @JsonKey(name: "total_price") double? totalPrice,
       @JsonKey(name: "warranty_price") double? warrentyPrice,
       @JsonKey(name: "selling_price") double? sellingPrice,
+      @JsonKey(name: "discount") double? discount,
       @JsonKey(name: "taxable_amount") double? taxableAmoubt,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "excess_tax") double? excessTax});
@@ -564,6 +567,7 @@ class _$PostlinesCopyWithImpl<$Res, $Val extends Postlines>
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
     Object? sellingPrice = freezed,
+    Object? discount = freezed,
     Object? taxableAmoubt = freezed,
     Object? unitCost = freezed,
     Object? excessTax = freezed,
@@ -601,6 +605,10 @@ class _$PostlinesCopyWithImpl<$Res, $Val extends Postlines>
           ? _value.sellingPrice
           : sellingPrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      discount: freezed == discount
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as double?,
       taxableAmoubt: freezed == taxableAmoubt
           ? _value.taxableAmoubt
           : taxableAmoubt // ignore: cast_nullable_to_non_nullable
@@ -633,6 +641,7 @@ abstract class _$$_PostlinesCopyWith<$Res> implements $PostlinesCopyWith<$Res> {
       @JsonKey(name: "total_price") double? totalPrice,
       @JsonKey(name: "warranty_price") double? warrentyPrice,
       @JsonKey(name: "selling_price") double? sellingPrice,
+      @JsonKey(name: "discount") double? discount,
       @JsonKey(name: "taxable_amount") double? taxableAmoubt,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "excess_tax") double? excessTax});
@@ -657,6 +666,7 @@ class __$$_PostlinesCopyWithImpl<$Res>
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
     Object? sellingPrice = freezed,
+    Object? discount = freezed,
     Object? taxableAmoubt = freezed,
     Object? unitCost = freezed,
     Object? excessTax = freezed,
@@ -694,6 +704,10 @@ class __$$_PostlinesCopyWithImpl<$Res>
           ? _value.sellingPrice
           : sellingPrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      discount: freezed == discount
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as double?,
       taxableAmoubt: freezed == taxableAmoubt
           ? _value.taxableAmoubt
           : taxableAmoubt // ignore: cast_nullable_to_non_nullable
@@ -722,6 +736,7 @@ class _$_Postlines implements _Postlines {
       @JsonKey(name: "total_price") this.totalPrice,
       @JsonKey(name: "warranty_price") this.warrentyPrice,
       @JsonKey(name: "selling_price") this.sellingPrice,
+      @JsonKey(name: "discount") this.discount,
       @JsonKey(name: "taxable_amount") this.taxableAmoubt,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "excess_tax") this.excessTax});
@@ -752,6 +767,9 @@ class _$_Postlines implements _Postlines {
   @JsonKey(name: "selling_price")
   final double? sellingPrice;
   @override
+  @JsonKey(name: "discount")
+  final double? discount;
+  @override
   @JsonKey(name: "taxable_amount")
   final double? taxableAmoubt;
   @override
@@ -763,7 +781,7 @@ class _$_Postlines implements _Postlines {
 
   @override
   String toString() {
-    return 'Postlines(quantity: $quantity, vat: $vat, isInvoiced: $isInvoiced, isActive: $isActive, salesOrderLineCode: $salesOrderLineCode, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice, sellingPrice: $sellingPrice, taxableAmoubt: $taxableAmoubt, unitCost: $unitCost, excessTax: $excessTax)';
+    return 'Postlines(quantity: $quantity, vat: $vat, isInvoiced: $isInvoiced, isActive: $isActive, salesOrderLineCode: $salesOrderLineCode, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice, sellingPrice: $sellingPrice, discount: $discount, taxableAmoubt: $taxableAmoubt, unitCost: $unitCost, excessTax: $excessTax)';
   }
 
   @override
@@ -786,6 +804,8 @@ class _$_Postlines implements _Postlines {
                 other.warrentyPrice == warrentyPrice) &&
             (identical(other.sellingPrice, sellingPrice) ||
                 other.sellingPrice == sellingPrice) &&
+            (identical(other.discount, discount) ||
+                other.discount == discount) &&
             (identical(other.taxableAmoubt, taxableAmoubt) ||
                 other.taxableAmoubt == taxableAmoubt) &&
             (identical(other.unitCost, unitCost) ||
@@ -806,6 +826,7 @@ class _$_Postlines implements _Postlines {
       totalPrice,
       warrentyPrice,
       sellingPrice,
+      discount,
       taxableAmoubt,
       unitCost,
       excessTax);
@@ -834,6 +855,7 @@ abstract class _Postlines implements Postlines {
       @JsonKey(name: "total_price") final double? totalPrice,
       @JsonKey(name: "warranty_price") final double? warrentyPrice,
       @JsonKey(name: "selling_price") final double? sellingPrice,
+      @JsonKey(name: "discount") final double? discount,
       @JsonKey(name: "taxable_amount") final double? taxableAmoubt,
       @JsonKey(name: "unit_cost") final double? unitCost,
       @JsonKey(name: "excess_tax") final double? excessTax}) = _$_Postlines;
@@ -863,6 +885,9 @@ abstract class _Postlines implements Postlines {
   @override
   @JsonKey(name: "selling_price")
   double? get sellingPrice;
+  @override
+  @JsonKey(name: "discount")
+  double? get discount;
   @override
   @JsonKey(name: "taxable_amount")
   double? get taxableAmoubt;

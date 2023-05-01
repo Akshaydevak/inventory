@@ -76,9 +76,10 @@ _$_OrderLinesInvoice _$$_OrderLinesInvoiceFromJson(Map<String, dynamic> json) =>
       unitCost: (json['unit_cost'] as num?)?.toDouble(),
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
       taxableAmount: (json['taxable_amount'] as num?)?.toDouble(),
-      sellingPriceTotal: (json['selling_price'] as num?)?.toDouble(),
+      sellingPrice: (json['selling_price'] as num?)?.toDouble(),
       totalPrice: (json['total_price'] as num?)?.toDouble(),
       warrentyPrice: (json['warranty_price'] as num?)?.toDouble(),
+      isEdit: json['is_edit'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_OrderLinesInvoiceToJson(
@@ -102,9 +103,10 @@ Map<String, dynamic> _$$_OrderLinesInvoiceToJson(
       'unit_cost': instance.unitCost,
       'excess_tax': instance.excessTax,
       'taxable_amount': instance.taxableAmount,
-      'selling_price': instance.sellingPriceTotal,
+      'selling_price': instance.sellingPrice,
       'total_price': instance.totalPrice,
       'warranty_price': instance.warrentyPrice,
+      'is_edit': instance.isEdit,
     };
 
 _$_InvoicedData _$$_InvoicedDataFromJson(Map<String, dynamic> json) =>

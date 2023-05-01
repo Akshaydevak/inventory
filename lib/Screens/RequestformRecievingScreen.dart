@@ -1173,9 +1173,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PurchaseReceivingPrintScreen2(
+                                            PrintScreen(
                                               table: recievingLisnes,
-                                              isRecieved: true,
+                                              isReceived: true,
                                               note: noteController.text,
                                               orderCode: orderCodeController.text,
                                               orderDate: orderDateController.text,

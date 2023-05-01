@@ -887,6 +887,8 @@ mixin _$SalesReturnOrderLines {
   bool? get isInvoiced => throw _privateConstructorUsedError;
   @JsonKey(name: "updatecheck", defaultValue: false)
   bool? get updatecheck => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_edit", defaultValue: false)
+  bool? get isEdit => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -927,7 +929,8 @@ abstract class $SalesReturnOrderLinesCopyWith<$Res> {
       @JsonKey(name: "invoice_line_code") String? invoicedLineCode,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "is_invoiced", defaultValue: false) bool? isInvoiced,
-      @JsonKey(name: "updatecheck", defaultValue: false) bool? updatecheck});
+      @JsonKey(name: "updatecheck", defaultValue: false) bool? updatecheck,
+      @JsonKey(name: "is_edit", defaultValue: false) bool? isEdit});
 }
 
 /// @nodoc
@@ -971,6 +974,7 @@ class _$SalesReturnOrderLinesCopyWithImpl<$Res,
     Object? isActive = freezed,
     Object? isInvoiced = freezed,
     Object? updatecheck = freezed,
+    Object? isEdit = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1081,6 +1085,10 @@ class _$SalesReturnOrderLinesCopyWithImpl<$Res,
           ? _value.updatecheck
           : updatecheck // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isEdit: freezed == isEdit
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -1120,7 +1128,8 @@ abstract class _$$_SalesReturnOrderLinesCopyWith<$Res>
       @JsonKey(name: "invoice_line_code") String? invoicedLineCode,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "is_invoiced", defaultValue: false) bool? isInvoiced,
-      @JsonKey(name: "updatecheck", defaultValue: false) bool? updatecheck});
+      @JsonKey(name: "updatecheck", defaultValue: false) bool? updatecheck,
+      @JsonKey(name: "is_edit", defaultValue: false) bool? isEdit});
 }
 
 /// @nodoc
@@ -1161,6 +1170,7 @@ class __$$_SalesReturnOrderLinesCopyWithImpl<$Res>
     Object? isActive = freezed,
     Object? isInvoiced = freezed,
     Object? updatecheck = freezed,
+    Object? isEdit = freezed,
   }) {
     return _then(_$_SalesReturnOrderLines(
       id: freezed == id
@@ -1271,6 +1281,10 @@ class __$$_SalesReturnOrderLinesCopyWithImpl<$Res>
           ? _value.updatecheck
           : updatecheck // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isEdit: freezed == isEdit
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1305,7 +1319,8 @@ class _$_SalesReturnOrderLines implements _SalesReturnOrderLines {
       @JsonKey(name: "invoice_line_code") this.invoicedLineCode,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive,
       @JsonKey(name: "is_invoiced", defaultValue: false) this.isInvoiced,
-      @JsonKey(name: "updatecheck", defaultValue: false) this.updatecheck});
+      @JsonKey(name: "updatecheck", defaultValue: false) this.updatecheck,
+      @JsonKey(name: "is_edit", defaultValue: false) this.isEdit});
 
   factory _$_SalesReturnOrderLines.fromJson(Map<String, dynamic> json) =>
       _$$_SalesReturnOrderLinesFromJson(json);
@@ -1384,10 +1399,13 @@ class _$_SalesReturnOrderLines implements _SalesReturnOrderLines {
   @override
   @JsonKey(name: "updatecheck", defaultValue: false)
   final bool? updatecheck;
+  @override
+  @JsonKey(name: "is_edit", defaultValue: false)
+  final bool? isEdit;
 
   @override
   String toString() {
-    return 'SalesReturnOrderLines(id: $id, qty: $qty, quantity: $quantity, discount: $discount, vat: $vat, barcode: $barcode, remarks: $remarks, salesOrderLineCode: $salesOrderLineCode, variantId: $variantId, stockId: $stockId, warrentyId: $warrentyId, salesUom: $salesUom, discountType: $discountType, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, warrentyPrice: $warrentyPrice, sellingPrice: $sellingPrice, totalPrice: $totalPrice, returnType: $returnType, returnTime: $returnTime, invoicedDate: $invoicedDate, invoicedTime: $invoicedTime, invoicedLineCode: $invoicedLineCode, isActive: $isActive, isInvoiced: $isInvoiced, updatecheck: $updatecheck)';
+    return 'SalesReturnOrderLines(id: $id, qty: $qty, quantity: $quantity, discount: $discount, vat: $vat, barcode: $barcode, remarks: $remarks, salesOrderLineCode: $salesOrderLineCode, variantId: $variantId, stockId: $stockId, warrentyId: $warrentyId, salesUom: $salesUom, discountType: $discountType, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, warrentyPrice: $warrentyPrice, sellingPrice: $sellingPrice, totalPrice: $totalPrice, returnType: $returnType, returnTime: $returnTime, invoicedDate: $invoicedDate, invoicedTime: $invoicedTime, invoicedLineCode: $invoicedLineCode, isActive: $isActive, isInvoiced: $isInvoiced, updatecheck: $updatecheck, isEdit: $isEdit)';
   }
 
   @override
@@ -1442,7 +1460,8 @@ class _$_SalesReturnOrderLines implements _SalesReturnOrderLines {
             (identical(other.isInvoiced, isInvoiced) ||
                 other.isInvoiced == isInvoiced) &&
             (identical(other.updatecheck, updatecheck) ||
-                other.updatecheck == updatecheck));
+                other.updatecheck == updatecheck) &&
+            (identical(other.isEdit, isEdit) || other.isEdit == isEdit));
   }
 
   @JsonKey(ignore: true)
@@ -1475,7 +1494,8 @@ class _$_SalesReturnOrderLines implements _SalesReturnOrderLines {
         invoicedLineCode,
         isActive,
         isInvoiced,
-        updatecheck
+        updatecheck,
+        isEdit
       ]);
 
   @JsonKey(ignore: true)
@@ -1541,7 +1561,9 @@ abstract class _SalesReturnOrderLines implements SalesReturnOrderLines {
       @JsonKey(name: "is_invoiced", defaultValue: false)
           final bool? isInvoiced,
       @JsonKey(name: "updatecheck", defaultValue: false)
-          final bool? updatecheck}) = _$_SalesReturnOrderLines;
+          final bool? updatecheck,
+      @JsonKey(name: "is_edit", defaultValue: false)
+          final bool? isEdit}) = _$_SalesReturnOrderLines;
 
   factory _SalesReturnOrderLines.fromJson(Map<String, dynamic> json) =
       _$_SalesReturnOrderLines.fromJson;
@@ -1620,6 +1642,9 @@ abstract class _SalesReturnOrderLines implements SalesReturnOrderLines {
   @override
   @JsonKey(name: "updatecheck", defaultValue: false)
   bool? get updatecheck;
+  @override
+  @JsonKey(name: "is_edit", defaultValue: false)
+  bool? get isEdit;
   @override
   @JsonKey(ignore: true)
   _$$_SalesReturnOrderLinesCopyWith<_$_SalesReturnOrderLines> get copyWith =>

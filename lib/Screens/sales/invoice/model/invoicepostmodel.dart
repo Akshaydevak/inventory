@@ -40,6 +40,7 @@ class Postlines with _$Postlines {
     @JsonKey(name: "total_price") final double? totalPrice,
     @JsonKey(name: "warranty_price") final double? warrentyPrice,
     @JsonKey(name: "selling_price") final double? sellingPrice,
+    @JsonKey(name: "discount") final double? discount,
     @JsonKey(name: "taxable_amount") final double? taxableAmoubt,
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "excess_tax") final double? excessTax,

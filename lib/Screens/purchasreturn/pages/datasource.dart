@@ -7643,6 +7643,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> postSaleOrderPaymentPost(
       PurchasePaymentPostModel model) async {
     print(payMentPostApi);
+    print(model);
     UserPreferences().getUser().then((value) {
       token = value.token;
       print("token is here222 exist" + token.toString());
@@ -7827,6 +7828,12 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       case 2:
         {
           path = salePaymentPostSuccessApi;
+        }
+
+        break;
+      case 3:
+        {
+          path = saleReturnPaymentPostSuccessApi;
         }
 
         break;

@@ -2823,84 +2823,95 @@ else{
                                                                   ),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: TableTextButton(
+                                                                  child: Row(
+                                                                    children: [
+                                                                      TableTextButton(
 
-                                                                      onPress: () {
-                                                                        if (vminqty! >
-                                                                            vmaxnqty!) {
-                                                                          print("enterd");
-                                                                          if(vminqty!=0 &&vmaxnqty!=0){
+                                                                          onPress: () {
+                                                                            if (vminqty! >
+                                                                                vmaxnqty!) {
+                                                                              print("enterd");
+                                                                              if(vminqty!=0 &&vmaxnqty!=0){
+                                                                                context.showSnackBarError(
+                                                                                    "the minimum order is always less than maximum order");}
+                                                                            }
+                                                                        else  if(  variantId=="null"||check==0||vvat==0)
                                                                             context.showSnackBarError(
-                                                                                "the minimum order is always less than maximum order");}
-                                                                        }
-                                                                    else  if(  variantId=="null"||check==0||vvat==0)
-                                                                        context.showSnackBarError(
-                                                                            "please fill all the fields");
-                                                                      else if(Qty==0||Qty==""){
-                                                                        context.showSnackBarError(
-                                                                            "the requested quantity not be 0 or empty");
-                                                                      }
-                                                                      else if(updateCheck==true){
-                                                                        context.showSnackBarError(
-                                                                            "please click the update button");
-                                                                      }
-                                                                      else if(vfoc!>Qty!){
-                                                                        context.showSnackBarError(
-                                                                            "foc is allways less than requested qty");
-                                                                      }
-                                                                      else{
+                                                                                "please fill all the fields");
+                                                                          else if(Qty==0||Qty==""){
+                                                                            context.showSnackBarError(
+                                                                                "the requested quantity not be 0 or empty");
+                                                                          }
+                                                                          else if(updateCheck==true){
+                                                                            context.showSnackBarError(
+                                                                                "please click the update button");
+                                                                          }
+                                                                          else if(vfoc!>Qty!){
+                                                                            context.showSnackBarError(
+                                                                                "foc is allways less than requested qty");
+                                                                          }
+                                                                          else{
 
-                                                                        table..add(
-                                                                            OrderLines(
-                                                                              vendorRefCode: vendorRefCode??"",
-                                                                              isRecieved: isRecieved ?? false,
-                                                                              isActive: _value ?? false,
-                                                                              supplierCode: vendorRefCode?? "",
-                                                                              variantId: variantId ?? "",
-                                                                              variantName: varinatname ?? "",
-                                                                              barcode: Vbarcode ?? "",
-                                                                              cvd: "sss",
-                                                                              foc: vfoc ?? 0,
-                                                                              maximumQty: vmaxnqty ?? 0,
-                                                                              minimumQty: vminqty ?? 0,
-                                                                              excessTax: eTax ?? 0,
-                                                                              vat: vvat ?? 0,
-                                                                              actualCost: vactualCost ?? 0,
-                                                                              purchaseUom: check1 ?? "",
-                                                                              discount: Vdiscount ?? 0,
-                                                                              requestedQty: Qty ?? 0,
-                                                                              unitCost: check! ?? 0,
-                                                                              grandTotal: Vgrnadtotal ?? 0,
-                                                                              vatableAmount: Vamount ?? 0,
-                                                                              currentQty: stockQty ?? 0,
-                                                                              updateCheck: false
-                                                                            ));
-                                                                        vendorCheckFunc();
-                                                                        currentStock.add(stockQty??0);
-                                                                        print("a"+currentStock.toString());
-                                                                        requestedListControllers.clear();
-                                                                        minListControllers.clear() ;
-                                                                        maxListControllers .clear();
-                                                                        unitcostListControllers.clear();
-                                                                        excesstListControllers.clear();
-                                                                        discounttListControllers.clear();
-                                                                        focListControllers.clear();
-                                                                        vatListControllers.clear();
+                                                                            table..add(
+                                                                                OrderLines(
+                                                                                  vendorRefCode: vendorRefCode??"",
+                                                                                  isRecieved: isRecieved ?? false,
+                                                                                  isActive: _value ?? false,
+                                                                                  supplierCode: vendorRefCode?? "",
+                                                                                  variantId: variantId ?? "",
+                                                                                  variantName: varinatname ?? "",
+                                                                                  barcode: Vbarcode ?? "",
+                                                                                  cvd: "sss",
+                                                                                  foc: vfoc ?? 0,
+                                                                                  maximumQty: vmaxnqty ?? 0,
+                                                                                  minimumQty: vminqty ?? 0,
+                                                                                  excessTax: eTax ?? 0,
+                                                                                  vat: vvat ?? 0,
+                                                                                  actualCost: vactualCost ?? 0,
+                                                                                  purchaseUom: check1 ?? "",
+                                                                                  discount: Vdiscount ?? 0,
+                                                                                  requestedQty: Qty ?? 0,
+                                                                                  unitCost: check! ?? 0,
+                                                                                  grandTotal: Vgrnadtotal ?? 0,
+                                                                                  vatableAmount: Vamount ?? 0,
+                                                                                  currentQty: stockQty ?? 0,
+                                                                                  updateCheck: false
+                                                                                ));
+                                                                            vendorCheckFunc();
+                                                                            currentStock.add(stockQty??0);
+                                                                            print("a"+currentStock.toString());
+                                                                            requestedListControllers.clear();
+                                                                            minListControllers.clear() ;
+                                                                            maxListControllers .clear();
+                                                                            unitcostListControllers.clear();
+                                                                            excesstListControllers.clear();
+                                                                            discounttListControllers.clear();
+                                                                            focListControllers.clear();
+                                                                            vatListControllers.clear();
+                                                                            setState(() {
+                                                                              tableClear=false;
+                                                                              valueAddingTextEdingController();
+                                                                            });
+                                                                            print("gtable" +
+                                                                                table
+                                                                                    .toString());
+                                                                            addition();
+                                                                            tableDatasClear();
+
+                                                                            setState(() {});
+
+                                                                          }
+                                                                          },
+                                                                          label:"SAVE",
+                                                                      ),
+                                                                      TableIconTextButton(label: "label", onPress: (){
                                                                         setState(() {
-                                                                          tableClear=false;
-                                                                          valueAddingTextEdingController();
+                                                                          tableDatasClear();
                                                                         });
-                                                                        print("gtable" +
-                                                                            table
-                                                                                .toString());
-                                                                        addition();
-                                                                        tableDatasClear();
 
-                                                                        setState(() {});
-
-                                                                      }
                                                                       },
-                                                                      label:"SAVE",
+                                                                      icon: Icons.clear,)
+                                                                    ],
                                                                   ),
                                                                 ),
                                                               ]),
@@ -2928,7 +2939,7 @@ else{
                                                         18: FlexColumnWidth(3),
                                                         19: FlexColumnWidth(2),
                                                         20: FlexColumnWidth(2),
-                                                        21: FlexColumnWidth(3),
+                                                        21: FlexColumnWidth(4),
                                                       },
                                                     ),
                                                   ),

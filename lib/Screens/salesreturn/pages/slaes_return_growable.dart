@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/salesreturn/cubit/invoiceraed/generalinvoiceread_cubit.dart';
+import 'package:inventory/Screens/salesreturn/cubit/salesgeneralread/salesgeneralread_cubit.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturnpost.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
@@ -8,6 +9,7 @@ import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
 import 'package:inventory/model/purchase_order_table_model.dart';
@@ -55,11 +57,13 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
 
   bool? invoiced = false;
   bool? isActive1 = false;
+  List<int?> currentStock = [];
   bool? clear = true;
   String? supplierRefCode = "";
   double? unitcost1 = 0;
   double? discount1 = 0;
   double vat1 = 0;
+  bool  stockCheck=false;
   int? quantity = 0;
   double? etax1 = 0;
   double taxableAmount = 0;
@@ -119,6 +123,17 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
     setState(() {});
     return totalPrice1;
   }
+  Future _getCurrentUser() async {
+    if (table1.isNotEmpty) {
+      for (var i = 0; i < table1.length; i++) {
+        print("variantaaaaaa" + table1[i].variantId.toString());
+
+        var b = await context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, table1[i].variantId);
+        print("b" + b.toString());
+      }
+      setState(() {});
+    }
+  }
   valueAddingTextEdingController(){
     unitcostListControllers.clear();
     if(table1.isNotEmpty){
@@ -147,7 +162,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    if (assignCheck == false) table1 = widget.table ?? [];
+
 
     // if(widget.select && clear==true)table1.clear();
     // clear=false;
@@ -162,6 +177,84 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
       child: Builder(builder: (context) {
         return MultiBlocListener(
           listeners: [
+            BlocListener<SalesgeneralreadCubit, SalesgeneralreadState>(
+              listener: (context, state) {
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        stockCheck=false;
+                        print("Akshay real "+data.toString());
+                        data?.orderLines != null
+                            ? table1 =List.from(  data?.orderLines ?? [])
+                            : table1 =List.from(  []);
+                        _getCurrentUser();
+                        valueAddingTextEdingController();
+
+                        // orderDateController.text= data?.returnOrderDate??"";
+
+
+
+
+
+
+
+
+
+
+                      });
+                    });
+              },
+            ),
+            BlocListener<PurchaseStockCubit, PurchaseStockState>(
+              listener: (context, state) {
+                print("state++++++++++++++++++++++++++++++++");
+
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      if(stockCheck==false){
+                        currentStock.add(0);
+                        setState(() {
+
+                        });
+                      }
+
+
+                      else{
+                        currentStock[Variable.tableindex]=0;
+                        // currentStock.cop(Variable.tableindex,  purchaseCurrentStock?.StockQty??0);
+                        print(currentStock.length);
+                        setState(() {});
+                      }
+                    },
+                    success: (data) {
+                      print("Akshayaaaaa" + data.toString());
+                      purchaseCurrentStock = data;
+                      var stockQty = purchaseCurrentStock?.StockQty;
+                      if(stockCheck==false){
+
+                        currentStock.add(stockQty);
+                        setState(() {
+
+                        });
+                      }
+
+                      else{
+                        currentStock[Variable.tableindex]=purchaseCurrentStock?.StockQty??0;
+                        // currentStock.cop(Variable.tableindex,  purchaseCurrentStock?.StockQty??0);
+                        print(currentStock.length);
+                        setState(() {});
+                      }
+
+
+                    });
+              },
+            ),
+
 
             BlocListener<GeneralinvoicereadCubit, GeneralinvoicereadState>(
               listener: (context, state) {
@@ -172,7 +265,9 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                     },
                     success: (data) {
                       print("checkin Case");
+                      stockCheck=false;
                       table1.clear();
+                      currentStock.clear();
                       if(data.invoicedData!=null){
                         data?.invoicedData?.lines != null ? table1 =List.from( data?.invoicedData?.lines ?? []) : table1 = [];
                       }
@@ -180,7 +275,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                         data?.lines != null ? table1 = List.from(data?.lines  ?? []) : table1 = [];
                       }
                       setState(() {
-                        // table1[0]=table1[0].copyWith(unitCost: 3);
+                        _getCurrentUser();
                         valueAddingTextEdingController();
                       });
 
@@ -351,15 +446,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                       // textColor: Palette.white
                                     ),
 
-                                    tableHeadtext(
-                                      'Warranty',
 
-                                      size: 13,
-
-                                      // color: Palette.containerDarknew,
-
-                                      // textColor: Palette.white
-                                    ),
 
                                     tableHeadtext(
                                       'Sales UOM',
@@ -509,7 +596,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                       textPadding(""),
                                       textPadding(""),
                                       textPadding(""),
-                                      textPadding(""),
+
                                       textPadding(""),
                                       Container(height: 48,)
 
@@ -546,7 +633,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                             child:
                                             table1[i].isInvoiced!=true?
                                             VariantIdTAble(
-                                              text:variantId.toString(),
+                                              text:table1[i] . variantId.toString(),
                                               onTap: (){
                                                 showDailogPopUp(
                                                   context,
@@ -558,7 +645,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                                       // widget.updateCheck(true);
                                                       table1[i] = table1[i].copyWith(updatecheck: true);
                                                       setState(() {});
-                                                      table1[i] = table1[i].copyWith(
+                                                      table1[i]   = table1[i].copyWith(
                                                           variantId: va?.code);
 
                                                       // table1.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
@@ -566,6 +653,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                                       //     ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
                                                       // )]);
                                                       setState(() {
+                                                        stockCheck=true;
                                                         // variantId =
                                                         //     va?.code;
                                                         int? id = va!.id;
@@ -635,8 +723,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                             textPadding(
                                                 table1?[i].variantId ?? "",
                                                 fontSize: 12,
-                                                padding: EdgeInsets.only(
-                                                    left: 11.5, top: 1.5),
+
                                                 fontWeight: FontWeight.w500)
                                         ),
                                         //   TableCell(
@@ -652,19 +739,17 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           child: textPadding(
                                               table1?[i].barcode ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: textPadding(
-                                              table1?[i].qty.toString()?? "",
+                                              currentStock.length!=table1.length?"": currentStock[i].toString(),
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         // TableCell(
                                         //   verticalAlignment:
@@ -683,10 +768,9 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: textPadding(table1?[i].runtimeType.toString()??"",
+                                          child: textPadding(table1?[i].returnType.toString()??"",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
@@ -698,8 +782,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
@@ -712,16 +795,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                                   : table1?[i].isInvoiced,
                                               onSelection: (bool? value) {}),
                                         ),
-                                        TableCell(
-                                          verticalAlignment:
-                                          TableCellVerticalAlignment.middle,
-                                          child: textPadding(
-                                              table1[i].warrentyId ?? "",
-                                              fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
-                                        ),
+
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
@@ -729,9 +803,8 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                               table1[i].salesUom ?? "",
                                               fontSize: 12,
                                               // height: 42,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
@@ -1038,9 +1111,8 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                               table1[i].discountType ?? "",
                                               fontSize: 12,
                                               // height: 42,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -1117,9 +1189,8 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -1127,9 +1198,9 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           child: textPadding(
                                               table1?[i].vat.toString() ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -1140,8 +1211,8 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+                                              alighnment: Alignment.topRight,
+
                                               fontWeight: FontWeight.w500),
                                         ),
                                         // TableCell(
@@ -1166,9 +1237,8 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -1202,15 +1272,40 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           child: TableTextButton(
                                             onPress: () {
                                               widget.updation(table1);
-                                              table1[i].copyWith(updatecheck: false);
+                                              table1[i]=    table1[i].copyWith(updatecheck: false);
                                             },
-                                            label: "update",
+                                            label: table1[i]?.updatecheck==true?  "update":"",
                                           ),
                                         )
                                       ]),
 
                               ]
-                            ]),
+                            ],
+                          widths: {
+                            0: FlexColumnWidth(3),
+                            1: FlexColumnWidth(4),
+                            2: FlexColumnWidth(2),
+                            3: FlexColumnWidth(2),
+                            4: FlexColumnWidth(2),
+                            5: FlexColumnWidth(2),
+                            6: FlexColumnWidth(4),
+                            7: FlexColumnWidth(2),
+                            8: FlexColumnWidth(2),
+                            9: FlexColumnWidth(2),
+                            10: FlexColumnWidth(2),
+                            11: FlexColumnWidth(2),
+                            12: FlexColumnWidth(3),
+                            13: FlexColumnWidth(2),
+                            14: FlexColumnWidth(3),
+                            15: FlexColumnWidth(3),
+                            16: FlexColumnWidth(2),
+                            17: FlexColumnWidth(3),
+                            18: FlexColumnWidth(2),
+                            19: FlexColumnWidth(2),
+                            20: FlexColumnWidth(3),
+                            // 21: FlexColumnWidth(3),
+
+                          },),
                       ),
                     ),
                     SizedBox(height: 20,)

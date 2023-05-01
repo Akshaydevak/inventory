@@ -786,11 +786,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                       '',
                                                                       size: 13,
                                                                     ),
-                                                                    tableHeadtext(
-                                                                      '',
-                                                                      size: 13,
 
-                                                                    ),
                                                                   ]),
                                                               if(lines.isEmpty)...[
                                                                 TableRow(
@@ -813,7 +809,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                                                 style: BorderStyle.solid))),
                                                                     children: [
-                                                                      textPadding(""),
                                                                       textPadding(""),
                                                                       textPadding(""),
                                                                       textPadding(""),
@@ -872,23 +867,19 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].variantName??"",
-                                                                              fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                              fontSize: 12, fontWeight: FontWeight.w500),
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].barcode??"", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                             fontWeight: FontWeight.w500),
                                                                         ),
                                                                         TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(currentStock.length!=lines.length?"": currentStock[i].toString(),
-                                                                              padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                          fontWeight: FontWeight.w500,alighnment:Alignment.topRight),
                                                                         ),   TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].purchaseUom??"", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                           fontWeight: FontWeight.w500),
                                                                         ),
                                                                         TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -948,49 +939,40 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                         TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].unitCost.toString()??"", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                           fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                                         ),
                                                                         TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(
-
                                                                               lines?[i].discount.toString()??"", fontSize: 12,
-
                                                                               padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                              1.5), fontWeight: FontWeight.w500, alighnment: Alignment.topRight),
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].foc.toString()??"",
-                                                                              // fontSize: 12,
-                                                                              // padding: EdgeInsets.only(left: 11.5, top:
-                                                                              // 1.5),
-                                                                              fontWeight: FontWeight.w500),
+                                                                              fontWeight: FontWeight.w500,
+                                                                          alighnment: Alignment.topRight)
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].vatableAmount.toString()??"", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                               fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].excessTax.toString()??"", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                             fontWeight: FontWeight.w500,alighnment:Alignment.topRight),
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].vat.toString()??"", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+
+                                                                              fontWeight: FontWeight.w500,alighnment:Alignment.topRight),
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].actualCost.toString()??"", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight,),
                                                                         ),    TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].grandTotal.toString()??"", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
+                                                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                                         ),
                                                                         TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1022,17 +1004,14 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                               onSelection:(bool ? value){
                                                                                 if(lines[i].isInvoiced!=true){
                                                                                   updateCheck=true;
-
                                                                                   lines[i]=lines[i].copyWith(upDateCheck: true);
                                                                                   bool? isActive = lines?[i].isActive??false;
                                                                                   setState(() {
-
                                                                                     isActive = !isActive!;
                                                                                     print(isActive);
                                                                                     // widget.updation(i,isActive);
                                                                                     lines[i] = lines[i].copyWith(isActive: isActive);
                                                                                     addition();
-
                                                                                     setState(() {});
                                                                                   });
                                                                                 }
@@ -1055,16 +1034,35 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                           ),
                                                                         ),
 
-                                                                        TableCell(
-                                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                          child: textPadding("", fontSize: 12,
-                                                                              padding: EdgeInsets.only(left: 11.5, top:
-                                                                              1.5), fontWeight: FontWeight.w500),
-                                                                        ),
+
                                                                       ]
                                                                   )
                                                               ]
-                                                            ]
+                                                            ],widths: {
+                                                          0: FlexColumnWidth(2),
+                                                          1: FlexColumnWidth(4),
+                                                          2: FlexColumnWidth(7),
+                                                          3: FlexColumnWidth(4),
+                                                          4: FlexColumnWidth(2),
+                                                          5: FlexColumnWidth(4),
+                                                          6: FlexColumnWidth(2),
+                                                          7: FlexColumnWidth(2),
+                                                          8: FlexColumnWidth(2),
+                                                          9: FlexColumnWidth(2),
+                                                          10: FlexColumnWidth(3),
+                                                          11: FlexColumnWidth(2),
+                                                          12: FlexColumnWidth(2),
+                                                          13: FlexColumnWidth(3),
+                                                          14: FlexColumnWidth(3),
+                                                          15: FlexColumnWidth(3),
+                                                          16: FlexColumnWidth(3),
+                                                          17: FlexColumnWidth(3),
+                                                          18: FlexColumnWidth(3),
+                                                          19: FlexColumnWidth(2),
+                                                          20: FlexColumnWidth(3),
+                                                          // 21: FlexColumnWidth(3),
+
+                                                        },
                                                         ),
                                                       ),
 

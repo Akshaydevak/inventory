@@ -406,45 +406,7 @@ offerGroupNameController.clear();
         });
       },
     ),
-    // BlocListener<ReadPromotionDiscountCubit, ReadPromotionDiscountState>(
-    //   listener: (context, state) {
-    //     print("state++++++++++++++++++++++++++++++++");
-    //     state.maybeWhen(
-    //         orElse: () {},
-    //         error: () {
-    //           print("error");
-    //         },
-    //         success: (data) {
-    //
-    //             print("taskssss"+data.toString());
-    //
-    //             titleController.text=data.title??"";
-    //             offerPeriodNameController.text=data.offerPeriodName??"";
-    //             offerApplyingTypeController.text=data.offerAppliedTo??"";
-    //             offerApplyingToIdController.text=data.offerAppliedToId??"";
-    //             offerApplyingToCodeController.text=data.offerAppliedToCode??"";
-    //             discountCodeController.text=data.discountCode??"";
-    //             descriptionController.text=data.description??"";
-    //             imageController.text=data.image??"";
-    //             basedOnController.text=data.basedOn??"";
-    //             offerPeriodController.text=data.offerPeriodId.toString()??"";
-    //             offerGroupController.text=data.offerGroupId.toString()??"";
-    //             offerGroupNameController.text=data.offerGroupName??"";
-    //             discountPercentageOrPriceController.text=data.discountPercentageOrPrice.toString()??"";
-    //             isAvailableForAll=data.isAvailableForAll??false;
-    //             isActive=data.isActive??false;
-    //
-    //
-    //
-    //             data.segments != null ? segmentTable =List.from( data?.segments ?? []) : segmentTable = [];
-    //             data.availableCustomerGroups != null ? customerGroup =List.from( data?.availableCustomerGroups ?? []) : customerGroup = [];
-    //             data.offerLines != null ? offerLines =List.from( data?.offerLines ?? []) : offerLines = [];
-    //             data.offerLines != null ? offerLines2 =List.from( data?.offerLines ?? []) : offerLines2 = [];
-    //
-    //
-    //         });
-    //   },
-    // ),
+
 
   ],
   child: BlocConsumer<ReadPromotionDiscountCubit, ReadPromotionDiscountState>(

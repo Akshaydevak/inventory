@@ -31,8 +31,9 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
   var transactionCodeControllers = <TextEditingController>[];
   List<PaymentListSalesModel> table = [];
   var items = [
-    'payment_completed',
-    'payment_pending',
+    'Payment Completed',
+    'Payment Pending',
+    'Rejected'
   ];
   String selectval = "Tokyo";
   var list1;
@@ -122,7 +123,36 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                 // width: 700,
                 child: Column(
                   children: [
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: h * .005,
+                    ),
+                    Container(
+                      // margin: EdgeInsets.all(5),
+                        child: SearchTextfiled(
+                          color: Color(0xffFAFAFA),
+                          h: 40,
+                          suffixIconCheck: suffixIconCheck,
+                          w: MediaQuery.of(context).size.width,
+                          hintText: "Search...",
+                          ctrlr: searchContoller,
+                          onChanged: (va) {
+                            print("searching case" + va.toString());
+                            context
+                                .read<PayementVerticalListCubit>()
+                                .getSearchCustomerList(searchContoller.text);
+                            suffixIconCheck=true;
+                            if (va == "") {
+                              context
+                                  .read<PayementVerticalListCubit>()
+                                  .getSalePaymentVerticalList();;
+                              suffixIconCheck=false;
+                            }
+                          },
+                        )),
+                    SizedBox(
+                      height: h * .005,
+                    ),
+
 
                     SingleChildScrollView(
                       child: customTable(
@@ -130,30 +160,23 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                         tableWidth: .5,
                         childrens: [
                           TableRow(
-                            // decoration: BoxDecoration(
-
-                            //     color: Colors.green.shade200,
-
-                            //     shape: BoxShape.rectangle,
-
-                            //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
                             children: [
                               tableHeadtext(
                                 'Sl.No',
 
                                 size: 13,
+                              ),  tableHeadtext(
+                                'Order Id',
+                                size: 13,
                               ),
 
                               tableHeadtext(
                                 'Transaction Code',
-
                                 size: 13,
 
                               ),
                               tableHeadtext(
                                 'Mobile Number',
-
                                 size: 13,
                                 // color: Color(0xffE5E5E5),
                               ),
@@ -212,6 +235,17 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                                       // Text(keys[i].key??"")
 
                                     ),
+                                    TableCell(
+                                        verticalAlignment:
+                                        TableCellVerticalAlignment
+                                            .middle,
+                                        child:textOnclickPadding(
+    ontap: () {
+    },
+    text: table[i].order ?? "",)
+                                      // Text(keys[i].key??"")
+
+                                    ),
 
                                     TableCell(
                                       verticalAlignment:
@@ -253,10 +287,24 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                                         child:
                                         CustomDropDown(
                                           // border: true,
-                                          choosenValue: table[i].paymentStatus??"",
+                                          choosenValue: table[i].paymentStatus=="payment_completed"?"Payment Completed":table[i].paymentStatus=="payment_pending"?"Payment Pending":table[i].paymentStatus=="rejected"?"Rejected":table[i].paymentStatus??"",
                                           onChange: (val) {
                                             setState(() {
-                                              table[i]=table[i].copyWith(paymentStatus:val,updateCheck: true );
+                                              String status="";
+                                              if(val=="Payment Completed"){
+                                                status="payment_completed";
+                                              }
+                                              else if(val=="Payment Pending"){
+                                                status="payment_pending";
+
+                                              }
+                                              else if(val=="Rejected"){
+                                                status="rejected";
+
+                                              }
+
+
+                                              table[i]=table[i].copyWith(paymentStatus:status,updateCheck: true );
                                             });
 
                                             // choosenValue=val;

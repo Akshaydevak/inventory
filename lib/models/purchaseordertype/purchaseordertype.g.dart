@@ -23,6 +23,9 @@ _$_PurchaseOrdertype _$$_PurchaseOrdertypeFromJson(Map<String, dynamic> json) =>
       virtualStockType: (json['virtual_stock_type'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      priceType: (json['price_type'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_PurchaseOrdertypeToJson(
@@ -33,4 +36,5 @@ Map<String, dynamic> _$$_PurchaseOrdertypeToJson(
       'discount_type': instance.discountType,
       'order_modes': instance.orderMode,
       'virtual_stock_type': instance.virtualStockType,
+      'price_type': instance.priceType,
     };

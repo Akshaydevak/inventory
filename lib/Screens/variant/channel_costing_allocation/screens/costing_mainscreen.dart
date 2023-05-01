@@ -43,6 +43,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
   TextEditingController costingCodeController=TextEditingController();
   TextEditingController channelNameController=TextEditingController();
   TextEditingController unitCostController=TextEditingController();
+  TextEditingController priceTypeController=TextEditingController();
   TextEditingController pricingGptypeController=TextEditingController();
   TextEditingController gpPercentegeController=TextEditingController();
   TextEditingController sellingPriceController=TextEditingController();
@@ -75,6 +76,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
       unitCostController.clear();
       sellingPriceController.clear();
       costingCodeController.clear();
+      priceTypeController.clear();
       costingnameController.clear();
       costingMethodController.clear();
       gpPercentegeController.clear();
@@ -183,6 +185,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                 // List<Object> get props => [this.verificationCode, this.status];
                 print("appuz"+data.toString());
              unitCostController.text=data.unitCost.toString();
+
                 sellingPriceController.text=data.sellingPrice.toString();
                 costingCodeController.text=data.costingCode.toString();
                 pricingNameController.text=data.pricingGroupName??"";
@@ -196,7 +199,8 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                 pricingGptypeController.text=data.pricingGpType.toString();
                 costingnameController.text=data.costingMethodName.toString();
                 pricingGroupIdController.text=data.pricingGroupId.toString();
-                
+                priceTypeController.text=data.priceType??"";
+
                 // print(checkBoxLis);
                 // group = data.data;
                 // print("Akshgayaa" + group.toString());
@@ -220,6 +224,9 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
               setState(() {
                 print("aaaayiram");
                 table=List.from(data);
+                if(table.isEmpty){
+                  select=true;
+                }
 
                 print(data);
                 // checkBoxLis=data.data;
@@ -538,6 +545,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                           costingName: costingnameController,
                           pricingName: pricingNameController,
                           unitCost: unitCostController,
+                          priceType: priceTypeController,
                           sellingPrice: sellingPriceController,
                           channelName: channelNameController,
                           channelStockCode: channelStockCodeController,
@@ -568,6 +576,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                                 costingMethodId: int.tryParse(costingMethodController.text),
                                 gpPercentage:
                                 double.tryParse(gpPercentegeController.text),
+                                  priceType: priceTypeController.text,
 
                                 // double.tryParse(gpPercentegeController.text),
                                 unitCost:  double.tryParse(unitCostController.text),
@@ -590,6 +599,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                                 pricingGpType: pricingGptypeController.text,
                                 unitCost:  double.tryParse(unitCostController.text),
                                 sellingPrice:  double.tryParse(sellingPriceController.text),
+                                priceType: priceTypeController.text
 
 
                               );

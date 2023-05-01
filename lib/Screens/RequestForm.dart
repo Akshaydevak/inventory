@@ -16,7 +16,6 @@ import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
-import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
@@ -29,17 +28,14 @@ import 'package:inventory/requestformcubit/cubit/requestformpost_cubit.dart';
 import 'package:inventory/requestformcubit/cubit/requestformread_cubit.dart';
 import 'package:inventory/requestformcubit/cubit/requestpatch_cubit.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
-import 'package:inventory/widgets/Scrollabletable.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
 import 'package:inventory/widgets/inputfield.dart';
-import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
 import '../printScreen.dart';
 import 'GeneralScreen.dart';
-
 class RequestFormScreen extends StatefulWidget {
   @override
   State<RequestFormScreen> createState() => _RequestFormScreenState();
@@ -1308,7 +1304,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 int? id = va!.id;
                                                                 Variable.tableindex =i;
                                                                 Variable.tableedit=true;
-                                                                stockCheck==true;
+
 
 
                                                                 // onChange = true;
@@ -1467,12 +1463,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                   TableCell(
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                     child: textPadding(
-                                                        table[i]
-                                                            .variantName??"",
+                                                        table[i].variantName??"",
 
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .w500),
+                                                        fontWeight: FontWeight.w500),
                                                   ),
 
                                                   TableCell(
@@ -1490,12 +1483,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                   TableCell(
                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                     child: textPadding(
-                                                        table[i]
-                                                            .purchaseUom??"",
+                                                        table[i].purchaseUom??"",
 
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .w500),
+                                                        fontWeight: FontWeight.w500),
                                                   ),
 
 

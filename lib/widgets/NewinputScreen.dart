@@ -1681,8 +1681,9 @@ class CustomDropDown extends StatefulWidget {
    final List <String>items;
    final bool border;
    final Color clr;
+   final double? width;
 
-  CustomDropDown({required this.choosenValue, required this.onChange,required this.items,this.border=false,this.clr=Colors.grey});
+  CustomDropDown({required this.choosenValue,this.width, required this.onChange,required this.items,this.border=false,this.clr=Colors.grey});
 
 
 
@@ -1702,10 +1703,12 @@ class _CustomDropDownState extends State<CustomDropDown> {
     return Container(
 
       height: height*.049,
-      width: width*.085,
+      width:widget.width!=null?widget.width: width*.085,
+
       alignment: Alignment.center,
       decoration: BoxDecoration(
         // color: Colors.red,
+
 
         borderRadius: BorderRadius.all(Radius.circular(5)),
        // color:   widget.clr,
@@ -1740,7 +1743,6 @@ class _CustomDropDownState extends State<CustomDropDown> {
           icon: const Icon(Icons.keyboard_arrow_down,size: 13,),
        hint: Container(
          // width: 150,
-         color: Colors.black26,
 
          child: Text(widget.choosenValue.toString(),style: TextStyle(color: widget.choosenValue!="_Select_"?Colors.black:Colors.grey,fontSize:widget.choosenValue!="_Select_"?16:13 ),overflow: TextOverflow.ellipsis, ),
        ),

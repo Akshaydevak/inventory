@@ -198,7 +198,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
 
                                   children: [
                                     tableHeadtext(
-                                      'Sno',
+                                      'Sl.No',
 
                                       size: 13,
 
@@ -280,7 +280,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                     ),
 
                                     tableHeadtext(
-                                      'Vat',
+                                      'VAT',
 
 
                                       size: 13,
@@ -414,11 +414,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   .toString(),
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
                                                   .w500),
@@ -432,11 +428,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
                                                   .w500),
@@ -450,11 +442,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
                                                   .w500),
@@ -468,11 +456,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
                                                   .w500),
@@ -486,11 +470,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
                                                   .w500),
@@ -504,11 +484,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
                                                   .w500),
@@ -522,14 +498,10 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
-                                                  .w500),
+                                                  .w500,alighnment: Alignment.topRight),
                                         ),
 
 
@@ -545,14 +517,10 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
-                                                  .w500),
+                                                  .w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -565,15 +533,11 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              height: 42,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
+
                                               fontWeight:
                                               FontWeight
-                                                  .w500),
+                                                  .w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -586,15 +550,11 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              height: 42,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
+
                                               fontWeight:
                                               FontWeight
-                                                  .w500),
+                                                  .w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -607,11 +567,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
                                                   .w500),
@@ -627,14 +583,10 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
-                                                  .w500),
+                                                  .w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -647,14 +599,10 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
-                                                  .w500),
+                                                  .w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -667,14 +615,10 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
-                                                  .w500),
+                                                  .w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -687,14 +631,10 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                                   "",
                                               fontSize:
                                               12,
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                  11.5,
-                                                  top:
-                                                  1.5),
+
                                               fontWeight:
                                               FontWeight
-                                                  .w500),
+                                                  .w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -748,8 +688,34 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                           ),
                                         ),
                                       ])
-                              ]
-                            ]),
+                              ],
+
+                            ],
+                          widths: {
+                            0: FlexColumnWidth(2),
+                            1: FlexColumnWidth(4),
+                            2: FlexColumnWidth(4),
+                            3: FlexColumnWidth(7),
+                            4: FlexColumnWidth(4),
+                            5: FlexColumnWidth(4),
+                            6: FlexColumnWidth(2),
+                            7: FlexColumnWidth(2),
+                            8: FlexColumnWidth(2),
+                            9: FlexColumnWidth(2),
+                            10: FlexColumnWidth(2),
+                            11: FlexColumnWidth(3),
+                            12: FlexColumnWidth(2),
+                            13: FlexColumnWidth(3),
+                            14: FlexColumnWidth(3),
+                            15: FlexColumnWidth(3),
+                            16: FlexColumnWidth(3),
+                            17: FlexColumnWidth(3),
+                            18: FlexColumnWidth(2),
+                            19: FlexColumnWidth(2),
+                            20: FlexColumnWidth(3),
+                            // 21: FlexColumnWidth(3),
+
+                          },),
                       ),
                     ),
                     SizedBox(height: 20,)

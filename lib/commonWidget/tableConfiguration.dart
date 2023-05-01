@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,13 +24,18 @@ import 'package:inventory/Screens/promotiontab/sale/cubits/listsegments/list_seg
 import 'package:inventory/Screens/promotiontab/sale/cubits/offergroup/list_offer_group_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/saleapplyingname/sale_applying_name_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/payment_list/payment_list_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment_sale_post_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/sales/general/cubit/customeridcreation/customeridcreation_cubit.dart';
 import 'package:inventory/Screens/sales/general/cubit/customeridlist/customeridlist_cubit.dart';
+import 'package:inventory/Screens/sales/general/cubit/payment_verticallist/payement_vertical_list_cubit.dart';
 import 'package:inventory/Screens/sales/general/cubit/shippingaddress/shippingadrees_cubit.dart';
 import 'package:inventory/Screens/sales/general/general.dart';
 import 'package:inventory/Screens/sales/general/model/customeridlistmodel.dart';
 import 'package:inventory/Screens/sales/general/model/customidcreation.dart';
 import 'package:inventory/Screens/sales/general/model/shippinfaddressmodel.dart';
+import 'package:inventory/Screens/sales/invoice/cubits/payment_suucess_post/payment_transaction_success_post_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtypelist/costingtypelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricinglist/pricinglist_cubit.dart';
@@ -40,6 +46,7 @@ import 'package:inventory/Screens/variant/variantdetails/cubits/salesList/sales_
 import 'package:inventory/Screens/variant/variantdetails/cubits/vendordetailslist/vendordetailslist_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -48,8 +55,11 @@ import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/purchaserecievingmodel/generatemissing.dart';
 import 'package:inventory/requestformcubit/cubit/orderedperson_cubit.dart';
+import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
+import 'package:inventory/widgets/itemmenu.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../Screens/heirarchy/general/cubits/materialRead/materialread_cubit.dart';
 import '../Screens/heirarchy/general/model/listbrand.dart';
@@ -68,6 +78,7 @@ class TableConfigurePopup extends StatelessWidget {
   final String? apiType;
   final Function valueSelect;
   final int? id;
+  final double? total;
   final String? inventory;
   final String? vendorId;
   final dynamic? object;
@@ -81,6 +92,7 @@ class TableConfigurePopup extends StatelessWidget {
         this.vendorId,
         this.code,
         this.object,
+        this.total,
       required this.type,
       this.id = 0,
       required this.valueSelect})
@@ -93,6 +105,15 @@ class TableConfigurePopup extends StatelessWidget {
         {
           data = divisionTabalePopup(
             type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "PaymentList_ByOrderIdPopup":
+        {
+          data = PaymentListByOrderIdPopup(
+            code: code,
+            total:total,
             valueSelect: valueSelect,
           );
         }
@@ -722,6 +743,723 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
           });
         },
       );
+    });
+  }
+}
+
+
+class PaymentListByOrderIdPopup extends StatefulWidget {
+  final String? code;
+  final Function valueSelect;
+  final double? total;
+
+  PaymentListByOrderIdPopup({
+    Key? key,
+    required this.code,
+    this.total,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _PaymentListByOrderIdPopup createState() => _PaymentListByOrderIdPopup();
+}
+
+class _PaymentListByOrderIdPopup extends State<PaymentListByOrderIdPopup> {
+  bool? active = true;
+  bool suffixIconCheck = false;
+  bool isPaymentStatusSuccessCall=false;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+
+  List<PaymentListSalesModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+  TextEditingController transactionCodeContoller = TextEditingController();
+  TextEditingController paymentStatusCodeContoller = TextEditingController();
+  TextEditingController mobileNumberCodeContoller = TextEditingController();
+  TextEditingController totalAmountContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+  String methodCode="";
+  List<PurchasePaymentModel> results=[];
+  
+  late AutoScrollController controller;
+  int verticalScrollIndex = 0;
+  @override
+  initState() {
+
+
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+    context.read<PaymentListCubit>().getPaymentList();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
+  }
+  var items = [
+    'Payment Completed',
+    'Payment Pending',
+    'Rejected'
+  ];
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    if(onChange==false){
+      setState(() {
+        print("zdgfghjkl;';");
+        print(widget.total);
+        totalAmountContoller.text=widget.total.toString();
+      });
+
+    }
+    onChange=true;
+
+    return Builder(builder: (context) {
+      context.read<PayementVerticalListCubit>()
+          .getPaymentByOrderId(widget.code??"");;
+      return MultiBlocListener(
+  listeners: [
+    BlocListener<PaymentSalePostCubit, PaymentSalePostState>(
+      listener: (context, state) {
+        state.maybeWhen(orElse: () {
+          // context.
+          context.showSnackBarError("Loading");
+        }, error: () {
+          showDailogPopUp(
+              context,
+              FailiurePopup(
+                content: Variable.errorMessege,
+              ));
+
+        }, success: (data) {
+          if (data.data1) {
+            if( isPaymentStatusSuccessCall)context.read<PaymentTransactionSuccessPostCubit>().postPaymentTransactionSuccess(int?.tryParse(widget.code!),Variable.methodCode, data.data2,3);
+            else
+              showDailogPopUp(
+                  context,
+                  SuccessPopup(
+                    content: "success",
+                    // table:table,
+                  ));
+          }
+          else {
+            showDailogPopUp(
+                context,
+                FailiurePopup(
+                  content: data.data2,
+                  // table:table,
+                ));
+            print(data.data1);
+          }
+          ;
+        });
+      },
+    ),
+    BlocListener<PaymentTransactionSuccessPostCubit, PaymentTransactionSuccessPostState>(
+      listener: (context, state) {
+        state.maybeWhen(orElse: () {
+          // context.
+          context.showSnackBarError("Loading");
+        }, error: () {
+          showDailogPopUp(
+              context,
+              FailiurePopup(
+                content: Variable.errorMessege,
+                // table:table,
+              ));
+
+
+          // context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+          if (data.data1) {
+            showDailogPopUp(
+                context,
+                SuccessPopup(
+                  content: data.data2.toString(),
+                  // table:table,
+                ));
+
+
+
+
+          }
+          else {
+            showDailogPopUp(
+                context,
+                FailiurePopup(
+                  content: data.data2,
+                  // table:table,
+                ));
+            print(data.data1);
+          }
+          ;
+        });
+      },
+    ),
+    BlocListener<PaymentListCubit, PaymentListState>(
+  listener: (context, state) {
+    print("state" + state.toString());
+    state.maybeWhen(
+        orElse: () {},
+        error: () {
+          print("error");
+        },
+        success: (list) {
+          print("PAYMENYT STATUSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+          results=list.data;
+          if(results.isNotEmpty){
+            methodCode=results[0].code??"";
+            Variable.methodCode=results[0].code??"";
+          }
+
+
+
+
+        });
+  },
+),
+
+  ],
+  child: BlocConsumer<PayementVerticalListCubit, PayementVerticalListState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;if(table.isNotEmpty==true){
+                  transactionCodeContoller.text=table[1].transactionCode??"";
+                }
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content:
+              PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "Payment Completed",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label:"Payment Popup",
+                onApply: () {
+                  PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                      contact: Variable.mobileNumber,
+                      customerCode:Variable.created_by,
+                      customerName: Variable.username,
+                      methodCode: Variable.methodCode,
+                      orderId:widget.code,
+                      status:"payment_completed",
+                      totalAmount: double.tryParse(totalAmountContoller.text)??0,
+                      tranSactionCode: transactionCodeContoller.text);
+
+                  print(model);
+                  context
+                      .read<PaymentSalePostCubit>()
+                      .postSaleOrderPaymentPost(model);
+                  isPaymentStatusSuccessCall=true;
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:TextButtonLarge(
+                  onPress: (){
+                    PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                        contact: Variable.mobileNumber,
+                        customerCode: Variable.created_by,
+                        customerName: Variable.username,
+                        methodCode: Variable.methodCode,
+                        orderId: widget.code,
+                        status: paymentStatusCodeContoller.text,
+                        totalAmount: double.tryParse(totalAmountContoller.text)??0,
+                        tranSactionCode: "");
+                    print(model);
+                    context
+                        .read<PaymentSalePostCubit>()
+                        .postSaleOrderPaymentPost(model);
+
+                  },
+                  text: "Transaction Pending",
+
+                ),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+
+                    children: [
+                      Container(
+                          // margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            suffixIconCheck: suffixIconCheck,
+                            w: MediaQuery.of(context).size.width/2.11,
+                            hintText: "Search...",
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<DevisionListCubit>()
+                                  .searchDevisionList(searchContoller.text);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context
+                                    .read<DevisionListCubit>()
+                                    .getDevisionList();
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        // height:40,
+                        // width: w/7,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        child: customTable(
+
+                          tableWidth: .5,
+                          childrens: [
+                            TableRow(
+                              children: [
+                                tableHeadtext(
+                                  'Sl No',
+                                  size: 13,
+                                ),
+                                tableHeadtext(
+                                  'Transaction Code',
+                                  size: 13,
+                                  // color: Color(0xffE5E5E5),
+                                ),
+                                tableHeadtext(
+                                  'Mobile Number',
+                                  size: 13,
+                                ),
+                                tableHeadtext(
+                                  'Total Amount',
+                                  size: 13,
+                                  // color: Color(0xffE5E5E5),
+                                ),
+
+                              ],
+                            ),
+                            // if (table?.isNotEmpty == true) ...[
+                            //   for (var i = 0; i < table.length; i++)
+                            //     TableRow(
+                            //         decoration: BoxDecoration(
+                            //             color: Pellet.tableRowColor,
+                            //             shape: BoxShape.rectangle,
+                            //             border:  Border(
+                            //                 left: BorderSide(
+                            //
+                            //                     color: Color(0xff3E4F5B).withOpacity(.1),
+                            //                     width: .4,
+                            //                     style: BorderStyle.solid),
+                            //                 bottom: BorderSide(
+                            //
+                            //                     color:   Color(0xff3E4F5B).withOpacity(.1),
+                            //                     style: BorderStyle.solid),
+                            //                 right: BorderSide(
+                            //                     color:   Color(0xff3E4F5B).withOpacity(.1),
+                            //                     width: .4,
+                            //
+                            //                     style: BorderStyle.solid))),
+                            //         children: [
+                            //           TableCell(
+                            //               verticalAlignment:
+                            //                   TableCellVerticalAlignment
+                            //                       .middle,
+                            //               child:
+                            //                   textPadding((i + 1).toString(),)
+                            //               // Text(keys[i].key??"")
+                            //
+                            //               ),
+                            //           TableCell(
+                            //               verticalAlignment:
+                            //                   TableCellVerticalAlignment
+                            //                       .middle,
+                            //               child: textOnclickPadding(
+                            //                 ontap: () {
+                            //                   // BrandListModel model =
+                            //                   //     BrandListModel(
+                            //                   //   id: table[i].id,
+                            //                   //   name: table[i].name,
+                            //                   //   code: table[i].code,
+                            //                   // );
+                            //                   // Navigator.pop(context);
+                            //                   //
+                            //                   // widget.valueSelect(model);
+                            //                 },
+                            //                 text: table[i].transactionCode ?? "",
+                            //
+                            //               )
+                            //               // Text(keys[i].value??"",)
+                            //
+                            //               ),
+                            //           TableCell(
+                            //               verticalAlignment:
+                            //                   TableCellVerticalAlignment
+                            //                       .middle,
+                            //               child: textOnclickPadding(
+                            //                 ontap: () {
+                            //                   // BrandListModel model =
+                            //                   //     BrandListModel(
+                            //                   //   id: table[i].id,
+                            //                   //   name: table[i].name,
+                            //                   //   code: table[i].code,
+                            //                   // );
+                            //                   // Navigator.pop(context);
+                            //                   //
+                            //                   // widget.valueSelect(model);
+                            //                 },
+                            //                 text:  table[i].postResponse?.contact ?? "" ?? "",
+                            //
+                            //               ),
+                            //               // Text(keys[i].value??"",)
+                            //
+                            //               ),           TableCell(
+                            //               verticalAlignment:
+                            //                   TableCellVerticalAlignment
+                            //                       .middle,
+                            //               child: textOnclickPadding(
+                            //                 ontap: () {
+                            //                   // BrandListModel model =
+                            //                   //     BrandListModel(
+                            //                   //   id: table[i].id,
+                            //                   //   name: table[i].name,
+                            //                   //   code: table[i].code,
+                            //                   // );
+                            //                   // Navigator.pop(context);
+                            //                   //
+                            //                   // widget.valueSelect(model);
+                            //                 },
+                            //                 text:  table[i].postResponse?.contact ?? "" ?? "",
+                            //
+                            //               ),
+                            //               // Text(keys[i].value??"",)
+                            //
+                            //               ),
+                            //         ]),
+                            // ],
+                          ],
+                          widths: {
+                            0: FlexColumnWidth(1),
+                            1: FlexColumnWidth(5),
+                          },
+                        ),
+                      ),
+                      Container(
+                        height: h / 3,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          child: customTable(
+
+                              childrens: [
+                                if (table?.isNotEmpty == true) ...[
+                                  for (var i = 0; i < table.length; i++)
+                                    TableRow(
+                                        decoration: BoxDecoration(
+                                            color: Pellet.tableRowColor,
+                                            shape: BoxShape.rectangle,
+                                            border:  Border(
+                                                left: BorderSide(
+
+                                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+                                                    style: BorderStyle.solid),
+                                                bottom: BorderSide(
+
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    style: BorderStyle.solid),
+                                                right: BorderSide(
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+
+                                                    style: BorderStyle.solid))),
+                                        children: [
+                                          TableCell(
+                                              verticalAlignment:
+                                              TableCellVerticalAlignment
+                                                  .middle,
+                                              child:
+                                              textPadding((i + 1).toString(),)
+                                            // Text(keys[i].key??"")
+
+                                          ),
+                                          TableCell(
+                                              verticalAlignment:
+                                              TableCellVerticalAlignment
+                                                  .middle,
+                                              child: textOnclickPadding(
+                                                ontap: () {
+                                                  // BrandListModel model =
+                                                  //     BrandListModel(
+                                                  //   id: table[i].id,
+                                                  //   name: table[i].name,
+                                                  //   code: table[i].code,
+                                                  // );
+                                                  // Navigator.pop(context);
+                                                  //
+                                                  // widget.valueSelect(model);
+                                                },
+                                                text: table[i].transactionCode ?? "",
+
+                                              )
+                                            // Text(keys[i].value??"",)
+
+                                          ),
+                                          TableCell(
+                                            verticalAlignment:
+                                            TableCellVerticalAlignment
+                                                .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                // BrandListModel model =
+                                                //     BrandListModel(
+                                                //   id: table[i].id,
+                                                //   name: table[i].name,
+                                                //   code: table[i].code,
+                                                // );
+                                                // Navigator.pop(context);
+                                                //
+                                                // widget.valueSelect(model);
+                                              },
+                                              text:  table[i].postResponse?.contact ?? "" ?? "",
+
+                                            ),
+                                            // Text(keys[i].value??"",)
+
+                                          ),           TableCell(
+                                            verticalAlignment:
+                                            TableCellVerticalAlignment
+                                                .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                // BrandListModel model =
+                                                //     BrandListModel(
+                                                //   id: table[i].id,
+                                                //   name: table[i].name,
+                                                //   code: table[i].code,
+                                                // );
+                                                // Navigator.pop(context);
+                                                //
+                                                // widget.valueSelect(model);
+                                              },
+                                              text:  table[i].postResponse?.contact ?? "" ?? "",
+
+                                            ),
+                                            // Text(keys[i].value??"",)
+
+                                          ),
+                                        ]),
+                                ],
+                              ]
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .04,
+                      ),
+                      Container(
+                        // width: 200,
+                        // height: 50,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 200,
+                              height: 90,
+                              child: ListView.separated(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+
+
+
+                                separatorBuilder: (context, index) {
+
+                                  return Divider(
+                                    height: 0,
+                                    color: Color(0xff2B3944)
+                                        .withOpacity(0.3),
+                                    // thickness: 1,
+                                  );
+                                },
+                                physics: ScrollPhysics(),
+                                controller: controller,
+                                itemBuilder: (context, index) {
+                                  return AutoScrollTag(
+                                      highlightColor: Colors.red,
+                                      controller: controller,
+                                      key: ValueKey(index),
+                                      index: index,
+                                      child: ItemCardPayment(
+                                        index: index,
+                                        selectedVertical:verticalScrollIndex,
+                                        item: results[index].tittle,
+                                        id:"",
+
+                                        onClick: () {
+
+                                          setState(() {
+                                            verticalScrollIndex=index;
+                                            methodCode=results[index].code??"";
+                                            Variable.methodCode=results[index].code??"";
+                                          });
+
+
+                                        },
+                                      ));
+                                },
+                                itemCount:results.length,
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      child: Column(
+                                        children: [
+                                          NewInputCard(
+
+                                              controller: transactionCodeContoller,
+                                              title: "Transaction Code"),
+                                          SizedBox(
+                                            height: h * .030,
+                                          ),
+                                          NewInputCard(
+
+                                              controller:totalAmountContoller,
+                                              title: " TotalAmount"),
+
+                                          SizedBox(
+                                            height: h * .030,
+                                          ),
+
+
+                                          // NewInputCard(
+                                          //     controller: widget.shipping, title: "shipping address id"),
+                                        ],
+                                      )),
+
+                                  Expanded(
+                                      child: Column(
+                                        children: [
+
+
+                                            Container(
+                                              // height: 30,
+                                              // width: 50,
+
+                                              child: CustomDropDown(
+                                                width: w*.15,
+                                                // border: true,
+                                                choosenValue: paymentStatusCodeContoller.text=="payment_completed"?"Payment Completed": paymentStatusCodeContoller.text=="payment_pending"?"Payment Pending": paymentStatusCodeContoller.text=="rejected"?"Rejected": paymentStatusCodeContoller.text??"",
+                                                onChange: (val) {
+                                                  setState(() {
+                                                    String status="";
+                                                    if(val=="Payment Completed"){
+                                                      status="payment_completed";
+                                                    }
+                                                    else if(val=="Payment Pending"){
+                                                      status="payment_pending";
+
+                                                    }
+                                                    else if(val=="Rejected"){
+                                                      status="rejected";
+
+                                                    }
+
+
+                                                    paymentStatusCodeContoller.text=status;
+                                                  });
+
+                                                  // choosenValue=val;
+                                                },
+                                                items: items,
+                                              ),
+                                            ),
+
+                                          SizedBox(
+                                            height: h * .030,
+                                          ),
+                                          NewInputCard(
+
+                                              controller: mobileNumberCodeContoller,
+                                              title: "Contact"),
+
+
+                                        ],
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      ),
+);
     });
   }
 }
@@ -10387,6 +11125,7 @@ class _customerIdListPopup extends State<customerIdListPopup> {
               context.showSnackBarError(Variable.errorMessege);
             }, success: (data) {
               if (data.data1) {
+                Navigator.pop(context);
                 context.read<CustomeridlistCubit>().getCustomerId();
 
                 showDailogPopUp(

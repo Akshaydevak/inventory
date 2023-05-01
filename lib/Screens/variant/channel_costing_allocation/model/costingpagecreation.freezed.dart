@@ -43,6 +43,8 @@ mixin _$CostingPageCreationPostModel {
   String? get channelStockCode => throw _privateConstructorUsedError;
   @JsonKey(name: "costing_code")
   String? get costingCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "price_type")
+  String? get priceType => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
   int? get variantId => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_code")
@@ -89,6 +91,7 @@ abstract class $CostingPageCreationPostModelCopyWith<$Res> {
       @JsonKey(name: "costing_method_name") String? costingMethodName,
       @JsonKey(name: "channel_stock_code") String? channelStockCode,
       @JsonKey(name: "costing_code") String? costingCode,
+      @JsonKey(name: "price_type") String? priceType,
       @JsonKey(name: "variant_id") int? variantId,
       @JsonKey(name: "variant_code") String? variantCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -126,6 +129,7 @@ class _$CostingPageCreationPostModelCopyWithImpl<$Res,
     Object? costingMethodName = freezed,
     Object? channelStockCode = freezed,
     Object? costingCode = freezed,
+    Object? priceType = freezed,
     Object? variantId = freezed,
     Object? variantCode = freezed,
     Object? inventoryId = freezed,
@@ -184,6 +188,10 @@ class _$CostingPageCreationPostModelCopyWithImpl<$Res,
       costingCode: freezed == costingCode
           ? _value.costingCode
           : costingCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      priceType: freezed == priceType
+          ? _value.priceType
+          : priceType // ignore: cast_nullable_to_non_nullable
               as String?,
       variantId: freezed == variantId
           ? _value.variantId
@@ -247,6 +255,7 @@ abstract class _$$_CostingPageCreationPostModelCopyWith<$Res>
       @JsonKey(name: "costing_method_name") String? costingMethodName,
       @JsonKey(name: "channel_stock_code") String? channelStockCode,
       @JsonKey(name: "costing_code") String? costingCode,
+      @JsonKey(name: "price_type") String? priceType,
       @JsonKey(name: "variant_id") int? variantId,
       @JsonKey(name: "variant_code") String? variantCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -283,6 +292,7 @@ class __$$_CostingPageCreationPostModelCopyWithImpl<$Res>
     Object? costingMethodName = freezed,
     Object? channelStockCode = freezed,
     Object? costingCode = freezed,
+    Object? priceType = freezed,
     Object? variantId = freezed,
     Object? variantCode = freezed,
     Object? inventoryId = freezed,
@@ -342,6 +352,10 @@ class __$$_CostingPageCreationPostModelCopyWithImpl<$Res>
           ? _value.costingCode
           : costingCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      priceType: freezed == priceType
+          ? _value.priceType
+          : priceType // ignore: cast_nullable_to_non_nullable
+              as String?,
       variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
@@ -398,6 +412,7 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
       @JsonKey(name: "costing_method_name") this.costingMethodName,
       @JsonKey(name: "channel_stock_code") this.channelStockCode,
       @JsonKey(name: "costing_code") this.costingCode,
+      @JsonKey(name: "price_type") this.priceType,
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_code") this.variantCode,
       @JsonKey(name: "inventory_id") this.inventoryId,
@@ -454,6 +469,9 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
   @JsonKey(name: "costing_code")
   final String? costingCode;
   @override
+  @JsonKey(name: "price_type")
+  final String? priceType;
+  @override
   @JsonKey(name: "variant_id")
   final int? variantId;
   @override
@@ -483,7 +501,7 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
 
   @override
   String toString() {
-    return 'CostingPageCreationPostModel(description: $description, id: $id, pricingPgtype: $pricingPgtype, channelId: $channelId, costingMethodId: $costingMethodId, pricingGroupId: $pricingGroupId, channelStockId: $channelStockId, channelCode: $channelCode, pricingGroupName: $pricingGroupName, costingMethodName: $costingMethodName, channelStockCode: $channelStockCode, costingCode: $costingCode, variantId: $variantId, variantCode: $variantCode, inventoryId: $inventoryId, createdBy: $createdBy, pricingGpType: $pricingGpType, gpPercentage: $gpPercentage, unitCost: $unitCost, sellingPrice: $sellingPrice, isActive: $isActive)';
+    return 'CostingPageCreationPostModel(description: $description, id: $id, pricingPgtype: $pricingPgtype, channelId: $channelId, costingMethodId: $costingMethodId, pricingGroupId: $pricingGroupId, channelStockId: $channelStockId, channelCode: $channelCode, pricingGroupName: $pricingGroupName, costingMethodName: $costingMethodName, channelStockCode: $channelStockCode, costingCode: $costingCode, priceType: $priceType, variantId: $variantId, variantCode: $variantCode, inventoryId: $inventoryId, createdBy: $createdBy, pricingGpType: $pricingGpType, gpPercentage: $gpPercentage, unitCost: $unitCost, sellingPrice: $sellingPrice, isActive: $isActive)';
   }
 
   @override
@@ -514,6 +532,8 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
                 other.channelStockCode == channelStockCode) &&
             (identical(other.costingCode, costingCode) ||
                 other.costingCode == costingCode) &&
+            (identical(other.priceType, priceType) ||
+                other.priceType == priceType) &&
             (identical(other.variantId, variantId) ||
                 other.variantId == variantId) &&
             (identical(other.variantCode, variantCode) ||
@@ -550,6 +570,7 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
         costingMethodName,
         channelStockCode,
         costingCode,
+        priceType,
         variantId,
         variantCode,
         inventoryId,
@@ -601,6 +622,8 @@ abstract class _CostingPageCreationPostModel
           final String? channelStockCode,
       @JsonKey(name: "costing_code")
           final String? costingCode,
+      @JsonKey(name: "price_type")
+          final String? priceType,
       @JsonKey(name: "variant_id")
           final int? variantId,
       @JsonKey(name: "variant_code")
@@ -657,6 +680,9 @@ abstract class _CostingPageCreationPostModel
   @override
   @JsonKey(name: "costing_code")
   String? get costingCode;
+  @override
+  @JsonKey(name: "price_type")
+  String? get priceType;
   @override
   @JsonKey(name: "variant_id")
   int? get variantId;

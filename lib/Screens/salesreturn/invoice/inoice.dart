@@ -84,21 +84,19 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
     double excessTAxValue = 0;
     if (table.isNotEmpty)
       for (var i = 0; i < table.length; i++) {
-        if (table[i].isInvoiced == true) {
+        if (table[i].isInvoiced == true && table[i].updateCheck != true) {
           var unicost1 = table[i].unitCost ?? 0;
           var vatValue1 = table[i].vat ?? 0;
           var discountValue1 = table[i].discount ?? 0;
           var taxableAmount1 = table[i].taxableAmount ?? 0;
           var excessTAxValue1 = table[i].excessTax ?? 0;
-          var sellingprice1 = table[i].sellingPriceTotal ?? 0;
+          var sellingprice1 = table[i].sellingPrice ?? 0;
           var totalAmount1 = table[i].totalPrice ?? 0;
           var warrentyprice1 = table[i].warrentyPrice ?? 0;
-
           unitcost = unitcost + unicost1;
           vatValue = vatValue + vatValue1;
           discountValue = discountValue + discountValue1;
           taxableAmount = taxableAmount + taxableAmount1;
-
           totalAmount = totalAmount + totalAmount1;
           sellingprice = sellingprice + sellingprice1;
           warrentyprice = warrentyprice + warrentyprice1;
@@ -112,15 +110,11 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
     totalPriceController.text = totalAmount.toString();
     taxableController.text = taxableAmount.toString();
     exciseTaxController.text = excessTAxValue.toString();
-
-    // _value=false;
   }
   updateCheckFucction(bool value) {
     updateCheck = value;
     setState(() {});
   }
-
-
   @override
   void initState() {
     context.read<SalesreturnverticalCubit>().getSalesReturnGeneralVertical();
@@ -130,6 +124,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
   int? veritiaclid = 0;
   TextEditingController itemsearch = TextEditingController();
   List<salesOrderTypeModel> result = [];
+  InvoicedDatasSalesReturn? object=InvoicedDatasSalesReturn();
 
   int selectedVertical = 0;
 
@@ -160,9 +155,12 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
           print("error");
         },
         success: (data) {
-          print("data" + data.toString());
-          if(data.invoicedData?.lines?.isNotEmpty==true)
+          print("datasssssssssssssssssssssssssssssssssssssssssssss" + data.toString());
+          if(data.invoicedData!=null)
           {
+            print("not inoiced is here bbbbbbbbbbbbbbbbbb");
+            print(data?.invoicedData?.returnInvoicelines.toString()??"");
+            object=data.invoicedData;
             // data.invoicedData?.lines != null
             //     ? table =  data.invoicedData?.lines ?? []
             //     : table = [];
@@ -170,6 +168,8 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
             salesReturnOrderCode=data.invoicedData?.salesReturnOrderCode??"";
             invoiceCodeController.text=data.invoicedData?.salesReturnInvoiceCode??"";
             invoicedDateController.text=data.invoicedData?.createdDate??"";
+
+            print(data.invoicedData?.createdDate);
             invoicedDateController=TextEditingController(text:data.invoicedData?.createdDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.invoicedData?.createdDate??"")));
             paymentIdController.text=data.invoicedData?.paymentCode??"";
             paymentStatusController.text=data.invoicedData?.paymentStatus??"";
@@ -188,8 +188,8 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
             vatController.text=data.invoicedData?.vat.toString()??"";
             sellingPriceController.text=data.invoicedData?.sellingPriceTotal.toString()??"";
             totalPriceController.text=data.invoicedData?.totalPrice.toString()??"";
-            data.invoicedData?.lines != null
-                ? table =  data.invoicedData?.lines ?? []
+            data.invoicedData?.returnInvoicelines != null
+                ? table =  data.invoicedData?.returnInvoicelines ?? []
                 : table = [];
 
 
@@ -203,6 +203,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
 
           }
           else{
+            print("not ddate is here bbbbbbbbbbbbbbbbbb"+data.returnOrrder.toString());
             // data.lines != null
             //     ? table =  data.lines ?? []
             //     : table = [];
@@ -398,6 +399,8 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                           MaterialPageRoute(builder: (context) =>
                                               SalePrintScreen(
                                                 note: noteController.text,
+                                                orderCode: invoiceCodeController.text,
+                                                orderDate: invoicedDateController.text,
                                                 // select: select,
 
                                                 table:table,
@@ -420,6 +423,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                   ],
                                 ) ,
                                 SalesReturnInvoiceStableTable(
+                                  verticalId: object?.id,
                                   invoicedDate: invoicedDateController,
                                     discount: discountController,
                                   remarks: remarksController,

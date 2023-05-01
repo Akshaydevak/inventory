@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 
 class SalesReturnInvoiceStableTable extends StatefulWidget {
@@ -22,6 +25,7 @@ class SalesReturnInvoiceStableTable extends StatefulWidget {
   final TextEditingController vat;
   final TextEditingController sellingPriceTotal;
   final TextEditingController totalPrice;
+  final int? verticalId;
 
   SalesReturnInvoiceStableTable(
       {
@@ -44,7 +48,7 @@ class SalesReturnInvoiceStableTable extends StatefulWidget {
         required this.totalPrice,
         required this.exciseTax,
         required this.unitCost,
-        required this.sellingPriceTotal});
+        required this.sellingPriceTotal, required this.verticalId});
 
   @override
   _SalesReturnInvoiceStableTableState createState() => _SalesReturnInvoiceStableTableState();
@@ -76,7 +80,8 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
           builder: (context) {
             return Container(
               color: Colors.white,
-              child: Row(
+              child:
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -99,9 +104,41 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                             height: height * .030,
                           ),
                           NewInputCard(
-                              readOnly: true,
-                              controller: widget.paymentId,
-                              title: " Payment Id"),
+                            controller: widget.paymentId,
+
+                            icondrop: true,
+                            title: "Payment Id",
+                            readOnly: true,
+                            ontap: () {
+                              if( widget.paymentId.text.isNotEmpty){
+                                setState(() {
+                                  widget.paymentId.text="";
+
+                                });
+                              }
+                              else{
+                                showDailogPopUp(
+                                  context,
+                                  TableConfigurePopup(type: "PaymentList_ByOrderIdPopup",
+                                    code: widget.verticalId.toString(),
+                                    total:double.tryParse( widget.totalPrice.text),
+                                    valueSelect: (BrandListModel va) {
+                                      setState(() {
+
+                                        //                           setState(() {});ge = true;
+                                        // orderType.text = va!;
+                                      });
+                                    },
+                                  ),
+                                );
+                              }
+
+                            },
+                          ),
+                          // NewInputCard(
+                          //     readOnly: true,
+                          //     controller: widget.paymentId,
+                          //     title: "Payment Id"),
                           SizedBox(
                             height: height * .030,
                           ),

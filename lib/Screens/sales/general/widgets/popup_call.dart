@@ -88,6 +88,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
               context.showSnackBarError(Variable.errorMessege);
             }, success: (data) {
               if (data.data1) {
+                Navigator.pop(context);
                 context.read<ShippingadreesCubit>().getShippingId(id:widget.code);
 
                 showDailogPopUp(

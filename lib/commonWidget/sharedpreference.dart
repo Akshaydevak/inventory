@@ -82,6 +82,7 @@ print(user);
     prefs.setString('name', model?.name??"");
     prefs.setString('inventoryEmail', model?.email??"");
     prefs.setString('companylogo', model?.companyLogo??"");
+    prefs.setString('storeLogo', model?.storeLogo??"");
     prefs.setBool("isInventoryListExist", true);
 
 
@@ -94,6 +95,7 @@ print(user);
 
     String?  contact = prefs.getString("contact");
     String?  companyLogo = prefs.getString("companylogo");
+    String?  storeLogo = prefs.getString("storeLogo");
 
     String?  addressOne = prefs.getString("addressOne");
     String?  addressTwo = prefs.getString("addressTwo");
@@ -108,6 +110,7 @@ print(user);
       addressTwo: addressTwo,
       landMark: landMark,
       companyLogo:companyLogo ,
+      storeLogo: storeLogo,
 
       email: inventoryEmail,
       isInventoryExist:inventoryExist,

@@ -5557,7 +5557,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
+                                    child:pw.Text(  'Excise tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 30,
                                   ),
                                   pw.  Container(

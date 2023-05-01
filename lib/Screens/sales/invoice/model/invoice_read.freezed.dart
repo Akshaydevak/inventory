@@ -645,11 +645,13 @@ mixin _$OrderLinesInvoice {
   @JsonKey(name: "taxable_amount")
   double? get taxableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "selling_price")
-  double? get sellingPriceTotal => throw _privateConstructorUsedError;
+  double? get sellingPrice => throw _privateConstructorUsedError;
   @JsonKey(name: "total_price")
   double? get totalPrice => throw _privateConstructorUsedError;
   @JsonKey(name: "warranty_price")
   double? get warrentyPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_edit", defaultValue: false)
+  bool? get isEdit => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -682,9 +684,10 @@ abstract class $OrderLinesInvoiceCopyWith<$Res> {
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "taxable_amount") double? taxableAmount,
-      @JsonKey(name: "selling_price") double? sellingPriceTotal,
+      @JsonKey(name: "selling_price") double? sellingPrice,
       @JsonKey(name: "total_price") double? totalPrice,
-      @JsonKey(name: "warranty_price") double? warrentyPrice});
+      @JsonKey(name: "warranty_price") double? warrentyPrice,
+      @JsonKey(name: "is_edit", defaultValue: false) bool? isEdit});
 }
 
 /// @nodoc
@@ -718,9 +721,10 @@ class _$OrderLinesInvoiceCopyWithImpl<$Res, $Val extends OrderLinesInvoice>
     Object? unitCost = freezed,
     Object? excessTax = freezed,
     Object? taxableAmount = freezed,
-    Object? sellingPriceTotal = freezed,
+    Object? sellingPrice = freezed,
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
+    Object? isEdit = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -795,9 +799,9 @@ class _$OrderLinesInvoiceCopyWithImpl<$Res, $Val extends OrderLinesInvoice>
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: freezed == sellingPriceTotal
-          ? _value.sellingPriceTotal
-          : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
+      sellingPrice: freezed == sellingPrice
+          ? _value.sellingPrice
+          : sellingPrice // ignore: cast_nullable_to_non_nullable
               as double?,
       totalPrice: freezed == totalPrice
           ? _value.totalPrice
@@ -807,6 +811,10 @@ class _$OrderLinesInvoiceCopyWithImpl<$Res, $Val extends OrderLinesInvoice>
           ? _value.warrentyPrice
           : warrentyPrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      isEdit: freezed == isEdit
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -838,9 +846,10 @@ abstract class _$$_OrderLinesInvoiceCopyWith<$Res>
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "taxable_amount") double? taxableAmount,
-      @JsonKey(name: "selling_price") double? sellingPriceTotal,
+      @JsonKey(name: "selling_price") double? sellingPrice,
       @JsonKey(name: "total_price") double? totalPrice,
-      @JsonKey(name: "warranty_price") double? warrentyPrice});
+      @JsonKey(name: "warranty_price") double? warrentyPrice,
+      @JsonKey(name: "is_edit", defaultValue: false) bool? isEdit});
 }
 
 /// @nodoc
@@ -872,9 +881,10 @@ class __$$_OrderLinesInvoiceCopyWithImpl<$Res>
     Object? unitCost = freezed,
     Object? excessTax = freezed,
     Object? taxableAmount = freezed,
-    Object? sellingPriceTotal = freezed,
+    Object? sellingPrice = freezed,
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
+    Object? isEdit = freezed,
   }) {
     return _then(_$_OrderLinesInvoice(
       id: freezed == id
@@ -949,9 +959,9 @@ class __$$_OrderLinesInvoiceCopyWithImpl<$Res>
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: freezed == sellingPriceTotal
-          ? _value.sellingPriceTotal
-          : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
+      sellingPrice: freezed == sellingPrice
+          ? _value.sellingPrice
+          : sellingPrice // ignore: cast_nullable_to_non_nullable
               as double?,
       totalPrice: freezed == totalPrice
           ? _value.totalPrice
@@ -961,6 +971,10 @@ class __$$_OrderLinesInvoiceCopyWithImpl<$Res>
           ? _value.warrentyPrice
           : warrentyPrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      isEdit: freezed == isEdit
+          ? _value.isEdit
+          : isEdit // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -987,9 +1001,10 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "excess_tax") this.excessTax,
       @JsonKey(name: "taxable_amount") this.taxableAmount,
-      @JsonKey(name: "selling_price") this.sellingPriceTotal,
+      @JsonKey(name: "selling_price") this.sellingPrice,
       @JsonKey(name: "total_price") this.totalPrice,
-      @JsonKey(name: "warranty_price") this.warrentyPrice});
+      @JsonKey(name: "warranty_price") this.warrentyPrice,
+      @JsonKey(name: "is_edit", defaultValue: false) this.isEdit});
 
   factory _$_OrderLinesInvoice.fromJson(Map<String, dynamic> json) =>
       _$$_OrderLinesInvoiceFromJson(json);
@@ -1044,17 +1059,20 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
   final double? taxableAmount;
   @override
   @JsonKey(name: "selling_price")
-  final double? sellingPriceTotal;
+  final double? sellingPrice;
   @override
   @JsonKey(name: "total_price")
   final double? totalPrice;
   @override
   @JsonKey(name: "warranty_price")
   final double? warrentyPrice;
+  @override
+  @JsonKey(name: "is_edit", defaultValue: false)
+  final bool? isEdit;
 
   @override
   String toString() {
-    return 'OrderLinesInvoice(id: $id, quantity: $quantity, updatecheck: $updatecheck, barcode: $barcode, discount: $discount, vat: $vat, variantId: $variantId, salesOrderLineCode: $salesOrderLineCode, salesUom: $salesUom, returnType: $returnType, returnTime: $returnTime, totalQuantity: $totalQuantity, isInvoiced: $isInvoiced, isActive: $isActive, discountType: $discountType, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice)';
+    return 'OrderLinesInvoice(id: $id, quantity: $quantity, updatecheck: $updatecheck, barcode: $barcode, discount: $discount, vat: $vat, variantId: $variantId, salesOrderLineCode: $salesOrderLineCode, salesUom: $salesUom, returnType: $returnType, returnTime: $returnTime, totalQuantity: $totalQuantity, isInvoiced: $isInvoiced, isActive: $isActive, discountType: $discountType, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPrice: $sellingPrice, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice, isEdit: $isEdit)';
   }
 
   @override
@@ -1095,12 +1113,13 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
                 other.excessTax == excessTax) &&
             (identical(other.taxableAmount, taxableAmount) ||
                 other.taxableAmount == taxableAmount) &&
-            (identical(other.sellingPriceTotal, sellingPriceTotal) ||
-                other.sellingPriceTotal == sellingPriceTotal) &&
+            (identical(other.sellingPrice, sellingPrice) ||
+                other.sellingPrice == sellingPrice) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
             (identical(other.warrentyPrice, warrentyPrice) ||
-                other.warrentyPrice == warrentyPrice));
+                other.warrentyPrice == warrentyPrice) &&
+            (identical(other.isEdit, isEdit) || other.isEdit == isEdit));
   }
 
   @JsonKey(ignore: true)
@@ -1125,9 +1144,10 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
         unitCost,
         excessTax,
         taxableAmount,
-        sellingPriceTotal,
+        sellingPrice,
         totalPrice,
-        warrentyPrice
+        warrentyPrice,
+        isEdit
       ]);
 
   @JsonKey(ignore: true)
@@ -1178,11 +1198,13 @@ abstract class _OrderLinesInvoice implements OrderLinesInvoice {
       @JsonKey(name: "taxable_amount")
           final double? taxableAmount,
       @JsonKey(name: "selling_price")
-          final double? sellingPriceTotal,
+          final double? sellingPrice,
       @JsonKey(name: "total_price")
           final double? totalPrice,
       @JsonKey(name: "warranty_price")
-          final double? warrentyPrice}) = _$_OrderLinesInvoice;
+          final double? warrentyPrice,
+      @JsonKey(name: "is_edit", defaultValue: false)
+          final bool? isEdit}) = _$_OrderLinesInvoice;
 
   factory _OrderLinesInvoice.fromJson(Map<String, dynamic> json) =
       _$_OrderLinesInvoice.fromJson;
@@ -1237,13 +1259,16 @@ abstract class _OrderLinesInvoice implements OrderLinesInvoice {
   double? get taxableAmount;
   @override
   @JsonKey(name: "selling_price")
-  double? get sellingPriceTotal;
+  double? get sellingPrice;
   @override
   @JsonKey(name: "total_price")
   double? get totalPrice;
   @override
   @JsonKey(name: "warranty_price")
   double? get warrentyPrice;
+  @override
+  @JsonKey(name: "is_edit", defaultValue: false)
+  bool? get isEdit;
   @override
   @JsonKey(ignore: true)
   _$$_OrderLinesInvoiceCopyWith<_$_OrderLinesInvoice> get copyWith =>

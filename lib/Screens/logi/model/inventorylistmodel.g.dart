@@ -25,6 +25,7 @@ _$_InventoryListModel _$$_InventoryListModelFromJson(
       addressTwo: json['address_two'] as String?,
       landMark: json['land_mark'] as String?,
       companyLogo: json['company_logo'] as String?,
+      storeLogo: json['store_logo'] as String?,
       userId: json['user_id'] as String?,
       businessAddress: json['business_addres'] as int?,
     );
@@ -46,6 +47,7 @@ Map<String, dynamic> _$$_InventoryListModelToJson(
       'address_two': instance.addressTwo,
       'land_mark': instance.landMark,
       'company_logo': instance.companyLogo,
+      'store_logo': instance.storeLogo,
       'user_id': instance.userId,
       'business_addres': instance.businessAddress,
     };

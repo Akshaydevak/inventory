@@ -21,6 +21,7 @@ class CostingStableTable extends StatefulWidget {
   final TextEditingController gpPercentage;
   final TextEditingController sellingPrice;
   final TextEditingController costingName;
+  final TextEditingController priceType;
   final Function sellingPriceCalculation;
   final int? channelId;
   TextEditingController pricingName;
@@ -38,7 +39,7 @@ class CostingStableTable extends StatefulWidget {
       required this.pricingGptype,
       required this.gpPercentage,
       required this.sellingPrice,
-      required this.sellingPriceCalculation});
+      required this.sellingPriceCalculation, required this.priceType});
 
   @override
   _CostingStableTableState createState() => _CostingStableTableState();
@@ -295,6 +296,9 @@ class _CostingStableTableState extends State<CostingStableTable> {
                             readOnly: true,
                             controller: widget.channelStockCode,
                             title: "Channel Stock Code"),
+                        SizedBox(
+                          height: height * .110,
+                        ),
                       ],
                     )),
                     Expanded(
@@ -331,6 +335,9 @@ class _CostingStableTableState extends State<CostingStableTable> {
                             },
                             controller: widget.unitCost,
                             title: "Unit Cost"),
+                        SizedBox(
+                          height: height * .110,
+                        ),
                       ],
                     )),
                     Expanded(
@@ -362,6 +369,27 @@ class _CostingStableTableState extends State<CostingStableTable> {
                             formatter: true,
                             controller: widget.gpPercentage,
                             title: "GP percentage"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        SelectableDropDownpopUp(
+                          label: "Price type",
+                          type: "CostingPricetype_PopUpCall",
+                          value: widget.priceType.text,
+                          onSelection: (String? va) {
+                            print("++++se+++++++++++++++++++");
+                            setState(() {
+                              widget.priceType.text = va ?? "";
+                            });
+                            context
+                                .read<PercentagegpCubit>()
+                                .percentageGp(widget.channelId, va);
+
+                            // onChange = true;
+                            // orderType = va!;
+                          },
+                          restricted: true,
+                        ),
                         SizedBox(
                           height: height * .030,
                         ),

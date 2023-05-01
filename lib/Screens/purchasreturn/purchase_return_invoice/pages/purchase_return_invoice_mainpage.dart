@@ -362,7 +362,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                   children: [
 
                                     TextButtonLarge(
-                                      marginCheck: true,
                                       text: "PREVIEW",
                                       onPress: () async {
                                         InventoryListModel model=InventoryListModel();
@@ -389,6 +388,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                 unitCost:double.tryParse( unitCostController.text) ,
                                                 excisetax:double.tryParse( excessTaxController.text) ,
                                                 model:model,
+                                                note: noteController.text,
+                                                remarks: remarksController.text,
                                               )
                                           ),
                                         );

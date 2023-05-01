@@ -446,17 +446,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                         width: 2200,
                         // padding: EdgeInsets.all(10),
                         child: customTable(
-                          // border: const TableBorder(
-                          //   verticalInside: BorderSide(
-                          //       width: .5,
-                          //       color: Colors.black45,
-                          //       style: BorderStyle.solid),
-                          //   horizontalInside: BorderSide(
-                          //       width: .3,
-                          //       color: Colors.black45,
-                          //       // color: Colors.blue,
-                          //       style: BorderStyle.solid),
-                          // ),
+
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -749,8 +739,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                               : textPadding(
                                               table1[i].variantId?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
                                         //   TableCell(
@@ -766,8 +755,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           textPadding(
                                               table1?[i].variaNtname ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
@@ -776,8 +764,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           child: textPadding(
                                               table1?[i].barcode ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
@@ -786,9 +773,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           child: textPadding(
                                               currentStock.length!=table1.length?"": currentStock[i].toString(),
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         // TableCell(
                                         //   verticalAlignment:
@@ -809,9 +794,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           TableCellVerticalAlignment.middle,
                                           child: textPadding(table1[i].returnType??"",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -822,9 +806,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -853,8 +836,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                               table1[i].salesUom ?? "",
                                               fontSize: 12,
                                               // height: 42,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
 
@@ -1173,8 +1155,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                     .toString() ??
                                                     "",
                                                 fontSize: 12,
-                                                padding: EdgeInsets.only(
-                                                    left: 11.5, top: 1.5),
+
                                                 fontWeight: FontWeight.w500)),
                                         TableCell(
                                           verticalAlignment:
@@ -1252,9 +1233,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -1262,9 +1242,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           child: textPadding(
                                               table1?[i].vat.toString() ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -1275,9 +1254,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         // TableCell(
                                         //   verticalAlignment:
@@ -1301,9 +1279,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -1359,7 +1336,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
 
                                             },
                                             textColor:table1[i].updatecheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
-                                            label:table1[i].updatecheck==true? "UPDATE":"",
+                                            label:table1[i].updatecheck==true? "Update":"",
                                           ),
                                         )
                                       ]),
@@ -1470,8 +1447,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         TableCellVerticalAlignment.middle,
                                         child: textPadding(varinatname ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
+
                                             fontWeight: FontWeight.w500),
                                       ),
                                       TableCell(
@@ -1479,8 +1455,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         TableCellVerticalAlignment.middle,
                                         child: textPadding(barcode ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
+
                                             fontWeight: FontWeight.w500),
                                       ),
                                       TableCell(
@@ -1489,27 +1464,24 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         child: textPadding(
                                             stock.toString() ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
-                                            fontWeight: FontWeight.w500),
+
+                                            fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                       ),
                                       TableCell(
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: textPadding(returntype ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
-                                            fontWeight: FontWeight.w500),
+
+                                            fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                       ),
                                       TableCell(
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: textPadding(returntime ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
-                                            fontWeight: FontWeight.w500),
+
+                                            fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                       ),
                                       TableCell(
                                         verticalAlignment:
@@ -1532,8 +1504,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         TableCellVerticalAlignment.middle,
                                         child: textPadding(salesUom ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
+
                                             fontWeight: FontWeight.w500),
                                       ),
                                       TableCell(
@@ -1771,9 +1742,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         child: textPadding(
                                             taxableAmount?.toString() ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
-                                            fontWeight: FontWeight.w500),
+
+                                            fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                       ),
                                       TableCell(
                                         verticalAlignment:
@@ -1781,9 +1751,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         child: textPadding(
                                             vat1?.toString() ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
-                                            fontWeight: FontWeight.w500),
+
+                                            fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                       ),
                                       TableCell(
                                         verticalAlignment:
@@ -1791,9 +1760,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         child: textPadding(
                                             sellingPrice?.toString() ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
-                                            fontWeight: FontWeight.w500),
+
+                                            fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                       ),
                                       // TableCell(
                                       //   verticalAlignment:
@@ -1811,9 +1779,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         child: textPadding(
                                             totalPrice?.toString() ?? "",
                                             fontSize: 12,
-                                            padding: EdgeInsets.only(
-                                                left: 11.5, top: 1.5),
-                                            fontWeight: FontWeight.w500),
+
+                                            fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                       ),
                                       TableCell(
                                         verticalAlignment:
@@ -1838,59 +1805,144 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                       TableCell(
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
-                                        child: TableTextButton(
-                                            label: "Save",
-                                            onPress: () {
-                                              setState(() {
-                                                if(quantity==0||quantity==""||quantity==null)
-                                                  context.showSnackBarError("Please enter the quantity");
-                                                else if(unitcost1==0||unitcost1==""||unitcost1==null)
-                                                  context.showSnackBarError("Please enter the unitcost");
-                                                else if(vat1==0||vat1==""||vat1==null){
-                                                  context.showSnackBarError("VAT is required");
+                                        child: Row(
+                                          children: [
+                                            TableIconTextButton(
+                                              label: "",
+                                              icon: Icons.clear,
+                                              onPress: () {
+                                                variantId = "";
+                                                quantity = 0;
+                                                returntime = "";
+                                                returntype = "";
+                                                salesUom = "";
+                                                unicostController.text = "";
+                                                discountPrice = "price";
+                                                varinatname = "";
+                                                barcode = "";
+                                                discount1 = 0;
+                                                stock=0;
+                                                stockId=0;
+                                                unitcost1 = 0;
+                                                taxableAmount = 0;
+                                                vat1 = 0;
+                                                etax1 = 0;
+                                                sellingPrice = 0;
+                                                totalPrice = 0;
+                                                warrentyPrice = 0;
+                                                isActive1 = false;
+                                                assignCheck=true;
+                                                // onChange=true;
+                                                //
+                                                // setState(() {
+                                                //
+                                                //   // print(keys);
+                                                //   print(i);
+                                                //
+                                                //
+                                                //   uomList?.removeAt(i);
+                                                //   upDate.removeAt(i);
+                                                //   codeListController.removeAt(i);
+                                                //   upDateButton.removeAt(i);
+                                                //   widget.uomTableEdit(
+                                                //       type: "1", list: uomList);
+                                                // nameListTextEditingController.removeAt(i);
+                                                //
+                                                // print(keys);
+                                                //
+                                                // aboutProducts = Storage(
+                                                //     name: headingController.text, keyValues: keys);
+                                                // widget.storageTableEdit(
+                                                //     type: "1", list: aboutProducts);
+                                                // });
+                                                setState(() {
 
-                                                }
-                                                else{
-                                                  table1.add(SalesOrderLines(
-                                                    variantId: variantId ?? "",
-                                                    stockId: stockId.toString(),
-                                                    returnType: returntype,
-                                                    returnTime: int.tryParse(returntime??""),
-                                                    salesUom: salesUom,
-                                                    warrentyId: "a",
-                                                    discountType: discountPrice,
-                                                    variaNtname: varinatname ?? "",
-                                                    barcode: barcode ?? "",
-                                                    discount: discount1??0,
-                                                    unitCost: unitcost1??0,
-                                                    taxableAmount: taxableAmount??0,
-                                                    quantity: quantity??0,
-                                                    vat: vat1??0,
-                                                    excessTax: etax1??0,
-                                                    sellingPrice: sellingPrice??0,
-                                                    totalPrice: totalPrice??0,
-                                                    qty: stock??0,
-                                                    warrentyPrice: warrentyPrice??0,
-                                                    isInvoiced: invoiced??false,
-                                                    isActive: isActive1??false,
-                                                    updatecheck: false,
-                                                  ));
-                                                  print("GAssaliiiiiiiiiiiis"+table1.toString());
-                                                  currentStock.add(stock??0);
-                                                  clearTableAddingVariables();
-                                                  valueAddingTextEdingController();
-                                                  widget.updation(table1);
+                                                });
 
-                                                }
+                                              },
+                                            ),
+                                            TableTextButton(
+                                                label: "Save",
+                                                onPress: () {
+                                                  setState(() {
+                                                    if(quantity==0||quantity==""||quantity==null)
+                                                      context.showSnackBarError("Please enter the quantity");
+                                                    else if(unitcost1==0||unitcost1==""||unitcost1==null)
+                                                      context.showSnackBarError("Please enter the unitcost");
+                                                    else if(vat1==0||vat1==""||vat1==null){
+                                                      context.showSnackBarError("VAT is required");
+
+                                                    }
+                                                    else{
+                                                      table1.add(SalesOrderLines(
+                                                        variantId: variantId ?? "",
+                                                        stockId: stockId.toString(),
+                                                        returnType: returntype,
+                                                        returnTime: int.tryParse(returntime??""),
+                                                        salesUom: salesUom,
+                                                        warrentyId: "a",
+                                                        discountType: discountPrice,
+                                                        variaNtname: varinatname ?? "",
+                                                        barcode: barcode ?? "",
+                                                        discount: discount1??0,
+                                                        unitCost: unitcost1??0,
+                                                        taxableAmount: taxableAmount??0,
+                                                        quantity: quantity??0,
+                                                        vat: vat1??0,
+                                                        excessTax: etax1??0,
+                                                        sellingPrice: sellingPrice??0,
+                                                        totalPrice: totalPrice??0,
+                                                        qty: stock??0,
+                                                        warrentyPrice: warrentyPrice??0,
+                                                        isInvoiced: invoiced??false,
+                                                        isActive: isActive1??false,
+                                                        updatecheck: false,
+                                                      ));
+                                                      print("GAssaliiiiiiiiiiiis"+table1.toString());
+                                                      currentStock.add(stock??0);
+                                                      clearTableAddingVariables();
+                                                      valueAddingTextEdingController();
+                                                      widget.updation(table1);
+
+                                                    }
 
 
 
-                                              });
-                                            }),
+                                                  });
+                                                }),
+
+                                          ],
+                                        ),
                                       )
                                     ]),
                               ]
-                            ]),
+                            ],
+                          widths: {
+                            0: FlexColumnWidth(3),
+                            1: FlexColumnWidth(7),
+                            2: FlexColumnWidth(4),
+                            3: FlexColumnWidth(3),
+                            4: FlexColumnWidth(3),
+                            5: FlexColumnWidth(3),
+                            6: FlexColumnWidth(2),
+                            7: FlexColumnWidth(4),
+                            8: FlexColumnWidth(2),
+                            9: FlexColumnWidth(2),
+                            10: FlexColumnWidth(2),
+                            11: FlexColumnWidth(3),
+                            12: FlexColumnWidth(2),
+                            13: FlexColumnWidth(3),
+                            14: FlexColumnWidth(2),
+                            15: FlexColumnWidth(3),
+                            16: FlexColumnWidth(3),
+                            17: FlexColumnWidth(3),
+                            18: FlexColumnWidth(3),
+                            19: FlexColumnWidth(2),
+                            20: FlexColumnWidth(3),
+                            // 21: FlexColumnWidth(3),
+
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 20,)

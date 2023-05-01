@@ -129,10 +129,10 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                     },
                     success: (data) {
                       print("data" + data.toString());
-                      if(data.invoicedData?.lines?.isNotEmpty==true)
+                      if(data.invoicedData!=null)
                       {
-                        data.invoicedData?.lines != null
-                            ? table1 = List.from( data.invoicedData?.lines ?? [])
+                        data.invoicedData?.returnInvoicelines != null
+                            ? table1 = List.from( data.invoicedData?.returnInvoicelines ?? [])
                             : table1 = [];
 
 
@@ -397,8 +397,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                           child: textPadding(
                                               table1?[i].variantId ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
 
@@ -409,8 +408,6 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                           child: textPadding(
                                               table1?[i].barcode ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
                                               fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
@@ -419,8 +416,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                           child: textPadding(
                                               table1?[i].salesReturnOrderLineCode.toString()?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
 
@@ -428,396 +424,447 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: CheckedBoxs(
+                                          child:
+                                          CheckedBoxs(
                                               valueChanger:
                                               table1[i].isInvoiced == null
                                                   ? false
                                                   : table1?[i].isInvoiced,
                                               onSelection: (bool? value) {
-                                                bool? isInvoiced =
-                                                    table1[i].isInvoiced;
-                                                setState(() {
-                                                  widget.updateCheck(true);
-                                                  // table1[i] = table1[i].copyWith(updatecheck: true);
-                                                  // table1[i] = table1[i].copyWith(updateCheck: true);
-                                                  setState(() {});
-                                                  isInvoiced = !isInvoiced!;
-                                                  table1[i] = table1[i]
-                                                      .copyWith(
-                                                      isInvoiced: isInvoiced);
-                                                });
+                                                if(table1[i].isInvoiced==false ||table1[i].isEdit==true){
+                                                  bool? isInvoiced =
+                                                      table1[i].isInvoiced;
+                                                  setState(() {
+                                                    widget.updateCheck(true);
+                                                    // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                    // table1[i] = table1[i].copyWith(updateCheck: true);
+                                                    setState(() {});
+                                                    isInvoiced = !isInvoiced!;
+                                                    table1[i] = table1[i]
+                                                        .copyWith(
+                                                        isInvoiced: isInvoiced,updateCheck: true,isEdit: true);
+                                                  });
+                                                }
+
                                               }),
                                         ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: textPadding(
-                                              table1[i].salesUOM ?? "",
+                                              table1[i].salesUom ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
                                               fontWeight: FontWeight.w500),
                                         ),
-
-
-
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: UnderLinedInput(
-                                            initialCheck: true,
-                                            // controller: requestedListControllers[i],
-                                            last: table1?[i]
-                                                .quantity
-                                                .toString() ??
-                                                "",
-                                            onChanged: (va) {
-                                              widget.updateCheck(true);
-                                              // table1[i] = table1[i].copyWith(updatecheck: true);
+                                          child: textPadding(
+                                              table1?[i].quantity.toString() ?? "",
+                                              fontSize: 12,
 
-                                              if (va == "") {
-                                                print("entered");
-                                                assignCheck = true;
-                                                table1[i] = table1[i].copyWith(
-                                                    quantity: 0,
-                                                    taxableAmount: 0,
-                                                    sellingPriceTotal: 0,
-                                                    totalPrice: 0);
-
-                                                setState(() {});
-                                              } else {
-                                                var qty = int.tryParse(va);
-                                                var dis =
-                                                    table1?[i].discount ?? 0;
-                                                var excess =
-                                                    table1?[i].excessTax ?? 0;
-                                                var unitcost =
-                                                    table1?[i].unitCost ?? 0;
-                                                var vat = table1?[i].vat ?? 0;
-
-
-                                                if (qty == 0 ||
-                                                    unitcost == 0 ||
-                                                    unitcost == "") {
-                                                  table1[i] = table1[i]
-                                                      .copyWith(
-                                                      taxableAmount: 0,
-                                                      sellingPriceTotal: 0,
-                                                      totalPrice: 0);
-                                                } else {
-                                                  var taxableAmount;
-                                                  var sellingPrice;
-                                                  var total;
-                                                  //
-                                                  taxableAmount =
-                                                      taxableUpdateMethod(
-                                                          qty!,
-                                                          unitcost,
-                                                          excess,
-                                                          dis,
-                                                          table1[i]
-                                                              .discountType);
-                                                  sellingPrice =
-                                                      sellingPriceUpdation(
-                                                          taxableAmount, vat);
-                                                  total = totalPriceUpdation(
-                                                      sellingPrice,
-                                                      table1[i].warrentyPrice ??
-                                                          0);
-
-                                                  table1[i] = table1[i]
-                                                      .copyWith(
-                                                      totalPrice: total,
-                                                      taxableAmount:
-                                                      taxableAmount,
-                                                      sellingPriceTotal: sellingPrice,
-                                                      quantity: qty);
-                                                }
-                                              }
-
-                                              setState(() {});
-                                            },
-                                          ),
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
 
+
+
+                                        // TableCell(
+                                        //   verticalAlignment:
+                                        //   TableCellVerticalAlignment.middle,
+                                        //   child: UnderLinedInput(
+                                        //     initialCheck: true,
+                                        //     // controller: requestedListControllers[i],
+                                        //     last: table1?[i]
+                                        //         .quantity
+                                        //         .toString() ??
+                                        //         "",
+                                        //     onChanged: (va) {
+                                        //       widget.updateCheck(true);
+                                        //       // table1[i] = table1[i].copyWith(updatecheck: true);
+                                        //
+                                        //       if (va == "") {
+                                        //         print("entered");
+                                        //         assignCheck = true;
+                                        //         table1[i] = table1[i].copyWith(
+                                        //             quantity: 0,
+                                        //             taxableAmount: 0,
+                                        //             sellingPriceTotal: 0,
+                                        //             totalPrice: 0);
+                                        //
+                                        //         setState(() {});
+                                        //       } else {
+                                        //         var qty = int.tryParse(va);
+                                        //         var dis =
+                                        //             table1?[i].discount ?? 0;
+                                        //         var excess =
+                                        //             table1?[i].excessTax ?? 0;
+                                        //         var unitcost =
+                                        //             table1?[i].unitCost ?? 0;
+                                        //         var vat = table1?[i].vat ?? 0;
+                                        //
+                                        //
+                                        //         if (qty == 0 ||
+                                        //             unitcost == 0 ||
+                                        //             unitcost == "") {
+                                        //           table1[i] = table1[i]
+                                        //               .copyWith(
+                                        //               taxableAmount: 0,
+                                        //               sellingPriceTotal: 0,
+                                        //               totalPrice: 0);
+                                        //         } else {
+                                        //           var taxableAmount;
+                                        //           var sellingPrice;
+                                        //           var total;
+                                        //           //
+                                        //           taxableAmount =
+                                        //               taxableUpdateMethod(
+                                        //                   qty!,
+                                        //                   unitcost,
+                                        //                   excess,
+                                        //                   dis,
+                                        //                   table1[i]
+                                        //                       .discountType);
+                                        //           sellingPrice =
+                                        //               sellingPriceUpdation(
+                                        //                   taxableAmount, vat);
+                                        //           total = totalPriceUpdation(
+                                        //               sellingPrice,
+                                        //               table1[i].warrentyPrice ??
+                                        //                   0);
+                                        //
+                                        //           table1[i] = table1[i]
+                                        //               .copyWith(
+                                        //               totalPrice: total,
+                                        //               taxableAmount:
+                                        //               taxableAmount,
+                                        //               sellingPriceTotal: sellingPrice,
+                                        //               quantity: qty);
+                                        //         }
+                                        //       }
+                                        //
+                                        //       setState(() {});
+                                        //     },
+                                        //   ),
+                                        // ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: UnderLinedInput(
-                                            initialCheck: true,
-                                            //controller: unitcostListControllers[i],
-                                            last: table1?[i]
-                                                .unitCost
-                                                .toString() ??
-                                                "",
-                                            onChanged: (va) {
-                                              widget.updateCheck(true);
-                                              // table1[i] = table1[i].copyWith(updatecheck: true);
+                                          child: textPadding(
+                                              table1?[i].unitCost.toString() ?? "",
+                                              fontSize: 12,
 
-                                              double? unitcost;
-                                              if (va == "") {
-                                                print("entered");
-                                                unitcost = 0;
-                                                print("disc" +
-                                                    unitcost.toString());
-                                                table1[i] = table1[i].copyWith(
-                                                    taxableAmount: 0,
-                                                    unitCost: 0,
-                                                    sellingPriceTotal: 0,
-                                                    totalPrice: 0);
-                                                setState(() {});
-                                              }
-                                              unitcost = double.tryParse(va);
-                                              var qty = table1[i].quantity ?? 0;
-                                              var excess =
-                                                  table1[i].excessTax ?? 0;
-                                              var disc =
-                                                  table1[i].discount ?? 0;
-                                              var vat = table1[i].vat ?? 0;
-                                              if (qty == 0 ||
-                                                  qty == null ||
-                                                  unitcost == 0) {
-                                                print("checking case");
-
-                                                table1[i] = table1[i].copyWith(
-                                                    taxableAmount: 0,
-                                                    sellingPriceTotal: 0,
-                                                    totalPrice: 0,
-                                                    unitCost: 0);
-                                                setState(() {});
-                                              } else {
-                                                var taxableAmounts =
-                                                taxableUpdateMethod(
-                                                    qty,
-                                                    unitcost!,
-                                                    excess,
-                                                    disc,
-                                                    table1[i].discountType);
-                                                print("taxableAmounts" +
-                                                    taxableAmounts.toString());
-
-                                                var sellingPrice =
-                                                sellingPriceUpdation(
-                                                    taxableAmounts, vat);
-                                                var totalPrice =
-                                                totalPriceUpdation(
-                                                    sellingPrice,
-                                                    table1[i]
-                                                        .warrentyPrice ??
-                                                        0);
-
-                                                table1[i] = table1[i].copyWith(
-                                                    taxableAmount:
-                                                    taxableAmounts,
-                                                    sellingPriceTotal: sellingPrice,
-                                                    totalPrice: totalPrice,
-                                                    unitCost: unitcost);
-                                                setState(() {});
-                                              }
-                                            },
-                                          ),
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
+
+                                        // TableCell(
+                                        //   verticalAlignment:
+                                        //   TableCellVerticalAlignment.middle,
+                                        //   child: UnderLinedInput(
+                                        //     initialCheck: true,
+                                        //     //controller: unitcostListControllers[i],
+                                        //     last: table1?[i]
+                                        //         .unitCost
+                                        //         .toString() ??
+                                        //         "",
+                                        //     onChanged: (va) {
+                                        //       widget.updateCheck(true);
+                                        //       // table1[i] = table1[i].copyWith(updatecheck: true);
+                                        //
+                                        //       double? unitcost;
+                                        //       if (va == "") {
+                                        //         print("entered");
+                                        //         unitcost = 0;
+                                        //         print("disc" +
+                                        //             unitcost.toString());
+                                        //         table1[i] = table1[i].copyWith(
+                                        //             taxableAmount: 0,
+                                        //             unitCost: 0,
+                                        //             sellingPriceTotal: 0,
+                                        //             totalPrice: 0);
+                                        //         setState(() {});
+                                        //       }
+                                        //       unitcost = double.tryParse(va);
+                                        //       var qty = table1[i].quantity ?? 0;
+                                        //       var excess =
+                                        //           table1[i].excessTax ?? 0;
+                                        //       var disc =
+                                        //           table1[i].discount ?? 0;
+                                        //       var vat = table1[i].vat ?? 0;
+                                        //       if (qty == 0 ||
+                                        //           qty == null ||
+                                        //           unitcost == 0) {
+                                        //         print("checking case");
+                                        //
+                                        //         table1[i] = table1[i].copyWith(
+                                        //             taxableAmount: 0,
+                                        //             sellingPriceTotal: 0,
+                                        //             totalPrice: 0,
+                                        //             unitCost: 0);
+                                        //         setState(() {});
+                                        //       } else {
+                                        //         var taxableAmounts =
+                                        //         taxableUpdateMethod(
+                                        //             qty,
+                                        //             unitcost!,
+                                        //             excess,
+                                        //             disc,
+                                        //             table1[i].discountType);
+                                        //         print("taxableAmounts" +
+                                        //             taxableAmounts.toString());
+                                        //
+                                        //         var sellingPrice =
+                                        //         sellingPriceUpdation(
+                                        //             taxableAmounts, vat);
+                                        //         var totalPrice =
+                                        //         totalPriceUpdation(
+                                        //             sellingPrice,
+                                        //             table1[i]
+                                        //                 .warrentyPrice ??
+                                        //                 0);
+                                        //
+                                        //         table1[i] = table1[i].copyWith(
+                                        //             taxableAmount:
+                                        //             taxableAmounts,
+                                        //             sellingPriceTotal: sellingPrice,
+                                        //             totalPrice: totalPrice,
+                                        //             unitCost: unitcost);
+                                        //         setState(() {});
+                                        //       }
+                                        //     },
+                                        //   ),
+                                        // ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: UnderLinedInput(
-                                            initialCheck: true,
+                                          child: textPadding(
+                                              table1?[i].excessTax.toString() ?? "",
+                                              fontSize: 12,
 
-                                            // controller: excesstListControllers[i],
-                                            last: table1?[i]
-                                                .excessTax
-                                                .toString() ??
-                                                "",
-                                            onChanged: (va) {
-                                              widget.updateCheck(true);
-                                              // table1[i] = table1[i].copyWith(updatecheck: true);
-
-                                              setState(() {});
-                                              double? excess;
-                                              if (va == "") {
-                                                excess = 0;
-                                                setState(() {});
-                                              } else {
-                                                excess = double.tryParse(va);
-                                                setState(() {});
-                                              }
-                                              var qty = table1[i].quantity ?? 0;
-                                              var vat = table1[i].vat ?? 0;
-                                              var unitcost =
-                                                  table1[i].unitCost ?? 0;
-                                              var Vdiscount =
-                                                  table1[i].discount ?? 0;
-                                              if (qty == 0 || unitcost == 0) {
-                                                table1[i] = table1[i].copyWith(
-                                                    taxableAmount: 0,
-                                                    sellingPriceTotal: 0,
-                                                    totalPrice: 0,
-                                                    excessTax: excess);
-                                                setState(() {});
-                                              } else {
-                                                var taxableAmount =
-                                                taxableUpdateMethod(
-                                                    qty,
-                                                    unitcost,
-                                                    excess!,
-                                                    Vdiscount,
-                                                    table1[i].discountType);
-
-                                                var sellingPrice =
-                                                sellingPriceUpdation(
-                                                    taxableAmount, vat);
-                                                var totalprice =
-                                                totalPriceUpdation(
-                                                    sellingPrice,
-                                                    table1[i]
-                                                        .warrentyPrice ??
-                                                        0);
-
-                                                table1[i] = table1[i].copyWith(
-                                                    taxableAmount:
-                                                    taxableAmount,
-                                                    sellingPriceTotal: sellingPrice,
-                                                    totalPrice: totalprice,
-                                                    excessTax: excess);
-                                                setState(() {});
-                                              }
-                                            },
-                                          ),
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
-                                        PopUpCall(
-                                          type: "PriceTypePopUpCall",
-                                          value: table1[i].discountType??"",
-                                          onSelection: (String va) {
-                                            print("+++++++++++++++++++++++");
-
-                                            setState(() {
-                                              // table1[i] = table1[i].copyWith(updatecheck: true);
-                                              table1[i] = table1[i]
-                                                  .copyWith(discountType: va);
-                                              widget.updateCheck(true);
-                                              var qty = table1[i].quantity ?? 0;
-                                              var unitcost =
-                                                  table1[i].unitCost ?? 0;
-                                              var excess =
-                                                  table1[i].excessTax ?? 0;
-                                              var discounts =
-                                                  table1[i].discount ?? 0;
-                                              var disc =
-                                                  table1[i].discount ?? 0;
-                                              var vat = table1[i].vat ?? 0;
-                                              if (unitcost == 0 || qty == 0) {
-                                                table1[i] = table1[i].copyWith(
-                                                    taxableAmount: 0,
-                                                    sellingPriceTotal: 0,
-                                                    totalPrice: 0);
-                                              } else {
-                                                if (qty == 0 || unitcost == 0) {
-                                                  table1[i] =
-                                                      table1[i].copyWith(
-                                                        taxableAmount: 0,
-                                                        sellingPriceTotal: 0,
-                                                        totalPrice: 0,
-                                                      );
-                                                  setState(() {});
-                                                } else {
-                                                  var taxableAmount =
-                                                  taxableUpdateMethod(
-                                                      qty,
-                                                      unitcost,
-                                                      excess,
-                                                      discounts,
-                                                      table1[i]
-                                                          .discountType);
-                                                  var sellingPrice =
-                                                  sellingPriceUpdation(
-                                                      taxableAmount, vat);
-                                                  var totalPrice =
-                                                  totalPriceUpdation(
-                                                      sellingPrice,
-                                                      table1[i]
-                                                          .warrentyPrice ??
-                                                          0);
-                                                  table1[i] =
-                                                      table1[i].copyWith(
-                                                        taxableAmount:
-                                                        taxableAmount,
-                                                        sellingPriceTotal: sellingPrice,
-                                                        totalPrice: totalPrice,
-                                                      );
-                                                  setState(() {});
-                                                }
-                                              }
-
-                                              // onChange = true;
-                                              // orderType = va!;
-                                            });
-                                          },
-                                        ),
+                                        // TableCell(
+                                        //   verticalAlignment:
+                                        //   TableCellVerticalAlignment.middle,
+                                        //   child: UnderLinedInput(
+                                        //     initialCheck: true,
+                                        //
+                                        //     // controller: excesstListControllers[i],
+                                        //     last: table1?[i]
+                                        //         .excessTax
+                                        //         .toString() ??
+                                        //         "",
+                                        //     onChanged: (va) {
+                                        //       widget.updateCheck(true);
+                                        //       // table1[i] = table1[i].copyWith(updatecheck: true);
+                                        //
+                                        //       setState(() {});
+                                        //       double? excess;
+                                        //       if (va == "") {
+                                        //         excess = 0;
+                                        //         setState(() {});
+                                        //       } else {
+                                        //         excess = double.tryParse(va);
+                                        //         setState(() {});
+                                        //       }
+                                        //       var qty = table1[i].quantity ?? 0;
+                                        //       var vat = table1[i].vat ?? 0;
+                                        //       var unitcost =
+                                        //           table1[i].unitCost ?? 0;
+                                        //       var Vdiscount =
+                                        //           table1[i].discount ?? 0;
+                                        //       if (qty == 0 || unitcost == 0) {
+                                        //         table1[i] = table1[i].copyWith(
+                                        //             taxableAmount: 0,
+                                        //             sellingPriceTotal: 0,
+                                        //             totalPrice: 0,
+                                        //             excessTax: excess);
+                                        //         setState(() {});
+                                        //       } else {
+                                        //         var taxableAmount =
+                                        //         taxableUpdateMethod(
+                                        //             qty,
+                                        //             unitcost,
+                                        //             excess!,
+                                        //             Vdiscount,
+                                        //             table1[i].discountType);
+                                        //
+                                        //         var sellingPrice =
+                                        //         sellingPriceUpdation(
+                                        //             taxableAmount, vat);
+                                        //         var totalprice =
+                                        //         totalPriceUpdation(
+                                        //             sellingPrice,
+                                        //             table1[i]
+                                        //                 .warrentyPrice ??
+                                        //                 0);
+                                        //
+                                        //         table1[i] = table1[i].copyWith(
+                                        //             taxableAmount:
+                                        //             taxableAmount,
+                                        //             sellingPriceTotal: sellingPrice,
+                                        //             totalPrice: totalprice,
+                                        //             excessTax: excess);
+                                        //         setState(() {});
+                                        //       }
+                                        //     },
+                                        //   ),
+                                        // ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: UnderLinedInput(
-                                            initialCheck: true,
-                                            last:
-                                            table1?[i].discount.toString() ??
-                                                "",
-                                            onChanged: (va) {
-                                              widget.updateCheck(true);
-                                              // table1[i] = table1[i].copyWith(updatecheck: true);
-                                              // table[i] = table[i].copyWith(updateCheck: true);
-                                              setState(() {});
-                                              var disc;
-                                              if (va == "") {
-                                                disc = 0;
-                                                setState(() {});
-                                              } else {
-                                                disc = double.tryParse(va);
-                                                setState(() {});
-                                              }
-                                              var qty = table1[i].quantity ?? 0;
-                                              var vat = table1[i].vat ?? 0;
-                                              var unitcost =
-                                                  table1[i].unitCost ?? 0;
-                                              var excess =
-                                                  table1[i].excessTax ?? 0;
+                                          child: textPadding(
+                                              table1?[i].discountType ?? "",
+                                              fontSize: 12,
 
-                                              if (qty == 0 || unitcost == 0) {
-                                                table1[i] = table1[i].copyWith(
-                                                    taxableAmount: 0,
-                                                    sellingPriceTotal: 0,
-                                                    totalPrice: 0,
-                                                    discount: disc);
-                                                setState(() {});
-                                              } else {
-                                                var taxableAmount =
-                                                taxableUpdateMethod(
-                                                    qty,
-                                                    unitcost,
-                                                    excess!,
-                                                    disc,
-                                                    table1[i].discountType);
-
-                                                var sellingPrice =
-                                                sellingPriceUpdation(
-                                                    taxableAmount, vat);
-                                                var totalprice =
-                                                totalPriceUpdation(
-                                                    sellingPrice,
-                                                    table1[i]
-                                                        .warrentyPrice ??
-                                                        0);
-
-                                                table1[i] = table1[i].copyWith(
-                                                    taxableAmount:
-                                                    taxableAmount,
-                                                    sellingPriceTotal: sellingPrice,
-                                                    totalPrice: totalprice,
-                                                    discount: disc);
-                                                setState(() {});
-                                              }
-                                            },
-                                          ),
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
+                                        // TableCell(
+                                        //   verticalAlignment:
+                                        //   TableCellVerticalAlignment.middle,
+                                        //   child: PopUpCall(
+                                        //     type: "PriceTypePopUpCall",
+                                        //     value: table1[i].discountType??"",
+                                        //     onSelection: (String va) {
+                                        //       print("+++++++++++++++++++++++");
+                                        //
+                                        //       setState(() {
+                                        //         // table1[i] = table1[i].copyWith(updatecheck: true);
+                                        //         table1[i] = table1[i]
+                                        //             .copyWith(discountType: va);
+                                        //         widget.updateCheck(true);
+                                        //         var qty = table1[i].quantity ?? 0;
+                                        //         var unitcost =
+                                        //             table1[i].unitCost ?? 0;
+                                        //         var excess =
+                                        //             table1[i].excessTax ?? 0;
+                                        //         var discounts =
+                                        //             table1[i].discount ?? 0;
+                                        //         var disc =
+                                        //             table1[i].discount ?? 0;
+                                        //         var vat = table1[i].vat ?? 0;
+                                        //         if (unitcost == 0 || qty == 0) {
+                                        //           table1[i] = table1[i].copyWith(
+                                        //               taxableAmount: 0,
+                                        //               sellingPriceTotal: 0,
+                                        //               totalPrice: 0);
+                                        //         } else {
+                                        //           if (qty == 0 || unitcost == 0) {
+                                        //             table1[i] =
+                                        //                 table1[i].copyWith(
+                                        //                   taxableAmount: 0,
+                                        //                   sellingPriceTotal: 0,
+                                        //                   totalPrice: 0,
+                                        //                 );
+                                        //             setState(() {});
+                                        //           } else {
+                                        //             var taxableAmount =
+                                        //             taxableUpdateMethod(
+                                        //                 qty,
+                                        //                 unitcost,
+                                        //                 excess,
+                                        //                 discounts,
+                                        //                 table1[i]
+                                        //                     .discountType);
+                                        //             var sellingPrice =
+                                        //             sellingPriceUpdation(
+                                        //                 taxableAmount, vat);
+                                        //             var totalPrice =
+                                        //             totalPriceUpdation(
+                                        //                 sellingPrice,
+                                        //                 table1[i]
+                                        //                     .warrentyPrice ??
+                                        //                     0);
+                                        //             table1[i] =
+                                        //                 table1[i].copyWith(
+                                        //                   taxableAmount:
+                                        //                   taxableAmount,
+                                        //                   sellingPriceTotal: sellingPrice,
+                                        //                   totalPrice: totalPrice,
+                                        //                 );
+                                        //             setState(() {});
+                                        //           }
+                                        //         }
+                                        //
+                                        //         // onChange = true;
+                                        //         // orderType = va!;
+                                        //       });
+                                        //     },
+                                        //   ),
+                                        // ),
+                                        TableCell(
+                                          verticalAlignment:
+                                          TableCellVerticalAlignment.middle,
+                                          child: textPadding(
+                                              table1?[i].discount.toString() ?? "",
+                                              fontSize: 12,
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                                        ),
+                                        // TableCell(
+                                        //   verticalAlignment:
+                                        //   TableCellVerticalAlignment.middle,
+                                        //   child: UnderLinedInput(
+                                        //     initialCheck: true,
+                                        //     last:
+                                        //     table1?[i].discount.toString() ??
+                                        //         "",
+                                        //     onChanged: (va) {
+                                        //       widget.updateCheck(true);
+                                        //       // table1[i] = table1[i].copyWith(updatecheck: true);
+                                        //       // table[i] = table[i].copyWith(updateCheck: true);
+                                        //       setState(() {});
+                                        //       var disc;
+                                        //       if (va == "") {
+                                        //         disc = 0;
+                                        //         setState(() {});
+                                        //       } else {
+                                        //         disc = double.tryParse(va);
+                                        //         setState(() {});
+                                        //       }
+                                        //       var qty = table1[i].quantity ?? 0;
+                                        //       var vat = table1[i].vat ?? 0;
+                                        //       var unitcost =
+                                        //           table1[i].unitCost ?? 0;
+                                        //       var excess =
+                                        //           table1[i].excessTax ?? 0;
+                                        //
+                                        //       if (qty == 0 || unitcost == 0) {
+                                        //         table1[i] = table1[i].copyWith(
+                                        //             taxableAmount: 0,
+                                        //             sellingPriceTotal: 0,
+                                        //             totalPrice: 0,
+                                        //             discount: disc);
+                                        //         setState(() {});
+                                        //       } else {
+                                        //         var taxableAmount =
+                                        //         taxableUpdateMethod(
+                                        //             qty,
+                                        //             unitcost,
+                                        //             excess!,
+                                        //             disc,
+                                        //             table1[i].discountType);
+                                        //
+                                        //         var sellingPrice =
+                                        //         sellingPriceUpdation(
+                                        //             taxableAmount, vat);
+                                        //         var totalprice =
+                                        //         totalPriceUpdation(
+                                        //             sellingPrice,
+                                        //             table1[i]
+                                        //                 .warrentyPrice ??
+                                        //                 0);
+                                        //
+                                        //         table1[i] = table1[i].copyWith(
+                                        //             taxableAmount:
+                                        //             taxableAmount,
+                                        //             sellingPriceTotal: sellingPrice,
+                                        //             totalPrice: totalprice,
+                                        //             discount: disc);
+                                        //         setState(() {});
+                                        //       }
+                                        //     },
+                                        //   ),
+                                        // ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
@@ -827,9 +874,8 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -837,22 +883,20 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                           child: textPadding(
                                               table1?[i].vat.toString() ?? "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: textPadding(
                                               table1?[i]
-                                                  .sellingPriceTotal
+                                                  .sellingPrice
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
                                         TableCell(
                                           verticalAlignment:
@@ -863,8 +907,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
+
                                               fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
@@ -876,9 +919,8 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                                   .toString() ??
                                                   "",
                                               fontSize: 12,
-                                              padding: EdgeInsets.only(
-                                                  left: 11.5, top: 1.5),
-                                              fontWeight: FontWeight.w500),
+
+                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                         ),
 
                                         TableCell(
@@ -886,11 +928,15 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                           TableCellVerticalAlignment.middle,
                                           child: TableTextButton(
                                             onPress: () {
-                                              widget.updateCheck(false);
-                                              widget.updation(table1);
-                                              // table1[i].copyWith(updatecheck: false);
+                                              setState(() {
+                                                widget.updateCheck(false);
+                                                table1[i]=table1[i].copyWith(updateCheck: false);
+                                                widget.updation(table1);
+                                              });
+
+
                                             },
-                                            label: "update",
+                                            label: table1[i]?.updateCheck==true?"update":"",
                                           ),
                                         )
                                       ]),

@@ -126,6 +126,7 @@ const listsalesReurnApi = salesReturnLiveBaseUrl + "sales-return/list-sales-retu
 const salesInvoiceCodeApi = salesOrderLiveBaseUrl + "sales-invoice/list-sales-invoice/";
 const purchaseOrderPaymentPostSuccessApi = purchaseOrderLiveBaseUrl + "purchase-order/order-edit-after-payment";
 const salePaymentPostSuccessApi = salesOrderLiveBaseUrl + "sales-invoice/order-edit-after-payment";
+const saleReturnPaymentPostSuccessApi = salesReturnLiveBaseUrl + "sales-return-invoice/order-edit-after-payment";
 
 const salesInvoiceRradApi =
     salesOrderLiveBaseUrl + "sales-invoice/read-sales-invoice-for-sales-return/";

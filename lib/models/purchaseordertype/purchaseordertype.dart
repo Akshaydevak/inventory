@@ -10,6 +10,7 @@ class PurchaseOrdertype with _$PurchaseOrdertype {
     @JsonKey(name: "discount_type") final List<String>? discountType,
     @JsonKey(name: "order_modes") final List<String>? orderMode,
     @JsonKey(name: "virtual_stock_type") final List<String>? virtualStockType,
+    @JsonKey(name: "price_type") final List<String>? priceType,
 
   }) = _PurchaseOrdertype;
   factory PurchaseOrdertype.fromJson(Map<String, dynamic> json) =>

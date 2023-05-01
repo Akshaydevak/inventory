@@ -155,10 +155,8 @@ class _TableTextButtonState extends State<TableTextButton> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width*.05,
-      margin: EdgeInsets.symmetric(horizontal:8),
-
+      margin: EdgeInsets.symmetric(horizontal:7),
       color: widget.buttonBagroundColor,
-
       child: widget.designCheck?
       InkWell(
         onTap: (){ widget.onPress();},
@@ -169,7 +167,9 @@ class _TableTextButtonState extends State<TableTextButton> {
 
       Container(
 
+
         decoration: BoxDecoration(
+
             color:widget.bagroundColor ,
             borderRadius:BorderRadius.all(Radius.circular(5))
 
@@ -300,7 +300,7 @@ class _TableIconTextButtonState extends State<TableIconTextButton> {
       child: InkWell(
         onTap: (){ widget.onPress();},
         child: Center(
-          child: Icon(widget.actionCheck?Icons.add:Icons.delete,color:widget.actionCheck?Colors.blue: widget.textColor,size: MediaQuery.of(context).size.width*.014,),
+          child: Icon(widget.actionCheck?Icons.add:widget.icon,color:widget.actionCheck?Colors.blue: widget.textColor,size: MediaQuery.of(context).size.width*.014,),
         ),
       )
 

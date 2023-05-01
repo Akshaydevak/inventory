@@ -51,9 +51,10 @@ class OrderLinesInvoice with _$OrderLinesInvoice {
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "taxable_amount") final double? taxableAmount,
-    @JsonKey(name: "selling_price") final double? sellingPriceTotal,
+    @JsonKey(name: "selling_price") final double? sellingPrice,
     @JsonKey(name: "total_price") final double? totalPrice,
     @JsonKey(name: "warranty_price") final double? warrentyPrice,
+    @JsonKey(name: "is_edit",defaultValue: false) final bool? isEdit,
   }) = _OrderLinesInvoice;
   factory OrderLinesInvoice.fromJson(Map<String, dynamic> json) =>
       _$OrderLinesInvoiceFromJson(json);

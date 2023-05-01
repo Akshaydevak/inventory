@@ -871,7 +871,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       return DoubleResponse(
           response.data['status'] == 'success', response.data['message']);
     } catch (e) {
-      print("errrr" + e.toString());
+      print("the searching error " + e.toString());
     }
     print(
       "post" + requestFormCreate.toString(),

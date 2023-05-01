@@ -29,6 +29,7 @@ class PrintScreen extends StatefulWidget {
   final String vendorCode;
   final String note;
   final bool select;
+  final bool isReceived;
   final String orderCode;
   final String pageName;
   final String orderDate;
@@ -48,6 +49,7 @@ class PrintScreen extends StatefulWidget {
     this.note="",
     this.remarks="",
     this.orderDate="",
+    this.isReceived=false,
     required this.table,
     required this.model,
     required this.pageName,
@@ -95,7 +97,7 @@ class _PrintScreenState extends State<PrintScreen> {
 
       body:PdfPreview(
         build: (format) => _generatePdf(format,"title",widget.orderDate, widget.orderCode,context,widget.vendorCode,
-            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table??[],widget.pageName,widget.model!),
+            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table??[],widget.pageName,widget.model!,widget.isReceived),
       ),
 
     );
@@ -103,13 +105,13 @@ class _PrintScreenState extends State<PrintScreen> {
 }
 Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDate,String orderCode,BuildContext context,String vendorCode,
     double? discount,double? actualCost,double? variableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<dynamic> table,String pageName,InventoryListModel model) async {
+    ,double? excisetax,double? vat,String note,String remarks,List<dynamic> table,String pageName,InventoryListModel model,bool isRecieved) async {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-  var url = "http://sidra-bazar-uat-products.s3.ap-south-1.amazonaws.com/logo/MicrosoftTeams-image_87.png";
-  final netImage = await networkImage(model.companyLogo??"");
-  // final font = await PdfGoogleFonts.nunitoExtraLight();
+  var url = "https://sidra-bazar-uat-products.s3.ap-south-1.amazonaws.com/logo/rawabi.png";
+  final netImage = await networkImage(model.storeLogo??"");
+  final font = await PdfGoogleFonts.nunitoExtraLight();
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
   pdf.addPage(
     pw.Page(
@@ -131,7 +133,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
                       pw.Container(
-                        margin: pw.EdgeInsets.symmetric(vertical: 7),
+                        margin: pw.EdgeInsets.symmetric(vertical: 7,horizontal:width/103),
                         height:70 ,
                        width: 70,
                        child:pw.Image(netImage),
@@ -146,7 +148,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           children: [
                           pw.  SizedBox(height: height*.03,),
                           pw.  Text(Variable.mobileNumber,
-                              style: pw.TextStyle(
+                              style: pw.TextStyle(font: font,
 
                                  // color:Color(0xff565555) ,
                                   fontSize:7 ),),
@@ -154,15 +156,17 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                            pw. Text(Variable.email,
 
                               style:pw. TextStyle(
+                                  font: font,
 
                                   // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                          pw.   SizedBox(height: height*.009,),
                            pw. Text(pageName??"",
                               style:pw. TextStyle(
+                                  font: font,
 
                                   color: PdfColor.fromInt(0xff3E4F5B),
-                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 1.0,),),
+                                fontSize:height*.026,fontWeight: pw.FontWeight.bold ,),),
                          pw.  SizedBox(height: height*.009,)
 
                           ],
@@ -183,679 +187,684 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                   // color:pw. Colors.white,
                   child:pw. Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      pw.  SizedBox(height: 10,),
-                      pw.  Container(
-                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-                        child:pw. Row(
-                          mainAxisAlignment:  pw.MainAxisAlignment.start,
-                          children: [
-                            pw. Container(
-                              height: 70,
-                              child: pw.Column(
-                                crossAxisAlignment:pw. CrossAxisAlignment.start,
-                                children: [
-                                  pw.   Text(model.name??""
-                                    ,
-                                    style:  pw.TextStyle( fontSize:14,fontWeight:pw. FontWeight.bold ),),
-                                  pw.  SizedBox(height: 2,),
-                                  pw.  Text(model.addressOne??"",
-                                    style:  pw.TextStyle(  fontSize:9 ),),
-                                  pw.  Text(model.addressTwo??"",
-                                    style:  pw.TextStyle(  fontSize:9 ),),
-                                  pw.   SizedBox(height: 2,),
-                                  pw. Text(model.email??"",
-                                    style:  pw.TextStyle( fontSize:9),)
-
-                                ],
-                              ),
-                            ),
-                            pw.  Spacer(),
-
-                            pw.   Container(
-                              height: 70,
-                              child: pw. Row(
-                                children: [
-                                  pw.  Column(
-                                    crossAxisAlignment:  pw.CrossAxisAlignment.end,
-                                    children: [
-                                      pw. Container(
-                                          padding: pw. EdgeInsets.only(top: 9),
-
-                                          child:  pw.Text("Date : ",style:  pw.TextStyle( fontSize:9))),
-                                      pw.  Container(
-                                          padding: pw. EdgeInsets.only(top: 9),
-
-                                          child:  pw.Text("purchase order code : ",style:  pw.TextStyle(fontSize:9))),
-
-                                    ],
-                                  ),
-                                  pw. Column(
-                                    mainAxisAlignment:pw. MainAxisAlignment.start,
-                                    children: [
-
-                                      pw. Container(
-                                          padding:  pw.EdgeInsets.only(top: 9),
-                                          decoration:  pw.BoxDecoration(
-                                              // color:PdfColor.fromInt(0xAAACACAC),
-
-                                              border: pw.Border(
-                                                bottom:pw. BorderSide(width: .3,),
-                                              )
-                                          ),
-                                          width: 80,
-                                          child: pw.Text(orderDate==""? DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9,))
-                                      ),
-                                      pw.  Container(
-                                          padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
-                                          decoration: pw. BoxDecoration(
-                                              border: pw.Border(
-                                                bottom: pw. BorderSide(width: .3,
-                                                    // color: Color(0xffACACAC66).withOpacity(.4)
-                                                ),
-                                              )
-                                          ),
-                                          width: 80,
-                                          child: pw.Text(orderCode?.toString()??"",style:  pw.TextStyle( fontSize:9))
-                                      ),
-
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-
-                          ],
-                        ),
-                      ),
-                      // pw. SizedBox(height: 30,),
-                      pw. Container(
-                        width: width,
-                        height: height*.11,
-                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-                        decoration: pw. BoxDecoration(
-
-                            border: pw. Border.all(
-                                width: .6,
-
-                              color: PdfColor.fromInt(0xAAACACAC),
-
-
-                            )
-                        ),
-                        child:  pw.Column(
-                          crossAxisAlignment:  pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.Container(
-                              height:height*.04,
-                              width: width,
-                            color: PdfColor.fromInt(0xff3E4F5B),
-                              child:  pw.Center(
-                                child: pw. Container(
-                                    alignment:  pw.Alignment.topLeft,
-
-
-                                    margin:pw. EdgeInsets.only(left: width*.01,top: 8),
-                                    child: pw.Text("Basic Details",style:pw. TextStyle( fontSize:9,color: PdfColors.white,),)),
-                              ),
-
-                            ),
-                            pw. Expanded(child: pw. Container(
-                              //color: Colors.red,
-                              child: pw.Center(
-                                child: pw. Row(
-
-                                  mainAxisAlignment: pw. MainAxisAlignment.spaceAround,
-                                  children: [
-                                    pw. Column(
-                                      mainAxisAlignment: pw. MainAxisAlignment.center,
-                                      crossAxisAlignment:  pw.CrossAxisAlignment.start,
-                                      children: [
-                                        pw. Text("SUPPLIER",
-                                            style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
-                                        )),
-
-                                        pw.SizedBox(height: 3,),
-                                        pw.Text(vendorCode,style:  pw.TextStyle( fontWeight:pw. FontWeight.bold,fontSize:height*.014,color: PdfColor.fromInt(0xAA565555)),),
-                                      ],
-                                    ),
-                                    pw.  SizedBox(width: 12,),
-                                    pw.  Column(
-                                      mainAxisAlignment:  pw.MainAxisAlignment.center,
-                                      crossAxisAlignment: pw. CrossAxisAlignment.start,
-                                      children: [
-                                        pw.Text("ORDER CODE",style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
-                                          // color:Color(0xff565555),
-                                        )),
-                                        pw. SizedBox(height: 3,),
-                                        pw. Text(orderCode??"",style: pw. TextStyle(
-
-                                            fontSize:height*.014,color: PdfColor.fromInt(0xAA565555),
-                                            // color: Colors.black,
-                                            fontWeight: pw.FontWeight.bold),),
-                                      ],
-                                    ),
-                                    pw.  SizedBox(width: 12,),
-                                    pw.  Column(
-                                      mainAxisAlignment: pw. MainAxisAlignment.center,
-                                      crossAxisAlignment:  pw.CrossAxisAlignment.start,
-                                      children: [
-                                        pw. Text("ORDER DATE",style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
-                                          ),),
-                                        pw.SizedBox(height: 3,),
-                                        pw.  Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate,style: pw. TextStyle(
-
-                                            fontSize:height*.014,color: PdfColor.fromInt(0xAA565555),
-                                            // color: pw.C.black,
-                                            fontWeight: pw.FontWeight.bold),),
-                                      ],
-                                    ),
-                                    pw. SizedBox(width: 12,)
-                                  ],
-                                ),
-                              ) ,
-                            ))
-                          ],
-                        ),
-                      ),
-        pw.SizedBox(height: 15),
-        pw.Container(
-          // height: 400,
-          margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-         child:  pw.Table(
-           border: pw. TableBorder(
-               bottom:pw. BorderSide(
-                   width: .5,
-                   color: PdfColors.grey,
-                   style:
-                   pw. BorderStyle.solid),
-               right:pw. BorderSide(
-                   width: .5,
-                   color: PdfColors.grey,
-                   style:
-                   pw. BorderStyle.solid),
-               left:pw. BorderSide(
-                   width: .5,
-                   color: PdfColors.grey,
-                   style:
-                   pw. BorderStyle.solid),
-               verticalInside: pw.BorderSide(
-                   width: .5,
-                   color: PdfColors.grey,
-                   style:
-                   pw. BorderStyle.solid),
-               // horizontalInside:
-               // pw.   BorderSide(
-               //
-               //     width: .5,
-               //     color: PdfColors.grey,
-               //     style:
-               //     pw.  BorderStyle.solid)
-           ),
-           // tableWidth:.5,
-           columnWidths: {
-
-             0: pw.FlexColumnWidth(1.5),
-             1:pw. FlexColumnWidth(4),
-             2:pw. FlexColumnWidth(3),
-             3: pw.FlexColumnWidth(4),
-             4:pw. FlexColumnWidth(2.5),
-             5:pw. FlexColumnWidth(2),
-             6: pw.FlexColumnWidth(2),
-             7:pw. FlexColumnWidth(2),
-             8: pw.FlexColumnWidth(3),
-             9: pw.FlexColumnWidth(2),
-             10:pw. FlexColumnWidth(2),
-             11:pw. FlexColumnWidth(4),
-             12: pw.FlexColumnWidth(4),
-             13:pw. FlexColumnWidth(4),
-             14:pw. FlexColumnWidth(4),
-             15:pw. FlexColumnWidth(3),
-             16:pw. FlexColumnWidth(3),
-             17: pw.FlexColumnWidth(3),
-
-
-           },
-           children: [
-             pw. TableRow(
-
-                 children: [
-                   pw. Container( padding: pw.EdgeInsets.all(10),
-
-                     color:  PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.012, color: PdfColors.white,)),
-                     height: 30,
-
-                   ),
-                   pw. Container(
-                     padding: pw.EdgeInsets.all(5),
-
-                     color:  PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text(  'Variant Id ',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
-                     height: 30,
-                   ),
-
-
-                   pw.  Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color: PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                     height: 30,
-                   ),
-                   pw.  Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color:  PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
-                     height: 30,
-
-                   ),
-                   pw.  Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color:  PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text( 'Requested Qty',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
-                     height: 30,
-                   ),
-
-
-
-                   pw.   Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color: PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text(   'Unit cost',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
-                     height: 30,
-                   ),
-                   pw.  Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color:  PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text(  'Excise tax',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
-                     height: 30,
-                   ),
-                   pw.  Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color: PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text('Disc.',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
-                     height: 30,
-
-                   ),
-
-                   pw.  Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color: PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text( 'VAT.Amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                     height: 30,
-                   ),
-                   pw.       Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color:  PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text( 'VAT',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
-                     height: 30,
-
-                   ),
-                   pw. Container(
-                     padding: pw.EdgeInsets.all(5),
-                     color:  PdfColor.fromInt(0xff3E4F5B),
-                     alignment:pw. Alignment.center,
-                     child:pw.Text( 'Actual cost',style:pw. TextStyle( fontSize: 7,color: PdfColors.white,)),
-                     height: 30,
-                   ),
-
-
-                   // tableHeadtext(
-                   //   'Is free',
-                   //   padding:
-                   //   EdgeInsets.all(15),
-                   //   height: 80,
-                   //   size: 13,
-                   //     color:  Color(0xff1F6BA9)
-                   // ),
-
-
-                 ]),
-             if (table != null)...[
-               for (var i = 0;
-               i < table.length;
-               i++)
-                 pw. TableRow(
-                     children: [
-
-                       pw.    Container(
-                         padding: pw.EdgeInsets.only(top: height*.019),
-                         alignment:pw. Alignment.center,
-
-                         child: pw.Text(   (i + 1)
-                             .toString(),style:pw. TextStyle(fontSize: height*.013)),
-
-
-                       ),
-
-                       pw.  Container(
-                         // padding: pw.EdgeInsets.only(top:height*.010),
-                         alignment:pw. Alignment.center,
-                         height: 40,
-                         child:pw. Text(
-                                    table[i].variantId??"",style:pw. TextStyle(fontSize: height*.013)),
-                       ),
-                       pw.   Container(
-                         // padding: pw.EdgeInsets.only(top: height*.014),
-                         alignment:pw. Alignment.center,
-                         height: 40,
-                         child:pw. Text(
-                             table[i].barcode==null||table[i].barcode=="null"?"":    table[i].barcode??"",style:pw. TextStyle( fontSize: height*.013)),
-
-                       ),
-                       pw.   Container(
-                         padding: pw.EdgeInsets.only(top: height*.019),
-                         alignment:pw. Alignment.center,
-                         child:pw. Text(
-                             table[i].purchaseUom==null||table[i].purchaseUom=="null"?"": table[i].purchaseUom??"",style:pw. TextStyle( fontSize: height*.013)),
-
-                       ),
-                       pw.  Container(
-                         padding: pw.EdgeInsets.only(top: height*.019),
-                         alignment:pw. Alignment.center,
-                         child: pw.Text(
-                             table[i]?.requestedQty.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
-
-                       ),
-
-                       pw. Container(
-                         padding: pw.EdgeInsets.only(top:height*.019),
-                         alignment:pw. Alignment.center,
-                         child: pw.Text(
-                             table[i].unitCost==null||table[i].unitCost=="null"?"": table[i].unitCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
-
-
-                       ),
-                       pw.  Container(
-                         padding: pw.EdgeInsets.only(top: height*.019),
-
-                         alignment:pw. Alignment.center,
-                         child: pw.Text(
-                             table[i].excessTax==null||table[i].excessTax=="null"?"": table[i].excessTax?.toString()??"",style:pw. TextStyle( fontSize: 8)),
-                         // fontSize: 12,
-
-
-                       ),
-                       pw. Container(
-                         padding: pw.EdgeInsets.only(top:height*.019),
-                         alignment:pw. Alignment.center,
-                         child:pw. Text(
-                             table[i].discount==null||table[i].discount=="null"?"":   table[i].discount?.toString()??"",style:pw. TextStyle( fontSize: 8)),
-                       ),
-
-                       pw. Container(
-                         alignment:pw. Alignment.center,
-                         padding: pw.EdgeInsets.only(top:height*.019),
-                         child:pw. Text(
-                             table[i].vatableAmount==null||table[i].vatableAmount=="null"?"":      table[i].vatableAmount?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
-                         // fontSize: 12,
-                       ),
-                       pw.  Container(
-                         padding: pw.EdgeInsets.only(top: height*.019),
-                         alignment:pw. Alignment.center,
-                         child: pw.Text(
-                             table[i].vat==null||table[i].vat=="null"?"":       table[i].vat?.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
-                         // fontSize: 12,
-
-                       ),
-                       pw.  Container(
-                         padding: pw.EdgeInsets.only(top:height*.019),
-                         alignment:pw. Alignment.center,
-                         child:pw. Text(
-                             table[i].actualCost==null||table[i].actualCost=="null"?"":   table[i].actualCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
-
-                       ),
-
-
-
-
-
-
-                     ]
-                 )
-             ],
-             if(table.isEmpty)...[
-        pw. TableRow(
-        children: [
-
-        pw.    Container(
-        padding: pw.EdgeInsets.only(top: height*.019),
-          height: 40,
-        ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-          pw.    Container(
-            padding: pw.EdgeInsets.only(top: height*.019),
-            height: 40,
-          ),
-        ])
-
-             ]
-
-
-           ],
-         ),
-         // width: width,
-
-        ),
-                      pw.SizedBox(height: 8),
-
-                    pw.  Container(
-                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-                          width: width,
-                          height: 27,
-
-                          decoration:pw. BoxDecoration(
-
-                              color:  PdfColor.fromInt(0xAAF7F7F7),
-
-
-                          ),
-                          child:pw.Row(
-                            mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
-                            children: [
-                              pw.Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw.Text("Discount: ",style: pw.TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
-                                    pw. Text(discount?.toString()??"",style: pw.TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
-                                  ],
-                                ),
-                              ),
-
-                              pw. Container(
-                                child: pw.Row(
-                                  children: [
-                                    pw. Text("Unit Cost: ",style: pw.TextStyle( fontWeight:pw.FontWeight.normal ,fontSize: 8 ),),
-                                    pw. Text(unitCost?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
-                                  ],
-                                ),
-                              ),
-                              pw.  Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
-                                    pw. Text(excisetax?.toString()??"",style: pw.TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
-                                  ],
-                                ),
-                              ),
-                              pw.Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw. Text("VAT Amount: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
-                                    pw.Text(vat?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
-                                  ],
-                                ),
-                              ),
-                              pw. Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw.  Text("Vatable Amount: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
-                                    pw.Text(variableAmount?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
-                                  ],
-                                ),
-                              ),
-                              pw. Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw. Text("Actual cost: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
-                                    pw.Text(actualCost?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
-                                  ],
-                                ),
-                              )
-
-                            ],
-                          )
-                      ),
-                      //calculation
-                      pw.  SizedBox(height: height*0.1,),
-                      //
-                      pw.  Row(
-                        children: [
-                          pw.  Container(
-                            margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
-                            child:pw. Column(
-                              crossAxisAlignment:pw. CrossAxisAlignment.start,
-                              children: [
-
-
-                                pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.01,),
-                                pw. Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
-                                    children: [
-                                      pw.  Row(
-                                        children: [
-
-
-                                          pw.  Text(note??"",style: pw.TextStyle(
-                                            // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.02,),
-
-                                    ],
-                                  ),
-                                ),
-                                pw.  SizedBox(height: height*.03,),
-                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.01,),
-                                pw.Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw. Row(
-                                        children: [
-
-
-                                          pw.Text(remarks??"",style: pw.TextStyle(
-                                            // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(height: height*.03,),
-
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          pw.  Spacer(),
-                          pw. Container(
-                            margin: pw.EdgeInsets.only(right: width*.02),
-                            height: height*.12,
-                            width:width*.14,
-                            decoration:pw. BoxDecoration(
-
-                              // Red border with the width is equal to 5
-                                border:pw. Border.all(
-                                    width: .6,
-
-
-                                    color: PdfColor.fromInt(0xAAACACAC)
-                                )
-                            ),
-                            child:pw. Column(
-                              crossAxisAlignment:pw. CrossAxisAlignment.start,
-                              children: [
-                                pw. Container(
-                                    margin:pw. EdgeInsets.only(
-                                      top:height*.018,
-                                      left:height*.015,
-                                    ),
-                                    child: pw.Text("Authorized by:",style:pw. TextStyle(
-                                      // color: Colors.black,
-                                      fontWeight:pw. FontWeight.normal,fontSize:height*.016,),)),
-                                //
-                                // Row(
-                                //   children: [
-                                //     Text("Aftabu rahman",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,height: 19),),
-                                //
-                                //   ],
-                                // )
-
-                              ],
-                            ),
-
-                          )
-
-                        ],
-                      )
-                      //last section
-
-
-
-                    ],
+        //             children: [
+        //               pw.  SizedBox(height: 10,),
+        //               pw.  Container(
+        //                 margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
+        //                 child:pw. Row(
+        //                   mainAxisAlignment:  pw.MainAxisAlignment.start,
+        //                   children: [
+        //                     pw. Container(
+        //                       height: 70,
+        //                       child: pw.Column(
+        //                         crossAxisAlignment:pw. CrossAxisAlignment.start,
+        //                         children: [
+        //                           pw.   Text(model.name??""
+        //                             ,
+        //                             style:  pw.TextStyle( fontSize:14,fontWeight:pw. FontWeight.bold ),),
+        //                           pw.  SizedBox(height: 2,),
+        //                           pw.  Text(model.addressOne??"",
+        //                             style:  pw.TextStyle(  fontSize:9 ),),
+        //                           pw.  Text(model.addressTwo??"",
+        //                             style:  pw.TextStyle(  fontSize:9 ),),
+        //                           pw.   SizedBox(height: 2,),
+        //                           pw. Text(model.email??"",
+        //                             style:  pw.TextStyle( fontSize:9),)
+        //
+        //                         ],
+        //                       ),
+        //                     ),
+        //                     pw.  Spacer(),
+        //
+        //                     pw.   Container(
+        //                       height: 70,
+        //                       child: pw. Row(
+        //                         children: [
+        //                           pw.  Column(
+        //                             crossAxisAlignment:  pw.CrossAxisAlignment.end,
+        //                             children: [
+        //                               pw. Container(
+        //                                   padding: pw. EdgeInsets.only(top: 9),
+        //
+        //                                   child:  pw.Text("Date : ",style:  pw.TextStyle( fontSize:9))),
+        //                               pw.  Container(
+        //                                   padding: pw. EdgeInsets.only(top: 9),
+        //
+        //                                   child:  pw.Text("purchase order code : ",style:  pw.TextStyle(fontSize:9))),
+        //
+        //                             ],
+        //                           ),
+        //                           pw. Column(
+        //                             mainAxisAlignment:pw. MainAxisAlignment.start,
+        //                             children: [
+        //
+        //                               pw. Container(
+        //                                   padding:  pw.EdgeInsets.only(top: 9),
+        //                                   decoration:  pw.BoxDecoration(
+        //                                       // color:PdfColor.fromInt(0xAAACACAC),
+        //
+        //                                       border: pw.Border(
+        //                                         bottom:pw. BorderSide(width: .3,),
+        //                                       )
+        //                                   ),
+        //                                   width: 80,
+        //                                   child: pw.Text(orderDate==""? DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9,))
+        //                               ),
+        //                               pw.  Container(
+        //                                   padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
+        //                                   decoration: pw. BoxDecoration(
+        //                                       border: pw.Border(
+        //                                         bottom: pw. BorderSide(width: .3,
+        //                                             // color: Color(0xffACACAC66).withOpacity(.4)
+        //                                         ),
+        //                                       )
+        //                                   ),
+        //                                   width: 80,
+        //                                   child: pw.Text(orderCode?.toString()??"",style:  pw.TextStyle( fontSize:9))
+        //                               ),
+        //
+        //                             ],
+        //                           )
+        //                         ],
+        //                       ),
+        //                     )
+        //
+        //                   ],
+        //                 ),
+        //               ),
+        //               // pw. SizedBox(height: 30,),
+        //               pw. Container(
+        //                 width: width,
+        //                 height: height*.11,
+        //                 margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
+        //                 decoration: pw. BoxDecoration(
+        //
+        //                     border: pw. Border.all(
+        //                         width: .6,
+        //
+        //                       color: PdfColor.fromInt(0xAAACACAC),
+        //
+        //
+        //                     )
+        //                 ),
+        //                 child:  pw.Column(
+        //                   crossAxisAlignment:  pw.CrossAxisAlignment.start,
+        //                   children: [
+        //                     pw.Container(
+        //                       height:height*.04,
+        //                       width: width,
+        //                     color: PdfColor.fromInt(0xff3E4F5B),
+        //                       child:  pw.Center(
+        //                         child: pw. Container(
+        //                             alignment:  pw.Alignment.topLeft,
+        //
+        //
+        //                             margin:pw. EdgeInsets.only(left: width*.01,top: 8),
+        //                             child: pw.Text("Basic Details",style:pw. TextStyle( fontSize:9,color: PdfColors.white,),)),
+        //                       ),
+        //
+        //                     ),
+        //                     pw. Expanded(child: pw. Container(
+        //                       //color: Colors.red,
+        //                       child: pw.Center(
+        //                         child: pw. Row(
+        //
+        //                           mainAxisAlignment: pw. MainAxisAlignment.spaceAround,
+        //                           children: [
+        //                             pw. Column(
+        //                               mainAxisAlignment: pw. MainAxisAlignment.center,
+        //                               crossAxisAlignment:  pw.CrossAxisAlignment.start,
+        //                               children: [
+        //                                 pw. Text("VENDOR CODE",
+        //                                     style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
+        //                                 )),
+        //
+        //                                 pw.SizedBox(height: 3,),
+        //                                 pw.Text(vendorCode,style:  pw.TextStyle( fontWeight:pw. FontWeight.bold,fontSize:height*.014,color: PdfColor.fromInt(0xAA565555)),),
+        //                               ],
+        //                             ),
+        //                             pw.  SizedBox(width: 12,),
+        //                             pw.  Column(
+        //                               mainAxisAlignment:  pw.MainAxisAlignment.center,
+        //                               crossAxisAlignment: pw. CrossAxisAlignment.start,
+        //                               children: [
+        //                                 pw.Text("ORDER CODE",style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
+        //                                   // color:Color(0xff565555),
+        //                                 )),
+        //                                 pw. SizedBox(height: 3,),
+        //                                 pw. Text(orderCode??"",style: pw. TextStyle(
+        //
+        //                                     fontSize:height*.014,color: PdfColor.fromInt(0xAA565555),
+        //                                     // color: Colors.black,
+        //                                     fontWeight: pw.FontWeight.bold),),
+        //                               ],
+        //                             ),
+        //                             pw.  SizedBox(width: 12,),
+        //                             pw.  Column(
+        //                               mainAxisAlignment: pw. MainAxisAlignment.center,
+        //                               crossAxisAlignment:  pw.CrossAxisAlignment.start,
+        //                               children: [
+        //                                 pw. Text("ORDER DATE",style: pw.TextStyle(fontWeight:pw. FontWeight.bold, fontSize: height*.014
+        //                                   ),),
+        //                                 pw.SizedBox(height: 3,),
+        //                                 pw.  Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate,style: pw. TextStyle(
+        //
+        //                                     fontSize:height*.014,color: PdfColor.fromInt(0xAA565555),
+        //                                     // color: pw.C.black,
+        //                                     fontWeight: pw.FontWeight.bold),),
+        //                               ],
+        //                             ),
+        //                             pw. SizedBox(width: 12,)
+        //                           ],
+        //                         ),
+        //                       ) ,
+        //                     ))
+        //                   ],
+        //                 ),
+        //               ),
+        // pw.SizedBox(height: 15),
+        // pw.Container(
+        //   // height: 400,
+        //   margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
+        //  child:  pw.Table(
+        //    border: pw. TableBorder(
+        //        bottom:pw. BorderSide(
+        //            width: .5,
+        //            color: PdfColors.grey,
+        //            style:
+        //            pw. BorderStyle.solid),
+        //        right:pw. BorderSide(
+        //            width: .5,
+        //            color: PdfColors.grey,
+        //            style:
+        //            pw. BorderStyle.solid),
+        //        left:pw. BorderSide(
+        //            width: .5,
+        //            color: PdfColors.grey,
+        //            style:
+        //            pw. BorderStyle.solid),
+        //        verticalInside: pw.BorderSide(
+        //            width: .5,
+        //            color: PdfColors.grey,
+        //            style:
+        //            pw. BorderStyle.solid),
+        //        // horizontalInside:
+        //        // pw.   BorderSide(
+        //        //
+        //        //     width: .5,
+        //        //     color: PdfColors.grey,
+        //        //     style:
+        //        //     pw.  BorderStyle.solid)
+        //    ),
+        //    // tableWidth:.5,
+        //    columnWidths: {
+        //
+        //      0: pw.FlexColumnWidth(1.5),
+        //      1:pw. FlexColumnWidth(4),
+        //      2:pw. FlexColumnWidth(3),
+        //      3: pw.FlexColumnWidth(4),
+        //      4:pw. FlexColumnWidth(2.5),
+        //      5:pw. FlexColumnWidth(2),
+        //      6: pw.FlexColumnWidth(2),
+        //      7:pw. FlexColumnWidth(2),
+        //      8: pw.FlexColumnWidth(3),
+        //      9: pw.FlexColumnWidth(2),
+        //      10:pw. FlexColumnWidth(2),
+        //      11:pw. FlexColumnWidth(2),
+        //      12: pw.FlexColumnWidth(4),
+        //      13:pw. FlexColumnWidth(4),
+        //      14:pw. FlexColumnWidth(4),
+        //      15:pw. FlexColumnWidth(3),
+        //      16:pw. FlexColumnWidth(3),
+        //      17: pw.FlexColumnWidth(3),17: pw.FlexColumnWidth(3),
+        //
+        //
+        //    },
+        //    children: [
+        //      pw. TableRow(
+        //
+        //          children: [
+        //            pw. Container( padding: pw.EdgeInsets.all(10),
+        //
+        //              color:  PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.012, color: PdfColors.white,)),
+        //              height: 30,
+        //
+        //            ),
+        //            pw. Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //
+        //              color:  PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text(  'Variant Id ',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //            ),
+        //
+        //
+        //            pw.  Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color: PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //            ),
+        //            pw.  Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color:  PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text( 'Purchase UOM',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //
+        //            ),
+        //            if(isRecieved)
+        //              pw.  Container(
+        //                color:  PdfColor.fromInt(0xff3E4F5B),
+        //                alignment:pw. Alignment.center,
+        //                child:pw.Text( 'Is Received',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
+        //                height: 30,
+        //              ),
+        //
+        //
+        //            pw.  Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color:  PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text( 'Requested Qty',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //            ),
+        //
+        //
+        //
+        //            pw.   Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color: PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text(   'Unit cost',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //            ),
+        //            pw.  Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color:  PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text(  'Excise tax',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //            ),
+        //            pw.  Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color: PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text('Disc.',style:pw. TextStyle( fontSize:height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //
+        //            ),
+        //
+        //            pw.  Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color: PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text( 'VAT.Amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //            ),
+        //            pw.       Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color:  PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text( 'VAT',style:pw. TextStyle( fontSize: height*.012,color: PdfColors.white,)),
+        //              height: 30,
+        //
+        //            ),
+        //            pw. Container(
+        //              padding: pw.EdgeInsets.all(5),
+        //              color:  PdfColor.fromInt(0xff3E4F5B),
+        //              alignment:pw. Alignment.center,
+        //              child:pw.Text( 'Actual cost',style:pw. TextStyle( fontSize: 7,color: PdfColors.white,)),
+        //              height: 30,
+        //            ),
+        //
+        //
+        //            // tableHeadtext(
+        //            //   'Is free',
+        //            //   padding:
+        //            //   EdgeInsets.all(15),
+        //            //   height: 80,
+        //            //   size: 13,
+        //            //     color:  Color(0xff1F6BA9)
+        //            // ),
+        //
+        //
+        //          ]),
+        //      if (table != null)...[
+        //        for (var i = 0;
+        //        i < table.length;
+        //        i++)
+        //          pw. TableRow(
+        //              children: [
+        //
+        //                pw.    Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019),
+        //                  alignment:pw. Alignment.center,
+        //
+        //                  child: pw.Text(   (i + 1)
+        //                      .toString(),style:pw. TextStyle(fontSize: height*.013)),
+        //
+        //
+        //                ),
+        //
+        //                pw.  Container(
+        //                  // padding: pw.EdgeInsets.only(top:height*.010),
+        //                  alignment:pw. Alignment.center,
+        //                  height: 40,
+        //                  child:pw. Text(
+        //                             table[i].variantId??"",style:pw. TextStyle(fontSize: height*.013)),
+        //                ),
+        //                pw.   Container(
+        //                  // padding: pw.EdgeInsets.only(top: height*.014),
+        //                  alignment:pw. Alignment.center,
+        //                  height: 40,
+        //                  child:pw. Text(
+        //                      table[i].barcode==null||table[i].barcode=="null"?"":    table[i].barcode??"",style:pw. TextStyle( fontSize: height*.013)),
+        //
+        //                ),
+        //                pw.   Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //                  alignment:pw. Alignment.center,
+        //                  child:pw. Text(
+        //                      table[i].purchaseUom==null||table[i].purchaseUom=="null"?"": table[i].purchaseUom??"",style:pw. TextStyle( fontSize: height*.013)),
+        //
+        //                ),
+        //                if(isRecieved)  pw.  Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //                  alignment:pw. Alignment.center,
+        //                  child: pw.Checkbox(name: "",value: table[i].isReceived??false,activeColor: PdfColor.fromInt(0xff3E4F5B),width:20),
+        //
+        //                ),
+        //                pw.  Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //                  alignment:pw. Alignment.center,
+        //                  child: pw.Text(
+        //                      table[i]?.requestedQty.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
+        //
+        //                ),
+        //
+        //                pw. Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //                  alignment:pw. Alignment.center,
+        //                  child: pw.Text(
+        //                      table[i].unitCost==null||table[i].unitCost=="null"?"": table[i].unitCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
+        //
+        //
+        //                ),
+        //                pw.  Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //
+        //                  alignment:pw. Alignment.center,
+        //                  child: pw.Text(
+        //                      table[i].excessTax==null||table[i].excessTax=="null"?"": table[i].excessTax?.toString()??"",style:pw. TextStyle( fontSize: 8)),
+        //                  // fontSize: 12,
+        //
+        //
+        //                ),
+        //                pw. Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //                  alignment:pw. Alignment.center,
+        //                  child:pw. Text(
+        //                      table[i].discount==null||table[i].discount=="null"?"":   table[i].discount?.toString()??"",style:pw. TextStyle( fontSize: 8)),
+        //                ),
+        //
+        //                pw. Container(
+        //                  alignment:pw. Alignment.center,
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //                  child:pw. Text(
+        //                      table[i].vatableAmount==null||table[i].vatableAmount=="null"?"":      table[i].vatableAmount?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+        //                  // fontSize: 12,
+        //                ),
+        //                pw.  Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //                  alignment:pw. Alignment.center,
+        //                  child: pw.Text(
+        //                      table[i].vat==null||table[i].vat=="null"?"":       table[i].vat?.toString()??"",style:pw. TextStyle( fontSize: height*.013)),
+        //                  // fontSize: 12,
+        //
+        //                ),
+        //                pw.  Container(
+        //                  padding: pw.EdgeInsets.only(top: height*.019,right: 5,left: 5),
+        //                  alignment:pw. Alignment.center,
+        //                  child:pw. Text(
+        //                      table[i].actualCost==null||table[i].actualCost=="null"?"":   table[i].actualCost?.toString()??"",style:pw. TextStyle( fontSize:height*.013)),
+        //
+        //                ),
+        //
+        //
+        //
+        //
+        //
+        //
+        //              ]
+        //          )
+        //      ],
+        //      if(table.isEmpty)...[
+        // pw. TableRow(
+        // children: [
+        //
+        // pw.    Container(
+        // padding: pw.EdgeInsets.only(top: height*.019),
+        //   height: 40,
+        // ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        //   pw.    Container(
+        //     padding: pw.EdgeInsets.only(top: height*.019),
+        //     height: 40,
+        //   ),
+        // ])
+        //
+        //      ]
+        //
+        //
+        //    ],
+        //  ),
+        //  // width: width,
+        //
+        // ),
+        //               pw.SizedBox(height: 8),
+        //
+        //             pw.  Container(
+        //                 margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
+        //                   width: width,
+        //                   height: 27,
+        //
+        //                   decoration:pw. BoxDecoration(
+        //
+        //                       color:  PdfColor.fromInt(0xAAF7F7F7),
+        //
+        //
+        //                   ),
+        //                   child:pw.Row(
+        //                     mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+        //                     children: [
+        //                       pw.Container(
+        //                         child:pw. Row(
+        //                           children: [
+        //                             pw.Text("Discount: ",style: pw.TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
+        //                             pw. Text(discount?.toString()??"",style: pw.TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
+        //                           ],
+        //                         ),
+        //                       ),
+        //
+        //                       pw. Container(
+        //                         child: pw.Row(
+        //                           children: [
+        //                             pw. Text("Unit Cost: ",style: pw.TextStyle( fontWeight:pw.FontWeight.normal ,fontSize: 8 ),),
+        //                             pw. Text(unitCost?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
+        //                           ],
+        //                         ),
+        //                       ),
+        //                       pw.  Container(
+        //                         child:pw. Row(
+        //                           children: [
+        //                             pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+        //                             pw. Text(excisetax?.toString()??"",style: pw.TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+        //                           ],
+        //                         ),
+        //                       ),
+        //                       pw.Container(
+        //                         child:pw. Row(
+        //                           children: [
+        //                             pw. Text("VAT Amount: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+        //                             pw.Text(vat?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+        //                           ],
+        //                         ),
+        //                       ),
+        //                       pw. Container(
+        //                         child:pw. Row(
+        //                           children: [
+        //                             pw.  Text("Vatable Amount: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
+        //                             pw.Text(variableAmount?.toString()??"",style:pw. TextStyle( fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+        //                           ],
+        //                         ),
+        //                       ),
+        //                       pw. Container(
+        //                         child:pw. Row(
+        //                           children: [
+        //                             pw. Text("Actual cost: ",style:pw. TextStyle( fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+        //                             pw.Text(actualCost?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+        //                           ],
+        //                         ),
+        //                       )
+        //
+        //                     ],
+        //                   )
+        //               ),
+        //               //calculation
+        //               pw.  SizedBox(height: height*0.1,),
+        //               //
+        //               pw.  Row(
+        //                 children: [
+        //                   pw.  Container(
+        //                     width:width/5,
+        //
+        //                     margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
+        //                     child:pw. Column(
+        //                       crossAxisAlignment:pw. CrossAxisAlignment.start,
+        //                       children: [
+        //
+        //
+        //                  pw.  Container(child:    pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),),
+        //                         pw. SizedBox(height: height*0.01,),
+        //                         pw. Container(
+        //                           width:200,
+        //
+        //
+        //
+        //
+        //                                child:   pw.  Text(note??"",style: pw.TextStyle(
+        //                                     // color: Color(0xff252525),
+        //                                       fontSize: height*.015),),
+        //
+        //
+        //
+        //
+        //
+        //                         ),
+        //                         pw.  SizedBox(height: height*.03,),
+        //                         pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
+        //                         pw. SizedBox(height: height*0.01,),
+        //                         pw.Container(
+        //                           width:200,
+        //
+        //
+        //
+        //                               child:    pw.Text(remarks??"",style: pw.TextStyle(
+        //                                     // color: Color(0xff252525),
+        //                                       fontSize: height*.015),),
+        //
+        //
+        //                         ),
+        //                       ],
+        //                     ),
+        //                   ),
+        //
+        //                   pw.  Spacer(),
+        //                   pw. Container(
+        //                     margin: pw.EdgeInsets.only(right: width*.02),
+        //                     height: height*.12,
+        //                     width:width*.14,
+        //                     decoration:pw. BoxDecoration(
+        //
+        //                       // Red border with the width is equal to 5
+        //                         border:pw. Border.all(
+        //                             width: .6,
+        //
+        //
+        //                             color: PdfColor.fromInt(0xAAACACAC)
+        //                         )
+        //                     ),
+        //                     child:pw. Column(
+        //                       crossAxisAlignment:pw. CrossAxisAlignment.start,
+        //                       children: [
+        //                         pw. Container(
+        //                             margin:pw. EdgeInsets.only(
+        //                               top:height*.018,
+        //                               left:height*.015,
+        //                             ),
+        //                             child: pw.Text("Authorized by:",style:pw. TextStyle(
+        //                               // color: Colors.black,
+        //                               fontWeight:pw. FontWeight.normal,fontSize:height*.016,),)),
+        //                         //
+        //                         // Row(
+        //                         //   children: [
+        //                         //     Text("Aftabu rahman",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,height: 19),),
+        //                         //
+        //                         //   ],
+        //                         // )
+        //
+        //                       ],
+        //                     ),
+        //
+        //                   )
+        //
+        //                 ],
+        //               )
+        //               //last section
+        //
+        //
+        //
+        //             ],
                   ),
 
                 ),
@@ -1943,7 +1952,8 @@ Future<Uint8List> _generatesInvoicePdf(PdfPageFormat format, String title,String
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   final font = await PdfGoogleFonts.nunitoExtraLight();
-  final netImage = await networkImage(model.companyLogo??"");
+  final netImage = await  networkImage(
+      model.companyLogo??"https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png");
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
 
   pdf.addPage(
@@ -2846,7 +2856,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                               style:pw. TextStyle(
 
                                 color: PdfColor.fromInt(0xff3E4F5B),
-                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 1.0,),),
+                                fontSize:height*.026,fontWeight: pw.FontWeight.bold ,  ),),
                             pw.  SizedBox(height: height*.009,)
 
                           ],
@@ -2986,27 +2996,32 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
 
                             ),
                             pw. Expanded(child: pw. Container(
+
                               //color: Colors.red,
                               child: pw.Center(
-                                child: pw. Row(
+                                child:pw.Container(
+                                  // margin:pw. EdgeInsets.symmetric(horizontal: width*.01),
+                                  child: pw. Row(
 
-                                  mainAxisAlignment: pw. MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: pw. MainAxisAlignment.start,
                                   children: [
-                                    pw. Column(
-                                      mainAxisAlignment: pw. MainAxisAlignment.center,
-                                      crossAxisAlignment:  pw.CrossAxisAlignment.start,
-                                      children: [
-                                        pw. Text("Supplier",
-                                            style:
-                                            pw. TextStyle(fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
-                                            )),
-
-                                        pw.SizedBox(height: 3,),
-                                        pw.Text(vendorCode,style:  pw.TextStyle(fontWeight:pw. FontWeight.bold,fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)),),
-                                      ],
-                                    ),
+                                    // pw. Column(
+                                    //   mainAxisAlignment: pw. MainAxisAlignment.center,
+                                    //   crossAxisAlignment:  pw.CrossAxisAlignment.start,
+                                    //   children: [
+                                    //     pw. Text("Supplier",
+                                    //         style:
+                                    //         pw. TextStyle(fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
+                                    //         )),
+                                    //
+                                    //     pw.SizedBox(height: 3,),
+                                    //     pw.Text(vendorCode,style:  pw.TextStyle(fontWeight:pw. FontWeight.bold,fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)),),
+                                    //   ],
+                                    // ),
                                     pw.  SizedBox(width: 12,),
-                                    pw.  Column(
+                                 pw.Container(
+                                   width: 300,
+                                   child:   pw.  Column(
                                       mainAxisAlignment:  pw.MainAxisAlignment.center,
                                       crossAxisAlignment: pw. CrossAxisAlignment.start,
                                       children: [
@@ -3019,7 +3034,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                             // color: Colors.black,
                                             fontWeight: pw.FontWeight.bold),),
                                       ],
-                                    ),
+                                    ),),
                                     pw.  SizedBox(width: 12,),
                                     pw.  Column(
                                       mainAxisAlignment: pw. MainAxisAlignment.center,
@@ -3029,7 +3044,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
                                         ),),
                                         pw.SizedBox(height: 3,),
-                                        pw.  Text(orderDate??"",style: pw. TextStyle(
+                                        pw.  Text(orderDate==""? DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style: pw. TextStyle(
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
                                             // color: pw.C.black,
                                             fontWeight: pw.FontWeight.bold),),
@@ -3037,7 +3052,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                     ),
                                     pw. SizedBox(width: 12,)
                                   ],
-                                ),
+                                ),),
                               ) ,
                             ))
                           ],
@@ -3151,7 +3166,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                     padding: pw.EdgeInsets.all(5),
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
+                                    child:pw.Text(   'Unit Cost',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
@@ -3174,14 +3189,14 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                     padding: pw.EdgeInsets.all(5),
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Taxable amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
+                                    child:pw.Text( 'Taxable Amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.       Container(
                                     padding: pw.EdgeInsets.all(5),
                                     color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
+                                    child:pw.Text( 'VAT',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
@@ -3215,80 +3230,80 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                       ),
 
                                       pw.  Container(
-                                        // padding: pw.EdgeInsets.only(top:height*.010),
+                                        padding: pw.EdgeInsets.all(5),
                                         alignment:pw. Alignment.center,
                                         height: 40,
                                         child:pw. Text(
-                                            table[i].variantId??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].variantId==null||table[i].variantId=="null"?"": table[i].variantId??"",style:pw. TextStyle(fontSize: height*.013)),
                                       ),
                                       pw.   Container(
-                                        // padding: pw.EdgeInsets.only(top: height*.014),
+                                        padding: pw.EdgeInsets.all(5),
                                         alignment:pw. Alignment.center,
                                         height: 40,
                                         child:pw. Text(
-                                            table[i].barcode??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].barcode==null||table[i].barcode=="null"?"":table[i].barcode??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
                                       pw.   Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
+                                        padding: pw.EdgeInsets.all(5),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            table[i].salesUom??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].salesUom==null||table[i].salesUom=="null"?"":  table[i]?.salesUom??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
                                       pw.  Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
+                                        padding: pw.EdgeInsets.all(5),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].quantity.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].quantity==null||table[i].quantity=="null"?"":   table[i]?.quantity.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
 
                                       ),
 
                                       pw. Container(
-                                        padding: pw.EdgeInsets.only(top:height*.019),
+                                        padding: pw.EdgeInsets.all(5),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].unitCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                            table[i].unitCost==null||table[i].unitCost=="null"?"":      table[i].unitCost?.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
 
 
                                       ),
                                       pw.  Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
+                                        padding: pw.EdgeInsets.all(5),
 
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].excessTax.toString()??"",style:pw. TextStyle(fontSize: 8)),
+                                            table[i].excessTax==null||table[i].excessTax=="null"?"":       table[i].excessTax?.toString()??"",style:pw. TextStyle(fontSize: 8)),
                                         // fontSize: 12,
 
 
                                       ),
                                       pw. Container(
-                                        padding: pw.EdgeInsets.only(top:height*.019),
+                                        padding: pw.EdgeInsets.all(5),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            table[i].discount.toString()??"",style:pw. TextStyle(fontSize: 8)),
+                                            table[i].discount==null||table[i].discount=="null"?"":      table[i].discount.toString()??"",style:pw. TextStyle(fontSize: 8)),
                                       ),
 
                                       pw. Container(
                                         alignment:pw. Alignment.center,
-                                        padding: pw.EdgeInsets.only(top:height*.019),
+                                        padding: pw.EdgeInsets.all(5),
                                         child:pw. Text(
-                                            table[i].taxableAmount.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].taxableAmount==null||table[i].taxableAmount=="null"?"":      table[i].taxableAmount?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
                                         // fontSize: 12,
                                       ),
                                       pw.  Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
+                                        padding: pw.EdgeInsets.all(5),
                                         alignment:pw. Alignment.center,
                                         child: pw.Text(
-                                            table[i].vat.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
+                                            table[i].vat==null||table[i].vat=="null"?"":      table[i]?.vat.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
                                         // fontSize: 12,
 
                                       ),
                                       pw.  Container(
-                                        padding: pw.EdgeInsets.only(top:height*.019),
+                                        padding: pw.EdgeInsets.all(5),
                                         alignment:pw. Alignment.center,
                                         child:pw. Text(
-                                            table[i].sellingPrice.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
+                                            table[i].sellingPrice==null||table[i].sellingPrice=="null"?"":     table[i].sellingPrice?.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
                                       ),
 
 
@@ -3393,7 +3408,7 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                               pw.  Container(
                                 child:pw. Row(
                                   children: [
-                                    pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
+                                    pw.  Text("Excess Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
                                     pw. Text(excisetax?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
@@ -3432,6 +3447,8 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                       pw.  Row(
                         children: [
                           pw.  Container(
+
+                            width:width/5,
                             margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
                             child:pw. Column(
                               crossAxisAlignment:pw. CrossAxisAlignment.start,
@@ -3441,45 +3458,26 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
                                 pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
                                 pw. SizedBox(height: height*0.01,),
                                 pw. Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
-                                    children: [
-                                      pw.  Row(
-                                        children: [
+                                  child:
 
 
                                           pw.  Text(note??"",style: pw.TextStyle(
                                             // color: Color(0xff252525),
                                               fontSize: height*.015),),
 
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.02,),
 
-                                    ],
-                                  ),
                                 ),
                                 pw.  SizedBox(height: height*.03,),
                                 pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
                                 pw. SizedBox(height: height*0.01,),
                                 pw.Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw. Row(
-                                        children: [
+                                  child:
 
 
                                           pw.Text(remarks??"",style: pw.TextStyle(
                                             // color: Color(0xff252525),
                                               fontSize: height*.015),),
 
-                                        ],
-                                      ),
-                                      pw.  SizedBox(height: height*.03,),
-
-                                    ],
-                                  ),
                                 ),
                               ],
                             ),

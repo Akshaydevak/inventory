@@ -2238,29 +2238,27 @@ class _BlockPageIdTableState extends State<BlockPageIdTable> {
 
 Widget tablePagination(VoidCallback reset,
         {VoidCallback? next, VoidCallback? back}) =>
-    Transform.scale(
-      scale: .95,
-      child: Container(
-        width: 300,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            TextButton.icon(
-                onPressed: back,
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 16,
-                ),
-                label: Text("Back",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
-            TextButton.icon(
-                onPressed: next,
-                label: Icon(
-                  Icons.arrow_forward_ios,
-                  size: 19,
-                ),
-                icon: Text("Next",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
-          ],
-        ),
+    Container(
+      // width: 30000,
+
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+
+          TextButton.icon(
+              onPressed: back,
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 16,
+              ),
+              label: Text("Back",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
+          TextButton.icon(
+              onPressed: next,
+              label: Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+              ),
+              icon: Text("Next",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
+        ],
       ),
     );

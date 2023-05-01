@@ -224,7 +224,7 @@ class _StableTableState extends State<StableTable> {
                                           widget.billingAddressId.text="";
                                           widget.billingName.text="";
                                           widget.customerName.text=va?.customerName!=""&&va?.customerName!=null?va?.customerName??"":va.businessData?.buisnessMeta?.fullmae??"";
-                                          widget.customerId.text=va?.customerUserCode.toString()??"";
+                                          widget.customerId.text=va?.id.toString()??"";
                                           customerUserCode=va?.customerUserCode??"";
                                           widget.trnNumber.text=va?.businessData?.taxId??"";
                                         });
@@ -267,7 +267,7 @@ class _StableTableState extends State<StableTable> {
                                     showDailogPopUp(
                                       context,
                                       TableConfigurePopup(
-                                        code:customerUserCode,
+                                        code:widget.customerId.text,
 
                                         id: int.tryParse(widget.customerId.text),
                                         type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
@@ -353,7 +353,7 @@ class _StableTableState extends State<StableTable> {
                                     showDailogPopUp(
                                       context,
                                       TableConfigurePopup(
-                                        code: customerUserCode,
+                                        code: widget.customerId.text,
 
                                         type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 

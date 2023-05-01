@@ -755,6 +755,17 @@ class _PopUpCallState extends State<PopUpCall> {
               type: widget.type);
         }
         break;
+      case "CostingPricetype_PopUpCall":
+        {
+          data = CostingPriceTypePopUpCall(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              // id: widget.id,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
       case "VirtualStockTypePopupCall":
         {
           data = VirtualStockTypePopupCall(
@@ -2664,6 +2675,144 @@ class _PgTypePopUpCallState extends State<PgTypePopUpCall> {
                       else {
                         widget.onSelection(onSellingBasedSelect(
                             suggestion.toString(), data!.pricingPgT!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+class CostingPriceTypePopUpCall extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const CostingPriceTypePopUpCall(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _CostingPriceTypePopUpCallState createState() => _CostingPriceTypePopUpCallState();
+}
+
+class _CostingPriceTypePopUpCallState extends State<CostingPriceTypePopUpCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<PricinggptypeCubit>(
+        create: (context) => PricinggptypeCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<PricinggptypeCubit>().getPricingPgtype();
+            return BlocBuilder<PricinggptypeCubit, PricinggptypeState>(
+                builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.priceType?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.priceType![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    PurchaseOrdertype? newData;
+                    list.forEach((element) {
+                      newData?.pricingPgT?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.priceType!));
                         // data.sellingPercntageBasedOn?.forEach((element) {
                         //   if (element == suggestion)
                         //     Variable.methodId = element.id;
