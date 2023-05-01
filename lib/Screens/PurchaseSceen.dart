@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
 import 'package:inventory/Screens/purchaseorder/invoice/screens/invoice_mainScreen.dart';
+import 'package:inventory/Screens/purchaseorder/purchase_order_general/screens/purchase_order_general_main.dart';
 import 'package:inventory/Screens/purchaseorder/purchase_order_request_form/pages/request_form_main_screen.dart';
 import 'package:inventory/Screens/sales/general/cubit/payment_verticallist/payement_vertical_list_cubit.dart';
 import 'package:inventory/Screens/sales/invoice/ipayment_list.dart';
@@ -171,7 +172,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                     physics: NeverScrollableScrollPhysics(),
                     controller: _tabController,
                     children: [
-                      GeneralScreen(widget.isCollapsed,purchaseTable,unitcost:unitCost),
+                      PurchaseOrderGeneralScreen(widget.isCollapsed,purchaseTable,unitcost:unitCost),
                       PurchaseRecievinScreen(
                         // isCollapsed:widget.isCollapsed,
                       ),

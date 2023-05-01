@@ -2973,8 +2973,6 @@ else{
                                           context,
                                           LogoutPopup(
                                             message: "Do you want to delete the order?",
-                                            // table:table,
-                                            // clear:clear(),
 
                                             onPressed:(){
                                               print("akshay");
