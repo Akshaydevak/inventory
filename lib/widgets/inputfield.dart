@@ -306,6 +306,16 @@ class Tabledate extends StatefulWidget {
 }
 
 class _Tabledate extends State<Tabledate> {
+  DateTime? date;
+   calenderPopupFunc() async {
+
+    if (widget.enable)
+      date = await showDatePicker(
+        context: context,
+        firstDate: DateTime(1900),
+        initialDate:  DateTime.now(),
+        lastDate: DateTime(2100));
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -322,7 +332,7 @@ class _Tabledate extends State<Tabledate> {
 
       validator: (value) => value == null ? "* required" : null,
       decoration: InputDecoration(
-        //suffixIcon: Icon(Icons.calendar_today_outlined),
+        suffixIcon: Icon(Icons.calendar_today_outlined),
         contentPadding: null,
         labelStyle:  CommonTextStyle.normalTableFieldStyle,
         // labelText: widget.initialValue?.toString().split(" ")[0],
@@ -358,32 +368,31 @@ class _Tabledate extends State<Tabledate> {
     ):
     Container(
       margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: width*.041,
-            height: 34,
+      child: Container(
+        // width: width*.049,
+        height: 34,
 
 
-            child: DateTimeField(
-             // initialValue: widget.initialValue,
-              controller: widget.controller,
-              enabled: widget.enable,
+        child: DateTimeField(
+         // initialValue: widget.initialValue,
+          controller: widget.controller,
+          enabled: widget.enable,
 
-              validator: (value) => value == null ? "* required" : null,
-              decoration: InputDecoration(
-                isDense: true,
-                // suffix: IconButton(
-                //   icon: Icon(Icons.visibility_rounded),
-                //   onPressed: () {
-                //
-                //     setState(() {
-                //       print("Akshayayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-                //       // hideState = !hideState;
-                //     });
-                //   },
-                // ),
+
+          validator: (value) => value == null ? "* required" : null,
+          decoration: InputDecoration(
+            isDense: true,
+            suffixIcon: Icon(Icons.calendar_today_outlined),
+            // suffix: IconButton(
+            //   icon: Icon(Icons.visibility_rounded),
+            //   onPressed: () {
+            //
+            //     setState(() {
+            //       print("Akshayayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+            //       // hideState = !hideState;
+            //     });
+            //   },
+            // ),
 
 //                 suffixIcon: Container(
 //                   height: 40,
@@ -400,50 +409,42 @@ class _Tabledate extends State<Tabledate> {
 //                   },
 //                   child:Icon(Icons.clear),),
 //                 ),
-                contentPadding: null,
-                labelStyle: CommonTextStyle.normalTableFieldStyle,
-                // labelText: widget.initialValue?.toString().split(" ")[0],
+            contentPadding: null,
+            labelStyle: CommonTextStyle.normalTableFieldStyle,
+            // labelText: widget.initialValue?.toString().split(" ")[0],
 
-                label: null,
-                alignLabelWithHint: true,
-                enabledBorder: UnderlineInputBorder(
+            label: null,
+            alignLabelWithHint: true,
+            enabledBorder: UnderlineInputBorder(
 
-                    borderRadius:BorderRadius.circular(2),
+                borderRadius:BorderRadius.circular(2),
 
 
-                    borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1), width: 3, )),
+                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1), width: 3, )),
 
-                focusedBorder: UnderlineInputBorder(
-                    borderRadius:BorderRadius.circular(2),
+            focusedBorder: UnderlineInputBorder(
+                borderRadius:BorderRadius.circular(2),
 
-                    borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1),width: 3, )),
-                // border: InputBorder.none,
-              ),
-              format: mFormat,
-              style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
-              //  onFieldSubmitted: widget.onSaved,
-              onShowPicker: (context, currentValue) async {
-                DateTime? date;
-                if (widget.enable)
-                  date = await showDatePicker(
-                      context: context,
-                      firstDate: DateTime(1900),
-                      initialDate: currentValue ?? DateTime.now(),
-                      lastDate: DateTime(2100));
-
-                return date ?? currentValue;
-              },
-            ),
+                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1),width: 3, )),
+            // border: InputBorder.none,
           ),
-          IconButton(onPressed:(){
-            setState(() {
-              widget.controller?.text="";
-              if(widget.onSuffixIconPressed!=null)
-                widget. onSuffixIconPressed!();
-            });
+          format: mFormat,
+          style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
 
-          } , icon: widget.controller!.text.isNotEmpty?Icon(Icons.clear,color: Colors.grey,size: height*.024,):Icon(Icons.calendar_month,color: Colors.grey))
-        ],
+          //  onFieldSubmitted: widget.onSaved,
+          onShowPicker: (context, currentValue) async {
+            // DateTime? date;
+            if (widget.enable)
+              // calenderPopupFunc();
+              date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(1900),
+                  initialDate: currentValue ?? DateTime.now(),
+                  lastDate: DateTime(2100));
+
+            return date ?? currentValue;
+          },
+        ),
       ),
     );
 

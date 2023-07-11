@@ -43,7 +43,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   TextEditingController lengthUnit=TextEditingController(text: "centimeter");
   TextEditingController widthUnit=TextEditingController(text:"centimeter");
   TextEditingController heightUnit=TextEditingController(text:"centimeter");
-  TextEditingController weightUnit=TextEditingController(text: "kilo gram");
+  TextEditingController weightUnit=TextEditingController();
   bool active = false;
   bool suffixIconCheck = false;
   bool haveGiftOption = false;
@@ -171,7 +171,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    weightUnit= TextEditingController(text: "Kilo Gram");
+    // weightUnit= TextEditingController(text: "Kilo Gram");
     double height = MediaQuery
         .of(context)
         .size

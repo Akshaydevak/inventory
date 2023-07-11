@@ -141,6 +141,8 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<BrandListModel>>> searchMaterialList(
       String? code,
       {String? page});
+  Future<PaginatedResponse<List<BrandListModel>>> getCategoryListOnly(
+      String? code);
   Future<DoubleResponse> postCreateMaterial(MaterialCreationtModel model);
   Future<MaterialReadModel> getMaterialRead(int? id);
   Future<DoubleResponse> postmaterialPatch(MaterialReadModel model, int? id);
@@ -560,6 +562,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     String path = listpurchaseReturnGeneralApi +
         Variable.inventory_ID.toString() +
         "?$code";
+    print(path);
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -905,7 +908,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesSearch(
       String? code) async {
-    String path = listsalesOederGeneral + "${Variable.verticalid}?$code";
+    String path = listsalesOederGeneral + "${Variable.inventory_ID}?$code";
+    print(path);
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1155,7 +1159,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     // String path =
     // "https://api-rgc-user.hilalcart.com/user-account_login/inventory";
     String path =
-        "https://api-uat-user.sidrabazar.com/user-employee_employeeuserlogin/inventory";
+        userLiveBaseUrl+ "user-employee_employeeuserlogin/starworld";
     print(path);
     try{
       final response = await client.post(path,
@@ -1166,13 +1170,14 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           }));
 
       print(response);
-      print("TGE sTATUS IS HERE OF LOGIN==="+response.data['status'].toString());
+      print("TGE sTATUS IS HERE OF LOGIN==="+response.data.toString());
       if (response.data['status'] == 'failed') {
         Variable.errorMessege = response.data['message'];
       }
-      RegisterModel dataa = RegisterModel.fromJson(response.data['data']);
+      RegisterModel dataa=RegisterModel();
+      if (response.data['status'] != 'failed')    dataa = RegisterModel.fromJson(response.data['data']);
 
-      return DoubleResponse(response.data['status'] == 'success', dataa);
+      return DoubleResponse(response.data['status'] == 'success',response.data['status'] == 'failed'? response.data['message']:dataa);
     }catch(e){
       print("the error is here"+e.toString());
     }
@@ -1188,9 +1193,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
     }
-    RegisterModel dataa = RegisterModel.fromJson(response.data['data']);
+    RegisterModel dataa=RegisterModel();
+    if (response.data['status'] != 'failed')     dataa = RegisterModel.fromJson(response.data['data']);
 
-    return DoubleResponse(response.data['status'] == 'success', dataa);
+    return DoubleResponse(response.data['status'] == 'success',response.data['status'] == 'failed'? response.data['message']:dataa);
 
 
 
@@ -1555,7 +1561,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesReturnSearch(
       String? code) async {
-    String path = listsalesReurnApi + "${Variable.verticalid}?code=$code";
+    String path = listsalesReurnApi + "${Variable.inventory_ID}?$code";
+    print(path);
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -3106,7 +3113,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
+
       MaterialReadModel dataa =
       MaterialReadModel.fromJson(response.data['data']);
       print("rwead" + dataa.toString());
@@ -4398,10 +4405,11 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<List<StockTableReadModel>> getStockTableRead(String? code) async {
     String path = stockTableReadApi;
+    print("stock table path$path");
+    print("stock table code$code");
+    print("stock table code${Variable.inventory_ID}");
 
     try {
-      print("ppppath" + path.toString());
-      print(path);
       final response = await client.post(
         path,
         data: {"code": code, "inventory_id": Variable.inventory_ID},
@@ -4424,9 +4432,6 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     } catch (e) {
       print(e);
     }
-
-    print(path);
-    print("ppppath" + path.toString());
     final response = await client.post(
       path,
       data: {"code": code, "inventory_id": Variable.inventory_ID},
@@ -6522,7 +6527,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
     code = code == null ? "" : code;
     if (code == "") {
-      path = inventoryLiveBaseUrl + "country-list?value=list";
+      // path = "https://api-customergroup-application.hilalcart.com/";
+      path = "https://api-uat-user.sidrabazar.com/" + "country-list?value=list";
     } else {
       path = inventoryLiveBaseUrl + "state-list?code=$code&value=list";
     }
@@ -7302,7 +7308,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<DoubleResponse> getAttributePatch(String? attributeType,
       String? attributeName, bool? isActive, int? id) async {
-    print(attributePatchApi);
+    print(isActive);
     String path = attributePatchApi + "$id";
     try {
       final response = await client.patch(path,
@@ -7416,7 +7422,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
-      print(e);
+      print(" the error ishere is showing $e");
     }
 
     final response = await client.get(
@@ -7885,5 +7891,36 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getCategoryListOnly(String? code) async {
+    code = code == null ? "" : code;
+
+    String path;
+
+    if (code == "")
+      path = listCategoryAllGroupApi;
+    else
+      path = listCategoryAllGroupApi + "?$code";
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print("material" + path.toString());
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 }

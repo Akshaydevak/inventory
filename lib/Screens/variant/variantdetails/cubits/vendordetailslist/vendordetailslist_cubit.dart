@@ -38,7 +38,7 @@ class VendordetailslistCubit extends Cubit<VendordetailslistState> {
   }
 
   Future nextslotSectionPageList({String? type}) async {
-    final result = await repo.getVariantList(next);
+    final result = await repo.getVendorDetailList(next);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

@@ -225,75 +225,14 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                             SizedBox(
                               height: height * .030,
                             ),
-
                             FileUploadField(
-
-                                fileName:widget.image1.text,
-                                fileUrl:widget.image1.text,
+                                fileName: widget.image3.text,
+                                fileUrl:widget.image3.text,
                                 onCancel: (){
 
                                   setState(() {
-                                    widget.image1.clear();
-                                    Variable.img1=null;
-                                  });
-
-                                },
-                                onChangeTap: (p0) {
-
-                                  // loading = true;
-                                  setState(() {});
-                                },
-                                onChange: (myFile) {
-                                  widget.imagePostCheck(type: "1");
-
-
-                                  widget.image1.text=myFile?.fileName??"";
-                                  // Variable.mobileBannerImage = myFile.toUint8List();
-                                  //
-                                  var     imageEncode =
-                                  myFile.toBase64();
-                                  // widget.fileMobileNameCtrl.text =
-                                  //     myFile.fileName ?? "";
-                                  // if (Variable.bannerimage!.length <= 240000)
-
-                                  // else
-                                  //   context.showSnackBarError(
-                                  //       "Please upload Banner of size Lesser than 230kb");
-                                },
-                                onImageChange: (newFile) async {
-                                  // onChange=true;
-                                  // Variable.popUp = false;
-
-                                  if (newFile.length <= 200000) {
-                                    context
-                                        .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image1");
-                                    // loading
-                                    //     ? showDailogPopUp(context, DialoguePopUp())
-                                    //     : Navigator.pop(context);
-                                    // context
-                                    //     .read<CreateWebImageCubit>()
-                                    //     .createMobImage();
-                                  } else
-                                    context.showSnackBarError(
-                                        "Please upload Image of size Lesser than 200kb");
-                                  setState(() {});
-                                },
-                                onCreate: true,
-                                label: "Image"),
-
-
-                            SizedBox(
-                              height: height * .030,
-                            ),
-
-                            FileUploadField(
-                                fileName: widget.itemCatelog1.text,
-                                fileUrl:widget.itemCatelog1.text,
-                                onCancel: (){
-
-                                  setState(() {
-                                    widget.itemCatelog1.clear();
-                                    Variable.img4=null;
+                                    widget.image3.clear();
+                                    Variable.img3=null;
                                   });
 
                                 },
@@ -303,70 +242,8 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 },
                                 onChange: (myFile) {
 
-                                  widget.itemCatelog1.text=myFile?.fileName??"";
-                                  // Variable.mobileBannerImage = myFile.toUint8List();
-                                  var imageEncode =
-                                  myFile.toBase64();
-                                  // widget.fileMobileNameCtrl.text =
-                                  //     myFile.fileName ?? "";
-                                  // if (Variable.bannerimage!.length <= 240000)
-
-
-
-                                  // Variable.bannerEncodedMobileBannerImage =
-                                  //     myFile.toBase64();
-                                  // widget.fileMobileNameCtrl.text =
-                                  //     myFile.fileName ?? "";
-                                  // if (Variable.bannerimage!.length <= 240000)
-                                  //   context
-                                  //       .read<CreateWebImageCubit>()
-                                  //       .createMobImage();
-                                  // else
-                                  //   context.showSnackBarError(
-                                  //       "Please upload Banner of size Lesser than 230kb");
-                                },
-                                onImageChange: (newFile) async {
-                                  // Variable.popUp = false;
-
-                                  if (newFile.length <= 200000) {
-                                    context
-                                        .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image4");
-                                    widget.imagePostCheck(type: "4");
-                                    // loading
-                                    //     ? showDailogPopUp(context, DialoguePopUp())
-                                    //     : Navigator.pop(context);
-                                    // context
-                                    //     .read<CreateWebImageCubit>()
-                                    //     .createMobImage();
-                                  } else
-                                    context.showSnackBarError(
-                                        "Please upload Image of size Lesser than 200kb");
-                                  setState(() {});
-                                },
-                                onCreate: true,
-                                label: "Item Catalogue1"),
-                            SizedBox(
-                              height: height * .030,
-                            ),
-                            FileUploadField(
-                                fileName:  widget.itemCatelog4.text,
-                                fileUrl: widget.itemCatelog4.text,
-                                onCancel: (){
-
-                                  setState(() {
-                                    widget.itemCatelog4.clear();
-                                    Variable.img7=null;
-                                  });
-
-                                },
-                                onChangeTap: (p0) {
-                                  // loading = true;
-                                  setState(() {});
-                                },
-                                onChange: (myFile) {
-
-                                  widget.itemCatelog4.text=myFile?.fileName??"";
-                                  var  imageEncode =
+                                  widget.image3.text=myFile?.fileName??"";
+                                  var    imageEncode =
                                   myFile.toBase64();
                                   // widget.fileMobileNameCtrl.text =
                                   //     myFile.fileName ?? "";
@@ -391,8 +268,8 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
 
                                   if (newFile.length <= 200000) {
                                     context
-                                        .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image7");
-                                    widget.imagePostCheck(type: "7");
+                                        .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image3");
+                                    widget.imagePostCheck(type: "3");
                                     // loading
                                     //     ? showDailogPopUp(context, DialoguePopUp())
                                     //     : Navigator.pop(context);
@@ -401,11 +278,98 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                     //     .createMobImage();
                                   } else
                                     context.showSnackBarError(
-                                        "Please upload Iamge of size Lesser than 200kb");
+                                        "Please upload Image of size Lesser than 200kb");
                                   setState(() {});
                                 },
                                 onCreate: true,
-                                label: "item Catalogue4"),
+                                label: "Image3"),
+
+
+
+
+                            SizedBox(
+                              height: height * .030,
+                            ),
+                            FileUploadField(
+                                fileName:  widget.itemCatelog3.text,
+                                fileUrl:widget.itemCatelog3.text,
+                                onCancel: (){
+
+                                  setState(() {
+                                    widget.itemCatelog3.clear();
+                                    Variable.img6=null;
+                                  });
+
+                                },
+
+                                onChangeTap: (p0) {
+                                  // loading = true;
+                                  setState(() {});
+                                },
+                                onChange: (myFile) {
+
+                                  widget.itemCatelog3.text=myFile?.fileName??"";
+                                  var   imageEncode =
+                                  myFile.toBase64();
+                                  // widget.fileMobileNameCtrl.text =
+                                  //     myFile.fileName ?? "";
+                                  // if (Variable.bannerimage!.length <= 240000)
+
+                                  // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                  // Variable.bannerEncodedMobileBannerImage =
+                                  //     myFile.toBase64();
+                                  // widget.fileMobileNameCtrl.text =
+                                  //     myFile.fileName ?? "";
+                                  // if (Variable.bannerimage!.length <= 240000)
+                                  //   context
+                                  //       .read<CreateWebImageCubit>()
+                                  //       .createMobImage();
+                                  // else
+                                  //   context.showSnackBarError(
+                                  //       "Please upload Banner of size Lesser than 230kb");
+                                },
+                                onImageChange: (newFile) async {
+                                  // Variable.popUp = false;
+
+                                  if (newFile.length <= 200000) {
+                                    context
+                                        .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image6");
+                                    widget.imagePostCheck(type: "6");
+                                    // loading
+                                    //     ? showDailogPopUp(context, DialoguePopUp())
+                                    //     : Navigator.pop(context);
+                                    // context
+                                    //     .read<CreateWebImageCubit>()
+                                    //     .createMobImage();
+                                  } else
+                                    context.showSnackBarError(
+                                        "Please upload Image of size Lesser than 200kb");
+                                  setState(() {});
+                                },
+                                onCreate: true,
+                                label: "Item Catalogue3"),
+
+
+                            SizedBox(
+                              height: height * .030,
+                            ),
+                            PopUpSwitchTile(
+                                value:widget.select?true:widget. active,
+                                title: "Is Active",
+                                onClick: (gg) {
+                                  widget.activeChange(!widget.active);
+
+
+
+
+
+                                  // extendedWarranty = gg;
+                                  // widget.changeExtendedWarranty(gg);
+                                  // onChangeExtWarranty = gg;
+                                  setState(() {});
+                                }),
+
 
 
 
@@ -433,49 +397,46 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                             height: height * .030,
                           ),
                           FileUploadField(
-                              fileName:widget.image2.text,
-                              fileUrl:widget.image2.text,
+
+                              fileName:widget.image1.text,
+                              fileUrl:widget.image1.text,
                               onCancel: (){
 
                                 setState(() {
-                                  widget.image2.clear();
-                                  Variable.img2=null;
+                                  widget.image1.clear();
+                                  Variable.img1=null;
                                 });
 
                               },
                               onChangeTap: (p0) {
+
                                 // loading = true;
                                 setState(() {});
                               },
                               onChange: (myFile) {
+                                widget.imagePostCheck(type: "1");
 
-                                widget.image2.text=myFile?.fileName??"";
+
+                                widget.image1.text=myFile?.fileName??"";
                                 // Variable.mobileBannerImage = myFile.toUint8List();
-                                var   imageEncode =
+                                //
+                                var     imageEncode =
                                 myFile.toBase64();
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
 
-                                // Variable.bannerEncodedMobileBannerImage =
-                                //     myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-                                //   context
-                                //       .read<CreateWebImageCubit>()
-                                //       .createMobImage();
                                 // else
                                 //   context.showSnackBarError(
                                 //       "Please upload Banner of size Lesser than 230kb");
                               },
                               onImageChange: (newFile) async {
+                                // onChange=true;
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 150000) {
+                                if (newFile.length <= 200000) {
                                   context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image2");
-                                  widget.imagePostCheck(type: "2");
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image1");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -484,11 +445,12 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Image of size Lesser than 150kb");
+                                      "Please upload Image of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "Image2"),
+                              label: "Image"),
+
                           // SelectableDropDownpopUp(
                           //
                           //   controller:widget.baseuomNameController,
@@ -528,14 +490,15 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
+
                           FileUploadField(
-                              fileName: widget.itemCatelog2.text,
-                              fileUrl:widget.itemCatelog2.text,
+                              fileName: widget.itemCatelog1.text,
+                              fileUrl:widget.itemCatelog1.text,
                               onCancel: (){
 
                                 setState(() {
-                                  widget.itemCatelog2.clear();
-                                  Variable.img5=null;
+                                  widget.itemCatelog1.clear();
+                                  Variable.img4=null;
                                 });
 
                               },
@@ -545,14 +508,15 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               },
                               onChange: (myFile) {
 
-                                widget.itemCatelog2.text=myFile?.fileName??"";
-                                var     imageEncode =
+                                widget.itemCatelog1.text=myFile?.fileName??"";
+                                // Variable.mobileBannerImage = myFile.toUint8List();
+                                var imageEncode =
                                 myFile.toBase64();
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
 
-                                // Variable.mobileBannerImage = myFile.toUint8List();
+
 
                                 // Variable.bannerEncodedMobileBannerImage =
                                 //     myFile.toBase64();
@@ -571,8 +535,8 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
 
                                 if (newFile.length <= 200000) {
                                   context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image5");
-                                  widget.imagePostCheck(type: "5");
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image4");
+                                  widget.imagePostCheck(type: "4");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -585,19 +549,19 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "Item Catalogue2"),
+                              label: "Item Catalogue1"),
+
                           SizedBox(
                             height: height * .030,
                           ),
-
                           FileUploadField(
-                              fileName: widget.itemCatelog5.text,
-                              fileUrl:widget.itemCatelog5.text,
+                              fileName:  widget.itemCatelog4.text,
+                              fileUrl: widget.itemCatelog4.text,
                               onCancel: (){
 
                                 setState(() {
-                                  widget.itemCatelog5.clear();
-                                  Variable.img8=null;
+                                  widget.itemCatelog4.clear();
+                                  Variable.img7=null;
                                 });
 
                               },
@@ -606,8 +570,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onChange: (myFile) {
-                                widget.itemCatelog5.text=myFile?.fileName??"";
-                                var     imageEncode =
+
+                                widget.itemCatelog4.text=myFile?.fileName??"";
+                                var  imageEncode =
                                 myFile.toBase64();
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
@@ -632,8 +597,8 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
 
                                 if (newFile.length <= 200000) {
                                   context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image8");
-                                  widget.imagePostCheck(type: "8");
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image7");
+                                  widget.imagePostCheck(type: "7");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -642,11 +607,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Image of size Lesser than 200kb");
+                                      "Please upload Iamge of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "Item Catalogue5"),
+                              label: "item Catalogue4"),
+
+
 
                           SizedBox(
                             height: height * .030,
@@ -747,6 +714,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               widget.uomGroupController.text="";
                                 widget.baseuomNameController.clear();
                                 widget.uomController.clear();
+                                widget.uomGroupid=0;
 
                               }
                               showDailogPopUp(
@@ -785,15 +753,14 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
-
                           FileUploadField(
-                              fileName: widget.image3.text,
-                              fileUrl:widget.image3.text,
+                              fileName:widget.image2.text,
+                              fileUrl:widget.image2.text,
                               onCancel: (){
 
                                 setState(() {
-                                  widget.image3.clear();
-                                  Variable.img3=null;
+                                  widget.image2.clear();
+                                  Variable.img2=null;
                                 });
 
                               },
@@ -803,80 +770,76 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               },
                               onChange: (myFile) {
 
-                                widget.image3.text=myFile?.fileName??"";
-                                var    imageEncode =
-                                myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-
+                                widget.image2.text=myFile?.fileName??"";
                                 // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                // Variable.bannerEncodedMobileBannerImage =
-                                //     myFile.toBase64();
-                                // widget.fileMobileNameCtrl.text =
-                                //     myFile.fileName ?? "";
-                                // if (Variable.bannerimage!.length <= 240000)
-                                //   context
-                                //       .read<CreateWebImageCubit>()
-                                //       .createMobImage();
-                                // else
-                                //   context.showSnackBarError(
-                                //       "Please upload Banner of size Lesser than 230kb");
-                              },
-                              onImageChange: (newFile) async {
-                                // Variable.popUp = false;
-
-                                if (newFile.length <= 200000) {
-                                  context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image3");
-                                  widget.imagePostCheck(type: "3");
-                                  // loading
-                                  //     ? showDailogPopUp(context, DialoguePopUp())
-                                  //     : Navigator.pop(context);
-                                  // context
-                                  //     .read<CreateWebImageCubit>()
-                                  //     .createMobImage();
-                                } else
-                                  context.showSnackBarError(
-                                      "Please upload Image of size Lesser than 200kb");
-                                setState(() {});
-                              },
-                              onCreate: true,
-                              label: "Image3"),
-
-
-                          SizedBox(
-                            height: height * .030,
-                          ),
-
-
-
-                          FileUploadField(
-                              fileName:  widget.itemCatelog3.text,
-                              fileUrl:widget.itemCatelog3.text,
-                              onCancel: (){
-
-                                setState(() {
-                                  widget.itemCatelog3.clear();
-                                  Variable.img6=null;
-                                });
-
-                              },
-
-                              onChangeTap: (p0) {
-                                // loading = true;
-                                setState(() {});
-                              },
-                              onChange: (myFile) {
-
-                                widget.itemCatelog3.text=myFile?.fileName??"";
                                 var   imageEncode =
                                 myFile.toBase64();
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
 
+                                // Variable.bannerEncodedMobileBannerImage =
+                                //     myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+                                //   context
+                                //       .read<CreateWebImageCubit>()
+                                //       .createMobImage();
+                                // else
+                                //   context.showSnackBarError(
+                                //       "Please upload Banner of size Lesser than 230kb");
+                              },
+                              onImageChange: (newFile) async {
+                                // Variable.popUp = false;
+
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image2");
+                                  widget.imagePostCheck(type: "2");
+                                  // loading
+                                  //     ? showDailogPopUp(context, DialoguePopUp())
+                                  //     : Navigator.pop(context);
+                                  // context
+                                  //     .read<CreateWebImageCubit>()
+                                  //     .createMobImage();
+                                } else
+                                  context.showSnackBarError(
+                                      "Please upload Image of size Lesser than 150kb");
+                                setState(() {});
+                              },
+                              onCreate: true,
+                              label: "Image2"),
+
+
+
+
+                          SizedBox(
+                            height: height * .030,
+                          ),  FileUploadField(
+                              fileName: widget.itemCatelog2.text,
+                              fileUrl:widget.itemCatelog2.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.itemCatelog2.clear();
+                                  Variable.img5=null;
+                                });
+
+                              },
+                              onChangeTap: (p0) {
+                                // loading = true;
+                                setState(() {});
+                              },
+                              onChange: (myFile) {
+
+                                widget.itemCatelog2.text=myFile?.fileName??"";
+                                var     imageEncode =
+                                myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+
                                 // Variable.mobileBannerImage = myFile.toUint8List();
 
                                 // Variable.bannerEncodedMobileBannerImage =
@@ -896,8 +859,8 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
 
                                 if (newFile.length <= 200000) {
                                   context
-                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image6");
-                                  widget.imagePostCheck(type: "6");
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image5");
+                                  widget.imagePostCheck(type: "5");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -910,26 +873,73 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "Item Catalogue3"),
+                              label: "Item Catalogue2"),
+
+
+
+
 
                           SizedBox(
                             height: height * .030,
                           ),
-                          PopUpSwitchTile(
-                              value:widget.select?true:widget. active,
-                              title: "Is Active",
-                              onClick: (gg) {
-                                widget.activeChange(!widget.active);
+                          FileUploadField(
+                              fileName: widget.itemCatelog5.text,
+                              fileUrl:widget.itemCatelog5.text,
+                              onCancel: (){
 
+                                setState(() {
+                                  widget.itemCatelog5.clear();
+                                  Variable.img8=null;
+                                });
 
-
-
-
-                                // extendedWarranty = gg;
-                                // widget.changeExtendedWarranty(gg);
-                                // onChangeExtWarranty = gg;
+                              },
+                              onChangeTap: (p0) {
+                                // loading = true;
                                 setState(() {});
-                              }),
+                              },
+                              onChange: (myFile) {
+                                widget.itemCatelog5.text=myFile?.fileName??"";
+                                var     imageEncode =
+                                myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+
+                                // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                // Variable.bannerEncodedMobileBannerImage =
+                                //     myFile.toBase64();
+                                // widget.fileMobileNameCtrl.text =
+                                //     myFile.fileName ?? "";
+                                // if (Variable.bannerimage!.length <= 240000)
+                                //   context
+                                //       .read<CreateWebImageCubit>()
+                                //       .createMobImage();
+                                // else
+                                //   context.showSnackBarError(
+                                //       "Please upload Banner of size Lesser than 230kb");
+                              },
+                              onImageChange: (newFile) async {
+                                // Variable.popUp = false;
+
+                                if (newFile.length <= 200000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image8");
+                                  widget.imagePostCheck(type: "8");
+                                  // loading
+                                  //     ? showDailogPopUp(context, DialoguePopUp())
+                                  //     : Navigator.pop(context);
+                                  // context
+                                  //     .read<CreateWebImageCubit>()
+                                  //     .createMobImage();
+                                } else
+                                  context.showSnackBarError(
+                                      "Please upload Image of size Lesser than 200kb");
+                                setState(() {});
+                              },
+                              onCreate: true,
+                              label: "Item Catalogue5"),
+
 
                           SizedBox(
                             height: height * .030,
@@ -1182,7 +1192,8 @@ class VariantFrameWorkBottomTable extends StatefulWidget {
   final  Function listAssign;
   List<VariantLinesLiostModel>table;
 
-  VariantFrameWorkBottomTable({required this.listAssign,required this.table});
+  VariantFrameWorkBottomTable({
+    required Key key,required this.listAssign,required this.table}):super(key: key);
   @override
   VariantFrameWorkBottomTableState createState() => VariantFrameWorkBottomTableState();
 }
@@ -1196,9 +1207,23 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
   List<TextEditingController>valuesTexgtEdingList=[];
   int ? attributeid;
   bool onChange=false;
+  bool isPopup=false;
 
   List<String>values=List.from([]);
   List<String>values1=List.from([]);
+  clears(){
+    table.clear();
+    values.clear();
+    values1.clear();
+    name.clear();
+    type.clear();
+    attributeid=0;
+    isPopup=false;
+    setState(() {
+
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1233,16 +1258,15 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
               print("values1" + values1.toString());
             }
             else {
-              print("eeeeeekkk");
+
               values1[i] = "no value";
-              print(values1);
+
             }
           }
 
           }
         }
-        print("tablesssssssssssss"+table.toString());
-        print("tablesssssssssssss"+values1.toString());
+
 
 
       }
@@ -1592,6 +1616,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                       child:
 
     Wrap(
+      crossAxisAlignment:WrapCrossAlignment.start,
     direction : Axis.horizontal,
     children: [
     if (values.isNotEmpty==true ) ...[
@@ -1633,8 +1658,19 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
     formatter: false,
     controller: val,
+    onChanged: (va){
+     if(isPopup==false) {
+       showDailogPopUp(
+           context,
+           SuccessPopup(
+             content: "Please press enter button after the value adding",
+             // table:table,
+           ));
+       isPopup=true;
+     }},
     onComplete: (){
      setState(() {
+
        onChange=true;
        if(val.text!=""){
          values.add(val.text);

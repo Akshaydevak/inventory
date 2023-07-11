@@ -33,10 +33,10 @@ import 'cubits/generateqrcode/qrgenerating_cubit.dart';
 
 class VariantDetailScreen extends StatefulWidget {
   @override
-  _VariantDetailScreenState createState() => _VariantDetailScreenState();
+  VariantDetailScreenState createState() => VariantDetailScreenState();
 }
 
-class _VariantDetailScreenState extends State<VariantDetailScreen> {
+class VariantDetailScreenState extends State<VariantDetailScreen> {
 
   TextEditingController controller = TextEditingController();
   TextEditingController itemCodeController = TextEditingController();
@@ -118,6 +118,9 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController shelfTimeController = TextEditingController();
   TextEditingController stockPartitionGroupId = TextEditingController();
   TextEditingController stockPartitionGroupName = TextEditingController();
+  final GlobalKey<VendorDetailsVarientState> _VendorDetailsState = GlobalKey<VendorDetailsVarientState>();
+  final GlobalKey<IdentificationState> _barcodeState = GlobalKey<IdentificationState>();
+  final GlobalKey<ProductTablesState> _productState = GlobalKey<ProductTablesState>();
   bool salesBolock = false;
   bool purchaseBolock = false;
   bool stockWarning = false;
@@ -161,7 +164,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
-  var list;
+  var list1;
   String? newWeight;
   String? newLength;
   String? newWidth;
@@ -263,59 +266,34 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   vendorDetailsTableAssign({List<VendorDetails>?list}) {
     setState(() {
       vendorDetails = list;
-
-      print("vendordetailS${vendorDetails}");
-
-
     });
   }
   barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
     print("list"+list.toString());
     switch(type){
-
       case '1' :
         alternativeBarcode=list??[];
         break;
-
       case '2' :
         alternativeQrCode=list??[];
         break;
-
-
-
-
-
-
-
     }
-
   }
   storageDetailsTableAssign({String? type,Storage ?list}){
-
-
     print("list is hereeeee"+list.toString());
-
     switch(type){
-
       case '1' :
         aboutProducts=list;
         break;
-
       case '2' :
         Ingrediants=list;
         break;
-
       case '3' :
         usageDirection=list;
         break;
       case '4' :
         storage=list;
         break;
-
-
-
-
-
     }
 
 
@@ -462,15 +440,17 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
 
     setState(() {
-      // aboutProducts?.clear();
-      // importantInfo=[];
-      // productDetails=[];
-      // nutriantsFacts=[];
-      // usageDirection=[];
-      // productFeatures=[];
-      // storage=[];
-      // Ingrediants=[];
-      // importantInfo=[];
+      aboutProducts=null;
+      importantInfo=null;
+      productDetails=null;
+      nutriantsFacts=null;
+      usageDirection=null;
+      productFeatures=null;
+      storage=null;
+      Ingrediants=null;
+      importantInfo=null;
+      _VendorDetailsState.currentState?.clear();
+      _barcodeState.currentState?.clears();
 
       baseUomNameController.clear();
       purchaseUomNameController.clear();
@@ -698,7 +678,6 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                           setState(() {
                             onChange=true;
 
-                          print("akshayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"+data.toString());
 
 
                           // group=data;
@@ -798,15 +777,13 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
                           usageDirection=data.variantMeta?.usageDirection;
                           vendorDetails=data.vendorDetails??[];
-                          print("vendor detailse"+vendorDetails.toString());
+                          // print("vendor detailse"+vendorDetails.toString());
                           productFeatures=data.variantMeta?.productFeatures;
                           additionalInfo=data.variantMeta?.additionalInfo;
                           storage=data.variantMeta?.storage;
                           Ingrediants=data.variantMeta?.Ingrediants;
                           importantInfo=data.variantMeta?.importantInfo;
                           inforMationList=data.variantMeta?.productBehave;
-                          print(alternativeBarcode);
-                          print("alternativeBarcode");
 
                           });
                           // addNew=false;
@@ -914,8 +891,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                         print("error");
                       },
                       success: (list) {
-                        print("aaaaayyyiram" + list.data.toString());
-                        list = list;
+                        list1 = list;
 
                         result = list.data;
                         selectedVertical=0;
@@ -925,14 +901,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                           veritiaclid = result[0].id;
                           veritiaclString = result[0].code;
                           Variable.variantCode=result[0].code.toString();
-
-                          // Variable.verticalid=result[0].id;
-                          // print("Variable.ak"+Variable.verticalid.toString());
                           context.read<VariantreadCubit>().getVariantRead(veritiaclid!);
                         }
                         else {
                           clear();
-
                           select=true;
 
 
@@ -952,7 +924,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                 child: Row(
                                   children: [
                                     VariantVerticalList(
-                                      list: list,
+                                      list: list1,
                                       select: select,
                                       suffixIconCheck: suffixIconCheck,
 
@@ -1013,14 +985,14 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                             () => context
                                             .read<ListvraiantCubit>()
                                             .refresh(),
-                                        back: list?.previousUrl == null
+                                        back: list1?.previousUrl == null
                                             ? null
                                             : () {
                                           context
                                               .read<ListvraiantCubit>()
                                               .previuosslotSectionPageList();
                                         },
-                                        next: list?.nextPageUrl == null
+                                        next: list1?.nextPageUrl == null
                                             ? null
                                             : () {
                                           // print(data.nextPageUrl);
@@ -1081,12 +1053,6 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                       );
                                                       setState(() {
 
-                                                        //
-                                                        // if(va!=""){
-                                                        //   suffixIcon=true;
-                                                        // }
-                                                        // else
-                                                        //   suffixIcon=false;
                                                       });
 
 
@@ -1094,24 +1060,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                     // onComplete: ( String? va),
                                                   ),
                                                 ),
-                                                // gapWidthColumn(width: width * .01),
-                                                // Button(null, Colors.grey,
-                                                //     ctx: context,
-                                                //     text: "Search",
-                                                //     height: 38,
-                                                //     Color:exportCheck? Pellet.tableBlueHeaderPrint:Pellet.tableBlueHeaderPrint,
-                                                //     width: 90,
-                                                //     labelcolor: Colors.white,
-                                                //     iconColor: Colors.white,
-                                                //     onApply: () {
-                                                //   setState(() {
-                                                //     print("testing Case");
-                                                //     context.read<VariantsearchCubit>().getVariantSearch(searchController.text??"");
-                                                //   });
-                                                //
-                                                //
-                                                //
-                                                //     }),
+
                                                 gapWidthColumn(width: width * .008),
                                                 Visibility(
                                                   visible: exportCheck,
@@ -1132,11 +1081,6 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           context.read<VariantreadCubit>().getVariantRead(checkIdid!);
 
                                                         });
-
-
-
-
-
                                                       }),
                                                 ),
                                               ],
@@ -1242,6 +1186,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                           SizedBox(height: height * .01,),
 
                                           VendorDetailsVarient(
+                                            key: _VendorDetailsState,
                                             vendorDetails:vendorDetails,
                                             vendorTableEdit:vendorDetailsTableAssign,
                                           ),
@@ -1254,6 +1199,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                           // Divider(color: Colors.grey,thickness: 1,),
                                           SizedBox(height: height * .01,),
                                           Identification(
+                                            key: _barcodeState,
                                             select:select,
                                             veritiaclid:veritiaclid ,
                                             rfId: rfIdController,
@@ -1262,13 +1208,13 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                             alternativeBarcode:alternativeBarcode,
                                             alternativeQrCode: alternativeQrCode,
                                             barQrCodeTableAssign:barQrCodeTableAssign,
-
                                           ),
                                           SizedBox(height: 10,),
                                           TextWidget(text: "Product"),
                                           Divider(color: Colors.grey,thickness: 1,),
                                           SizedBox(height: height * .04,),
                                           ProductTables(
+                                            key: _productState,
                                             addNew:addNew,
                                             aboutProducts:aboutProducts,
                                             productDetails:productDetails,
@@ -1281,224 +1227,11 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                             storageTableEdit:storageDetailsTableAssign,
                                             productTableEdit:ProductBehaviourTableAssign,
                                             imPorantInfo:importantInfo,
-
                                             productFeaturesableAssign:productFeaturesableAssign,
                                             inforMationList:inforMationList,
-
-
-
-
                                           ),
                                           SizedBox(height: height * .13,),
-                                          // SaveUpdateResponsiveButton(
-                                          //   label:select?"SAVE":"UPDATE" ,
-                                          //   discardFunction: (){
-                                          //     context
-                                          //         .read<QrgeneratingCubit>()
-                                          //         .getQrCodeRead(veritiaclid);
-                                          //
-                                          //   },
-                                          //   saveFunction: (){
-                                          //     if(select){
-                                          //       VariantPost model = VariantPost(
-                                          //         weight:double.tryParse( weightController.text),
-                                          //         inventoryId: Variable.inventory_ID,
-                                          //         height: double.tryParse(heightController.text),
-                                          //         width: double.tryParse(widthController.text),
-                                          //         length: double.tryParse(lengthController.text),
-                                          //         inventoryName: Variable.inventory_Name,
-                                          //         weightUomId: int.tryParse(weightUomIdController.text),
-                                          //         searchName:searchNAmeController.text.isEmpty?null:searchNAmeController?.text,
-                                          //         posName:posNameController.text.isEmpty?null:posNameController?.text,
-                                          //         displayName:displayNAmeController.text.isEmpty?null:displayNAmeController?.text,
-                                          //         arabicDescription:arabicDescriptionController.text.isEmpty?null:arabicDescriptionController?.text,
-                                          //         additionalDescription:additionalDescriptionController.text.isEmpty?null:additionalDescriptionController?.text??"",
-                                          //         salesUom: int.tryParse(salesUomController?.text??""),
-                                          //         seblingId: int.tryParse(seblingController.text),
-                                          //         purchaseUom: int.tryParse(purchaseUomController?.text??""),
-                                          //         grossWeight:double.tryParse( grossWeightController.text??""),
-                                          //         actualCost:double.tryParse( actualCostController.text??""),
-                                          //         safetyStock: int.tryParse(saftyStockController?.text??""),
-                                          //         reOrderPoint: int.tryParse(reorederPointController?.text??""),
-                                          //         reorderQuantity: int.tryParse(reorederQuaintityController?.text??""),
-                                          //         salesBolock: salesBolock,
-                                          //         purchaseBlock: purchaseBolock,
-                                          //         ratioToEcommerce:ratioEcommerceController.text.isEmpty?null: ratioEcommerceController.text,
-                                          //         itemCatelog: itmcatelog,
-                                          //         itemImage: itmImage,
-                                          //         vendorDetails: vendorDetails,
-                                          //         needMultipleIntegration: needMultipleIntegration,
-                                          //
-                                          //
-                                          //
-                                          //         minMaxRatio:minMaxController.text.isEmpty?null: minMaxController?.text,
-                                          //         wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
-                                          //         minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
-                                          //         maxSalesOrderLimit:int.tryParse( maxSalesOrderLimitController?.text??""),
-                                          //         minPurchaseOrderLimit:int.tryParse( minPurchaseOrderLimitController?.text??""),
-                                          //         maxPurchaseOrderLimit:int.tryParse( maxPurchaseOrderLimitController?.text??""),
-                                          //         stockWarning:stockWarning,
-                                          //         weightUnit: weightUnit.text.isEmpty?null:weightUnit.text,
-                                          //         heightUnit: heightUnit.text.isEmpty?null:heightUnit.text,
-                                          //         lengthUnit: lengthUnit.text.isEmpty?null:lengthUnit.text,
-                                          //         widthUnit: widthUnit.text.isEmpty?null:widthUnit.text,
-                                          //
-                                          //         producedCountry:producedCountryController.text.isEmpty?null: producedCountryController?.text,
-                                          //         basePrize: double.tryParse(basePrizePrizeController.text),
-                                          //         vat: double.tryParse(vatController.text??""),
-                                          //         excessTax: double.tryParse(exciseTaxController.text??""),
-                                          //         minGap: double.tryParse(minimumGpController.text??""),
-                                          //         maxGp: double.tryParse(maximumGpController.text??""),
-                                          //         avgGp: double.tryParse(averageGpController.text??""),
-                                          //         targetedGp: double.tryParse(targetedGpController.text??""),
-                                          //         vedioUrl: videoUrlController.text.isEmpty?null:videoUrlController.text,
-                                          //         alternativeBarcode:alternativeBarcode,
-                                          //         alternativeQrCodeBarcode: alternativeQrCode,
-                                          //         returnType: returnTypeController.text,
-                                          //         shelfTime: shelfTimeController.text.isEmpty?null:int.tryParse(shelfTimeController.text),
-                                          //         shelfType: shelfTypeController.text.isEmpty?null:shelfTypeController.text,
-                                          //         haveWrapOption: haveWrapOption,
-                                          //         haveGiftOption: haveGiftOption,
-                                          //         landingCost:double.tryParse( landingCostController?.text??""),
-                                          //         returnTime: int.tryParse(returnTimeController.text),
-                                          //         variantStatus: "va",
-                                          //         isActive: active,
-                                          //         image1: img1?Variable.img1.toString():image1Controller?.text??null,
-                                          //         image2:img2?Variable.img2.toString():  image2Controller?.text??null,
-                                          //         image3:img3?Variable.img3.toString():image3Controller?.text??null,
-                                          //         image4:img4?Variable.img4.toString().toString(): image4Controller?.text??null,
-                                          //         image5:img5?Variable.img5.toString(): image5Controller?.text??null,
-                                          //         catalog1:cata1?Variable.catalog1.toString(): group.variantMeta?.catelog?.keyValues?.catelog1??null,
-                                          //         catalog2:cata2?Variable.catalog2.toString(): group.variantMeta?.catelog?.keyValues?.catelog2??null,
-                                          //         catalog3:cata3?Variable.catalog3.toString():group.variantMeta?.catelog?.keyValues?.catelog3??null,
-                                          //         catalog4:cata4?Variable.catalog4.toString(): group.variantMeta?.catelog?.keyValues?.catelog4??null,
-                                          //         catalog5:cata5?Variable.catalog5.toString():group.variantMeta?.catelog?.keyValues?.catelog5??null,
-                                          //         catalog6:cata6?Variable.catalog6.toString(): group.variantMeta?.catelog?.keyValues?.catelog6??null,
-                                          //         catalog7:cata7?Variable.catalog7.toString():group.variantMeta?.catelog?.keyValues?.catelog7??null,
-                                          //         catalog8:cata8?Variable.catalog8.toString(): group.variantMeta?.catelog?.keyValues?.catelog8??null,
-                                          //         netWeight: netWeightController.text.isEmpty?null:double.tryParse(netWeightController?.text??""),
-                                          //         aboutProducts: aboutProducts?.name==""?Storage(name:"About Products",keyValues: aboutProducts?.keyValues):aboutProducts,
-                                          //         productDetails: productDetails?.name==""?ProductFeatures(name:"Product Detailsls",keyValues:productDetails?.keyValues  ):productDetails,
-                                          //         productFeatures:productFeatures?.name==""?ProductFeatures(name: "Product Features",keyValues:productFeatures?.keyValues ):productFeatures,
-                                          //         unitCost: double.tryParse( unitCostController?.text??""),
-                                          //         additionalInfo: additionalInfo?.name==""?ProductFeatures(name:"Additional Info",keyValues:additionalInfo?.keyValues  ):additionalInfo,
-                                          //         nutriantsFacts:nutriantsFacts?.name==""?ProductFeatures(name:"Nutrial Facts",keyValues:nutriantsFacts?.keyValues  ):nutriantsFacts,
-                                          //         Ingrediants: Ingrediants?.name==""?Storage(name: "Ingrediants",keyValues: Ingrediants?.keyValues):Ingrediants,
-                                          //         usageDirection: usageDirection?.name==""?Storage(name: "Usage Direction",keyValues: usageDirection?.keyValues):usageDirection,
-                                          //         storage:storage?.name==""?Storage(name: "Storage",keyValues: storage?.keyValues):storage,
-                                          //         importantInfo:importantInfo?.name==""?ProductFeatures(name: "ImportanT Info",keyValues:importantInfo?.keyValues ):importantInfo,
-                                          //         productBehavior:   inforMationList,
-                                          //
-                                          //       );
-                                          //       print("shifasssss"+  model.productBehavior.toString());
-                                          //       context.read<VariantpostCubit>().postVariant(checkIdid, model);
-                                          //       onChange=true;
-                                          //       setState(() {
-                                          //
-                                          //       });
-                                          //     }
-                                          //     else{
-                                          //       VariantPatch model=VariantPatch (
-                                          //         weightUnit: weightUnit.text.isEmpty?null:weightUnit.text,
-                                          //         heightUnit: heightUnit.text.isEmpty?null:heightUnit.text,
-                                          //         lengthUnit: lengthUnit.text.isEmpty?null:lengthUnit.text,
-                                          //         widthUnit: widthUnit.text.isEmpty?null:widthUnit.text,
-                                          //         weight:double.tryParse( weightController.text),
-                                          //         length: double.tryParse(lengthController.text),
-                                          //         width: double.tryParse(widthController.text),
-                                          //         height: double.tryParse(heightController.text),
-                                          //         variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
-                                          //         salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
-                                          //         // "1",
-                                          //
-                                          //         purchaseUom:purchaseUomController.text.isEmpty?null:purchaseUomController.text,
-                                          //         itemImage: itmImage,
-                                          //         itemCatelog: itmcatelog,
-                                          //         vendorDetails: vendorDetails,
-                                          //         needMultipleIntegration: needMultipleIntegration,
-                                          //         weightUomId: int.tryParse(weightUomIdController.text),
-                                          //         shelfTime: shelfTimeController.text.isEmpty?null:int.tryParse(shelfTimeController.text),
-                                          //         shelfType: shelfTypeController.text.isEmpty?null:shelfTypeController.text,
-                                          //         haveWrapOption: haveWrapOption,
-                                          //         haveGiftOption: haveGiftOption,
-                                          //         // purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
-                                          //         barcode: barCodeController!.text.isEmpty?null:barCodeController.text,
-                                          //         qrcode: qrCodeController!.text.isEmpty?null:qrCodeController?.text,
-                                          //         alternativeBarcode: alternativeBarcode.isEmpty?null: alternativeBarcode,
-                                          //         alternativeQrCodeBarcode: alternativeQrCode.isEmpty?null:alternativeQrCode,
-                                          //         searchName: searchNAmeController.text.isEmpty?null:searchNAmeController?.text,
-                                          //         displayName: displayNAmeController!.text.isEmpty?null:displayNAmeController?.text,
-                                          //         description: descriptionController.text.isEmpty?null:descriptionController?.text,
-                                          //         arabicDescription: arabicDescriptionController.text.isEmpty?null: arabicDescriptionController?.text,
-                                          //         additionalDescription: additionalDescriptionController.text.isEmpty?null:additionalDescriptionController?.text,
-                                          //         posName: posNameController.text.isEmpty?null:posNameController?.text,
-                                          //         grossWeight: grossWeightController.text.isEmpty?null:grossWeightController?.text,
-                                          //         netWeight: netWeightController.text.isEmpty?null:netWeightController?.text,
-                                          //         unitCost: double.tryParse( unitCostController?.text??""),
-                                          //         landingCost:double.tryParse( landingCostController?.text??""),
-                                          //         actualCost:double.tryParse( actualCostController?.text??""),
-                                          //         basePrize:double.tryParse( basePrizePrizeController?.text??""),
-                                          //         manuFacturedId:int.tryParse( manuFactreIdController?.text??""),
-                                          //         manuFacturedName: manuFactreNameController.text.isEmpty?null:manuFactreNameController?.text,
-                                          //         safetyStock:int.tryParse(saftyStockController?.text??""),
-                                          //         reOrderPoint:int.tryParse(reorederPointController?.text??""),
-                                          //         reorderQuantity:int.tryParse(reorederQuaintityController?.text??""),
-                                          //         salesBolock: salesBolock,
-                                          //         purchaseBlock: purchaseBolock,
-                                          //         isActive: active,
-                                          //         producedCountry: producedCountryController.text.isEmpty?null:producedCountryController.text,
-                                          //         ratioToEcommerce: ratioEcommerceController!.text.isEmpty?null: ratioEcommerceController?.text,
-                                          //         minMaxRatio: minMaxController!.text.isEmpty?null:minMaxController?.text,
-                                          //         minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
-                                          //         maxSalesOrderLimit:int.tryParse( maxSalesOrderLimitController?.text??""),
-                                          //         wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
-                                          //         onlineSellingPercenage:double.tryParse( ""),
-                                          //         minGap:double.tryParse( minimumGpController?.text??""),
-                                          //         maxGp:double.tryParse( maximumGpController?.text??""),
-                                          //         avgGp:double.tryParse( averageGpController?.text??""),
-                                          //         targetedGp:double.tryParse( targetedGpController?.text??""),
-                                          //         minPurchaseOrderLimit:int.tryParse( minPurchaseOrderLimitController?.text??""),
-                                          //         returnTime:int.tryParse( returnTimeController?.text??""),
-                                          //         maxPurchaseOrderLimit:int.tryParse( maxPurchaseOrderLimitController?.text??""),
-                                          //         vat:double.tryParse( vatController?.text??""),
-                                          //         excessTax:double.tryParse( exciseTaxController?.text??""),
-                                          //         vedioUrl: videoUrlController!.text.isEmpty?null:videoUrlController?.text,
-                                          //         returnType: returnTypeController!.text.isEmpty?null:returnTypeController?.text,
-                                          //         status: statusController.text.isEmpty?null:statusController?.text,
-                                          //         image2:img2?Variable.img2.toString().isEmpty?null:Variable.img2.toString():  image2Controller.text.isEmpty?null:image2Controller.text,
-                                          //         image3:img3?Variable.img3.toString():image3Controller?.text,
-                                          //         image4:img4?Variable.img4.toString(): image4Controller?.text,
-                                          //         image5:img5?Variable.img5.toString():image5Controller?.text,
-                                          //         catalog1:cata1?Variable.catalog1.toString(): group.variantMeta?.catelog?.keyValues?.catelog1,
-                                          //         catalog2:cata2?Variable.catalog2.toString(): group.variantMeta?.catelog?.keyValues?.catelog2,
-                                          //         catalog3:cata3?Variable.catalog3.toString(): group.variantMeta?.catelog?.keyValues?.catelog3,
-                                          //         catalog4:cata4?Variable.catalog4.toString():group.variantMeta?.catelog?.keyValues?.catelog4,
-                                          //         catalog5:cata5?Variable.catalog5.toString(): group.variantMeta?.catelog?.keyValues?.catelog5,
-                                          //         catalog6:cata6?Variable.catalog6.toString(): group.variantMeta?.catelog?.keyValues?.catelog6,
-                                          //         catalog7:cata7?Variable.catalog7.toString(): group.variantMeta?.catelog?.keyValues?.catelog7,
-                                          //         catalog8:cata8?Variable.catalog8.toString(): group.variantMeta?.catelog?.keyValues?.catelog8,
-                                          //
-                                          //         variantStatus:null,
-                                          //         stockWarning: stockWarning,
-                                          //         aboutProducts: aboutProducts?.name==""?Storage(name:"About Products",keyValues: aboutProducts?.keyValues):aboutProducts,
-                                          //         productDetails: productDetails?.name==""?ProductFeatures(name:"Product Detailsls",keyValues:productDetails?.keyValues  ):productDetails,
-                                          //         productFeatures:productFeatures?.name==""?ProductFeatures(name: "Product Features",keyValues:productFeatures?.keyValues ):productFeatures,
-                                          //
-                                          //         additionalInfo: additionalInfo?.name==""?ProductFeatures(name:"Additional Info",keyValues:additionalInfo?.keyValues  ):additionalInfo,
-                                          //         nutriantsFacts:nutriantsFacts?.name==""?ProductFeatures(name:"Nutrial Facts",keyValues:nutriantsFacts?.keyValues  ):nutriantsFacts,
-                                          //         Ingrediants: Ingrediants?.name==""?Storage(name: "Ingrediants",keyValues: Ingrediants?.keyValues):Ingrediants,
-                                          //         usageDirection: usageDirection?.name==""?Storage(name: "Usage Direction",keyValues: usageDirection?.keyValues):usageDirection,
-                                          //         storage:storage?.name==""?Storage(name: "Storage",keyValues: storage?.keyValues):storage,
-                                          //         importantInfo:importantInfo?.name==""?ProductFeatures(name: "ImportanT Info",keyValues:importantInfo?.keyValues ):importantInfo,
-                                          //         productBehavior:   inforMationList,
-                                          //
-                                          //       );
-                                          //       print("the searching model is here"+model.toString());
-                                          //       context.read<VariantpostCubit>().patchVariant(veritiaclid, model);
-                                          //
-                                          //     }
-                                          //   },
-                                          // ),
+
                                           Container(
                                             margin:EdgeInsets.only(right: width*.015) ,
                                             child: Row(
@@ -1547,13 +1280,6 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
 
 
                                                           ));
-
-                                                      // if(updateCheck){
-                                                      //   // clears();
-                                                      //
-                                                      //
-                                                      // }
-
                                                     },
                                                     height: 29,
                                                     width: 90,
@@ -1563,11 +1289,6 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                 SizedBox(
                                                   width: width * .008,
                                                 ),
-
-
-
-
-
                                                 Button(Icons.check, Colors.grey,
                                                     ctx: context,
                                                     text: select?"SAVE":"UPDATE",
@@ -1609,9 +1330,6 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           itemImage: itmImage,
                                                           vendorDetails: vendorDetails,
                                                           needMultipleIntegration: needMultipleIntegration,
-
-
-
                                                           minMaxRatio:minMaxController.text.isEmpty?null: minMaxController?.text,
                                                           wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
                                                           minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
@@ -1697,8 +1415,6 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           haveStockPartitionGroup: haveStockPartitionGroup??false,
                                                           variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
                                                           salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
-                                                          // "1",
-
                                                           purchaseUom:purchaseUomController.text.isEmpty?null:purchaseUomController.text,
                                                           itemImage: itmImage,
                                                           itemCatelog: itmcatelog,
@@ -1786,11 +1502,6 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
                                                         context.read<VariantpostCubit>().patchVariant(veritiaclid, model);
 
                                                       }
-
-
-
-
-
                                                     }),
                                                 SizedBox(
                                                   width: width * .008,

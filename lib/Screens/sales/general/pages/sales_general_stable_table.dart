@@ -224,7 +224,7 @@ class _StableTableState extends State<StableTable> {
                                           widget.billingAddressId.text="";
                                           widget.billingName.text="";
                                           widget.customerName.text=va?.customerName!=""&&va?.customerName!=null?va?.customerName??"":va.businessData?.buisnessMeta?.fullmae??"";
-                                          widget.customerId.text=va?.id.toString()??"";
+                                          widget.customerId.text=va?.customerUserCode.toString()??"";
                                           customerUserCode=va?.customerUserCode??"";
                                           widget.trnNumber.text=va?.businessData?.taxId??"";
                                         });

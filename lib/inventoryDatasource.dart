@@ -344,6 +344,30 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     //   print("aaanananana");
     print(path);
     print("aaammamam");
+try{
+  final response = await client.get(
+    path,
+    options: Options(
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+    ),
+  );
+  List<VariantId> items = [];
+  (response.data['data']['results'] as List).forEach((element) {
+    items.add(VariantId.fromJson(element));
+    print("itemsAk" + items.toString());
+  });
+  return PaginatedResponse<List<VariantId>>(
+    items,
+    response.data['data']['next'],
+    response.data['data']['count'].toString(),
+    previousUrl: response.data['data']['previous'],
+  );}
+    catch(e){
+  print("the vertical list error is$e");
+    }
 
     final response = await client.get(
       path,
@@ -365,33 +389,6 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
-
-
-    // }catch(e){print("Akshaya2"+e.toString());}
-    //   final response = await client.get(
-    //     path,
-    //     // data:
-    //     // // {"payment_status": "completed", "order_status": "completed"},
-    //     // {
-    //     //
-    //     // },
-    //     options: Options(
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json'
-    //       },
-    //     ),
-    //   );
-    //   print("response" + response.toString());
-    //   //print(response.data['results']);
-    //   List<VariantId> items = [];
-    //
-    //   (response.data['data']['results'] as List).forEach((element) {
-    //     // print("data");
-    //
-    //     items.add(VariantId.fromJson(element));
-    //   });
-    //   return items;
   }
 
   @override
@@ -525,7 +522,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
-      print(e);
+      print("the read error is$e");
     }
     String path = generalPurchaseRead + id.toString();
     print(path);
@@ -769,7 +766,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           }));
-      print("");
+      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
       print(response);
       print(response.data['message']);
       if (response.data['status'] == 'failed') {
@@ -786,7 +783,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
-    print("");
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     print(response);
     print(response.data['message']);
     if (response.data['status'] == 'failed') {
@@ -1375,6 +1372,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       String? code) async {
     print("here arrived");
     print(code);
+
     String path = organizationLiveApiApi+code.toString();
     try {
       print("THE INVENTORYLIST PATH" + path.toString());

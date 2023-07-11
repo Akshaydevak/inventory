@@ -435,7 +435,7 @@ class _PromotionMultibuyMainScreenState extends State<PromotionMultibuyMainScree
                       else {
                         print("common");
                         select = true;
-                        // clear();
+                        clear();
 
 
                       }

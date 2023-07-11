@@ -16,6 +16,7 @@ class SalesReturnInvoiceReadModel with _$SalesReturnInvoiceReadModel {
     @JsonKey(name: "trn_number") final String? trnNumber,
     @JsonKey(name: "payment_id") final String? paymentId,
     @JsonKey(name: "payment_status") final String? paymentStatus,
+    @JsonKey(name: "payment_method") final String? paymentMethod,
     @JsonKey(name: "order_satus") final String? orderStatus,
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "excess_tax") final double? excessTax,

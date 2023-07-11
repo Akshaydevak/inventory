@@ -2926,7 +2926,7 @@ data:{
     if (code == "")
       path = "https://api-customergroup-application.hilalcart.com/";
     else
-      path = "https://api-customergroup-application.hilalcart.com/"+ "?$code";
+      path = "https://api-customergroup-application.hilalcart.com/"+ "$code";
 
 
 
@@ -2934,7 +2934,7 @@ data:{
     print(path);
     try{
       print("Inside");
-      final response = await client.get("https://api-customergroup-application.hilalcart.com/customerGroupinglist",
+      final response = await client.get(path,
         // verticalListCouponApi+"SBNU1001",
         options: Options(
           headers: {
@@ -2944,22 +2944,11 @@ data:{
         ),
       );
       print("Inside");
-      // final response = await client.get("https://api-customergroup-application.hilalcart.com/",
-      //
-      //   options: Options(validateStatus: (value)=>true,
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //       'Accept': 'application/json',
-      //       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-      //       "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
-      //       "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
-      //       "Access-Control-Allow-Methods": "POST, OPTIONS"
-      //     },
-      //   ),);
-      print(response);
+
+
 
       List<CustomerGroupModel> items = [];
-      (response.data['data']['Group_Code_Name'] as List).forEach((element) {
+      (response.data['data']['results'] as List).forEach((element) {
         items.add(CustomerGroupModel.fromJson(element));
         print("itemsAk" + items.toString());
       });
@@ -2974,7 +2963,7 @@ data:{
     }
 
     final response = await client.get(
-      "https://api-customergroup-application.hilalcart.com/customerGroupinglist",
+      path,
       options: Options(
         headers: {
           'Content-Type': 'application/json',
@@ -2985,7 +2974,7 @@ data:{
     print(response);
 
     List<CustomerGroupModel> items = [];
-    (response.data['data']['Group_Code_Name'] as List).forEach((element) {
+    (response.data['data']['results'] as List).forEach((element) {
       items.add(CustomerGroupModel.fromJson(element));
       print("itemsAk" + items.toString());
     });

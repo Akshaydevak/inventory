@@ -173,14 +173,9 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                           physics: NeverScrollableScrollPhysics(),
                           controller: _tabController,
                           children: [
-
                             HeirarchyGeneralScreen(),
                             DevisionConfiguration(),
                             CustomisedMainScreen(),
-
-
-
-
                           ],
                         ),
                       ),

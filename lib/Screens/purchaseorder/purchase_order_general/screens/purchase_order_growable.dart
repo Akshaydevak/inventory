@@ -8,6 +8,7 @@ import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
@@ -158,8 +159,82 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
 
   }
 
+  tableAddingValuesClear(){
+    setState(() {
+      variantId="";
+      stockCheck=false;
+      varinatname="";
+      vendorRefCode="";
+      Vbarcode="";
+      stockQty=0;
+      check1="";
+      vvat=0;
+      requestedtTestContoller.clear();
+      Qty=0;
+      Vamount=0;
+      Vgrnadtotal=0;
+      vactualCost=0;
+      check=0;vminqty=0;
+      vmaxnqty=0;
+      minOrderTestContoller.clear();
+      maxOrderTestContoller.clear();
+      unitCostCheck.clear();
+      excesstaxTestContoller.clear();eTax=0;discountTestContoller.clear();
+      Vdiscount=0;
+      focTestContoller.clear();
+      vfoc=0;
+      isInvoiced=false;
+      isActive=false;
+    });
+  }
+
+  bool updateCheckFunc(){
+    var isUpdate=table.where((element) => element.updateCheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
+  }
   clearTableAddingVariables(){
     setState(() {
+      table.clear();
+      variantId="";
+      stockCheck=false;
+      varinatname="";
+      vendorRefCode="";
+      Vbarcode="";
+      stockQty=0;
+      check1="";
+      requestedtTestContoller.clear();
+      Qty=0;
+      Vamount=0;
+      vvat=0;
+      Vgrnadtotal=0;
+      vactualCost=0;
+      check=0;vminqty=0;
+      vmaxnqty=0;
+      minOrderTestContoller.clear();
+      maxOrderTestContoller.clear();
+      unitCostCheck.clear();
+      excesstaxTestContoller.clear();eTax=0;discountTestContoller.clear();
+      Vdiscount=0;
+      focTestContoller.clear();
+      vfoc=0;
+      isInvoiced=false;
+      isActive=false;
+      //Clearing the whole growable datas
+      requestedListControllers.clear();
+      minListControllers.clear();
+      maxListControllers.clear();
+      excesstListControllers.clear();
+      discounttListControllers.clear();
+      unitcostListControllers.clear();
+      focListControllers.clear();
+      vatListControllers.clear();
+      currentStock.clear();
+
+
 
     });
 
@@ -181,13 +256,26 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
     super.initState();
   }
   valueAddingTextEdingController(){
-    if(table.isNotEmpty){
-      print("checking case");
-      for(var i=0;i<table.length;i++){
 
+    if(table.isNotEmpty){
+      for(var i=0;i<table.length;i++){
+        var requsted = new TextEditingController(text: table[i].requestedQty.toString()??"");
+        requestedListControllers.add(requsted);
+        print(requestedListControllers.length);
+        var min = new TextEditingController(text: table[i].minimumQty.toString()??"");
+        minListControllers.add(min);
+        var max = new TextEditingController(text: table[i].maximumQty.toString()??"");
+        maxListControllers.add(max);
         var unitcost = new TextEditingController(text: table[i].unitCost.toString()??"");
         unitcostListControllers.add(unitcost);
-
+        var excess = new TextEditingController(text: table[i].excessTax.toString()??"");
+        excesstListControllers.add(excess);
+        var disc = new TextEditingController(text:  table[i].discount.toString());
+        discounttListControllers.add(disc);
+        var foc = new TextEditingController(text: table[i].foc.toString()??"");
+        focListControllers.add(foc);
+        var vat = new TextEditingController(text: table[i].vat.toString()??"");
+        vatListControllers.add(vat);
         setState(() {
 
         });
@@ -195,16 +283,37 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
       }
     }
   }
+  tableUpdationConditionCheck(int index){
 
+
+    var qty =  table[index].requestedQty;
+    var dis = table[index].discount;
+    var excess = table[index].excessTax;
+    var unitcost = table[index].unitCost??0;
+    var vat = table[index].vat;
+    setState(() {
+      if (qty == 0 || unitcost == 0) {
+        table[index] = table[index].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
+      }else {
+        var Vamount;
+        var vactualCost;
+        Vamount = vatableAmountUpdation(unitcost, qty, excess, dis);
+        if (vat == 0 || vat == "") {
+          vactualCost = Vamount;
+        }
+        else {
+          vactualCost = actualAndgrandTotalUpdation(Vamount, vat);
+        }
+
+        table[index] = table[index].copyWith(vatableAmount: Vamount, actualCost: vactualCost, grandTotal: vactualCost, requestedQty: qty,);
+      }
+    });
+
+    }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    // if(widget.select){
-    //   table1=[];
-    //   clears();
-    //
-    // }
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -214,31 +323,23 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
       child: Builder(builder: (context) {
         return MultiBlocListener(
           listeners: [
-            BlocListener<RequestformreadCubit, RequestformreadState>(
+            BlocListener<GeneralPurchaseReadCubit, GeneralPurchaseReadState>(
               listener: (context, state) {
-
                 state.maybeWhen(
                     orElse: () {},
                     error: () {
-                      print("error");
                     },
                     success: (data) {
-
                       setState(() {
                         stockCheck=false;
-                        data.data?.orderLines != null
-                            ? table = List.from(data.data?.orderLines ?? [])
-                            : table = [];
-
-
-                        _getCurrentUser();
+                        data.data?.orderLines != null ? table =List.from( data.data?.orderLines ?? []) : table = [];
                         valueAddingTextEdingController();
-
-
+                        _getCurrentUser();
                       });
                     });
               },
             ),
+
             BlocListener<TableDetailsCubitDartCubit, TableDetailsCubitDartState>(
               listener: (context, state) {
                 state.maybeWhen(
@@ -249,12 +350,9 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                     success: (data) {
                       purchaseTable = data;
                       setState(() {
-                        print("Variable.tableedit"+Variable.tableedit.toString());
-                        print("Variable.tableedit"+Variable.tableindex.toString());
                         if(Variable.tableedit==true){
                           var vendorDetailList=purchaseTable?.vendorDetails;
                           var unitCost = purchaseTable?.unitCost;
-
                           String? code;
                           if(purchaseTable?.vendorDetails?.isNotEmpty==true){
                             for(var i=0;i<vendorDetailList!.length;i++){
@@ -262,7 +360,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                 code=vendorDetailList[i].vendorRefCode;
 
                               }
-
                             }
                           }
                           table[Variable.tableindex] =
@@ -286,12 +383,8 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                           var Vdiscount = table[Variable.tableindex].discount;
                           var excess = table[Variable.tableindex].excessTax;
                           if(qty==0 || unitcost==0){
-                            print("the casssssssssssssssss");
-                            print(qty);
-                            print(unitcost);
                             table[Variable.tableindex] = table[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
                             setState(() {
-
                             });
 
                           }else {
@@ -386,70 +479,43 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                         currentStock.add(0);
                         setState(() {
                         });
-
                       }
                       else if(Variable.tableedit==false) {
-
                         stockQty = 0;
                         setState(() {});
                       }
                       else{
-
-                        // table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
-                        //     variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: purchaseCurrentStock?.StockQty,variantName:  table[Variable.tableindex].variantName,barcode: table[Variable.tableindex].barcode,excessTax: table[Variable.tableindex].excessTax,supplierCode: table[Variable.tableindex].supplierCode
-                        //     ,unitCost:table[Variable.tableindex].unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom:table[Variable.tableindex].purchaseuom,discount: table[Variable.tableindex].discount
-                        // )]);
-
                         currentStock[Variable.tableindex]=0;
-
                         setState(() {});
                       }
-                      print("error");
                     },
                     success: (data) {
                       purchaseCurrentStock = data;
-                      print("Sachin"+stockCheck.toString());
                       if(stockCheck==false){
-                        print("anamikas case");
                         currentStock.add(data.StockQty??0);
                         setState(() {
                         });
-                        print("anamikas case"+currentStock.length.toString());
                       }
                       else if(Variable.tableedit==false) {
-
                         stockQty = purchaseCurrentStock?.StockQty;
                         setState(() {});
                       }
                       else{
-                        print("aaaaapuuuuuuuuuuuu");
-                        // table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
-                        //     variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: purchaseCurrentStock?.StockQty,variantName:  table[Variable.tableindex].variantName,barcode: table[Variable.tableindex].barcode,excessTax: table[Variable.tableindex].excessTax,supplierCode: table[Variable.tableindex].supplierCode
-                        //     ,unitCost:table[Variable.tableindex].unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom:table[Variable.tableindex].purchaseuom,discount: table[Variable.tableindex].discount
-                        // )]);
-                        print("Variable.tableindex"+Variable.tableindex.toString());
                         currentStock[Variable.tableindex]=purchaseCurrentStock?.StockQty??0;
-                        // currentStock.cop(Variable.tableindex,  purchaseCurrentStock?.StockQty??0);
                         print(currentStock.length);
                         setState(() {});
                       }
                     });
               },
             ),
-
-
           ],
           child:
           CustomScrollBar(
             controller: scontroller,
 
             childs: Container(
-              // margin:EdgeInsets.only(right: 14),
-
               color: Colors.white,
               alignment: Alignment.topRight,
-
-              // height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
                 controller: scontroller,
                 physics: ScrollPhysics(),
@@ -473,178 +539,28 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                             childrens: [TableRow(
 
                                 children: [
-                                  tableHeadtext(
-                                    'Sl.No',
-                                    size: 13,
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white,
-                                  ),
-                                  tableHeadtext(
-                                    'Variant Id',
-                                    size: 12,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Variant Name',
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Vendor Ref Code',
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  // tableHeadtext('description', size: 10, color: null),
-                                  tableHeadtext(
-                                    'Barcode',
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Current Qty',
-                                    size: 13,
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Purchase UOM',
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Requested qty',
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Min Order Qty',
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Max Order Qty',
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Is Received',
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Unit Cost', size: 13,
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Excise Tax', size: 13,
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-                                  ),
-                                  tableHeadtext(
-                                    'Discount',
-                                    size: 13,
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'FOC',
-                                    size: 13,
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Vatable Amount',
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-
-                                  tableHeadtext(
-                                    'VAT',
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Actual Cost',
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Grand Total',
-                                    center: true,
-                                    padding: EdgeInsets.only(bottom:height*.0198),
-
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Is Invoiced',
-
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    'Is Active',
-
-
-                                    size: 13,
-                                    // color: Palette.containerDarknew,
-                                    // textColor: Palette.white
-                                  ),
-                                  tableHeadtext(
-                                    '',
-
-                                    size: 13,
-                                  ),
+                                  tableHeadtext('Sl.No', size: 13, center: true, padding: EdgeInsets.only(bottom:height*.0198),),
+                                  tableHeadtext('Variant Id', size: 12,),
+                                  tableHeadtext('Variant Name', size: 13,),
+                                  tableHeadtext('Vendor Ref Code', size: 13,),
+                                  tableHeadtext('Barcode', size: 13,),
+                                  tableHeadtext('Current Qty', size: 13, center: true, padding: EdgeInsets.only(bottom:height*.0198),),
+                                  tableHeadtext('Purchase UOM', size: 13,),
+                                  tableHeadtext('Requested qty', center: true, padding: EdgeInsets.only(bottom:height*.0198), size: 13,),
+                                  tableHeadtext('Min Order Qty', center: true, padding: EdgeInsets.only(bottom:height*.0198), size: 13,),
+                                  tableHeadtext('Max Order Qty', center: true, padding: EdgeInsets.only(bottom:height*.0198), size: 13,),
+                                  tableHeadtext('Is Received', size: 13,),
+                                  tableHeadtext('Unit Cost', size: 13, center: true, padding: EdgeInsets.only(bottom:height*.0198),),
+                                  tableHeadtext('Excise Tax', size: 13, center: true, padding: EdgeInsets.only(bottom:height*.0198),),
+                                  tableHeadtext('Discount', size: 13, center: true, padding: EdgeInsets.only(bottom:height*.0198),),
+                                  tableHeadtext('FOC', size: 13, center: true, padding: EdgeInsets.only(bottom:height*.0198),),
+                                  tableHeadtext('Vatable Amount', center: true, padding: EdgeInsets.only(bottom:height*.0198), size: 13,),
+                                  tableHeadtext('VAT', center: true, padding: EdgeInsets.only(bottom:height*.0198), size: 13,),
+                                  tableHeadtext('Actual Cost', center: true, padding: EdgeInsets.only(bottom:height*.0198), size: 13,),
+                                  tableHeadtext('Grand Total', center: true, padding: EdgeInsets.only(bottom:height*.0198), size: 13,),
+                                  tableHeadtext('Is Invoiced', size: 13,),
+                                  tableHeadtext('Is Active', size: 13,),
+                                  tableHeadtext('', size: 13,),
 
                                 ]),
 
@@ -734,10 +650,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                             variantId: va?.code,
                                                           );
 
-                                                      // table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
-                                                      //     variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
-                                                      //     ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
-                                                      // )]);
                                                       setState(() {
                                                         var    variantId1 = va?.code;
                                                         int? id = va!.id;
@@ -756,98 +668,23 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                             )
 
 
-                                          // textPadding(
-                                          //     table[i].variantName??"",
-                                          //      padding: EdgeInsets.only(left: 11.5,), fontWeight: FontWeight.w500),
                                         ),
-                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(
-                                              table[i].variantName??"",
-                                              // padding: EdgeInsets.only(left: 11.5,),
-                                              fontWeight: FontWeight.w500
-                                          ),
-                                        ),
-                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(table[i].supplierCode.toString(),
-                                              // padding: EdgeInsets.only(left: 11.5, ),
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(table[i].barcode??"",
-                                              // padding: EdgeInsets.only(left: 11.5, ),
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(table[i].variantName??"", fontWeight: FontWeight.w500),),
+                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(table[i].supplierCode.toString(), fontWeight: FontWeight.w500),),
+                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle,child: textPadding(table[i].barcode??"", fontWeight: FontWeight.w500),),
 
-                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
-                                              alighnment: Alignment.topRight,
-                                              // padding: EdgeInsets.only(left: 11.5, ),
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(table[i].purchaseUom??"",
-                                              // padding: EdgeInsets.only(left: 11.5, ),
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(), alighnment: Alignment.topRight, fontWeight: FontWeight.w500),),
+                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(table[i].purchaseUom??"", fontWeight: FontWeight.w500),),
                                         //88888888888888888888                                   //**********************************************
                                         TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(controller:requestedListControllers[i],
-                                              integerOnly: true,
-
-
-                                              onChanged: (va) {print(va);
-                                              widget.  updateCheck(true);
-                                              table[i] = table[i].copyWith(updateCheck: true);
+                                              integerOnly: true, onChanged: (va) {print(va);widget.  updateCheck(true);
+                                              table[i] = table[i].copyWith(updateCheck: true,requestedQty: va==""?0:int.tryParse(va));
                                               setState(() {
+                                                tableUpdationConditionCheck(i);
 
                                               });
-                                              if (va == "") {
-                                                print("entered");
-                                                table[i] = table[i].copyWith(requestedQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
-                                              } else {
-                                                var qty = int.tryParse(va);
-                                                var dis = table[i].discount;
-                                                var excess = table[i].excessTax;
-                                                var unitcost = table[i].unitCost;
-                                                var vat = table[i].vat;
-                                                var foc = table[i].foc;
-                                                if (qty == 0 || unitcost == 0 ||unitcost=="") {
-                                                  table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
-                                                }else {
-                                                  var Vamount;
-                                                  var vactualCost;
-                                                  Vamount=vatableAmountUpdation(unitcost,qty,excess,dis);
 
-                                                  // Vamount  = (((unitcost! *
-                                                  // qty!) +
-                                                  // excess!) -
-                                                  // dis!)
-                                                  //     .toDouble();
-                                                  if(vat==0 ||vat==""){
-                                                    vactualCost=Vamount;
-                                                  }
-                                                  else{
-                                                    vactualCost=actualAndgrandTotalUpdation(Vamount,vat);
-                                                    // vactualCost  = (Vamount! +
-                                                    // ((Vamount! *
-                                                    // vat!) /
-                                                    // 100));
-                                                  }
-                                                  table[i] =
-                                                      table[i].copyWith(
-                                                        vatableAmount: Vamount,
-                                                        actualCost: vactualCost,
-                                                        grandTotal: vactualCost, requestedQty:qty ,
-
-                                                      );
-
-
-
-                                                }
-
-
-
-                                              }
 
 
                                               setState(() {});}
@@ -856,52 +693,29 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
-                                            //last:table[i].minimumQty.toString(),
+                                            integerOnly: true,
                                             controller:minListControllers[i],
                                             onChanged: (p0) {
                                               widget.  updateCheck(true);
-                                              table[i] = table[i].copyWith(updateCheck: true);
-                                              setState(() {
-                                              });
-                                              print(p0);
-                                              if(p0==""||p0=="0"){
                                                 setState(() {
-                                                  table[i] = table[i].copyWith(minimumQty: 0);
-
+                                                  table[i] = table[i].copyWith(updateCheck:true,minimumQty:p0==""?0:int.tryParse( p0));
                                                 });
-                                              }
-                                              else{
-                                                setState(() {
-                                                  table[i] = table[i].copyWith(minimumQty:int.tryParse(p0));
-                                                });
-                                              }
                                             },
                                             enable: true,
                                             onComplete: () {
-                                              setState(() {  print("maxxxx"+table.toString());});
                                             },
                                           ),
                                         ),
                                         TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: UnderLinedInput(controller:maxListControllers[i],
+                                          child: UnderLinedInput(
+                                            integerOnly: true,
+                                            controller:maxListControllers[i],
                                             onChanged: (p0) {
-                                              widget.  updateCheck(true);;
+                                              widget.  updateCheck(true);
                                               table[i] = table[i].copyWith(updateCheck: true);
-                                              setState(() {
-                                              });
-                                              if(p0==""){
-                                                table[i] = table[i].copyWith(maximumQty: 0);
+                                                table[i] = table[i].copyWith(maximumQty:p0==""? 0:int.tryParse(p0));
                                                 setState(() {
-
                                                 });
-
-                                              }
-                                              else{
-                                                setState(() {
-                                                  table[i] = table[i].copyWith(maximumQty:int.tryParse(p0));
-
-                                                });
-                                              }
 
                                             },
                                             enable: true,
@@ -911,77 +725,19 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                             },
                                           ),
                                         ),
-                                        TableCell(
-                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: CheckedBoxs(
-
-                                            valueChanger:table[i].isRecieved==null?false: table[i].isRecieved,
-
-
-                                            onSelection: (bool? value) {  },
-
-                                          ),
-                                        ),
+                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: CheckedBoxs(valueChanger:table[i].isRecieved==null?false: table[i].isRecieved, onSelection: (bool? value) {  },),),
 
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            // integerOnly: true,
                                             controller:unitcostListControllers[i],
-                                            // last: table[i].unitCost.toString() ?? "",
                                             onChanged: (va) {
                                               widget.  updateCheck(true);
-                                              table[i] = table[i].copyWith(updateCheck: true);
+                                              table[i] = table[i].copyWith(updateCheck: true,unitCost:va ==""?0:double.tryParse(va) );
                                               setState(() {
-
+                                                tableUpdationConditionCheck(i);
                                               });
-                                              double? unitcost;
-                                              if (va == "") {
-                                                print("entered");
-                                                unitcost = 0;
-                                                print("disc" + unitcost.toString());
-                                                table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
-                                                setState(() {});
-                                              }
-                                              unitcost = double.tryParse(va);
-
-
-                                              var qty = table[i].requestedQty;
-                                              print("qty" + qty.toString());
-                                              var excess = table[i].excessTax;
-                                              print("excess" + excess.toString());
-                                              var disc = table[i].discount;
-                                              var foc=table[i].foc;
-
-                                              var vat = table[i].vat;
-                                              print("vat" + vat.toString());
-                                              print("qty" + qty.toString());
-                                              if (qty == 0 || qty == null) {
-                                                print("checking case");
-
-                                                table[i] = table[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
-                                                setState(() {});
-                                              } else {
-                                                double Vamount;
-                                                Vamount  =vatableAmountUpdation(unitcost,qty,excess,disc);
-                                                // double.parse((((unitcost! * qty!) + excess!) - disc!).toDouble().toStringAsFixed(2));
-
-
-
-                                                var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
-                                                // (Vamount! +
-                                                //     ((Vamount! *
-                                                //         vat!) /
-                                                //         100));
-
-                                                table[i] =
-                                                    table[i].copyWith(
-                                                        vatableAmount: Vamount,
-                                                        actualCost: vactualCost,
-                                                        grandTotal: vactualCost,
-                                                        unitCost: unitcost);
-                                                setState(() {});
-
-                                              }
                                             },
                                           ),
                                         ),
@@ -995,132 +751,28 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                           child: UnderLinedInput(
 
                                             controller:excesstListControllers[i],
-                                            // last: table[i].excessTax.toString() ?? "",
                                             onChanged: (va) {
                                               widget.  updateCheck(true);
-                                              table[i] = table[i].copyWith(updateCheck: true);
+                                              table[i] = table[i].copyWith(updateCheck: true,excessTax:va == ""?0:double.tryParse(va) );
                                               setState(() {
-
+                                                tableUpdationConditionCheck(i);
                                               });
-                                              double? excess;
-                                              if (va == "") {
-                                                excess = 0;
-                                                setState(() {});
-                                              } else {
-                                                excess = double.tryParse(va);
-                                                setState(() {});
-                                              }
 
-                                              var qty = table[i].requestedQty;
-                                              var vat = table[i].vat;
-                                              var foc = table[i].foc;
-
-                                              print("excess" + excess.toString());
-                                              var unitcost = table[i].unitCost;
-                                              print("unitcost" + unitcost.toString());
-                                              var Vdiscount = table[i].discount;
-                                              if(qty==0 || unitcost==0){
-                                                table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
-                                                setState(() {
-
-                                                });
-
-                                              }else {
-                                                var Vamount;
-
-
-                                                Vamount =vatableAmountUpdation(unitcost,qty,excess,Vdiscount);
-                                                // (((unitcost! *
-                                                //     qty!) +
-                                                //     excess!) -
-                                                //     Vdiscount!)
-                                                //     .toDouble();
-
-                                                var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
-                                                // (Vamount! +
-                                                //     ((Vamount! *
-                                                //         vat!) /
-                                                //         100));
-                                                var Vgrnadtotal =actualAndgrandTotalUpdation(Vamount,vat);
-                                                // (Vamount! +
-                                                //     ((Vamount! *
-                                                //         vat!) /
-                                                //         100));
-                                                table[i] =
-                                                    table[i]
-                                                        .copyWith(
-                                                        actualCost: vactualCost,
-                                                        grandTotal: Vgrnadtotal,
-                                                        vatableAmount: Vamount,
-                                                        excessTax: excess);
-                                                setState(() {});
-                                              } },
+                                               },
                                           ),
                                         ):
                                         TableCell(
 
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
-
-                                            // controller:excesstListControllers[i],
-                                            // last: table[i].excessTax.toString() ?? "",
                                             onChanged: (va) {
                                               widget.  updateCheck(true);
-                                              table[i] = table[i].copyWith(updateCheck: true);
+                                              table[i] = table[i].copyWith(updateCheck: true,excessTax:va == ""?0: double.tryParse(va));
                                               setState(() {
+                                                tableUpdationConditionCheck(i);
 
                                               });
-                                              double? excess;
-                                              if (va == "") {
-                                                excess = 0;
-                                                setState(() {});
-                                              } else {
-                                                excess = double.tryParse(va);
-                                                setState(() {});
-                                              }
-
-                                              var qty = table[i].requestedQty;
-                                              var vat = table[i].vat;
-                                              var foc = table[i].foc;
-
-                                              print("excess" + excess.toString());
-                                              var unitcost = table[i].unitCost;
-                                              print("unitcost" + unitcost.toString());
-                                              var Vdiscount = table[i].discount;
-                                              if(qty==0 || unitcost==0){
-                                                table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
-                                                setState(() {
-
-                                                });
-
-                                              }else {
-                                                var Vamount;
-
-
-                                                Vamount =
-                                                    (((unitcost! *
-                                                        qty!) +
-                                                        excess!) -
-                                                        Vdiscount!)
-                                                        .toDouble();
-
-                                                var vactualCost = (Vamount! +
-                                                    ((Vamount! *
-                                                        vat!) /
-                                                        100));
-                                                var Vgrnadtotal = (Vamount! +
-                                                    ((Vamount! *
-                                                        vat!) /
-                                                        100));
-                                                table[i] =
-                                                    table[i]
-                                                        .copyWith(
-                                                        actualCost: vactualCost,
-                                                        grandTotal: Vgrnadtotal,
-                                                        vatableAmount: Vamount,
-                                                        excessTax: excess);
-                                                setState(() {});
-                                              } },
+                      },
                                           ),
                                         ),
                                         //****************************************DISCOUNT***************************DISCOUNT*********************************
@@ -1129,143 +781,37 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             controller:discounttListControllers[i],
-                                            // last: table[i].discount.toString() ?? "",
                                             onChanged: (va) {
                                               widget.  updateCheck(true);
-                                              table[i] = table[i].copyWith(updateCheck: true);
+                                              table[i] = table[i].copyWith(updateCheck: true,discount: va ==
+                                                  ""?0:double.tryParse(va));
                                               setState(() {
+                                                tableUpdationConditionCheck(i);
 
                                               });
-                                              double? disc;
-                                              if (va ==
-                                                  "") {
-
-                                                disc =
-                                                0;
-
-                                              } else {
-                                                disc =
-                                                    double
-                                                        .tryParse(
-                                                        va);
-
-                                              }
-                                              var qty = table[i].requestedQty;
-                                              var excess = table[i].excessTax;
-                                              var unitcost = table[i]
-                                                  .unitCost;
-                                              var vat = table[i].vat;
-                                              var foc = table[i].foc;
-
-                                              if (unitcost ==
-                                                  0 ||
-                                                  qty ==
-                                                      0) {
-                                                table[i] =
-                                                    table[i]
-                                                        .copyWith(
-                                                        vatableAmount: 0,
-                                                        actualCost: 0,
-                                                        grandTotal: 0,
-                                                        discount: disc);
-                                              }
-
-                                              else {
-
-                                                var Vamount =vatableAmountUpdation(unitcost,qty,excess,disc);
-                                                // (((unitcost! *
-                                                //     qty!) +
-                                                //     excess!) -
-                                                //     disc!)
-                                                //     .toDouble();
-                                                print(
-                                                    "Vamount" +
-                                                        Vamount
-                                                            .toString());
-
-                                                var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
-                                                // (Vamount! +
-                                                //     ((Vamount! *
-                                                //         vat!) /
-                                                //         100));
-                                                print(
-                                                    "vactualCost" +
-                                                        vactualCost
-                                                            .toString());
-                                                table[i] =
-                                                    table[i]
-                                                        .copyWith(
-                                                        vatableAmount: Vamount,
-                                                        actualCost: vactualCost,
-                                                        grandTotal: vactualCost,
-                                                        discount: disc);
-                                                setState(() {});
-
-                                              }
 
                                             }
-                                            ,
-
                                           ),
                                         ),
-
-
+                                        // TableCell(
+                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                        //   child: UnderLinedInput(
+                                        //     controller:focListControllers[i], onChanged: (p0) {widget.  updateCheck(true);table[i] = table[i].copyWith(updateCheck: true,foc:p0==""?0:double.tryParse(p0));},
+                                        //     enable: true,
+                                        //     onComplete: () {
+                                        //       setState(() {  print("maxxxx"+table.toString());});
+                                        //     },
+                                        //   ),
+                                        // ),
 
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: UnderLinedInput(
-                                            controller:focListControllers[i],
-                                            // last: table[i].foc.toString(),
-
-                                            onChanged: (p0) {
-                                              widget.  updateCheck(true);
-                                              table[i] = table[i].copyWith(updateCheck: true);
-                                              setState(() {
-
-                                              });
-
-                                              print(p0);
-                                              if(p0==""){
-                                                table[i] = table[i].copyWith(foc:0);
-                                                setState(() {
-
-                                                });
-
-                                              }
-                                              else{
-                                                table[i] = table[i].copyWith(foc:double.tryParse(p0));
-                                                setState(() {
-
-                                                });
-                                              }
-
-
-
-
-                                            },
-                                            enable: true,
-                                            onComplete: () {
-
-                                              setState(() {  print("maxxxx"+table.toString());});
-                                            },
-                                          ),
+                                          child: textPadding(focListControllers[i].text, alighnment: Alignment.topRight, fontWeight: FontWeight.w500),
+                                        ),   TableCell(
+                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                          child: textPadding(table[i].vatableAmount.toString(), alighnment: Alignment.topRight, fontWeight: FontWeight.w500),
                                         ),
-
-                                        TableCell(
-                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(
-                                              table[i].vatableAmount.toString(),
-                                              alighnment: Alignment.topRight,
-                                              fontWeight: FontWeight
-                                                  .w500),
-                                        ),
-                                        TableCell(
-                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(
-                                              table[i].vat.toString(),
-                                              alighnment: Alignment.topRight,
-                                              fontWeight:
-                                              FontWeight.w500),
+                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(table[i].vat.toString(), alighnment: Alignment.topRight, fontWeight: FontWeight.w500),
                                         ),
 
                                         //$$$$$$$$$$$$$$$$$$$$$$$$$$$$  vat   **************************
@@ -1329,33 +875,11 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         //   ),
                                         // ),
 
-                                        TableCell(
-                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(
-                                              table[i]
-                                                  .actualCost
-                                                  .toString(),
-                                              padding: EdgeInsets
-                                                  .only(
-                                                left:
-                                                11.5,
-                                              ),
-                                              alighnment: Alignment.topRight,
-                                              fontWeight:
-                                              FontWeight
-                                                  .w500),
+                                        TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(table[i].actualCost.toString(), padding: EdgeInsets.only(left: 11.5,), alighnment: Alignment.topRight, fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(
-                                              table[i]
-                                                  .grandTotal
-                                                  .toString(),
-                                              padding: EdgeInsets
-                                                  .only(
-                                                left:
-                                                11.5,
-                                              ),
+                                          child: textPadding(table[i].grandTotal.toString(), padding: EdgeInsets.only(left: 11.5,),
                                               alighnment: Alignment.topRight,
                                               fontWeight:
                                               FontWeight
@@ -1371,18 +895,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
 
                                               }),
                                         ),
-                                        // Checkbox(
-                                        //   value: table[i]
-                                        //       .isRecieved==null?false:table[i]
-                                        //       .isRecieved,
-                                        //   onChanged: (bool?
-                                        //       value) {
-                                        //     setState(() {
-                                        //       // this.isRecieved =
-                                        //       //     value;
-                                        //     });
-                                        //   },
-                                        // ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: CheckedBoxs(
@@ -1411,7 +923,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                             bagroundColor: table?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
 
                                             onPress: () {
-                                              var Vamount = table[i].vatableAmount??0;
                                               var variant = table[i].variantId??0;
                                               var mins = table[i].minimumQty??0;
                                               var maxs = table[i].maximumQty??0;
@@ -1421,7 +932,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                               var unitcosts = table[i].unitCost??0;
                                               var qty = table[i].requestedQty??0;
                                               var foc = table[i].foc??0;
-                                              var dis = table[i].discount??0;
                                               if(variant=="null"||unitcosts==0){
                                                 context.showSnackBarError("please fill all the fields");
                                               }
@@ -1444,19 +954,8 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                 setState(() {
 
                                                 });
-                                                widget.  updateCheck(false);
-                                                // focValue=0;
-                                                // excessTAxValue=0;
-                                                // Vdiscount = 0;
-                                                // Vamount = 0;
-                                                // Vgrnadtotal = 0;
-                                                // vactualCost = 0;
-                                                // unitcost = 0;
-                                                // grands = 0;
-                                                // actualValue = 0;
-                                                // VatableValue = 0;
-                                                // discountValue = 0;
-                                                // vatValue = 0;
+                                                var isUpdate=updateCheckFunc();
+                                                widget.  updateCheck(isUpdate);
                                                 setState(() {});
                                               }
                                             },
@@ -1507,13 +1006,8 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                     int? id = va!.id;
                                                     print("idssss"+id.toString());
                                                     Variable.tableedit=false;
-
                                                     context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
                                                     context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID,variantId);
-
-
-
-
                                                   });
                                                 },
                                               ),
@@ -1543,26 +1037,12 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                       //   },
                                       // ),
                                     ),
+                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(varinatname??"", fontWeight: FontWeight.w500),),
+                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(vendorRefCode??"", fontWeight: FontWeight.w500),),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: textPadding(varinatname??"",
-                                          // padding: EdgeInsets.only(left: 11.5, ),
-                                          fontWeight: FontWeight.w500),
-                                    ),
+                                      child: textPadding(Vbarcode.toString(), fontWeight: FontWeight.w500),),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: textPadding(vendorRefCode??"",
-                                          // padding: EdgeInsets.only(left: 11.5,),
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: textPadding(Vbarcode.toString(),
-                                          // padding: EdgeInsets.only(left: 11.5, ),
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: textPadding(stockQty.toString(),
-                                          padding: EdgeInsets.only(left: 11.5, ),
-                                          alighnment: Alignment.topRight,
-                                          fontWeight: FontWeight.w500),
+                                      child: textPadding(stockQty.toString(), padding: EdgeInsets.only(left: 11.5, ), alighnment: Alignment.topRight, fontWeight: FontWeight.w500),
                                     ),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: textPadding(check1??"",
@@ -1594,9 +1074,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                           else {
                                             vatableAmountCalculation(check,Qty,eTax,Vdiscount);
                                             actualAndgrandTotal(Vamount,vvat);
-                                            // Vamount =double.parse( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
-                                            // vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
-                                            // Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
                                             if (Vamount != 0) {
                                               Vamount = (((check! * Qty!) + eTax!) -
                                                   Vdiscount!)
@@ -1666,9 +1143,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                             check = double.tryParse(p0);
                                             vatableAmountCalculation(check,Qty,eTax,Vdiscount);
                                             actualAndgrandTotal(Vamount,vvat);
-                                            // Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
-                                            // vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
-                                            // Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
                                           }
                                         },
                                         enable: true,
@@ -1701,9 +1175,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                             if (Vamount != 0) {
                                               vatableAmountCalculation(check,Qty,eTax,Vdiscount);
                                               actualAndgrandTotal(Vamount,vvat);
-                                              // Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
-                                              // vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                              // Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
                                             }
                                           }
                                         },
@@ -1733,61 +1204,34 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                           else {
                                             vatableAmountCalculation(check,Qty,eTax,Vdiscount);
                                             actualAndgrandTotal(Vamount,vvat);
-                                            // Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
-                                            // vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                            // Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
                                             setState(() {});
                                           }
                                         },
                                       ),
                                     ),
-                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: UnderLinedInput(controller: focTestContoller,
-                                        onChanged: (p0) {
-                                          setState(() {
-                                            if (p0 == '')
-                                              setState(() {
-                                                vfoc = 0;
-                                              });
-                                            else {
-                                              setState(() {
-                                                vfoc = double.tryParse(p0);
-                                              });
-                                            }
-                                          });
-                                        },
-                                        enable: true,
-                                        onComplete: () {},
-                                      ),
-                                    ),
-                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: textPadding(Vamount.toString(),
-                                          alighnment: Alignment.topRight,
-                                          padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
-                                    ),
-                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: textPadding(vvat!=0?vvat.toString():"",
-                                          alighnment: Alignment.topRight,
-                                          padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),
-                                    ),
-
-                                    TableCell(
-                                      verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: textPadding(vactualCost.toString(),
-                                          alighnment: Alignment.topRight,
-                                          padding: EdgeInsets.only(left: 11.5, ),
-
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    TableCell(
-                                      verticalAlignment: TableCellVerticalAlignment.middle,
-                                      child: textPadding(Vgrnadtotal?.toString()??"",
-
-
-                                          padding: EdgeInsets.only(left: 11.5, ),
-                                          alighnment: Alignment.topRight,
-                                          fontWeight: FontWeight.w500),
-                                    ),
+                                    // TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                    //   child: UnderLinedInput(controller: focTestContoller,
+                                    //     onChanged: (p0) {
+                                    //       setState(() {
+                                    //         if (p0 == '')
+                                    //           setState(() {
+                                    //             vfoc = 0;
+                                    //           });
+                                    //         else {
+                                    //           setState(() {vfoc = double.tryParse(p0);
+                                    //           });
+                                    //         }
+                                    //       });
+                                    //     },
+                                    //     enable: true,
+                                    //     onComplete: () {},
+                                    //   ),
+                                    // ),
+                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(focTestContoller.text.toString(), alighnment: Alignment.topRight, padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),),
+                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(Vamount.toString(), alighnment: Alignment.topRight, padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),),
+                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(vvat!=0?vvat.toString():"", alighnment: Alignment.topRight, padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500),),
+                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(vactualCost.toString(), alighnment: Alignment.topRight, padding: EdgeInsets.only(left: 11.5, ), fontWeight: FontWeight.w500)),
+                                    TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: textPadding(Vgrnadtotal?.toString()??"", padding: EdgeInsets.only(left: 11.5, ), alighnment: Alignment.topRight, fontWeight: FontWeight.w500),),
                                     TableCell(
                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: CheckedBoxs(
@@ -1824,22 +1268,17 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                   vmaxnqty!) {
                                                 print("enterd");
                                                 if(vminqty!=0 &&vmaxnqty!=0){
-                                                  context.showSnackBarError(
-                                                      "the minimum order is always less than maximum order");}
+                                                  context.showSnackBarError("the minimum order is always less than maximum order");}
                                               }
                                               else  if(  variantId=="null"||check==0||vvat==0)
-                                                context.showSnackBarError(
-                                                    "please fill all the fields");
+                                                context.showSnackBarError("please fill all the fields");
                                               else if(Qty==0||Qty==""){
-                                                context.showSnackBarError(
-                                                    "the requested quantity not be 0 or empty");
+                                                context.showSnackBarError("the requested quantity not be 0 or empty");
                                               }
                                               else if(vfoc!>Qty!){
-                                                context.showSnackBarError(
-                                                    "foc is allways less than requested qty");
+                                                context.showSnackBarError("foc is allways less than requested qty");
                                               }
                                               else{
-
                                                 table..add(
                                                     OrderLines(
                                                         vendorRefCode: vendorRefCode??"",
@@ -1877,15 +1316,10 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                 focListControllers.clear();
                                                 vatListControllers.clear();
                                                 setState(() {
-
                                                   valueAddingTextEdingController();
                                                 });
-                                                print("gtable" +
-                                                    table
-                                                        .toString());
                                                 widget.updation(table);
-                                                // tableDatasClear();
-
+                                                tableAddingValuesClear();
                                                 setState(() {});
 
                                               }
@@ -1894,7 +1328,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                           ),
                                           TableIconTextButton(label: "label", onPress: (){
                                             setState(() {
-                                              // tableDatasClear();
+                                              tableAddingValuesClear();
                                             });
 
                                           },
@@ -1933,8 +1367,6 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                         ),
                       ),
                       SizedBox(height: 20,),
-
-
                     ],
                   ),
                 ),

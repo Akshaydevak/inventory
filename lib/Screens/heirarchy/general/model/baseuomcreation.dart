@@ -13,7 +13,7 @@ class BaseUomCreationtModel with _$BaseUomCreationtModel {
     @JsonKey(name: "uomgroup_name") final String? uomGroupName,
     @JsonKey(name: "uom_code") final String? uomCode,
     @JsonKey(name: "standard_code") final String? standardCode,
-    @JsonKey(name: "conversion_factor") final int? conversionFactor,
+    @JsonKey(name: "conversion_factor") final double? conversionFactor,
     @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,
   }) = _BaseUomCreationtModel;
   factory BaseUomCreationtModel.fromJson(Map<String, dynamic> json) =>

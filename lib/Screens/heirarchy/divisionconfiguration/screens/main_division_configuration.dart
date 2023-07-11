@@ -23,10 +23,13 @@ import '../cubit/post_division/division_configuration_cubit.dart';
 
 class  DevisionConfiguration extends StatefulWidget {
   @override
-  _DevisionConfigurationState createState() =>  _DevisionConfigurationState();
+  DevisionConfigurationState createState() =>  DevisionConfigurationState();
 }
 
-class _DevisionConfigurationState extends State< DevisionConfiguration> {
+class DevisionConfigurationState extends State< DevisionConfiguration> {
+  final GlobalKey<UomTableState> uomTableState = GlobalKey<UomTableState>();
+  final GlobalKey<GroupTableState> _groupTableState = GlobalKey<GroupTableState>();
+  final GlobalKey<CategoryTableState> cateogryTableState = GlobalKey<CategoryTableState>();
   TextEditingController codeController=TextEditingController();
   TextEditingController nameController=TextEditingController();
   TextEditingController priorityController=TextEditingController();
@@ -100,9 +103,6 @@ priorityController.clear();
 descriptionController.clear();
 isActive=false;
 ismixed=false;
-
-
-
   }
 
 
@@ -258,6 +258,9 @@ ismixed=false;
                 categoryList?.clear();
                 groupList?.clear();
                 uomList?.clear();
+                uomTableState.currentState?.clears();
+                cateogryTableState.currentState?.clears();
+                _groupTableState.currentState?.clears();
 
               });
 
@@ -289,6 +292,13 @@ ismixed=false;
                   print("taped");
                   select=false;
                   selectedVertical=index;
+                  clear();
+                  categoryList?.clear();
+                  groupList?.clear();
+                  uomList?.clear();
+                  uomTableState.currentState?.clears();
+                  cateogryTableState.currentState?.clears();
+                  _groupTableState.currentState?.clears();
 
                   // clear();
 
@@ -350,6 +360,9 @@ ismixed=false;
                     categoryList?.clear();
                     groupList?.clear();
                     uomList?.clear();
+                    uomTableState.currentState?.clears();
+                    cateogryTableState.currentState?.clears();
+                    _groupTableState.currentState?.clears();
 
                       select=true;
                     });
@@ -381,7 +394,7 @@ ismixed=false;
                 // Divider(color: Colors.grey,thickness: 1,),
                 SizedBox(height: height*.01,),
 
-                UomTable(list: uomList,uomTableEdit: TableAssign,isMixed:ismixed),
+                UomTable(key:uomTableState,list: uomList,uomTableEdit: TableAssign,isMixed:ismixed),
                 SizedBox(height: 20,),
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -390,7 +403,7 @@ ismixed=false;
                 ),
                 // Divider(color: Colors.grey,thickness: 1,),
                   SizedBox(height: height*.01,),
-                GroupTable(list: groupList,uomTableEdit:TableAssign,isMixed: ismixed, ),
+                GroupTable(list: groupList,key:_groupTableState,uomTableEdit:TableAssign,isMixed: ismixed, ),
                   SizedBox(height: 20,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -400,7 +413,7 @@ ismixed=false;
                 ),
                 // Divider(color: Colors.grey,thickness: 1,),
                   SizedBox(height: height*.01,),
-                CategoryTable(list: categoryList,uomTableEdit:TableAssign, isMixed: ismixed),
+                CategoryTable(list: categoryList,uomTableEdit:TableAssign, isMixed: ismixed,key: cateogryTableState,),
                 SizedBox(height: height * .13,),
                   SaveUpdateResponsiveButton(
                     saveFunction: (){

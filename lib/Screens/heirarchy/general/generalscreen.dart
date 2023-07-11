@@ -191,7 +191,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
-  var list;
+  var list1;
   idChange(int type,int id){
     print("the id"+id.toString());
     switch (type) {
@@ -265,17 +265,22 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
+                    img1 = false;
+                    img2 = false;
+                    img3 = false;
+                    img4 = false;
+                    img5 = false;
+                    img6 = false;
+                    img7 = false;
+                    img8 = false;
                     context.showSnackBarSuccess(data.data2);
                     Timer(Duration(seconds: 5), () {
                       setState(() {
-                        select
-                            ?print("")
-                        // context
-                        //         .read<ItemcreationListCubit>()
-                        //         .getItemListList()
-                            : context
-                                .read<ItemreadCubit>()
-                                .getItemRead(veritiaclid!);
+
+                        context
+                                .read<ItemcreationListCubit>()
+                                .getItemListList();
+
                         // select=false;
                       });
                     });
@@ -392,27 +397,37 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                     print("error");
                   },
                   success: (list) {
-                    print("aaaaayyyiram" + list.data.toString());
-                    list = list;
+                    list1 = list;
 
                     result = list.data;
                     print("seee" + result.toString());
                     setState(() {
-                      if (result.isNotEmpty) {
+                      if (result.isNotEmpty) {print("istCAse   enterd inthis case1");
                         if(select){
-                          veritiaclid = result[result.length-1].id;
-                          selectedVertical=result.length-1;
-                          context.read<ItemreadCubit>().getItemRead(veritiaclid!);
-                        }
-                        else{
+                          print("istCAse   enterd inthis case2");
                           veritiaclid = result[0].id;
                           selectedVertical=0;
                           context.read<ItemreadCubit>().getItemRead(veritiaclid!);
                         }
+                        else{
+                          var ab=result.any((item) => item.id ==veritiaclid);
+                          print("ab$ab");
+                       if(   result.any((item) => item.id ==veritiaclid)){
+                         print("istCAse   enterd inthis case3");
+                         context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                       }
+                       else{
+                         print("istCAse   enterd inthis case4");
+                        veritiaclid = result[0].id;
+                        selectedVertical=0;
+                        context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                      }
 
+                        }
                         select = false;
                       } else {
-                        print("common");
+                        print("istCAse   enterd inthis case5");
+
                         select = true;
                         clear();
                         setState(() {});
@@ -432,7 +447,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         ItemVerticalList(
-                          list: list,
+                          list: list1,
                           select: select,
                           selectedVertical: selectedVertical,
                           itemsearch: itemsearch,
@@ -457,6 +472,26 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                             });
                           },
                           result: result,
+                          child:                         tablePagination(
+                                () => context
+                                .read<ItemcreationListCubit>()
+                                .refresh(),
+                            back: list1?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<ItemcreationListCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next:list1?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<ItemcreationListCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          ),
                         ),
                         Expanded(
                           child: SingleChildScrollView(
@@ -689,21 +724,9 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                     print(img5);
                                     print(itemCatelog2Controller.text);
 
-                                    select ? context
-                                        .read<ItemcreatinCubit>()
-                                        .postCreateItem(model)
-                                        : context
-                                        .read<ItemcreatinCubit>()
-                                        .postItemPatch(
+                                    select ? context.read<ItemcreatinCubit>().postCreateItem(model) : context.read<ItemcreatinCubit>().postItemPatch(
                                         veritiaclid, model1);
-                                    img1 = false;
-                                    img2 = false;
-                                    img3 = false;
-                                    img4 = false;
-                                    img5 = false;
-                                    img6 = false;
-                                    img7 = false;
-                                    img8 = false;
+
                                   },
                                 ),
                                 // Container(
@@ -1033,6 +1056,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                     widget.divisionName.text="";
                     widget.division.text="";
                     widget.category.clear();
+                    widget.divisionId=0;
                     widget.categoryName.clear();
                     widget.subCategory.clear();
                     widget.subCategoryName.clear();

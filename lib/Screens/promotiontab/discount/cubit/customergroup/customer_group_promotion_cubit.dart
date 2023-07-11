@@ -32,7 +32,7 @@ class CustomerGroupPromotionCubit extends Cubit<CustomerGroupPromotionState> {
 
   Future searchPromotionCustomerGroup(String filter) async {
     emit( CustomerGroupPromotionState.initial());
-    final result = await repo.getPromotionCustomerGroupList("name="+filter.toString());
+    final result = await repo.getPromotionCustomerGroupList("search_grps?q="+filter.toString());
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -43,7 +43,7 @@ class CustomerGroupPromotionCubit extends Cubit<CustomerGroupPromotionState> {
   }
 
   Future nextslotSectionPageList() async {
-    final result = await repo.getPromotionCustomerGroupList(next);
+    final result = await repo.getPromotionCustomerGroupList("?$next");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -54,7 +54,7 @@ class CustomerGroupPromotionCubit extends Cubit<CustomerGroupPromotionState> {
 
   Future previuosslotSectionPageList() async {
     // print(previous);
-    final result = await repo.getPromotionCustomerGroupList(prev);
+    final result = await repo.getPromotionCustomerGroupList("?$prev");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

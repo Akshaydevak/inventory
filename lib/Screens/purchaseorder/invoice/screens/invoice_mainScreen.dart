@@ -298,6 +298,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                   invoiceStatusController.text=data.invoicedata?.invoiceStatus??"";
                                   noteController.text=data.invoicedata?.notes??"";
                                   remarksController.text=data.invoicedata?.remarks??"";
+                                  paymentMethodController.text=data.invoicedata?.paymentMethod??"";
                                   unitCostController.text=data.invoicedata?.unitCost.toString()??"";
                                   focController.text=data.invoicedata?.foc.toString()??"";
                                   discountController.text=data.invoicedata?.discount.toString()??"";
@@ -392,7 +393,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                       }, success: (data) {
                         if (data.data1) {
                           context.showSnackBarSuccess(data.data2);
-                          context.read<InventorysearchCubit>().getInventorySearch("code",tab:"II");
+                          // context.read<InventorysearchCubit>().getInventorySearch("code",tab:"II");
                         }
                         else {
                           context.showSnackBarError(data.data2);

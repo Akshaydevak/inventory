@@ -68,8 +68,7 @@ abstract class InventoryRepository {
   Future<Either<Failure, InventoryRead>> getInventoryRead(int id);
   Future<Either<Failure, DoubleResponse>> postInventory(
       InventoryPostModel model);
-  Future<Either<Failure, PaginatedResponse<List<InventoryListModel>>>>
-      getInventoryListRead(String code);
+  Future<Either<Failure, PaginatedResponse<List<InventoryListModel>>>> getInventoryListRead(String code);
   Future<Either<Failure, double>> getUnitcost(int? variantId);
 }
 

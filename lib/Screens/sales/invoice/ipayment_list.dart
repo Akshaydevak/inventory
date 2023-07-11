@@ -372,6 +372,95 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                                     )
                                   ]),
                           ],
+                          if(table.isEmpty)
+                            TableRow(
+                                decoration: BoxDecoration(
+                                    color: Pellet.tableRowColor,
+                                    shape: BoxShape.rectangle,
+                                    border:  Border(
+                                        left: BorderSide(
+
+                                            color: Color(0xff3E4F5B).withOpacity(.1),
+                                            width: .4,
+                                            style: BorderStyle.solid),
+                                        bottom: BorderSide(
+
+                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                            style: BorderStyle.solid),
+                                        right: BorderSide(
+                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                            width: .4,
+
+                                            style: BorderStyle.solid))),
+                                children: [
+                                  TableCell(
+                                      verticalAlignment:
+                                      TableCellVerticalAlignment
+                                          .middle,
+                                      child:
+                                      textPadding("",alighnment: Alignment.center)
+                                    // Text(keys[i].key??"")
+
+                                  ),
+                                  TableCell(
+                                      verticalAlignment:
+                                      TableCellVerticalAlignment
+                                          .middle,
+                                      child:
+                                      textPadding("",alighnment: Alignment.center)
+                                    // Text(keys[i].key??"")
+
+                                  ),
+
+                                  TableCell(
+                                      verticalAlignment:
+                                      TableCellVerticalAlignment
+                                          .middle,
+                                      child:
+                                      textPadding("",alighnment: Alignment.center)
+                                    // Text(keys[i].key??"")
+
+                                  ),
+                                  TableCell(
+                                      verticalAlignment:
+                                      TableCellVerticalAlignment
+                                          .middle,
+                                      child:
+                                      textPadding("",alighnment: Alignment.center)
+                                    // Text(keys[i].key??"")
+
+                                  ),
+
+                                  TableCell(
+                                      verticalAlignment:
+                                      TableCellVerticalAlignment
+                                          .middle,
+                                      child:
+                                      textPadding("",alighnment: Alignment.center)
+                                    // Text(keys[i].key??"")
+
+                                  ),
+                                  TableCell(
+                                      verticalAlignment:
+                                      TableCellVerticalAlignment
+                                          .middle,
+                                      child:
+                                      textPadding("",alighnment: Alignment.center)
+                                    // Text(keys[i].key??"")
+
+                                  ),
+                                  TableCell(
+                                      verticalAlignment:
+                                      TableCellVerticalAlignment
+                                          .middle,
+                                      child:
+                                      textPadding("",alighnment: Alignment.center)
+                                    // Text(keys[i].key??"")
+
+                                  ),
+                                ]),
+
+
                         ],
                         widths: {
                           0: FlexColumnWidth(1),

@@ -83,7 +83,6 @@ class _VariantChannelAllocationScreenState
 
 
   }
-
   selectUnSelect(){
     for(var i=0;i<table.length;i++){
       if(selectAll){
@@ -95,26 +94,18 @@ class _VariantChannelAllocationScreenState
     }
   }
   checkBoxClickSelectUnselct(List<ChannelTypeModel>table1){
-
-    for(var n in table)
-      {
-        if(n.isActive==false){
-          selectAll=false;
-          break;
-        }
-        else{
-          selectAll=true;
-        }
-        setState(() {
-
-        });
-
+    if(table.isNotEmpty){
+      var val=table1.where((element) => element.isActive==false);
+      if(val.isNotEmpty){
+        selectAll=false;
       }
-
+      else{
+        selectAll=true;
+      }
+      setState(() {
+      });
+    }
   }
-
-
-
   listAssign(List<ChannelTypeModel>table1, PaginatedResponse<dynamic> data) {
     setState(() {
       table = table1;
@@ -149,18 +140,10 @@ class _VariantChannelAllocationScreenState
     super.initState();
   }
   final GlobalKey<ChanneAllocationTopScreenState> channelAllocationState = GlobalKey<ChanneAllocationTopScreenState>();
-
   @override
   Widget build(BuildContext context) {
-    double h = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double w = MediaQuery
-        .of(context)
-        .size
-        .width;
-
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -234,7 +217,6 @@ class _VariantChannelAllocationScreenState
                     },
                     success: (data) {
                       setState(() {
-                        print("FArista"+data.toString());
                         group=data;
                         channels=data?.results??[];
 

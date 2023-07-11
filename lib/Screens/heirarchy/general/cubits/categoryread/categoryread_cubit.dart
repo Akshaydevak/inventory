@@ -12,6 +12,7 @@ class CategoryreadCubit extends Cubit<CategoryreadState> {
   Future getCategoryRead(
     int? id,
   ) async {
+    emit(CategoryreadState.initial());
     final result = await repo.getCategoryRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

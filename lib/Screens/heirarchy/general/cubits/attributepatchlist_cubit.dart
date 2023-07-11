@@ -13,6 +13,7 @@ class AttributepatchlistCubit extends Cubit<AttributepatchlistState> {
   String? prev;
   String? next;
   Future getAttributePatchList() async {
+    emit(AttributepatchlistState.initial());
     final result = await repo.getAttributePatchList("");
     print(result);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

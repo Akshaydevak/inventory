@@ -10,7 +10,7 @@ class BrandreadCubit extends Cubit<BrandreadState> {
   BrandreadCubit() : super(BrandreadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getBrandRead(int? id) async {
-    print("idddidd" + id.toString());
+    emit(BrandreadState.initial());
     final result = await repo.getBrandRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

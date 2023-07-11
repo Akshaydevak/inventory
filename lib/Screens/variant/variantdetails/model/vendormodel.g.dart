@@ -14,10 +14,10 @@ _$_VendorDetailsModel _$$_VendorDetailsModelFromJson(
           ? null
           : Address.fromJson(json['address'] as Map<String, dynamic>),
       email: json['email'] as String?,
-      manuFactureuserCode: json['manufacturer_usercode'] as String?,
+      manuFactureuserCode: json['code'] as String?,
       alternativeEmail: json['alternative_email'] as String?,
       trnNumber: json['tr_number'] as int?,
-      manuFactureName: json['manufacturer_name'] as String?,
+      manuFactureName: json['name'] as String?,
     );
 
 Map<String, dynamic> _$$_VendorDetailsModelToJson(
@@ -26,10 +26,10 @@ Map<String, dynamic> _$$_VendorDetailsModelToJson(
       'id': instance.id,
       'address': instance.address,
       'email': instance.email,
-      'manufacturer_usercode': instance.manuFactureuserCode,
+      'code': instance.manuFactureuserCode,
       'alternative_email': instance.alternativeEmail,
       'tr_number': instance.trnNumber,
-      'manufacturer_name': instance.manuFactureName,
+      'name': instance.manuFactureName,
     };
 
 _$_Address _$$_AddressFromJson(Map<String, dynamic> json) => _$_Address(

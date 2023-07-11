@@ -86,6 +86,14 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
     return actualCost;
 
   }
+  bool updateCheckFunc(){
+    var isUpdate=lines.where((element) => element.updateCheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
+  }
 
 
   void initState() {
@@ -674,10 +682,14 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                           TableCellVerticalAlignment
                                               .middle,
                                           child: TableTextButton(
+                                            textColor:  lines?[i].updateCheck==true?Pellet.bagroundColor:Colors.black,
+                                            bagroundColor: lines?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
                                             label:lines[i].updateCheck==true? "UPDATE":"",
                                             onPress: (){
-                                              widget.updateCheck(false);
+
                                               lines[i]=lines[i].copyWith(updateCheck: false);
+                                              var update=updateCheckFunc();
+                                              widget.updateCheck(update);
                                              widget.updation( lines);
                                               setState(() {
 

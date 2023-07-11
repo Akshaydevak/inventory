@@ -10,7 +10,7 @@ class MaterialreadCubit extends Cubit<MaterialreadState> {
   MaterialreadCubit() : super(MaterialreadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getMaterialRead(int? id) async {
-    print("idddidd" + id.toString());
+   emit(MaterialreadState.initial());
     final result = await repo.getMaterialRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

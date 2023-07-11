@@ -46,6 +46,7 @@ class NewInputCard extends StatefulWidget {
 
   final bool password;
   final bool icondrop;
+  final bool integerOnly;
   final  bool direction;
   const NewInputCard({
     Key? key,
@@ -53,6 +54,7 @@ class NewInputCard extends StatefulWidget {
     this.ontap,
     this.paddings,
     this.textLimit=100,
+    this.integerOnly=false,
     required this.controller,
     this.label,
     this.keyboardType,
@@ -127,12 +129,9 @@ class _NewInputCardState extends State<NewInputCard> {
               maxLines: widget.maxLines,
               controller: widget.controller,
               obscureText: show,
-              keyboardType:
-              widget.formatter? TextInputType.number:null ,
-              inputFormatters:widget.formatter?
-              <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ]:null,
+
+              keyboardType:widget.formatter?TextInputType.numberWithOptions(decimal: true):null,
+            inputFormatters:widget.formatter? <TextInputFormatter>[widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]:null,
               decoration: InputDecoration(
                 hintText:widget.icondrop?"-select-":"",
 
@@ -222,14 +221,8 @@ class _NewInputCardState extends State<NewInputCard> {
               maxLines: widget.maxLines,
               controller: widget.controller.text=="null"?TextEditingController(text: ""):widget.controller,
               obscureText: show,
-            keyboardType:
-            widget.formatter? TextInputType.phone:null ,
-              inputFormatters:widget.formatter?
-
-              <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
-              ]:null,
-
+              keyboardType:widget.formatter?TextInputType.numberWithOptions(decimal: true):null,
+              inputFormatters:widget.formatter? <TextInputFormatter>[widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]:null,
 
               decoration: InputDecoration(
                 hintText:widget.icondrop?"-select-":"",
@@ -905,7 +898,7 @@ class UnderLinedInput extends StatefulWidget {
         this.suffixIconEnable=false,
         this.enable = true,
         this.initial='',
-        this.hintText = "type..",
+        this.hintText = "Enter..",
         this.maxLines = 1,
         this.controller,
         this.onChanged,
@@ -950,14 +943,8 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
 
               //controller: widget.controller,
               enabled: widget.enable,
-              keyboardType:
-              // widget.formatter? TextInputType.number:null ,
-              widget.formatter? TextInputType.phone:null ,
-              inputFormatters:widget.formatter?
-
-              <TextInputFormatter>[
-              widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
-              ]:null,
+                keyboardType:widget.formatter?TextInputType.numberWithOptions(decimal: true):null,
+                inputFormatters:widget.formatter? <TextInputFormatter>[widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]:null,
               onEditingComplete: widget.onComplete,
               onChanged: widget.onChanged,
               decoration: InputDecoration(
@@ -982,26 +969,15 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                 textAlign: widget.textAlighn,
                 readOnly: widget.readOnly,
                 style: CommonTextStyle.normalTableFieldStyle,
-
-
-
                 // initialValue:widget.last=="0"?"":widget.last,
                 onTap: () {
                   if (widget.onClick != null) widget.onClick!();
                 },
                 maxLines: widget.maxLines,
-
                 controller: widget.controller,
                 enabled: widget.enable,
-
-                keyboardType:
-                // widget.formatter? TextInputType.number:null ,
-                widget.formatter? TextInputType.phone:null ,
-                inputFormatters:widget.formatter?
-
-                <TextInputFormatter>[
-                  widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
-                ]:null,
+                keyboardType:widget.formatter?TextInputType.numberWithOptions(decimal: true):null,
+                inputFormatters:widget.formatter? <TextInputFormatter>[widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]:null,
                 onEditingComplete: widget.onComplete,
                 onChanged: widget.onChanged,
                 decoration: InputDecoration(
@@ -1615,13 +1591,14 @@ class PopUpSwitchTile extends StatefulWidget {
 class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding: widget.paddingCheck? EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.009):EdgeInsets.symmetric(horizontal: 0),
+    return  Container(
+      // color: Colors.red,
+      padding: widget.paddingCheck? EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.007):EdgeInsets.symmetric(horizontal: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width*.13,
+            width: MediaQuery.of(context).size.width*.12,
 
 
               padding: EdgeInsets.only(top: 3,left:MediaQuery.of(context).size.width*.009),
@@ -1727,6 +1704,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
 
      child: DropdownButton(
        iconEnabledColor: Colors.grey,
+       // value:"widget.choosenValue"??"" ,
        iconDisabledColor: Pellet.tableBlueHeaderPrint,
 
        borderRadius:BorderRadius.zero ,

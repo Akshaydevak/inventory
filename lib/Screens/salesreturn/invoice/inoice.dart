@@ -498,7 +498,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                               sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
                               totalPrice: double.tryParse(totalPriceController.text??""),
                               assignTo: assignToController.text??"",
-                              orderLines: result??[],
+                              orderLines: table??[],
 
 
 
@@ -538,7 +538,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                       totalPrice: double.tryParse(
                           totalPriceController.text ?? ""),
                       assignTo: assignToController.text ?? "",
-                      orderLines: result ?? [],
+                      orderLines: table ?? [],
 
 
                     );

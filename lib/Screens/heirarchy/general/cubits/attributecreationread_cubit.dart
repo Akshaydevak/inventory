@@ -12,7 +12,7 @@ class AttributecreationreadCubit extends Cubit<AttributecreationreadState> {
   AttributecreationreadCubit() : super(AttributecreationreadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getAttributeCreationRead(int? id) async {
-    print("idddidd" + id.toString());
+   emit(AttributecreationreadState.initial());
     final result = await repo.getAttributeCreationRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

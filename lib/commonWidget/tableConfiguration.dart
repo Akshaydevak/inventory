@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/divisionconfiguration/cubit/categorydivisionconfig/categorylistdivisionconfig_cubit.dart';
@@ -18,7 +19,9 @@ import 'package:inventory/Screens/heirarchy/general/cubits/subcategorylist/subca
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
+import 'package:inventory/Screens/promotiontab/discount/cubit/customergroup/customer_group_promotion_cubit.dart';
 import 'package:inventory/Screens/promotiontab/discount/cubit/type_listing_on/type_id_list_cubit.dart';
+import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
 import 'package:inventory/Screens/promotiontab/muttibuy/cubit/variantlist/variant_list_multi_buy_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/listsegments/list_segments_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/offergroup/list_offer_group_cubit.dart';
@@ -46,6 +49,7 @@ import 'package:inventory/Screens/variant/variantdetails/cubits/salesList/sales_
 import 'package:inventory/Screens/variant/variantdetails/cubits/vendordetailslist/vendordetailslist_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/appurl.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
@@ -185,6 +189,16 @@ class TableConfigurePopup extends StatelessWidget {
       case "OfferPeriodPopup":
         {
           data = OfferPeriodPopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+
+
+      case "CustomerGroup_OneselectionPopup":
+        {
+          data = CustomerGroupOneselectionPopup(
             type: type,
             valueSelect: valueSelect,
           );
@@ -359,6 +373,16 @@ class TableConfigurePopup extends StatelessWidget {
       case "shippingIdListPopup":
         {
           data = shippingIdListPopup(
+            code: code,
+            id:id,
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "producedCountryPopupVariant":
+        {
+          data = producedCountryPopupVariant(
             code: code,
             id:id,
             type: type,
@@ -543,7 +567,7 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                   //
                   // setState(() {});
                 },
-                paginated:        list1 != null?
+                paginated:list1 != null?
                 tablePagination(
                 () => context.read<DevisionListCubit>().refresh(),
             back: list1?.previousUrl == null
@@ -1419,6 +1443,7 @@ class _PaymentListByOrderIdPopup extends State<PaymentListByOrderIdPopup> {
                                             height: h * .030,
                                           ),
                                           NewInputCard(
+                                            formatter: true,
 
                                               controller: mobileNumberCodeContoller,
                                               title: "Contact"),
@@ -1556,7 +1581,7 @@ class _variantTabalePopup extends State<variantTabalePopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "Variant Id",
+                label: "Variants",
                 onApply: () {
 
                 },
@@ -1640,6 +1665,12 @@ class _variantTabalePopup extends State<variantTabalePopup> {
                         height: h * .005,
                       ),
                       SizedBox(height: 8,),
+
+
+                    table?.isEmpty==true?Container(
+                      child: Text("No Data  Found"),
+
+                ):
                       Container(
                         height: h / 1.86,
                         // width: w/7,
@@ -4346,6 +4377,312 @@ class _OfferPeriodPopup extends State<OfferPeriodPopup> {
         },
       );
     });
+  }
+}
+
+
+
+
+class CustomerGroupOneselectionPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+
+  CustomerGroupOneselectionPopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _CustomerGroupOneselectionPopup createState() => _CustomerGroupOneselectionPopup    ();
+}
+
+class _CustomerGroupOneselectionPopup extends State<CustomerGroupOneselectionPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  bool suffixIconCheck=false;
+  List<CustomerGroupModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => CustomerGroupPromotionCubit(),
+  child: Builder(builder: (context) {
+      context.read<CustomerGroupPromotionCubit>().getPromotionCustomerGroupList();
+      return BlocConsumer<CustomerGroupPromotionCubit, CustomerGroupPromotionState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: false,
+                buttonVisible: false,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Available Customer Group",
+                onApply: () {
+
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                paginated:           list1 != null?
+                tablePagination(
+                () => context.read<CustomerGroupPromotionCubit>().refresh(),
+            back: list1?.previousUrl == null
+            ? null
+                : () {
+            context
+                .read<CustomerGroupPromotionCubit>()
+                .previuosslotSectionPageList();
+            },
+            next: list1.nextPageUrl == null
+            ? null
+                : () {
+            // print(data.nextPageUrl);
+            context
+                .read<CustomerGroupPromotionCubit>()
+                .nextslotSectionPageList();
+            },
+            ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 8,),
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              context
+                                  .read<CustomerGroupPromotionCubit>()
+                                  .searchPromotionCustomerGroup(searchContoller.text);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context
+                                    .read<CustomerGroupPromotionCubit>()
+                                    .getPromotionCustomerGroupList();
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(height: 8,),
+                      Container(
+                        height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Offer Period',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                CustomerGroupModel model =
+                                                CustomerGroupModel(
+                                                  code: table[i].code,
+                                                  name:
+                                                      table[i].name,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text:
+
+                                                      table[i].name ??
+                                                          ""),
+
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<DevisionListCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<DevisionListCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
   }
 }
 
@@ -7417,9 +7754,7 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                                   .getSearchVendorDetailsList(
                                       searchContoller.text,);
                               if (va == "") {
-                                context
-                                    .read<VendordetailslistCubit>()
-                                    .getVendorDetailList();
+                                context.read<VendordetailslistCubit>().getVendorDetailList();
                               }
                               setState(() {
 
@@ -7538,12 +7873,12 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                       ),
                       if (list1 != null)
                         tablePagination(
-                          () => context.read<VariantselectionCubit>().refresh(),
+                          () => context.read<VendordetailslistCubit>().refresh(),
                           back: list1?.previousUrl == null
                               ? null
                               : () {
                                   context
-                                      .read<VariantselectionCubit>()
+                                      .read<VendordetailslistCubit>()
                                       .previuosslotSectionPageList();
                                 },
                           next: list1.nextPageUrl == null
@@ -7551,8 +7886,8 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                               : () {
                                   // print(data.nextPageUrl);
                                   context
-                                      .read<VariantselectionCubit>()
-                                      .nextslotSectionPageList(0);
+                                      .read<VendordetailslistCubit>()
+                                      .nextslotSectionPageList();
                                 },
                         )
                     ],
@@ -10651,7 +10986,17 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                                                 TableCellVerticalAlignment
                                                     .middle,
                                             child:
-                                                textPadding((i + 1).toString())
+                                            textOnclickPadding(text:(i + 1).toString(),ontap: (){
+                                              ShippingAddressModel model =
+                                              ShippingAddressModel(
+                                                id: table[i].id,
+                                                fullName: table[i].fullName,
+
+                                              );
+                                              Navigator.pop(context);
+
+                                              widget.valueSelect(model);
+                                            },)
                                             // Text(keys[i].key??"")
 
                                             ),
@@ -10720,6 +11065,380 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
     });
   }
 }
+
+
+
+class producedCountryPopupVariant extends StatefulWidget {
+  final String type;
+  final String? code;
+  final Function valueSelect;
+  final int? id;
+
+  producedCountryPopupVariant({
+    Key? key,
+    required this.type,
+    required this.id,
+    this.code,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _producedCountryPopup createState() => _producedCountryPopup();
+}
+
+class _producedCountryPopup extends State<producedCountryPopupVariant> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool suffixIconCheck = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  List<VariantReadModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+  Dio client = Dio();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    _firstLoad();
+    super.initState();
+  }
+  void _firstLoad() async {
+
+
+
+    try {
+
+      final res = await client.get(
+
+        inventoryLiveBaseUrl + "country-list?value=list",
+
+        options: Options(
+
+          headers: {
+
+            'Content-Type': 'application/json',
+
+            'Accept': 'application/json',
+
+
+          },
+
+        ),
+
+      );
+print("respppppppppppppppppppppppppppppppppppppp$res");
+
+
+
+      setState(() {
+
+        for (var element in (res.data['data'] as List)) {
+
+          table.add(VariantReadModel.fromJson(element));
+
+        }
+
+
+
+
+
+
+    });} catch (err)
+      {
+        print('Something went wrong $err');
+      }
+
+
+
+  }
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return Builder(builder: (context) {
+
+
+      return BlocConsumer<ProducedcountryCubit, ProducedcountryState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                table = list;
+                // list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Shipping",
+                onApply: () {
+                  showDailogPopUp(
+                      context,
+                      WarrantyDetailsPopUp(
+                        code: widget.code??"",
+                        // indexValue: temp,
+                        // changeActive: onChangeActive,
+                        // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                        // changeExtendedWarranty: onChangeExtendedWarranty,
+                      ));
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                // paginated:    list1 != null?
+                // tablePagination(
+                //       () => context.read<ShippingadreesCubit>().refresh(),
+                //   back: list1?.previousUrl == null
+                //       ? null
+                //       : () {
+                //     context
+                //         .read<ShippingadreesCubit>()
+                //         .previuosslotSectionPageList();
+                //   },
+                //   next: list1.nextPageUrl == null
+                //       ? null
+                //       : () {
+                //     // print(data.nextPageUrl);
+                //     context
+                //         .read<ShippingadreesCubit>()
+                //         .nextslotSectionPageList();
+                //   },
+                // ):Container(),
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<ShippingadreesCubit>()
+                                  .getSearchCustomList(searchContoller.text,widget.code);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                context
+                                    .read<ShippingadreesCubit>()
+                                    .getShippingId(id:widget.code);
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      Container(
+                        height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Shipping',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                            TableCellVerticalAlignment
+                                                .middle,
+                                            child:
+                                            textOnclickPadding(text:(i + 1).toString(),ontap: (){
+                                              VariantReadModel model =
+                                              VariantReadModel(
+                                                id: table[i].id,
+                                                name: table[i].name,
+
+                                              );
+                                              Navigator.pop(context);
+
+                                              widget.valueSelect(model);
+                                            },)
+                                          // Text(keys[i].key??"")
+
+                                        ),
+                                        TableCell(
+                                            verticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                VariantReadModel model = VariantReadModel(id: table[i].id, name: table[i].name,);
+                                                Navigator.pop(context);
+                                                widget.valueSelect(model);
+                                              },
+                                              text: table[i].name ?? "",
+
+                                            )
+                                          // Text(keys[i].value??"",)
+
+                                        ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(2),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      // if (list1 != null)
+                      //   tablePagination(
+                      //     () => context.read<ShippingadreesCubit>().refresh(),
+                      //     back: list1?.previousUrl == null
+                      //         ? null
+                      //         : () {
+                      //             context
+                      //                 .read<ShippingadreesCubit>()
+                      //                 .previuosslotSectionPageList();
+                      //           },
+                      //     next: list1.nextPageUrl == null
+                      //         ? null
+                      //         : () {
+                      //             // print(data.nextPageUrl);
+                      //             context
+                      //                 .read<ShippingadreesCubit>()
+                      //                 .nextslotSectionPageList();
+                      //           },
+                      //   )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    });
+  }
+}
+
+
+
+
+
+
+
+
 
 
 class RequestFormCstomGroupListPopup extends StatefulWidget {

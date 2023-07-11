@@ -10,7 +10,7 @@ class AllocationdataAssignCubit extends Cubit<AllocationdataAssignState> {
   AllocationdataAssignCubit() : super(AllocationdataAssignState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getChannelAllocationRead(int? id, int? channelId) async {
-    print("idddidd" + id.toString());
+    emit(AllocationdataAssignState.initial());
     final result = await repo.getChannelAllocationRead(id, channelId);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

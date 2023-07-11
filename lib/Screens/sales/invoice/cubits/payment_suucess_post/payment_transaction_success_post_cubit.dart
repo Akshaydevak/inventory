@@ -11,7 +11,7 @@ class PaymentTransactionSuccessPostCubit extends Cubit<PaymentTransactionSuccess
   PaymentTransactionSuccessPostCubit() : super(PaymentTransactionSuccessPostState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future postPaymentTransactionSuccess(int ? invoiceId ,String? paymentMethod,String? paymentCode,int type ) async {
-    emit(_Loading());
+    // emit(_Loading());
     print("assa");
     final result = await repo.postPaymentTransactionSuccess(invoiceId,paymentMethod,paymentCode, type);
     print(result);

@@ -16,7 +16,7 @@ _$_BaseUomCreationtModel _$$_BaseUomCreationtModelFromJson(
       uomGroupName: json['uomgroup_name'] as String?,
       uomCode: json['uom_code'] as String?,
       standardCode: json['standard_code'] as String?,
-      conversionFactor: json['conversion_factor'] as int?,
+      conversionFactor: (json['conversion_factor'] as num?)?.toDouble(),
       isActive: json['is_active'] as bool? ?? false,
     );
 

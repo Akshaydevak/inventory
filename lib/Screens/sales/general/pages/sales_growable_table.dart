@@ -72,6 +72,9 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
   double warrentyPrice = 0;
   double totalPrice = 0;
   TextEditingController unicostController = TextEditingController();
+  TextEditingController discountTestController = TextEditingController();
+  TextEditingController excessTestController = TextEditingController();
+  TextEditingController quanitityTestController = TextEditingController();
   var unitcostListControllers = <TextEditingController>[];
 
   void taxableCalcutatingMethod(
@@ -84,7 +87,24 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
       taxableAmount = double.parse(((total - ((total * disct) / 100))).toStringAsFixed(2));
     }
   }
+
+
+
+
+
+  bool updateCheckFunc(){
+    var isUpdate=table1.where((element) => element.updatecheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
+  }
   clearTableAddingVariables(){
+
+
+
+    print("widget clearing checking");
 
     variantId = "";
     quantity = 0;
@@ -92,6 +112,10 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
     returntype = "";
     salesUom = "";
     unicostController.text = "";
+    discountTestController.clear();
+    excessTestController.clear();
+    quanitityTestController.clear();
+    unitcostListControllers.clear();
     discountPrice = "price";
     varinatname = "";
     barcode = "";
@@ -107,7 +131,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
     warrentyPrice = 0;
     isActive1 = false;
     assignCheck=true;
-    unitcostListControllers.clear();
+
 
 
   }
@@ -522,7 +546,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     ),
 
                                     tableHeadtext(
-                                      'Unit Cost',
+                                      'Actual Cost',
 
 
                                       size: 13,
@@ -1316,18 +1340,20 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: TableTextButton(
+                                            textColor:  table1?[i].updatecheck==true?Pellet.bagroundColor:Colors.black,
+                                            bagroundColor: table1?[i].updatecheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
                                             onPress: () {
                                               setState(() {
                                                 if(table1[i].quantity==0||table1[i].quantity==""||table1[i].quantity==null)
                                                   context.showSnackBarError("Please enter the quantity");
                                                 else if(table1[i].unitCost==0||table1[i].unitCost==""||table1[i].unitCost==null)
                                                   context.showSnackBarError("Please enter the unitcost");
-                                                else if(table1[i].vat==0||table1[i].vat==""||table1[i].vat==null){
-                                                  context.showSnackBarError("VAT is required");
-                                                }
+
                                                 else{
-                                                  widget.updateCheck(false);
                                                   table1[i]=      table1[i].copyWith(updatecheck: false);
+                                             var update=     updateCheckFunc();
+                                                  widget.updateCheck(update);
+
                                                   widget.updation(table1);
                                                 }
 
@@ -1335,7 +1361,6 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                               });
 
                                             },
-                                            textColor:table1[i].updatecheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
                                             label:table1[i].updatecheck==true? "Update":"",
                                           ),
                                         )
@@ -1511,7 +1536,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
-                                          // controller: receivedTestContoller,
+                                          controller: quanitityTestController,
 
                                           onChanged: (p0) {
                                             clear=true;
@@ -1611,7 +1636,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
-                                          // controller: excesstaxTestContoller,
+                                          controller: excessTestController,
                                           onChanged: (p0) {
                                             clear=true;
                                             if (p0 == '')
@@ -1694,7 +1719,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
-                                          // controller: discountTestContoller,
+                                          controller: discountTestController,
                                           onChanged: (p0) {
                                             clear=true;
                                             if (p0 == '')
@@ -1811,27 +1836,11 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                               label: "",
                                               icon: Icons.clear,
                                               onPress: () {
-                                                variantId = "";
-                                                quantity = 0;
-                                                returntime = "";
-                                                returntype = "";
-                                                salesUom = "";
-                                                unicostController.text = "";
-                                                discountPrice = "price";
-                                                varinatname = "";
-                                                barcode = "";
-                                                discount1 = 0;
-                                                stock=0;
-                                                stockId=0;
-                                                unitcost1 = 0;
-                                                taxableAmount = 0;
-                                                vat1 = 0;
-                                                etax1 = 0;
-                                                sellingPrice = 0;
-                                                totalPrice = 0;
-                                                warrentyPrice = 0;
-                                                isActive1 = false;
-                                                assignCheck=true;
+                                                setState(() {
+                                                  clearTableAddingVariables();
+                                                  widget.updation(table1);
+                                                });
+
                                                 // onChange=true;
                                                 //
                                                 // setState(() {
@@ -1855,9 +1864,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                 // widget.storageTableEdit(
                                                 //     type: "1", list: aboutProducts);
                                                 // });
-                                                setState(() {
 
-                                                });
 
                                               },
                                             ),
@@ -1869,10 +1876,6 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                       context.showSnackBarError("Please enter the quantity");
                                                     else if(unitcost1==0||unitcost1==""||unitcost1==null)
                                                       context.showSnackBarError("Please enter the unitcost");
-                                                    else if(vat1==0||vat1==""||vat1==null){
-                                                      context.showSnackBarError("VAT is required");
-
-                                                    }
                                                     else{
                                                       table1.add(SalesOrderLines(
                                                         variantId: variantId ?? "",
@@ -1901,6 +1904,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                       print("GAssaliiiiiiiiiiiis"+table1.toString());
                                                       currentStock.add(stock??0);
                                                       clearTableAddingVariables();
+                                                      unitcostListControllers.clear();
                                                       valueAddingTextEdingController();
                                                       widget.updation(table1);
 

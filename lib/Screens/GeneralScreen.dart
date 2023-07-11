@@ -1067,8 +1067,6 @@ else{
 
                                           TextButtonLarge(
                                             marginCheck: true,
-
-
                                             onPress: () {
                                                 select=true;
                                                 isVendorCheck=
@@ -1079,7 +1077,6 @@ else{
                                                table.clear();
                                                setState(() {
                                                });
-                                               print("Variable.inventory_ID"+Variable.inventory_ID.toString());
                                             },
                                             text: "CREATE",
                                           ),

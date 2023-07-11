@@ -292,37 +292,20 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
 
                             ),
                             tableHeadtext(
-
                               "Maximum Inventory",
-
-                              // padding: EdgeInsets.all(7),
-                              //
-                              // height: 46,
                               textColor: Colors.white,
-
-
                               size: 13,
-
 
                             ),
                             tableHeadtext(
-
                               "Offer Product Group",
-
-                              // padding: EdgeInsets.all(7),
-                              //
-                              // height: 46,
                               textColor: Colors.white,
-
-
                               size: 13,
 
 
                             ),
                             tableHeadtext(
-
                               "Image",
-
                               // padding: EdgeInsets.all(7),
                               //
                               // height: 46,

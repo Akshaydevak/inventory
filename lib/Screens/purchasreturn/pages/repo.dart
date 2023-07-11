@@ -90,7 +90,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postShippinAddress(
       ShippingAddressCreationModel model);
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>> getSalesGeneralVertical();
-  Future<Either<Failure, PaginatedResponse<List<PaymentListSalesModel>>>> getSalePaymentVerticalList(String? code);
+    Future<Either<Failure, PaginatedResponse<List<PaymentListSalesModel>>>> getSalePaymentVerticalList(String? code);
 
 
 
@@ -151,8 +151,8 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> brandDelete(int? id);
   Future<Either<Failure, DoubleResponse>> postBrandPatch(
       BrandCreationtModel model, int? id);
-  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      searchMaterialList(String? code, {String? page});
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> searchMaterialList(String? code, {String? page});
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getCategoryListOnly(String? code);
   Future<Either<Failure, DoubleResponse>> postCreateMaterial(
       MaterialCreationtModel model);
   Future<Either<Failure, MaterialReadModel>> getMaterialRead(int? id);
@@ -1729,5 +1729,11 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postPaymentTransactionSuccess(int? invoiceId, String? paymentMethod, String? paymentCode,int type) {
     return repoExecute<DoubleResponse>(
             () async => remoteDataSource.postPaymentTransactionSuccess(invoiceId,paymentMethod,paymentCode,type));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getCategoryListOnly(String? code,) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+            () async => remoteDataSource.getCategoryListOnly(code));
   }
 }

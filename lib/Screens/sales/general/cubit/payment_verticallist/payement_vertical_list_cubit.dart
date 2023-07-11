@@ -17,7 +17,10 @@ class PayementVerticalListCubit extends Cubit<PayementVerticalListState> {
     emit(PayementVerticalListState.initial());
     final result = await repo.getSalePaymentVerticalList("");
     print(result);
-    result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
+    result.fold((l) => emit(_Error()), (r) {
+      next = r.nextPage;
+      prev = r.previousPage;
+      emit(_Success(r));});
   }
 
   Future getSearchCustomerList(String filter) async {

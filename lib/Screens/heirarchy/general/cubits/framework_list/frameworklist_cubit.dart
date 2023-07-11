@@ -43,7 +43,7 @@ class FrameworklistCubit extends Cubit<FrameworklistState> {
   }
 
   Future nextslotSectionPageList() async {
-    final result = await repo.getFrameWorklist(next);
+    final result = await repo.getFrameWorklist("?$next");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -54,7 +54,7 @@ class FrameworklistCubit extends Cubit<FrameworklistState> {
 
   Future previuosslotSectionPageList() async {
     // print(previous);
-    final result = await repo.getFrameWorklist(prev);
+    final result = await repo.getFrameWorklist("?$next");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

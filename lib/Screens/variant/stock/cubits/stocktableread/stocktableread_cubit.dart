@@ -10,8 +10,11 @@ class StocktablereadCubit extends Cubit<StocktablereadState> {
   StocktablereadCubit() : super(StocktablereadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getStockTableRead(
+
     String? code,
   ) async {
+
+    emit(StocktablereadState.initial());
     final result = await repo.getStockTableRead(code);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

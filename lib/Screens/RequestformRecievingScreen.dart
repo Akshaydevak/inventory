@@ -172,6 +172,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
     }
   }
 
+
   valueAddingRecievingTextEdingController() {
     if (recievingLisnes.isNotEmpty) {
       for (var i = 0; i < recievingLisnes.length; i++) {
@@ -181,6 +182,22 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
         setState(() {});
       }
     }
+  }
+  bool receiveLineUpdateCheckFunc(){
+    var isUpdate=recievingLisnes.where((element) => element.updateCheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
+  }
+  bool additiionUpdateCheckFunc(){
+    var isUpdate=additionalVariants.where((element) => element.updateCheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
   }
 
   vatableAmountCalculation(
@@ -927,6 +944,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                           builder: (context) =>
                                               PrintScreen(
                                                 table: recievingLisnes,
+                                                vendorCode: "Not",
 
                                                 note: noteController.text,
 
@@ -1166,6 +1184,58 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                     } else {
                                     }
                                   });
+                                  var recieveingList1=[];
+                                  double unitCostRecievde=0;
+                                  double vatRecievde=0;
+                                  double actualCostRecievde=0;
+                                  double variableAmountRecievde=0;
+                                  double discAmountRecievde=0;
+                                  double excessRecievde=0;
+                                  double focRecievde=0;
+                                  if(recievingLisnes.isNotEmpty) {
+                                    for (var i = 0; i <
+                                        recievingLisnes.length; i++) {
+                                      if (recievingLisnes[i].isReceived!=true) {
+                                        recieveingList1.add(recievingLisnes[i]);
+                                        var unicosts = recievingLisnes[i]
+                                            .unitCost ?? 0;
+                                        var vatValue1 = recievingLisnes[i]
+                                            .vat ?? 0;
+
+                                        var actualValue1 = recievingLisnes[i]
+                                            .actualCost ?? 0;
+                                        var discountValue1 = recievingLisnes[i]
+                                            .discount ?? 0;
+                                        var focValue1 = recievingLisnes[i]
+                                            .foc ?? 0;
+                                        var VatableValue1 = recievingLisnes[i]
+                                            .vatableAmount ?? 0;
+                                        var excessTAxValue1 = recievingLisnes[i]
+                                            .excessTax ?? 0;
+
+                                        unitCostRecievde = unitCostRecievde + unicosts;
+
+                                        actualCostRecievde =
+                                            actualCostRecievde + actualValue1;
+                                        vatRecievde = vatRecievde + vatValue1;
+                                        discAmountRecievde =
+                                            discAmountRecievde + discountValue1;
+                                        focRecievde = focRecievde + focValue1;
+                                        variableAmountRecievde =
+                                            variableAmountRecievde +
+                                                VatableValue1;
+                                        print("excessTaxvalue" +
+                                            excessTAxValue.toString());
+                                        excessRecievde =
+                                            excessRecievde + excessTAxValue1;
+                                      }
+                                    }
+                                  }
+
+
+
+
+
 
 
 
@@ -1174,22 +1244,18 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             PrintScreen(
-                                              table: recievingLisnes,
+                                              table: recieveingList1,
                                               isReceived: true,
                                               note: noteController.text,
+                                              vendorCode: "Not",
                                               orderCode: orderCodeController.text,
                                               orderDate: orderDateController.text,
-                                              vat: double.tryParse(
-                                                  vatController.text),
-                                              actualCost: double.tryParse(
-                                                  actualCostController.text),
-                                              variableAmount: double.tryParse(variableAmountController.text),
-                                              discount: double.tryParse(
-                                                  discountController.text),
-                                              unitCost: double.tryParse(
-                                                  unitCostController.text),
-                                              excisetax: double.tryParse(
-                                                  excessTaxController.text),
+                                              vat: vatRecievde,
+                                              actualCost: actualCostRecievde,
+                                              variableAmount: variableAmountRecievde,
+                                              discount: discAmountRecievde,
+                                              unitCost: unitCostRecievde,
+                                              excisetax:excessRecievde,
                                               remarks: remarksController.text,
                                               model: model,
                                               pageName: "REQUEST FORM RECEIVING",
@@ -3176,19 +3242,15 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                   .middle,
                                                           child:
                                                               TableTextButton(
+                                                                textColor:  recievingLisnes?[i].updateCheck==true?Pellet.bagroundColor:Colors.black,
+                                                                bagroundColor: recievingLisnes?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
                                                             label: recievingLisnes[
                                                                             i]
                                                                         .updateCheck ==
                                                                     true
                                                                 ? 'UPDATE'
                                                                 : "",
-                                                            textColor: recievingLisnes[
-                                                                            i]
-                                                                        .updateCheck ==
-                                                                    true
-                                                                ? Pellet
-                                                                    .tableBlueHeaderPrint
-                                                                : Colors.grey,
+
                                                             onPress: () {
                                                               var variant =
                                                                   recievingLisnes[i]
@@ -5980,8 +6042,12 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                             children: [
                               TextButtonLarge(
                                 onPress: () {
-                                  AdditionalGenerateModel model =
-                                      AdditionalGenerateModel(
+                                  var isUpdate=additiionUpdateCheckFunc();
+                                  if(isUpdate){
+                                    context.showSnackBarError("Please press the update button");
+                                  }
+                                  else{AdditionalGenerateModel model =
+                                  AdditionalGenerateModel(
                                     receivingId: receivingId,
                                     createdBy: 12,
                                     purchaseOrderId: Variable.verticalid,
@@ -5990,7 +6056,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                   context
                                       .read<GeneraterequestformCubit>()
-                                      .additionlGenerateRequest(model!);
+                                      .additionlGenerateRequest(model!);}
+
                                 },
                                 text: "GENERATE ORDER",
                               ),
@@ -6018,9 +6085,10 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                               //   }
                               // }
 
-                              if (updateCheck == true) {
+                              var isUpdate=receiveLineUpdateCheckFunc();
+                              if (isUpdate == true) {
                                 context
-                                    .showSnackBarError("please press update");
+                                    .showSnackBarError("Please press update");
                               } else {
                                 RequestReceivingPatch model =
                                     RequestReceivingPatch(

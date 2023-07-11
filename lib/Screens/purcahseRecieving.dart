@@ -264,6 +264,23 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
     grandTotal1=actualCost1;
 
   }
+
+  bool receiveLineUpdateCheckFunc(){
+    var isUpdate=recievingLisnes.where((element) => element.updateCheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
+  }
+  bool additiionUpdateCheckFunc(){
+    var isUpdate=additionalVariants.where((element) => element.updateCheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
+  }
   clear(){
 
 
@@ -393,10 +410,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           print("error");
                         },
                         success: (data) {
-                          print("the purchase" + data.toString());
                           stockCheck=false;
                           // setState(() {
-                          print("dataSSSSSSSSSSSSSS" + data.toString());
                           data.receivingLines != null
                               ? recievingLisnes =List.from( data.receivingLines ?? [])
                               : recievingLisnes = [];
@@ -405,12 +420,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           for(var i=0;i<recievingLisnes.length;i++){
                             var date = new TextEditingController(text:recievingLisnes[i]?.expiryDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(recievingLisnes[i]?.expiryDate??"")));
                             expirydateControllerList2.add(date);
-
                           }
                           // print("reading case"+expirydateControllerList2.length.toString());
-                          print("recievelines" + recievingLisnes.toString());
-                          print("recievelines" +
-                              vm.recievingLisnes.length.toString());
                           orderCodeController.text = data.orderCode ?? "";
                           focController.text = data.foc.toString() ?? "";
                           recievingCodeController.text = data.receivingCode ?? "";
@@ -485,9 +496,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           remarksController.text=data.remarks ?? "";
                           noteController.text=data.note ?? "";
                           _getCurrentUser();
-
                           setState(() {});
-                          print("recievingLisnes" + recievingLisnes.toString());
                         });
                   },
                 ),
@@ -550,7 +559,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                     print("postssssssss" + state.toString());
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingg");
+                      context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
@@ -950,6 +959,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       PrintScreen(table:recievingLisnes,
                                                                         note: noteController.text,
                                                                         orderCode:orderCodeController.text ,
+                                                                        vendorCode:  vendorCodeController.text,
                                                                         orderDate:orederDate2Controller .text,
                                                                         vat: double.tryParse( vatController.text),
                                                                         actualCost:double.tryParse( actualCostController.text),
@@ -2224,6 +2234,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             TableCell(
                                                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                               child: TableTextButton(
+                                                                                                  textColor:  recievingLisnes?[i].updateCheck==true?Pellet.bagroundColor:Colors.black,
+                                                                                                bagroundColor: recievingLisnes?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
 
                                                                                                   onPress: () {
 
@@ -2242,7 +2254,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                     }
                                                                                                     else if(qty==0||qty==""){
                                                                                                       context.showSnackBarError(
-                                                                                                          "the requested quantity not be 0 or empty");
+                                                                                                          "the received quantity not be 0 or empty");
 
                                                                                                     }
                                                                                                     // else if(expirydates=="")
@@ -2282,7 +2294,6 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
                                                                                                   },
-                                                                                                textColor:recievingLisnes[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.grey ,
                                                                                                   label: recievingLisnes[i].updateCheck==true?"Update":"",
 
                                                                                               ),
@@ -2651,7 +2662,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   valueSelect: (VariantId? va) {
                                                                                                     updateCheck1=true;
 
-                                                                                                    additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                                    additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                                     setState(() {
 
                                                                                                     });
@@ -2767,7 +2778,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             integerOnly: true,
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
-                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                               setState(() {
                                                                                               });
                                                                                               print(va);
@@ -2845,7 +2856,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               bool? isRecieved = additionalVariants[i].isReceived;
                                                                                               setState(() {
                                                                                                 updateCheck1=true;
-                                                                                                additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                                additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                                 setState(() {
 
                                                                                                 });
@@ -2864,7 +2875,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             // last: additionalVariants[i].unitCost.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
-                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                               setState(() {
 
                                                                                               });
@@ -2941,7 +2952,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: additionalVariants[i].excessTax.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
-                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                               setState(() {
 
                                                                                               });
@@ -3125,7 +3136,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: additionalVariants[i].foc.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
-                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                               setState(() {
 
                                                                                               });
@@ -3343,11 +3354,12 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
                                                                                         TableCell(
+                                                                                          verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: CheckedBoxs(
                                                                                             valueChanger: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
                                                                                             onSelection: (bool? value) {
                                                                                               updateCheck1=true;
-                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                               setState(() {
 
                                                                                               });
@@ -3367,7 +3379,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             valueChanger: additionalVariants[i].isActive == null ? false : additionalVariants[i].isActive,
                                                                                             onSelection: (bool? value) {
                                                                                               updateCheck1=true;
-                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: true);
                                                                                               setState(() {
 
                                                                                               });
@@ -3383,13 +3395,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child:          TableTextButton(
+                                                                                            textColor:  additionalVariants?[i].updateCheck==true?Pellet.bagroundColor:Colors.black,
+                                                                                            bagroundColor: additionalVariants?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
 
                                                                                            onPress: () {
                                                                                               print("akshay");
-                                                                                              if(additionalVariants[i].isActive==false||additionalVariants[i].isReceived==false) {
-                                                                                                context
+                                                                                                if(additionalVariants[i].isActive==false||additionalVariants[i].isReceived==false) {
+                                                                                                  context
                                                                                                     .showSnackBarError(
-                                                                                                    "please check isActive and isRecieved fields");
+                                                                                                    "please check isActive and is Received fields");
                                                                                               }
 
                                                                                                 else{
@@ -3403,7 +3417,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
                                                                                           },
-                                                                                            label: updateCheck==true?"update":"",
+                                                                                            label: additionalVariants[i].updateCheck==true?"update":"",
                                                                                         ))
 
 
@@ -4111,22 +4125,31 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             children: [
                                                               TextButtonLarge(
                                                                 onPress: () {
-
-                                                                  List<RecievingLines>additionalVariants1=[];
-                                                                  for(var i=0;i<additionalVariants.length;i++){
-                                                                    if(additionalVariants[i].isReceived==true &&additionalVariants[i].isActive==true){
-                                                                      additionalVariants1.add(additionalVariants[i]);
+                                                                  var isUpdate=additiionUpdateCheckFunc();
+                                                                  if(isUpdate==true){
+                                                                    context.showSnackBarError("Please press update button");
+                                                                  }
+                                                                  else{
+                                                                    List<RecievingLines>additionalVariants1=[];
+                                                                    for(var i=0;i<additionalVariants.length;i++){
+                                                                      if(additionalVariants[i].isReceived==true &&additionalVariants[i].isActive==true){
+                                                                        additionalVariants1.add(additionalVariants[i]);
+                                                                      }
                                                                     }
+
+                                                                    AdditionalGenerateModel model=AdditionalGenerateModel(
+                                                                      receivingId: receivingId,
+                                                                      createdBy: 12,
+                                                                      purchaseOrderId:veritiaclid,
+                                                                      orderLines: additionalVariants1,
+                                                                    );
+                                                                    print("avan"+model.toString());
+                                                                    context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
+
                                                                   }
 
-                                                                  AdditionalGenerateModel model=AdditionalGenerateModel(
-                                                                    receivingId: receivingId,
-                                                                    createdBy: 12,
-                                                                    purchaseOrderId:Variable.verticalid,
-                                                                    orderLines: additionalVariants1,
-                                                                  );
-                                                                  print("avan"+model.toString());
-                                                                   context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
+
+
                                                                 },
                                                                 icon: Icons.check,
                                                                 // iconColor: Colors.white,
@@ -4144,8 +4167,14 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                           isDelete: true,
 
                                                           saveFunction: (){
+                                                            var isUpdate=receiveLineUpdateCheckFunc();
+                                                            print("isUpdate=============$isUpdate");
 
-                                                            print("akkkakkaa");
+
+                                                          if(isUpdate==true){
+                                                            context.showSnackBarError("Please press the update button");
+                                                          }
+                                                          else{
                                                             if(recievingLisnes.isNotEmpty==true  && currentStock.isNotEmpty==true){
                                                               for(var i=0;i<recievingLisnes.length;i++){
 
@@ -4155,16 +4184,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                 });
                                                               }
                                                             }
-
-
                                                             PurchaseRecievingRead model = PurchaseRecievingRead(
                                                                 orderCode: orderCodeController.text ?? "",
                                                                 receivingCode: recievingCodeController.text ?? "",
                                                                 orderCreatedDate: orederDateController.text ?? "",
                                                                 orderStatus:
                                                                 orderStatusController
-                                                                    .text ??
-                                                                    "",
+                                                                    .text ??"",
                                                                 invoiceStatus:
                                                                 invoiceStausController
                                                                     .text ??
@@ -4190,6 +4216,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                 .getPurchaseRecievePatch(
                                                                 receivingId,
                                                                 model);
+                                                          }
+
 
                                                           },
                                                           discardFunction: (){
@@ -5125,795 +5153,3 @@ class CommonButtonCustom extends StatelessWidget {
 
 
 
-class PurchaseReceivingPrintScreen2 extends StatefulWidget {
-  final String vendorCode;
-  final String note;
-  final bool select;
-  final bool isRecieved;
-  final String orderCode;
-  final String orderDate;
-  final String remarks;
-  final double? discount;
-  final double? vat;
-  final double? variableAmount;
-  final double? actualCost;
-  final double? unitCost;
-  final double? excisetax;
-  final String pageName;
-  final InventoryListModel? model;
-  final  List<RecievingLines> table;
-
-  PurchaseReceivingPrintScreen2({
-    this.vendorCode="",
-    this.orderCode="",
-    this.note="",
-    this.remarks="",
-    this.orderDate="",
-    required this.table,
-    this.actualCost=0.00,
-    this.variableAmount=0.00,
-    this.select=false,
-    this.discount=0.00,
-    this.isRecieved=false,
-    this.vat=0.00,
-    this.unitCost=0.00,
-    this.excisetax=0.00, this.model, required this.pageName,
-  });
-  @override
-  _PurchaseReceivingPrintScreen2State createState() => _PurchaseReceivingPrintScreen2State();
-}
-class _PurchaseReceivingPrintScreen2State extends State<PurchaseReceivingPrintScreen2> {
-  late AutoScrollController _scrollController;
-  @override
-  void initState() {
-
-    _scrollController = AutoScrollController(
-        viewportBoundaryGetter: () =>
-            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
-        axis: Axis.vertical);
-    super.initState();
-    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
-    //   print("ak test"+value.toString());
-    // });
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-
-      body:PdfPreview(
-        build: (format) => _generatePdf(format,"title",widget.orderDate, widget.orderCode,context,widget.vendorCode,
-            widget.discount,widget.actualCost,widget.variableAmount,widget.unitCost,widget.excisetax,widget.vat,widget.note,widget.remarks,widget.table,widget.model!,widget.isRecieved,widget.pageName),
-      ),
-
-    );
-  }
-}
-Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDate,String? orderCode,BuildContext context,String vendorCode,
-    double? discount,double? actualCost,double? variableAmount,double? unitCost
-    ,double? excisetax,double? vat,String note,String remarks,List<RecievingLines> table,InventoryListModel model,bool isRecieved,String pageName) async {
-  double height = MediaQuery.of(context).size.height;
-  double width = MediaQuery.of(context).size.width;
-  final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-  final font = await PdfGoogleFonts.nunitoExtraLight();
-  // final netImage = await networkImage(model.companyLogo??"");
-  // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
-
-  pdf.addPage(
-    pw.Page(
-      pageFormat:   format.copyWith(marginLeft: 3, marginTop: 3, marginRight: 3, marginBottom: 3),
-      build: (context) {
-        return
-          pw. Container(
-
-            // backgroundColor: Colors.white,
-            child:pw.Column(
-              children: [
-
-                pw.  Container(
-                  height:height*.105 ,
-
-
-                  color: PdfColor.fromInt(0xAAF7F7F7),
-                  child:pw. Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      // pw.Container(
-                      //   margin: pw.EdgeInsets.symmetric(vertical: 5),
-                      //   height:60 ,
-                      //   width: 60,
-                      //   child:pw.Image(netImage),
-                      // ),
-                      pw. Spacer(),
-                      pw. Container(
-                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-                        // padding:pw. EdgeInsets.only(right: width*.01),
-
-                        child:pw. Column(
-                          crossAxisAlignment:pw. CrossAxisAlignment.end,
-                          children: [
-                            pw.  SizedBox(height: height*.06,),
-                            pw.  Text(Variable.mobileNumber,
-                              style: pw.TextStyle(
-                                // color:Color(0xff565555) ,
-                                  fontSize:7 ),),
-                            pw.  SizedBox(height: height*.005,),
-                            pw. Text(Variable.email,
-                              style:pw. TextStyle(
-                                // color:Color(0xff565555) ,
-                                  fontSize:7 ),),
-                            pw.   SizedBox(height: height*.009,),
-                            pw. Text(pageName,
-                              style:pw. TextStyle(
-
-                                color: PdfColor.fromInt(0xff3E4F5B),
-                                fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 2.0,),),
-                            pw.  SizedBox(height: height*.009,)
-
-                          ],
-                        ),
-                      ),
-
-
-
-
-                    ],
-                  ),
-                ),
-
-
-
-
-
-                pw.   Container(
-                  // color:pw. Colors.white,
-                  child:pw. Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      pw.  SizedBox(height: 10,),
-                      pw.  Container(
-                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-                        child:pw. Row(
-                          mainAxisAlignment:  pw.MainAxisAlignment.start,
-                          children: [
-                            pw. Container(
-                              height: 70,
-                              child: pw.Column(
-                                crossAxisAlignment:pw. CrossAxisAlignment.start,
-                                children: [
-                                  pw.   Text(model.name??"",
-                                    style:  pw.TextStyle(  fontSize:14,fontWeight:pw. FontWeight.bold ),),
-                                  pw.  SizedBox(height: 2,),
-                                  pw.  Text(model.addressOne??"",
-                                    style:  pw.TextStyle(  font: font,fontSize:9 ),),
-                                  pw.  Text(model.addressTwo??"",
-                                    style:  pw.TextStyle(  font: font,fontSize:9 ),),
-                                  pw.   SizedBox(height: 2,),
-                                  pw. Text(model.email??"",
-                                    style:  pw.TextStyle( font: font,fontSize:9),)
-
-                                ],
-                              ),
-                            ),
-                            pw.  Spacer(),
-
-                            pw.   Container(
-                              height: 70,
-                              child: pw. Row(
-                                children: [
-                                  pw.  Column(
-                                    crossAxisAlignment:  pw.CrossAxisAlignment.end,
-                                    children: [
-                                      pw. Container(
-                                          padding: pw. EdgeInsets.only(top: 9),
-
-                                          child:  pw.Text("Date : ",style:  pw.TextStyle(fontSize:9))),
-                                      pw.  Container(
-                                          padding: pw. EdgeInsets.only(top: 9),
-
-                                          child:  pw.Text("purchase order code : ",style:  pw.TextStyle(fontSize:9))),
-
-                                    ],
-                                  ),
-                                  pw. Column(
-                                    children: [
-                                      pw. Container(
-                                          padding:  pw.EdgeInsets.only(top: 9),
-                                          decoration:  pw.BoxDecoration(
-                                              border: pw.Border(
-                                                bottom:pw. BorderSide(width: .5,),
-                                              )
-                                          ),
-                                          width: 80,
-                                          child: pw.Text(orderDate==""?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate.toString(),style:  pw.TextStyle(fontSize:9))
-                                      ),
-                                      pw.  Container(
-                                          padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
-                                          decoration: pw. BoxDecoration(
-                                              border: pw.Border(
-                                                bottom: pw. BorderSide(width: .5,
-                                                  // color: Color(0xffACACAC66).withOpacity(.4)
-                                                ),
-                                              )
-                                          ),
-                                          width: 85,
-                                          child: pw.Text(orderCode.toString()??"",style:  pw.TextStyle(fontSize:9))
-                                      ),
-
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-
-                          ],
-                        ),
-                      ),
-                      // pw. SizedBox(height: 30,),
-                      pw. Container(
-                        width: width,
-                        height: height*.15,
-                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-                        decoration: pw. BoxDecoration(
-
-                            border: pw. Border.all(
-                              width: .6,
-
-                              color: PdfColor.fromInt(0xAAACACAC),
-
-
-                            )
-                        ),
-                        child:  pw.Column(
-                          crossAxisAlignment:  pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.Container(
-                              height:height*.04,
-                              width: width,
-                              color: PdfColor.fromInt(0xff3E4F5B),
-                              child:  pw.Center(
-                                child: pw. Container(
-                                    alignment:  pw.Alignment.topLeft,
-
-
-                                    margin:pw. EdgeInsets.only(left: width*.01,top: 8),
-                                    child: pw.Text("Basic Details",style:pw. TextStyle(fontSize:8,color: PdfColors.white,),)),
-                              ),
-
-                            ),
-                            pw. Expanded(child: pw. Container(
-                              //color: Colors.red,
-                              child: pw.Center(
-                                child: pw. Row(
-
-                                  mainAxisAlignment: pw. MainAxisAlignment.spaceAround,
-                                  children: [
-                                    pw. Column(
-                                      mainAxisAlignment: pw. MainAxisAlignment.center,
-                                      crossAxisAlignment:  pw.CrossAxisAlignment.start,
-                                      children: [
-                                        pw. Text("Supplier",
-                                            style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018
-                                            )),
-
-                                        pw.SizedBox(height: 3,),
-                                        pw.Text(vendorCode,style:  pw.TextStyle(fontWeight:pw. FontWeight.bold,fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)),),
-                                      ],
-                                    ),
-                                    pw.  SizedBox(width: 12,),
-                                    pw.  Column(
-                                      mainAxisAlignment:  pw.MainAxisAlignment.center,
-                                      crossAxisAlignment: pw. CrossAxisAlignment.start,
-                                      children: [
-                                        pw.Text("ORDER CODE",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018
-                                          // color:Color(0xff565555),
-                                        )),
-                                        pw. SizedBox(height: 3,),
-                                        pw. Text(orderCode??"",style: pw. TextStyle(
-                                            fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
-                                            // color: Colors.black,
-                                            fontWeight: pw.FontWeight.bold),),
-                                      ],
-                                    ),
-                                    pw.  SizedBox(width: 12,),
-                                    pw.  Column(
-                                      mainAxisAlignment: pw. MainAxisAlignment.center,
-                                      crossAxisAlignment:  pw.CrossAxisAlignment.start,
-                                      children: [
-                                        pw. Text("ORDER DATE",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018
-                                        ),),
-                                        pw.SizedBox(height:orderDate==""?9: 3,),
-                                        pw.  Text(orderDate.isEmpty?DateFormat('dd-MM-yyyy').format(DateTime.now()):orderDate,style: pw. TextStyle(
-                                            fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
-                                            // color: pw.C.black,
-                                            fontWeight: pw.FontWeight.bold),),
-                                      ],
-                                    ),
-                                    pw. SizedBox(width: 12,)
-                                  ],
-                                ),
-                              ) ,
-                            ))
-                          ],
-                        ),
-                      ),
-                      pw.SizedBox(height: 15),
-                      pw.Container(
-                        // height: 400,
-                        margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-                        child:  pw.Table(
-                          border: pw. TableBorder(
-                            bottom:pw. BorderSide(
-                                width: .5,
-                                color: PdfColors.grey,
-                                style:
-                                pw. BorderStyle.solid),
-                            right:pw. BorderSide(
-                                width: .5,
-                                color: PdfColors.grey,
-                                style:
-                                pw. BorderStyle.solid),
-                            left:pw. BorderSide(
-                                width: .5,
-                                color: PdfColors.grey,
-                                style:
-                                pw. BorderStyle.solid),
-                            verticalInside: pw.BorderSide(
-                                width: .5,
-                                color: PdfColors.grey,
-                                style:
-                                pw. BorderStyle.solid),
-                            // horizontalInside:
-                            // pw.   BorderSide(
-                            //
-                            //     width: .5,
-                            //     color: PdfColors.grey,
-                            //     style:
-                            //     pw.  BorderStyle.solid)
-                          ),
-                          // tableWidth:.5,
-                          columnWidths: {
-
-                            0: pw.FlexColumnWidth(1.5),
-                            1:pw. FlexColumnWidth(4),
-                            2:pw. FlexColumnWidth(5),
-                            3: pw.FlexColumnWidth(3),
-                            4:pw. FlexColumnWidth(2.5),
-                            5:pw. FlexColumnWidth(2),
-                            6: pw.FlexColumnWidth(2),
-                            7:pw. FlexColumnWidth(2),
-                            8: pw.FlexColumnWidth(3),
-                            9: pw.FlexColumnWidth(2),
-                            10:pw. FlexColumnWidth(2),
-                            11:pw. FlexColumnWidth(4),
-                            12: pw.FlexColumnWidth(4),
-                            13:pw. FlexColumnWidth(4),
-                            14:pw. FlexColumnWidth(4),
-                            15:pw. FlexColumnWidth(3),
-                            16:pw. FlexColumnWidth(3),
-                            17: pw.FlexColumnWidth(3),
-
-
-                          },
-                          children: [
-                            pw. TableRow(
-
-                                children: [
-                                  pw. Container(
-                                    color:  PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.012, color: PdfColors.white,)),
-                                    height: 30,
-
-                                  ),
-                                  pw. Container(
-                                    color:  PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 30,
-                                  ),
-
-
-                                  pw.  Container(
-                                    color: PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 30,
-                                  ),
-                                  pw.  Container(
-                                    color:  PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 30,
-
-                                  ),
-                                  if(isRecieved)
-                                    pw.  Container(
-                                      color:  PdfColor.fromInt(0xff3E4F5B),
-                                      alignment:pw. Alignment.center,
-                                      child:pw.Text( 'Is Received',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                      height: 30,
-                                    ),
-                                  pw.  Container(
-                                    color:  PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 30,
-                                  ),
-
-
-
-                                  pw.   Container(
-                                    color: PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 30,
-                                  ),
-                                  pw.  Container(
-                                    color:  PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text(  'Excise tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 30,
-                                  ),
-                                  pw.  Container(
-                                    color: PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 30,
-
-                                  ),
-
-                                  pw.  Container(
-                                    color: PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 30,
-                                  ),
-                                  pw.       Container(
-                                    color:  PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
-                                    height: 30,
-
-                                  ),
-                                  pw. Container(
-                                    color:  PdfColor.fromInt(0xff3E4F5B),
-                                    alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
-                                    height: 30 ,
-                                  ),
-
-
-                                  // tableHeadtext(
-                                  //   'Is free',
-                                  //   padding:
-                                  //   EdgeInsets.all(15),
-                                  //   height: 80,
-                                  //   size: 13,
-                                  //     color:  Color(0xff1F6BA9)
-                                  // ),
-
-
-                                ]),
-                            if (table != null)...[
-                              for (var i = 0;
-                              i < table.length;
-                              i++)
-                                pw. TableRow(
-                                    children: [
-
-                                      pw.    Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
-                                        alignment:pw. Alignment.center,
-
-                                        child: pw.Text(   (i + 1)
-                                            .toString(),style:pw. TextStyle(fontSize: height*.013)),
-
-
-                                      ),
-
-                                      pw.  Container(
-                                        padding: pw.EdgeInsets.only(top:height*.014),
-                                        alignment:pw. Alignment.center,
-                                        height: 40,
-                                        child:pw. Text(
-                                            table[i].variantId??"",style:pw. TextStyle(fontSize: height*.013)),
-                                      ),
-                                      pw.   Container(
-                                        padding: pw.EdgeInsets.only(top: height*.014),
-                                        alignment:pw. Alignment.center,
-                                        height: 40,
-                                        child:pw. Text(
-                                            table[i].barcode??"",style:pw. TextStyle(fontSize: height*.013)),
-
-                                      ),
-                                      pw.   Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
-                                        alignment:pw. Alignment.center,
-                                        child:pw. Text(
-                                            table[i].supplierCode??table[i].purchaseUom??"",style:pw. TextStyle(fontSize: height*.013)),
-
-                                      ),
-
-                                      if(isRecieved)  pw.  Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
-                                        alignment:pw. Alignment.center,
-                                        child: pw.Checkbox(name: "",value: table[i].isReceived??false),
-
-                                      ),  pw.  Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
-                                        alignment:pw. Alignment.center,
-                                        child: pw.Text(
-                                            table[i].requestedQty?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
-
-                                      ),
-
-                                      pw. Container(
-                                        padding: pw.EdgeInsets.only(top:height*.019),
-                                        alignment:pw. Alignment.center,
-                                        child: pw.Text(
-                                            table[i].unitCost?.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
-
-
-                                      ),
-                                      pw.  Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
-
-                                        alignment:pw. Alignment.center,
-                                        child: pw.Text(
-                                            table[i].excessTax.toString()??"",style:pw. TextStyle(fontSize: 8)),
-                                        // fontSize: 12,
-
-
-                                      ),
-                                      pw. Container(
-                                        padding: pw.EdgeInsets.only(top:height*.019),
-                                        alignment:pw. Alignment.center,
-                                        child:pw. Text(
-                                            table[i].discount?.toString()??"",style:pw. TextStyle(fontSize: 8)),
-                                      ),
-
-                                      pw. Container(
-                                        alignment:pw. Alignment.center,
-                                        padding: pw.EdgeInsets.only(top:height*.019),
-                                        child:pw. Text(
-                                            table[i]?.vatableAmount?.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
-                                        // fontSize: 12,
-                                      ),
-                                      pw.  Container(
-                                        padding: pw.EdgeInsets.only(top: height*.019),
-                                        alignment:pw. Alignment.center,
-                                        child: pw.Text(
-                                            table[i]?.vat.toString()??"",style:pw. TextStyle(fontSize: height*.013)),
-                                        // fontSize: 12,
-
-                                      ),
-                                      pw.  Container(
-                                        padding: pw.EdgeInsets.only(top:height*.019),
-                                        alignment:pw. Alignment.center,
-                                        child:pw. Text(
-                                            table[i].actualCost.toString()??"",style:pw. TextStyle(fontSize:height*.013)),
-
-                                      ),
-
-
-
-
-
-
-                                    ]
-                                )
-                            ]
-
-                          ],
-                        ),
-                        // width: width,
-
-                      ),
-                      pw.SizedBox(height: 8),
-
-                      pw.  Container(
-                          margin:  pw.EdgeInsets.symmetric(horizontal:width/103),
-                          width: width,
-                          height: 27,
-
-                          decoration:pw. BoxDecoration(
-
-                            color:  PdfColor.fromInt(0xAAF7F7F7),
-
-
-                          ),
-                          child:pw.Row(
-                            mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
-                            children: [
-                              pw.Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw.Text("Discount:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw. Text(discount?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
-                                  ],
-                                ),
-                              ),
-
-                              pw. Container(
-                                child: pw.Row(
-                                  children: [
-                                    pw. Text("UnitCost:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
-                                    pw. Text(unitCost?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
-                                  ],
-                                ),
-                              ),
-                              pw.  Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw.  Text("Excise Tax: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
-                                    pw. Text(excisetax?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
-                                  ],
-                                ),
-                              ),
-                              pw.Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw. Text("VAT Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
-                                    pw.Text(vat?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
-                                  ],
-                                ),
-                              ),
-                              pw. Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw.  Text("Vatable Amount: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8 ),),
-                                    pw.Text(variableAmount?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
-                                  ],
-                                ),
-                              ),
-                              pw. Container(
-                                child:pw. Row(
-                                  children: [
-                                    pw. Text("Actual cost: ",style:pw. TextStyle(fontWeight:pw.FontWeight.normal,fontSize: 8  ),),
-                                    pw.Text(actualCost?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
-                                  ],
-                                ),
-                              )
-
-                            ],
-                          )
-                      ),
-                      //calculation
-                      pw.  SizedBox(height: height*0.15,),
-                      //
-                      pw.  Row(
-                        children: [
-                          pw.  Container(
-                            margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
-                            child:pw. Column(
-                              crossAxisAlignment:pw. CrossAxisAlignment.start,
-                              children: [
-
-                                pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.008,),
-                                pw. Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
-                                    children: [
-                                      pw.  Row(
-                                        children: [
-
-
-                                          pw.  Text(note??"",style: pw.TextStyle(
-                                            // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: height*.02,),
-
-                                    ],
-                                  ),
-                                ),
-                                pw.  SizedBox(height: height*.02,),
-                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.008,),
-                                pw.Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw. Row(
-                                        children: [
-
-
-                                          pw.Text(remarks??"",style: pw.TextStyle(
-                                            // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.02,),
-
-                                    ],
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          ),
-
-
-                          pw.  Spacer(),
-                          pw. Container(
-                            margin: pw.EdgeInsets.only(right: width*.02),
-                            height: height*.12,
-                            width:width*.14,
-                            decoration:pw. BoxDecoration(
-
-                              // Red border with the width is equal to 5
-                                border:pw. Border.all(
-                                    width: .6,
-
-
-                                    color: PdfColor.fromInt(0xAAACACAC)
-                                )
-                            ),
-                            child:pw. Column(
-                              crossAxisAlignment:pw. CrossAxisAlignment.start,
-                              children: [
-                                pw. Container(
-                                    margin:pw. EdgeInsets.only(
-                                      top:height*.018,
-                                      left:height*.015,
-                                    ),
-                                    child: pw.Text("Authorized by:",style:pw. TextStyle(
-                                      // color: Colors.black,
-                                      fontWeight:pw. FontWeight.normal,fontSize:height*.016,),)),
-                                //
-                                // Row(
-                                //   children: [
-                                //     Text("Aftabu rahman",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,height: 19),),
-                                //
-                                //   ],
-                                // )
-
-                              ],
-                            ),
-
-                          )
-
-                        ],
-                      )
-                      //last section
-
-
-
-                    ],
-                  ),
-
-                ),
-                pw.   SizedBox(height: height*.03,)
-
-              ],
-            ) ,
-          );
-
-        //   pw.Column(
-        //   children: [
-        //     pw.SizedBox(
-        //       width: double.infinity,
-        //       child: pw.FittedBox(
-        //         child: pw.Text(title, style: pw.TextStyle(font: font)),
-        //       ),
-        //     ),
-        //     pw.SizedBox(height: 20),
-        //     pw.Flexible(child: pw.FlutterLogo())
-        //   ],
-        // );
-      },
-    ),
-  );
-
-  return pdf.save();
-}

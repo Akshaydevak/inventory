@@ -40,7 +40,10 @@ class Identification extends StatefulWidget {
   final Function barQrCodeTableAssign;
 
   Identification(
-      {required this.select,
+
+      {
+        required Key key,
+        required this.select,
       required this.barCode,
       required this.veritiaclid,
       required this.qrCode,
@@ -50,10 +53,10 @@ class Identification extends StatefulWidget {
       required this.barQrCodeTableAssign});
 
   @override
-  _IdentificationState createState() => _IdentificationState();
+  IdentificationState createState() => IdentificationState();
 }
 
-class _IdentificationState extends State<Identification> {
+class IdentificationState extends State<Identification> {
   TextEditingController controller = TextEditingController();
   List<AlternativeBarcode> alternativeBarcode = [];
   TextEditingController barCodeTextEditingController = TextEditingController();
@@ -81,6 +84,16 @@ class _IdentificationState extends State<Identification> {
         onSaveActive = false;
       });
     }
+  }
+  clears(){
+    alternativeBarcode.clear();
+    upDateButton.clear();
+    onSaveActive=false;
+    upDateButton.clear();
+    barCode2TextEditingController.clear();
+    barcodeTextEditingController.clear();
+    barCodeTextEditingController.clear();
+    barActive=false;
   }
 
   @override
@@ -843,6 +856,7 @@ class ProductTables extends StatefulWidget {
   // final TextEditingController rfId;
   ProductTables(
       {required this.aboutProducts,
+      required Key key,
       required this.imPorantInfo,
       required this.ingredians,
       required this.productDetails,
@@ -866,6 +880,7 @@ class ProductTablesState extends State<ProductTables> {
 
   bool onChange = false;
   List<Storage>? aboutProducts = [];
+
 
   @override
   Widget build(BuildContext context) {
@@ -2480,6 +2495,35 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //     );
                     //   },
                     // ),
+                    NewInputCard(controller: widget.producedCountry,
+                      readOnly: true,
+                      icondrop:true,title: "Billing Address Id",ontap: (){
+                        showDailogPopUp(
+                          context,
+                          TableConfigurePopup(
+
+                            type: "producedCountryPopupVariant", valueSelect: (VariantReadModel va){
+
+                            setState(() {
+
+                              widget.producedCountry.text =
+                                  va?.name.toString() ?? "";
+                              setState(() {
+
+                              });
+
+
+                              // onChange = true;
+                              // orderType.text = va!;
+                            });
+
+                          },
+                          ),
+
+
+                        );
+
+                      },),
 
                     SelectableDropDownpopUp(
                       onTap: (){
@@ -3811,14 +3855,15 @@ class VendorDetailsVarient extends StatefulWidget {
   final List<VendorDetails>? vendorDetails;
   final Function vendorTableEdit;
 
+
   VendorDetailsVarient(
-      {required this.vendorDetails, required this.vendorTableEdit});
+      {required Key key,required this.vendorDetails, required this.vendorTableEdit}): super(key: key);
 
   @override
-  _VendorDetailsVarientState createState() => _VendorDetailsVarientState();
+  VendorDetailsVarientState createState() => VendorDetailsVarientState();
 }
 
-class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
+class VendorDetailsVarientState extends State<VendorDetailsVarient> {
   bool onChange = false;
   List<VendorDetails> vendorDetails =List.from( []);
   List<bool> upDate =List.from( []);
@@ -3831,6 +3876,24 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   List<TextEditingController> refCodeListTextEditingController = [];
 
   bool onSaveActive = false;
+  clear(){
+    print("callinghhh the clear function");
+    setState(() {
+
+
+    onChange=false;
+    code.clear();
+    upDate.clear();
+    refCode.clear();
+    upDateButton.clear();
+    vendoeCode="";
+    vendorDetails.clear();
+    codeListTextEditingController.clear();
+    refCodeListTextEditingController.clear();
+    onSaveActive=false;
+    });
+
+  }
 
   saveButtonActovde(String name, String ref) {
     onChange = true;

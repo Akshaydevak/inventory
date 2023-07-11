@@ -13,12 +13,12 @@ class UomTable extends StatefulWidget {
  final List<DataInclude>?list;
   final Function uomTableEdit;
   final bool isMixed;
-  UomTable({required this.list,required this.uomTableEdit,required this.isMixed});
+  UomTable({required Key key,required this.list,required this.uomTableEdit,required this.isMixed}):super(key: key);
   @override
-  _UomTableState createState() => _UomTableState();
+  UomTableState createState() => UomTableState();
 }
 
-class _UomTableState extends State<UomTable> {
+class UomTableState extends State<UomTable> {
 
 
   bool onChange=false;
@@ -32,6 +32,18 @@ class _UomTableState extends State<UomTable> {
   bool Active=false;
   bool onSaveActive = false;
 
+  clears(){
+
+setState(() {
+  code.clear();
+  name.clear();
+  upDate.clear();
+  upDateButton.clear();
+  uomList.clear();
+  codeListController.clear();
+});
+
+  }
 
   saveButtonActovde(String name,String code){
 
@@ -515,12 +527,13 @@ class GroupTable extends StatefulWidget {
   List<DataInclude>?list;
   final Function uomTableEdit;
   final bool isMixed;
-  GroupTable({required this.list,required this.uomTableEdit,required this.isMixed});
+
+  GroupTable({required Key key, required this.list,required this.uomTableEdit,required this.isMixed}): super(key: key);
   @override
-  _GroupTableState createState() => _GroupTableState();
+  GroupTableState createState() => GroupTableState();
 }
 
-class _GroupTableState extends State<GroupTable> {
+class GroupTableState extends State<GroupTable> {
 
 
 
@@ -529,8 +542,8 @@ class _GroupTableState extends State<GroupTable> {
 
   List<bool>upDateButton=[];
   List<TextEditingController> codeListController= [];
-  TextEditingController code =TextEditingController();
-  TextEditingController name =TextEditingController();
+  TextEditingController code =TextEditingController(text: "");
+  TextEditingController name =TextEditingController(text: "");
   bool Active=false;
   bool onSaveActive = false;
 
@@ -552,11 +565,31 @@ class _GroupTableState extends State<GroupTable> {
   }
 
   @override
+  void initState() {
+
+    super.initState();
+  }
+  clears(){
+    print("AKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+    setState(() {
+      groupList.clear();
+      upDate.clear();
+      upDateButton.clear();
+      codeListController.clear();
+      code.text="";
+      name.text="";
+      Active=false;
+    });
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     print(widget.list);
     if(onChange==false){
+      // clears();
       // codeListController.clear();
       // groupList.clear();
       setState(() {
@@ -937,7 +970,7 @@ class _GroupTableState extends State<GroupTable> {
 
                   TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child:textPadding(name.text??"")
+                      child:textPadding(name?.text??"")
                   ),
                   TableCell(
                     verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1019,12 +1052,12 @@ class CategoryTable extends StatefulWidget {
   List<DataInclude>?list;
   final bool isMixed;
   final Function uomTableEdit;
-  CategoryTable({required this.list,required this.uomTableEdit,required this.isMixed});
+  CategoryTable({required Key key,required this.list,required this.uomTableEdit,required this.isMixed}):super(key: key);
   @override
-  _CategoryTableState createState() => _CategoryTableState();
+  CategoryTableState createState() => CategoryTableState();
 }
 
-class _CategoryTableState extends State<CategoryTable> {
+class CategoryTableState extends State<CategoryTable> {
 
 
   bool onChange=false;
@@ -1053,6 +1086,15 @@ class _CategoryTableState extends State<CategoryTable> {
       });
 
     }
+  }
+  clears(){
+    setState(() {
+      categoryList.clear();
+      upDate.clear();
+      codeListController.clear();upDateButton.clear();code.clear();
+      name.clear();
+    });
+
   }
 
   @override

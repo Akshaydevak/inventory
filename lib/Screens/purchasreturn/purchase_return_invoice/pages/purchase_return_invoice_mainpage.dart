@@ -300,9 +300,11 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
                   result = list.data;
                   setState(() {
+
                     if (result.isNotEmpty) {
                       veritiaclid = result[0].id;
                       Variable.verticalid = result[0].id;
+                      selectedVertical=0;
                       context.read<InvoiceReadCubit>().getInvoiceRead(veritiaclid!);
                     } else {
                       print("common");
@@ -487,7 +489,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                     paymentMethod: paymentmethodController?.text??null,
                                                     paymentStatus:paymentStatusController?.text??null ,
 
-                                                    lines: result
+                                                    lines: lines
 
                                                 );
                                                 print("model"+model.toString());
@@ -539,7 +541,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                             paymentCode: paymentCodeController?.text??null,
                                             paymentMethod: paymentmethodController?.text??null,
                                             paymentStatus:paymentStatusController?.text??null ,
-                                            lines: result
+                                            lines: lines
 
                                         );
                                         print("model"+model.toString());

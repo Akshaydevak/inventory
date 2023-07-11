@@ -252,7 +252,7 @@ const channelFilterReadApi =
 //stock
 const stockReadApi = inventoryLiveBaseUrl + "inventory-stock/read-variant/";
 const stockTableReadApi =
-    stagingUrl + "purchase-order/get-invoice-lines-by-variant";
+    purchaseOrderLiveBaseUrl + "purchase-order/get-invoice-lines-by-variant";
 const stockVerticalReadApi = organizationLiveBaseApi+"channel/list-categories/";
 const stockVerticalListReadApi =
     organizationLiveBaseApi+"channel/list-channels-categories/";

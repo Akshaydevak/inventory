@@ -27,9 +27,11 @@ import 'Screens/Dashboard.dart';
 import 'Screens/heirarchy/customizeddata/cubit/listcustom/listcustomvertical_cubit.dart';
 import 'Screens/heirarchy/divisionconfiguration/cubit/list/list_division_cubit.dart';
 import 'Screens/heirarchy/general/cubits/allcategorylist_cubit.dart';
+import 'Screens/heirarchy/general/cubits/attributelist/attributelist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/attributepatchlist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/categorylist/categorylist_cubit.dart';
+import 'Screens/heirarchy/general/cubits/clategory_list_only/category_list_search_cubit.dart';
 import 'Screens/heirarchy/general/cubits/devision_list/devision_list_cubit.dart';
 import 'Screens/heirarchy/general/cubits/framework_list/frameworklist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
@@ -259,6 +261,10 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => PaymentTransactionSuccessPostCubit(),
+        ),  BlocProvider(
+          create: (context) => AttributelistCubit(),
+        ), BlocProvider(
+          create: (context) => CategoryListSearchCubit(),
         ),
       ],
       child: MaterialApp(
@@ -291,17 +297,11 @@ class _MyHomeState extends State<MyHome> {
 
     // Variable.subIndex = list.map(int.parse).toList();
 
-    print(
-        "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" +
-            prefs.getString("inventory_name").toString()); print(
-        "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" +
-            Variable.inventory_ID.toString());
-
     index = prefs.getInt('index') ?? 0;
-    print("index after caching $index");
+
     UserPreferences userPref = UserPreferences();
     await userPref.getUser().then((user) {
-      print("user.isLoggedIn" + user.isLoggedIn.toString());
+
       if (user.isLoggedIn == true) {
         prefs.setString('token', user?.token ?? "");
 
@@ -314,7 +314,6 @@ class _MyHomeState extends State<MyHome> {
         Variable.created_by = user.employeeCode.toString();
         Variable.subIndex = [];
         var list = jsonDecode(prefs.getString('key').toString());
-        print("lists is herds" + list.runtimeType.toString());
         for (var a in list) {
           print("the a i shere" + a.toString());
           Variable.subIndex.add(int?.tryParse(a));

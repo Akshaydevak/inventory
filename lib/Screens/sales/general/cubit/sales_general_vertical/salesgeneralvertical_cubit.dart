@@ -30,6 +30,7 @@ class SalesgeneralverticalCubit extends Cubit<SalesgeneralverticalState> {
   Future getSalesSearch(
       String code,
       ) async {
+    emit(SalesgeneralverticalState.initial());
     final result = await repo.getSalesSearch(
     "code="+  code,
     );

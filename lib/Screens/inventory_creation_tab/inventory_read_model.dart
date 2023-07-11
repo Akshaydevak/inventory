@@ -53,6 +53,7 @@ class InvoiceData with _$InvoiceData {
     @JsonKey(name: "inventory_id") final String? inventoryId,
     @JsonKey(name: "payment_code") final String? paymentCode,
     @JsonKey(name: "payment_status") final String? payementStatus,
+    @JsonKey(name: "payment_method") final String? paymentMethod,
     @JsonKey(name: "invoiced_by") final String? invoicedBy,
     @JsonKey(name: "invoice_code") final String? invoicedCode,
     @JsonKey(name: "invoice_status") final String? invoiceStatus,

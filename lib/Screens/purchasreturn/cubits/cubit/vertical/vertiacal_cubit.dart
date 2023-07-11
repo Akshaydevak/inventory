@@ -28,6 +28,7 @@ class VertiacalCubit extends Cubit<VertiacalState> {
   Future getSearch(
     String code,
   ) async {
+    emit(VertiacalState.initial());
     final result = await repo.getSearch(
       "code="+code,
     );

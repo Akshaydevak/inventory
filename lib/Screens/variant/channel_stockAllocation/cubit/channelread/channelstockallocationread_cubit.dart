@@ -12,6 +12,7 @@ class ChannelstockallocationreadCubit
       : super(ChannelstockallocationreadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getChannelStockAllocationRead(int? id, int? channelId) async {
+    emit(ChannelstockallocationreadState.initial());
     print("idddidd" + id.toString());
     final result = await repo.getChannelStockAllocationRead(id, channelId);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

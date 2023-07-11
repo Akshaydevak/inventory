@@ -12,6 +12,7 @@ class UomgroupreadCubit extends Cubit<UomgroupreadState> {
   Future getUomGroupRead(
     int? id,
   ) async {
+    emit(UomgroupreadState.initial());
     final result = await repo.getUomGroupRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

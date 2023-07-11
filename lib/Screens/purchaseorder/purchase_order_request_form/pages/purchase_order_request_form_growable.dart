@@ -90,6 +90,12 @@ class PurchaseOrderRequestFormGrowableTableState extends State<PurchaseOrderRequ
   }
 
   double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,double? discount){
+    print("vatable updationsssssssssss");
+    print(unitCost);
+    print(qty);
+    print(excessTax);
+    print(unitCost);
+    print(unitCost);
     double vatableAmountupdation=0;
     vatableAmountupdation =double.parse( (((unitCost! *
         qty!) +
@@ -101,10 +107,19 @@ class PurchaseOrderRequestFormGrowableTableState extends State<PurchaseOrderRequ
   }
   double actualAndgrandTotalUpdation(double? vatableAmount,double? vat){
     double actualCost=0;
-    actualCost = double.parse((vatableAmount! +
-        ((vatableAmount *
-            vat!) /
-            100)).toStringAsFixed(2));
+    print("grand updationsssssssssss");
+    print(vatableAmount);
+    print(vat);
+    if(vat==null || vat==0){
+      actualCost=vatableAmount??0;
+    }
+    else{
+      actualCost = double.parse((vatableAmount! +
+          ((vatableAmount *
+              vat!) /
+              100)).toStringAsFixed(2));
+    }
+
     return actualCost;
 
   }
@@ -120,6 +135,15 @@ class PurchaseOrderRequestFormGrowableTableState extends State<PurchaseOrderRequ
     }
 
   }
+  bool updateCheckFunc(){
+    var isUpdate=table.where((element) => element.updateCheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
+  }
+
   clearTableAddingVariables(){
     setState(() {
 table.clear();
@@ -310,10 +334,10 @@ unitcostListControllers.clear();
                           var qty = table[Variable.tableindex].requestedQty;
                           var vat = table[Variable.tableindex].vat;
                           var excess = table[Variable.tableindex].excessTax;
-                          var unitcost = table[Variable.tableindex].unitCost;
+                          var unitcost = table[Variable.tableindex].unitCost??0;
                           // print("unitcost" + unitcost.toString());
                           var Vdiscount = table[Variable.tableindex].discount;
-                          if(qty==0 || unitcost==0){
+                          if(qty==0 || unitcost==0 ){
                             table[Variable.tableindex] = table[Variable.tableindex].copyWith(actualCost: 0, grandTotal: 0, vatableAmount: 0, excessTax: excess);
                             setState(() {
                             });
@@ -339,12 +363,13 @@ unitcostListControllers.clear();
                           setState(() {
                             varinatname = purchaseTable?.name??"";
                             unitcost = purchaseTable?.unitCost;
+                            print("unitcostsssssssssssssss"+unitcost.toString());
                             vat1 = purchaseTable?.vat;
                             unitCostCheck.text=purchaseTable?.unitCost.toString()??"";
                             purchaseUomName = purchaseTable?.purchaseUomName??"";
                             vrefcod = purchaseTable?.code??"";
                             barcode = purchaseTable?.barCode?.barcodeNumber.toString()??"";
-                            if(unitcost==0 ||recievedQty==0){
+                            if(unitcost==0 ||unitcost==null ||recievedQty==0){
                               actualCost1=0;
                               vatableAmount1=0;
                               grandTotal1=0;
@@ -749,6 +774,7 @@ unitcostListControllers.clear();
                                         child: UnderLinedInput(
                                           initialCheck:true,
                                           integerOnly: true,
+
                                           // controller: requestedListControllers[i],
                                           last: table[i].requestedQty.toString() ?? "",
                                           onChanged: (va) {
@@ -808,6 +834,7 @@ unitcostListControllers.clear();
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
+                                          integerOnly: true,
 
                                           initialCheck:true,
                                           last:table[i].minimumQty.toString(),
@@ -851,6 +878,7 @@ unitcostListControllers.clear();
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
+                                          integerOnly: true,
                                           initialCheck:true,
                                           //controller: maxListControllers[i],
                                           last:table[i].maximumQty.toString(),
@@ -1081,48 +1109,57 @@ unitcostListControllers.clear();
 
 
 
+                                      // TableCell(
+                                      //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                      //   child: UnderLinedInput(
+                                      //     initialCheck:true,
+                                      //     last: table[i].foc.toString(),
+                                      //     // controller: focListControllers[i],
+                                      //
+                                      //     onChanged: (p0) {
+                                      //       widget.updateCheck(true);
+                                      //       table[i] = table[i].copyWith(updateCheck: true);
+                                      //       setState(() {
+                                      //
+                                      //       });
+                                      //
+                                      //       print(p0);
+                                      //       if(p0==""){
+                                      //         table[i] = table[i].copyWith(foc:0);
+                                      //         setState(() {
+                                      //
+                                      //         });
+                                      //
+                                      //       }
+                                      //       else{
+                                      //         table[i] = table[i].copyWith(foc:double.tryParse(p0));
+                                      //         setState(() {
+                                      //
+                                      //         });
+                                      //       }
+                                      //
+                                      //
+                                      //
+                                      //
+                                      //     },
+                                      //     enable: true,
+                                      //     onComplete: () {
+                                      //
+                                      //       setState(() {  print("maxxxx"+table.toString());});
+                                      //     },
+                                      //   ),
+                                      // ),
+
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: UnderLinedInput(
-                                          initialCheck:true,
-                                          last: table[i].foc.toString(),
-                                          // controller: focListControllers[i],
+                                        child: textPadding(
+                                            table[i].foc
+                                                .toString(),
 
-                                          onChanged: (p0) {
-                                            widget.updateCheck(true);
-                                            table[i] = table[i].copyWith(updateCheck: true);
-                                            setState(() {
+                                            fontWeight: FontWeight.w500,
+                                            alighnment: Alignment.topRight),
 
-                                            });
-
-                                            print(p0);
-                                            if(p0==""){
-                                              table[i] = table[i].copyWith(foc:0);
-                                              setState(() {
-
-                                              });
-
-                                            }
-                                            else{
-                                              table[i] = table[i].copyWith(foc:double.tryParse(p0));
-                                              setState(() {
-
-                                              });
-                                            }
-
-
-
-
-                                          },
-                                          enable: true,
-                                          onComplete: () {
-
-                                            setState(() {  print("maxxxx"+table.toString());});
-                                          },
-                                        ),
-                                      ),
-
-                                      TableCell(
+                                      ),         TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: textPadding(
                                             table[i]
@@ -1291,7 +1328,10 @@ unitcostListControllers.clear();
 
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
-                                        child: TableTextButton(label:table[i].updateCheck==true?'Update':"",
+                                        child: TableTextButton(
+                                          textColor:  table?[i].updateCheck==true?Pellet.bagroundColor:Colors.black,
+                                          bagroundColor: table?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
+                                          label:table[i].updateCheck==true?'Update':"",
                                           onPress: (){
                                             var Vamount = table[i].vatableAmount??0;
                                             var variant = table[i].variantId??0;
@@ -1320,8 +1360,10 @@ unitcostListControllers.clear();
                                               context.showSnackBarError("the minimum qty  all ways less than than  maximum qty");
                                             }
                                             else{
-                                              widget.updateCheck(true);
+
                                               table[i] = table[i].copyWith(updateCheck: false);
+                                              var isUpdate=updateCheckFunc();
+                                              widget.updateCheck(isUpdate);
                                             widget.updation(table)  ;
                                             }
 
@@ -1476,6 +1518,7 @@ unitcostListControllers.clear();
                                   TableCell(
                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                     child: UnderLinedInput(
+                                      integerOnly: true,
                                       controller: minOrderTestContoller,
 
                                       onChanged: (p0) {
@@ -1505,6 +1548,7 @@ unitcostListControllers.clear();
                                   ),
                                   TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                     child: UnderLinedInput(
+                                      integerOnly: true,
                                       controller:maxOrderTestContoller,
                                       onChanged: (p0) {
                                         if (p0 == '') {
@@ -1692,36 +1736,39 @@ unitcostListControllers.clear();
                                       },
                                     ),
                                   ),
+                                  // TableCell(
+                                  //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                  //   child: UnderLinedInput(
+                                  //     controller:focTestContoller,
+                                  //     onChanged: (p0) {
+                                  //       if (p0 == '') {
+                                  //         setState(() {
+                                  //           foc1=0;
+                                  //
+                                  //         });
+                                  //       } else {
+                                  //         setState(() {
+                                  //           foc1 =
+                                  //               double
+                                  //                   .tryParse(
+                                  //                   p0);
+                                  //         });
+                                  //       }
+                                  //
+                                  //       // print(Qty);
+                                  //     },
+                                  //     enable: true,
+                                  //     onComplete: () {
+                                  //       setState(() {});
+                                  //
+                                  //       setState(() {});
+                                  //     },
+                                  //   ),
+                                  // ),
                                   TableCell(
                                     verticalAlignment: TableCellVerticalAlignment.middle,
-                                    child: UnderLinedInput(
-                                      controller:focTestContoller,
-                                      onChanged: (p0) {
-                                        if (p0 == '') {
-                                          setState(() {
-                                            foc1=0;
-
-                                          });
-                                        } else {
-                                          setState(() {
-                                            foc1 =
-                                                double
-                                                    .tryParse(
-                                                    p0);
-                                          });
-                                        }
-
-                                        // print(Qty);
-                                      },
-                                      enable: true,
-                                      onComplete: () {
-                                        setState(() {});
-
-                                        setState(() {});
-                                      },
-                                    ),
-                                  ),
-                                  TableCell(
+                                    child: textPadding(focTestContoller.text.toString()??"", fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                                  ),   TableCell(
                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                     child: textPadding(vatableAmount1.toString()??"", fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                   ),
@@ -1871,7 +1918,7 @@ unitcostListControllers.clear();
                                             context.showSnackBarError(
                                                 "the minimum order is always less than maximum order");
                                           }
-                                          else  if(variantId=="null"||recievedQty==0||unitcost==0){
+                                          else  if(variantId=="null"||unitcost==0 ||unitcost==null){
                                             context.showSnackBarError("please fill all the fields");
                                           }
                                           else if(recievedQty==0||recievedQty==""){

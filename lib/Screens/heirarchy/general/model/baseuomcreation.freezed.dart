@@ -35,7 +35,7 @@ mixin _$BaseUomCreationtModel {
   @JsonKey(name: "standard_code")
   String? get standardCode => throw _privateConstructorUsedError;
   @JsonKey(name: "conversion_factor")
-  int? get conversionFactor => throw _privateConstructorUsedError;
+  double? get conversionFactor => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
 
@@ -59,7 +59,7 @@ abstract class $BaseUomCreationtModelCopyWith<$Res> {
       @JsonKey(name: "uomgroup_name") String? uomGroupName,
       @JsonKey(name: "uom_code") String? uomCode,
       @JsonKey(name: "standard_code") String? standardCode,
-      @JsonKey(name: "conversion_factor") int? conversionFactor,
+      @JsonKey(name: "conversion_factor") double? conversionFactor,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 }
 
@@ -119,7 +119,7 @@ class _$BaseUomCreationtModelCopyWithImpl<$Res,
       conversionFactor: freezed == conversionFactor
           ? _value.conversionFactor
           : conversionFactor // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -144,7 +144,7 @@ abstract class _$$_BaseUomCreationtModelCopyWith<$Res>
       @JsonKey(name: "uomgroup_name") String? uomGroupName,
       @JsonKey(name: "uom_code") String? uomCode,
       @JsonKey(name: "standard_code") String? standardCode,
-      @JsonKey(name: "conversion_factor") int? conversionFactor,
+      @JsonKey(name: "conversion_factor") double? conversionFactor,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 }
 
@@ -201,7 +201,7 @@ class __$$_BaseUomCreationtModelCopyWithImpl<$Res>
       conversionFactor: freezed == conversionFactor
           ? _value.conversionFactor
           : conversionFactor // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -249,7 +249,7 @@ class _$_BaseUomCreationtModel implements _BaseUomCreationtModel {
   final String? standardCode;
   @override
   @JsonKey(name: "conversion_factor")
-  final int? conversionFactor;
+  final double? conversionFactor;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
@@ -327,7 +327,7 @@ abstract class _BaseUomCreationtModel implements BaseUomCreationtModel {
       @JsonKey(name: "standard_code")
           final String? standardCode,
       @JsonKey(name: "conversion_factor")
-          final int? conversionFactor,
+          final double? conversionFactor,
       @JsonKey(name: "is_active", defaultValue: false)
           final bool? isActive}) = _$_BaseUomCreationtModel;
 
@@ -356,7 +356,7 @@ abstract class _BaseUomCreationtModel implements BaseUomCreationtModel {
   String? get standardCode;
   @override
   @JsonKey(name: "conversion_factor")
-  int? get conversionFactor;
+  double? get conversionFactor;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive;

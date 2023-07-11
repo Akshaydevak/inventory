@@ -527,13 +527,6 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                       // textColor: Palette.white
                                     ),
 
-                                    // tableHeadtext(
-                                    //   'Warranty Price',
-                                    //
-                                    //   size: 13,
-                                    //   // color: Palette.containerDarknew,
-                                    //   // textColor: Palette.white
-                                    // ),
                                     tableHeadtext(
                                       'Total Price',
                                       size: 13,
@@ -1270,6 +1263,8 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: TableTextButton(
+                                            textColor:  table1?[i].updatecheck==true?Pellet.bagroundColor:Colors.black,
+                                            bagroundColor: table1?[i].updatecheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
                                             onPress: () {
                                               widget.updation(table1);
                                               table1[i]=    table1[i].copyWith(updatecheck: false);

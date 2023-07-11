@@ -381,9 +381,9 @@ class _CostingStableTableState extends State<CostingStableTable> {
                             setState(() {
                               widget.priceType.text = va ?? "";
                             });
-                            context
-                                .read<PercentagegpCubit>()
-                                .percentageGp(widget.channelId, va);
+                            // context
+                            //     .read<PercentagegpCubit>()
+                            //     .percentageGp(widget.channelId, va);
 
                             // onChange = true;
                             // orderType = va!;

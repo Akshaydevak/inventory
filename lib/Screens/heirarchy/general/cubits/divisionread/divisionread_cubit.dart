@@ -10,6 +10,7 @@ class DivisionreadCubit extends Cubit<DivisionreadState> {
   DivisionreadCubit() : super(DivisionreadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getDivisionRead(int? id,String type) async {
+    emit(DivisionreadState.initial());
     final result = await repo.getDivisionRead(id,type);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

@@ -320,6 +320,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                       customerIdController.text=data.invoicedData?.customerId??"";
                       paymentIdController.text=data.invoicedData?.paymentCode??"";
                       trnController.text=data.invoicedData?.trnNumber??"";
+                      paymentMethodController.text=data.invoicedData?.paymentMethod??"";
                       // invoiceDateController.text=data.invoicedData?.createdDate??"";
                       invoiceDateController=TextEditingController(text:data.invoicedData?.createdDate ==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.invoicedData?.createdDate??"")));
                       noteController.text=data.invoicedData?.notes??"";
@@ -604,7 +605,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                               table1.add(Postlines(
                                                 isInvoiced: table[i].isInvoiced??false,
                                                 quantity: table[i].quantity ,
-                                                isActive: table[i].isInvoiced??false,
+                                                isActive: table[i].isActive??false,
                                                 totalPrice: table[i].totalPrice,
                                                 warrentyPrice: table[i].warrentyPrice,
                                                 sellingPrice: table[i].sellingPrice,

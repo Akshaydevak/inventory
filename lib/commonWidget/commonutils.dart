@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/Dashboard.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/allcategorylist_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/attributelist/attributelist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/attributepatchlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuom_creation/baseuomcreation_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
@@ -11,6 +12,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/baseuomread/readbaseu
 import 'package:inventory/Screens/heirarchy/general/cubits/branddelete/branddelete_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/brandread/brandread_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/categorylist/categorylist_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/clategory_list_only/category_list_search_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/createbrand/createbrand_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/createcategory/createcategory_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/devision_list/devision_list_cubit.dart';
@@ -1719,12 +1721,20 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context.read<Listbrand2Cubit>().getSlotSectionPage();
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
-                    print(data.data1);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -1818,14 +1828,23 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                     result = list.data;
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        Variable.verticalid = result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<BrandreadCubit>()
-                            .getBrandRead(veritiaclid!);
+                        if(   result.any((item) => item.id ==veritiaclid)){
+                          context
+                              .read<BrandreadCubit>()
+                              .getBrandRead(veritiaclid!);
+                        }else{
+                          veritiaclid = result[0].id;
+                          Variable.verticalid = result[0].id;
+                          selectedVertical=0;
+                          context
+                              .read<BrandreadCubit>()
+                              .getBrandRead(veritiaclid!);
+                        }
+                        setState(() {});
+                       ;
                       } else {
                         print("common");
+                        clear();
                         // select=true;
                         setState(() {});
                       }
@@ -3025,6 +3044,498 @@ class _CustomGroupLinkedItem extends State<CustomGroupLinkedItem> {
 
 
                       }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    );
+                  }
+
+                  // context.showSnackBarSuccess(data.data2);
+
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialcraetionCubit, MaterialcraetionState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<MaterialListCubit>().getMaterialList();
+                    Navigator.pop(context);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<MaterialreadCubit>()
+                            .getMaterialRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+
+                    functionChane: true,
+                    buttonCheck: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    label: "Customer Group",
+                    onApply: () {
+
+                      widget.listAssign!(list1);
+                      Navigator.pop(context);
+                    },
+                    onEdit: () {
+                      MaterialReadModel model = MaterialReadModel(
+                        name: namecontroller?.text ?? "",
+                        image: imageContollercontroller?.text ?? "",
+                        description: descriptionContollercontroller?.text ?? "",
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        isActive: active,
+                      );
+                      // print(model);
+                      context
+                          .read<MaterialcraetionCubit>()
+                          .postmaterialPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Container(
+                      // height: 500,
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child: SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                h: 40,
+                                hintText: "Search...",
+                                ctrlr: searchContoller,
+                                onChanged: (va) {
+                                  print("searching case"+va.toString());
+                                  context
+                                      .read<CustomerGroupPromotionCubit>()
+                                      .searchPromotionCustomerGroup(searchContoller.text);
+                                  if(va==""){
+                                    context
+                                        .read<CustomerGroupPromotionCubit>()
+                                        .getPromotionCustomerGroupList();
+
+                                  }
+                                },
+                              )),
+                          Container(
+                              height: MediaQuery
+                                  .of(context).size.height/ 1.8,
+                            child: SingleChildScrollView(
+                              child: Container(
+
+                                // width: w/7,
+                                // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                                child: customTable(
+                                  // border: const TableBorder(
+                                  //   verticalInside: BorderSide(
+                                  //       width: .5,
+                                  //       color: Colors.black45,
+                                  //       style: BorderStyle.solid),
+                                  //   horizontalInside: BorderSide(
+                                  //       width: .3,
+                                  //       color: Colors.black45,
+                                  //       // color: Colors.blue,
+                                  //       style: BorderStyle.solid),
+                                  // ),
+                                  tableWidth: .5,
+                                  childrens: [
+                                    TableRow(
+                                      // decoration: BoxDecoration(
+
+                                      //     color: Colors.green.shade200,
+
+                                      //     shape: BoxShape.rectangle,
+
+                                      //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                      children: [
+                                        tableHeadtext(
+                                          '',
+
+                                          // padding: EdgeInsets.all(7),
+                                          //
+                                          // height: 46,
+                                          // textColor: Colors.black,
+                                          // color: Color(0xffE5E5E5),
+
+                                          size: 13,
+                                        ),
+
+                                        tableHeadtext(
+                                          'Item Name',
+                                          // textColor: Colors.black,
+                                          // padding: EdgeInsets.all(7),
+                                          // height: 46,
+                                          size: 13,
+                                          // color: Color(0xffE5E5E5),
+                                        ),
+                                        // tableHeadtext(
+                                        //   '',
+                                        //   textColor: Colors.black,
+                                        //   padding: EdgeInsets.all(7),
+                                        //   height: 46,
+                                        //   size: 13,
+                                        //   // color: Color(0xffE5E5E5),
+                                        // ),
+                                      ],
+                                    ),
+                                    if (table?.isNotEmpty == true) ...[
+                                      for (var i = 0; i < table!.length; i++)
+                                        TableRow(
+                                            decoration: BoxDecoration(
+                                                color: Pellet.tableRowColor,
+                                                shape: BoxShape.rectangle,
+                                                border:  Border(
+                                                    left: BorderSide(
+
+                                                        color: Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+                                                        style: BorderStyle.solid),
+                                                    bottom: BorderSide(
+
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        style: BorderStyle.solid),
+                                                    right: BorderSide(
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+
+                                                        style: BorderStyle.solid))),
+                                            children: [
+                                              TableCell(
+                                                verticalAlignment:
+                                                    TableCellVerticalAlignment
+                                                        .middle,
+
+                                                child: CustomCheckBox(
+                                                  key: UniqueKey(),
+                                                  value:additionCheck.contains(table?[i].name),
+                                                  onChange: (p0) {
+                                                    if (p0) {
+                                                      print(p0);
+                                                      list1.add(
+                                                          AvailableCustomerGroups(
+                                                            customerGroupId:table?[i]
+                                                              .code??"" ,
+                                                              customerGroupCode: table?[i]
+                                                                  .code??"",
+                                                              customerGroupName: table?[i]
+                                                                  .name??""
+                                                          ));
+                                                      additionCheck.add(
+                                                          table?[i].name??"");
+                                                    }
+                                                    else{
+                                                      list1.removeWhere((element) =>
+                                                      element.customerGroupCode == table?[i].code);
+                                                      additionCheck.removeWhere((element) =>
+                                                      element == table?[i].name);
+                                                      setState(() {
+
+                                                      });
+                                                    }
+
+                                                    // list1.remove(table![i]);
+
+                                                    // widget.listAssign!(list1);
+
+                                                    print(list1);
+                                                  },
+                                                ),
+                                                // Text(keys[i].key??"")
+                                              ),
+                                              TableCell(
+                                                  verticalAlignment:
+                                                      TableCellVerticalAlignment
+                                                          .middle,
+                                                  child: textPadding(
+                                                      table?[i].name ?? "",
+                                                     )
+                                                  // Text(keys[i].value??"",)
+
+                                                  ),
+                                            ]),
+                                    ],
+                                    //
+                                    // TableRow(
+                                    //     decoration: BoxDecoration(
+                                    //         color: Colors.grey
+                                    //             .shade200,
+                                    //         shape: BoxShape
+                                    //             .rectangle,
+                                    //         border:const  Border(
+                                    //             left: BorderSide(
+                                    //                 width: .5,
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 style: BorderStyle
+                                    //                     .solid),
+                                    //             bottom: BorderSide(
+                                    //                 width: .5,
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 style: BorderStyle
+                                    //                     .solid),
+                                    //             right: BorderSide(
+                                    //                 color: Colors
+                                    //                     .grey,
+                                    //                 width: .5,
+                                    //                 style: BorderStyle
+                                    //                     .solid))),
+                                    //     children: [
+                                    //
+                                    //       TableCell(
+                                    //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                    //
+                                    //         child: UnderLinedInput(
+                                    //           onChanged: (va){
+                                    //             key.text=va;
+                                    //
+                                    //           },
+                                    //
+                                    //           formatter: false,
+                                    //
+                                    //         ),
+                                    //
+                                    //
+                                    //       ),
+                                    //       TableCell(
+                                    //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                    //
+                                    //         child:
+                                    //
+                                    //         UnderLinedInput(
+                                    //           onChanged: (va){
+                                    //             value.text=va;
+                                    //           },
+                                    //           formatter: false,
+                                    //         ),
+                                    //
+                                    //
+                                    //       ),
+                                    //       TableTextButton(label: "", onPress: (){
+                                    //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                    //           Keys model=Keys(
+                                    //             key: key.text??"",
+                                    //             value: value.text??'',
+                                    //           );
+                                    //           setState(() {
+                                    //             onChange=true;
+                                    //
+                                    //
+                                    //             keys?.add(model);
+                                    //
+                                    //
+                                    //             productFeatures?.add(ProductFeatures(
+                                    //
+                                    //                 keyValues: keys
+                                    //             ));
+                                    //             widget.productTableEdit(type:"3",list:productFeatures);
+                                    //             key.text="";
+                                    //             value.text="";
+                                    //           });
+                                    //
+                                    //
+                                    //
+                                    //
+                                    //         }
+                                    //
+                                    //       })
+                                    //
+                                    //
+                                    //     ])
+                                  ],
+                                  widths: {
+                                    0: FlexColumnWidth(2),
+                                    1: FlexColumnWidth(5),
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+class CustomGroupOneItem extends StatefulWidget {
+  final String type;
+  final String? veritcalCode;
+  final Function? listAssign;
+  final List<dynamic>?linkedListItemTable;
+
+  CustomGroupOneItem({
+    Key? key,
+  this.veritcalCode,
+    required this.linkedListItemTable,
+    required this.type,
+    required this.listAssign,
+  }) : super(key: key);
+
+  @override
+  _CustomGroupOneItem createState() => _CustomGroupOneItem();
+}
+
+class _CustomGroupOneItem extends State<CustomGroupOneItem> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  MaterialReadModel? group;
+  int? veritiaclid = 0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  List<String?>additionCheck=[];
+
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  TextEditingController searchContoller = TextEditingController();
+  bool addNew = false;
+  List<CustomerGroupModel>? table = [];
+  List<int> list = [];
+  List<AvailableCustomerGroups> list1 = [];
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MaterialcraetionCubit(),
+        ),
+
+        BlocProvider(
+          create: (context) => CustomerGroupPromotionCubit()..getPromotionCustomerGroupList(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<CustomerGroupPromotionCubit, CustomerGroupPromotionState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // // context.
+                  // context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print("the real Akshay" + data.toString());
+
+
+                  print(widget.linkedListItemTable);
+                  if (data?.data.isNotEmpty==true) {
+                    setState(() {
+
+                      table = data.data;
+
 
 
 
@@ -5112,6 +5623,66 @@ class _DiscountVariantGroupCodeCreatativePopup extends State<DiscountVariantGrou
 
                                           ]),
                                   ],
+                                  if(table?.isEmpty==true)...[
+                                    TableRow(
+                                        decoration: BoxDecoration(
+                                            color: Pellet.tableRowColor,
+                                            shape: BoxShape.rectangle,
+                                            border:  Border(
+                                                left: BorderSide(
+
+                                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+                                                    style: BorderStyle.solid),
+                                                bottom: BorderSide(
+
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    style: BorderStyle.solid),
+                                                right: BorderSide(
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+
+                                                    style: BorderStyle.solid))),
+                                        children: [
+
+                                          TableCell(
+                                              verticalAlignment:
+                                              TableCellVerticalAlignment
+                                                  .middle,
+                                              child: textPadding(
+                                                "",
+                                              )
+                                            // Text(keys[i].value??"",)
+
+                                          ),
+                                          TableCell(
+                                              verticalAlignment:
+                                              TableCellVerticalAlignment
+                                                  .middle,
+                                              child: textPadding(
+                                               "",
+                                              )
+                                          ),
+                                          TableCell(
+                                              verticalAlignment:
+                                              TableCellVerticalAlignment
+                                                  .middle,
+                                              child: textPadding(
+                                                "",
+                                              )
+                                          ),  TableCell(
+                                              verticalAlignment:
+                                              TableCellVerticalAlignment
+                                                  .middle,
+                                              child: textPadding(
+                                                "",
+                                              )
+                                          ),
+
+
+                                        ]),
+
+                ]
                                   //
                                   // TableRow(
                                   //     decoration: BoxDecoration(
@@ -6334,14 +6905,18 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
     super.initState();
   }
   clear(){
-    codeController.text =  "";
-    imageName = "";
+    codeController.clear();
+    imageName="";
     namecontroller.text = "";
     descriptionContollercontroller.text =
          "";
     searchNamecontroller.text = "";
 
     active =  false;
+    setState(() {
+
+    });
+
   }
 
   @override
@@ -6424,11 +6999,20 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context.read<MaterialListCubit>().getMaterialList();
                   } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -6444,6 +7028,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
+
                     // Navigator.pop(context);
                     // context.showSnackBarSuccess(data.data2);
                     context.read<MaterialListCubit>().getMaterialList();
@@ -6466,28 +7051,36 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                     print("error");
                   },
                   success: (list) {
-                    print("aaaaayyyiram" + list.data.toString());
                     list1 = list;
-
                     result = list.data;
-                    setState(() {
-                      if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        selectedVertical=0;
-                        clear();
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<MaterialreadCubit>()
-                            .getMaterialRead(veritiaclid!);
+                      if (result.isNotEmpty==true) {
+
+                        print("enterddddd");
+                        if(   result.any((item) => item.id ==veritiaclid)){
+                          print("enterddddd1");
+                          context
+                              .read<MaterialreadCubit>()
+                              .getMaterialRead(veritiaclid!);
+                        }
+                        else{
+                          print("enterddddd2");
+                          veritiaclid = result[0].id;
+                          selectedVertical=0;
+
+                          context
+                              .read<MaterialreadCubit>()
+                              .getMaterialRead(veritiaclid!);
+                        }
+
                       } else {
-                        print("common");
-                        // select=true;
-                        setState(() {});
+                        print("enterdddd3");
+                        clear();
+
+
+
                       }
 
-                      setState(() {});
-                    });
+
                   });
             },
             builder: (context, state) {
@@ -6531,6 +7124,20 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                           children: [
                             MaterialVerticalList(
                               list: list1,
+                              search: (va){
+
+                                if(va==""){
+                                  context
+                                      .read<MaterialListCubit>()
+                                      .getMaterialList();
+
+                                }
+                                else{
+                                  context
+                                      .read<MaterialListCubit>()
+                                      .searchMaterialList( va);
+                                }
+                              },
                               selectedVertical: selectedVertical,
                               itemsearch: itemsearch,
                               ontap: (int index) {
@@ -7665,7 +8272,20 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
     context.read<DevisionListCubit>().getDevisionList();
     super.initState();
   }
+clear(){
+  group = null;
+  codeController.text =  "";
+  displayContollercontroller.text = "";
+  namecontroller.text =  "";
+  imageContollercontroller.text =  "";
+  imageName =  "";
+  descriptionContollercontroller.text =
+       "";
+  searchNamecontroller.text =  "";
 
+  active =  false;
+
+}
   @override
   Widget build(BuildContext context) {
     // descriptionController = TextEditingController(
@@ -7749,13 +8369,22 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
                     context.read<DevisionListCubit>().getDevisionList();
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                     print(data.data1);
                   }
                   ;
@@ -7799,14 +8428,24 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                     result = list.data;
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<DivisionreadCubit>()
-                            .getDivisionRead(veritiaclid!, "division");
+                        if(   result.any((item) => item.id ==veritiaclid)){
+                          context
+                              .read<DivisionreadCubit>()
+                              .getDivisionRead(veritiaclid!, "division");
+                        }
+                        else{
+                          veritiaclid = result[0].id;
+                          selectedVertical=0;
+                          // Variable.verticalid=result[0].id;
+                          print("Variable.ak" + Variable.verticalid.toString());
+                          context
+                              .read<DivisionreadCubit>()
+                              .getDivisionRead(veritiaclid!, "division");
+                        }
+
                       } else {
                         print("common");
+                        clear();
                         // select=true;
                         setState(() {});
                       }
@@ -8373,7 +9012,7 @@ class CreateFrameWorkPopUp extends StatefulWidget {
 
 class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
   bool? active = costingTypeMethodeCheck?true:false;
-
+  final GlobalKey<VariantFrameWorkBottomTableState> frameworkTableState = GlobalKey<VariantFrameWorkBottomTableState>();
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
@@ -8422,6 +9061,18 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
     }
 
     super.initState();
+  }
+
+  clear(){
+    group = null;
+    codeController.text =  "";
+    namecontroller.text =  "";
+    table = [];
+    descriptionContollercontroller.text = "";
+    categoryNameController.text =  "";
+    categoryid = 0;
+    active = false;
+    frameworkTableState.currentState?.clears();
   }
 
   @override
@@ -8495,7 +9146,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                     },
                     success: (data) {
                       setState(() {
-                        print("the frame work read" + data.toString());
+
                         group = data;
                         codeController.text = data.code ?? "";
                         namecontroller.text = data.name ?? "";
@@ -8524,16 +9175,21 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                 }, success: (data) {
                   // Navigator.pop(context);
                   if (data.data1) {
-                    Navigator.pop(context);
+                 if(   costingTypeMethodeCheck ==true)  {
+                   Navigator.pop(context);
+                 }
+                 else{
+                   showDailogPopUp(
+                       context,
+                       SuccessPopup(
+                         content: data.data2,
+                         // table:table,
+                       ));
+                 }
                     print("here after  creation");
 
                     setState(() {
-                      showDailogPopUp(
-                          context,
-                          SuccessPopup(
-                            content: data.data2,
-                            // table:table,
-                          ));
+
 
                       context.read<FrameworklistCubit>().getFrameWorklist();
                       print("here after  creation next call");
@@ -8569,16 +9225,23 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        // if (costingTypeMethodeCheck != true)
-                     if( costingTypeMethodeCheck != true)   context
-                            .read<FrameworkreadCubit>()
-                            .getFrameWorkRead(veritiaclid!);
+
+
+                     if( costingTypeMethodeCheck != true) {
+                       if(   result.any((item) => item.id ==veritiaclid)){
+                         context.read<FrameworkreadCubit>().getFrameWorkRead(veritiaclid!);
+                       }
+                       else{
+                         veritiaclid = result[0].id;
+                         selectedVertical=0;
+                         context.read<FrameworkreadCubit>().getFrameWorkRead(veritiaclid!);
+                       }
+
+
+                     }
                       } else {
-                        print("common");
-                        // select=true;
+                        clear();
+
                         setState(() {});
                       }
 
@@ -8672,10 +9335,6 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                           //     // result[index].id.toString());
 
                                           veritiaclid = result[index].id;
-                                          // clear();
-                                          // select=true;
-                                          //
-                                          //
 
                                           setState(() {
                                             context
@@ -8687,10 +9346,11 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                       },
                                       search: (String va) {
                                         print(va);
-                                        context.read<FrameworklistCubit>().searchCostingList(va);
+
                                         if (va == "") {
                                           context.read<FrameworklistCubit>().getFrameWorklist();
                                         }
+                                        else{context.read<FrameworklistCubit>().searchCostingList(va);}
                                       },
                                       result: result,
                                     ),
@@ -8878,8 +9538,8 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
 
 
                                                     child: VariantFrameWorkBottomTable(
-                                                            listAssign:
-                                                                listAssign,
+                                                      key: frameworkTableState,
+                                                            listAssign: listAssign,
                                                             table: List.from(table))),
                                               ],
                                             ),
@@ -9053,6 +9713,16 @@ class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
 
     super.initState();
   }
+  clear(){
+    group = null;
+    codeController.text =  "";
+    namecontroller.text =  "";
+    attributeType.text="";
+    active =  false;
+    setState(() {
+
+    });
+     }
 
   @override
   Widget build(BuildContext context) {
@@ -9099,7 +9769,7 @@ class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
                             content: data.data2,
                             // table:table,
                           ));
-                      context.read<AttributepatchlistCubit>().getAttributePatchList();
+
 
                     });
                   } else {
@@ -9130,13 +9800,6 @@ class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
                         codeController.text = data.code ?? "";
                         namecontroller.text = data?.attributeName ?? "";
                         attributeType.text=data?.attributeType??"";
-
-
-
-
-
-                        print(categoryid);
-
                         active = data.isActive ?? false;
                       });
                     });
@@ -9153,18 +9816,30 @@ class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
                 }, success: (data) {
                   // Navigator.pop(context);
                   if (data.data1) {
-                    print("here after  creation");
+
 
                     setState(() {
-                      showDailogPopUp(
-                          context,
-                          SuccessPopup(
-                            content: data.data2,
-                            // table:table,
-                          ));
-                      if (costingTypeMethodeCheck == true)
-                        context.read<AttributepatchlistCubit>().getAttributePatchList();
 
+
+                      if (costingTypeMethodeCheck != true){
+                        showDailogPopUp(
+                            context,
+                            SuccessPopup(
+                              content: data.data2,
+                              // table:table,
+                            ));
+                        context.read<AttributepatchlistCubit>().getAttributePatchList();
+                      }
+                      else{
+                        costingTypeMethodeCheck = false;
+                        showDailogPopUp(
+                            context,
+                            ConfigurePopup(
+                              type: "create_framework",
+                            ));
+                        context.read<AttributelistCubit>().getAttributeList();
+                      }
+                       // if(costingTypeMethodeCheck==true) Navigator.pop(context);
                       // context.read<FrameworklistCubit>().getFrameWorklist();
                       print("here after  creation next call");
                     });
@@ -9199,16 +9874,26 @@ class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
+
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
                         // if (costingTypeMethodeCheck != true)
-                     if( costingTypeMethodeCheck != true)   context
-                            .read<AttributecreationreadCubit>()
-                            .getAttributeCreationRead(veritiaclid!);
+                     if( costingTypeMethodeCheck != true) {
+                       if(   result.any((item) => item.id ==veritiaclid)) {
+                         context
+                             .read<AttributecreationreadCubit>()
+                             .getAttributeCreationRead(veritiaclid!);
+                       }
+                       else{
+                         veritiaclid = result[0].id;
+                         selectedVertical=0;
+                         context
+                             .read<AttributecreationreadCubit>()
+                             .getAttributeCreationRead(veritiaclid!);
+                       }
+                     }
                       } else {
-                        print("common");
-                        // select=true;
+                        clear();
                         setState(() {});
                       }
 
@@ -9231,12 +9916,11 @@ class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
                     addNew: addNew,
                     // isDirectCreate:changer,
 
-                    label: "Create Attribute",
+                    label: "Attribute",
                     onApply: () {
                       print("save");
 
-                      context
-                          .read<AttributetypesaveCubit>().getAttributePost(attributeType.text ,namecontroller.text, active);
+                      context.read<AttributetypesaveCubit>().getAttributePost(attributeType.text ,namecontroller.text, active);
 
                       // widget.onTap();
                     },
@@ -9372,15 +10056,15 @@ class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
 
                                                         restricted: true,
                                                       ),
-                                                      NewInputCard(
-                                                        height: 60,
-                                                        controller:
-                                                        attributeType,
-                                                        title: "Attribute Type",
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
+                                                      // NewInputCard(
+                                                      //   height: 60,
+                                                      //   controller:
+                                                      //   attributeType,
+                                                      //   title: "Attribute Type",
+                                                      // ),
+                                                      // SizedBox(
+                                                      //   height: 10,
+                                                      // ),
 
                                                       SizedBox(
                                                         height: 10,
@@ -12983,10 +13667,37 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                                     SizedBox(
                                       height: 10,
                                     ),
+
+
                                     NewInputCard(
-                                        readOnly: true,
-                                        controller: customerGroup,
-                                        title: "Customer Group"),
+                                      controller:customerGroup,
+                                      icondrop: true,
+                                      readOnly: true,
+                                      title: "Customer Group",
+                                      ontap: () {
+                                        if(customerGroup.text.isNotEmpty){
+                                          customerGroup.text = "";
+
+                                        }
+                                        else
+                                          showDailogPopUp(
+                                            context,
+                                            TableConfigurePopup(
+                                              type: "CustomerGroup_OneselectionPopup",
+                                              valueSelect: (CustomerGroupModel va) {
+                                                setState(() {
+                                                  customerGroup.text = va?.name.toString() ?? "";
+                                                });
+                                              },
+                                            ),
+                                          );
+                                      },
+                                    ),
+
+                                    // NewInputCard(
+                                    //     readOnly: true,
+                                    //     controller: customerGroup,
+                                    //     title: "Customer Group"),
                                     SizedBox(
                                       height: 10,
                                     ),
@@ -14373,13 +15084,24 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
-                    context.read<DevisionListCubit>().getDevisionList();
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context.read<ListstaticCubit>().getStaticList();
+
+
+
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -14387,7 +15109,6 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
             ),
             BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
               listener: (context, state) {
-                print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
                   // context.showSnackBarError("Loading");
@@ -14418,23 +15139,23 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                     print("error");
                   },
                   success: (list) {
-                    print("aaaaayyyiram" + list.data.toString());
                     list1 = list;
-
                     result = list.data;
-                    print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        selectedVertical=0;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<DivisionreadCubit>()
-                            .getDivisionRead(veritiaclid!, "static");
+                        if(   result.any((item) => item.id ==veritiaclid)){
+                          context
+                              .read<DivisionreadCubit>()
+                              .getDivisionRead(veritiaclid!, "static");
+                        }
+                        else{
+                          veritiaclid = result[0].id;
+                          selectedVertical=0;
+                          context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!, "static");
+                        }
+
                       } else {
-                        print("common");
-                        // select=true;
+                        clear();
                         setState(() {});
                       }
 
@@ -15369,12 +16090,13 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
     context.read<UomgruoplistCubit>().getUomGroupist();
     super.initState();
   }
-  clear(){
+  clear(){group=null;
     codeController.text =  "";
     namecontroller.text = "";
     shortNamecontroller.text = "";
     descriptionContollercontroller.text = "";
     active = false;
+
 
   }
 
@@ -15447,9 +16169,7 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                           content: data.data2,
                           // table:table,
                         ));
-                    context
-                        .read<UomgroupreadCubit>()
-                        .getUomGroupRead(veritiaclid!);
+                    context.read<UomgruoplistCubit>().getUomGroupist();
                   } else {
                     showDailogPopUp(
                         context,
@@ -15526,18 +16246,21 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<UomgroupreadCubit>()
-                            .getUomGroupRead(veritiaclid!);
-                      } else {
-                        print("common");
-                        // select=true;
+                        if(   result.any((item) => item.id ==veritiaclid)){
+                          context.read<UomgroupreadCubit>().getUomGroupRead(veritiaclid!);
+                        }
+                        else{
+                          veritiaclid = result[0].id;
+                          selectedVertical=0;
+                          context.read<UomgroupreadCubit>().getUomGroupRead(veritiaclid!);
+                        }
+                      }
+                      else {
+
+                        clear();
+
                         setState(() {});
                       }
-
                       setState(() {});
                     });
                   });
@@ -15584,15 +16307,10 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                         description: descriptionContollercontroller?.text ?? "",
                         isActive: active,
                       );
-                      print("Rijina" + model.toString());
-                      context
-                          .read<DivisioncreateCubit>()
-                          .postDivisionPatch(veritiaclid, model, "Uom_goup");
+                      context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid, model, "Uom_goup");
                     },
                     onCancel: () {
-                      context
-                          .read<MaterialdeleteCubit>()
-                          .materialDelete(veritiaclid, "Uom_group");
+                      context.read<MaterialdeleteCubit>().materialDelete(veritiaclid, "Uom_group");
                     },
 
                     onAddNew: (v) {
@@ -15663,6 +16381,7 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                                   height: 10,
                                 ),
                                 PopUpSwitchTile(
+
                                     value: active ?? false,
                                     title: "is Active",
                                     onClick: (gg) {
@@ -16124,8 +16843,9 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  Navigator.pop(context);
+
                   if (data.data1) {
+                    Navigator.pop(context);
                     showDailogPopUp(
                         context,
                         SuccessPopup(
@@ -16203,7 +16923,7 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                         uomGroupCode: uomGroupController.text ?? "",
                         standardCode: standardCodecontroller.text ?? "",
                         conversionFactor:
-                            int.tryParse(conversionfactorcontroller.text),
+                            double.tryParse(conversionfactorcontroller.text),
                       );
                       print("model" + model.toString());
                       context
@@ -16422,6 +17142,22 @@ class _UomPopUpState extends State<UomPopUp> {
     context.read<BaseuomlistCubit>().getUomist(type: "all");
     super.initState();
   }
+  clear(){
+    group = null;
+    codeController.text =  "";
+    namecontroller.text =  "";
+    uomGroupController.text =  "";
+    uomGroupNameController.text =  "";
+    shortNamecontroller.text =  "";
+    conversionfactorcontroller.text = "";
+    baseEquivalentcontroller.text = "";
+    standardCodecontroller.text = "";
+    active =  false;
+    setState(() {
+
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16472,7 +17208,7 @@ class _UomPopUpState extends State<UomPopUp> {
                             data.standardCode.toString() ?? "";
                         active = data.isActive ?? false;
 
-                        active = data.isActive ?? false;
+
                       });
                     });
               },
@@ -16487,13 +17223,25 @@ class _UomPopUpState extends State<UomPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  Navigator.pop(context);
+
 
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    context.read<BaseuomlistCubit>().getUomist();
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
+                    context.read<BaseuomlistCubit>().getUomist(type: "all");
                   } else {
-                    context.showSnackBarError(data.data2);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content:  Variable.errorMessege,
+                          // table:table,
+                        ));
+                    // context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
                   ;
@@ -16542,12 +17290,19 @@ class _UomPopUpState extends State<UomPopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<ReadbaseuomCubit>()
-                            .getBaseUomRead(veritiaclid!);
+                        if(   result.any((item) => item.id ==veritiaclid)){
+                          context
+                              .read<ReadbaseuomCubit>()
+                              .getBaseUomRead(veritiaclid!);
+                        }
+                        else{
+
+                          veritiaclid = result[0].id;
+                          selectedVertical=0;
+                          context
+                              .read<ReadbaseuomCubit>()
+                              .getBaseUomRead(veritiaclid!);
+                        }
                       } else {
                         print("common");
                         // select=true;
@@ -16582,7 +17337,7 @@ class _UomPopUpState extends State<UomPopUp> {
                         uomGroupCode: uomGroupController.text ?? "",
                         standardCode: standardCodecontroller.text ?? "",
                         conversionFactor:
-                            int.tryParse(conversionfactorcontroller.text),
+                            double.tryParse(conversionfactorcontroller.text),
                       );
                       print("model" + model.toString());
                       context
@@ -16597,7 +17352,7 @@ class _UomPopUpState extends State<UomPopUp> {
                           uomGroupCode: uomGroupController.text ?? "",
                           standardCode: standardCodecontroller.text ?? "",
                           conversionFactor:
-                              int.tryParse(conversionfactorcontroller.text),
+                              double.tryParse(conversionfactorcontroller.text),
                           isActive: active);
                       print("model" + model.toString());
                       context
@@ -16829,7 +17584,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
   }
 
   void initState() {
-    context.read<AllcategorylistCubit>().getAllCategoryist();
+    context.read<CategoryListSearchCubit>().getCategoryList2();
     super.initState();
   }
   clear(){
@@ -16846,6 +17601,9 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
     // shortNamecontroller.text=data.shortName??"";
 
     descriptionContollercontroller.clear();
+setState(() {
+
+});
   }
 
   @override
@@ -16941,14 +17699,23 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                   print(data.data1);
 
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
-                    context.read<AllcategorylistCubit>().getAllCategoryist();
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
+                    context.read<CategoryListSearchCubit>().getCategoryList2();
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+
+                        ));
+
                   }
                   ;
                 });
@@ -16970,7 +17737,6 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
 
                     });
 
-                    // context.showSnackBarSuccess(data.data2);
                   } else {
                     context.showSnackBarError(data.data2);
                     print(data.data1);
@@ -16980,7 +17746,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
               },
             ),
           ],
-          child: BlocConsumer<AllcategorylistCubit, AllcategorylistState>(
+          child: BlocConsumer<CategoryListSearchCubit, CategoryListSearchState>(
             listener: (context, state) {
               print("state" + state.toString());
               state.maybeWhen(
@@ -16996,16 +17762,19 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
+                        if(   result.any((item) => item.id ==veritiaclid)){
+                          context.read<CategoryreadCubit>().getCategoryRead(veritiaclid!);
+                        }else{   veritiaclid = result[0].id;
                         selectedVertical = 0;
                         Variable.divisionId = result[0].id;
 
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<CategoryreadCubit>()
-                            .getCategoryRead(veritiaclid!);
+                        context.read<CategoryreadCubit>().getCategoryRead(veritiaclid!);}
+
+
                       } else {
+                        clear();
                         // select=true;
                         setState(() {});
                       }
@@ -17083,6 +17852,24 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                               list: list,
                               selectedVertical: selectedVertical,
                               itemsearch: itemsearch,
+                              search: (va){
+
+
+
+
+                                if(va==""){
+                                  context.read<CategoryListSearchCubit>().getCategoryList2();
+                                  setState(() {
+
+                                  });
+                                }
+                                else{
+                                  context.read<CategoryListSearchCubit>().searchgetCategoryList2(va);
+                                  setState(() {
+
+                                  });
+                                }
+                              },
                               ontap: (int index) {
                                 setState(() {
                                   selectedVertical = index;
@@ -17617,7 +18404,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                     showDailogPopUp(
                                       context,
                                       TableConfigurePopup(
-                                        type: "division-TablePopup",
+                                        type: "division_TablePopup",
                                         valueSelect: (BrandListModel va) {
                                           setState(() {
                                             onChange = true;
@@ -18148,7 +18935,7 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                                     showDailogPopUp(
                                       context,
                                       TableConfigurePopup(
-                                        type: "division-TablePopup",
+                                        type: "division_TablePopup",
                                         valueSelect: (BrandListModel va) {
                                           setState(() {
                                             onChange = true;
@@ -18966,15 +19753,23 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                   print(data.data1);
 
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                     context
                         .read<GrouplistCubit>()
                         .getGroupListList(type: "all");
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
+                    showDailogPopUp(
+                      context,
+                      FailiurePopup(
+                        content: data.data2,
+                        // table:table,
+                      ));
                   }
                   ;
                 });
@@ -19020,17 +19815,27 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        selectedVertical = 0;
-                        Variable.divisionId = result[0].id;
+                        if(   result.any((item) => item.id ==veritiaclid)){
+                          context
+                              .read<GroupreadCubit>()
+                              .getGroupRead(veritiaclid!);
 
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<GroupreadCubit>()
-                            .getGroupRead(veritiaclid!);
+                        }
+                        else{
+                          veritiaclid = result[0].id;
+                          selectedVertical = 0;
+                          Variable.divisionId = result[0].id;
+
+                          // Variable.verticalid=result[0].id;
+
+                          context
+                              .read<GroupreadCubit>()
+                              .getGroupRead(veritiaclid!);
+                        }
+
                       } else {
                         print("common");
+                        clear();
                         // select=true;
                         setState(() {});
                       }
@@ -19069,7 +19874,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                         isActive: active,
                         description: descriptionContollercontroller?.text ?? "",
                       );
-                      print("Rijina" + model.toString());
+
                       context
                           .read<GroupcreationCubit>()
                           .postGroupPatch(veritiaclid, model);

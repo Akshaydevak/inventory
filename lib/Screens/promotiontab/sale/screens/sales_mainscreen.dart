@@ -640,9 +640,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                             context,
                             LogoutPopup(
                               message: "Do you want to delete the order",
-                              // table:table,
-                              // clear:clear(),
-                              // verticalId: veritiaclid,
+
                               onPressed: () {
                                 print("akshay");
                                 Navigator.pop(context);
@@ -651,11 +649,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
                                     .read<DeleteOfferPeriodCubit>()
                                     .deleteOfferPeriod(veritiaclid,type:"3"
                                     );
-                                // context
-                                //     .read<
-                                //     SalesgeneraldeleteCubit>()
-                                //     .salesGeneralDelete(
-                                //     veritiaclid);
+
                               },
                             ));
 

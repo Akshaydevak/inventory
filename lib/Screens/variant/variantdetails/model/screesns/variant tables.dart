@@ -16,12 +16,12 @@ class ProductTable extends StatefulWidget {
   final Storage? aboutProducts;
   final Function storageTableEdit;
   final bool addNew;
-  final Key? key;
+
 
   ProductTable(
       {required this.aboutProducts,
       required this.storageTableEdit,
-      required this.key,
+      required Key? key,
       required this.addNew});
   @override
   ProductTableState createState() => ProductTableState();
@@ -58,6 +58,17 @@ class ProductTableState extends State<ProductTable> {
       });
 
     }
+  }
+  clear(){
+    nameListTextEditingController.clear();
+    nameListControllers.clear();
+    upDate.clear();
+    upDateButton.clear();
+    keys.clear();
+    headingController.clear();name.clear();
+    aboutProducts=null;
+    key.clear();
+
   }
 
 
@@ -4073,6 +4084,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                           choosenValue: choosenValue,
                           onChange: (val) {
                             onSaveActive=true;
+                            print("objectsssssssssss");
                             choosenValue = val;
                             setState(() {});
                           },

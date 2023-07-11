@@ -128,6 +128,14 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
     discountController.text="";
 
   }
+  bool updateCheckFunc(){
+    var isUpdate=lines.where((element) => element.upDateCheck==true);
+    if(isUpdate.isNotEmpty){
+      return true;
+    }
+    else
+      return false;
+  }
   addition() {
     print("enterd");
     print("+==" + lines.toString());
@@ -458,6 +466,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                           }
                           else{
                             select=true;
+                            clear();
                             setState(() {
                             });
                           }
@@ -708,6 +717,12 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                                     ),
 
+
+                                                                    tableHeadtext(
+                                                                      'Excess Tax',
+
+                                                                      size: 13,
+                                                                    ),
                                                                     tableHeadtext(
 
                                                                       'Vatable Amount',
@@ -715,11 +730,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                                       size: 13,
 
-                                                                    ),
-                                                                    tableHeadtext(
-                                                                      'Excess Tax',
-
-                                                                      size: 13,
                                                                     ),
                                                                     tableHeadtext(
 
@@ -952,15 +962,18 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                           child: textPadding(lines?[i].foc.toString()??"",
                                                                               fontWeight: FontWeight.w500,
                                                                           alighnment: Alignment.topRight)
-                                                                        ),    TableCell(
-                                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                          child: textPadding(lines?[i].vatableAmount.toString()??"", fontSize: 12,
-                                                                               fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                                                                        ),    TableCell(
+                                                                        ),
+                                                                        TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].excessTax.toString()??"", fontSize: 12,
                                                                              fontWeight: FontWeight.w500,alighnment:Alignment.topRight),
-                                                                        ),    TableCell(
+                                                                        ),
+                                                                        TableCell(
+                                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                          child: textPadding(lines?[i].vatableAmount.toString()??"", fontSize: 12,
+                                                                              fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                                                                        ),
+                                                                        TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: textPadding(lines?[i].vat.toString()??"", fontSize: 12,
 
@@ -1020,7 +1033,9 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                         TableCell(
                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                           child: TableTextButton(
-                                                                            label:lines[i].upDateCheck==true? "update":"",
+                                                                            textColor:  lines?[i].upDateCheck==true?Pellet.bagroundColor:Colors.black,
+                                                                            bagroundColor: lines?[i].upDateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
+                                                                            label:lines[i].upDateCheck==true? "Update":"",
                                                                             onPress: (){
                                                                               updateCheck=false;
                                                                               lines[i]=lines[i].copyWith(upDateCheck: false);
@@ -1111,7 +1126,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                             },
                                             saveFunction: (){
-                                              if( updateCheck)  context.showSnackBarError("please click the update button");
+                                              var upDate=updateCheckFunc();
+                                              if( upDate)  context.showSnackBarError("Please click the update button");
                                               else{
                                                 print(lines);
                                                 if(lines.isNotEmpty){

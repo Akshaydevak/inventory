@@ -107,6 +107,14 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
       addition();
     });
   }
+  bool updateCheckFunc(){
+   var isUpdate=table.where((element) => element.updateCheck==true);
+   if(isUpdate.isNotEmpty){
+     return true;
+   }
+   else
+     return false;
+  }
 
   addition() {
     double unitcost2 = 0;
@@ -351,7 +359,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                             context.showSnackBarError(data.data2);
                             print(data.data1);
                           }
-                          ;
+
                         });
                       },
                     ),
@@ -530,6 +538,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                                 orderCode:ordereCodeController.text ,
                                                                 orderDate: orderDateController.text,
                                                                 table:table,
+                                                                vendorCode: "Not",
                                                                 vat: double.tryParse( vatController.text),
                                                                 actualCost:double.tryParse( actualCostController.text),
                                                                 variableAmount:double.tryParse( vatableAmountController.text) ,
@@ -584,7 +593,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                               SizedBox(height: 30,),
                                               SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",
                                                 saveFunction: (){
-                                                  if(updateCheck){
+                                                  if(updateCheck==true){
                                                     context.showSnackBarError("please click the update button ");
                                                   }
                                                   else{

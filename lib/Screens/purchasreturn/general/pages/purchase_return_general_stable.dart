@@ -157,6 +157,36 @@ class _TopStableTableState extends State<TopStableTable> {
                 children: [
                   Expanded(child: Column(
                     children: [
+                      widget.select? SelectableDropDownpopUp(
+                        label: "PurchaseInvoice Id",
+                        type:"PurchaseInvoices",
+                        value: widget.purchaseInvoiceId.text??"",
+                        onSelection: (PurchaseInvoice? va) {
+
+                          print(
+                              "+++++++++++++++++++++++"+va.toString());
+                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                          // setState(() {
+                          widget.purchaseInvoiceId.text=va?.invoiceCode??"";
+                          print("widget.purchaseInvoiceId.text"+widget.purchaseInvoiceId.text.toString());
+
+                          setState(() {
+                            context.read<
+                                PurchaseinvoiceReadCubit>()
+                                .getGeneralInvoiceRead(
+                                va?.id);
+
+                          });
+
+
+                        },
+
+                      ): NewInputCard(
+                          readOnly: true,
+                          controller: widget.purchaseInvoiceId, title: "Purchase Invoice Id"),
+                      SizedBox(
+                        height: height * .030,
+                      ),
 
                       NewInputCard(
                           readOnly: true,
@@ -193,36 +223,8 @@ class _TopStableTableState extends State<TopStableTable> {
                       //     enable: true),
                       // NewInputCard(
                       //     controller: widget.orderDate, title: "order date"),
-                      SizedBox(
-                        height: height * .030,
-                      ),
-                      widget.select? SelectableDropDownpopUp(
-                        label: "PurchaseInvoice Id",
-                        type:"PurchaseInvoices",
-                        value: widget.purchaseInvoiceId.text??"",
-                        onSelection: (PurchaseInvoice? va) {
-
-                          print(
-                              "+++++++++++++++++++++++"+va.toString());
-                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                          // setState(() {
-                          widget.purchaseInvoiceId.text=va?.invoiceCode??"";
-                          print("widget.purchaseInvoiceId.text"+widget.purchaseInvoiceId.text.toString());
-
-                          setState(() {
-                            context.read<
-                                PurchaseinvoiceReadCubit>()
-                                .getGeneralInvoiceRead(
-                                va?.id);
-
-                          });
 
 
-                        },
-
-                      ): NewInputCard(
-                          readOnly: true,
-                          controller: widget.purchaseInvoiceId, title: "Purchase Invoice Id"),
 
                       // NewInputCard(
                       //     controller: widget.purchaseInvoiceId, title: "PurchaseInvoice id"),

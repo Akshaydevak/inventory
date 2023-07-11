@@ -52,6 +52,7 @@ class _StockScreenState extends State<StockScreen> {
   TextEditingController maximumQuantityController = TextEditingController();
   TextEditingController minimumQuantityController = TextEditingController();
   TextEditingController channelTypeController = TextEditingController();
+  StockData? stockData=StockData();
   bool stockwarning = false;
   bool check = false;
   bool suffixIconCheck = false;
@@ -61,7 +62,7 @@ class _StockScreenState extends State<StockScreen> {
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
-  var list;
+  var list1;
   int? veritiaclid = 0;
   List<StockTableReadModel> data=[];
   bool addVirtualLimit=false;
@@ -69,6 +70,39 @@ class _StockScreenState extends State<StockScreen> {
     setState(() {
       addVirtualLimit=val;
     });
+
+  }
+  clear(){
+    stockData=null;
+    variantCodeController.text="";
+    variantId=0;
+    stockCodeController.text="";
+    salesUomController.text="";
+    salesUomNameController.text="";
+    baseUomController.text="";
+    baseUomName.text="";
+    purchaseUomController.text="";
+    purchaseUomNameController.text="";
+    salesStockQuantityController.text="";
+    channelTypeController.text="";
+    salesBlockQuantityController.text="";
+    purchaseBlockController.text="";
+    cancelledQuantityController.text="";
+    reservedQuantityController.text="";
+    reorderPointQuantityController.text="";
+    reorderQuantityController.text="";
+    damagedQuantityController.text="";
+    returnedQuantityController.text="";
+    minimumQuantityController.text="";
+    maximumQuantityController.text="";
+    minMaxRatioController.text="";
+    totalQuantityController.text="";
+    stockwarning=false;
+    salesBlock=false;
+    purchaseBlock=false;
+    virtualStockTypeController.text="";
+    virtualStockController.text="";
+    addVirtualStockController.text="";
 
   }
 
@@ -100,7 +134,6 @@ class _StockScreenState extends State<StockScreen> {
     print(minMaxRatioController.text);
     double sum = 0;
     if(minMaxRatioController.text.isNotEmpty){
-      print("entered MIN");
       var minMax = minMaxRatioController.text.split(":");
       print(minMax);
       if(minMax.length>2){
@@ -119,9 +152,9 @@ class _StockScreenState extends State<StockScreen> {
 
         }
         else{
-          print("aaaaaaaa"+totalQuantityController.text.toString());
+
           if(totalQuantityController.text.isNotEmpty==true &&totalQuantityController.text!="0" ){
-            print("entered totAL");
+
             double? total=double.tryParse(totalQuantityController?.text??"0");
             print(total);
             if(total!=null &&total!=0){
@@ -145,7 +178,6 @@ class _StockScreenState extends State<StockScreen> {
 
           }
           else{
-            print("entered virtual");
             double? virtual=double.tryParse(virtualStockController?.text??"0");
             double? addVirtual=double.tryParse(addVirtualStockController?.text??"0");
             if(addVirtual==null){
@@ -222,8 +254,7 @@ class _StockScreenState extends State<StockScreen> {
         .height;
     double width = MediaQuery
         .of(context)
-        .size
-        .width;
+        .size.width;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -235,7 +266,6 @@ class _StockScreenState extends State<StockScreen> {
         BlocProvider(
           create: (context) => StockpostCubit(),
         ),
-
       ],
       child: Builder(
           builder: (context) {
@@ -251,10 +281,8 @@ class _StockScreenState extends State<StockScreen> {
                         },
                         success: (data) {
                           setState(() {
-                            print("aval ethito" + data.toString());
-
-                            // group=data;
-
+                            print("data.stockData${data.stockData}");
+                            stockData=data.stockData;
                             variantCodeController.text=data.stockData?.variantCode??"";
                             variantId=data.stockData?.variantId;
                             stockCodeController.text=data.stockData?.stockCode??"";
@@ -272,7 +300,6 @@ class _StockScreenState extends State<StockScreen> {
                             reservedQuantityController.text=data.stockData?.reservedQuantity.toString()??"";
                             reorderPointQuantityController.text=data.stockData?.reOrderPoint.toString()??"";
                             reorderQuantityController.text=data.stockData?.reOrderQuantity.toString()??"";
-
                             damagedQuantityController.text=data.stockData?.damagedQuantity.toString()??"";
                             returnedQuantityController.text=data.stockData?.returnQuantity.toString()??"";
                             minimumQuantityController.text=data.stockData?.minimumQuantity.toString()??"";
@@ -286,32 +313,10 @@ class _StockScreenState extends State<StockScreen> {
                             virtualStockController.text=data.stockData?.virtualStock.toString()??"";
                             addVirtualStockController.text=data.stockData?.addVirtualStock.toString()??"";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                           });
-
-
-
-
-
                         });
                   },
                 ),
-
                 BlocListener<StockpostCubit, StockpostState>(
                   listener: (context, state) {
                     print("postssssssss" + state.toString());
@@ -395,8 +400,7 @@ class _StockScreenState extends State<StockScreen> {
                         print("error");
                       },
                       success: (list) {
-                        print("aaaaayyyiram" + list.data.toString());
-                        list = list;
+                        list1 = list;
 
                         result = list.data;
                         print("seee" + result.toString());
@@ -409,7 +413,7 @@ class _StockScreenState extends State<StockScreen> {
                             context.read<StockreadCubit>().getStockRead(veritiaclid!);
                           }
                           else {
-                            print("common");
+                           clear();
                             // select=true;
                             setState(() {});
                           }
@@ -429,7 +433,7 @@ class _StockScreenState extends State<StockScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           VariantVerticalList(
-                            list: list,
+                            list: list1,
                             suffixIconCheck: suffixIconCheck,
 
 
@@ -442,20 +446,9 @@ class _StockScreenState extends State<StockScreen> {
                                 addVirtualLimit=false;
 
                                 // select=false;
-                                // clear();
+                                clear();
                                 // exportCheck=false;
                                 // addNew=true;
-
-                                // updateCheck=false;
-                                print("rijina" + result[index].id.toString());
-
-
-                                veritiaclid = result[index].id;
-                                // clear();
-                                // select=true;
-                                //
-                                //
-
 
                                 setState(() {
                                   context.read<StocktablereadCubit>().getStockTableRead(result[index].code);
@@ -482,14 +475,14 @@ class _StockScreenState extends State<StockScreen> {
                                   () => context
                                   .read<ListvraiantCubit>()
                                   .refresh(),
-                              back: list?.previousUrl == null
+                              back: list1?.previousUrl == null
                                   ? null
                                   : () {
                                 context
                                     .read<ListvraiantCubit>()
                                     .previuosslotSectionPageList();
                               },
-                              next: list?.nextPageUrl == null
+                              next: list1?.nextPageUrl == null
                                   ? null
                                   : () {
                                 // print(data.nextPageUrl);
@@ -499,7 +492,11 @@ class _StockScreenState extends State<StockScreen> {
                               },
                             ),
                           ),
-                          Expanded(child: SingleChildScrollView(
+                          Expanded(child:stockData?.id==null?Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+
+                            child: Text(" NO Stock Data",style: TextStyle(fontSize: 18),),
+                          ): SingleChildScrollView(
                             child: Column(
                               children: [
                                 VAriantStockStableTable(
@@ -541,22 +538,24 @@ class _StockScreenState extends State<StockScreen> {
 
                                 ),
                                 SizedBox(height: 35,),
-                                Row(mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    TextWidget(text: "Based On Batch"),
-                                  ],
-                                ),
-                                // Divider(color: Colors.grey, thickness: 1,),
-                                SizedBox(height: height*.01,),
-
-                                StockBottomTable(
-                                    data:data
-                                ),
+                                // Row(mainAxisAlignment: MainAxisAlignment.start,
+                                //   children: [
+                                //     TextWidget(text: "Based On Batch"),
+                                //   ],
+                                // ),
+                                // // Divider(color: Colors.grey, thickness: 1,),
+                                // SizedBox(height: height*.01,),
+                                //
+                                // StockBottomTable(
+                                //     data:data
+                                // ),
 
 
                                 SizedBox(height: height * .1,),
                                 SaveUpdateResponsiveButton(
                                   label:"SAVE" ,
+                                  isDelete: true,
+
                                   discardFunction: (){},
                                   saveFunction: (){
                                     ratiooCheck(minMaxRatioController.text,"");

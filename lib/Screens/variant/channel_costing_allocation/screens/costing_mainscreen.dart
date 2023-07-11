@@ -53,7 +53,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
   bool suffixIconCheck=false;
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
-  var list;
+  var list1;
   int? veritiaclid = 0;
   int? channelStockId = 0;
   int? channelId = 0;
@@ -66,7 +66,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
   List<ChannelListModel> checkBoxLis = [];
   List<ListingChnanelTableModel> table = [];
   List<bool?>selection=[];
-  bool select=false;
+  bool select=true;
   @override
   void initState() {
     context.read<ListvraiantCubit>().getVariantList();
@@ -160,7 +160,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
               setState(() {
                 print("arion");
                 checkBoxLis=List.from(data.data);
-                print(checkBoxLis.length);
+                print(checkBoxLis);
                 // print(checkBoxLis);
                 // group = data.data;
                 // print("Akshgayaa" + group.toString());
@@ -308,7 +308,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                 },
                 success: (list) {
                   print("aaaaayyyiram" + list.data.toString());
-                  list = list;
+                  list1 = list;
 
                   result = list.data;
                   print("seee" + result.toString());
@@ -316,11 +316,9 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                     if (result.isNotEmpty) {
                       veritiaclid = result[0].id;
                       variantCode = result[0].code;
-                      // Variable.verticalid=result[0].id;
-                      // print("Variable.ak"+Variable.verticalid.toString());
+
                       context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
-                      // context.read<ChannelreadCubit>().getCostingRead(tableId);
-                      // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+
                     }
                     else {
                       print("common");
@@ -351,7 +349,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     VariantVerticalList(
-                      list: list,
+                      list: list1,
 
 
                       selectedVertical: selectedVertical,
@@ -369,43 +367,20 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                           clear();
                           channelNameController.clear();
                           channelStockCodeController.clear();
-
-
-
-                          // clear();
-                          // exportCheck=false;
-                          // addNew=true;
-
-                          // updateCheck=false;
-                          print("rijina" + result[index].id.toString());
-
-
                           veritiaclid = result[index].id;
                           variantCode = result[0].code;
-                          // clear();
-                          // select=true;
-                          //
-                          //
-
-
                           setState(() {
                             onChange=true;
                             context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
-                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
-
                           });
                         });
                       },
                       search: (String va) {
                         print(va);
-                        context
-                            .read<ListvraiantCubit>()
-                            .getSearchVariantList(va);
+                        context.read<ListvraiantCubit>().getSearchVariantList(va);
                         suffixIconCheck=true;
                         if (va == "") {
-                          context
-                              .read<ListvraiantCubit>()
-                              .getVariantList();
+                          context.read<ListvraiantCubit>().getVariantList();
                           suffixIconCheck=false;
                         }
                       },
@@ -415,20 +390,16 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             () => context
                             .read<ListvraiantCubit>()
                             .refresh(),
-                        back: list?.previousUrl == null
+                        back: list1?.previousUrl == null
                             ? null
                             : () {
-                          context
-                              .read<ListvraiantCubit>()
-                              .previuosslotSectionPageList();
+                          context.read<ListvraiantCubit>().previuosslotSectionPageList();
                         },
-                        next: list?.nextPageUrl == null
+                        next: list1?.nextPageUrl == null
                             ? null
                             : () {
                           // print(data.nextPageUrl);
-                          context
-                              .read<ListvraiantCubit>()
-                              .nextslotSectionPageList();
+                          context.read<ListvraiantCubit>().nextslotSectionPageList();
                         },
                       ),
                     ),
@@ -438,20 +409,14 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                         ChannelScrollableScreen(
                           onPress: (int? index){
                             setState(() {
-                              print(index);
-                              print("sssssssssssssssssssssssssssss"+group.toString());
                               checkBoxLis.clear();
                               selection.clear();
                               table.clear();
                               clear();
                               channelNameController.clear();
                               channelStockCodeController.clear();
-
                               if(index!=null) {
-                                context
-                                    .read<ChannelListReadCubit>()
-                                    .getChannelList(
-                                    group[index].channelTypecode, veritiaclid);
+                                context.read<ChannelListReadCubit>().getChannelList(group[index].channelTypecode, veritiaclid);
 
                               }  });
 
@@ -583,8 +548,6 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                                 sellingPrice:  double.tryParse(sellingPriceController.text),
 
                               );
-                              print("the serching model is here${model}");
-                              print("the serching model is here${model.gpPercentage}");
                               context.read<CostingCreationCubit>().postCosting(model);
 
 
@@ -608,106 +571,9 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             }
                           },
                           discardFunction: (){},
-                          label:select?"SAVE":"UPDATE" ,
+                          label:select?"SAnnVE":"UPDATE" ,
 
                         ),
-                        // Container(
-                        //   margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.end,
-                        //     children: [
-                        //       Button(Icons.delete, Colors.red,
-                        //           ctx: context,
-                        //           text: "DISCARD",
-                        //           onApply: () {
-                        //
-                        //             // if(updateCheck){
-                        //             //   // clears();
-                        //             //
-                        //             //
-                        //             // }
-                        //
-                        //           },
-                        //           height: 29,
-                        //           width: 90,
-                        //           labelcolor: Colors.red,
-                        //           iconColor: Colors.red,
-                        //           bdr: true),
-                        //       SizedBox(
-                        //         width: width * .008,
-                        //       ),
-                        //       Button(Icons.check, Colors.grey,
-                        //           ctx: context,
-                        //           text:select?"SAVE":"UPDATE",
-                        //           height: 29,
-                        //           Color: Color(0xff3E4F5B),
-                        //           width: 90,
-                        //           labelcolor: Colors.white,
-                        //           iconColor: Colors.white,
-                        //           onApply: () {
-                        //             print(costingMethodController.text);
-                        //             if(select){
-                        //
-                        //               CostingPageCreationPostModel model=CostingPageCreationPostModel(
-                        //                 channelId: channelId,
-                        //                 channelCode:channelCode,
-                        //                 channelStockId: channelStockId,
-                        //                 variantId: veritiaclid,
-                        //                 variantCode: variantCode,
-                        //                 inventoryId: Variable.inventory_ID,
-                        //                 pricingGpType: pricingGptypeController.text,
-                        //                 createdBy: Variable.created_by,
-                        //                 pricingGroupId: int.tryParse(pricingGroupIdController.text),
-                        //                 costingMethodId: int.tryParse(costingMethodController.text),
-                        //                 gpPercentage:
-                        //                 double.tryParse(gpPercentegeController.text),
-                        //
-                        //                 // double.tryParse(gpPercentegeController.text),
-                        //                 unitCost:  double.tryParse(unitCostController.text),
-                        //                 sellingPrice:  double.tryParse(sellingPriceController.text),
-                        //
-                        //               );
-                        //               print("the serching model is here${model}");
-                        //               print("the serching model is here${model.gpPercentage}");
-                        //               context.read<CostingCreationCubit>().postCosting(model);
-                        //
-                        //
-                        //             }
-                        //             else{
-                        //
-                        //               CostingPageCreationPostModel model=CostingPageCreationPostModel(
-                        //                 createdBy: Variable.created_by,
-                        //                 pricingGroupId: int.tryParse(pricingGroupIdController.text),
-                        //                 costingMethodId: int.tryParse(costingMethodController.text),
-                        //                 gpPercentage: double.tryParse(gpPercentegeController.text),
-                        //                 pricingGpType: pricingGptypeController.text,
-                        //                 unitCost:  double.tryParse(unitCostController.text),
-                        //                 sellingPrice:  double.tryParse(sellingPriceController.text),
-                        //
-                        //
-                        //               );
-                        //               print(model);
-                        //               context.read<CostingCreationCubit>().patchCosting(model,channelTableSelcteddId);
-                        //             }
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //           }
-                        //       ),
-                        //       SizedBox(
-                        //         // width: width * .008,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
 
 
                       ],),

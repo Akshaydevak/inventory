@@ -2610,7 +2610,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     context.showSnackBarError(
                                                         "the minimum order is always less than maximum order");
                                                   }
-                                               else  if(variantId=="null"||recievedQty==0||unitcost==0){
+                                               else  if(variantId=="null"||unitcost==0 ||unitcost==null ){
                                                     context.showSnackBarError("please fill all the fields");
                                                   }
                                                   else if(recievedQty==0||recievedQty==""){

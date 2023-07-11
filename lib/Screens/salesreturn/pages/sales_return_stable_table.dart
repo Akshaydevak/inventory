@@ -155,6 +155,29 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            widget.select?
+                            SelectableDropDownpopUp(
+                              label: "Sales Invoice Code",
+                              type:"InvoiceCode-PopUpCall",
+                              value: widget.salesInvoiceCode.text,
+                              enable: true,
+                              onSelection: (SalesInvoiceCodeModel? va) {
+                                print(
+                                    "+++++++++++++++++++++++");
+                                //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                setState(() {
+                                  widget.salesInvoiceCode.text=va?.invoiceCode.toString()??"";
+                                  context.read<GeneralinvoicereadCubit>().getSalesReturnGeneralInvoiceRead(va?.id);
+
+                                });
+                              },
+
+                            ):NewInputCard(
+                                readOnly: true,
+                                controller: widget.salesInvoiceCode, title: "Sales Invoice Code"),
+                            SizedBox(
+                              height: height * .030,
+                            ),
                             SelectableDropDownpopUp(
                               label: "Order Type",
                               type: "SalesOrder_TypePopUpCall",
@@ -200,30 +223,9 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
 
                             SizedBox(
                               height: height * .030,
-                            ),widget.select?
-                            SelectableDropDownpopUp(
-                              label: "Sales Invoice Code",
-                              type:"InvoiceCode-PopUpCall",
-                              value: widget.salesInvoiceCode.text,
-                              enable: true,
-                              onSelection: (SalesInvoiceCodeModel? va) {
-                                print(
-                                    "+++++++++++++++++++++++");
-                                //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                setState(() {
-                                  widget.salesInvoiceCode.text=va?.invoiceCode.toString()??"";
-                                  context.read<GeneralinvoicereadCubit>().getSalesReturnGeneralInvoiceRead(va?.id);
-
-                                });
-                              },
-
-                            ):NewInputCard(
-                                readOnly: true,
-                                controller: widget.salesInvoiceCode, title: "Sales Invoice Code"),
-
-                            SizedBox(
-                              height: height * .030,
                             ),
+
+
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.customerId, title: "Customer Id"),

@@ -23,13 +23,13 @@ mixin _$VendorDetailsModel {
   int? get id => throw _privateConstructorUsedError;
   Address? get address => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  @JsonKey(name: "manufacturer_usercode")
+  @JsonKey(name: "code")
   String? get manuFactureuserCode => throw _privateConstructorUsedError;
   @JsonKey(name: "alternative_email")
   String? get alternativeEmail => throw _privateConstructorUsedError;
   @JsonKey(name: "tr_number")
   int? get trnNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: "manufacturer_name")
+  @JsonKey(name: "name")
   String? get manuFactureName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,10 +48,10 @@ abstract class $VendorDetailsModelCopyWith<$Res> {
       {int? id,
       Address? address,
       String? email,
-      @JsonKey(name: "manufacturer_usercode") String? manuFactureuserCode,
+      @JsonKey(name: "code") String? manuFactureuserCode,
       @JsonKey(name: "alternative_email") String? alternativeEmail,
       @JsonKey(name: "tr_number") int? trnNumber,
-      @JsonKey(name: "manufacturer_name") String? manuFactureName});
+      @JsonKey(name: "name") String? manuFactureName});
 
   $AddressCopyWith<$Res>? get address;
 }
@@ -134,10 +134,10 @@ abstract class _$$_VendorDetailsModelCopyWith<$Res>
       {int? id,
       Address? address,
       String? email,
-      @JsonKey(name: "manufacturer_usercode") String? manuFactureuserCode,
+      @JsonKey(name: "code") String? manuFactureuserCode,
       @JsonKey(name: "alternative_email") String? alternativeEmail,
       @JsonKey(name: "tr_number") int? trnNumber,
-      @JsonKey(name: "manufacturer_name") String? manuFactureName});
+      @JsonKey(name: "name") String? manuFactureName});
 
   @override
   $AddressCopyWith<$Res>? get address;
@@ -202,10 +202,10 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
       {this.id,
       this.address,
       this.email,
-      @JsonKey(name: "manufacturer_usercode") this.manuFactureuserCode,
+      @JsonKey(name: "code") this.manuFactureuserCode,
       @JsonKey(name: "alternative_email") this.alternativeEmail,
       @JsonKey(name: "tr_number") this.trnNumber,
-      @JsonKey(name: "manufacturer_name") this.manuFactureName});
+      @JsonKey(name: "name") this.manuFactureName});
 
   factory _$_VendorDetailsModel.fromJson(Map<String, dynamic> json) =>
       _$$_VendorDetailsModelFromJson(json);
@@ -217,7 +217,7 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
   @override
   final String? email;
   @override
-  @JsonKey(name: "manufacturer_usercode")
+  @JsonKey(name: "code")
   final String? manuFactureuserCode;
   @override
   @JsonKey(name: "alternative_email")
@@ -226,7 +226,7 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
   @JsonKey(name: "tr_number")
   final int? trnNumber;
   @override
-  @JsonKey(name: "manufacturer_name")
+  @JsonKey(name: "name")
   final String? manuFactureName;
 
   @override
@@ -274,17 +274,14 @@ class _$_VendorDetailsModel implements _VendorDetailsModel {
 
 abstract class _VendorDetailsModel implements VendorDetailsModel {
   const factory _VendorDetailsModel(
-      {final int? id,
-      final Address? address,
-      final String? email,
-      @JsonKey(name: "manufacturer_usercode")
-          final String? manuFactureuserCode,
-      @JsonKey(name: "alternative_email")
-          final String? alternativeEmail,
-      @JsonKey(name: "tr_number")
-          final int? trnNumber,
-      @JsonKey(name: "manufacturer_name")
-          final String? manuFactureName}) = _$_VendorDetailsModel;
+          {final int? id,
+          final Address? address,
+          final String? email,
+          @JsonKey(name: "code") final String? manuFactureuserCode,
+          @JsonKey(name: "alternative_email") final String? alternativeEmail,
+          @JsonKey(name: "tr_number") final int? trnNumber,
+          @JsonKey(name: "name") final String? manuFactureName}) =
+      _$_VendorDetailsModel;
 
   factory _VendorDetailsModel.fromJson(Map<String, dynamic> json) =
       _$_VendorDetailsModel.fromJson;
@@ -296,7 +293,7 @@ abstract class _VendorDetailsModel implements VendorDetailsModel {
   @override
   String? get email;
   @override
-  @JsonKey(name: "manufacturer_usercode")
+  @JsonKey(name: "code")
   String? get manuFactureuserCode;
   @override
   @JsonKey(name: "alternative_email")
@@ -305,7 +302,7 @@ abstract class _VendorDetailsModel implements VendorDetailsModel {
   @JsonKey(name: "tr_number")
   int? get trnNumber;
   @override
-  @JsonKey(name: "manufacturer_name")
+  @JsonKey(name: "name")
   String? get manuFactureName;
   @override
   @JsonKey(ignore: true)

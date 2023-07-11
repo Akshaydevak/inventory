@@ -10,10 +10,10 @@ class VendorDetailsModel with _$VendorDetailsModel {
     final String? email,
 
 
-    @JsonKey(name: "manufacturer_usercode", ) final String? manuFactureuserCode,
+    @JsonKey(name: "code", ) final String? manuFactureuserCode,
     @JsonKey(name: "alternative_email", ) final String? alternativeEmail,
     @JsonKey(name: "tr_number", ) final int? trnNumber,
-    @JsonKey(name: "manufacturer_name", ) final String? manuFactureName,
+    @JsonKey(name: "name", ) final String? manuFactureName,
   }) = _VendorDetailsModel;
   factory VendorDetailsModel.fromJson(Map<String, dynamic> json) =>
       _$VendorDetailsModelFromJson(json);

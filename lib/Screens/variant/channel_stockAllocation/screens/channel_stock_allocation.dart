@@ -54,7 +54,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
-  var list;
+  var list1;
   int? veritiaclid = 0;
   int? channelId ;
   bool stockwarning = false;
@@ -167,7 +167,7 @@ if(minMaxRatioController.text.isNotEmpty){
 
     }
     else{
-      print("aaaaaaaa"+totalQuantityController.text.toString());
+
       if(totalQuantityController.text.isNotEmpty==true && totalQuantityController.text!="0"){
         print("entered totAL");
         double? total=double.tryParse(totalQuantityController?.text??"0");
@@ -370,7 +370,7 @@ if(addVirtual==null){
             },
             success: (list) {
               print("aaaaayyyiram" + list.data.toString());
-              list = list;
+              list1 = list;
 
               result = list.data;
               print("seee" + result.toString());
@@ -406,7 +406,7 @@ if(addVirtual==null){
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     VariantVerticalList(
-                      list: list,
+                      list: list1,
                       suffixIconCheck: suffixIconCheck,
 
 
@@ -416,14 +416,14 @@ if(addVirtual==null){
                             () => context
                             .read<ListvraiantCubit>()
                             .refresh(),
-                        back: list?.previousUrl == null
+                        back: list1?.previousUrl == null
                             ? null
                             : () {
                           context
                               .read<ListvraiantCubit>()
                               .previuosslotSectionPageList();
                         },
-                        next: list?.nextPageUrl == null
+                        next: list1?.nextPageUrl == null
                             ? null
                             : () {
                           // print(data.nextPageUrl);
@@ -493,7 +493,8 @@ if(addVirtual==null){
                               itemBuilder: (context, index) {
                               return Container(
                                 // width:40 ,
-                                  child: TextButtonLarge(onPress: () {
+                                  child: TextButtonLarge(
+                                      onPress: () {
 
                                     channelId=group[index].id;
                                     setState(() {

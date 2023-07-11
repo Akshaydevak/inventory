@@ -657,6 +657,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
           // gr
           DrawerCared(
               ontap: () {
+                costingTypeMethodeCheck = false;
                 showDailogPopUp(
                   context,
                   ConfigurePopup(
@@ -671,6 +672,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
           // gr,
           DrawerCared(
               ontap: () {
+                costingTypeMethodeCheck = false;
                 showDailogPopUp(
                   context,
                   ConfigurePopup(

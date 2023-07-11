@@ -244,7 +244,7 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
 
                         },
                           type:"Weight_unit_popup" ,
-                          initialvalue: "Kilo Gram",
+                          // initialvalue: "Kilo Gram",
                         ),
                         // Container(
                         //   margin: EdgeInsets.only(left: 20),
