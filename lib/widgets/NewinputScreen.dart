@@ -1440,16 +1440,23 @@ class _FileUploadFieldState extends State<FileUploadField> {
   }
 
   void imagePicker() async {
-    final pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery ,
-    );
-    Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
+    // final pickedFile = await ImagePicker().getImage(
+    //   source: ImageSource.gallery ,
+    // );
+    final fromPicker = await ImagePicker().getImage(source: ImageSource.gallery);
+    print("dsdsdsdssssssssssssssssssss${fromPicker}");
+    if (fromPicker != null) {
+      final bytes = await fromPicker.readAsBytes();
+      // widget.onChange!(bytes);
+      widget.onImageChange!(bytes);
+    }
+
 
 // print(fromPicker.)
     Uint8List? bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
     fileChange = true;
     widget.onImageChange!(bytesFromPicker!);
-    imageFile = pickedFile!;
+    imageFile = fromPicker!;
 
 
     setState(() {});
@@ -1514,6 +1521,399 @@ class _FileUploadFieldState extends State<FileUploadField> {
 
   }
 }
+
+
+
+class ImageUploadField extends StatefulWidget {
+  final Function(MultipartFile)? changeMultiFile;
+  final Function(PlatformFile)? onChanePlatformFile;
+  final VoidCallback? onNewTap;
+  final Function(bool)? onChangeTap;
+  final Function(String)? onChange;
+  final Function(Uint8List)? onImageChange;
+  final String? fileUrl;
+  final bool row;
+  final VoidCallback? onCancel;
+  final bool onCreate;
+  final String label;
+  final bool required;
+  final bool isFile;
+  final bool enable;
+  final bool tableCheck;
+  final double fontsize;
+  final String fileName;
+  const ImageUploadField(
+      {Key? key,
+        this.onChange,
+        this.row=false,
+        this.fileUrl,
+        this.onCancel,
+        this.fontsize=12,
+        this.tableCheck=false,
+        this.onCreate = false,
+        this.enable = false,
+        this.isFile = false,
+        required this.label,
+        this.required = false,
+        required this.fileName,
+        this.onImageChange,
+        this.onNewTap,
+        this.onChangeTap,
+        this.onChanePlatformFile,
+        this.changeMultiFile})
+      : super(key: key);
+
+  @override
+  _ImageUploadFieldState createState() => _ImageUploadFieldState();
+}
+
+class _ImageUploadFieldState extends State<ImageUploadField> {
+  String? filename = "no attachments";
+  bool fileChange = false;
+  bool clearedImage = false;
+  PickedFile imageFile=PickedFile("");
+  File? file;
+
+
+  @override
+  Widget build(BuildContext context) {
+    // print(filename);
+
+    if (!fileChange && widget.fileUrl != null &&!fileChange && widget.fileUrl != "null") {
+      filename = widget.fileUrl;
+      print("searching"+filename.toString());
+    } else {
+      if (!fileChange && widget.fileName.isEmpty)
+        // print("false");
+        filename = "no attachments";
+    }
+    fileChange = false;
+    return widget.row?
+    SizedBox(
+
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(
+            //horizontal: 10,
+              vertical: 5),
+          leading: Container(
+
+              width: 70,
+              child: Text.rich(TextSpan(
+                  text: widget.label,
+                  style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                  children: widget.required
+                      ? [
+                    TextSpan(
+                        text: "*", style: TextStyle(color:Colors.grey))
+                  ]
+                      : []))),
+          title:
+          Container(
+
+            child: TextFormField(
+              onTap: () {
+                widget.onChangeTap!(true);
+                imagePicker();
+                // chooseFileUsingFilePicker();
+                // imagePicker();
+              },
+              // widget.fileUrl!=null?
+
+              // :() async {
+              //  widget.isFile?
+              //             launchUrl(widget.fileUrl ?? "")
+              //             :showImage(
+              //               widget.fileUrl??"",context
+              //            );
+              //            setState(() {
+
+              //            });
+              // },
+              controller: TextEditingController(text: filename),
+              decoration: InputDecoration(
+                prefixIcon: IconButton(
+                    onPressed: widget.fileUrl != null
+                        ? ()  {
+                      // imageFile!=null?dispalyImage( imageFile,context):null;
+                      // print("file url is ${widget.fileUrl}");
+                      widget.isFile
+
+
+                          ? launchUrl(widget.fileUrl ?? "")
+                          : showImage(widget.fileUrl ?? "", context);
+
+                    }
+                        : null,
+                    icon: Icon(Icons.attach_file)),
+                contentPadding:
+                EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                // isDense: true,
+                hintStyle: TextStyle(fontSize: 10),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0),
+                )
+                ,
+                suffixIcon: IconButton(
+                    onPressed: () {
+
+
+                      print("""""""""""""shamnaaaaaaaaaaaaaaaaaaa");
+
+                      filename = "no attachments";
+                      clearedImage = true;
+                      widget.onCancel != null ? widget.onCancel!() : null;
+                      setState(() {});
+                    },
+                    icon: Icon(Icons.clear)),
+              ),
+            ),
+          ),
+        )):
+    Container(
+      padding: widget.tableCheck==false?  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018):EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:[
+
+          widget.tableCheck==false?
+          Container(
+
+              child: Text.rich(TextSpan(
+                  text: widget.label,
+                  style: GoogleFonts.roboto(fontSize: widget.fontsize,fontWeight: FontWeight.w500),
+                  children: widget.required
+                      ? [
+                    TextSpan(
+                        text: "*", style: TextStyle(color: Palette.DANGER))
+                  ]
+                      : []))):Container(),
+          SizedBox(height:3),
+          Container(
+
+
+
+            child: TextFormField(
+
+              onTap: () {
+                widget.onChangeTap!(true);
+                filePicker();
+                // chooseFileUsingFilePicker();
+                // imagePicker();
+              },
+              // widget.fileUrl!=null?
+
+              // :() async {
+              //  widget.isFile?
+              //             launchUrl(widget.fileUrl ?? "")
+              //             :showImage(
+              //               widget.fileUrl??"",context
+              //            );
+              //            setState(() {
+
+              //            });
+              // },
+              controller: TextEditingController(text: filename),
+              decoration: InputDecoration(
+                prefixIcon: IconButton(
+                    onPressed: widget.fileUrl != null
+                        ? () async {
+                      // imageFile!=null?dispalyImage( imageFile,context):null;
+                      // print("file url is ${widget.fileUrl}");
+                      widget.isFile
+
+
+                          ? launchUrl(widget.fileUrl ?? "")
+                          : showImage(widget.fileUrl ?? "", context);
+
+                    }
+                        : null,
+                    icon: Icon(Icons.attach_file)),
+                contentPadding:
+                EdgeInsets.symmetric(horizontal: 10, vertical: 18.7),
+                isDense: true,
+                hintStyle: TextStyle(fontSize: 10),
+                border: widget.tableCheck==true? InputBorder.none:OutlineInputBorder(
+                  borderRadius:BorderRadius.circular(2),
+                  borderSide: BorderSide(
+
+                    color:Colors.red,
+                  ),
+                ),
+                enabledBorder:OutlineInputBorder(
+                    borderRadius:BorderRadius.circular(2),
+
+                    borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                focusedBorder:   OutlineInputBorder(
+                    borderRadius:BorderRadius.circular(2),
+
+                    borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      print("aakkakakkakak");
+
+
+                      filename = "no attachments";
+                      clearedImage = true;
+                      widget.onCancel != null ? widget.onCancel!() : null;
+                      setState(() {});
+                    },
+                    icon: Icon(Icons.clear)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  PlatformFile? objFile = null;
+  void chooseFileUsingFilePicker() async {
+    //-----pick file by file picker,
+    var result = await FilePicker.platform.pickFiles(
+      withReadStream:
+      true, // this will return PlatformFile object with read stream
+    );
+    if (result != null) {
+      setState(() {
+        objFile = result.files.single;
+        widget.onChanePlatformFile!(objFile!);
+      });
+    }
+  }
+
+  void uploadSelectedFile() async {
+    //---Create http package multipart request object
+    final request = http.MultipartRequest(
+      "POST",
+      Uri.parse("Your API URL"),
+    );
+    //-----add other fields if needed
+    request.fields["id"] = "abc";
+    //-----add selected file with request
+    request.files.add(new http.MultipartFile(
+        "Your parameter name on server side",
+        objFile!.readStream!,
+        objFile!.size,
+        filename: objFile!.name));
+    //-------Send request
+    var resp = await request.send();
+    //------Read response
+    String result = await resp.stream.bytesToString();
+    //-------Your response
+    print(result);
+  }
+
+  void filePicker() async {
+    widget.onNewTap;
+    FilePickerCross myFile = await FilePickerCross.importFromStorage(
+      type: FileTypeCross.any,
+    );
+
+    // String newPath = await myFile.exportToStorage() ?? "";
+    // print(newPath);
+    Uint8List newFile = myFile.toUint8List();
+    filename = myFile.fileName;
+    print("aaa"+filename.toString());
+    Variable.imageName=filename;
+    fileChange = true;
+    // widget.onChange!(myFile);
+    widget.onImageChange!(newFile);
+    setState(() {});
+  }
+
+  void imagePicker() async {
+    // final pickedFile = await ImagePicker().getImage(
+    //   source: ImageSource.gallery ,
+    // );
+    final fromPicker = await ImagePicker().getImage(source: ImageSource.gallery);
+    print("dsdsdsdssssssssssssssssssss${fromPicker}");
+    if (fromPicker != null) {
+      final bytes = await fromPicker.readAsBytes();
+      widget.onChange!(fromPicker.path);
+      widget.onImageChange!(bytes);
+    }
+
+
+// print(fromPicker.)
+    Uint8List? bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
+    fileChange = true;
+    widget.onImageChange!(bytesFromPicker!);
+    imageFile = fromPicker!;
+
+
+    setState(() {});
+    // widget.onChange(bytesFromPicker);
+  }
+  void launchUrl(String url) {
+
+    urlLauncher.canLaunch(url).then((value) {
+
+      if (value) urlLauncher.launch(url);
+
+    });
+
+  }
+
+
+  void showImage(String url, BuildContext context) {
+
+    // print("image url is $url");
+
+    ScreenshotController screenshotController = ScreenshotController();
+
+    //  Uint8List? _imageFile;
+
+    //  final pdf = pw.Document();
+
+    showDialog(
+
+        context: context,
+
+        builder: (context) => AlertDialog(
+
+          content: Container(
+
+            height: 500,
+
+            width: 700,
+
+            child: Screenshot(
+
+              controller: screenshotController,
+
+              child: PhotoView(
+
+                enablePanAlways: true,
+
+
+
+                // tightMode: true,
+
+                imageProvider: NetworkImage(url),
+
+              ),
+
+            ),
+
+          ),
+
+
+
+        ));
+
+  }
+}
+
+
+
+
+
+
+
+
+
 //
 // void dispalyImage(PickedFile imageFile, BuildContext context) {
 //

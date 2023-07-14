@@ -6534,6 +6534,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     } else {
       path = inventoryLiveBaseUrl + "state-list?code=$code&value=list";
     }
+    print(path);
     try {
       print("ppppath" + path.toString());
       print(path);
