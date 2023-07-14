@@ -2497,7 +2497,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     // ),
                     NewInputCard(controller: widget.producedCountry,
                       readOnly: true,
-                      icondrop:true,title: "Billing Address Id",ontap: (){
+                      icondrop:true,title: "Produced Country",ontap: (){
                         showDailogPopUp(
                           context,
                           TableConfigurePopup(
@@ -2511,44 +2511,37 @@ class _VariantStabletableState extends State<VariantStabletable> {
                               setState(() {
 
                               });
-
-
                               // onChange = true;
                               // orderType.text = va!;
                             });
-
                           },
                           ),
-
-
                         );
-
                       },),
-
-                    SelectableDropDownpopUp(
-                      onTap: (){
-                      },
-                      controller: widget.producedCountry,
-                      label: "Produced Country",
-                      type: "ProducedCountryPopUpCall",
-                      id: base_uom ?? 0,
-                      value: widget.producedCountry.text,
-                      onchange: (vale) {
-                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                      },
-                      enable: true,
-                      onSelection: (VariantReadModel? va) {
-                        setState(() {
-                          widget.producedCountry.text =
-                              va?.name.toString() ?? "";
-
-                          setState(() {});
-
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
+                    // SelectableDropDownpopUp(
+                    //   onTap: (){
+                    //   },
+                    //   controller: widget.producedCountry,
+                    //   label: "Produced Country",
+                    //   type: "ProducedCountryPopUpCall",
+                    //   id: base_uom ?? 0,
+                    //   value: widget.producedCountry.text,
+                    //   onchange: (vale) {
+                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                    //   },
+                    //   enable: true,
+                    //   onSelection: (VariantReadModel? va) {
+                    //     setState(() {
+                    //       widget.producedCountry.text =
+                    //           va?.name.toString() ?? "";
+                    //
+                    //       setState(() {});
+                    //
+                    //       // onChange = true;
+                    //       // orderType.text = va!;
+                    //     });
+                    //   },
+                    // ),
 
                     SizedBox(
                       height: height * .030,
@@ -2661,10 +2654,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       type: "Sebling_ListPopUpCall",
                       value: widget.seblingNameController.text,
                       onchange: (vale) {
-                        print(vale);
-                        context
-                            .read<ListvraiantCubit>()
-                            .getSearchVariantList(vale);
+
+                        context.read<ListvraiantCubit>().getSearchVariantList(vale);
                       },
                       enable: true,
                       onSelection: (BrandListModel? va) {
@@ -3739,10 +3730,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           bool val = widget.itmCatelog;
                           val = !val;
                           widget.trueOrFalseChange(type: "Catalog", val: val);
-
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
                           setState(() {});
                         }),
                     PopUpSwitchTile(
@@ -3753,10 +3740,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           bool val = widget.itmImage;
                           val = !val;
                           widget.trueOrFalseChange(type: "Image", val: val);
-
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
                           setState(() {});
                         }),
                     PopUpSwitchTile(
@@ -3769,12 +3752,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             val = !val;
                             widget.trueOrFalseChange(type: "Active", val: val);
                           }
-
-                          // widget.activeChange(!widget.active);
-
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
                           setState(() {});
                         }),
 
@@ -4174,8 +4151,7 @@ class VendorDetailsVarientState extends State<VendorDetailsVarient> {
                         context,
                         ConfigurePopup(
                           listAssign: (VendorDetailsModel model) {
-                            print("akkk");
-                            print(model.toString());
+
                             setState(() {
                               onChange = true;
                               code.text = model.manuFactureName ?? "";

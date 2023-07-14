@@ -3761,7 +3761,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
                 ? {"name": "Additional info", "key_values": []}
                 : model.additionalInfo,
             "Nutriants_facts": model.nutriantsFacts == null
-                ? {"name": "Nutriants facts", "key_values": []}
+                ? {"name": "Nutrients facts", "key_values": []}
                 : model.nutriantsFacts,
             "product_details": model.productDetails == null
                 ? {"name": "product details", "key_values": []}
@@ -3892,7 +3892,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
               ? {"name": "Additional info", "key_values": []}
               : model.additionalInfo,
           "Nutriants_facts": model.nutriantsFacts == null
-              ? {"name": "Nutriants facts", "key_values": []}
+              ? {"name": "Nutrients facts", "key_values": []}
               : model.nutriantsFacts,
           "product_details": model.productDetails == null
               ? {"name": "product details", "key_values": []}
@@ -4036,7 +4036,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
               : model.additionalInfo,
           "Nutriants_facts": model.nutriantsFacts == null
               ? {
-            "name": "Nutriants facts",
+            "name": "Nutrients facts",
             "key_values": [{}]
           }
               : model.nutriantsFacts,
@@ -6498,7 +6498,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       return PaginatedResponse<List<VendorDetailsModel>>(
           items,
           response.data['data']['next'],
-          response.data['data']['count'].toString());
+          response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],);
     } catch (e) {
       print("the mistake is" + e.toString());
     }
@@ -6518,7 +6519,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<VendorDetailsModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
   }
 
   @override

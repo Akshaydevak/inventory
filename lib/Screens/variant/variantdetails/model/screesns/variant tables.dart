@@ -8,6 +8,8 @@ import 'package:inventory/Screens/variant/variantdetails/screens.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
@@ -3655,7 +3657,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
   String choosenValue = '';
   bool onChange = false;
   bool onSaveActive = false;
-  List<String> items = ["Male", "Female"];
+  List<String> items = ["Male","Female"];
   List<String> ethinikItem = ["young", "old", "medium"];
   List<bool>upDate=[];
   List<bool>upDateButton=[];
@@ -4083,6 +4085,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       child: CustomDropDown(
                           choosenValue: choosenValue,
                           onChange: (val) {
+                            onChange=true;
                             onSaveActive=true;
                             print("objectsssssssssss");
                             choosenValue = val;
@@ -4097,6 +4100,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                         controller: ageGroupController,
                         onChanged: (va){
                           setState(() {
+                            onChange=true;
                             onSaveActive=true;
                           });
                         },
@@ -4108,6 +4112,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       child: CustomDropDown(
                           choosenValue: ethlinkController.text,
                           onChange: (val) {
+                            onChange=true;
 
                             onSaveActive=true;
 
@@ -4129,29 +4134,61 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                     ),*/
 
 
-                    PopUpCall(
+
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child:
+                      UnderLinedInput(
+                        suffixIconEnable: true,
+                        formatter: false,
+                        controller: countryController,
+                        onClick: ()
+                        {
+                          showDailogPopUp(
+                              context,
+                              TableConfigurePopup(
+
+                              type: "producedCountryPopupVariant", valueSelect: (VariantReadModel va){
+                                onChange=true;
+
+                            setState(() {
+                              onSaveActive=true;
+                              countryController?.text = va?.name ?? "";
+                              setState(() {
+
+                              });
+                              // onChange = true;
+                              // orderType.text = va!;
+                            });
+                          },
+
+                      ),
+                    );})),
 
 
-                      type: "ProducedCountryPopUpCall",
-
-                      value: countryController.text,
-                      onchange: (vale) {
-                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                      },
-                      enable: true,
-                      onSelection: (VariantReadModel? va) {
-                        onChange=true;
-                        setState(() {
-                          onSaveActive=true;
-                          countryController?.text = va?.name ?? "";
-
-                          setState(() {});
-
-                          // onChange = true;
-                          // orderType.text = va!;
-                        });
-                      },
-                    ),
+                    // PopUpCall(
+                    //
+                    //
+                    //   type: "ProducedCountryPopUpCall",
+                    //
+                    //   value: countryController.text,
+                    //   onchange: (vale) {
+                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                    //   },
+                    //   enable: true,
+                    //   onSelection: (VariantReadModel? va) {
+                    //     onChange=true;
+                    //     setState(() {
+                    //       onSaveActive=true;
+                    //       countryController?.text = va?.name ?? "";
+                    //
+                    //       setState(() {});
+                    //
+                    //       // onChange = true;
+                    //       // orderType.text = va!;
+                    //     });
+                    //   },
+                    // ),
                     // TableCell(
                     //   verticalAlignment: TableCellVerticalAlignment.middle,
                     //   child: Container(

@@ -439,7 +439,7 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
   clear(){
 
 
-    setState(() {
+
       aboutProducts=null;
       importantInfo=null;
       productDetails=null;
@@ -570,7 +570,7 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
 
 
       Variable.uomId=0;
-    });
+
 
 
 
@@ -894,10 +894,11 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                         list1 = list;
 
                         result = list.data;
-                        selectedVertical=0;
-                        print("seee" + result.toString());
 
-                        if (result.isNotEmpty) {
+                        print("seeesssssssssssssssssssssssssssssssssssss" + result.toString());
+
+                        if (result.isNotEmpty==true) {
+                          selectedVertical=0;
                           veritiaclid = result[0].id;
                           veritiaclString = result[0].code;
                           Variable.variantCode=result[0].code.toString();
@@ -911,7 +912,9 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                         }
 
 
+setState(() {
 
+});
 
                       });
                 },
@@ -1381,19 +1384,17 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           catalog8:cata8?Variable.catalog8.toString(): catalog8?.text??null,
                                                           netWeight: netWeightController.text.isEmpty?null:double.tryParse(netWeightController?.text??""),
                                                           aboutProducts: aboutProducts?.name==""?Storage(name:"About Products",keyValues: aboutProducts?.keyValues):aboutProducts,
-                                                          productDetails: productDetails?.name==""?ProductFeatures(name:"Product Detailsls",keyValues:productDetails?.keyValues  ):productDetails,
+                                                          productDetails: productDetails?.name==""?ProductFeatures(name:"Product Details",keyValues:productDetails?.keyValues  ):productDetails,
                                                           productFeatures:productFeatures?.name==""?ProductFeatures(name: "Product Features",keyValues:productFeatures?.keyValues ):productFeatures,
                                                           unitCost: double.tryParse( unitCostController?.text??""),
                                                           additionalInfo: additionalInfo?.name==""?ProductFeatures(name:"Additional Info",keyValues:additionalInfo?.keyValues  ):additionalInfo,
-                                                          nutriantsFacts:nutriantsFacts?.name==""?ProductFeatures(name:"Nutrial Facts",keyValues:nutriantsFacts?.keyValues  ):nutriantsFacts,
-                                                          Ingrediants: Ingrediants?.name==""?Storage(name: "Ingrediants",keyValues: Ingrediants?.keyValues):Ingrediants,
+                                                          nutriantsFacts:nutriantsFacts?.name==""?ProductFeatures(name:"Nutrition Facts",keyValues:nutriantsFacts?.keyValues  ):nutriantsFacts,
+                                                          Ingrediants: Ingrediants?.name==""?Storage(name: "Ingredients",keyValues: Ingrediants?.keyValues):Ingrediants,
                                                           usageDirection: usageDirection?.name==""?Storage(name: "Usage Direction",keyValues: usageDirection?.keyValues):usageDirection,
                                                           storage:storage?.name==""?Storage(name: "Storage",keyValues: storage?.keyValues):storage,
-                                                          importantInfo:importantInfo?.name==""?ProductFeatures(name: "ImportanT Info",keyValues:importantInfo?.keyValues ):importantInfo,
+                                                          importantInfo:importantInfo?.name==""?ProductFeatures(name: "Important Info",keyValues:importantInfo?.keyValues ):importantInfo,
                                                           productBehavior:   inforMationList??[],
-
                                                         );
-                                                        print("shifasssss"+  model.toString());
                                                         context.read<VariantpostCubit>().postVariant(checkIdid, model);
                                                         onChange=true;
                                                         setState(() {
@@ -1482,23 +1483,19 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                                                           catalog6:cata6?Variable.catalog6.toString(): catalog6?.text??null,
                                                           catalog7:cata7?Variable.catalog7.toString(): catalog7?.text??null,
                                                           catalog8:cata8?Variable.catalog8.toString(): catalog8?.text??null,
-
                                                           variantStatus:null,
                                                           stockWarning: stockWarning,
                                                           aboutProducts: aboutProducts?.name==""?Storage(name:"About Products",keyValues: aboutProducts?.keyValues):aboutProducts,
                                                           productDetails: productDetails?.name==""?ProductFeatures(name:"Product Detailsls",keyValues:productDetails?.keyValues  ):productDetails,
                                                           productFeatures:productFeatures?.name==""?ProductFeatures(name: "Product Features",keyValues:productFeatures?.keyValues ):productFeatures,
-
                                                           additionalInfo: additionalInfo?.name==""?ProductFeatures(name:"Additional Info",keyValues:additionalInfo?.keyValues  ):additionalInfo,
-                                                          nutriantsFacts:nutriantsFacts?.name==""?ProductFeatures(name:"Nutrial Facts",keyValues:nutriantsFacts?.keyValues  ):nutriantsFacts,
-                                                          Ingrediants: Ingrediants?.name==""?Storage(name: "Ingrediants",keyValues: Ingrediants?.keyValues):Ingrediants,
+                                                          nutriantsFacts:nutriantsFacts?.name==""?ProductFeatures(name:"Nutrition Facts",keyValues:nutriantsFacts?.keyValues  ):nutriantsFacts,
+                                                          Ingrediants: Ingrediants?.name==""?Storage(name: "Ingredients",keyValues: Ingrediants?.keyValues):Ingrediants,
                                                           usageDirection: usageDirection?.name==""?Storage(name: "Usage Direction",keyValues: usageDirection?.keyValues):usageDirection,
                                                           storage:storage?.name==""?Storage(name: "Storage",keyValues: storage?.keyValues):storage,
-                                                          importantInfo:importantInfo?.name==""?ProductFeatures(name: "ImportanT Info",keyValues:importantInfo?.keyValues ):importantInfo,
+                                                          importantInfo:importantInfo?.name==""?ProductFeatures(name: "Important Info",keyValues:importantInfo?.keyValues ):importantInfo,
                                                           productBehavior:   inforMationList??[],
-
                                                         );
-                                                        print("the searching model is here"+model.toString());
                                                         context.read<VariantpostCubit>().patchVariant(veritiaclid, model);
 
                                                       }

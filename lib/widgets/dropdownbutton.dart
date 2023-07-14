@@ -163,7 +163,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
             ),
             SizedBox(height:3),
             Container(
-              height: 49,
+              // height: 49,
               child:Container(  decoration: BoxDecoration(
                   color:
                   widget.restricted ? Colors.white.withOpacity(.2) : null,
@@ -205,6 +205,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                       // onTap: () {},
                       decoration: InputDecoration(
                         hintText: "Select One",
+                          contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 16.5),
 
 
 

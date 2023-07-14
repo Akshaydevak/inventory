@@ -11106,18 +11106,25 @@ class _producedCountryPopup extends State<producedCountryPopupVariant> {
   }
 
   void initState() {
-    _firstLoad();
+
     super.initState();
   }
-  void _firstLoad() async {
+  void _firstLoad(String ? code) async {
+    String path="";
 
-
+    code = code == null ? "" : code;
+    if (code == "") {
+      // path = "https://api-customergroup-application.hilalcart.com/";
+      path = "https://api-uat-user.sidrabazar.com/" + "country-list?value=list";
+    } else {
+      path = inventoryLiveBaseUrl + "state-list?code=$code&value=list";
+    }
 
     try {
 
       final res = await client.get(
 
-        inventoryLiveBaseUrl + "country-list?value=list",
+      path,
 
         options: Options(
 
@@ -11169,6 +11176,7 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return Builder(builder: (context) {
+      _firstLoad("");
 
 
       return BlocConsumer<ProducedcountryCubit, ProducedcountryState>(

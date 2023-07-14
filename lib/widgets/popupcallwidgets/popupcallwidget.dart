@@ -9974,6 +9974,8 @@ class _SeblingUomPopUpCall extends State<SeblingUomPopUpCall> {
               controller: TextEditingController(text: widget.value),
               onTap: () {},
               decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 16.5),
+
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(2),
                       borderSide: BorderSide(
@@ -10044,7 +10046,7 @@ class _SeblingUomPopUpCall extends State<SeblingUomPopUpCall> {
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
-                          contentPadding: EdgeInsets.all(MediaQuery.of(context).size.width*.019),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 20.5),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
