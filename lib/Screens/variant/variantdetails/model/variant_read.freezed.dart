@@ -83,6 +83,8 @@ mixin _$VariantReadModel {
   bool? get needMultipleIntegration => throw _privateConstructorUsedError;
   @JsonKey(name: "avrg_gp")
   double? get avgGp => throw _privateConstructorUsedError;
+  @JsonKey(name: "base_price")
+  double? get basePrize => throw _privateConstructorUsedError;
   @JsonKey(name: "return_type")
   String? get returnType => throw _privateConstructorUsedError;
   @JsonKey(name: "return_time")
@@ -243,6 +245,8 @@ abstract class $VariantReadModelCopyWith<$Res> {
           bool? needMultipleIntegration,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
+      @JsonKey(name: "base_price")
+          double? basePrize,
       @JsonKey(name: "return_type")
           String? returnType,
       @JsonKey(name: "return_time")
@@ -388,6 +392,7 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
     Object? manuFacturedName = freezed,
     Object? needMultipleIntegration = freezed,
     Object? avgGp = freezed,
+    Object? basePrize = freezed,
     Object? returnType = freezed,
     Object? returnTime = freezed,
     Object? haveStockPartitionGroup = freezed,
@@ -575,6 +580,10 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
       avgGp: freezed == avgGp
           ? _value.avgGp
           : avgGp // ignore: cast_nullable_to_non_nullable
+              as double?,
+      basePrize: freezed == basePrize
+          ? _value.basePrize
+          : basePrize // ignore: cast_nullable_to_non_nullable
               as double?,
       returnType: freezed == returnType
           ? _value.returnType
@@ -926,6 +935,8 @@ abstract class _$$_VariantReadModelCopyWith<$Res>
           bool? needMultipleIntegration,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
+      @JsonKey(name: "base_price")
+          double? basePrize,
       @JsonKey(name: "return_type")
           String? returnType,
       @JsonKey(name: "return_time")
@@ -1078,6 +1089,7 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
     Object? manuFacturedName = freezed,
     Object? needMultipleIntegration = freezed,
     Object? avgGp = freezed,
+    Object? basePrize = freezed,
     Object? returnType = freezed,
     Object? returnTime = freezed,
     Object? haveStockPartitionGroup = freezed,
@@ -1265,6 +1277,10 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
       avgGp: freezed == avgGp
           ? _value.avgGp
           : avgGp // ignore: cast_nullable_to_non_nullable
+              as double?,
+      basePrize: freezed == basePrize
+          ? _value.basePrize
+          : basePrize // ignore: cast_nullable_to_non_nullable
               as double?,
       returnType: freezed == returnType
           ? _value.returnType
@@ -1503,6 +1519,8 @@ class _$_VariantReadModel implements _VariantReadModel {
           this.needMultipleIntegration,
       @JsonKey(name: "avrg_gp")
           this.avgGp,
+      @JsonKey(name: "base_price")
+          this.basePrize,
       @JsonKey(name: "return_type")
           this.returnType,
       @JsonKey(name: "return_time")
@@ -1714,6 +1732,9 @@ class _$_VariantReadModel implements _VariantReadModel {
   @JsonKey(name: "avrg_gp")
   final double? avgGp;
   @override
+  @JsonKey(name: "base_price")
+  final double? basePrize;
+  @override
   @JsonKey(name: "return_type")
   final String? returnType;
   @override
@@ -1850,7 +1871,7 @@ class _$_VariantReadModel implements _VariantReadModel {
 
   @override
   String toString() {
-    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, partitionGroupName: $partitionGroupName, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, siblingCode: $siblingCode, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, needMultipleIntegration: $needMultipleIntegration, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, haveStockPartitionGroup: $haveStockPartitionGroup, haveStockPriority: $haveStockPriority, stockPartitionGroupId: $stockPartitionGroupId, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
+    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, partitionGroupName: $partitionGroupName, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, siblingCode: $siblingCode, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, needMultipleIntegration: $needMultipleIntegration, avgGp: $avgGp, basePrize: $basePrize, returnType: $returnType, returnTime: $returnTime, haveStockPartitionGroup: $haveStockPartitionGroup, haveStockPriority: $haveStockPriority, stockPartitionGroupId: $stockPartitionGroupId, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
   }
 
   @override
@@ -1918,6 +1939,8 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.needMultipleIntegration, needMultipleIntegration) ||
                 other.needMultipleIntegration == needMultipleIntegration) &&
             (identical(other.avgGp, avgGp) || other.avgGp == avgGp) &&
+            (identical(other.basePrize, basePrize) ||
+                other.basePrize == basePrize) &&
             (identical(other.returnType, returnType) ||
                 other.returnType == returnType) &&
             (identical(other.returnTime, returnTime) ||
@@ -1948,8 +1971,7 @@ class _$_VariantReadModel implements _VariantReadModel {
                 other.variantframeWork == variantframeWork) &&
             (identical(other.variantMeta, variantMeta) ||
                 other.variantMeta == variantMeta) &&
-            (identical(other.itemData, itemData) ||
-                other.itemData == itemData) &&
+            (identical(other.itemData, itemData) || other.itemData == itemData) &&
             (identical(other.searchName, searchName) || other.searchName == searchName) &&
             (identical(other.SalesUom, SalesUom) || other.SalesUom == SalesUom) &&
             (identical(other.grossWeight, grossWeight) || other.grossWeight == grossWeight) &&
@@ -2017,6 +2039,7 @@ class _$_VariantReadModel implements _VariantReadModel {
         manuFacturedName,
         needMultipleIntegration,
         avgGp,
+        basePrize,
         returnType,
         returnTime,
         haveStockPartitionGroup,
@@ -2138,6 +2161,8 @@ abstract class _VariantReadModel implements VariantReadModel {
           final bool? needMultipleIntegration,
       @JsonKey(name: "avrg_gp")
           final double? avgGp,
+      @JsonKey(name: "base_price")
+          final double? basePrize,
       @JsonKey(name: "return_type")
           final String? returnType,
       @JsonKey(name: "return_time")
@@ -2323,6 +2348,9 @@ abstract class _VariantReadModel implements VariantReadModel {
   @override
   @JsonKey(name: "avrg_gp")
   double? get avgGp;
+  @override
+  @JsonKey(name: "base_price")
+  double? get basePrize;
   @override
   @JsonKey(name: "return_type")
   String? get returnType;

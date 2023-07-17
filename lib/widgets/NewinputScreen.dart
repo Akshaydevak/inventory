@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
 
@@ -1532,6 +1533,7 @@ class ImageUploadField extends StatefulWidget {
   final Function(String)? onChange;
   final Function(Uint8List)? onImageChange;
   final String? fileUrl;
+  final String imagePostType;
   final bool row;
   final VoidCallback? onCancel;
   final bool onCreate;
@@ -1539,6 +1541,7 @@ class ImageUploadField extends StatefulWidget {
   final bool required;
   final bool isFile;
   final bool enable;
+
   final bool tableCheck;
   final double fontsize;
   final String fileName;
@@ -1560,7 +1563,7 @@ class ImageUploadField extends StatefulWidget {
         this.onNewTap,
         this.onChangeTap,
         this.onChanePlatformFile,
-        this.changeMultiFile})
+        this.changeMultiFile, required this.imagePostType,})
       : super(key: key);
 
   @override
@@ -1697,8 +1700,8 @@ class _ImageUploadFieldState extends State<ImageUploadField> {
             child: TextFormField(
 
               onTap: () {
-                widget.onChangeTap!(true);
-                filePicker();
+                // widget.onChangeTap!(true);
+                _uploadImage();
                 // chooseFileUsingFilePicker();
                 // imagePicker();
               },
@@ -1818,9 +1821,152 @@ class _ImageUploadFieldState extends State<ImageUploadField> {
     print("aaa"+filename.toString());
     Variable.imageName=filename;
     fileChange = true;
-    // widget.onChange!(myFile);
+    widget.onChange!(myFile.directory);
     widget.onImageChange!(newFile);
     setState(() {});
+  }
+
+
+  Future<void> _uploadImage() async {
+
+    final url = Uri.parse('https://api-uat-user.sidrabazar.com/file-upload');
+    final headers = {'Content-Type': 'application/json'};
+    final request = http.MultipartRequest('POST', url);
+    // request.headers.addAll(headers);
+    final pickedFile = await FilePicker.platform.pickFiles(type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],);
+
+
+    if (pickedFile != null) {
+      Uint8List? bytes =  pickedFile.files.first.bytes;
+
+     if( bytes!=null) widget.onImageChange!(bytes);
+
+      if(bytes!=null) {
+        final imageFile = http.MultipartFile.fromBytes(
+          'upload',
+          bytes,
+          filename: 'doc.pdf',
+        );
+        print("pickedFile${imageFile}");
+
+        request.files.add(imageFile);
+        final response = await request.send();
+//  final responseBody = await response.stream.bytesToString();
+
+
+        // final completer = Completer<void>();
+
+        final responseStream =
+        Stream.fromIterable(await response.stream.toList());
+        print("rressspondseee stream ${responseStream.transform(utf8.decoder).first}");
+
+
+        try
+        {
+          // await completer.future;
+          final responseBody = await responseStream.transform(utf8.decoder).join();
+          Map valueMap = jsonDecode(responseBody);
+          print(valueMap);
+          print("respooo boidyyy ${valueMap["data"]["upload"]}".runtimeType);
+          setState(() {
+            print("hrrrrrrrrrrr found");
+            widget.onChange!(valueMap["data"]["upload"]);
+            if (widget.imagePostType != null || widget.imagePostType != "") {
+              switch (widget.imagePostType) {
+                case 'image1':
+                  print("ist image");
+                  Variable.img1 = valueMap["data"]["id"];
+                  //  print(Variable.img1);
+                  //   Variable.img?.image1 != response.data["data"];
+
+                  break;
+
+                case 'image2':
+                  print('2st image');
+                  // Variable.img= ImagesModel(image2: response.data);
+                  Variable.img2 = valueMap["data"]["id"];
+                  break;
+
+                case 'image3':
+                  print('3st image');
+                  // Variable.img= ImagesModel(image3: response.data);
+                  Variable.img3 = valueMap["data"]["id"];
+                  break;
+                case 'image4':
+                  print('4st image');
+                  // Variable.img= ImagesModel(itemCatelog1: response.data);
+                  Variable.img4 = valueMap["data"]["id"];
+                  break;
+                case 'image5':
+                  print('5st image');
+                  // Variable.img= ImagesModel(itemCatelog2: response.data);
+                  Variable.img5 = valueMap["data"]["id"];
+                  break;
+                case 'image6':
+                  print('6st image');
+                  // Variable.img= ImagesModel(itemCatelog3: response.data);
+                  Variable.img6 = valueMap["data"]["id"];
+                  break;
+                case 'image7':
+                  print('7st image');
+                  // Variable.img= ImagesModel(itemCatelog4: response.data);
+                  Variable.img7 = valueMap["data"]["id"];
+                  break;
+                case 'image8':
+                  print('8st image');
+                  // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.img8 =valueMap["data"]["id"];
+                  break;
+                case '1':
+                  print('8st image');
+                  // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.catalog1 = valueMap["data"]["id"];
+                  break;
+                case '2':
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.catalog2 = valueMap["data"]["id"];
+                  break;
+                case '3':
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.catalog3 = valueMap["data"]["id"];
+                  break;
+                case '4':
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.catalog4 = valueMap["data"]["id"];
+                  break;
+                case '5':
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.catalog5 = valueMap["data"]["id"];
+                  break;
+                case '6':
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.catalog6 = valueMap["data"]["id"];
+                  break;
+                case '7':
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.catalog7 = valueMap["data"]["id"];
+                  break;
+                case '8':
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                  Variable.catalog8 = valueMap["data"]["id"];
+                  break;
+              }
+            }
+
+
+
+
+          });
+        }
+        catch(e) {
+          print("response stream exceotiojn $e");
+        }
+      }
+
+    }
+
+
   }
 
   void imagePicker() async {

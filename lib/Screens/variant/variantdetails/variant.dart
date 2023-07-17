@@ -677,18 +677,13 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                         success: (data) {
                           setState(() {
                             onChange=true;
-
-
-
-                          // group=data;
-
                           variantNameController.text=data.name??"";
                           itemCodeController.text=data.itemData?.itemName??"";
                           variantNameController.text=data.name??"";
-                            stockPartitionGroupName.text=data.partitionGroupName??"";
-                            haveGiftOption=data.haveGiftOption??false;
-
-
+                          stockPartitionGroupName.text=data.partitionGroupName??"";
+                          basePrizePrizeController.text=data.basePrize.toString()??"";
+                          haveGiftOption=data.haveGiftOption??false;
+                          reorederQuaintityController.text=data?.reOrderQuantity?.toString()??"";
                             haveWrapOption=data.haveWrapOption??false;
                             needMultipleIntegration=data.needMultipleIntegration??false;
                           shelfTypeController.text=data.shelfType??"";

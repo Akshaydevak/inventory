@@ -56,6 +56,7 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
       manuFacturedName: json['manufacture_name'] as String?,
       needMultipleIntegration: json['need_multiple_integration'] as bool?,
       avgGp: (json['avrg_gp'] as num?)?.toDouble(),
+      basePrize: (json['base_price'] as num?)?.toDouble(),
       returnType: json['return_type'] as String?,
       returnTime: json['return_time'] as int?,
       haveStockPartitionGroup:
@@ -156,6 +157,7 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'manufacture_name': instance.manuFacturedName,
       'need_multiple_integration': instance.needMultipleIntegration,
       'avrg_gp': instance.avgGp,
+      'base_price': instance.basePrize,
       'return_type': instance.returnType,
       'return_time': instance.returnTime,
       'have_stock_partition_group': instance.haveStockPartitionGroup,

@@ -1372,6 +1372,11 @@ try{
       String? code) async {
     print("here arrived");
     print(code);
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
+    print(Variable.token);
 
     String path = organizationLiveApiApi+code.toString();
     try {
@@ -1384,6 +1389,7 @@ try{
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization':Variable.token
 
           },
         ),
@@ -1401,7 +1407,7 @@ try{
           response.data['data']['next'],
           response.data['data']['count'].toString());
     } catch (e) {
-      print("the mistake is+" + e.toString());
+      print("the mistakeSSSSSSSSSSSSSSS is+" + e.toString());
     }
 
     print(path);
@@ -1412,7 +1418,8 @@ try{
       options: Options(
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization':Variable.token
         },
       ),
     );

@@ -46,6 +46,7 @@ class VariantReadModel with _$VariantReadModel {
     @JsonKey(name: "manufacture_name") final String? manuFacturedName,
     @JsonKey(name: "need_multiple_integration") final bool? needMultipleIntegration,
     @JsonKey(name: "avrg_gp") final double? avgGp,
+    @JsonKey(name: "base_price") final double? basePrize,
     @JsonKey(name: "return_type") final String ? returnType,
     @JsonKey(name: "return_time") final int ? returnTime,
     @JsonKey(name: "have_stock_partition_group", defaultValue: false) final bool? haveStockPartitionGroup,
