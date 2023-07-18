@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:inventory/Screens/heirarchy/customizeddata/model/creation_custom_model.dart';
 import 'package:inventory/Screens/heirarchy/divisionconfiguration/model/creationmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
@@ -11,6 +14,7 @@ import 'package:inventory/Screens/heirarchy/general/model/divisionread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/images.dart';
 import 'package:inventory/Screens/heirarchy/general/model/itemcreation.dart';
+import 'package:http/http.dart'as http;
 import 'package:inventory/Screens/heirarchy/general/model/itemread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/materialread.dart';
@@ -132,8 +136,14 @@ abstract class PurchaseSourceAbstract {
   //productmodule****************************
   Future<List<BrandListModel>> getBrandList();
   Future<DoubleResponse> postCreateBrand(BrandCreationtModel model);
-  Future<DoubleResponse> postImage(String? imageNmae, String ImageEncode,
-      {String type});
+  Future<DoubleResponse> postImage(String? imageNmae, String ImageEncode, {String type});
+  Future<DoubleResponse> postImage2(Uint8List? bytes, {String type});
+
+
+
+
+
+
   Future<PaginatedResponse<List<BrandListModel>>> getlistBrand(String? code);
   Future<BrandReadModel> getBrandRead(int? id);
   Future<DoubleResponse> brandDelete(int? id);
@@ -2054,10 +2064,133 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<DoubleResponse> postImage(String? imageNmae, String ImageEncode,
+
       {String? type}) async {
     String path = imagePostApi;
-    print(path);
-
+    Map valueMap=Map();
+//     print(path);
+//     final url = Uri.parse('https://api-uat-user.sidrabazar.com/file-upload');
+//     final headers = {'Content-Type': 'application/json'};
+//     final request = http.MultipartRequest('POST', url);
+//     if(bytes!=null) {
+//       final imageFile = http.MultipartFile.fromBytes(
+//         'upload',
+//         bytes,
+//         filename: 'doc.pdf',
+//       );
+//       print("pickedFile${imageFile}");
+//
+//       request.files.add(imageFile);
+//       final response = await request.send();
+// //  final responseBody = await response.stream.bytesToString();
+//
+//
+//       // final completer = Completer<void>();
+//
+//       final responseStream =
+//       Stream.fromIterable(await response.stream.toList());
+//       print("rressspondseee stream ${responseStream.transform(utf8.decoder).first}");
+//
+//
+//       try
+//       {
+//         // await completer.future;
+//         final responseBody = await responseStream.transform(utf8.decoder).join();
+//         valueMap  = jsonDecode(responseBody);
+//
+//
+//
+//           if (type!= null ||type != "") {
+//             switch (type) {
+//               case 'image1':
+//                 print("ist image");
+//                 Variable.img1 = valueMap["data"]["id"];
+//                 //  print(Variable.img1);
+//                 //   Variable.img?.image1 != response.data["data"];
+//
+//                 break;
+//
+//               case 'image2':
+//                 print('2st image');
+//                 // Variable.img= ImagesModel(image2: response.data);
+//                 Variable.img2 = valueMap["data"]["id"];
+//                 break;
+//
+//               case 'image3':
+//                 print('3st image');
+//                 // Variable.img= ImagesModel(image3: response.data);
+//                 Variable.img3 = valueMap["data"]["id"];
+//                 break;
+//               case 'image4':
+//                 print('4st image');
+//                 // Variable.img= ImagesModel(itemCatelog1: response.data);
+//                 Variable.img4 = valueMap["data"]["id"];
+//                 break;
+//               case 'image5':
+//                 print('5st image');
+//                 // Variable.img= ImagesModel(itemCatelog2: response.data);
+//                 Variable.img5 = valueMap["data"]["id"];
+//                 break;
+//               case 'image6':
+//                 print('6st image');
+//                 // Variable.img= ImagesModel(itemCatelog3: response.data);
+//                 Variable.img6 = valueMap["data"]["id"];
+//                 break;
+//               case 'image7':
+//                 print('7st image');
+//                 // Variable.img= ImagesModel(itemCatelog4: response.data);
+//                 Variable.img7 = valueMap["data"]["id"];
+//                 break;
+//               case 'image8':
+//                 print('8st image');
+//                 // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.img8 =valueMap["data"]["id"];
+//                 break;
+//               case '1':
+//                 print('8st image');
+//                 // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.catalog1 = valueMap["data"]["id"];
+//                 break;
+//               case '2':
+//               // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.catalog2 = valueMap["data"]["id"];
+//                 break;
+//               case '3':
+//               // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.catalog3 = valueMap["data"]["id"];
+//                 break;
+//               case '4':
+//               // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.catalog4 = valueMap["data"]["id"];
+//                 break;
+//               case '5':
+//               // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.catalog5 = valueMap["data"]["id"];
+//                 break;
+//               case '6':
+//               // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.catalog6 = valueMap["data"]["id"];
+//                 break;
+//               case '7':
+//               // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.catalog7 = valueMap["data"]["id"];
+//                 break;
+//               case '8':
+//               // Variable.img= ImagesModel(itemCatelog5: response.data);
+//                 Variable.catalog8 = valueMap["data"]["id"];
+//                 break;
+//             }
+//           }
+//
+//
+//
+//
+//
+//       }
+//       catch(e) {
+//         print("response stream exceotiojn $e");
+//       }
+//     }
     final response = await client.post(path,
         data: {"image_name": imageNmae, "image_encode": ImageEncode},
         options: Options(headers: {
@@ -2147,11 +2280,12 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         case '8':
         // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.catalog8 = response.data["data"];
+
           break;
       }
     }
     return DoubleResponse(
-        response.data['status'] == 'success', response.data['data']);
+      response.data['status'] == 'success',  response.data["data"]);
   }
 
   @override
@@ -7925,5 +8059,138 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
+  }
+
+  @override
+  Future<DoubleResponse> postImage2(Uint8List? bytes, {String? type}) async {
+    Map valueMap=Map();
+
+    final url = Uri.parse('https://api-uat-inv-inventory.sidrabusiness.com/inventory-product/upload-image-clone');
+    final headers = {'Content-Type': 'application/json'};
+    final request = http.MultipartRequest('POST', url);
+    if(bytes!=null) {
+      final imageFile = http.MultipartFile.fromBytes(
+        'image',
+        bytes,
+        filename: 'doc.pdf',
+      );
+      print("pickedFile${imageFile}");
+
+      request.files.add(imageFile);
+      final response = await request.send();
+//  final responseBody = await response.stream.bytesToString();
+
+
+      // final completer = Completer<void>();
+
+      final responseStream =
+      Stream.fromIterable(await response.stream.toList());
+      print("rressspondseee stream ${responseStream.transform(utf8.decoder).first}");
+
+
+      try
+      {
+        // await completer.future;
+        final responseBody = await responseStream.transform(utf8.decoder).join();
+        valueMap  = jsonDecode(responseBody);
+        print(valueMap["data"]);
+
+
+
+          if (type!= null ||type != "") {
+            switch (type) {
+              case 'image1':
+                print("ist image");
+                Variable.img1 = valueMap["data"];
+                //  print(Variable.img1);
+                //   Variable.img?.image1 != response.data["data"];
+
+                break;
+
+              case 'image2':
+                print('2st image');
+                // Variable.img= ImagesModel(image2: response.data);
+                Variable.img2 = valueMap["data"];
+                break;
+
+              case 'image3':
+                print('3st image');
+                // Variable.img= ImagesModel(image3: response.data);
+                Variable.img3 =valueMap["data"];
+                break;
+              case 'image4':
+                print('4st image');
+                // Variable.img= ImagesModel(itemCatelog1: response.data);
+                Variable.img4 =valueMap["data"];
+                break;
+              case 'image5':
+                print('5st image');
+                // Variable.img= ImagesModel(itemCatelog2: response.data);
+                Variable.img5 = valueMap["data"];
+                break;
+              case 'image6':
+                print('6st image');
+                // Variable.img= ImagesModel(itemCatelog3: response.data);
+                Variable.img6 = valueMap["data"];
+                break;
+              case 'image7':
+                print('7st image');
+                // Variable.img= ImagesModel(itemCatelog4: response.data);
+                Variable.img7 = valueMap["data"];
+                break;
+              case 'image8':
+                print('8st image');
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.img8 =valueMap["data"];
+                break;
+              case '1':
+                print('8st image');
+                // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.catalog1 = valueMap["data"];
+                break;
+              case '2':
+              // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.catalog2 = valueMap["data"];
+                break;
+              case '3':
+              // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.catalog3 =valueMap["data"];
+                break;
+              case '4':
+              // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.catalog4 = valueMap["data"];
+                break;
+              case '5':
+              // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.catalog5 = valueMap["data"];
+                break;
+              case '6':
+              // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.catalog6 = valueMap["data"];
+                break;
+              case '7':
+              // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.catalog7 = valueMap["data"];
+                break;
+              case '8':
+              // Variable.img= ImagesModel(itemCatelog5: response.data);
+                Variable.catalog8 = valueMap["data"];
+                print("case8${Variable.catalog8}");
+                break;
+            }
+          }
+
+
+
+
+
+      }
+      catch(e) {
+        print("response stream exceotiojn $e");
+      }
+    }
+
+    return DoubleResponse(
+        valueMap['status'] == 'success', valueMap["data"]);
   }
 }

@@ -20,5 +20,13 @@ class ImagepostCubit extends Cubit<ImagepostState> {
     );
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
+  Future postImage2(Uint8List? bytes, {String? type}) async {
+    emit(_Loading());
+    final result = await repo.postImage2(
+      bytes,
+      type:type,
+    );
+    result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
+  }
 
 }

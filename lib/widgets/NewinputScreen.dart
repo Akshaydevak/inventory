@@ -1141,6 +1141,396 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
 //     );
 //   }
 // }
+class FileUploadField2 extends StatefulWidget {
+  final Function(MultipartFile)? changeMultiFile;
+  final Function(PlatformFile)? onChanePlatformFile;
+  final VoidCallback? onNewTap;
+  final Function(bool)? onChangeTap;
+  final Function(String)? onChange;
+  final Function(Uint8List)? onImageChange;
+  final String? fileUrl;
+  final bool row;
+  final VoidCallback? onCancel;
+  final bool onCreate;
+  final String label;
+  final bool required;
+  final bool isFile;
+  final bool enable;
+  final bool tableCheck;
+  final double fontsize;
+  final String fileName;
+  const FileUploadField2(
+      {Key? key,
+        this.onChange,
+        this.row=false,
+        this.fileUrl,
+        this.onCancel,
+        this.fontsize=12,
+        this.tableCheck=false,
+        this.onCreate = false,
+        this.enable = false,
+        this.isFile = false,
+        required this.label,
+        this.required = false,
+        required this.fileName,
+        this.onImageChange,
+        this.onNewTap,
+        this.onChangeTap,
+        this.onChanePlatformFile,
+        this.changeMultiFile})
+      : super(key: key);
+
+  @override
+  _FileUploadField2State createState() => _FileUploadField2State();
+}
+
+class _FileUploadField2State extends State<FileUploadField2> {
+  String? filename = "no attachments";
+  bool fileChange = false;
+  bool clearedImage = false;
+  PickedFile imageFile=PickedFile("");
+  File? file;
+
+
+  @override
+  Widget build(BuildContext context) {
+    // print(filename);
+
+    if (!fileChange && widget.fileUrl != null &&!fileChange && widget.fileUrl != "null") {
+      filename = widget.fileUrl;
+      print("searching"+filename.toString());
+    } else {
+      if (!fileChange && widget.fileName.isEmpty)
+        // print("false");
+        filename = "no attachments";
+    }
+    fileChange = false;
+    return widget.row?
+    SizedBox(
+
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(
+            //horizontal: 10,
+              vertical: 5),
+          leading: Container(
+
+              width: 70,
+              child: Text.rich(TextSpan(
+                  text: widget.label,
+                  style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                  children: widget.required
+                      ? [
+                    TextSpan(
+                        text: "*", style: TextStyle(color:Colors.grey))
+                  ]
+                      : []))),
+          title:
+          Container(
+
+            child: TextFormField(
+              onTap: () {
+                widget.onChangeTap!(true);
+                filePicker();
+                // chooseFileUsingFilePicker();
+                // imagePicker();
+              },
+              // widget.fileUrl!=null?
+
+              // :() async {
+              //  widget.isFile?
+              //             launchUrl(widget.fileUrl ?? "")
+              //             :showImage(
+              //               widget.fileUrl??"",context
+              //            );
+              //            setState(() {
+
+              //            });
+              // },
+              controller: TextEditingController(text: filename),
+              decoration: InputDecoration(
+                prefixIcon: IconButton(
+                    onPressed: widget.fileUrl != null
+                        ? ()  {
+                      // imageFile!=null?dispalyImage( imageFile,context):null;
+                      // print("file url is ${widget.fileUrl}");
+                      widget.isFile
+
+
+                          ? launchUrl(widget.fileUrl ?? "")
+                          : showImage(widget.fileUrl ?? "", context);
+
+                    }
+                        : null,
+                    icon: Icon(Icons.attach_file)),
+                contentPadding:
+                EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                // isDense: true,
+                hintStyle: TextStyle(fontSize: 10),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0),
+                )
+                ,
+                suffixIcon: IconButton(
+                    onPressed: () {
+
+
+                      print("""""""""""""shamnaaaaaaaaaaaaaaaaaaa");
+
+                      filename = "no attachments";
+                      clearedImage = true;
+                      widget.onCancel != null ? widget.onCancel!() : null;
+                      setState(() {});
+                    },
+                    icon: Icon(Icons.clear)),
+              ),
+            ),
+          ),
+        )):
+      Container(
+      padding: widget.tableCheck==false?  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018):EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:[
+
+    widget.tableCheck==false?
+    Container(
+
+            child: Text.rich(TextSpan(
+                text: widget.label,
+                style: GoogleFonts.roboto(fontSize: widget.fontsize,fontWeight: FontWeight.w500),
+                children: widget.required
+                    ? [
+                  TextSpan(
+                      text: "*", style: TextStyle(color: Palette.DANGER))
+                ]
+                    : []))):Container(),
+          SizedBox(height:3),
+     Container(
+
+
+
+          child: TextFormField(
+
+            onTap: () {
+              widget.onChangeTap!(true);
+              filePicker();
+              // chooseFileUsingFilePicker();
+              // imagePicker();
+            },
+            // widget.fileUrl!=null?
+
+            // :() async {
+            //  widget.isFile?
+            //             launchUrl(widget.fileUrl ?? "")
+            //             :showImage(
+            //               widget.fileUrl??"",context
+            //            );
+            //            setState(() {
+
+            //            });
+            // },
+            controller: TextEditingController(text: filename),
+            decoration: InputDecoration(
+              prefixIcon: IconButton(
+                  onPressed: widget.fileUrl != null
+                      ? () async {
+                    // imageFile!=null?dispalyImage( imageFile,context):null;
+                    // print("file url is ${widget.fileUrl}");
+                    widget.isFile
+
+
+                        ? launchUrl(widget.fileUrl ?? "")
+                        : showImage(widget.fileUrl ?? "", context);
+
+                  }
+                      : null,
+                  icon: Icon(Icons.attach_file)),
+              contentPadding:
+              EdgeInsets.symmetric(horizontal: 10, vertical: 18.7),
+              isDense: true,
+              hintStyle: TextStyle(fontSize: 10),
+              border: widget.tableCheck==true? InputBorder.none:OutlineInputBorder(
+                borderRadius:BorderRadius.circular(2),
+    borderSide: BorderSide(
+
+    color:Colors.red,
+   ),
+    ),
+              enabledBorder:OutlineInputBorder(
+                  borderRadius:BorderRadius.circular(2),
+
+                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+              focusedBorder:   OutlineInputBorder(
+                  borderRadius:BorderRadius.circular(2),
+
+                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+              suffixIcon: IconButton(
+                  onPressed: () {
+                   print("aakkakakkakak");
+
+
+                    filename = "no attachments";
+                    clearedImage = true;
+                    widget.onCancel != null ? widget.onCancel!() : null;
+                    setState(() {});
+                  },
+                  icon: Icon(Icons.clear)),
+            ),
+          ),
+        ),
+      ],
+      ),
+    );
+  }
+
+  PlatformFile? objFile = null;
+  void chooseFileUsingFilePicker() async {
+    //-----pick file by file picker,
+    var result = await FilePicker.platform.pickFiles(
+      withReadStream:
+      true, // this will return PlatformFile object with read stream
+    );
+    if (result != null) {
+      setState(() {
+        objFile = result.files.single;
+        widget.onChanePlatformFile!(objFile!);
+      });
+    }
+  }
+
+  void uploadSelectedFile() async {
+    //---Create http package multipart request object
+    final request = http.MultipartRequest(
+      "POST",
+      Uri.parse("Your API URL"),
+    );
+    //-----add other fields if needed
+    request.fields["id"] = "abc";
+    //-----add selected file with request
+    request.files.add(new http.MultipartFile(
+        "Your parameter name on server side",
+        objFile!.readStream!,
+        objFile!.size,
+        filename: objFile!.name));
+    //-------Send request
+    var resp = await request.send();
+    //------Read response
+    String result = await resp.stream.bytesToString();
+    //-------Your response
+    print(result);
+  }
+
+  void filePicker() async {
+    widget.onNewTap;
+    final pickedFile = await FilePicker.platform.pickFiles(type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],);
+    print(pickedFile?.files.first.name);
+    Uint8List? bytes;
+
+
+    if (pickedFile != null) {
+       bytes = pickedFile.files.first.bytes;
+    }
+
+    // String newPath = await myFile.exportToStorage() ?? "";
+    // print(newPath);
+
+    filename =pickedFile?.files.first.name;
+    print("aaa"+filename.toString());
+    Variable.imageName=filename;
+    fileChange = true;
+    widget.onChange!(filename??"");
+    widget.onImageChange!(bytes!);
+    setState(() {});
+  }
+
+  void imagePicker() async {
+    // final pickedFile = await ImagePicker().getImage(
+    //   source: ImageSource.gallery ,
+    // );
+    final fromPicker = await ImagePicker().getImage(source: ImageSource.gallery);
+    print("dsdsdsdssssssssssssssssssss${fromPicker}");
+    if (fromPicker != null) {
+      final bytes = await fromPicker.readAsBytes();
+      // widget.onChange!(bytes);
+      widget.onImageChange!(bytes);
+    }
+
+
+// print(fromPicker.)
+    Uint8List? bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
+    fileChange = true;
+    widget.onImageChange!(bytesFromPicker!);
+    imageFile = fromPicker!;
+
+
+    setState(() {});
+    // widget.onChange(bytesFromPicker);
+  }
+  void launchUrl(String url) {
+
+    urlLauncher.canLaunch(url).then((value) {
+
+      if (value) urlLauncher.launch(url);
+
+    });
+
+  }
+
+
+  void showImage(String url, BuildContext context) {
+
+    // print("image url is $url");
+
+    ScreenshotController screenshotController = ScreenshotController();
+
+    //  Uint8List? _imageFile;
+
+    //  final pdf = pw.Document();
+
+    showDialog(
+
+        context: context,
+
+        builder: (context) => AlertDialog(
+
+          content: Container(
+
+            height: 500,
+
+            width: 700,
+
+            child: Screenshot(
+
+              controller: screenshotController,
+
+              child: PhotoView(
+
+                enablePanAlways: true,
+
+
+
+                // tightMode: true,
+
+                imageProvider: NetworkImage(url),
+
+              ),
+
+            ),
+
+          ),
+
+
+
+        ));
+
+  }
+}
+
+
+
 class FileUploadField extends StatefulWidget {
   final Function(MultipartFile)? changeMultiFile;
   final Function(PlatformFile)? onChanePlatformFile;
@@ -1829,12 +2219,13 @@ class _ImageUploadFieldState extends State<ImageUploadField> {
 
   Future<void> _uploadImage() async {
 
-    final url = Uri.parse('https://api-uat-user.sidrabazar.com/file-upload');
+    final url = Uri.parse('https://api-uat-inv-inventory.sidrabusiness.com/inventory-product/upload-image-clone');
     final headers = {'Content-Type': 'application/json'};
     final request = http.MultipartRequest('POST', url);
     // request.headers.addAll(headers);
     final pickedFile = await FilePicker.platform.pickFiles(type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],);
+    print(pickedFile?.files.first.name);
 
 
     if (pickedFile != null) {
@@ -1844,7 +2235,7 @@ class _ImageUploadFieldState extends State<ImageUploadField> {
 
       if(bytes!=null) {
         final imageFile = http.MultipartFile.fromBytes(
-          'upload',
+          'image',
           bytes,
           filename: 'doc.pdf',
         );
@@ -1868,15 +2259,15 @@ class _ImageUploadFieldState extends State<ImageUploadField> {
           final responseBody = await responseStream.transform(utf8.decoder).join();
           Map valueMap = jsonDecode(responseBody);
           print(valueMap);
-          print("respooo boidyyy ${valueMap["data"]["upload"]}".runtimeType);
+
           setState(() {
             print("hrrrrrrrrrrr found");
-            widget.onChange!(valueMap["data"]["upload"]);
+            widget.onChange!(valueMap["image_url"]);
             if (widget.imagePostType != null || widget.imagePostType != "") {
               switch (widget.imagePostType) {
                 case 'image1':
                   print("ist image");
-                  Variable.img1 = valueMap["data"]["id"];
+                  Variable.img1 = valueMap["data"];
                   //  print(Variable.img1);
                   //   Variable.img?.image1 != response.data["data"];
 
@@ -1885,71 +2276,71 @@ class _ImageUploadFieldState extends State<ImageUploadField> {
                 case 'image2':
                   print('2st image');
                   // Variable.img= ImagesModel(image2: response.data);
-                  Variable.img2 = valueMap["data"]["id"];
+                  Variable.img2 =valueMap["data"];
                   break;
 
                 case 'image3':
                   print('3st image');
                   // Variable.img= ImagesModel(image3: response.data);
-                  Variable.img3 = valueMap["data"]["id"];
+                  Variable.img3 = valueMap["data"];
                   break;
                 case 'image4':
                   print('4st image');
                   // Variable.img= ImagesModel(itemCatelog1: response.data);
-                  Variable.img4 = valueMap["data"]["id"];
+                  Variable.img4 = valueMap["data"];
                   break;
                 case 'image5':
                   print('5st image');
                   // Variable.img= ImagesModel(itemCatelog2: response.data);
-                  Variable.img5 = valueMap["data"]["id"];
+                  Variable.img5 = valueMap["data"];
                   break;
                 case 'image6':
                   print('6st image');
                   // Variable.img= ImagesModel(itemCatelog3: response.data);
-                  Variable.img6 = valueMap["data"]["id"];
+                  Variable.img6 = valueMap["data"];
                   break;
                 case 'image7':
                   print('7st image');
                   // Variable.img= ImagesModel(itemCatelog4: response.data);
-                  Variable.img7 = valueMap["data"]["id"];
+                  Variable.img7 = valueMap["data"];
                   break;
                 case 'image8':
                   print('8st image');
                   // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.img8 =valueMap["data"]["id"];
+                  Variable.img8 =valueMap["data"];
                   break;
                 case '1':
                   print('8st image');
                   // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.catalog1 = valueMap["data"]["id"];
+                  Variable.catalog1 = valueMap["data"];
                   break;
                 case '2':
                 // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.catalog2 = valueMap["data"]["id"];
+                  Variable.catalog2 = valueMap["data"];
                   break;
                 case '3':
                 // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.catalog3 = valueMap["data"]["id"];
+                  Variable.catalog3 = valueMap["data"];
                   break;
                 case '4':
                 // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.catalog4 = valueMap["data"]["id"];
+                  Variable.catalog4 = valueMap["data"];
                   break;
                 case '5':
                 // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.catalog5 = valueMap["data"]["id"];
+                  Variable.catalog5 = valueMap["data"];
                   break;
                 case '6':
                 // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.catalog6 = valueMap["data"]["id"];
+                  Variable.catalog6 =valueMap["data"];
                   break;
                 case '7':
                 // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.catalog7 = valueMap["data"]["id"];
+                  Variable.catalog7 = valueMap["data"];
                   break;
                 case '8':
                 // Variable.img= ImagesModel(itemCatelog5: response.data);
-                  Variable.catalog8 = valueMap["data"]["id"];
+                  Variable.catalog8 =valueMap["data"];
                   break;
               }
             }

@@ -1491,6 +1491,7 @@ setState(() {
                                                           importantInfo:importantInfo?.name==""?ProductFeatures(name: "Important Info",keyValues:importantInfo?.keyValues ):importantInfo,
                                                           productBehavior:   inforMationList??[],
                                                         );
+                                                        print(model);
                                                         context.read<VariantpostCubit>().patchVariant(veritiaclid, model);
 
                                                       }

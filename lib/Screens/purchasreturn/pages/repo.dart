@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/services.dart';
 import 'package:inventory/Screens/heirarchy/customizeddata/model/creation_custom_model.dart';
 import 'package:inventory/Screens/heirarchy/divisionconfiguration/model/creationmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
@@ -144,9 +145,16 @@ abstract class PurchaseReturnRepoAbstract {
   );
   Future<Either<Failure, DoubleResponse>> postCreateBrand(
       BrandCreationtModel model);
-  Future<Either<Failure, DoubleResponse>> postImage(
-      String? imageNmae, String ImageEncode,
-      {String? type});
+  Future<Either<Failure, DoubleResponse>> postImage(String? imageNmae, String ImageEncode, {String? type});
+  Future<Either<Failure, DoubleResponse>> postImage2(Uint8List? bytes, {String? type});
+
+
+
+
+
+
+
+
   Future<Either<Failure, BrandReadModel>> getBrandRead(int? id);
   Future<Either<Failure, DoubleResponse>> brandDelete(int? id);
   Future<Either<Failure, DoubleResponse>> postBrandPatch(
@@ -1735,5 +1743,12 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getCategoryListOnly(String? code,) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
             () async => remoteDataSource.getCategoryListOnly(code));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postImage2(Uint8List? bytes, {String? type}) {
+    return repoExecute<DoubleResponse>(
+            () async =>
+            remoteDataSource.postImage2(bytes, type: type));
   }
 }

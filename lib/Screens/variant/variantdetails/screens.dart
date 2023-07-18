@@ -2901,6 +2901,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.image2.clear();
+                            Variable.img2=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -2959,6 +2960,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.image3.clear();
+                            Variable.img3=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3016,6 +3018,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.image4.clear();
+                            Variable.img4=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3072,6 +3075,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.image5.clear();
+                            Variable.img5=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3134,6 +3138,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.catalog1.clear();
+                            Variable.catalog1=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3190,6 +3195,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.catalog2.clear();
+                            Variable.catalog2=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3246,6 +3252,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.catalog3.clear();
+                            Variable.catalog3=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3302,6 +3309,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.catalog4.clear();
+                            Variable.catalog4=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3358,6 +3366,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.catalog5.clear();
+                            Variable.catalog5=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3408,29 +3417,86 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    ImageUploadField(
-                      imagePostType: "Catalog6", onCancel: () {
-         setState(() {
-           widget.catalog6.clear();
-         });
-       },
-                      fileUrl: widget.catalog6.text,
-                      label: 'a', fileName: widget.catalog6.text,onChange: (val){
-                        widget.imagePostCheck(type: "11");
-                        setState(() {
-                          widget.catalog5.text = val ?? "";
-                        });
+       //              ImageUploadField(
+       //                imagePostType: "Catalog6", onCancel: () {
+       //   setState(() {
+       //     widget.catalog6.clear();
+       //   });
+       // },
+       //                fileUrl: widget.catalog6.text,
+       //                label: 'a', fileName: widget.catalog6.text,onChange: (val){
+       //                  widget.imagePostCheck(type: "11");
+       //                  setState(() {
+       //                    widget.catalog5.text = val ?? "";
+       //                  });
+       //
+       //              },onImageChange: (as){
+       //
+       //                print("onImageChange$as");
+       //              },),
+                    FileUploadField(
+                        fileName: widget.catalog6.text,
+                        fileUrl: widget.catalog6.text,
+                        onCancel: () {
+                          setState(() {
+                            widget.catalog6.clear();
+                            Variable.catalog6=null;
+                          });
+                        },
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "11");
+                          widget.catalog6.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
 
-                    },onImageChange: (as){
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
 
-                      print("onImageChange$as");
-                    },),
-                    // FileUploadField(
-                    //     fileName: widget.catalog6.text,
-                    //     fileUrl: widget.catalog6.text,
+                          if (newFile.length <= 150000) {
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "6");
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Iamge of size Lesser than 150kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog6"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    // FileUploadField2(
+                    //     fileName: widget.catalog7.text,
+                    //     fileUrl: widget.catalog7.text,
                     //     onCancel: () {
                     //       setState(() {
-                    //         widget.catalog6.clear();
+                    //         widget.catalog7.clear();
                     //       });
                     //     },
                     //     onChangeTap: (p0) {
@@ -3438,10 +3504,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //       setState(() {});
                     //     },
                     //     onChange: (myFile) {
-                    //       widget.imagePostCheck(type: "11");
-                    //       widget.catalog6.text = myFile?.fileName ?? "";
+                    //       widget.imagePostCheck(type: "12");
+                    //       widget.catalog7.text = myFile?? "";
                     //       // Variable.mobileBannerImage = myFile.toUint8List();
-                    //       var imageEncode = myFile.toBase64();
+                    //
                     //       // widget.fileMobileNameCtrl.text =
                     //       //     myFile.fileName ?? "";
                     //       // if (Variable.bannerimage!.length <= 240000)
@@ -3458,35 +3524,28 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //       //   context.showSnackBarError(
                     //       //       "Please upload Banner of size Lesser than 230kb");
                     //     },
-                    //     onImageChange: (newFile) async {
-                    //       // Variable.popUp = false;
-                    //
-                    //       if (newFile.length <= 150000) {
-                    //         context.read<ImagepostCubit>().postImage(
-                    //             Variable.imageName, imageEncode,
-                    //             type: "6");
+                    //     onImageChange: (bytes) async {
+                    //       //
+                    //       context.read<ImagepostCubit>().postImage2(
+                    //           bytes,
+                    //           type:"7");
+                    //     },
                     //         // loading
                     //         //     ? showDailogPopUp(context, DialoguePopUp())
                     //         //     : Navigator.pop(context);
                     //         // context
                     //         //     .read<CreateWebImageCubit>()
                     //         //     .createMobImage();
-                    //       } else
-                    //         context.showSnackBarError(
-                    //             "Please upload Iamge of size Lesser than 150kb");
-                    //       setState(() {});
-                    //     },
+                    //
                     //     onCreate: true,
-                    //     label: "Catalog6"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
+                    //     label: "Catalog7"),
                     FileUploadField(
                         fileName: widget.catalog7.text,
                         fileUrl: widget.catalog7.text,
                         onCancel: () {
                           setState(() {
                             widget.catalog7.clear();
+                            Variable.catalog7=null;
                           });
                         },
                         onChangeTap: (p0) {
@@ -3543,6 +3602,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCancel: () {
                           setState(() {
                             widget.catalog8.clear();
+                            Variable.catalog8=null;
                           });
                         },
                         onChangeTap: (p0) {
