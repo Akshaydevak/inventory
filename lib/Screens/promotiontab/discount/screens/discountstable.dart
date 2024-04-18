@@ -112,26 +112,15 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
 
                             value: widget.offerApplyingType.text,
                             onSelection: (String? va) {
-                              print(
-                                  "+++++++++++++++++++++++");
-                              //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                               setState(() {
-
-
                                 // onChange = true;
                                 widget.offerApplyingType.text = va!;
                                 widget.offerApplyingTo.text = "";
                                 widget.offerApplyingCode.text = "";
                                 widget.offerApplyingId.text = "";
-                                // context
-                                //     .read<ChannelListCubit>()
-                                //     .getChannelList(va
-                                // );
                               });
                             },
                           ),
-                          // NewInputCard(  readOnly: true,
-                          //     controller: widget.saleApplyingPlace, title: " Sale Applying Place"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -149,14 +138,9 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                               },
                               onChangeTap: (p0) {
 
-                                // loading = true;
-                                setState(() {});
                               },
                               onChange: (myFile) {
                                 widget.imagePostCheck(type: "1");
-
-
-
                                 widget.image.text=myFile?.fileName??"";
                                 // Variable.mobileBannerImage = myFile.toUint8List();
                                 //
@@ -240,9 +224,6 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                             );
                           },
                         ),
-
-
-
                         SizedBox(
                           height: height * .030,
                         ),
@@ -252,17 +233,8 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                           code: widget.offerApplyingType.text,
                           value:widget.offerApplyingCode.text ,
                           onSelection: (ChannelListModel? va) {
-                            print(
-                                "+++++++++++++++++++++++");
-                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                             setState(() {
-
-
-                              // onChange = true;
-                              widget.offerApplyingTo.text
-                              = va?.name??"";
-                              print("SSSSSSSSSSSS");
-                              print(   widget.offerApplyingTo.text??"");
+                              widget.offerApplyingTo.text = va?.name??"";
                               widget.offerApplyingCode.text = va?.channelCode??"";
                               widget.offerApplyingId.text = va?.id.toString()??"";
                             });
@@ -280,12 +252,7 @@ class _PromotionDiscountStableTableState extends State<PromotionDiscountStableTa
                           type:"SaleBasedOnPromotionPopup",
                           value: widget.basedOn.text,
                           onSelection: (String? va) {
-                            print(
-                                "+++++++++++++++++++++++");
-                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                             setState(() {
-
-
                               // onChange = true;
                               widget.basedOn.text = va!;
                             });

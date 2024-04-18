@@ -218,7 +218,12 @@ class _VariantChannelAllocationScreenState
                     success: (data) {
                       setState(() {
                         group=data;
-                        channels=data?.results??[];
+                        if(data.results?.isNotEmpty==true){
+                          channels=data?.results??[];
+                        }else{
+
+                        }
+
 
                       });
                     });

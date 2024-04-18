@@ -2839,7 +2839,60 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    FileUploadField(
+                    // FileUploadField(
+                    //     fileName: widget.image1.text,
+                    //     fileUrl: widget.image1.text,
+                    //     onCancel: () {
+                    //       setState(() {
+                    //         widget.image1.clear();
+                    //       });
+                    //     },
+                    //     onChangeTap: (p0) {
+                    //       // loading = true;
+                    //       setState(() {});
+                    //     },
+                    //     onChange: (myFile) {
+                    //       widget.imagePostCheck(type: "1");
+                    //       widget.image1.text = myFile?.fileName ?? "";
+                    //       // Variable.mobileBannerImage = myFile.toUint8List();
+                    //       imageEncode = myFile.toBase64();
+                    //       // widget.fileMobileNameCtrl.text =
+                    //       //     myFile.fileName ?? "";
+                    //       // if (Variable.bannerimage!.length <= 240000)
+                    //
+                    //       // Variable.bannerEncodedMobileBannerImage =
+                    //       //     myFile.toBase64();
+                    //       // widget.fileMobileNameCtrl.text =
+                    //       //     myFile.fileName ?? "";
+                    //       // if (Variable.bannerimage!.length <= 240000)
+                    //       //   context
+                    //       //       .read<CreateWebImageCubit>()
+                    //       //       .createMobImage();
+                    //       // else
+                    //       //   context.showSnackBarError(
+                    //       //       "Please upload Banner of size Lesser than 230kb");
+                    //     },
+                    //     onImageChange: (newFile) async {
+                    //       // Variable.popUp = false;
+                    //
+                    //       if (newFile.length <= 150000) {
+                    //         context.read<ImagepostCubit>().postImage(
+                    //             Variable.imageName, imageEncode,
+                    //             type: "image1");
+                    //         // loading
+                    //         //     ? showDailogPopUp(context, DialoguePopUp())
+                    //         //     : Navigator.pop(context);
+                    //         // context
+                    //         //     .read<CreateWebImageCubit>()
+                    //         //     .createMobImage();
+                    //       } else
+                    //         context.showSnackBarError(
+                    //             "Please upload Image of size Lesser than 130kb");
+                    //       setState(() {});
+                    //     },
+                    //     onCreate: true,
+                    //     label: "Image1"),
+                    FileUploadField2(
                         fileName: widget.image1.text,
                         fileUrl: widget.image1.text,
                         onCancel: () {
@@ -2853,9 +2906,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         },
                         onChange: (myFile) {
                           widget.imagePostCheck(type: "1");
-                          widget.image1.text = myFile?.fileName ?? "";
+                          widget.image1.text = myFile ?? "";
                           // Variable.mobileBannerImage = myFile.toUint8List();
-                          imageEncode = myFile.toBase64();
+
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
@@ -2872,12 +2925,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           //   context.showSnackBarError(
                           //       "Please upload Banner of size Lesser than 230kb");
                         },
-                        onImageChange: (newFile) async {
+                        onImageChange: (bytes) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 150000) {
-                            context.read<ImagepostCubit>().postImage(
-                                Variable.imageName, imageEncode,
+                            context.read<ImagepostCubit>().postImage2(
+                                bytes,
                                 type: "image1");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
@@ -2885,17 +2937,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             // context
                             //     .read<CreateWebImageCubit>()
                             //     .createMobImage();
-                          } else
-                            context.showSnackBarError(
-                                "Please upload Image of size Lesser than 130kb");
-                          setState(() {});
+
                         },
                         onCreate: true,
                         label: "Image1"),
                     SizedBox(
                       height: height * .030,
                     ),
-                    FileUploadField(
+                    FileUploadField2(
                         fileName: widget.image2.text,
                         fileUrl: widget.image2.text,
                         onCancel: () {
@@ -2910,9 +2959,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         },
                         onChange: (myFile) {
                           widget.imagePostCheck(type: "2");
-                          widget.image2.text = myFile?.fileName ?? "";
+                          widget.image2.text = myFile?? "";
                           // Variable.mobileBannerImage = myFile.toUint8List();
-                          var imageEncode = myFile.toBase64();
+                          // var imageEncode = myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
@@ -2929,12 +2978,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           //   context.showSnackBarError(
                           //       "Please upload Banner of size Lesser than 230kb");
                         },
-                        onImageChange: (newFile) async {
+                        onImageChange: (bytes) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 150000) {
-                            context.read<ImagepostCubit>().postImage(
-                                Variable.imageName, imageEncode,
+                            context.read<ImagepostCubit>().postImage2(
+                                bytes,
                                 type: "image2");
 
                             // loading
@@ -2943,18 +2991,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             // context
                             //     .read<CreateWebImageCubit>()
                             //     .createMobImage();
-                          } else
-                            context.showSnackBarError(
-                                "Please upload Image of size Lesser than 130kb");
-                          ;
-                          setState(() {});
+
                         },
                         onCreate: true,
                         label: "Image2"),
                     SizedBox(
                       height: height * .030,
                     ),
-                    FileUploadField(
+                    FileUploadField2(
                         fileName: widget.image3.text,
                         fileUrl: widget.image3.text,
                         onCancel: () {
@@ -2969,8 +3013,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         },
                         onChange: (myFile) {
                           widget.imagePostCheck(type: "3");
-                          widget.image3.text = myFile?.fileName ?? "";
-                          var imageEncode = myFile.toBase64();
+                          widget.image3.text = myFile ?? "";
+                          // var imageEncode = myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
@@ -2989,12 +3033,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           //   context.showSnackBarError(
                           //       "Please upload Banner of size Lesser than 230kb");
                         },
-                        onImageChange: (newFile) async {
+                        onImageChange: (bytes) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 150000) {
-                            context.read<ImagepostCubit>().postImage(
-                                Variable.imageName, imageEncode,
+                            context.read<ImagepostCubit>().postImage2(
+                                bytes,
                                 type: "image3");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
@@ -3002,17 +3045,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             // context
                             //     .read<CreateWebImageCubit>()
                             //     .createMobImage();
-                          } else
-                            context.showSnackBarError(
-                                "Please upload Image of size Lesser than 150kb");
-                          setState(() {});
+
                         },
                         onCreate: true,
                         label: "Image3"),
                     SizedBox(
                       height: height * .030,
                     ),
-                    FileUploadField(
+                    FileUploadField2(
                         fileName: widget.image4.text,
                         fileUrl: widget.image4.text,
                         onCancel: () {
@@ -3027,9 +3067,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         },
                         onChange: (myFile) {
                           widget.imagePostCheck(type: "4");
-                          widget.image4.text = myFile?.fileName ?? "";
+                          widget.image4.text = myFile ?? "";
                           // Variable.mobileBannerImage = myFile.toUint8List();
-                          var imageEncode = myFile.toBase64();
+
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
@@ -3046,12 +3086,12 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           //   context.showSnackBarError(
                           //       "Please upload Banner of size Lesser than 230kb");
                         },
-                        onImageChange: (newFile) async {
+                        onImageChange: (bytes) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 150000) {
-                            context.read<ImagepostCubit>().postImage(
-                                Variable.imageName, imageEncode,
+
+                            context.read<ImagepostCubit>().postImage2(
+                               bytes ,
                                 type: "image4");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
@@ -3059,17 +3099,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             // context
                             //     .read<CreateWebImageCubit>()
                             //     .createMobImage();
-                          } else
-                            context.showSnackBarError(
-                                "Please upload Image of size Lesser than 150kb");
-                          setState(() {});
+
                         },
                         onCreate: true,
                         label: "Image4"),
                     SizedBox(
                       height: height * .030,
                     ),
-                    FileUploadField(
+                    FileUploadField2(
                         fileName: widget.image5.text,
                         fileUrl: widget.image5.text,
                         onCancel: () {
@@ -3084,8 +3121,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         },
                         onChange: (myFile) {
                           widget.imagePostCheck(type: "5");
-                          widget.image5.text = myFile?.fileName ?? "";
-                          var imageEncode = myFile.toBase64();
+                          widget.image5.text = myFile ?? "";
+                          // var imageEncode = myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
@@ -3104,12 +3141,12 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           //   context.showSnackBarError(
                           //       "Please upload Banner of size Lesser than 230kb");
                         },
-                        onImageChange: (newFile) async {
+                        onImageChange: (bytes) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 150000) {
-                            context.read<ImagepostCubit>().postImage(
-                                Variable.imageName, imageEncode,
+
+                            context.read<ImagepostCubit>().postImage2(
+                                bytes,
                                 type: "image5");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
@@ -3117,10 +3154,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             // context
                             //     .read<CreateWebImageCubit>()
                             //     .createMobImage();
-                          } else
-                            context.showSnackBarError(
-                                "Please upload Image of size Lesser than 150kb");
-                          setState(() {});
+
                         },
                         onCreate: true,
                         label: "Image5"),
@@ -3491,12 +3525,62 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    // FileUploadField2(
+                    FileUploadField2(
+                        fileName: widget.catalog7.text,
+                        fileUrl: widget.catalog7.text,
+                        onCancel: () {
+                          setState(() {
+                            widget.catalog7.clear();
+                            Variable.catalog7=null;
+                          });
+                        },
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "12");
+                          widget.catalog7.text = myFile?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (bytes) async {
+                          //
+                          context.read<ImagepostCubit>().postImage2(
+                              bytes,
+                              type:"7");
+                        },
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+
+                        onCreate: true,
+                        label: "Catalog7"),
+                    // FileUploadField(
                     //     fileName: widget.catalog7.text,
                     //     fileUrl: widget.catalog7.text,
                     //     onCancel: () {
                     //       setState(() {
                     //         widget.catalog7.clear();
+                    //         Variable.catalog7=null;
                     //       });
                     //     },
                     //     onChangeTap: (p0) {
@@ -3505,9 +3589,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //     },
                     //     onChange: (myFile) {
                     //       widget.imagePostCheck(type: "12");
-                    //       widget.catalog7.text = myFile?? "";
+                    //       widget.catalog7.text = myFile?.fileName ?? "";
                     //       // Variable.mobileBannerImage = myFile.toUint8List();
-                    //
+                    //       var imageEncode = myFile.toBase64();
                     //       // widget.fileMobileNameCtrl.text =
                     //       //     myFile.fileName ?? "";
                     //       // if (Variable.bannerimage!.length <= 240000)
@@ -3524,79 +3608,30 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //       //   context.showSnackBarError(
                     //       //       "Please upload Banner of size Lesser than 230kb");
                     //     },
-                    //     onImageChange: (bytes) async {
-                    //       //
-                    //       context.read<ImagepostCubit>().postImage2(
-                    //           bytes,
-                    //           type:"7");
-                    //     },
+                    //     onImageChange: (newFile) async {
+                    //       // Variable.popUp = false;
+                    //
+                    //       if (newFile.length <= 150000) {
+                    //         context.read<ImagepostCubit>().postImage(
+                    //             Variable.imageName, imageEncode,
+                    //             type: "7");
                     //         // loading
                     //         //     ? showDailogPopUp(context, DialoguePopUp())
                     //         //     : Navigator.pop(context);
                     //         // context
                     //         //     .read<CreateWebImageCubit>()
                     //         //     .createMobImage();
-                    //
+                    //       } else
+                    //         context.showSnackBarError(
+                    //             "Please upload Image of size Lesser than 150kb");
+                    //       setState(() {});
+                    //     },
                     //     onCreate: true,
                     //     label: "Catalog7"),
-                    FileUploadField(
-                        fileName: widget.catalog7.text,
-                        fileUrl: widget.catalog7.text,
-                        onCancel: () {
-                          setState(() {
-                            widget.catalog7.clear();
-                            Variable.catalog7=null;
-                          });
-                        },
-                        onChangeTap: (p0) {
-                          // loading = true;
-                          setState(() {});
-                        },
-                        onChange: (myFile) {
-                          widget.imagePostCheck(type: "12");
-                          widget.catalog7.text = myFile?.fileName ?? "";
-                          // Variable.mobileBannerImage = myFile.toUint8List();
-                          var imageEncode = myFile.toBase64();
-                          // widget.fileMobileNameCtrl.text =
-                          //     myFile.fileName ?? "";
-                          // if (Variable.bannerimage!.length <= 240000)
-
-                          // Variable.bannerEncodedMobileBannerImage =
-                          //     myFile.toBase64();
-                          // widget.fileMobileNameCtrl.text =
-                          //     myFile.fileName ?? "";
-                          // if (Variable.bannerimage!.length <= 240000)
-                          //   context
-                          //       .read<CreateWebImageCubit>()
-                          //       .createMobImage();
-                          // else
-                          //   context.showSnackBarError(
-                          //       "Please upload Banner of size Lesser than 230kb");
-                        },
-                        onImageChange: (newFile) async {
-                          // Variable.popUp = false;
-
-                          if (newFile.length <= 150000) {
-                            context.read<ImagepostCubit>().postImage(
-                                Variable.imageName, imageEncode,
-                                type: "7");
-                            // loading
-                            //     ? showDailogPopUp(context, DialoguePopUp())
-                            //     : Navigator.pop(context);
-                            // context
-                            //     .read<CreateWebImageCubit>()
-                            //     .createMobImage();
-                          } else
-                            context.showSnackBarError(
-                                "Please upload Image of size Lesser than 150kb");
-                          setState(() {});
-                        },
-                        onCreate: true,
-                        label: "Catalog7"),
                     SizedBox(
                       height: height * .030,
                     ),
-                    FileUploadField(
+                    FileUploadField2(
                         fileName: widget.catalog8.text,
                         fileUrl: widget.catalog8.text,
                         onCancel: () {
@@ -3611,9 +3646,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         },
                         onChange: (myFile) {
                           widget.imagePostCheck(type: "13");
-                          widget.catalog8.text = myFile?.fileName ?? "";
+                          widget.catalog8.text = myFile?? "";
                           // Variable.mobileBannerImage = myFile.toUint8List();
-                          var imageEncode = myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
@@ -3630,12 +3664,12 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           //   context.showSnackBarError(
                           //       "Please upload Banner of size Lesser than 230kb");
                         },
-                        onImageChange: (newFile) async {
+                        onImageChange: (bytes) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 150000) {
-                            context.read<ImagepostCubit>().postImage(
-                                Variable.imageName, imageEncode,
+
+                            context.read<ImagepostCubit>().postImage2(
+                               bytes,
                                 type: "8");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
@@ -3643,13 +3677,64 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             // context
                             //     .read<CreateWebImageCubit>()
                             //     .createMobImage();
-                          } else
-                            context.showSnackBarError(
-                                "Please upload Image of size Lesser than 150kb");
-                          setState(() {});
+
                         },
                         onCreate: true,
                         label: "Catalog8"),
+                    // FileUploadField(
+                    //     fileName: widget.catalog8.text,
+                    //     fileUrl: widget.catalog8.text,
+                    //     onCancel: () {
+                    //       setState(() {
+                    //         widget.catalog8.clear();
+                    //         Variable.catalog8=null;
+                    //       });
+                    //     },
+                    //     onChangeTap: (p0) {
+                    //       // loading = true;
+                    //       setState(() {});
+                    //     },
+                    //     onChange: (myFile) {
+                    //       widget.imagePostCheck(type: "13");
+                    //       widget.catalog8.text = myFile?.fileName ?? "";
+                    //       // Variable.mobileBannerImage = myFile.toUint8List();
+                    //       var imageEncode = myFile.toBase64();
+                    //       // widget.fileMobileNameCtrl.text =
+                    //       //     myFile.fileName ?? "";
+                    //       // if (Variable.bannerimage!.length <= 240000)
+                    //
+                    //       // Variable.bannerEncodedMobileBannerImage =
+                    //       //     myFile.toBase64();
+                    //       // widget.fileMobileNameCtrl.text =
+                    //       //     myFile.fileName ?? "";
+                    //       // if (Variable.bannerimage!.length <= 240000)
+                    //       //   context
+                    //       //       .read<CreateWebImageCubit>()
+                    //       //       .createMobImage();
+                    //       // else
+                    //       //   context.showSnackBarError(
+                    //       //       "Please upload Banner of size Lesser than 230kb");
+                    //     },
+                    //     onImageChange: (newFile) async {
+                    //       // Variable.popUp = false;
+                    //
+                    //       if (newFile.length <= 150000) {
+                    //         context.read<ImagepostCubit>().postImage(
+                    //             Variable.imageName, imageEncode,
+                    //             type: "8");
+                    //         // loading
+                    //         //     ? showDailogPopUp(context, DialoguePopUp())
+                    //         //     : Navigator.pop(context);
+                    //         // context
+                    //         //     .read<CreateWebImageCubit>()
+                    //         //     .createMobImage();
+                    //       } else
+                    //         context.showSnackBarError(
+                    //             "Please upload Image of size Lesser than 150kb");
+                    //       setState(() {});
+                    //     },
+                    //     onCreate: true,
+                    //     label: "Catalog8"),
 
                     SizedBox(
                       height: height * .1498,

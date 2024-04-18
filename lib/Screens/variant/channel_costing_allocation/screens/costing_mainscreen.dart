@@ -316,6 +316,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                     if (result.isNotEmpty) {
                       veritiaclid = result[0].id;
                       variantCode = result[0].code;
+                      selectedVertical=0;
 
                       context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
 
@@ -571,7 +572,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             }
                           },
                           discardFunction: (){},
-                          label:select?"SAnnVE":"UPDATE" ,
+                          label:select?"SAVE":"UPDATE" ,
 
                         ),
 

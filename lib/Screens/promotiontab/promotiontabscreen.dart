@@ -197,17 +197,17 @@ class PromotionRightDrawer extends StatelessWidget {
 
             );
           },),
-          DrawerCared(label: "Offer Group",ontap: (){
-            costingTypeMethodeCheck = false;
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "CreateOfferGroupPopUp",
-              ),
-
-
-            );
-          },),
+          // DrawerCared(label: "Offer Group",ontap: (){
+          //   costingTypeMethodeCheck = false;
+          //   showDailogPopUp(
+          //     context,
+          //     ConfigurePopup(
+          //       type: "CreateOfferGroupPopUp",
+          //     ),
+          //
+          //
+          //   );
+          // },),
         ],
       ),
 

@@ -316,6 +316,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                         ),
                         NewInputCard(
                             formatter: true,
+                            integerOnly: true,
 
                             controller: widget.channelTypeAllocationRatio, title: "Channel Type Allocation Ratio"),
                         SizedBox(

@@ -10,6 +10,7 @@ class PurchaseOrderTypeCubit extends Cubit<PurchaseOrderTypeCubitDartState> {
   final InventoryRepository _repos = InventoryRepositoryImpl();
   PurchaseOrderTypeCubit() : super(PurchaseOrderTypeCubitDartState.initial());
   Future getPurchaseOrdertype() async {
+
     final result = await _repos.getPurchaseOrdertype();
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

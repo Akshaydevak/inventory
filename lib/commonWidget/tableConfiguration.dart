@@ -5079,22 +5079,16 @@ class _SaleApplyingNamePeriodPopup extends State<SaleApplyingNamePeriodPopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
+                buttonVisible: false,
                 buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
                 label: "Sales Applying Name",
                 onApply: () {
-                  costingTypeMethodeCheck = true;
-                  showDailogPopUp(
-                    context,
-                    ConfigurePopup(
-                      type: "CreateOfferGroupPopUp",
-                    ),
-                  );
 
-                  // widget.onTap();
-                  setState(() {});
+
+
                 },
                 onEdit: () {},
                 onCancel: () {

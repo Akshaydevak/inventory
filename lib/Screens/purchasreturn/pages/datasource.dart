@@ -3877,14 +3877,14 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
             "length_unit": model.lengthUnit,
             "width_unit": model.widthUnit,
             "height_unit": model.heightUnit,
-            "catalog1": model.catalog1,
-            "catalog2": model.catalog2,
-            "catalog3": model.catalog3,
-            "catalog4": model.catalog4,
-            "catalog5": model.catalog5,
-            "catalog6": model.catalog6,
-            "catalog7": model.catalog7,
-            "catalog8": model.catalog8,
+            "catalogue_1": model.catalog1,
+            "catalogue_2": model.catalog2,
+            "catalogue_3": model.catalog3,
+            "catalogue_4": model.catalog4,
+            "catalogue_5": model.catalog5,
+            "catalogue_6": model.catalog6,
+            "catalogue_7": model.catalog7,
+            "catalogue_8": model.catalog8,
             "Ingrediants": model.Ingrediants == null
                 ? {"name": "Ingrediants", "key_values": []}
                 : model.Ingrediants,
@@ -4008,14 +4008,14 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           "length_unit": model.lengthUnit,
           "width_unit": model.widthUnit,
           "height_unit": model.heightUnit,
-          "catalog1": model.catalog1,
-          "catalog2": model.catalog2,
-          "catalog3": model.catalog3,
-          "catalog4": model.catalog4,
-          "catalog5": model.catalog5,
-          "catalog6": model.catalog6,
-          "catalog7": model.catalog7,
-          "catalog8": model.catalog8,
+          "catalogue_1": model.catalog1,
+          "catalogue_2": model.catalog2,
+          "catalogue_3": model.catalog3,
+          "catalogue_4": model.catalog4,
+          "catalogue_5": model.catalog5,
+          "catalogue_6": model.catalog6,
+          "catalogue_7": model.catalog7,
+          "catalogue_8": model.catalog8,
           "Ingrediants": model.Ingrediants == null
               ? {"name": "Ingrediants", "key_values": []}
               : model.Ingrediants,
@@ -4137,14 +4137,14 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           "image3": model.image3,
           "image4": model.image4,
           "image5": model.image5,
-          "catalog1": model.catalog1,
-          "catalog2": model.catalog2,
-          "catalog3": model.catalog3,
-          "catalog4": model.catalog4,
-          "catalog5": model.catalog5,
-          "catalog6": model.catalog6,
-          "catalog7": model.catalog7,
-          "catalog8": model.catalog8,
+          "catalogue_1": model.catalog1,
+          "catalogue_2": model.catalog2,
+          "catalogue_3": model.catalog3,
+          "catalogue_4": model.catalog4,
+          "catalogue_5": model.catalog5,
+          "catalogue_6": model.catalog6,
+          "catalogue_7": model.catalog7,
+          "catalogue_8": model.catalog8,
           "vedio_url": model.vedioUrl,
           "minimum_gp": model.minGap,
           "maximum_gp": model.maxGp,
@@ -5440,8 +5440,6 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<CostingCreatePostModel> getCostMethodRead(int? id) async {
     String path = costingMethodReadApi + id.toString();
     try {
-      print("ppppath" + path.toString());
-      print(path);
       final response = await client.get(
         path,
         options: Options(

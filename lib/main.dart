@@ -70,11 +70,13 @@ import 'Screens/variant/variantdetails/cubits/liststock/liststockpartition_cubit
 import 'Screens/variant/variantdetails/cubits/producedcountry/producedcountry_cubit.dart';
 import 'commonWidget/Navigationprovider.dart';
 import 'commonWidget/sharedpreference.dart';
+import 'core/env.dart';
 import 'cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
 import 'cubits/cubit/cubit/general_purchase_read_cubit.dart';
 
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
+  AppEnviornment.setUpEnv(EnviornMent.production);
   // window_size.  DesktopWindow.setMinWindowSize(Size(600, 800));
   runApp(MyApp());
 }

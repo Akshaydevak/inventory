@@ -867,7 +867,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         TableCell(
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
-                                          child: UnderLinedInput(
+                                          child:
+                                          UnderLinedInput(
                                             initialCheck: true,
                                             readOnly: table1[i].isInvoiced==true?true:false,
                                             // controller: requestedListControllers[i],

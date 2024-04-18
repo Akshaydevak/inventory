@@ -347,21 +347,14 @@ class Catelog with _$Catelog {
 @freezed
 class KeyValues with _$KeyValues {
   const factory KeyValues({
-    final String? catelog1,
-    final String? catelog2, final String? catelog3,
-    final String? catelog4,
-    final String? catelog5,
-    final String? catelog6,
-    final String? catelog7,
-    final String? catelog8,
-
-
-
-
-
-
-
-
+    @JsonKey(name: "catalogue_1") final String? catelog1,
+    @JsonKey(name: "catalogue_2") final String? catelog2,
+    @JsonKey(name: "catalogue_3") final String? catelog3,
+    @JsonKey(name: "catalogue_4") final String? catelog4,
+    @JsonKey(name: "catalogue_5") final String? catelog5,
+    @JsonKey(name: "catalogue_6")  final String? catelog6,
+    @JsonKey(name: "catalogue_7")  final String? catelog7,
+    @JsonKey(name: "catalogue_8")   final String? catelog8,
 
 
   }) = _KeyValues;

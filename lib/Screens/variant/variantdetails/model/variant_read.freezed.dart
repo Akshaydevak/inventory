@@ -5293,13 +5293,21 @@ KeyValues _$KeyValuesFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$KeyValues {
+  @JsonKey(name: "catalogue_1")
   String? get catelog1 => throw _privateConstructorUsedError;
+  @JsonKey(name: "catalogue_2")
   String? get catelog2 => throw _privateConstructorUsedError;
+  @JsonKey(name: "catalogue_3")
   String? get catelog3 => throw _privateConstructorUsedError;
+  @JsonKey(name: "catalogue_4")
   String? get catelog4 => throw _privateConstructorUsedError;
+  @JsonKey(name: "catalogue_5")
   String? get catelog5 => throw _privateConstructorUsedError;
+  @JsonKey(name: "catalogue_6")
   String? get catelog6 => throw _privateConstructorUsedError;
+  @JsonKey(name: "catalogue_7")
   String? get catelog7 => throw _privateConstructorUsedError;
+  @JsonKey(name: "catalogue_8")
   String? get catelog8 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -5314,14 +5322,14 @@ abstract class $KeyValuesCopyWith<$Res> {
       _$KeyValuesCopyWithImpl<$Res, KeyValues>;
   @useResult
   $Res call(
-      {String? catelog1,
-      String? catelog2,
-      String? catelog3,
-      String? catelog4,
-      String? catelog5,
-      String? catelog6,
-      String? catelog7,
-      String? catelog8});
+      {@JsonKey(name: "catalogue_1") String? catelog1,
+      @JsonKey(name: "catalogue_2") String? catelog2,
+      @JsonKey(name: "catalogue_3") String? catelog3,
+      @JsonKey(name: "catalogue_4") String? catelog4,
+      @JsonKey(name: "catalogue_5") String? catelog5,
+      @JsonKey(name: "catalogue_6") String? catelog6,
+      @JsonKey(name: "catalogue_7") String? catelog7,
+      @JsonKey(name: "catalogue_8") String? catelog8});
 }
 
 /// @nodoc
@@ -5391,14 +5399,14 @@ abstract class _$$_KeyValuesCopyWith<$Res> implements $KeyValuesCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? catelog1,
-      String? catelog2,
-      String? catelog3,
-      String? catelog4,
-      String? catelog5,
-      String? catelog6,
-      String? catelog7,
-      String? catelog8});
+      {@JsonKey(name: "catalogue_1") String? catelog1,
+      @JsonKey(name: "catalogue_2") String? catelog2,
+      @JsonKey(name: "catalogue_3") String? catelog3,
+      @JsonKey(name: "catalogue_4") String? catelog4,
+      @JsonKey(name: "catalogue_5") String? catelog5,
+      @JsonKey(name: "catalogue_6") String? catelog6,
+      @JsonKey(name: "catalogue_7") String? catelog7,
+      @JsonKey(name: "catalogue_8") String? catelog8});
 }
 
 /// @nodoc
@@ -5462,33 +5470,41 @@ class __$$_KeyValuesCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_KeyValues implements _KeyValues {
   const _$_KeyValues(
-      {this.catelog1,
-      this.catelog2,
-      this.catelog3,
-      this.catelog4,
-      this.catelog5,
-      this.catelog6,
-      this.catelog7,
-      this.catelog8});
+      {@JsonKey(name: "catalogue_1") this.catelog1,
+      @JsonKey(name: "catalogue_2") this.catelog2,
+      @JsonKey(name: "catalogue_3") this.catelog3,
+      @JsonKey(name: "catalogue_4") this.catelog4,
+      @JsonKey(name: "catalogue_5") this.catelog5,
+      @JsonKey(name: "catalogue_6") this.catelog6,
+      @JsonKey(name: "catalogue_7") this.catelog7,
+      @JsonKey(name: "catalogue_8") this.catelog8});
 
   factory _$_KeyValues.fromJson(Map<String, dynamic> json) =>
       _$$_KeyValuesFromJson(json);
 
   @override
+  @JsonKey(name: "catalogue_1")
   final String? catelog1;
   @override
+  @JsonKey(name: "catalogue_2")
   final String? catelog2;
   @override
+  @JsonKey(name: "catalogue_3")
   final String? catelog3;
   @override
+  @JsonKey(name: "catalogue_4")
   final String? catelog4;
   @override
+  @JsonKey(name: "catalogue_5")
   final String? catelog5;
   @override
+  @JsonKey(name: "catalogue_6")
   final String? catelog6;
   @override
+  @JsonKey(name: "catalogue_7")
   final String? catelog7;
   @override
+  @JsonKey(name: "catalogue_8")
   final String? catelog8;
 
   @override
@@ -5540,33 +5556,41 @@ class _$_KeyValues implements _KeyValues {
 
 abstract class _KeyValues implements KeyValues {
   const factory _KeyValues(
-      {final String? catelog1,
-      final String? catelog2,
-      final String? catelog3,
-      final String? catelog4,
-      final String? catelog5,
-      final String? catelog6,
-      final String? catelog7,
-      final String? catelog8}) = _$_KeyValues;
+      {@JsonKey(name: "catalogue_1") final String? catelog1,
+      @JsonKey(name: "catalogue_2") final String? catelog2,
+      @JsonKey(name: "catalogue_3") final String? catelog3,
+      @JsonKey(name: "catalogue_4") final String? catelog4,
+      @JsonKey(name: "catalogue_5") final String? catelog5,
+      @JsonKey(name: "catalogue_6") final String? catelog6,
+      @JsonKey(name: "catalogue_7") final String? catelog7,
+      @JsonKey(name: "catalogue_8") final String? catelog8}) = _$_KeyValues;
 
   factory _KeyValues.fromJson(Map<String, dynamic> json) =
       _$_KeyValues.fromJson;
 
   @override
+  @JsonKey(name: "catalogue_1")
   String? get catelog1;
   @override
+  @JsonKey(name: "catalogue_2")
   String? get catelog2;
   @override
+  @JsonKey(name: "catalogue_3")
   String? get catelog3;
   @override
+  @JsonKey(name: "catalogue_4")
   String? get catelog4;
   @override
+  @JsonKey(name: "catalogue_5")
   String? get catelog5;
   @override
+  @JsonKey(name: "catalogue_6")
   String? get catelog6;
   @override
+  @JsonKey(name: "catalogue_7")
   String? get catelog7;
   @override
+  @JsonKey(name: "catalogue_8")
   String? get catelog8;
   @override
   @JsonKey(ignore: true)

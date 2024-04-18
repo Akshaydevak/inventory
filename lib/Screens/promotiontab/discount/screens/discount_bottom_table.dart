@@ -196,9 +196,7 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
           if (data.data1) {
-            // imageController.text = data.data2.toString();
-            print("imageController.text");
-            print(imageController.text);
+
             // print("dataAkshay" +
             //     imageContollercontroller.text.toString());
 
@@ -1078,9 +1076,9 @@ class DiscountBottomGrowableTableState extends State<DiscountBottomGrowableTable
 
                       ],
                       widths: {
-                        0: FlexColumnWidth(2),
+                        0: FlexColumnWidth(2.5),
                         1: FlexColumnWidth(3),
-                        2: FlexColumnWidth(3),
+                        2: FlexColumnWidth(2.5),
                         3: FlexColumnWidth(2),
                         4: FlexColumnWidth(2),
                         5: FlexColumnWidth(3),

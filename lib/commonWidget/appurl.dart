@@ -1,6 +1,7 @@
-const baseUrl = "https://api-purchase-order-staging.rgcdynamics.org/";
-const stagingUrl = "https://api-purchase-order-staging.rgcdynamics.org/";
-const purchaseOrderLiveBaseUrl = "https://api-uat-inv-purchase-order.sidrabusiness.com/";
+
+// const purchaseOrderLiveBaseUrl = "https://api-purchase-order-staging.rgcdynamics.org/";
+const purchaseOrderLiveBaseUrl = "https://st-inv-purchase-order.hilalcart.com/";
+// const purchaseOrderLiveBaseUrl = "https://api-uat-inv-purchase-order.sidrabusiness.com/";
 
 
 
@@ -8,32 +9,39 @@ const hilalBaseUrl = "https://api-rgc-user.hilalcart.com/";
 // const stagingUrl= "http://65.1.61.201:8111/";
 // const inventoryLiveBaseUrl = "http://65.1.61.201:8112/";
 
-const inventoryBaseUrl = "https://api-inventory-software-staging.rgcdynamics.org/";
-const inventoryLiveBaseUrl = "https://api-uat-inv-inventory.sidrabusiness.com/";
+// const inventoryLiveBaseUrl = "https://api-inventory-software-staging.rgcdynamics.org/";
+const inventoryLiveBaseUrl = "https://st-inv-inventory.hilalcart.com/";
+// const inventoryLiveBaseUrl = "https://api-uat-inv-inventory.sidrabusiness.com/";
 
-const userBaseUrl = "https://api-rgc-user.hilalcart.com/";
-const userLiveBaseUrl = "https://api-uat-user.sidrabazar.com/";
+const userLiveBaseUrl = "https://api-rgc-user.hilalcart.com/";
+// const userLiveBaseUrl = "https://api-uat-user.sidrabazar.com/";
 
 
-const promotionBaseUrl="https://invtry-promotion.rgcdynamics.org/";
-const promotionLiveBaseUrl="https://api-uat-inv-promotion.sidrabusiness.com/";
+// const promotionLiveBaseUrl="https://invtry-promotion.rgcdynamics.org/";
+const promotionLiveBaseUrl="https://st-inv-promotion.hilalcart.com/";
+// const promotionLiveBaseUrl="https://api-uat-inv-promotion.sidrabusiness.com/";
 
-const organizationStagingApiApi = "https://api-rgc-organization.hilalcart.com/legalunit/business-unit-list?legal_unit=";
-const organizationStagingBaseApi = "https://api-rgc-organization.hilalcart.com/";
-const organizationLiveApiApi = "https://api-uat-organization.sidrabusiness.com/legalunit/business-unit-list?legal_unit=";
-const organizationLiveBaseApi = "https://api-uat-organization.sidrabusiness.com/";
+const organizationLiveApiApi = "https://api-rgc-organization.hilalcart.com/legalunit/business-unit-list/org?legal_unit=";
+const organizationLiveBaseApi = "https://api-rgc-organization.hilalcart.com/";
+// const organizationLiveApiApi = "https://api-uat-organization.sidrabusiness.com/legalunit/business-unit-list/org?legal_unit=";
+// const organizationLiveBaseApi = "https://api-uat-organization.sidrabusiness.com/";
 
-const purchasereturnBaseUrl = "https://invtry-purchase-return.rgcdynamics.org/";
-const purchasereturnLiveBaseUrl =  "https://api-uat-inv-purchase-return.sidrabusiness.com/";
+// const purchasereturnLiveBaseUrl = "https://invtry-purchase-return.rgcdynamics.org/";
+const purchasereturnLiveBaseUrl = "https://st-inv-purchase-return.hilalcart.com/";
+// const purchasereturnLiveBaseUrl =  "https://api-uat-inv-purchase-return.sidrabusiness.com/";
 
-const salesOrderBaseUrl = "https://invtry-sales-order-staging.rgcdynamics.org/";
-const salesOrderLiveBaseUrl = "https://api-uat-inv-sales-order.sidrabusiness.com/";
+// const salesOrderLiveBaseUrl = "https://invtry-sales-order-staging.rgcdynamics.org/";
+const salesOrderLiveBaseUrl = "https://st-inv-sales-order.hilalcart.com/";
 
-const salesReturnBaseUrl = "https://api-invtry-sales-return.hilalcart.com/";
-const salesReturnLiveBaseUrl = "https://api-uat-inv-sales-return.sidrabusiness.com/";
+// const salesOrderLiveBaseUrl = "https://api-uat-inv-sales-order.sidrabusiness.com/";
+
+// const salesReturnLiveBaseUrl = "https://api-invtry-sales-return.hilalcart.com/";
+const salesReturnLiveBaseUrl = "https://st-inv-sales-return.hilalcart.com/";
+// const salesReturnLiveBaseUrl = "https://api-uat-inv-sales-return.sidrabusiness.com/";
 
 
 const payMentBaseUrl = "https://api-uat-payments.sidrabazar.com/";
+// const payMentBaseUrl = "https://api-rgc-payments.hilalcart.com/";
 
 
 

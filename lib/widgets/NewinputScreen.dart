@@ -493,7 +493,7 @@ class _CustomScrollBarState extends State<CustomScrollBar> {
     return Container(
       margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
       child: Scrollbar(
-        isAlwaysShown: true,
+        // isAlwaysShown: true,
         thickness: 5,
         controller: widget.controller,
         child: widget.childs,

@@ -1207,7 +1207,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                           margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
                                                           child: Scrollbar(
                                                               controller: scontroller,
-                                                              isAlwaysShown: true,
+                                                              // isAlwaysShown: true,
                                                               child: Container(
 
                                                                 alignment:

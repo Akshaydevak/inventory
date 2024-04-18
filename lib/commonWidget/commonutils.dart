@@ -683,7 +683,9 @@ class _ConfirmationPopupState extends State<ConfirmationPopup> {
       }),
     );
   }
-}class LogoutPopup extends StatefulWidget {
+}
+
+class LogoutPopup extends StatefulWidget {
   final Function? clear;
   final Function? onPressed;
   final Function? onLeftPress;
@@ -734,7 +736,8 @@ class _LogoutPopup extends State<LogoutPopup> {
       //       ),
       //
       // ],
-          content: Container(
+          content:
+          Container(
               height: 150,
               child: Column(
             children: [
@@ -5282,7 +5285,7 @@ class _DiscountVariantGroupCodeCreatativePopup extends State<DiscountVariantGrou
                             .read<MaterialreadCubit>()
                             .getMaterialRead(veritiaclid!);
                       } else {
-                        print("common");
+
                         // select=true;
                         setState(() {});
                       }
@@ -6598,9 +6601,7 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                         veritiaclid = result[0].id;
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<MaterialreadCubit>()
-                            .getMaterialRead(veritiaclid!);
+                        context.read<MaterialreadCubit>().getMaterialRead(veritiaclid!);
                       } else {
                         print("common");
                         // select=true;
@@ -6820,7 +6821,7 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                           ),
                           SizedBox(height: 2,),
                           Container(
-                           height:500,
+                           height: MediaQuery.of(context).size.height *.60,
                             // margin: EdgeInsets.symmetric(horizontal: w*.02),
                             child: SingleChildScrollView(
                               child: customTable(
@@ -10485,6 +10486,7 @@ class _CreateCostingMethodeTypePopUpState
                           content: data.data2,
                           // table:table,
                         ));
+                    context.read<CostingtypelistCubit>().getCostingTypeList();
                   } else {
                     showDailogPopUp(
                         context,
@@ -10514,18 +10516,17 @@ class _CreateCostingMethodeTypePopUpState
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        print("the deleting errpr" + result[0].id.toString());
-                        veritiaclid = result[0].id;
-                        // setState(() {
-                        //
-                        // });
+                        if (costingTypeMethodeCheck != true){
+                          if(   result.any((item) => item.id ==veritiaclid)){
+                            context.read<ReadcostingtypeCubit>().getCostMethodTypeRead(veritiaclid!);
+                          }else{
+                            veritiaclid = result[0].id;
+                            selectedVertical=0;
+                            context.read<ReadcostingtypeCubit>().getCostMethodTypeRead(veritiaclid!);
+                          }
 
-                        // // Variable.verticalid=result[0].id;
-                        // print("Variable.ak"+Variable.verticalid.toString());
-                        if (costingTypeMethodeCheck != true)
-                          context
-                              .read<ReadcostingtypeCubit>()
-                              .getCostMethodTypeRead(veritiaclid!);
+                        }
+
                       } else {
                         print("common");
                         // select=true;
@@ -11047,6 +11048,18 @@ class _CreateCostingMethodeCreatePopUpState
       table = tables;
     });
   }
+  clear(){
+    group = null;
+    typeId = null;
+    codeController.text =  "";
+    costingMethodcontroller.text = "";
+    namecontroller.text = "";
+    descriptionContollercontroller.text = "";
+    active =  false;
+    setState(() {
+
+    });
+  }
 
   final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
       GlobalKey<_CreateStaticPopUpState>();
@@ -11142,8 +11155,8 @@ class _CreateCostingMethodeCreatePopUpState
                             // table:table,
                           ));
                       context
-                          .read<ReadcostingCubit>()
-                          .getCostMethodRead(veritiaclid!);
+                          .read<CostingcreatelistCubit>()
+                          .getCostingCreateList();
 
                     }
 
@@ -11177,15 +11190,20 @@ class _CreateCostingMethodeCreatePopUpState
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
-                        if (costingTypeMethodeCheck != true)
-                          context
-                              .read<ReadcostingCubit>()
-                              .getCostMethodRead(veritiaclid!);
+                        if (costingTypeMethodeCheck != true){
+                          if(   result.any((item) => item.id ==veritiaclid)){
+                            context.read<ReadcostingCubit>().getCostMethodRead(veritiaclid!);
+                          }else{
+                            veritiaclid = result[0].id;
+                            selectedVertical=0;
+                            context.read<ReadcostingCubit>().getCostMethodRead(veritiaclid!);
+                          }
+                        }
+
                       } else {
                         print("common");
+                        clear();
                         // select=true;
                         setState(() {});
                       }
@@ -11587,27 +11605,25 @@ class _CreateOfferPeriodCreatePopUpState
                     },
                     success: (data) {
                       setState(() {
-                        print("dataaaaaaaaaaaa" + data.toString());
-                        print("shifas" + data.toTime.toString());
                         group = data;
 
                         codeController.text = data.offerPeriodCode ?? "";
 
                         noteContollercontroller.text=data.notes??"";
                         fromDateController.text=data.fromDate??"";
+                        // fromDateController=TextEditingController(text:data.fromDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.fromDate??"")));
+
                         toDateController.text=data.toDate??"";
+                        // toDateController=TextEditingController(text:data.toDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.toDate??"")));
+
                         titleController.text=data.title??"";
                         fromTimeController.text=data.fromTime.toString()??"";
                         toTimeController.text=data.toTime.toString()??"";
-
                         Datefrom=data.fromTime.toString();
-
                         descriptionContollercontroller.text =
-
                             data.description ?? "";
-
                         active = data.isActive ?? false;
-                        print("PP${Datefrom}");
+
                       });
                     });
               },
@@ -11645,10 +11661,8 @@ class _CreateOfferPeriodCreatePopUpState
             ),
             BlocListener<CreateOfferPeriodCubit, CreateOfferPeriodState>(
               listener: (context, state) {
-                print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -11670,13 +11684,9 @@ class _CreateOfferPeriodCreatePopUpState
                             content: data.data2,
                             // table:table,
                           ));
-                      context
-                          .read<ReadOfferPeriodCubit>()
-                          .getOfferPeriodRead(veritiaclid!);
+                      context.read<ListOfferPeriodCubit>().getOfferPeriodList();
 
                     }
-
-
                     setState(() {});
                   } else {
                     showDailogPopUp(
@@ -11700,21 +11710,23 @@ class _CreateOfferPeriodCreatePopUpState
                     print("error");
                   },
                   success: (list) {
-                    print("aaaaayyyiram" + list.data.toString());
-
                     result = list.data;
-                    print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        if (costingTypeMethodeCheck != true)
-                          context
-                              .read<ReadOfferPeriodCubit>()
-                              .getOfferPeriodRead(veritiaclid!);
+
+                        if (costingTypeMethodeCheck != true){
+                          if(   result.any((item) => item.id ==veritiaclid)){
+                            context.read<ReadOfferPeriodCubit>().getOfferPeriodRead(veritiaclid!);
+                          }
+                          else{
+                            veritiaclid = result[0].id;
+                            selectedVertical=0;
+                            context.read<ReadOfferPeriodCubit>().getOfferPeriodRead(veritiaclid!);
+
+                          }
+                        }
+
                       } else {
-                        print("common");
                         clear();
                         // select=true;
                         setState(() {});
@@ -11772,8 +11784,12 @@ class _CreateOfferPeriodCreatePopUpState
                     },
                     onEdit: () {
                       ReadOfferPeriod model=ReadOfferPeriod(
-                        fromDate: fromDateController?.text??"",
-                        toDate: toDateController?.text??"",
+                        fromDate:
+                        // DateFormat('yyyy-MM-dd').format(DateTime.parse(fromDateController?.text??"")),
+                        fromDateController?.text??"",
+                        toDate:
+                        // DateFormat('yyyy-MM-dd').format(DateTime.parse(toDateController?.text??"")),
+                        toDateController?.text??"",
                         fromTime: fromTimeController?.text??"",
                         toTime: toTimeController?.text??"",
                         title: titleController.text??"",
@@ -11782,16 +11798,11 @@ class _CreateOfferPeriodCreatePopUpState
                         createdBy: Variable.created_by??"",
                         description: descriptionContollercontroller.text??"",
                       );
-
-                      print("patchData$model");
                       context.read<CreateOfferPeriodCubit>().patchOfferPeriod(veritiaclid,model);
                     },
                     onCancel: () {
-                      context
-                          .read<DeleteOfferPeriodCubit>()
-                          .deleteOfferPeriod(veritiaclid, type: "1");
+                      context.read<DeleteOfferPeriodCubit>().deleteOfferPeriod(veritiaclid, type: "1");
                     },
-
                     onAddNew: (v) {},
                     dataField: Expanded(
                       // height: MediaQuery.of(context).size.height * .6,
@@ -11830,18 +11841,14 @@ class _CreateOfferPeriodCreatePopUpState
                                           //
 
                                           setState(() {
-                                            context
-                                                .read<ReadOfferPeriodCubit>()
-                                                .getOfferPeriodRead(veritiaclid!);
+                                            context.read<ReadOfferPeriodCubit>().getOfferPeriodRead(veritiaclid!);
                                             // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                                           });
                                         });
                                       },
                                       search: (String va) {
                                         print(va);
-                                        context
-                                            .read<ListOfferPeriodCubit>()
-                                            .searchUomList(va);
+                                        context.read<ListOfferPeriodCubit>().searchUomList(va);
                                         if (va == "") {
                                           context.read<ListOfferPeriodCubit>().getOfferPeriodList();
                                         }
@@ -11854,7 +11861,6 @@ class _CreateOfferPeriodCreatePopUpState
                                   children: [
 
                                     NewInputCard(
-
                                         readOnly: true,
                                         controller: codeController,
                                         title: "Code"),
@@ -11877,6 +11883,8 @@ class _CreateOfferPeriodCreatePopUpState
                                         //     DateTime.parse(fromDate!),
                                         label: "From Date",
                                         onSaved: (newValue) {
+
+                                          // fromDateController.text=   DateFormat('dd-MM-yyyy').format(newValue!);
                                           fromDateController.text = newValue
                                                 ?.toIso8601String()
                                                 .split("T")[0] ??
@@ -11887,15 +11895,14 @@ class _CreateOfferPeriodCreatePopUpState
                                     SizedBox(
                                       height: 10,
                                     ),
-
                                     PopUpDateFormField(
-
                                         format:DateFormat('yyyy-MM-dd'),
                                         controller: toDateController,
                                         // initialValue:
                                         //     DateTime.parse(fromDate!),
                                         label: "To Date",
                                         onSaved: (newValue) {
+                                          // toDateController.text=   DateFormat('dd-MM-yyyy').format(newValue!);
                                           toDateController.text = newValue
                                               ?.toIso8601String()
                                               .split("T")[0] ??
@@ -11908,25 +11915,40 @@ class _CreateOfferPeriodCreatePopUpState
                                 Expanded(
                                     child: Column(
                                   children: [
+                                    // SizedBox(
+                                    //   child: TimePickerDialog(
+                                    //     initialTime: TimeOfDay.fromDateTime(DateTime.now()),
+                                    //     onTimeChange: (TimeOfDay time) {
+                                    //       print(
+                                    //           "What we get the value of the time is now $time");
+                                    //     },
+                                    //   ),
+                                    // ),
                                     NewInputCard(
                                       controller: fromTimeController,
                                       icondrop: true,
                                       readOnly: true,
                                       title: "From Time",
                                       ontap: ()async {
-                                        final TimeOfDay? newTime = await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now(),
+                                        if(fromTimeController.text.isNotEmpty==true){
+                                          setState(() {
+                                            fromTimeController.clear();
+                                          });
 
-                                        );
-                                        // var value=newTime?.format(context);
-                                        print("24h: ${newTime?.hour}:${newTime?.minute}");
-                                        var value=    " ${newTime?.hour}:${newTime?.minute}";
+                                        }else{
 
-                                        fromTimeController.text=value??"";
-                                        setState(() {
+                                          final TimeOfDay? newTime = await showTimePicker(
+                                              context: context,
+                                              initialTime: TimeOfDay.now(),
 
-                                        });
+                                          );
+                                          if(newTime?.hour.runtimeType!=null){
+                                            var value=    " ${newTime?.hour}:${newTime?.minute}";
+                                            fromTimeController.text=value??"";
+                                            setState(() {
+                                            });
+                                          }
+                                        }
                                       },
                                     ),
                                     // PopUpDateFormField(
@@ -11953,16 +11975,27 @@ class _CreateOfferPeriodCreatePopUpState
                                       readOnly: true,
                                       title: "To Time",
                                       ontap: ()async {
-                                        final TimeOfDay? newTime = await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now(),
+                if(toTimeController.text.isNotEmpty){
 
-                                        );
-                                        var value=    " ${newTime?.hour}:${newTime?.minute}";
-                                        toTimeController.text=value??"";
-                                        setState(() {
+                  setState(() {
+                    toTimeController.clear();
+                  });
+                }
+                else{
+                  final TimeOfDay? newTime = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
 
-                                        });
+                  ); if(newTime?.hour.runtimeType!=null){
+                    var value=    " ${newTime?.hour}:${newTime?.minute}";
+                    toTimeController.text=value??"";
+                    setState(() {
+
+                    });
+                  }
+                }
+
+
                                       },
                                     ),
                                     SizedBox(
@@ -12755,6 +12788,15 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
     addNew = va;
     onChange = false;
   }
+  clear(){
+    setState(() {
+      group = null;
+      codeController.text = "";
+      namecontroller.text =  "";
+      descriptionContollercontroller.text = "";
+      active =false;
+    });
+  }
 
   void initState() {
     if (costingTypeMethodeCheck != true)
@@ -12826,7 +12868,8 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
 
                   if (data.data1) {
                     setState(() {
-                      Navigator.pop(context);
+                       Navigator.pop(context);
+
                       showDailogPopUp(
                           context,
                           SuccessPopup(
@@ -12864,6 +12907,7 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                           content: data.data2,
                           // table:table,
                         ));
+                    context.read<PricingroupcreateCubit>().getPricingGroupList();
                   } else {
                     // Navigator.pop(context);
                     showDailogPopUp(
@@ -12890,16 +12934,22 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        if (costingTypeMethodeCheck != true)
-                          context
-                              .read<ReadpricingroupreadCubit>()
-                              .getPricingRead(veritiaclid);
+
+                        if (costingTypeMethodeCheck != true){
+                          if(   result.any((item) => item.id ==veritiaclid)){
+                            context.read<ReadpricingroupreadCubit>().getPricingRead(veritiaclid);
+                          }
+                          else{
+                            veritiaclid = result[0].id;
+                            selectedVertical=0;
+                            context.read<ReadpricingroupreadCubit>().getPricingRead(veritiaclid);
+                          }
+
+                        }
+
                       } else {
                         print("common");
-                        // select=true;
+                        clear();
                         setState(() {});
                       }
 
@@ -13529,7 +13579,7 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                             content: data.data2,
                             // table:table,
                           ));
-                      context.read<PricinglistCubit>().getPricingList(); context.showSnackBarSuccess(data.data2);
+                      context.read<PricinglistCubit>().getPricingList();
 
                     }
                     else{
@@ -13539,7 +13589,7 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                             content: data.data2,
                             // table:table,
                           ));
-                      context.read<PricingreadCubit>().getPricingGroupRead(veritiaclid);
+                      context.read<PricinglistCubit>().getPricingList();
 
                     }
 
@@ -13569,12 +13619,23 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context.read<PricinglistCubit>().getPricingList();
+
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
                   }
                   ;
                 });
@@ -13590,19 +13651,25 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                     print("error");
                   },
                   success: (list) {
-                    print("aaaaayyyiram" + list.data.toString());
+
 
                     result = list.data;
-                    print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].pricingTypeId;
-                        // Variable.verticalid=result[0].id;
-                        print("Variable.ak" + Variable.verticalid.toString());
-                        if (costingTypeMethodeCheck != true)  context
-                            .read<PricingreadCubit>()
-                            .getPricingGroupRead(veritiaclid);
-                      } else {
+                        if (costingTypeMethodeCheck != true) {
+
+                          if(   result.any((item) => item.pricingTypeId ==veritiaclid)){
+                            context
+                                .read<PricingreadCubit>()
+                                .getPricingGroupRead(veritiaclid);
+                          }
+                          else{veritiaclid = result[0].pricingTypeId;
+                               selectedVertical=0;
+                               context.read<PricingreadCubit>().getPricingGroupRead(veritiaclid);
+        }
+                          }
+                        }
+                      else {
                         print("common");
                         // select=true;
                         setState(() {});
@@ -13968,6 +14035,9 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
     descriptionContollercontroller.clear();
 
     active = false;
+    setState(() {
+
+    });
   }
 
   final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
@@ -14066,6 +14136,7 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                             content: data.data2,
                             // table:table,
                           ));
+                      context.read<ListstockpartitionCubit>().getStockPartitionList();
                     }
 
                     // context.read<PricinglistCubit>().getPricingList();
@@ -14139,15 +14210,22 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                     print("seee" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {
-                        veritiaclid = result[0].id;
-                        // Variable.verticalid=result[0].id;
 
-                        if (costingTypeMethodeCheck != true)  context
-                            .read<StockPartitionReadCubit>()
-                            .getStockPartitionRead(veritiaclid);
+                        if (costingTypeMethodeCheck != true) {
+                          if(   result.any((item) => item.id ==veritiaclid)){
+                            context.read<StockPartitionReadCubit>()
+                                .getStockPartitionRead(veritiaclid);
+                          }
+                          else{
+                            veritiaclid = result[0].id;
+                            selectedVertical=0;
+                            context.read<StockPartitionReadCubit>()
+                                .getStockPartitionRead(veritiaclid);
+
+                          }
+                        }
                       } else {
-                        print("common");
-                        // select=true;
+                      clear();
                         setState(() {});
                       }
 

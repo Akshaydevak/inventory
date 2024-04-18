@@ -79,11 +79,12 @@ List<  InventoryListModel> inventoryList=[];
             Variable.mobileNumber=user.mobile.toString();
             Variable.email=user.email.toString();
             // Variable.inventory_ID=user.fname.toString();
-            context.read<InventorylistCubit>().getInventoryListRead(user.legalEntiry.toString());
+
 
 
 
             UserPreferences().saveUser(user);
+            context.read<InventorylistCubit>().getInventoryListRead(user.legalEntiry.toString());
             final SharedPreferences prefs =
             await SharedPreferences.getInstance();
             final List<String> strs = Variable.subIndex.map((e) => e.toString()).toList();

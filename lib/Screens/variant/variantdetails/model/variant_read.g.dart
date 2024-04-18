@@ -436,26 +436,26 @@ Map<String, dynamic> _$$_CatelogToJson(_$_Catelog instance) =>
     };
 
 _$_KeyValues _$$_KeyValuesFromJson(Map<String, dynamic> json) => _$_KeyValues(
-      catelog1: json['catelog1'] as String?,
-      catelog2: json['catelog2'] as String?,
-      catelog3: json['catelog3'] as String?,
-      catelog4: json['catelog4'] as String?,
-      catelog5: json['catelog5'] as String?,
-      catelog6: json['catelog6'] as String?,
-      catelog7: json['catelog7'] as String?,
-      catelog8: json['catelog8'] as String?,
+      catelog1: json['catalogue_1'] as String?,
+      catelog2: json['catalogue_2'] as String?,
+      catelog3: json['catalogue_3'] as String?,
+      catelog4: json['catalogue_4'] as String?,
+      catelog5: json['catalogue_5'] as String?,
+      catelog6: json['catalogue_6'] as String?,
+      catelog7: json['catalogue_7'] as String?,
+      catelog8: json['catalogue_8'] as String?,
     );
 
 Map<String, dynamic> _$$_KeyValuesToJson(_$_KeyValues instance) =>
     <String, dynamic>{
-      'catelog1': instance.catelog1,
-      'catelog2': instance.catelog2,
-      'catelog3': instance.catelog3,
-      'catelog4': instance.catelog4,
-      'catelog5': instance.catelog5,
-      'catelog6': instance.catelog6,
-      'catelog7': instance.catelog7,
-      'catelog8': instance.catelog8,
+      'catalogue_1': instance.catelog1,
+      'catalogue_2': instance.catelog2,
+      'catalogue_3': instance.catelog3,
+      'catalogue_4': instance.catelog4,
+      'catalogue_5': instance.catelog5,
+      'catalogue_6': instance.catelog6,
+      'catalogue_7': instance.catelog7,
+      'catalogue_8': instance.catelog8,
     };
 
 _$_KeyValues1 _$$_KeyValues1FromJson(Map<String, dynamic> json) =>

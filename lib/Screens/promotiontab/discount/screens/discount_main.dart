@@ -455,12 +455,9 @@ offerGroupNameController.clear();
                     print("error");
                   },
                   success: (list) {
-                    print("aaaaayyyiram" + list.data.toString());
                     list = list;
 
                     result = list.data;
-                    print("seee" + result.toString());
-
                       if (result.isNotEmpty) {
                         if(select){
                           selectedVertical=result.length-1;

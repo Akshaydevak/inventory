@@ -307,7 +307,10 @@ if(addVirtual==null){
                       .getChannelStockAllocationRead(veritiaclid, group[0].id);
                   // channels=data?.results??[];
 
-                } });
+                }
+              else{
+                clear();
+                }});
             });
 
         // TODO: implement listener

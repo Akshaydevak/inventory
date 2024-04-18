@@ -918,7 +918,7 @@ class _SellingPriceBasedPopUpCallState
                             hintText: "Select One",
                             hintStyle: CommonTextStyle.normalTableFieldStyle,
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -3628,7 +3628,7 @@ class _PromotionChannelListPopupState extends State<PromotionChannelListPopup> {
                     ],
                     decoration: InputDecoration(
                         isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.012,horizontal: 10),
                         enabledBorder:OutlineInputBorder(
                             borderRadius:BorderRadius.circular(2),
 
@@ -3775,7 +3775,7 @@ class _SaleApplyingPlacePopupState extends State<SaleApplyingPlacePopup> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.012,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -4501,7 +4501,7 @@ class _SaleBasedOnPromotionPopup extends State<SaleBasedOnPromotionPopup> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 18.5),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -5539,7 +5539,10 @@ class _VendorCodesSelectionState extends State<VendorCodesSelection> {
                       inputFormatters:  <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(r" "))
                       ],
+
                       decoration: InputDecoration(
+                       
+
                           // border: InputBorder.none,
                           isDense: true,
                           contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),

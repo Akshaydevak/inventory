@@ -942,7 +942,6 @@ setState(() {
                                           // addNew=true;
 
                                           // updateCheck=false;
-                                          print("rijina"+result[index].id.toString());
 
 
                                           veritiaclid = result[index].id;
@@ -1390,6 +1389,7 @@ setState(() {
                                                           importantInfo:importantInfo?.name==""?ProductFeatures(name: "Important Info",keyValues:importantInfo?.keyValues ):importantInfo,
                                                           productBehavior:   inforMationList??[],
                                                         );
+                                                        print(model);
                                                         context.read<VariantpostCubit>().postVariant(checkIdid, model);
                                                         onChange=true;
                                                         setState(() {

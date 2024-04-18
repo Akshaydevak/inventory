@@ -1830,7 +1830,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
 
                 children: [
                   tableHeadtext(
-                    'Nutinats Facts',
+                    'Nutrition Facts',
 
                     padding: EdgeInsets.only(left: 13,top: 13),
 
