@@ -1425,25 +1425,26 @@ class _FileUploadField2State extends State<FileUploadField2> {
   void filePicker() async {
     widget.onNewTap;
     final pickedFile = await FilePicker.platform.pickFiles(type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],);
+      allowedExtensions: ['jpg', "png"],);
     print(pickedFile?.files.first.name);
     Uint8List? bytes;
 
 
     if (pickedFile != null) {
        bytes = pickedFile.files.first.bytes;
+       filename =pickedFile?.files.first.name;
+       print("aaa"+filename.toString());
+       Variable.imageName=filename;
+       fileChange = true;
+       widget.onChange!(filename??"");
+       widget.onImageChange!(bytes!);
+       setState(() {});
     }
 
     // String newPath = await myFile.exportToStorage() ?? "";
     // print(newPath);
 
-    filename =pickedFile?.files.first.name;
-    print("aaa"+filename.toString());
-    Variable.imageName=filename;
-    fileChange = true;
-    widget.onChange!(filename??"");
-    widget.onImageChange!(bytes!);
-    setState(() {});
+
   }
 
   void imagePicker() async {

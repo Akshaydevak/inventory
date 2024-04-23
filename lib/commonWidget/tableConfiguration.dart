@@ -11100,7 +11100,7 @@ class _producedCountryPopup extends State<producedCountryPopupVariant> {
   }
 
   void initState() {
-
+    _firstLoad("");
     super.initState();
   }
   void _firstLoad(String ? code) async {
@@ -11170,7 +11170,7 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return Builder(builder: (context) {
-      _firstLoad("");
+
 
 
       return BlocConsumer<ProducedcountryCubit, ProducedcountryState>(
@@ -11198,20 +11198,20 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "Shipping",
+                label: "Produced Country",
                 onApply: () {
-                  showDailogPopUp(
-                      context,
-                      WarrantyDetailsPopUp(
-                        code: widget.code??"",
-                        // indexValue: temp,
-                        // changeActive: onChangeActive,
-                        // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                        // changeExtendedWarranty: onChangeExtendedWarranty,
-                      ));
+                  // showDailogPopUp(
+                  //     context,
+                  //     WarrantyDetailsPopUp(
+                  //       code: widget.code??"",
+                  //       // indexValue: temp,
+                  //       // changeActive: onChangeActive,
+                  //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                  //       // changeExtendedWarranty: onChangeExtendedWarranty,
+                  //     ));
 
                   // widget.onTap();
-                  setState(() {});
+                  // setState(() {});
                 },
                 onEdit: () {},
                 onCancel: () {
@@ -11249,28 +11249,28 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
                   // height: 500,
                   child: Column(
                     children: [
-                      Container(
-                          margin: EdgeInsets.all(5),
-                          child: SearchTextfiled(
-                            color: Color(0xffFAFAFA),
-                            h: 40,
-                            hintText: "Search...",
-                            suffixIconCheck: suffixIconCheck,
-                            ctrlr: searchContoller,
-                            onChanged: (va) {
-                              print("searching case" + va.toString());
-                              context
-                                  .read<ShippingadreesCubit>()
-                                  .getSearchCustomList(searchContoller.text,widget.code);
-                              suffixIconCheck=true;
-                              if (va == "") {
-                                context
-                                    .read<ShippingadreesCubit>()
-                                    .getShippingId(id:widget.code);
-                                suffixIconCheck=false;
-                              }
-                            },
-                          )),
+                      // Container(
+                      //     margin: EdgeInsets.all(5),
+                      //     child: SearchTextfiled(
+                      //       color: Color(0xffFAFAFA),
+                      //       h: 40,
+                      //       hintText: "Search...",
+                      //       suffixIconCheck: suffixIconCheck,
+                      //       ctrlr: searchContoller,
+                      //       onChanged: (va) {
+                      //         print("searching case" + va.toString());
+                      //         context
+                      //             .read<ShippingadreesCubit>()
+                      //             .getSearchCustomList(searchContoller.text,widget.code);
+                      //         suffixIconCheck=true;
+                      //         if (va == "") {
+                      //           context
+                      //               .read<ShippingadreesCubit>()
+                      //               .getShippingId(id:widget.code);
+                      //           suffixIconCheck=false;
+                      //         }
+                      //       },
+                      //     )),
                       SizedBox(
                         height: h * .004,
                       ),

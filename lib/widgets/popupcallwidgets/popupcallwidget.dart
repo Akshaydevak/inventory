@@ -3472,7 +3472,7 @@ class _RequestFoemOrderState extends State<RequestFoemOrder> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
