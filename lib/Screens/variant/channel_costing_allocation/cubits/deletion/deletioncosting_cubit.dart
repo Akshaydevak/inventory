@@ -10,7 +10,7 @@ class DeletioncostingCubit extends Cubit<DeletioncostingState> {
   DeletioncostingCubit() : super(DeletioncostingState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future CostingDelete(int? id, {String? type}) async {
-    print("akkkk"+type.toString());
+   emit(DeletioncostingState.initial());
     final result = await repo.CostingDelete(id,type: type);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

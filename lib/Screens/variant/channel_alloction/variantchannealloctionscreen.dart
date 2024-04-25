@@ -14,6 +14,7 @@ import 'package:inventory/Screens/variant/channel_alloction/screens/channel_allo
 import 'package:inventory/Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
 import 'package:inventory/Screens/variant/stock/models/stockverticallist.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -23,6 +24,7 @@ import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/responseutils.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
+import 'package:provider/provider.dart';
 
 import '../../GeneralScreen.dart';
 import 'cubit/channelpost/channelpost_cubit.dart';
@@ -54,6 +56,7 @@ class _VariantChannelAllocationScreenState
   int selectedVertical = 0;bool selectAll=false;
   var list;
   int? veritiaclid = 0;
+  NavigationProvider commonProvider = NavigationProvider();
   TextEditingController searchContoller = TextEditingController();
   filterTable(List<bool?>selections){
     print("seeee u"+channels1.toString());
@@ -144,6 +147,7 @@ class _VariantChannelAllocationScreenState
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -171,6 +175,7 @@ class _VariantChannelAllocationScreenState
                   // context.
                   context.showSnackBarError("Loading");
                 }, error: () {
+                  commonProvider.setLoadingSaveUpdate(false);
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
@@ -187,6 +192,7 @@ class _VariantChannelAllocationScreenState
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
+                  commonProvider.setLoadingSaveUpdate(false);
                   ;
                 });
               },
@@ -282,6 +288,7 @@ class _VariantChannelAllocationScreenState
                           selectedVertical: selectedVertical,
                           itemsearch: itemsearch,
                           ontap: (int index) {
+                            print("ssssssssssssssss");
                             setState(() {
                               selectedVertical = index;
 
@@ -524,8 +531,13 @@ class _VariantChannelAllocationScreenState
                                   ),
                                   SizedBox(height: h * .11,),
                                   SaveUpdateResponsiveButton(
+                                    isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                    isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                     label: "SAVE",
+                                    isDelete: true,
+
                                     saveFunction: (){
+                                      commonProvider.setLoadingSaveUpdate(true);
                                       List<ChannelDatas>? channelDatas=[];
                                       List<SelectedData>? selectedData=[];
                                       if(channels1.isNotEmpty==true){

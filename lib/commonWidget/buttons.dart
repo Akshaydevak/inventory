@@ -3,6 +3,7 @@ import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 
 import '../Screens/GeneralScreen.dart';
+import 'loading_widgets.dart';
 
 class Buttons extends StatelessWidget {
   final Color clr;
@@ -72,8 +73,9 @@ class TextButtonLarge extends StatelessWidget {
   final Color  labelcolor ;
   final bool marginCheck;
   final bool marginAvoid;
+  final bool isLoading;
 
-   TextButtonLarge({Key? key,this.marginCheck=false,this.W=80,this.H=43,this.labelcolor=Colors.white,this.marginAvoid=false, this.clr=Pellet.tableBlueHeaderPrint, this.images, required this.text,this.icon,required this.onPress,  this.bdr=false,  this.border=Colors.red}) : super(key: key);
+   TextButtonLarge({Key? key,this.marginCheck=false,this.W=80,this.H=43,this.labelcolor=Colors.white,this.marginAvoid=false, this.clr=Pellet.tableBlueHeaderPrint, this.images, required this.text,this.icon,required this.onPress,  this.bdr=false,  this.border=Colors.red,this.isLoading=false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
  double h=MediaQuery.of(context).size.height;
@@ -101,7 +103,7 @@ class TextButtonLarge extends StatelessWidget {
          ),
          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
 
-         child: Text(text,textAlign:TextAlign.center,style: TextStyle(color: labelcolor,fontSize: 12),),
+         child: isLoading?customCommonButtonProgressIndiactor(labelcolor==Colors.red):Text(text,textAlign:TextAlign.center,style: TextStyle(color: labelcolor,fontSize: 12),),
        ),
      ),
      // Container(
@@ -204,7 +206,9 @@ final String label;
 final String deleteLabel;
 final bool  isDelete;
 final bool  dividercheck;
-SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.dividercheck=true,this.isDelete=false,required this.saveFunction,required this.discardFunction});
+final bool  isSaveUpdateLoading;
+final bool  isClearDeketeLoading;
+SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.dividercheck=true,this.isDelete=false,required this.saveFunction,required this.discardFunction,this.isClearDeketeLoading=false,this.isSaveUpdateLoading=false});
 
 
   @override
@@ -224,6 +228,7 @@ SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.
 
 
             if(isDelete==false)  TextButtonLarge(
+              isLoading: isClearDeketeLoading,
 
                   text: deleteLabel,
                   onPress: (){
@@ -241,6 +246,7 @@ SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.
                 width: width * .008,
               ),
               TextButtonLarge(
+                  isLoading:isSaveUpdateLoading ,
 
                   text:label,
                   marginAvoid: true,

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
+import 'package:inventory/Screens/purchaseorder/purchase_order_general/blocs/bottom_button_loading_bloc.dart';
 import 'package:inventory/Screens/purchaseorder/purchase_order_general/screens/purchase_order_general_stable.dart';
 import 'package:inventory/Screens/purchaseorder/purchase_order_general/screens/purchase_order_growable.dart';
 import 'package:inventory/commonWidget/Colors.dart';
@@ -341,6 +342,7 @@ orederDate2Controller.clear();
                     }
                     ;
                   });
+                  context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: false));
                 },
               ),
               BlocListener<GeneralPurchaseReadCubit, GeneralPurchaseReadState>(
@@ -466,7 +468,9 @@ orederDate2Controller.clear();
                     }
                     ;
                   });
+                  context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: false));
                 },
+
               ),
               BlocListener<PurchaseorderdeleteCubit, PurchaseorderdeleteState>(
                 listener: (context, state) {
@@ -662,56 +666,73 @@ orederDate2Controller.clear();
                                           ),
                                         ],
                                       ),
-                                      PurchaseOrderGeneralStableTable(
-                                         discount: discount,
-                                        orderCode: ordercode,
-                                        oderDate: orederDate2Controller,
-                                        isVendorCheck: isVendorCheck,
-                                        vendorCode: vendorCode,
-                                        vendorName: vendorCodeName,
-                                        vendorTrnNumber: vendortrnnumber,
-                                        vendorEmail: vendor_email,
-                                        promisedReceiptDate: promised_receipt_date,
-                                        promisedReceiptDate2: promised_receipt_date2,
-                                        plannedReceiptDate: planned_receipt_date,
-                                        plannedReceiptDate2: planned_receipt_date2,
-                                        paymentCode:Paymentcode,
-                                        paymentStatus: Paymentstatus,
-                                        orderStatus: orderStatus,
-                                        receivingStatus: recievingstatus,
-                                        invoiceStatus: invoicestatus,
-                                        note: note,
-                                        remarks: remarks,
-                                        foc: foc,
-                                        unitCost: unitcourse,
-                                        vatableAmount: Variableamount,
-                                        excessTax: excesstax,
-                                        vat: vat,
-                                        actualCost: actualcost,
-                                        grandTotal: grandtotal,
-                                        orderType: orderType,
-                                        tableDatasClear:tableDatasClear,
-                                      ),
+
+
 
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: height*.10,),
+BlocBuilder<GeneralPurchaseReadCubit,GeneralPurchaseReadState>(builder: (context, state) {
+  return state.maybeWhen(orElse: (){return Container(
+      height: height/2,child: Center(child: CircularProgressIndicator()));},error: (){
+    return Container(
+      height: height/2,
+        child: Center(child: CircularProgressIndicator()));
+  },success: (data){
+    return Column(
+      children: [
+        PurchaseOrderGeneralStableTable(
+          discount: discount,
+          orderCode: ordercode,
+          oderDate: orederDate2Controller,
+          isVendorCheck: isVendorCheck,
+          vendorCode: vendorCode,
+          vendorName: vendorCodeName,
+          vendorTrnNumber: vendortrnnumber,
+          vendorEmail: vendor_email,
+          promisedReceiptDate: promised_receipt_date,
+          promisedReceiptDate2: promised_receipt_date2,
+          plannedReceiptDate: planned_receipt_date,
+          plannedReceiptDate2: planned_receipt_date2,
+          paymentCode:Paymentcode,
+          paymentStatus: Paymentstatus,
+          orderStatus: orderStatus,
+          receivingStatus: recievingstatus,
+          invoiceStatus: invoicestatus,
+          note: note,
+          remarks: remarks,
+          foc: foc,
+          unitCost: unitcourse,
+          vatableAmount: Variableamount,
+          excessTax: excesstax,
+          vat: vat,
+          actualCost: actualcost,
+          grandTotal: grandtotal,
+          orderType: orderType,
+          tableDatasClear:tableDatasClear,
+        ),
+        SizedBox(height: height*.10,),
 
 
-                                PurchaseOrderGenearlFormGrowableTable(
-                                  updateCheck: updateCheckFucction,
-                                  select:select,
-                                  updation: tableAssign,
-                                  key:_myWidgetState,
-                                  vendorCode: vendorCode,
-                                ),
+        PurchaseOrderGenearlFormGrowableTable(
+          updateCheck: updateCheckFucction,
+          select:select,
+          updation: tableAssign,
+          key:_myWidgetState,
+          vendorCode: vendorCode,
+        ),
+      ],
+    );
+  });
+},),
+
 
                                 SizedBox(
                                   height: height * .08,
                                 ),
-                                SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",discardFunction: (){
-                                  print("aaaaaa");
+                                BlocBuilder<BottomButtonLoadingBloc, BottomButtonLoadingState>(
+  builder: (context, state) {
+    return SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",isSaveUpdateLoading: state.updateSave,isClearDeketeLoading:state.deleteClear,discardFunction: (){
                                   setState(() {
                                     if(select){
                                       clear();
@@ -743,6 +764,7 @@ orederDate2Controller.clear();
                                         "please press update");
                                   }
                                   else{
+                                    context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: true));
                                     var table1=[
                                       for(var em in table)
                                         if(em.isActive==true)
@@ -784,7 +806,9 @@ orederDate2Controller.clear();
 
                                 },
 
-                                ),
+                                );
+  },
+),
 //                                 Container(
 //                                     margin: EdgeInsets.only(right:width*.011,),
 //                                   child: Row(

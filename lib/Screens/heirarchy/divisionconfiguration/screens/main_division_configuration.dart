@@ -12,12 +12,14 @@ import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/deletion/deletioncosting_cubit.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:provider/provider.dart';
 
 import '../cubit/post_division/division_configuration_cubit.dart';
 
@@ -36,6 +38,7 @@ class DevisionConfigurationState extends State< DevisionConfiguration> {
   TextEditingController descriptionController=TextEditingController();
   TextEditingController image1Controller=TextEditingController();
   TextEditingController image1NameController=TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   bool isActive=false;
   bool ismixed=false;
   bool select=false;
@@ -111,6 +114,7 @@ ismixed=false;
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return Scaffold(
       backgroundColor: Pellet.bagroundColor,
       body: MultiBlocProvider(
@@ -150,9 +154,13 @@ ismixed=false;
             // context.read<ListvraiantCubit>().getVariantList();
             // select=false;
           });
+
+          commonProvider.setLoadingSaveUpdate(false);
         });
       } else {
         context.showSnackBarError(data.data2);
+
+        commonProvider.setLoadingSaveUpdate(false);
         print(data.data1);
       }
       ;
@@ -219,6 +227,7 @@ ismixed=false;
           }
           ;
         });
+        commonProvider.setLoadingDeleterClear(false);
       },
     ),
 
@@ -416,8 +425,10 @@ ismixed=false;
                 CategoryTable(list: categoryList,uomTableEdit:TableAssign, isMixed: ismixed,key: cateogryTableState,),
                 SizedBox(height: height * .13,),
                   SaveUpdateResponsiveButton(
-                    saveFunction: (){
-
+                    isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                    isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
+                    saveFunction: () async {
+                     commonProvider.setLoadingSaveUpdate(true);
                       List<String> uomlist1=[];
                       List<String>  grouplist1=[];
                       List<String>  category1=[];
@@ -497,7 +508,7 @@ ismixed=false;
                               // clear:clear(),
                               // verticalId:veritiaclid ,
                               onPressed:(){
-
+                                commonProvider.setLoadingDeleterClear(true);
                                 Navigator.pop(context);
                                 context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"8");
 

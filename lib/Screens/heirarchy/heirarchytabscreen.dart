@@ -10,8 +10,10 @@ import 'package:inventory/Screens/salesreturn/salesreturngeneral.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../commonWidget/Navigationprovider.dart';
 import 'customizeddata/screens/main_customized.dart';
 import 'divisionconfiguration/screens/main_division_configuration.dart';
 
@@ -28,11 +30,13 @@ class HeirarchyTabScreen extends StatefulWidget {
 
 class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProviderStateMixin {
   bool isClossed=true;
+  NavigationProvider commonProvider = NavigationProvider();
   @override
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this,initialIndex: Variable.subIndex[4]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return Stack(
       children: [
         Container(
@@ -87,6 +91,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                                 padding: EdgeInsets.only(left: 13),
                                 isScrollable: true,
                                 onTap: (val) async {
+                                  commonProvider.setLoadingBoth(false);
                                   final SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
                                   Variable.subIndex[4]=val;

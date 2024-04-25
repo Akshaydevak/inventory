@@ -12,10 +12,12 @@ import 'package:inventory/Screens/variant/channel_stockAllocation/model/channels
 import 'package:inventory/Screens/variant/channel_stockAllocation/model/channelstock_read.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:provider/provider.dart';
 
 import 'channelstockallocation_stabletable.dart';
 
@@ -30,6 +32,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
   TextEditingController channelTypeStockcode = TextEditingController();
   TextEditingController channelTypecode = TextEditingController();
   TextEditingController baseUomController = TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   TextEditingController purchaseUomController = TextEditingController();
   TextEditingController safetyStockController = TextEditingController();
   TextEditingController totalQuantityController = TextEditingController();
@@ -267,6 +270,7 @@ if(addVirtual==null){
           // context.
           context.showSnackBarError("Loading");
         }, error: () {
+          commonProvider.setLoadingSaveUpdate(false);
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
           if (data.data1) {
@@ -283,6 +287,7 @@ if(addVirtual==null){
             context.showSnackBarError(data.data2);
             print(data.data1);
           }
+          commonProvider.setLoadingSaveUpdate(false);
           ;
         });
       },
@@ -401,6 +406,7 @@ if(addVirtual==null){
           builder: (context) {
             double height=MediaQuery.of(context).size.height;
             double width=MediaQuery.of(context).size.width;
+            commonProvider = Provider.of<NavigationProvider>(context);
             return Scaffold(
               backgroundColor:  Pellet.bagroundColor,
               body: IntrinsicHeight(
@@ -583,10 +589,17 @@ if(addVirtual==null){
                       ),
                           SizedBox(height: height * .08,),
                           SaveUpdateResponsiveButton(
+                            isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                            isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
+                            isDelete: true,
                             saveFunction: (){
                               ratiooCheck(channelAllocationRatio.text,"1");
                               ratiooCheck(minMaxRatioController.text,"");
+                              print("SSSSSSSSSSSSS$check");
                               if(check!=true){
+                                print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+                                commonProvider.setLoadingSaveUpdate(true);
+                                print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
                                 ChannelAllocationStockStockReadModel model=ChannelAllocationStockStockReadModel(
                                   stockWarning: stockwarning,
                                   salesblock: salesBlock,

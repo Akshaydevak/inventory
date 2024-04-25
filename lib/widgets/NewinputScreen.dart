@@ -400,10 +400,10 @@ class _NewInputPopupFieldState extends State<NewInputPopupField> {
                     // width:150,
                     child: TextFormField(
                       controller: widget.contrroller,
-                      keyboardType:TextInputType.number,
+                      keyboardType:TextInputType.numberWithOptions(decimal: true),
                       inputFormatters:
                       <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
+                        FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))
                       ]
                       ,
                       decoration:  InputDecoration(

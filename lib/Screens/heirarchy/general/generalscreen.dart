@@ -23,7 +23,9 @@ import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
+import 'package:provider/provider.dart';
 
+import '../../../commonWidget/Navigationprovider.dart';
 import '../../../commonWidget/Textwidget.dart';
 import '../../../commonWidget/commonutils.dart';
 import '../../../commonWidget/popupinputfield.dart';
@@ -84,6 +86,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
   TextEditingController barCodeController = TextEditingController();
   TextEditingController qrCodeController = TextEditingController();
   TextEditingController rfIdController = TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   int? divisionId = 0;
   int? categoryId = 0;
   int? subCategoryId = 0;
@@ -226,7 +229,10 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
 
   @override
   void initState() {
+
     context.read<ItemcreationListCubit>().getItemListList();
+
+    print("sssssssssssssssss");
     super.initState();
   }
 
@@ -234,6 +240,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -288,8 +295,10 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
+                  commonProvider.setLoadingSaveUpdate(false);
                   ;
                 });
+
               },
             ),
             BlocListener<ItemreadCubit, ItemreadState>(
@@ -385,6 +394,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                   }
                   ;
                 });
+                commonProvider.setLoadingDeleterClear(false);
               },
             ),
           ],
@@ -603,8 +613,11 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                   height: 35,
                                 ),
                                 SaveUpdateResponsiveButton(
+                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                  isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                   label:  select ? "SAVE" : "UPDATE",
                                   discardFunction: (){
+
                                     showDailogPopUp(
                                         context,
                                         LogoutPopup(
@@ -614,6 +627,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                           // verticalId: veritiaclid,
                                           onPressed: () {
                                             print("akshay");
+                                            commonProvider.setLoadingDeleterClear(true);
                                             Navigator.pop(context);
 
                                             context
@@ -629,6 +643,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                         ));
                                   },
                                   saveFunction: (){
+                                    commonProvider.setLoadingSaveUpdate(true);
                                     ItemCreationModel model =
                                     ItemCreationModel(
                                       name: itemNameController.text.isEmpty

@@ -9970,7 +9970,7 @@ class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
                         context.read<AttributepatchlistCubit>().getAttributePatchList();
                       }
                       else{
-                        costingTypeMethodeCheck = false;
+                        // costingTypeMethodeCheck = false;
                         showDailogPopUp(
                             context,
                             ConfigurePopup(

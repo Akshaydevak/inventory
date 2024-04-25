@@ -52,6 +52,7 @@ import 'Screens/promotiontab/sale/cubits/delete_promotion/delete_offer_period_cu
 import 'Screens/promotiontab/sale/cubits/offergroup/list_offer_group_cubit.dart';
 import 'Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'Screens/promotiontab/sale/cubits/salevertical_list/promotionsale_vertical_list_cubit.dart';
+import 'Screens/purchaseorder/purchase_order_general/blocs/bottom_button_loading_bloc.dart';
 import 'Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
 import 'Screens/sales/general/cubit/shippingaddress/shippingadrees_cubit.dart';
 import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
@@ -254,6 +255,8 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => PaymentListCubit(),
+        ),  BlocProvider(
+          create: (context) => BottomButtonLoadingBloc(),
         ),
         BlocProvider(
           create: (context) => PaymentSalePostCubit(),

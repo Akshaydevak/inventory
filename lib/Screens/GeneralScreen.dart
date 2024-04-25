@@ -52,6 +52,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 
+import '../commonWidget/loading_widgets.dart';
 import '../printScreen.dart';
 import 'Dashboard.dart';
 import 'logi/model/inventorylistmodel.dart';
@@ -3171,6 +3172,7 @@ Widget Button(IconData? icon, Color border,
     required BuildContext ctx,
     required String text,
     double height = 30,
+      bool isLoading=false,
     double width = 30,
     Color labelcolor = Colors.white,
     Color iconColor = Colors.black,
@@ -3201,10 +3203,10 @@ Widget Button(IconData? icon, Color border,
          //    color: iconColor,
          //  ),
          //  SizedBox(width: 1,),
-          Text(
+          !isLoading?  Text(
             text,
             style: TextStyle(color: labelcolor, fontWeight: FontWeight.bold),
-          )
+          ):customCommonButtonProgressIndiactor(border== Colors.red)
         ],
       ), //BoxDecoration
     ),

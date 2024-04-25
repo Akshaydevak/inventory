@@ -321,6 +321,7 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                         ),
                         NewInputCard(
                             formatter: true,
+                            integerOnly: true,
 
 
                             controller: widget.channelTypeAllocationRatio, title: "channel Allocation Ratio"),

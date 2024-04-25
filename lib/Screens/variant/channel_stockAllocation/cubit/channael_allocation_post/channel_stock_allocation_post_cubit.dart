@@ -14,7 +14,7 @@ class ChannelStockAllocationPostCubit
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future channelStockAllocationPatch(
       int? id, ChannelAllocationStockStockReadModel model) async {
-    print("sunithi" + id.toString());
+   emit(ChannelStockAllocationPostState.initial());
     final result = await repo.channelStockAllocationPatch(model, id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

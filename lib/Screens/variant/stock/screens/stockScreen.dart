@@ -12,10 +12,12 @@ import 'package:inventory/Screens/variant/stock/screens/stock_bottom_table.dart'
 import 'package:inventory/Screens/variant/stock/screens/stock_stableTable.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../commonWidget/Textwidget.dart';
 
@@ -52,6 +54,7 @@ class _StockScreenState extends State<StockScreen> {
   TextEditingController maximumQuantityController = TextEditingController();
   TextEditingController minimumQuantityController = TextEditingController();
   TextEditingController channelTypeController = TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   StockData? stockData=StockData();
   bool stockwarning = false;
   bool check = false;
@@ -255,6 +258,7 @@ class _StockScreenState extends State<StockScreen> {
     double width = MediaQuery
         .of(context)
         .size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -324,20 +328,20 @@ class _StockScreenState extends State<StockScreen> {
                       // context.
                       context.showSnackBarError("Loading");
                     }, error: () {
+                      commonProvider.setLoadingSaveUpdate(false);
+                      ;
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1) {
                         context.showSnackBarSuccess(data.data2);
 
-                          setState(() {
-                            // context.read<ListvraiantCubit>().getVariantList();
-                            // select=false;
-                          });
+
 
                       } else {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
+                      commonProvider.setLoadingSaveUpdate(false);
                       ;
                     });
                   },
@@ -553,6 +557,8 @@ class _StockScreenState extends State<StockScreen> {
 
                                 SizedBox(height: height * .1,),
                                 SaveUpdateResponsiveButton(
+                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                  isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                   label:"SAVE" ,
                                   isDelete: true,
 
@@ -561,6 +567,7 @@ class _StockScreenState extends State<StockScreen> {
                                     ratiooCheck(minMaxRatioController.text,"");
                                     ratiooCheck(channelTypeController.text,"1");
                                     if(check!=true){
+                                      commonProvider.setLoadingSaveUpdate(true);
                                       StockData model=StockData(
                                         inventoryId: Variable.inventory_ID,
                                         variantId: variantId,

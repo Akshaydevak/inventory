@@ -15,6 +15,7 @@ import 'package:inventory/Screens/variant/variantdetails/model/variantpatch.dart
 import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
 import 'package:inventory/Screens/variant/variantdetails/screens.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
@@ -27,6 +28,7 @@ import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'cubits/generateqrcode/qrgenerating_cubit.dart';
@@ -119,6 +121,7 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController stockPartitionGroupId = TextEditingController();
   TextEditingController stockPartitionGroupName = TextEditingController();
   final GlobalKey<VendorDetailsVarientState> _VendorDetailsState = GlobalKey<VendorDetailsVarientState>();
+  NavigationProvider commonProvider = NavigationProvider();
   final GlobalKey<IdentificationState> _barcodeState = GlobalKey<IdentificationState>();
   final GlobalKey<ProductTablesState> _productState = GlobalKey<ProductTablesState>();
   bool salesBolock = false;
@@ -593,6 +596,7 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    commonProvider = Provider.of<NavigationProvider>(context);
     double height = MediaQuery
         .of(context)
         .size
@@ -798,6 +802,7 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                       // context.
                       context.showSnackBarError("Loading");
                     }, error: () {
+                      commonProvider.setLoadingSaveUpdate(false);
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1) {
@@ -826,6 +831,7 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
+                      commonProvider.setLoadingSaveUpdate(false);
                       ;
                     });
                   },
@@ -837,6 +843,7 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                       // context.
                       context.showSnackBarError("Loading");
                     }, error: () {
+                      commonProvider.setLoadingDeleterClear(false);
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1) {
@@ -846,6 +853,7 @@ class VariantDetailScreenState extends State<VariantDetailScreen> {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
+                      commonProvider.setLoadingDeleterClear(false);
                       ;
                     });
                   },
@@ -1256,6 +1264,7 @@ setState(() {
                                                 Button(Icons.delete, Colors.red,
                                                     ctx: context,
                                                     text: "DISCARD",
+                                                    isLoading:commonProvider.isLoadingDeleteClear ,
                                                     onApply: () {
 
 
@@ -1267,6 +1276,7 @@ setState(() {
                                                             // clear:clear(),
                                                             // verticalId:veritiaclid ,
                                                             onPressed:(){
+                                                              commonProvider.setLoadingDeleterClear(true);
                                                               print("akshay");
                                                               Navigator.pop(context);
                                                               context
@@ -1288,6 +1298,7 @@ setState(() {
                                                 ),
                                                 Button(Icons.check, Colors.grey,
                                                     ctx: context,
+                                                     isLoading:commonProvider.isLoadingSaveupdate ,
                                                     text: select?"SAVE":"UPDATE",
                                                     height: 29,
                                                     Color: Color(0xff3E4F5B),
@@ -1295,7 +1306,7 @@ setState(() {
                                                     labelcolor: Colors.white,
                                                     iconColor: Colors.white,
                                                     onApply: () {
-
+                                                      commonProvider.setLoadingSaveUpdate(true);
                                                       if(select){
                                                         VariantPost model = VariantPost(
                                                           weight:double.tryParse( weightController.text)??0,

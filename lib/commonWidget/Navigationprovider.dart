@@ -1,10 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:inventory/purchaserecievingmodel/purchaserecieving_read.dart';
+import 'package:provider/provider.dart';
 
 class NavigationProvider extends ChangeNotifier {
   bool _isCollapsed = false;
   int unitcost=0;
+  bool _isLoadingSaveUpdate = false;
+  bool _isLoadingDeleteClear = false;
   bool press=false;
   double ? totalUnitcost=0;
   int ? totalDiscount=0;
@@ -17,6 +20,8 @@ class NavigationProvider extends ChangeNotifier {
   int ? totalFoc=0;
 
   bool get isCollapsed => _isCollapsed;
+  bool get isLoadingSaveupdate => _isLoadingSaveUpdate;
+  bool get isLoadingDeleteClear => _isLoadingDeleteClear;
   void toggleIsCollapsed() {
     print("wts");
     _isCollapsed = !isCollapsed;
@@ -25,6 +30,19 @@ press=_isCollapsed;
   }
   change(int v){
     unitcost=v;
+    notifyListeners();
+  }
+
+  void setLoadingSaveUpdate(bool value) {
+    _isLoadingSaveUpdate = value;
+    notifyListeners();
+  }void setLoadingDeleterClear(bool value) {
+    _isLoadingDeleteClear = value;
+    notifyListeners();
+  }
+  void setLoadingBoth(bool value) {
+    _isLoadingDeleteClear = value;
+    _isLoadingSaveUpdate = value;
     notifyListeners();
   }
 

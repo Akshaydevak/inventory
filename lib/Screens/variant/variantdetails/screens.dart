@@ -2012,7 +2012,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputPopupField(label: 'Length',contrroller:widget.length ,contrrollerUnit:widget.lengthUnit ,onChange: (va){
+                    NewInputPopupField(
+
+                      label: 'Length',contrroller:widget.length ,contrrollerUnit:widget.lengthUnit ,onChange: (va){
                       //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                       setState(() {
                         widget.lengthUnit.text = va??"";

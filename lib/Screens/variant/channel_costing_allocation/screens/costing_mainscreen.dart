@@ -23,9 +23,11 @@ import 'package:inventory/Screens/variant/channels2allocation/models/channelsrea
 import 'package:inventory/Screens/variant/channels2allocation/screens/channelbuttonScrollable.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../commonWidget/buttons.dart';
 import '../../channels2allocation/screens/ChannelCheckBoxScreen.dart';
@@ -48,6 +50,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
   TextEditingController gpPercentegeController=TextEditingController();
   TextEditingController sellingPriceController=TextEditingController();
   TextEditingController costingnameController=TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   List<BrandListModel> result = [];
   bool onChange=false;
   bool suffixIconCheck=false;
@@ -107,6 +110,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
     print("the reallllllllllllllllllll");
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
   providers: [
         BlocProvider(
@@ -274,6 +278,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
           // context.
           context.showSnackBarError("Loading");
         }, error: () {
+          commonProvider.setLoadingSaveUpdate(false);
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
           if (data.data1) {
@@ -292,6 +297,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
             context.showSnackBarError(data.data2);
             print(data.data1);
           }
+          commonProvider.setLoadingSaveUpdate(false);
           ;
         });
       },
@@ -525,8 +531,11 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                         ),
                         SizedBox(height: height * .13,),
                         SaveUpdateResponsiveButton(
+                          isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                          isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
+                          isDelete: true,
                           saveFunction: (){
-
+                            commonProvider.setLoadingSaveUpdate(true);
                             if(select){
 
                               CostingPageCreationPostModel model=CostingPageCreationPostModel(

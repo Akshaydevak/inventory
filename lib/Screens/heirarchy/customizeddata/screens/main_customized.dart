@@ -16,6 +16,9 @@ import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../commonWidget/Navigationprovider.dart';
 
 class CustomisedMainScreen extends StatefulWidget {
   @override
@@ -44,6 +47,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   TextEditingController widthUnit=TextEditingController(text:"centimeter");
   TextEditingController heightUnit=TextEditingController(text:"centimeter");
   TextEditingController weightUnit=TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   bool active = false;
   bool suffixIconCheck = false;
   bool haveGiftOption = false;
@@ -171,6 +175,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    commonProvider = Provider.of<NavigationProvider>(context);
+
+
     // weightUnit= TextEditingController(text: "Kilo Gram");
     double height = MediaQuery
         .of(context)
@@ -203,7 +211,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                   listener: (context, state) {
                     print("postssssssss" + state.toString());
                     state.maybeWhen(orElse: () {
-                      // context.
+
                       context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
@@ -222,6 +230,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
+                      commonProvider.setLoadingSaveUpdate(false);
                       ;
                     });
                   },
@@ -234,6 +243,8 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                       context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
+                      commonProvider.setLoadingDeleterClear(false);
+                      ;
                     }, success: (data) {
                       if (data.data1) {
                         clear();
@@ -247,6 +258,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
+                      commonProvider.setLoadingDeleterClear(false);
                       ;
                     });
                   },
@@ -473,7 +485,9 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
 ),
                             SizedBox(height: height * .13,),
                             SaveUpdateResponsiveButton(
-                              discardFunction: (){
+                                isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                isClearDeketeLoading:commonProvider.isLoadingDeleteClear,
+                                discardFunction: (){
                                 if(select==true)
                                   clear();
                                 else{
@@ -486,6 +500,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                                         // verticalId:veritiaclid ,
                                         onPressed:(){
                                           print("akshay");
+                                          commonProvider.setLoadingDeleterClear(true);
                                           Navigator.pop(context);
                                           context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"7");
 
@@ -498,6 +513,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
 
                               },
                               saveFunction: (){
+                                commonProvider.setLoadingSaveUpdate(true);
                                 CustomCreationtModel model=CustomCreationtModel(
                                   mappingPlaceId: Variable.inventory_ID,
                                   needMultipleIntgration: needMultipleIntegreation,

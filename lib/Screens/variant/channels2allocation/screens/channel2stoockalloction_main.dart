@@ -14,10 +14,12 @@ import 'package:inventory/Screens/variant/channels2allocation/screens/channelbut
 import 'package:inventory/Screens/variant/channels2allocation/screens/stabletable.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:provider/provider.dart';
 
 class ChannelTypeStockAllocation extends StatefulWidget {
   @override
@@ -53,6 +55,7 @@ class _ChannelTypeStockAllocationState
   TextEditingController dailyStockQuantity = TextEditingController();
   TextEditingController channelStatusMediumPoint = TextEditingController();
   TextEditingController channelStatusCrucialPoint = TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   bool stockwarning = false;
   bool dailyStockAvailable = false;
   bool salesBlock = false;
@@ -141,6 +144,7 @@ class _ChannelTypeStockAllocationState
 
   @override
   Widget build(BuildContext context) {
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
       providers: [
         // BlocProvider(
@@ -242,6 +246,7 @@ class _ChannelTypeStockAllocationState
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
+                  commonProvider.setLoadingSaveUpdate(false);
                   ;
                 });
               },
@@ -518,9 +523,14 @@ class _ChannelTypeStockAllocationState
                                 height: height * .02,
                               ),
                               SaveUpdateResponsiveButton(
+                                isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                 discardFunction: (){},
+
                                 label: "UPDATE",
                                 saveFunction: (){
+
+                                  commonProvider.setLoadingSaveUpdate(true);
                                   ChannelListModel model =
                                   ChannelListModel(
                                     stockWarning: stockwarning,

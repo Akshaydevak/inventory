@@ -21,7 +21,9 @@ import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
+import 'package:provider/provider.dart';
 
+import '../../../commonWidget/Navigationprovider.dart';
 import '../../../commonWidget/commonutils.dart';
 import '../../../widgets/customtable.dart';
 import '../../GeneralScreen.dart';
@@ -44,6 +46,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   TextEditingController variantController = TextEditingController();
   TextEditingController variantNameController = TextEditingController();
   VariantCreationReadModel group = VariantCreationReadModel();
+  NavigationProvider commonProvider = NavigationProvider();
   int selectedVertical = 0;
   String itemCode = "";
   String uomCode = "";
@@ -528,6 +531,7 @@ print("the list is"+variantList.toString());
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -551,6 +555,7 @@ print("the list is"+variantList.toString());
                   // context.
                   context.showSnackBarError("Loading");
                 }, error: () {
+                  commonProvider.setLoadingSaveUpdate(false);
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
@@ -561,6 +566,7 @@ print("the list is"+variantList.toString());
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
+                  commonProvider.setLoadingSaveUpdate(false);
                   ;
                 });
               },
@@ -838,21 +844,27 @@ print("the list is"+variantList.toString());
                                   height: height / 9,
                                 ),
                                 SaveUpdateResponsiveButton(
+                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                  isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                   label: "SAVE",
                                   saveFunction: (){
+                                    commonProvider.setLoadingSaveUpdate(true);
                                     print("filterList"+ result_value.toString());
-                                    if(result_value.isNotEmpty){
-                                      for (int i=0;i<result_value.length;i++){
-                                        if(vals[i].isActive==true){
-                                          variantList.add(result_value[i]);
+                                    if(result_value!=null){
+                                      if(result_value.isNotEmpty){
+                                        for (int i=0;i<result_value.length;i++){
+                                          if(vals[i].isActive==true){
+                                            variantList.add(result_value[i]);
 
+                                          }
                                         }
                                       }
                                     }
+
                                     // print("filterList"+uomCode.toString());
 
 
-
+print(variantList);
                                     context
                                         .read<
                                         VariantFrameworkcombinationpostCubit>()
