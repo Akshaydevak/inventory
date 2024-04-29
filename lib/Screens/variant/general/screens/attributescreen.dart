@@ -18,7 +18,7 @@ class AttributeScreen extends StatefulWidget {
 }
 
 class _AttributeScreenState extends State<AttributeScreen> {
-  List<VariantCreationRead2Model> attribute = [];
+  // List<VariantCreationRead2Model> attribute = [];
 
   bool onChange = false;
   List<Map<String, dynamic>> attributes = [];
@@ -41,55 +41,60 @@ class _AttributeScreenState extends State<AttributeScreen> {
       print("hellooooooooo");
 
       graphArray.clear();
+if(widget.attributes!=null || widget.attributes?.isNotEmpty==true){
+  final length=widget.attributes!.length;
 
-      for (var i = 0; i < attribute.length; i++) {
-        graphArray.add([]);
-      }
-      print("graphArrayList"+graphArray.length.toString());
-      // if
+  for (var i = 0; i < length; i++) {
+    graphArray.add([]);
+  }
+  print("graphArrayList"+graphArray.length.toString());
+  // if
 
-      for (var i = 0; i < attribute.length; i++) {
-        if (attribute[i].values?.isNotEmpty == true) {
-          for (var j = 0; j < attribute[i].values!.length; j++) {
+  for (var i = 0; i < length; i++) {
+    if( widget.attributes![i].values?.isNotEmpty == true) {
+      for (var j = 0; j <  widget.attributes![i].values!.length; j++) {
 // maps={
 //   "flag":false,
 //   "value":attribute[i].values?[j]
 // };
 // attributes.add(maps);
-            graphArray[i].add({
-              "attribute_name": attribute[i].attributeName,
-              "attribute_id": attribute[i].attributeId,
-              "attribute_code": attribute[i].attributeCode,
-              "flag": false,
-              "value": attribute[i].values?[j]
-            });
+        graphArray[i].add({
+          "attribute_name":  widget.attributes![i].attributeName,
+          "attribute_id":  widget.attributes![i].attributeId,
+          "attribute_code":  widget.attributes![i].attributeCode,
+          "flag": false,
+          "value":  widget.attributes![i].values?[j]
+        });
 
-            print("grappphAtrray" + graphArray.toString());
-          }
-
-          // attribute[i].values?.forEach((element) {
-          //   print(element);
-          //   print(i);
-          //   maps={
-          //     "flag":false,
-          //     "value":element
-          //   };
-          //
-          //
-          //   print("rgc"+maps.toString());
-          //
-          //   print("rgc"+attributes.toString());
-          //   attributes.add(maps);
-          //   graphArray[i].add(attributes);
-          //
-          //   // graphArray.add(attributes);
-          //
-          // }
-          // );
-
-        }
-
+        print("grappphAtrray" + graphArray.toString());
       }
+
+      // attribute[i].values?.forEach((element) {
+      //   print(element);
+      //   print(i);
+      //   maps={
+      //     "flag":false,
+      //     "value":element
+      //   };
+      //
+      //
+      //   print("rgc"+maps.toString());
+      //
+      //   print("rgc"+attributes.toString());
+      //   attributes.add(maps);
+      //   graphArray[i].add(attributes);
+      //
+      //   // graphArray.add(attributes);
+      //
+      // }
+      // );
+
+    }
+
+  }
+}
+
+
 //        graphArray = new List.generate(attribute.length, (i) {
 //          print("the i is here"+i.toString());
 //
@@ -128,8 +133,8 @@ class _AttributeScreenState extends State<AttributeScreen> {
             },
             success: (data) {
               print("the entire data" + data.toString());
-              attribute = data;
-              print("the entire data attribute" + attribute.toString());
+              // attribute = data;
+              // print("the entire data attribute" + attribute.toString());
 
               setState(() {});
             });
@@ -139,7 +144,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
         // color: Colors.yellow,
         alignment: Alignment.topRight,
         width: MediaQuery.of(context).size.width - 60,
-        child: attribute.isNotEmpty == true
+        child:  widget.attributes?.isNotEmpty == true
             ? ListView.builder(
           shrinkWrap:true,
             // physics: NeverScrollableScrollPhysics(),
@@ -157,7 +162,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
 
 
                 scrollDirection: Axis.vertical,
-                itemCount: attribute.length,
+                itemCount:  widget.attributes?.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.all(10),
@@ -167,7 +172,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(attribute[index]?.attributeName.toString() ?? ""),
+                        Text( widget.attributes![index]?.attributeName.toString() ?? ""),
                         SizedBox(
                           height: 10,
                         ),

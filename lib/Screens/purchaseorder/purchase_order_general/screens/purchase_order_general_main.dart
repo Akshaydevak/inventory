@@ -302,9 +302,7 @@ orederDate2Controller.clear();
           BlocProvider(
             create: (context) => PurchaseOrderPatchCubit(),
           ),
-          BlocProvider(
-            create: (context) => GeneralPurchaseReadCubit(),
-          ),
+
           BlocProvider(
             create: (context) => PurchaseorderdeleteCubit(),
           ),
@@ -321,6 +319,7 @@ orederDate2Controller.clear();
                     // context.
                     context.showSnackBarError("Loading");
                   }, error: () {
+                    context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: false));
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
                     if (data.data1) {
@@ -340,9 +339,10 @@ orederDate2Controller.clear();
                       context.showSnackBarError(data.data2);
                       print(data.data1);
                     }
+                    context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: false));
                     ;
                   });
-                  context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: false));
+
                 },
               ),
               BlocListener<GeneralPurchaseReadCubit, GeneralPurchaseReadState>(
@@ -356,6 +356,7 @@ orederDate2Controller.clear();
                       success: (data) {
                         setState(() {
                           stockCheck=false;
+                          print("orderLinessssssss${data.data?.orderLines}");
                           data.data?.orderLines != null ? table =List.from( data.data?.orderLines ?? []) : table = [];
                           Variable.inventory_ID =data.data?.iventoryId??"";
                           vendortrnnumber.text=data.data?.vendorTrnNumber??"";
@@ -432,7 +433,7 @@ orederDate2Controller.clear();
                           ordercode.text=data.data?.orderCode.toString()??"";
                           print("data.data?.vendorId${data.data?.vendorId}");
                           vendorCode.text=data.data?.vendorId.toString()??"";
-                          print("data.data?.vendorId${vendorCode.text}");
+                          print("data.data?.vendorMailId${data.data?.vendorMailId}");
                           vendor_email.text=data.data?.vendorMailId.toString()??"";
                           recievingstatus.text=data.data?.recievingStatus??"";
                           Paymentstatus.text=data.data?.paymentStatus??"";
@@ -455,6 +456,7 @@ orederDate2Controller.clear();
                     // context.
                     context.showSnackBarError("Loading");
                   }, error: () {
+                    context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: false));
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
                     if (data.data1) {
@@ -466,9 +468,9 @@ orederDate2Controller.clear();
                       context.showSnackBarError(data.data2);
                       print(data.data1);
                     }
-                    ;
+                    ;context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: false));
                   });
-                  context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: false));
+
                 },
 
               ),
@@ -672,59 +674,49 @@ orederDate2Controller.clear();
                                     ],
                                   ),
                                 ),
-BlocBuilder<GeneralPurchaseReadCubit,GeneralPurchaseReadState>(builder: (context, state) {
-  return state.maybeWhen(orElse: (){return Container(
-      height: height/2,child: Center(child: CircularProgressIndicator()));},error: (){
-    return Container(
-      height: height/2,
-        child: Center(child: CircularProgressIndicator()));
-  },success: (data){
-    return Column(
-      children: [
-        PurchaseOrderGeneralStableTable(
-          discount: discount,
-          orderCode: ordercode,
-          oderDate: orederDate2Controller,
-          isVendorCheck: isVendorCheck,
-          vendorCode: vendorCode,
-          vendorName: vendorCodeName,
-          vendorTrnNumber: vendortrnnumber,
-          vendorEmail: vendor_email,
-          promisedReceiptDate: promised_receipt_date,
-          promisedReceiptDate2: promised_receipt_date2,
-          plannedReceiptDate: planned_receipt_date,
-          plannedReceiptDate2: planned_receipt_date2,
-          paymentCode:Paymentcode,
-          paymentStatus: Paymentstatus,
-          orderStatus: orderStatus,
-          receivingStatus: recievingstatus,
-          invoiceStatus: invoicestatus,
-          note: note,
-          remarks: remarks,
-          foc: foc,
-          unitCost: unitcourse,
-          vatableAmount: Variableamount,
-          excessTax: excesstax,
-          vat: vat,
-          actualCost: actualcost,
-          grandTotal: grandtotal,
-          orderType: orderType,
-          tableDatasClear:tableDatasClear,
-        ),
-        SizedBox(height: height*.10,),
+
+                                PurchaseOrderGeneralStableTable(
+                                  discount: discount,
+                                  orderCode: ordercode,
+                                  oderDate: orederDate2Controller,
+                                  isVendorCheck: isVendorCheck,
+                                  vendorCode: vendorCode,
+                                  vendorName: vendorCodeName,
+                                  vendorTrnNumber: vendortrnnumber,
+                                  vendorEmail: vendor_email,
+                                  promisedReceiptDate: promised_receipt_date,
+                                  promisedReceiptDate2: promised_receipt_date2,
+                                  plannedReceiptDate: planned_receipt_date,
+                                  plannedReceiptDate2: planned_receipt_date2,
+                                  paymentCode:Paymentcode,
+                                  paymentStatus: Paymentstatus,
+                                  orderStatus: orderStatus,
+                                  receivingStatus: recievingstatus,
+                                  invoiceStatus: invoicestatus,
+                                  note: note,
+                                  remarks: remarks,
+                                  foc: foc,
+                                  unitCost: unitcourse,
+                                  vatableAmount: Variableamount,
+                                  excessTax: excesstax,
+                                  vat: vat,
+                                  actualCost: actualcost,
+                                  grandTotal: grandtotal,
+                                  orderType: orderType,
+                                  tableDatasClear:tableDatasClear,
+                                ),
+                                SizedBox(height: height*.10,),
 
 
-        PurchaseOrderGenearlFormGrowableTable(
-          updateCheck: updateCheckFucction,
-          select:select,
-          updation: tableAssign,
-          key:_myWidgetState,
-          vendorCode: vendorCode,
-        ),
-      ],
-    );
-  });
-},),
+                                PurchaseOrderGenearlFormGrowableTable(
+                                  updateCheck: updateCheckFucction,
+                                  select:select,
+                                  updation: tableAssign,
+                                  key:_myWidgetState,
+                                  vendorCode: vendorCode,
+                                ),
+
+
 
 
                                 SizedBox(

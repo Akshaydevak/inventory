@@ -1632,7 +1632,7 @@ class _CreateAttributeListPopUpCallState
                         decoration: InputDecoration(
                             hintText: "Select One",
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -5705,7 +5705,7 @@ class _PurchaseInvoiceState extends State<PurchaseInvoices> {
                       decoration: InputDecoration(
                           // border: InputBorder.none,
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                          contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
@@ -5851,7 +5851,7 @@ class _SalesOrderTypePopUpCallState extends State<SalesOrderTypePopUpCall> {
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
@@ -5995,7 +5995,7 @@ class _SalesOrderModePopUpCallState extends State<SalesOrderModePopUpCall> {
                           FilteringTextInputFormatter.allow(RegExp(r" "))
                         ],
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),

@@ -7323,62 +7323,113 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                             Expanded(
                                 child: Column(
                               children: [
-                                FileUploadField(
+
+                                FileUploadField2(
                                     fileName: imageName,
                                     fileUrl: imageName,
-                                    onChangeTap: (p0) {
-                                      onChange = true;
-                                      // loading = true;
-                                      setState(() {});
-                                    },
-                                    onCancel:(){
+                                    onCancel: () {
                                       setState(() {
                                         imageName="";
                                         imageContollercontroller.clear();
 
                                       });
-
-                                    } ,
+                                    },
+                                    onChangeTap: (p0) {
+                                      // loading = true;
+                                      setState(() {});
+                                    },
                                     onChange: (myFile) {
                                       onChange = true;
-                                      imageName = myFile?.fileName ?? "";
-
+                                      imageName = myFile ?? "";
                                       // Variable.mobileBannerImage = myFile.toUint8List();
 
-                                      imageEncode = myFile.toBase64();
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
 
+                                      // Variable.bannerEncodedMobileBannerImage =
+                                      //     myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      //   context
+                                      //       .read<CreateWebImageCubit>()
+                                      //       .createMobImage();
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
                                     },
-                                    onImageChange: (newFile) async {
-                                      onChange = true;
+                                    onImageChange: (bytes) async {
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 150000) {
-                                        context.read<ImagepostCubit>().postImage(
-                                            Variable.imageName, imageEncode);
-                                        // loading
-                                        //     ? showDailogPopUp(context, DialoguePopUp())
-                                        //     : Navigator.pop(context);
-                                        // context
-                                        //     .read<CreateWebImageCubit>()
-                                        //     .createMobImage();
-                                      } else
-                                        showDailogPopUp(
-                                            context,
-                                            FailiurePopup(
-                                              content: "Please upload Image of size Lesser than 150kb",
-                                              // table:table,
-                                            ));
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // loading
+                                      //     ? showDailogPopUp(context, DialoguePopUp())
+                                      //     : Navigator.pop(context);
+                                      // context
+                                      //     .read<CreateWebImageCubit>()
+                                      //     .createMobImage();
 
-                                      setState(() {});
                                     },
                                     onCreate: true,
-                                    label: "Image"),
+                                    label: "Image1"),
+                                // FileUploadField(
+                                //     fileName: imageName,
+                                //     fileUrl: imageName,
+                                //     onChangeTap: (p0) {
+                                //       onChange = true;
+                                //       // loading = true;
+                                //       setState(() {});
+                                //     },
+                                //     onCancel:(){
+                                //       setState(() {
+                                //         imageName="";
+                                //         imageContollercontroller.clear();
+                                //
+                                //       });
+                                //
+                                //     } ,
+                                //     onChange: (myFile) {
+                                //       onChange = true;
+                                //       imageName = myFile?.fileName ?? "";
+                                //
+                                //       // Variable.mobileBannerImage = myFile.toUint8List();
+                                //
+                                //       imageEncode = myFile.toBase64();
+                                //       // widget.fileMobileNameCtrl.text =
+                                //       //     myFile.fileName ?? "";
+                                //       // if (Variable.bannerimage!.length <= 240000)
+                                //
+                                //       // else
+                                //       //   context.showSnackBarError(
+                                //       //       "Please upload Banner of size Lesser than 230kb");
+                                //     },
+                                //     onImageChange: (newFile) async {
+                                //       onChange = true;
+                                //       // Variable.popUp = false;
+                                //
+                                //       if (newFile.length <= 150000) {
+                                //         context.read<ImagepostCubit>().postImage(
+                                //             Variable.imageName, imageEncode);
+                                //         // loading
+                                //         //     ? showDailogPopUp(context, DialoguePopUp())
+                                //         //     : Navigator.pop(context);
+                                //         // context
+                                //         //     .read<CreateWebImageCubit>()
+                                //         //     .createMobImage();
+                                //       } else
+                                //         showDailogPopUp(
+                                //             context,
+                                //             FailiurePopup(
+                                //               content: "Please upload Image of size Lesser than 150kb",
+                                //               // table:table,
+                                //             ));
+                                //
+                                //       setState(() {});
+                                //     },
+                                //     onCreate: true,
+                                //     label: "Image"),
                                 SizedBox(
                                   height: 10,
                                 ),

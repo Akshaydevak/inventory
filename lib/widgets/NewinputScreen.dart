@@ -1192,6 +1192,29 @@ class _FileUploadField2State extends State<FileUploadField2> {
   File? file;
 
 
+
+  bool isImageUrl(String url) {
+    // Regular expression to match common image file extensions
+    RegExp regExp = RegExp(r'\.(gif|jpe?g|tiff?|png|webp|bmp)$', caseSensitive: false);
+
+    // Check if the URL ends with a known image file extension
+    if (!regExp.hasMatch(url)) {
+      return false;
+    }
+
+    // Parse the URL to check if it's well-formed
+    Uri? uri = Uri.tryParse(url);
+    if (uri == null || !uri.isAbsolute || uri.scheme.isEmpty) {
+      return false;
+    }
+
+    // Optional: You can also check if the URL points to a valid image file by making a network request
+    // For simplicity, we're not making an actual request in this example
+
+    // If all checks pass, consider it a valid image URL
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     // print(filename);
@@ -1342,7 +1365,7 @@ class _FileUploadField2State extends State<FileUploadField2> {
 
 
                         ? launchUrl(widget.fileUrl ?? "")
-                        : showImage(widget.fileUrl ?? "", context);
+                        : showImage(isImageUrl(filename??"")?filename??"": "", context);
 
                   }
                       : null,
@@ -1483,7 +1506,7 @@ class _FileUploadField2State extends State<FileUploadField2> {
 
   void showImage(String url, BuildContext context) {
 
-    // print("image url is $url");
+   print("url$url");
 
     ScreenshotController screenshotController = ScreenshotController();
 

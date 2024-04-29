@@ -8063,7 +8063,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> postImage2(Uint8List? bytes, {String? type}) async {
     Map valueMap=Map();
 
-    final url = Uri.parse('https://api-uat-inv-inventory.sidrabusiness.com/inventory-product/upload-image-clone');
+    final url = Uri.parse('${inventoryLiveBaseUrl}inventory-product/upload-image-clone');
     final headers = {'Content-Type': 'application/json'};
     final request = http.MultipartRequest('POST', url);
     if(bytes!=null) {

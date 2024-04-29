@@ -1717,7 +1717,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
-                      readOnly: true,
+
                         controller: widget.description, title: "Description"),
                     SizedBox(
                       height: height * .030,
@@ -1984,14 +1984,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
-                        formatter: true,
+
                         controller: widget.grossWeight,
                         title: "Gross Weight"),
                     SizedBox(
                       height: height * .030,
                     ),
                     NewInputCard(
-                        formatter: true,
+
                         controller: widget.netWeight,
                         title: "Net Weight"),
                     SizedBox(
@@ -2594,6 +2594,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
                     NewInputCard(
                         formatter: true,
+                        integerOnly: true,
                         controller: widget.saftyStock,
                         title: "Safety Stock"),
 
@@ -2602,6 +2603,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     ),
                     NewInputCard(
                         formatter: true,
+                        integerOnly: true,
                         controller: widget.reorderPoint,
                         title: "Reorder Point"),
                     SizedBox(
@@ -2609,6 +2611,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     ),
                     NewInputCard(
                         formatter: true,
+                        integerOnly: true,
                         controller: widget.reorderQuantity,
                         title: "Reorder  QTY"),
                     SizedBox(
@@ -2638,6 +2641,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     // ),
                     NewInputCard(
                         formatter: true,
+                        integerOnly: true,
                         controller: widget.minSalesOrderLimit,
                         title: "Min Order Sale Limit"),
                     SizedBox(
@@ -2645,6 +2649,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     ),
                     NewInputCard(
                         formatter: true,
+                        integerOnly: true,
                         controller: widget.maxSalesOrderLimit,
                         title: "Max Sales Order Limit"),
                     SizedBox(
@@ -2752,6 +2757,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     ),
                     NewInputCard(
                         formatter: true,
+                        integerOnly: true,
                         controller: widget.minPurchaseOrderLimit,
                         title: "Min purchase  Order Limit"),
                     SizedBox(
@@ -2760,6 +2766,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
                     NewInputCard(
                         formatter: true,
+                        integerOnly: true,
                         controller: widget.maxPurchaseOrderLimit,
                         title: "Max Purchase Order Limit"),
 
@@ -2895,6 +2902,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //     onCreate: true,
                     //     label: "Image1"),
                     FileUploadField2(
+
                         fileName: widget.image1.text,
                         fileUrl: widget.image1.text,
                         onCancel: () {

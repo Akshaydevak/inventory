@@ -27,7 +27,7 @@ class VendordetailslistCubit extends Cubit<VendordetailslistState> {
 
   Future getSearchVendorDetailsList(String filter) async {
     emit(VendordetailslistState.initial());
-    final result = await repo.getVendorDetailList("name="+filter.toString());
+    final result = await repo.getVendorDetailList("search_key="+filter.toString());
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

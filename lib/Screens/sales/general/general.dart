@@ -17,6 +17,7 @@ import 'package:inventory/Screens/sales/general/pages/sales_growable_table.dart'
 import 'package:inventory/Screens/variant/general/productmodulegeneral.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -26,6 +27,7 @@ import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/printScreen.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
+import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../../../commonWidget/commonutils.dart';
@@ -95,7 +97,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
   TextEditingController vatController = TextEditingController();
   TextEditingController sellingPriceController = TextEditingController();
   TextEditingController toatalPriceController = TextEditingController();
-
+  NavigationProvider commonProvider = NavigationProvider();
   List<SalesOrderLines> table  =[];
   tableAssign(List<SalesOrderLines> table1) {
     print("ethito");
@@ -161,8 +163,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
   }
 
   addition() {
-    print("enterd");
-    print("+==" + table.toString());
+   
     double unitcost = 0;
     double sellingprice = 0;
     double actualValue = 0;
@@ -197,11 +198,11 @@ class _SalesGeneralState extends State<SalesGeneral> {
       }
     unitCostController.text = unitcost == 0 ? "" : unitcost.toString();
     vatController.text = vatValue.toString();
-    discountController.text = discountValue.toString();
-    sellingPriceController.text = sellingprice.toString();
-    toatalPriceController.text = totalAmount.toString();
-    taxableAmountController.text = taxableAmount.toString();
-    exciseTAxController.text = excessTAxValue.toString();
+    discountController.text = discountValue.toStringAsFixed(2);
+    sellingPriceController.text = sellingprice.toStringAsFixed(2);
+    toatalPriceController.text = totalAmount.toStringAsFixed(2);
+    taxableAmountController.text = taxableAmount.toStringAsFixed(2);
+    exciseTAxController.text = excessTAxValue.toStringAsFixed(2);
 
     // _value=false;
   }
@@ -217,6 +218,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -245,6 +247,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                   // context.
                   context.showSnackBarError("Loading");
                 }, error: () {
+                  commonProvider.setLoadingSaveUpdate(false);
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
@@ -259,7 +262,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
-                  ;
+                  ;    commonProvider.setLoadingSaveUpdate(false);
                 });
               },
             ),
@@ -343,6 +346,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                   // context.
                   context.showSnackBarError("Loading");
                 }, error: () {
+                  commonProvider.setLoadingSaveUpdate(true);
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
@@ -355,6 +359,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
+                  commonProvider.setLoadingSaveUpdate(false);
                   ;
                 });
               },
@@ -365,6 +370,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                   // context.
                   context.showSnackBarError("Loading");
                 }, error: () {
+                  commonProvider.setLoadingDeleterClear(false);
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print("checkingdata" + data.data1.toString());
@@ -380,6 +386,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
+                  commonProvider.setLoadingDeleterClear(false);
                   ;
                 });
               },
@@ -592,7 +599,8 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                   height: 55,
                                 ),
                                 SaveUpdateResponsiveButton(
-
+                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                  isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                   discardFunction: (){
                                     if(updateCheck){
                                       clears();
@@ -608,6 +616,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                           // verticalId: veritiaclid,
                                           onPressed: () {
                                             print("akshay");
+                                            commonProvider.setLoadingDeleterClear(true);
                                             Navigator.pop(context);
                                             context
                                                 .read<
@@ -624,6 +633,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                       context.showSnackBarError(
                                           "please click the update button ");
                                     else {
+                                      commonProvider.setLoadingSaveUpdate(true);
                                       var table1=[
                                         for(var em in table)
                                           if(em.isActive==true)

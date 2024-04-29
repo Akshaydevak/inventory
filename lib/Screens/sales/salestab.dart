@@ -5,8 +5,10 @@ import 'package:inventory/Screens/sales/general/general.dart';
 import 'package:inventory/Screens/sales/invoice/ipayment_list.dart';
 
 import 'package:inventory/Screens/sales/salesinvoice.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -18,11 +20,13 @@ class SalesScreen extends StatefulWidget {
 }
 
 class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin {
+  NavigationProvider commonProvider = NavigationProvider();
   @override
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this,initialIndex:  Variable.subIndex[2]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return Container(
       color:Color(0xffF2F3F5),
       child: Column(
@@ -75,6 +79,7 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
                             padding: EdgeInsets.only(left: 13),
                             isScrollable: true,
                             onTap: (val) async {
+                              commonProvider.setLoadingBoth(false);
                               final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                               Variable.subIndex[2]=val;

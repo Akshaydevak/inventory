@@ -50,7 +50,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   int selectedVertical = 0;
   String itemCode = "";
   String uomCode = "";
-  List<VariantCreationRead2Model> attribute = [];
+  List<VariantCreationRead2Model> attribute =List.from([]) ;
   List<List<Map<String, dynamic>>> combinationArray = [];
   List<dynamic> variantList = [];
   List<List<Map<String, dynamic>>> variantList1 = [];
@@ -577,6 +577,7 @@ print("the list is"+variantList.toString());
                     orElse: () {},
                     error: () {
                       print("error");
+
                     },
                     success: (data) {
                       print("shaaaamna" + data.toString());
@@ -667,6 +668,7 @@ print("the list is"+variantList.toString());
                               variantNameController.clear();
                               variantFrameWorkNameController.clear();
                               vals.clear();
+                              attribute=[];
 
                               variantList.clear();
 

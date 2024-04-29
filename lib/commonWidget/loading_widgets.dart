@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 Widget customCommonButtonProgressIndiactor(bool islabelcolor){
   return SizedBox(
@@ -14,4 +15,7 @@ Widget customCommonButtonProgressIndiactor(bool islabelcolor){
       ),
     ),
   );
+}
+Widget customCommonTAbleProgressIndiactor(){
+  return Center(child:Lottie.asset('asset_json/loadingAnimation.json', ));
 }

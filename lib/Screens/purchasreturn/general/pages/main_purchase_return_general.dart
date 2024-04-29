@@ -18,6 +18,7 @@ import 'package:inventory/Screens/purchasreturn/general/pages/purchase_return_ge
 import 'package:inventory/Screens/purchasreturn/pages/model/postmodel.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/purchaseinvoice.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -72,6 +73,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
   TextEditingController grandTotalCostController=TextEditingController();
   TextEditingController inventory=TextEditingController();
   TextEditingController vendorMailId=TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   var paginatedList;
   bool select=false;
   bool updateCheck=false;
@@ -226,6 +228,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -259,6 +262,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                       // context.
                       context.showSnackBarError("Loading");
                     }, error: () {
+                      commonProvider.setLoadingSaveUpdate(false);
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1) {
@@ -278,7 +282,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
-                      ;
+                      ;   commonProvider.setLoadingSaveUpdate(false);
                     });
                   },
                 ),
@@ -375,6 +379,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                       // context.
                       context.showSnackBarError("Loading");
                     }, error: () {
+                      commonProvider.setLoadingSaveUpdate(false);
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1){
@@ -387,7 +392,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                       else {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
-                      }
+                      } commonProvider.setLoadingSaveUpdate(false);
                       ;
                     });
                   },
@@ -399,6 +404,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                       // context.
                       context.showSnackBarError("Loading");
                     }, error: () {
+                      commonProvider.setLoadingDeleterClear(false);
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1) {
@@ -413,6 +419,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
+                      commonProvider.setLoadingDeleterClear(false);
                       ;
                     });
                   },
@@ -1095,6 +1102,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                             height: 55,
                                           ),
                                           SaveUpdateResponsiveButton(
+                                            isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                            isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                             label:select?"SAVE":"UPDATE",
                                             discardFunction: (){
                                               if(select){
@@ -1113,7 +1122,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                       // clear:clear(),
                                                       // verticalId:veritiaclid ,
                                                       onPressed:(){
-
+                                                        commonProvider.setLoadingDeleterClear(true);
                                                         Navigator.pop(context);
                                                         context.read<ReturdeleteCubit>().returnGeneralDelete(veritiaclid);
 
@@ -1129,7 +1138,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                               var upDate=updateCheckFunc();
                                               if( upDate)  context.showSnackBarError("Please click the update button");
                                               else{
-                                                print(lines);
+                                                commonProvider.setLoadingSaveUpdate(true);
                                                 if(lines.isNotEmpty){
                                                   for(var i=0;i<lines.length;i++) {
                                                     if(select) {

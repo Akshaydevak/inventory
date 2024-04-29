@@ -151,6 +151,9 @@ class _MyAppState extends State<MyApp> {
           create: (context) => MaterialListCubit(),
         ),
         BlocProvider(
+          create: (context) => GeneralPurchaseReadCubit(),
+        ),
+        BlocProvider(
           create: (context) => DevisionListCubit(),
         ),
         BlocProvider(

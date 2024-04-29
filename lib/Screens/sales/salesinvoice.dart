@@ -15,6 +15,7 @@ import 'package:inventory/Screens/sales/invoice/cubits/read/invoiceread_cubit.da
 import 'package:inventory/Screens/sales/invoice/pages/sales_invoice_growable.dart';
 import 'package:inventory/Screens/sales/invoice/pages/sales_invoice_stable.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -24,6 +25,7 @@ import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
+import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../../commonWidget/verticalList.dart';
@@ -63,6 +65,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
   TextEditingController sellingPriceController=TextEditingController();
   TextEditingController totalPricePriceController=TextEditingController();
   TextEditingController inventoryId=TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   int? veritiaclid=0;
   InvoicedData? object=InvoicedData();
   bool updateCheck=false;
@@ -168,6 +171,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return MultiBlocProvider(
       providers: [
 
@@ -280,6 +284,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                 // context.
                 context.showSnackBarError("Loading");
               }, error: () {
+                commonProvider.setLoadingSaveUpdate(false);
                 context.showSnackBarError(Variable.errorMessege);
               }, success: (data) {
                 if (data.data1) {
@@ -293,7 +298,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                   context.showSnackBarError(data.data2);
                   print(data.data1);
                 }
-                ;
+                ; commonProvider.setLoadingSaveUpdate(false);
               });
             },
           ),
@@ -592,6 +597,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                   ),
                                   SizedBox(height: height*.04,),
                                   SaveUpdateResponsiveButton(
+                                    isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
                                     isDelete: true,
                                     label:"SAVE" ,
                                     saveFunction: (){
@@ -599,6 +605,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                         context.showSnackBarError(
                                             "please click the update button ");
                                       else {
+                                        commonProvider.setLoadingSaveUpdate(true);
                                         List<Postlines>  table1=[];
                                         if(table.isNotEmpty){
                                           for(var i=0;i<table.length;i++)

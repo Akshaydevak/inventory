@@ -13,6 +13,7 @@ import 'package:inventory/Screens/purchasreturn/pages/model/purchasereturninvoic
 import 'package:inventory/Screens/purchasreturn/purchase_return_invoice/pages/purchase_return_invoice_growable.dart';
 import 'package:inventory/Screens/purchasreturn/purchase_return_invoice/pages/purchase_return_invoice_stable_table.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 
 
 import 'package:inventory/commonWidget/Textwidget.dart';
@@ -27,6 +28,7 @@ import 'package:inventory/printScreen.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
 import 'package:inventory/widgets/customtable.dart';
+import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
@@ -60,7 +62,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
   TextEditingController inventoryContoller = TextEditingController();
   TextEditingController vendoridContoller = TextEditingController();
   TextEditingController vendorTrnnumberController = TextEditingController();
-
+  NavigationProvider commonProvider = NavigationProvider();
   TextEditingController noteController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
   List<PurchaseOrder> result = [];
@@ -174,6 +176,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -263,6 +267,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                 // context.
                 context.showSnackBarError("Loading");
               }, error: () {
+                commonProvider.setLoadingSaveUpdate(false);
                 context.showSnackBarError(Variable.errorMessege);
               }, success: (data) {
                 if (data.data1) {
@@ -282,6 +287,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                   context.showSnackBarError(data.data2);
                   print(data.data1);
                 }
+                commonProvider.setLoadingSaveUpdate(false);
                 ;
               });
             },
@@ -442,11 +448,15 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                   height: 55,
                                 ),
                                 SaveUpdateResponsiveButton(
+                                  isDelete: true,
+                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+
                                   label:"SAVE" ,
                                   saveFunction: (){
                                     print("apppa"+lines.toString());
                                     if(updateCheck)  context.showSnackBarError("please click the update button");
                                     else{
+
                                       List<Order>? result;
                                       bool confirmationCheck=false;
                                       for(var i=0;i<lines.length;i++){
@@ -466,6 +476,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                               // // clear:clear(),
                                               // verticalId:veritiaclid ,
                                               onPressed:(){
+                                                commonProvider.setLoadingSaveUpdate(true);
                                                 PurchaseReturnInvoicePostModel model =
                                                 PurchaseReturnInvoicePostModel(
                                                     purchaseInvoiceId:purchaseInvoiceidController?.text??null,
@@ -502,6 +513,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                             ));
                                       }
                                       else {
+                                        commonProvider.setLoadingSaveUpdate(true);
                                         PurchaseReturnInvoicePostModel model =
                                         PurchaseReturnInvoicePostModel(
                                             purchaseInvoiceId: purchaseInvoiceidController

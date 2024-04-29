@@ -13,6 +13,7 @@ class ShippingadreesCubit extends Cubit<ShippingadreesState> {
   String? prev;
   String? next;
   Future getShippingId({String? id}) async {
+    emit(ShippingadreesState.initial());
     final result = await repo.getShippingId("",id:id);
     next = null;
     prev = null;

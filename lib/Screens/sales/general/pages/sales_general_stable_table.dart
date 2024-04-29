@@ -226,7 +226,7 @@ class _StableTableState extends State<StableTable> {
                                           widget.customerName.text=va?.customerName!=""&&va?.customerName!=null?va?.customerName??"":va.businessData?.buisnessMeta?.fullmae??"";
                                           widget.customerId.text=va?.customerUserCode.toString()??"";
                                           customerUserCode=va?.customerUserCode??"";
-                                          widget.trnNumber.text=va?.businessData?.taxId??"";
+                                          widget.trnNumber.text=va?.taxId??"";
                                         });
                                       },
                                       ),
@@ -256,6 +256,7 @@ class _StableTableState extends State<StableTable> {
                               NewInputCard(controller: widget.shipping,
                                 readOnly: true,
                                 icondrop:true,title: "Shipping Address Id",ontap: (){
+                                
                                   if(widget.shipping.text.isNotEmpty){
                                     setState(() {
                                       widget.shipping.text="";
@@ -264,6 +265,9 @@ class _StableTableState extends State<StableTable> {
                                     });
                                   }
                                 else{
+                                  if(widget.customerId.text.isEmpty){
+                                    context.showSnackBarError("Please Select Customer Id");
+                                  }else{
                                     showDailogPopUp(
                                       context,
                                       TableConfigurePopup(
@@ -290,6 +294,8 @@ class _StableTableState extends State<StableTable> {
 
 
                                     );
+                                  }
+                                  
                                   }
 
 
@@ -350,29 +356,34 @@ class _StableTableState extends State<StableTable> {
                                     });
                                   }
                                   else{
-                                    showDailogPopUp(
-                                      context,
-                                      TableConfigurePopup(
-                                        code: widget.customerId.text,
+                                    if(widget.customerId.text.isEmpty){
+                                      context.showSnackBarError("Please Select Customer Id");
+                                    }else{
+                                      showDailogPopUp(
+                                        context,
+                                        TableConfigurePopup(
+                                          code: widget.customerId.text,
 
-                                        type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
+                                          type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
-                                        setState(() {
-                                          widget.billingAddressId.text=va?.id.toString()??"";
-                                          widget.billingName.text=va?.fullName.toString()??"";
                                           setState(() {
+                                            widget.billingAddressId.text=va?.id.toString()??"";
+                                            widget.billingName.text=va?.fullName.toString()??"";
+                                            setState(() {
+                                            });
+
+
+                                            // onChange = true;
+                                            // orderType.text = va!;
                                           });
 
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-
-                                      },
-                                      ),
+                                        },
+                                        ),
 
 
-                                    );
+                                      );
+                                    }
+
                                   }
 
 

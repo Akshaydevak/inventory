@@ -332,6 +332,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                     success: (data) {
                       setState(() {
                         stockCheck=false;
+                        print("data.data?.orderLines${data.data?.orderLines}");
                         data.data?.orderLines != null ? table =List.from( data.data?.orderLines ?? []) : table = [];
                         valueAddingTextEdingController();
                         _getCurrentUser();

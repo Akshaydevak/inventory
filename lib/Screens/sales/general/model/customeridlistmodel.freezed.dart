@@ -1088,6 +1088,8 @@ mixin _$CustomerIdListModel {
   bool? get isBuisnessUser => throw _privateConstructorUsedError;
   @JsonKey(name: "business_data")
   BusinessData? get businessData => throw _privateConstructorUsedError;
+  @JsonKey(name: "tax_id")
+  String? get taxId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1116,7 +1118,9 @@ abstract class $CustomerIdListModelCopyWith<$Res> {
       @JsonKey(name: "is_business_user", defaultValue: false)
           bool? isBuisnessUser,
       @JsonKey(name: "business_data")
-          BusinessData? businessData});
+          BusinessData? businessData,
+      @JsonKey(name: "tax_id")
+          String? taxId});
 
   $BusinessDataCopyWith<$Res>? get businessData;
 }
@@ -1143,6 +1147,7 @@ class _$CustomerIdListModelCopyWithImpl<$Res, $Val extends CustomerIdListModel>
     Object? isDeleted = freezed,
     Object? isBuisnessUser = freezed,
     Object? businessData = freezed,
+    Object? taxId = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1181,6 +1186,10 @@ class _$CustomerIdListModelCopyWithImpl<$Res, $Val extends CustomerIdListModel>
           ? _value.businessData
           : businessData // ignore: cast_nullable_to_non_nullable
               as BusinessData?,
+      taxId: freezed == taxId
+          ? _value.taxId
+          : taxId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -1220,7 +1229,9 @@ abstract class _$$_CustomerIdListModelCopyWith<$Res>
       @JsonKey(name: "is_business_user", defaultValue: false)
           bool? isBuisnessUser,
       @JsonKey(name: "business_data")
-          BusinessData? businessData});
+          BusinessData? businessData,
+      @JsonKey(name: "tax_id")
+          String? taxId});
 
   @override
   $BusinessDataCopyWith<$Res>? get businessData;
@@ -1246,6 +1257,7 @@ class __$$_CustomerIdListModelCopyWithImpl<$Res>
     Object? isDeleted = freezed,
     Object? isBuisnessUser = freezed,
     Object? businessData = freezed,
+    Object? taxId = freezed,
   }) {
     return _then(_$_CustomerIdListModel(
       id: freezed == id
@@ -1284,6 +1296,10 @@ class __$$_CustomerIdListModelCopyWithImpl<$Res>
           ? _value.businessData
           : businessData // ignore: cast_nullable_to_non_nullable
               as BusinessData?,
+      taxId: freezed == taxId
+          ? _value.taxId
+          : taxId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1306,7 +1322,9 @@ class _$_CustomerIdListModel implements _CustomerIdListModel {
       @JsonKey(name: "is_business_user", defaultValue: false)
           this.isBuisnessUser,
       @JsonKey(name: "business_data")
-          this.businessData});
+          this.businessData,
+      @JsonKey(name: "tax_id")
+          this.taxId});
 
   factory _$_CustomerIdListModel.fromJson(Map<String, dynamic> json) =>
       _$$_CustomerIdListModelFromJson(json);
@@ -1335,10 +1353,13 @@ class _$_CustomerIdListModel implements _CustomerIdListModel {
   @override
   @JsonKey(name: "business_data")
   final BusinessData? businessData;
+  @override
+  @JsonKey(name: "tax_id")
+  final String? taxId;
 
   @override
   String toString() {
-    return 'CustomerIdListModel(id: $id, fname: $fname, lname: $lname, customerUserCode: $customerUserCode, customerName: $customerName, isActive: $isActive, isDeleted: $isDeleted, isBuisnessUser: $isBuisnessUser, businessData: $businessData)';
+    return 'CustomerIdListModel(id: $id, fname: $fname, lname: $lname, customerUserCode: $customerUserCode, customerName: $customerName, isActive: $isActive, isDeleted: $isDeleted, isBuisnessUser: $isBuisnessUser, businessData: $businessData, taxId: $taxId)';
   }
 
   @override
@@ -1360,7 +1381,8 @@ class _$_CustomerIdListModel implements _CustomerIdListModel {
             (identical(other.isBuisnessUser, isBuisnessUser) ||
                 other.isBuisnessUser == isBuisnessUser) &&
             (identical(other.businessData, businessData) ||
-                other.businessData == businessData));
+                other.businessData == businessData) &&
+            (identical(other.taxId, taxId) || other.taxId == taxId));
   }
 
   @JsonKey(ignore: true)
@@ -1375,7 +1397,8 @@ class _$_CustomerIdListModel implements _CustomerIdListModel {
       isActive,
       isDeleted,
       isBuisnessUser,
-      businessData);
+      businessData,
+      taxId);
 
   @JsonKey(ignore: true)
   @override
@@ -1408,7 +1431,9 @@ abstract class _CustomerIdListModel implements CustomerIdListModel {
       @JsonKey(name: "is_business_user", defaultValue: false)
           final bool? isBuisnessUser,
       @JsonKey(name: "business_data")
-          final BusinessData? businessData}) = _$_CustomerIdListModel;
+          final BusinessData? businessData,
+      @JsonKey(name: "tax_id")
+          final String? taxId}) = _$_CustomerIdListModel;
 
   factory _CustomerIdListModel.fromJson(Map<String, dynamic> json) =
       _$_CustomerIdListModel.fromJson;
@@ -1437,6 +1462,9 @@ abstract class _CustomerIdListModel implements CustomerIdListModel {
   @override
   @JsonKey(name: "business_data")
   BusinessData? get businessData;
+  @override
+  @JsonKey(name: "tax_id")
+  String? get taxId;
   @override
   @JsonKey(ignore: true)
   _$$_CustomerIdListModelCopyWith<_$_CustomerIdListModel> get copyWith =>

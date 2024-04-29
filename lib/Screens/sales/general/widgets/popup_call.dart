@@ -11,6 +11,7 @@ import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
@@ -166,31 +167,53 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                             Expanded(child: Column(
                               children: [
 
+                                PopUpInputField(controller: country,
+                                  readOnly: true,
+                                  icondrop:true,label: "Country",ontap: (){
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
 
-                                SelectableDropDownpopUp(
-                                  row: true,
-                                  controller:country,
-                                  label: "Country",
-                                  type: "ProducedCountryPopUpCall",
-                                  // id: base_uom ?? 0,
-                                  value: country?.text??"",
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (VariantReadModel? va) {
-                                    setState(() {
-                                      state.clear();
-                                      country?.text = va?.name.toString() ?? "";
-                                      countryCode = va?.code.toString() ?? "";
+                                        type: "producedCountryPopupVariant", valueSelect: (VariantReadModel va){
+                                        setState(() {
+                                          state.clear();
+                                          country?.text = va?.name.toString() ?? "";
+                                          countryCode = va?.code.toString() ?? "";
+                                          print("countrtCode$countryCode");
 
-                                      setState(() {});
+                                          // setState(() {});
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
-                                  },
-                                ),
+                                          // onChange = true;
+                                          // orderType.text = va!;
+                                        });
+                                      },
+                                      ),
+                                    );
+                                  },),
+                                // SelectableDropDownpopUp(
+                                //   row: true,
+                                //   controller:country,
+                                //   label: "Country",
+                                //   type: "ProducedCountryPopUpCall",
+                                //   // id: base_uom ?? 0,
+                                //   value: country?.text??"",
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (VariantReadModel? va) {
+                                //     setState(() {
+                                //       state.clear();
+                                //       country?.text = va?.name.toString() ?? "";
+                                //       countryCode = va?.code.toString() ?? "";
+                                //
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
 
 
                                 PopUpInputField(
@@ -207,27 +230,46 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                   controller:city ,
                                   label: "City",
                                 ),
+                                PopUpInputField(controller: state,
 
-                                SelectableDropDownpopUp(
-                                  row: true,
-                                  code: countryCode,
-                                  controller:state,
-                                  label: "State",
-                                  type: "StatePop_UpCall",
-                                  value: state?.text??"",
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (StateList? va) {
-                                    setState(() {
-                                      print(va?.code.toString());
-                                      state?.text = va?.name.toString() ?? "";
-                                      stateCode = va?.code.toString() ?? "";
-                                      setState(() {});
-                                    });
-                                  },
-                                ),
+                                  readOnly: true,
+                                  icondrop:true,label: "State",ontap: (){
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        code: countryCode,
+
+                                        type: "producedCountryPopupVariant", valueSelect: (VariantReadModel va){
+                                        setState(() {
+                                          print(va?.code.toString());
+                                          state?.text = va?.name.toString() ?? "";
+                                          stateCode = va?.code.toString() ?? "";
+                                          setState(() {});
+                                        });
+                                      },
+                                      ),
+                                    );
+                                  },),
+                                // SelectableDropDownpopUp(
+                                //   row: true,
+                                //   code: countryCode,
+                                //   controller:state,
+                                //   label: "State",
+                                //   type: "StatePop_UpCall",
+                                //   value: state?.text??"",
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (StateList? va) {
+                                //     setState(() {
+                                //       print(va?.code.toString());
+                                //       state?.text = va?.name.toString() ?? "";
+                                //       stateCode = va?.code.toString() ?? "";
+                                //       setState(() {});
+                                //     });
+                                //   },
+                                // ),
 
                               ],
                             )),
@@ -783,29 +825,50 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
                             SizedBox(width: 15,),
                             Expanded(child:   Column(
                               children: [
-                                SelectableDropDownpopUp(
-                                  row: true,
-                                  controller: widget.country,
-                                  label: "Produced Country",
-                                  type: "ProducedCountryPopUpCall",
-                                  // id: base_uom ?? 0,
-                                  value: widget.country?.text??"",
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (VariantReadModel? va) {
-                                    setState(() {
-                                      widget.country?.text =
-                                          va?.name.toString() ?? "";
+                                PopUpInputField(controller: widget.country,
+                                  readOnly: true,
+                                  icondrop:true,label: "Produced Country",ontap: (){
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
 
-                                      setState(() {});
+                                        type: "producedCountryPopupVariant", valueSelect: (VariantReadModel va){
+                                        setState(() {
+                                          widget.country?.text =
+                                              va?.name.toString() ?? "";
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
-                                  },
-                                ),
+                                          setState(() {});
+
+                                          // onChange = true;
+                                          // orderType.text = va!;
+                                        });
+                                      },
+                                      ),
+                                    );
+                                  },),
+                                // SelectableDropDownpopUp(
+                                //   row: true,
+                                //   controller: widget.country,
+                                //   label: "Produced Country",
+                                //   type: "ProducedCountryPopUpCall",
+                                //   // id: base_uom ?? 0,
+                                //   value: widget.country?.text??"",
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (VariantReadModel? va) {
+                                //     setState(() {
+                                //       widget.country?.text =
+                                //           va?.name.toString() ?? "";
+                                //
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
                                 PopUpInputField(
 
                                   controller:widget.taxId ,

@@ -137,8 +137,10 @@ class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSt
                                         context,
                                         TableConfigurePopup(type: "VendorDetails_Popup",
                                           valueSelect: (VendorDetailsModel va) {
+                                          print("va?.email${va?.email}");
                                             setState(() {widget. vendorCode.text=va.manuFactureuserCode ?? "";widget.vendorName.text=va.manuFactureName ?? "";
                                            widget.vendorEmail.text =va?.email==""||va.email==null?va.alternativeEmail??"":va.email??"";
+                                            print("va?.email${widget.vendorEmail.text}");
                                             widget.vendorTrnNumber .text=va.trnNumber.toString();
                                             });
                                           },

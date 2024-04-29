@@ -88,6 +88,7 @@ class CustomerIdListModel with _$CustomerIdListModel {
     @JsonKey(name: "is_delete",defaultValue: false) final bool? isDeleted,
     @JsonKey(name: "is_business_user",defaultValue: false) final bool? isBuisnessUser,
     @JsonKey(name: "business_data",) final BusinessData? businessData,
+    @JsonKey(name: "tax_id",) final String? taxId,
 
 
 

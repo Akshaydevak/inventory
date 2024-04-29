@@ -9,7 +9,7 @@ part of 'variant_read.dart';
 _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
     _$_VariantReadModel(
       id: json['id'] as int?,
-      code: json['code'] as String?,
+      code: json['code']. toString(),
       vat: (json['vat'] as num?)?.toDouble(),
       description: json['description'] as String?,
       name: json['name'] as String?,

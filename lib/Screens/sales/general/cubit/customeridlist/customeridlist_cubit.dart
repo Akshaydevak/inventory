@@ -16,7 +16,13 @@ class CustomeridlistCubit extends Cubit<CustomeridlistState> {
     emit(CustomeridlistState.initial());
     final result = await repo.getCustomerId("");
     print(result);
-    result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
+    result.fold((l) => emit(_Error()),  (r) {
+    next = r.nextPage;
+    prev = r.previousPage;
+    // items = r.data;
+
+    emit(_Success(r));
+    });
   }
   Future getSearchCustomerList(String filter) async {
     emit(CustomeridlistState.initial());

@@ -110,7 +110,8 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   var url = "https://sidra-bazar-uat-products.s3.ap-south-1.amazonaws.com/logo/rawabi.png";
-  final netImage = await networkImage(model.storeLogo??"");
+  String?  logo=model.storeLogo?.isEmpty==true?"https://logodix.com/logo/1931272.png":model.storeLogo;
+  final netImage = await networkImage(logo!);
   final font = await PdfGoogleFonts.nunitoExtraLight();
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
   pdf.addPage(
@@ -2803,7 +2804,10 @@ Future<Uint8List> _generateSalePdf(PdfPageFormat format, String title,String ord
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   final font = await PdfGoogleFonts.nunitoExtraLight();
-  final netImage = await networkImage(model.storeLogo??"");
+
+  print("model.storeLogo${model.storeLogo}");
+String?  logo=model.storeLogo?.isEmpty==true?"https://logodix.com/logo/1931272.png":model.storeLogo;
+  final netImage = await networkImage(logo!);
   // final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
 
   pdf.addPage(

@@ -550,7 +550,8 @@ try{
   @override
   Future<DoubleResponse> getGeneralPurchasePatch(
       PurchaseOrderPost model, int? id) async {
-    print("sunithi2" + id.toString());
+
+    print("sunithi2" + model.toString());
     String path = generalPurchasePatch + id.toString();
     print(path);
     try {
@@ -562,7 +563,7 @@ try{
             "vendor_id": model.vendorId,
             "vendor_trn_number": model.vendorTrnNumber,
             "vendor_address": model.vendorAddress,
-            "vendor_mail_id": "",
+            "vendor_mail_id": model.vendorMailId,
             "planned_receipt_date": model.plannedRecieptDate,
             "address_1": model.address1,
             "address_2": model.address2,

@@ -75,6 +75,7 @@ import '../Screens/variant/general/cubits/variant_selection/variantselection_cub
 import '../Screens/variant/variantdetails/cubits/producedcountry/producedcountry_cubit.dart';
 import '../Screens/variant/variantdetails/cubits/variantsearch/variantsearch_cubit.dart';
 import '../Screens/variant/variantdetails/model/vendormodel.dart';
+import 'loading_widgets.dart';
 
 class TableConfigurePopup extends StatelessWidget {
   final String type;
@@ -813,7 +814,7 @@ class _PaymentListByOrderIdPopup extends State<PaymentListByOrderIdPopup> {
   }
   String methodCode="";
   List<PurchasePaymentModel> results=[];
-  
+
   late AutoScrollController controller;
   int verticalScrollIndex = 0;
   @override
@@ -2920,6 +2921,8 @@ class _VendorDetailsList extends State<VendorDetailsList> {
             },
             builder: (context, state) {
               return Builder(builder: (context) {
+                double h = MediaQuery.of(context).size.height;
+                double w = MediaQuery.of(context).size.width;
                 return AlertDialog(
                   content: PopUpHeader(
                     functionChane: true,
@@ -2944,6 +2947,7 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                       // setState(() {});
                     },
                     dataField: Container(
+                      
                       // height: 500,
                       child: Column(
                         children: [
@@ -2969,186 +2973,198 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                           //
                           //       },
                           //     )),
-                          Container(
-                            // width: w/7,
-                            // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                            child: customTable(
+                          BlocBuilder<VendordetailslistCubit, VendordetailslistState>(
+  builder: (context, state) {
+    return state.maybeWhen(orElse: (){
+      return customCommonTAbleProgressIndiactor();
+    },success: (data){
+      return Container(
+        height: h / 1.86,
+        margin: EdgeInsets.symmetric(horizontal: w*.006),
+        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+        child: SingleChildScrollView(
+          child: customTable(
 
-                              tableWidth: .5,
-                              childrens: [
-                                TableRow(
-                                  // decoration: BoxDecoration(
+            tableWidth: .5,
+            childrens: [
+              TableRow(
+                // decoration: BoxDecoration(
 
-                                  //     color: Colors.green.shade200,
+                //     color: Colors.green.shade200,
 
-                                  //     shape: BoxShape.rectangle,
+                //     shape: BoxShape.rectangle,
 
-                                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                                  children: [
-                                    tableHeadtext(
-                                      'Vendors',
-                                      // textColor: Colors.black,
+                children: [
+                  tableHeadtext(
+                    'Vendors',
+                    // textColor: Colors.black,
 
-                                      size: 13,
-                                      // color: Color(0xffE5E5E5),
-                                    ),
-                                    // tableHeadtext(
-                                    //   '',
-                                    //   textColor: Colors.black,
-                                    //   padding: EdgeInsets.all(7),
-                                    //   height: 46,
-                                    //   size: 13,
-                                    //   // color: Color(0xffE5E5E5),
-                                    // ),
-                                  ],
-                                ),
-                                if (table?.isNotEmpty == true) ...[
-                                  for (var i = 0; i < table.length; i++)
-                                    TableRow(
-                                        decoration: BoxDecoration(
-                                            color: Pellet.tableRowColor,
-                                            shape: BoxShape.rectangle,
-                                            border:  Border(
-                                                left: BorderSide(
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
+                  // tableHeadtext(
+                  //   '',
+                  //   textColor: Colors.black,
+                  //   padding: EdgeInsets.all(7),
+                  //   height: 46,
+                  //   size: 13,
+                  //   // color: Color(0xffE5E5E5),
+                  // ),
+                ],
+              ),
+              if (table?.isNotEmpty == true) ...[
+                for (var i = 0; i < table.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Pellet.tableRowColor,
+                          shape: BoxShape.rectangle,
+                          border:  Border(
+                              left: BorderSide(
 
-                                                    color: Color(0xff3E4F5B).withOpacity(.1),
-                                                    width: .4,
-                                                    style: BorderStyle.solid),
-                                                bottom: BorderSide(
+                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                  width: .4,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
 
-                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                    style: BorderStyle.solid),
-                                                right: BorderSide(
-                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                    width: .4,
+                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                  width: .4,
 
-                                                    style: BorderStyle.solid))),
-                                        children: [
-                                          TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment
-                                                  .middle,
-                                              child: textOnclickPadding(
-                                                ontap: () {
-                                                  VendorDetailsModel model =
-                                                  VendorDetailsModel(
-                                                    id: table[i].id,
-                                                    manuFactureName: table[i]
-                                                        .manuFactureName,
-                                                    manuFactureuserCode: table[i].manuFactureuserCode,
-                                                    trnNumber: table[i].trnNumber,
-                                                    address: table[i].address,
-                                                    email: table[i].email,
-                                                    alternativeEmail: table[i].alternativeEmail
-                                                  );
-                                                  widget.valueSelect!(model);
-                                                  Navigator.pop(context);
-                                                },
-                                                text: table[i]
-                                                    .manuFactureName ??
-                                                    "",
-                                              )
-                                            // Text(keys[i].value??"",)
-
-                                          ),
-                                        ]),
-                                ],
-                                //
-                                // TableRow(
-                                //     decoration: BoxDecoration(
-                                //         color: Colors.grey
-                                //             .shade200,
-                                //         shape: BoxShape
-                                //             .rectangle,
-                                //         border:const  Border(
-                                //             left: BorderSide(
-                                //                 width: .5,
-                                //                 color: Colors
-                                //                     .grey,
-                                //                 style: BorderStyle
-                                //                     .solid),
-                                //             bottom: BorderSide(
-                                //                 width: .5,
-                                //                 color: Colors
-                                //                     .grey,
-                                //                 style: BorderStyle
-                                //                     .solid),
-                                //             right: BorderSide(
-                                //                 color: Colors
-                                //                     .grey,
-                                //                 width: .5,
-                                //                 style: BorderStyle
-                                //                     .solid))),
-                                //     children: [
-                                //
-                                //       TableCell(
-                                //         verticalAlignment: TableCellVerticalAlignment.middle,
-                                //
-                                //         child: UnderLinedInput(
-                                //           onChanged: (va){
-                                //             key.text=va;
-                                //
-                                //           },
-                                //
-                                //           formatter: false,
-                                //
-                                //         ),
-                                //
-                                //
-                                //       ),
-                                //       TableCell(
-                                //         verticalAlignment: TableCellVerticalAlignment.middle,
-                                //
-                                //         child:
-                                //
-                                //         UnderLinedInput(
-                                //           onChanged: (va){
-                                //             value.text=va;
-                                //           },
-                                //           formatter: false,
-                                //         ),
-                                //
-                                //
-                                //       ),
-                                //       TableTextButton(label: "", onPress: (){
-                                //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
-                                //           Keys model=Keys(
-                                //             key: key.text??"",
-                                //             value: value.text??'',
-                                //           );
-                                //           setState(() {
-                                //             onChange=true;
-                                //
-                                //
-                                //             keys?.add(model);
-                                //
-                                //
-                                //             productFeatures?.add(ProductFeatures(
-                                //
-                                //                 keyValues: keys
-                                //             ));
-                                //             widget.productTableEdit(type:"3",list:productFeatures);
-                                //             key.text="";
-                                //             value.text="";
-                                //           });
-                                //
-                                //
-                                //
-                                //
-                                //         }
-                                //
-                                //       })
-                                //
-                                //
-                                //     ])
-                              ],
-                              widths: {
-                                0: FlexColumnWidth(2),
-                                1: FlexColumnWidth(5),
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
+                            verticalAlignment:
+                            TableCellVerticalAlignment
+                                .middle,
+                            child: textOnclickPadding(
+                              ontap: () {
+                                VendorDetailsModel model =
+                                VendorDetailsModel(
+                                    id: table[i].id,
+                                    manuFactureName: table[i]
+                                        .manuFactureName,
+                                    manuFactureuserCode: table[i].manuFactureuserCode,
+                                    trnNumber: table[i].trnNumber,
+                                    address: table[i].address,
+                                    email: table[i].email,
+                                    alternativeEmail: table[i].alternativeEmail
+                                );
+                                widget.valueSelect!(model);
+                                Navigator.pop(context);
                               },
-                            ),
-                          ),
+                              text: table[i]
+                                  .manuFactureName ??
+                                  "",
+                            )
+                          // Text(keys[i].value??"",)
+
+                        ),
+                      ]),
+              ],
+              //
+              // TableRow(
+              //     decoration: BoxDecoration(
+              //         color: Colors.grey
+              //             .shade200,
+              //         shape: BoxShape
+              //             .rectangle,
+              //         border:const  Border(
+              //             left: BorderSide(
+              //                 width: .5,
+              //                 color: Colors
+              //                     .grey,
+              //                 style: BorderStyle
+              //                     .solid),
+              //             bottom: BorderSide(
+              //                 width: .5,
+              //                 color: Colors
+              //                     .grey,
+              //                 style: BorderStyle
+              //                     .solid),
+              //             right: BorderSide(
+              //                 color: Colors
+              //                     .grey,
+              //                 width: .5,
+              //                 style: BorderStyle
+              //                     .solid))),
+              //     children: [
+              //
+              //       TableCell(
+              //         verticalAlignment: TableCellVerticalAlignment.middle,
+              //
+              //         child: UnderLinedInput(
+              //           onChanged: (va){
+              //             key.text=va;
+              //
+              //           },
+              //
+              //           formatter: false,
+              //
+              //         ),
+              //
+              //
+              //       ),
+              //       TableCell(
+              //         verticalAlignment: TableCellVerticalAlignment.middle,
+              //
+              //         child:
+              //
+              //         UnderLinedInput(
+              //           onChanged: (va){
+              //             value.text=va;
+              //           },
+              //           formatter: false,
+              //         ),
+              //
+              //
+              //       ),
+              //       TableTextButton(label: "", onPress: (){
+              //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+              //           Keys model=Keys(
+              //             key: key.text??"",
+              //             value: value.text??'',
+              //           );
+              //           setState(() {
+              //             onChange=true;
+              //
+              //
+              //             keys?.add(model);
+              //
+              //
+              //             productFeatures?.add(ProductFeatures(
+              //
+              //                 keyValues: keys
+              //             ));
+              //             widget.productTableEdit(type:"3",list:productFeatures);
+              //             key.text="";
+              //             value.text="";
+              //           });
+              //
+              //
+              //
+              //
+              //         }
+              //
+              //       })
+              //
+              //
+              //     ])
+            ],
+            widths: {
+              0: FlexColumnWidth(2),
+              1: FlexColumnWidth(5),
+            },
+          ),
+        ),
+      );
+    });
+
+  },
+),
                         ],
                       ),
                     ),
@@ -7671,9 +7687,9 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return BlocProvider(
-  create: (context) => VendordetailslistCubit(),
+  create: (context) => VendordetailslistCubit()..getVendorDetailList(),
   child: Builder(builder: (context) {
-      context.read<VendordetailslistCubit>().getVendorDetailList();
+      // ?context.read<VendordetailslistCubit>().getVendorDetailList();
       return BlocConsumer<VendordetailslistCubit, VendordetailslistState>(
         listener: (context, state) {
           print("state" + state.toString());
@@ -7763,104 +7779,111 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                        child: SingleChildScrollView(
-                          child: customTable(
-                            // border: const TableBorder(
-                            //   verticalInside: BorderSide(
-                            //       width: .5,
-                            //       color: Colors.black45,
-                            //       style: BorderStyle.solid),
-                            //   horizontalInside: BorderSide(
-                            //       width: .3,
-                            //       color: Colors.black45,
-                            //       // color: Colors.blue,
-                            //       style: BorderStyle.solid),
-                            // ),
-                            tableWidth: .5,
-                            childrens: [
-                              TableRow(
-                                // decoration: BoxDecoration(
+                        child: BlocBuilder<VendordetailslistCubit, VendordetailslistState>(
+  builder: (context, state) {
+    return state.maybeWhen(orElse: (){return customCommonTAbleProgressIndiactor();},success: (data){
+      return  SingleChildScrollView(
+        child: customTable(
+          // border: const TableBorder(
+          //   verticalInside: BorderSide(
+          //       width: .5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width: .3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),
+          // ),
+          tableWidth: .5,
+          childrens: [
+            TableRow(
+              // decoration: BoxDecoration(
 
-                                //     color: Colors.green.shade200,
+              //     color: Colors.green.shade200,
 
-                                //     shape: BoxShape.rectangle,
+              //     shape: BoxShape.rectangle,
 
-                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                                children: [
+              children: [
 
 
-                                  tableHeadtext(
-                                    'Manufacture name',
-                                    // textColor: Colors.black,
-                                    // padding: EdgeInsets.all(7),
-                                    // height: 46,
-                                    size: 13,
-                                    // color: Color(0xffE5E5E5),
-                                  ),
-                                  // tableHeadtext(
-                                  //   '',
-                                  //   textColor: Colors.black,
-                                  //   padding: EdgeInsets.all(7),
-                                  //   height: 46,
-                                  //   size: 13,
-                                  //   // color: Color(0xffE5E5E5),
-                                  // ),
-                                ],
-                              ),
-                              if (table?.isNotEmpty == true) ...[
-                                for (var i = 0; i < table.length; i++)
-                                  TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
-                                          shape: BoxShape.rectangle,
-                                          border:  Border(
-                                              left: BorderSide(
+                tableHeadtext(
+                  'Manufacture name',
+                  // textColor: Colors.black,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                // tableHeadtext(
+                //   '',
+                //   textColor: Colors.black,
+                //   padding: EdgeInsets.all(7),
+                //   height: 46,
+                //   size: 13,
+                //   // color: Color(0xffE5E5E5),
+                // ),
+              ],
+            ),
+            if (table?.isNotEmpty == true) ...[
+              for (var i = 0; i < table.length; i++)
+                TableRow(
+                    decoration: BoxDecoration(
+                        color: Pellet.tableRowColor,
+                        shape: BoxShape.rectangle,
+                        border:  Border(
+                            left: BorderSide(
 
-                                                  color: Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+                                style: BorderStyle.solid),
+                            bottom: BorderSide(
 
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                style: BorderStyle.solid),
+                            right: BorderSide(
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
 
-                                                  style: BorderStyle.solid))),
-                                      children: [
+                                style: BorderStyle.solid))),
+                    children: [
 
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child: textOnclickPadding(
-                                              ontap: () {
-                                                VendorDetailsModel model =
-                                                VendorDetailsModel(
-                                                  id: table[i].id,
-                                                  manuFactureuserCode: table[i].manuFactureuserCode,
-                                                  manuFactureName: table[i].manuFactureName,
-                                                );
-                                                Navigator.pop(context);
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child: textOnclickPadding(
+                            ontap: () {
+                              VendorDetailsModel model =
+                              VendorDetailsModel(
+                                id: table[i].id,
+                                manuFactureuserCode: table[i].manuFactureuserCode,
+                                manuFactureName: table[i].manuFactureName,
+                              );
+                              Navigator.pop(context);
 
-                                                widget.valueSelect(model);
-                                              },
-                                              text: table[i].manuFactureName ?? "",
-                                            )
-                                            // Text(keys[i].value??"",)
-
-                                            ),
-                                      ]),
-                              ],
-                            ],
-                            widths: {
-                              0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(5),
+                              widget.valueSelect(model);
                             },
-                          ),
-                        ),
+                            text: table[i].manuFactureName ?? "",
+                          )
+                        // Text(keys[i].value??"",)
+
+                      ),
+                    ]),
+            ],
+          ],
+          widths: {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(5),
+          },
+        ),
+      );
+    });
+
+  },
+),
                       ),
                       SizedBox(
                         height: h * .004,
@@ -10791,7 +10814,8 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return Builder(builder: (context) {
-      context.read<ShippingadreesCubit>().getShippingId(id:widget.code);
+
+      context.read<ShippingadreesCubit>().getShippingId(id:widget.code?.isEmpty==true?"null":widget.code??"null");
       return BlocConsumer<ShippingadreesCubit, ShippingadreesState>(
         listener: (context, state) {
           print("state" + state.toString());
@@ -10898,133 +10922,142 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                        child: SingleChildScrollView(
-                          child: customTable(
-                            // border: const TableBorder(
-                            //   verticalInside: BorderSide(
-                            //       width: .5,
-                            //       color: Colors.black45,
-                            //       style: BorderStyle.solid),
-                            //   horizontalInside: BorderSide(
-                            //       width: .3,
-                            //       color: Colors.black45,
-                            //       // color: Colors.blue,
-                            //       style: BorderStyle.solid),
-                            // ),
-                            tableWidth: .5,
-                            childrens: [
-                              TableRow(
-                                // decoration: BoxDecoration(
+                        child: BlocBuilder<ShippingadreesCubit, ShippingadreesState>(
+  builder: (context, state) {
+    return state.maybeWhen(orElse: (){
+      return customCommonTAbleProgressIndiactor();
+    },success: (data){
+      return  SingleChildScrollView(
+        child: customTable(
+          // border: const TableBorder(
+          //   verticalInside: BorderSide(
+          //       width: .5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width: .3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),
+          // ),
+          tableWidth: .5,
+          childrens: [
+            TableRow(
+              // decoration: BoxDecoration(
 
-                                //     color: Colors.green.shade200,
+              //     color: Colors.green.shade200,
 
-                                //     shape: BoxShape.rectangle,
+              //     shape: BoxShape.rectangle,
 
-                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                                children: [
-                                  tableHeadtext(
-                                    'Sl No',
+              children: [
+                tableHeadtext(
+                  'Sl No',
 
-                                    // padding: EdgeInsets.all(7),
-                                    //
-                                    // height: 46,
-                                    // textColor: Colors.black,
-                                    // color: Color(0xffE5E5E5),
+                  // padding: EdgeInsets.all(7),
+                  //
+                  // height: 46,
+                  // textColor: Colors.black,
+                  // color: Color(0xffE5E5E5),
 
-                                    size: 13,
-                                  ),
+                  size: 13,
+                ),
 
-                                  tableHeadtext(
-                                    'Shipping',
-                                    // textColor: Colors.black,
-                                    // padding: EdgeInsets.all(7),
-                                    // height: 46,
-                                    size: 13,
-                                    // color: Color(0xffE5E5E5),
-                                  ),
-                                  // tableHeadtext(
-                                  //   '',
-                                  //   textColor: Colors.black,
-                                  //   padding: EdgeInsets.all(7),
-                                  //   height: 46,
-                                  //   size: 13,
-                                  //   // color: Color(0xffE5E5E5),
-                                  // ),
-                                ],
-                              ),
-                              if (table?.isNotEmpty == true) ...[
-                                for (var i = 0; i < table.length; i++)
-                                  TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
-                                          shape: BoxShape.rectangle,
-                                          border:  Border(
-                                              left: BorderSide(
+                tableHeadtext(
+                  'Shipping',
+                  // textColor: Colors.black,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                // tableHeadtext(
+                //   '',
+                //   textColor: Colors.black,
+                //   padding: EdgeInsets.all(7),
+                //   height: 46,
+                //   size: 13,
+                //   // color: Color(0xffE5E5E5),
+                // ),
+              ],
+            ),
+            if (table?.isNotEmpty == true) ...[
+              for (var i = 0; i < table.length; i++)
+                TableRow(
+                    decoration: BoxDecoration(
+                        color: Pellet.tableRowColor,
+                        shape: BoxShape.rectangle,
+                        border:  Border(
+                            left: BorderSide(
 
-                                                  color: Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+                                style: BorderStyle.solid),
+                            bottom: BorderSide(
 
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                style: BorderStyle.solid),
+                            right: BorderSide(
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
 
-                                                  style: BorderStyle.solid))),
-                                      children: [
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child:
-                                            textOnclickPadding(text:(i + 1).toString(),ontap: (){
-                                              ShippingAddressModel model =
-                                              ShippingAddressModel(
-                                                id: table[i].id,
-                                                fullName: table[i].fullName,
+                                style: BorderStyle.solid))),
+                    children: [
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child:
+                          textOnclickPadding(text:(i + 1).toString(),ontap: (){
+                            ShippingAddressModel model =
+                            ShippingAddressModel(
+                              id: table[i].id,
+                              fullName: table[i].fullName,
 
-                                              );
-                                              Navigator.pop(context);
+                            );
+                            Navigator.pop(context);
 
-                                              widget.valueSelect(model);
-                                            },)
-                                            // Text(keys[i].key??"")
+                            widget.valueSelect(model);
+                          },)
+                        // Text(keys[i].key??"")
 
-                                            ),
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child: textOnclickPadding(
-                                              ontap: () {
-                                                ShippingAddressModel model =
-                                                ShippingAddressModel(
-                                                  id: table[i].id,
-                                                  fullName: table[i].fullName,
+                      ),
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child: textOnclickPadding(
+                            ontap: () {
+                              ShippingAddressModel model =
+                              ShippingAddressModel(
+                                id: table[i].id,
+                                fullName: table[i].fullName,
 
-                                                );
-                                                Navigator.pop(context);
+                              );
+                              Navigator.pop(context);
 
-                                                widget.valueSelect(model);
-                                              },
-                                              text: table[i].fullName ?? "",
-
-                                            )
-                                            // Text(keys[i].value??"",)
-
-                                            ),
-                                      ]),
-                              ],
-                            ],
-                            widths: {
-                              0: FlexColumnWidth(2),
-                              1: FlexColumnWidth(5),
+                              widget.valueSelect(model);
                             },
-                          ),
-                        ),
+                            text: table[i].fullName ?? "",
+
+                          )
+                        // Text(keys[i].value??"",)
+
+                      ),
+                    ]),
+            ],
+          ],
+          widths: {
+            0: FlexColumnWidth(2),
+            1: FlexColumnWidth(5),
+          },
+        ),
+      );
+    });
+
+  },
+),
                       ),
                       SizedBox(
                         height: h * .004,
@@ -11091,6 +11124,7 @@ class _producedCountryPopup extends State<producedCountryPopupVariant> {
   String imageEncode = "";
   List<VariantReadModel> table = [];
   var list1;
+   bool isLoading=true;
   TextEditingController searchContoller = TextEditingController();
   Dio client = Dio();
 
@@ -11100,20 +11134,20 @@ class _producedCountryPopup extends State<producedCountryPopupVariant> {
   }
 
   void initState() {
-    _firstLoad("");
+    _firstLoad(widget.code);
     super.initState();
   }
-  void _firstLoad(String ? code) async {
+  void _firstLoad(String ? code,{String  searchKey=""}) async {
     String path="";
 
     code = code == null ? "" : code;
     if (code == "") {
       // path = "https://api-customergroup-application.hilalcart.com/";
-      path = "https://api-uat-user.sidrabazar.com/" + "country-list?value=list";
+      path =searchKey==""? inventoryLiveBaseUrl+ "country-list?value=list":inventoryLiveBaseUrl+ "country-list?value=list&name=$searchKey";
     } else {
-      path = inventoryLiveBaseUrl + "state-list?code=$code&value=list";
+      path =searchKey==""? inventoryLiveBaseUrl + "state-list?code=$code&value=list":inventoryLiveBaseUrl + "state-list?code=$code&value=list&name=$searchKey";
     }
-
+print(path);
     try {
 
       final res = await client.get(
@@ -11136,10 +11170,10 @@ class _producedCountryPopup extends State<producedCountryPopupVariant> {
       );
 print("respppppppppppppppppppppppppppppppppppppp$res");
 
-
+      isLoading=false;
 
       setState(() {
-
+        table.clear();
         for (var element in (res.data['data'] as List)) {
 
           table.add(VariantReadModel.fromJson(element));
@@ -11249,28 +11283,25 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
                   // height: 500,
                   child: Column(
                     children: [
-                      // Container(
-                      //     margin: EdgeInsets.all(5),
-                      //     child: SearchTextfiled(
-                      //       color: Color(0xffFAFAFA),
-                      //       h: 40,
-                      //       hintText: "Search...",
-                      //       suffixIconCheck: suffixIconCheck,
-                      //       ctrlr: searchContoller,
-                      //       onChanged: (va) {
-                      //         print("searching case" + va.toString());
-                      //         context
-                      //             .read<ShippingadreesCubit>()
-                      //             .getSearchCustomList(searchContoller.text,widget.code);
-                      //         suffixIconCheck=true;
-                      //         if (va == "") {
-                      //           context
-                      //               .read<ShippingadreesCubit>()
-                      //               .getShippingId(id:widget.code);
-                      //           suffixIconCheck=false;
-                      //         }
-                      //       },
-                      //     )),
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            suffixIconCheck: suffixIconCheck,
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              isLoading=true;
+                              print("searching case" + va.toString());
+                              _firstLoad(widget.code, searchKey: va);
+                              suffixIconCheck=true;
+                              if (va == "") {
+                                _firstLoad(widget.code);
+                                suffixIconCheck=false;
+                              }
+                            },
+                          )),
                       SizedBox(
                         height: h * .004,
                       ),
@@ -11279,7 +11310,8 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                        child: SingleChildScrollView(
+                        child: !isLoading?
+                        SingleChildScrollView(
                           child: customTable(
                             // border: const TableBorder(
                             //   verticalInside: BorderSide(
@@ -11362,15 +11394,10 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
                                                 .middle,
                                             child:
                                             textOnclickPadding(text:(i + 1).toString(),ontap: (){
-                                              VariantReadModel model =
-                                              VariantReadModel(
-                                                id: table[i].id,
-                                                name: table[i].name,
 
-                                              );
                                               Navigator.pop(context);
 
-                                              widget.valueSelect(model);
+                                              widget.valueSelect(table[i]);
                                             },)
                                           // Text(keys[i].key??"")
 
@@ -11380,9 +11407,9 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
                                             TableCellVerticalAlignment.middle,
                                             child: textOnclickPadding(
                                               ontap: () {
-                                                VariantReadModel model = VariantReadModel(id: table[i].id, name: table[i].name,);
+
                                                 Navigator.pop(context);
-                                                widget.valueSelect(model);
+                                                widget.valueSelect(table[i]);
                                               },
                                               text: table[i].name ?? "",
 
@@ -11398,7 +11425,7 @@ print("respppppppppppppppppppppppppppppppppppppp$res");
                               1: FlexColumnWidth(5),
                             },
                           ),
-                        ),
+                        ):customCommonTAbleProgressIndiactor(),
                       ),
                       SizedBox(
                         height: h * .004,
@@ -12010,130 +12037,129 @@ class _customerIdListPopup extends State<customerIdListPopup> {
                             margin: EdgeInsets.symmetric(horizontal: w*.006),
                             // width: w/7,
                             // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                            child: SingleChildScrollView(
-                              child: customTable(
-                                // border: const TableBorder(
-                                //   verticalInside: BorderSide(
-                                //       width: .5,
-                                //       color: Colors.black45,
-                                //       style: BorderStyle.solid),
-                                //   horizontalInside: BorderSide(
-                                //       width: .3,
-                                //       color: Colors.black45,
-                                //       // color: Colors.blue,
-                                //       style: BorderStyle.solid),
-                                // ),
-                                tableWidth: .5,
-                                childrens: [
-                                  TableRow(
-                                    // decoration: BoxDecoration(
+                            child: BlocBuilder<CustomeridlistCubit, CustomeridlistState>(
+  builder: (context, state) {
+    return state.maybeWhen(orElse: (){
+     return customCommonTAbleProgressIndiactor();
+    },success: (data){
+      return  SingleChildScrollView(
+        child: customTable(
+          // border: const TableBorder(
+          //   verticalInside: BorderSide(
+          //       width: .5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width: .3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),
+          // ),
+          tableWidth: .5,
+          childrens: [
+            TableRow(
+              // decoration: BoxDecoration(
 
-                                    //     color: Colors.green.shade200,
+              //     color: Colors.green.shade200,
 
-                                    //     shape: BoxShape.rectangle,
+              //     shape: BoxShape.rectangle,
 
-                                    //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                                    children: [
-                                      tableHeadtext(
-                                        'Sl No',
+              children: [
+                tableHeadtext(
+                  'Sl No',
 
-                                        // padding: EdgeInsets.all(7),
-                                        //
-                                        // height: 46,
-                                        // textColor: Colors.black,
-                                        // color: Color(0xffE5E5E5),
+                  // padding: EdgeInsets.all(7),
+                  //
+                  // height: 46,
+                  // textColor: Colors.black,
+                  // color: Color(0xffE5E5E5),
 
-                                        size: 13,
-                                      ),
+                  size: 13,
+                ),
 
-                                      tableHeadtext(
-                                        'Customer Code',
-                                        // textColor: Colors.black,
-                                        // padding: EdgeInsets.all(7),
-                                        // height: 46,
-                                        size: 13,
-                                        // color: Color(0xffE5E5E5),
-                                      ),
-                                      // tableHeadtext(
-                                      //   '',
-                                      //   textColor: Colors.black,
-                                      //   padding: EdgeInsets.all(7),
-                                      //   height: 46,
-                                      //   size: 13,
-                                      //   // color: Color(0xffE5E5E5),
-                                      // ),
-                                    ],
-                                  ),
-                                  if (table?.isNotEmpty == true) ...[
-                                    for (var i = 0; i < table.length; i++)
-                                      TableRow(
-                decoration: BoxDecoration(
-                color: Pellet.tableRowColor,
-                    shape: BoxShape.rectangle,
-                    border:  Border(
-                        left: BorderSide(
+                tableHeadtext(
+                  'Customer Code',
+                  // textColor: Colors.black,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                // tableHeadtext(
+                //   '',
+                //   textColor: Colors.black,
+                //   padding: EdgeInsets.all(7),
+                //   height: 46,
+                //   size: 13,
+                //   // color: Color(0xffE5E5E5),
+                // ),
+              ],
+            ),
+            if (table?.isNotEmpty == true) ...[
+              for (var i = 0; i < table.length; i++)
+                TableRow(
+                    decoration: BoxDecoration(
+                        color: Pellet.tableRowColor,
+                        shape: BoxShape.rectangle,
+                        border:  Border(
+                            left: BorderSide(
 
-                            color: Color(0xff3E4F5B).withOpacity(.1),
-                            width: .4,
-                            style: BorderStyle.solid),
-                        bottom: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+                                style: BorderStyle.solid),
+                            bottom: BorderSide(
 
-                            color:   Color(0xff3E4F5B).withOpacity(.1),
-                            style: BorderStyle.solid),
-                        right: BorderSide(
-                            color:   Color(0xff3E4F5B).withOpacity(.1),
-                            width: .4,
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                style: BorderStyle.solid),
+                            right: BorderSide(
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
 
-                            style: BorderStyle.solid))),
-                                          children: [
-                                            TableCell(
-                                                verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                                child:
-                                                textPadding((i + 1).toString())
-                                              // Text(keys[i].key??"")
+                                style: BorderStyle.solid))),
+                    children: [
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child:
+                          textPadding((i + 1).toString())
+                        // Text(keys[i].key??"")
 
-                                            ),
-                                            TableCell(
-                                                verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                                child: textOnclickPadding(
-                                                  ontap: () {
-                                                    CustomerIdListModel model =
-                                                    CustomerIdListModel(
-                                                      customerUserCode:table[i].customerUserCode ,
-
-                                                      id: table[i].id,
-                                                      businessData: table[i].businessData,
-                                                        customerName:table[i].customerName,
+                      ),
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child: textOnclickPadding(
+                            ontap: () {
 
 
+                              Navigator.pop(context);
 
-                                                    );
+                              widget.valueSelect(table[i]);
+                            },
+                            text:table[i].customerName!=''&&table[i].customerName!=null?table[i].customerName:
+                            table[i].businessData?.buisnessMeta?.fullmae??"",
 
-                                                    Navigator.pop(context);
+                          )
+                        // Text(keys[i].value??"",)
 
-                                                    widget.valueSelect(model);
-                                                  },
-                                                  text:table[i].customerName!=''&&table[i].customerName!=null?table[i].customerName:
-                                                    table[i].businessData?.buisnessMeta?.fullmae??"",
+                      ),
+                    ]),
+            ],
+          ],
+          widths: {
+            0: FlexColumnWidth(2),
+            1: FlexColumnWidth(5),
+          },
+        ),
+      );
+    });
 
-                                                )
-                                              // Text(keys[i].value??"",)
-
-                                            ),
-                                          ]),
-                                  ],
-                                ],
-                                widths: {
-                                  0: FlexColumnWidth(2),
-                                  1: FlexColumnWidth(5),
-                                },
-                              ),
-                            ),
+  },
+),
                           ),
                           SizedBox(
                             height: h * .004,

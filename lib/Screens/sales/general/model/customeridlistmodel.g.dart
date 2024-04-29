@@ -106,6 +106,7 @@ _$_CustomerIdListModel _$$_CustomerIdListModelFromJson(
           ? null
           : BusinessData.fromJson(
               json['business_data'] as Map<String, dynamic>),
+      taxId: json['tax_id'] as String?,
     );
 
 Map<String, dynamic> _$$_CustomerIdListModelToJson(
@@ -120,6 +121,7 @@ Map<String, dynamic> _$$_CustomerIdListModelToJson(
       'is_delete': instance.isDeleted,
       'is_business_user': instance.isBuisnessUser,
       'business_data': instance.businessData,
+      'tax_id': instance.taxId,
     };
 
 _$_BusinessData _$$_BusinessDataFromJson(Map<String, dynamic> json) =>
