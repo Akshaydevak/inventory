@@ -1352,7 +1352,7 @@ class _CustomWeightPopUpCallState
                         decoration: InputDecoration(
                             hintText: "Select One",
                             isDense: true,
-                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1784,7 +1784,7 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
                         decoration: InputDecoration(
                             hintText: "Select One",
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -1930,7 +1930,7 @@ class _VariantLengthunitPopupCallState extends State<VariantLengthunitPopupCall>
                         decoration: InputDecoration(
                             isDense: true,
                             hintText: "Select One",
-                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2077,7 +2077,7 @@ class _VariantWidthunitPopupCallState extends State<VariantWidthunitPopupCall> {
                         decoration: InputDecoration(
                             isDense: true,
                             hintText: "Select One",
-                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2226,7 +2226,7 @@ class _VariantWeightunitPopupCallState extends State<VariantWeightunitPopupCall>
                             isDense: true,
                             hintText: "Select One",
 
-                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2372,7 +2372,7 @@ class _VariantHeightunitPopupCallState extends State<VariantHeightunitPopupCall>
                         ],
                         decoration: InputDecoration(
                             hintText: "Select One",
-                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
+                            contentPadding:widget.contentPadding!=null? EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10):EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.015,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2517,7 +2517,7 @@ class _CustomReturnTypePopupCallState extends State<CustomReturnTypePopupCall> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2661,7 +2661,7 @@ class _PgTypePopUpCallState extends State<PgTypePopUpCall> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2799,7 +2799,7 @@ class _CostingPriceTypePopUpCallState extends State<CostingPriceTypePopUpCall> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -2939,7 +2939,7 @@ class _VirtualStockTypePopupCallState extends State<VirtualStockTypePopupCall> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -3148,7 +3148,7 @@ class _VirtualStockTypePopupCallState extends State<VirtualStockTypePopupCall> {
 //                             isDense: true,
 //                             hintText: "Select One",
 //                             hintStyle: TextStyle(fontSize: 14),
-//                             // contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+//                             // contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
 //                             // border: OutlineInputBorder(),
 //                             suffixIcon: Container(
 //                               margin: EdgeInsets.only(bottom: 20),
@@ -3723,10 +3723,10 @@ class _SaleApplyingPlacePopupState extends State<SaleApplyingPlacePopup> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<ListallsalesapiCubit>(
-        create: (context) => ListallsalesapiCubit(),
+        create: (context) => ListallsalesapiCubit()..getListAllSalesApi(),
         child: Builder(
           builder: (context) {
-            context.read<ListallsalesapiCubit>().getListAllSalesApi();
+            // context.read<ListallsalesapiCubit>().getListAllSalesApi();
             return BlocBuilder<ListallsalesapiCubit, ListallsalesapiState>(
                 builder: (context, state) {
               print(state);
@@ -3867,10 +3867,10 @@ class _CouponApplyingToPopupState extends State<CouponApplyingToPopup> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<ListCouponAllCubit>(
-        create: (context) => ListCouponAllCubit(),
+        create: (context) => ListCouponAllCubit()..getListAllCouponApi(),
         child: Builder(
           builder: (context) {
-            context.read<ListCouponAllCubit>().getListAllCouponApi();
+            // context.read<ListCouponAllCubit>().getListAllCouponApi();
             return BlocBuilder<ListCouponAllCubit, ListCouponAllState>(
                 builder: (context, state) {
               print(state);
@@ -3880,7 +3880,7 @@ class _CouponApplyingToPopupState extends State<CouponApplyingToPopup> {
                 ),
                 // error: () => {errorLoader(widget.onAddNew)},
                 success: (data) {
-                  print("data===" + data.toString());
+                  print("data===ttesting api" + data.toString());
                   List<String> list = [];
                   // list=data.orderTypes;
                   int? length = data?.couponApplyingTo?.length;
@@ -3919,7 +3919,7 @@ class _CouponApplyingToPopupState extends State<CouponApplyingToPopup> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -3948,6 +3948,9 @@ class _CouponApplyingToPopupState extends State<CouponApplyingToPopup> {
                       //     title: Text(suggestion.toString()),
                       //   );
                       return ListTile(
+                        onTap: (){
+                          print("ontaping");
+                        },
                         ////leading: Icon(Icons.shopping_cart_outlined),
                         title: Text(suggestion.toString()),
                       );
@@ -4012,10 +4015,10 @@ class _MultiBuyApplyingToPopupState extends State<MultiBuyApplyingToPopup> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<MultibuyAllListCubit>(
-        create: (context) => MultibuyAllListCubit(),
+        create: (context) => MultibuyAllListCubit()..getListAllMultiBuyApi(),
         child: Builder(
           builder: (context) {
-            context.read<MultibuyAllListCubit>().getListAllMultiBuyApi();
+            // context.read<MultibuyAllListCubit>().getListAllMultiBuyApi();
             return BlocBuilder<MultibuyAllListCubit, MultibuyAllListState>(
                 builder: (context, state) {
               print(state);
@@ -4064,7 +4067,7 @@ class _MultiBuyApplyingToPopupState extends State<MultiBuyApplyingToPopup> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -4157,10 +4160,10 @@ class _BogoApplyingPlaceTypePopupState extends State<BogoApplyingPlaceTypePopup>
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<BogoListAllCubit>(
-        create: (context) => BogoListAllCubit(),
+        create: (context) => BogoListAllCubit()..getListAllBogoApi(),
         child: Builder(
           builder: (context) {
-            context.read<BogoListAllCubit>().getListAllBogoApi();
+            // context.read<BogoListAllCubit>().getListAllBogoApi();
             return BlocBuilder<BogoListAllCubit, BogoListAllState>(
                 builder: (context, state) {
               print(state);
@@ -4209,7 +4212,7 @@ class _BogoApplyingPlaceTypePopupState extends State<BogoApplyingPlaceTypePopup>
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -4301,10 +4304,10 @@ class _BogoApplyingOnTypePopupState extends State<BogoApplyingOnTypePopup> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<BogoListAllCubit>(
-        create: (context) => BogoListAllCubit(),
+        create: (context) => BogoListAllCubit()..getListAllBogoApi(),
         child: Builder(
           builder: (context) {
-            context.read<BogoListAllCubit>().getListAllBogoApi();
+            // context.read<BogoListAllCubit>().getListAllBogoApi();
             return BlocBuilder<BogoListAllCubit, BogoListAllState>(
                 builder: (context, state) {
               print(state);
@@ -4353,7 +4356,7 @@ class _BogoApplyingOnTypePopupState extends State<BogoApplyingOnTypePopup> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -4449,10 +4452,10 @@ class _SaleBasedOnPromotionPopup extends State<SaleBasedOnPromotionPopup> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<ListallsalesapiCubit>(
-        create: (context) => ListallsalesapiCubit(),
+        create: (context) => ListallsalesapiCubit()..getListAllSalesApi(),
         child: Builder(
           builder: (context) {
-            context.read<ListallsalesapiCubit>().getListAllSalesApi();
+            // context.read<ListallsalesapiCubit>().getListAllSalesApi();
             return BlocBuilder<ListallsalesapiCubit, ListallsalesapiState>(
                 builder: (context, state) {
               print(state);
@@ -4595,10 +4598,10 @@ class _CouponBasedOnPromotionPopup extends State<CouponBasedOnPromotionPopup> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<ListCouponAllCubit>(
-        create: (context) => ListCouponAllCubit(),
+        create: (context) => ListCouponAllCubit()..getListAllCouponApi(),
         child: Builder(
           builder: (context) {
-            context.read<ListCouponAllCubit>().getListAllCouponApi();
+            // context.read<ListCouponAllCubit>().getListAllCouponApi();
             return BlocBuilder<ListCouponAllCubit, ListCouponAllState>(
                 builder: (context, state) {
               print(state);
@@ -4647,7 +4650,7 @@ class _CouponBasedOnPromotionPopup extends State<CouponBasedOnPromotionPopup> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -4742,10 +4745,10 @@ class _SaleApplyingOnPromotionPopup extends State<SaleApplyingOnPromotionPopup> 
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<ListallsalesapiCubit>(
-        create: (context) => ListallsalesapiCubit(),
+        create: (context) => ListallsalesapiCubit()..getListAllSalesApi(),
         child: Builder(
           builder: (context) {
-            context.read<ListallsalesapiCubit>().getListAllSalesApi();
+            // context.read<ListallsalesapiCubit>().getListAllSalesApi();
             return BlocBuilder<ListallsalesapiCubit, ListallsalesapiState>(
                 builder: (context, state) {
               print(state);
@@ -4794,7 +4797,7 @@ class _SaleApplyingOnPromotionPopup extends State<SaleApplyingOnPromotionPopup> 
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -4887,10 +4890,10 @@ class _CouponApplyingOnPromotionPopup extends State<CouponApplyingOnPromotionPop
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<ListCouponAllCubit>(
-        create: (context) => ListCouponAllCubit(),
+        create: (context) => ListCouponAllCubit()..getListAllCouponApi(),
         child: Builder(
           builder: (context) {
-            context.read<ListCouponAllCubit>().getListAllCouponApi();
+            // context.read<ListCouponAllCubit>().getListAllCouponApi();
             return BlocBuilder<ListCouponAllCubit, ListCouponAllState>(
                 builder: (context, state) {
               print(state);
@@ -4939,7 +4942,7 @@ class _CouponApplyingOnPromotionPopup extends State<CouponApplyingOnPromotionPop
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -5083,7 +5086,7 @@ class _CouponApplyingTypePromotionPopup extends State<CouponApplyingTypePromotio
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -5231,7 +5234,7 @@ class _OfferAppliedtoTypePopupState extends State<OfferAppliedtoTypePopup> {
                         ],
                         decoration: InputDecoration(
                             isDense: true,
-                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                             enabledBorder:OutlineInputBorder(
                                 borderRadius:BorderRadius.circular(2),
 
@@ -5541,11 +5544,11 @@ class _VendorCodesSelectionState extends State<VendorCodesSelection> {
                       ],
 
                       decoration: InputDecoration(
-                       
+
 
                           // border: InputBorder.none,
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                          contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
@@ -6141,7 +6144,7 @@ class _PriceTypePopUpCallState extends State<PriceTypePopUpCall> {
                           ],
                           decoration: InputDecoration(
                               isDense: true,
-                              contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                               border: InputBorder.none,
                               suffixIcon: Icon(Icons.keyboard_arrow_down))),
                       onSuggestionSelected: (suggestion) {
@@ -6581,7 +6584,7 @@ class _InvoiceCodePopUpCallState extends State<InvoiceCodePopUpCall> {
                     ],
                     decoration: InputDecoration(
                         isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
@@ -7026,7 +7029,7 @@ class _BrandListPopUpCallState extends State<BrandListPopUpCall> {
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.019,horizontal: 10),
+                        contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(

@@ -341,7 +341,7 @@ class _PromotionSaleStableTableState extends State<PromotionSaleStableTable> {
                           controller: widget.saleApplyingCode,
                           icondrop: true,
                           readOnly: true,
-                          title: "Sale Applying Name",
+                          title: "Sale ApplyingA Name",
                           ontap: () {
 
 

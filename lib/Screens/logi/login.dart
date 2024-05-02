@@ -197,7 +197,14 @@ List<  InventoryListModel> inventoryList=[];
                   ),
                   Container(
                       margin: EdgeInsets.symmetric(horizontal: width*.012),
-                      child: NewInputCard(controller: empCode, title: "EMPLOYEE CODE",password: true,height: height/16,)),
+                      child: NewInputCard(controller: empCode, title: "EMPLOYEE CODE",password: true,height: height/16,onChange: (va){
+                        empCode.value =
+                            empCode.value.copyWith(
+                              text: va.toUpperCase(),
+                              selection:
+                              TextSelection.collapsed(offset: va.length),
+                            );
+                      },)),
                   SizedBox(
                     height: height * .075,
                   ),

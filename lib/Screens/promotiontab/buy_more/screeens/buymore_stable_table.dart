@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/promotiontab/discount/model/promotion_discount_model.dart';
+import 'package:inventory/Screens/promotiontab/sale/cubits/chennellist/channel_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/model/offer_period_list.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
@@ -89,6 +90,7 @@ class _PromotionByMoreStableTableState extends State<PromotionByMoreStableTable>
                         widget.buyMoreApplyingPlaceName.text = "";
                         widget.buyMoreApplyingPlaceCode.text = "";
                         widget.buyMoreApplyingPlaceId.text = "";
+
                         // context
                         //     .read<ChannelListCubit>()
                         //     .getChannelList(va

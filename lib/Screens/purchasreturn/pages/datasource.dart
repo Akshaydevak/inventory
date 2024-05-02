@@ -1179,8 +1179,6 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
             'Accept': 'application/json',
           }));
 
-      print(response);
-      print("TGE sTATUS IS HERE OF LOGIN==="+response.data.toString());
       if (response.data['status'] == 'failed') {
         Variable.errorMessege = response.data['message'];
       }

@@ -12,7 +12,7 @@ class ChannelListCubit extends Cubit<ChannelListState> {
   ChannelListCubit() : super(ChannelListState.initial());
   final InventoryPromotionRepository repo = InventoryPromoRepoIml();
   Future getChannelList(String? code) async {
-    print("reead");
+    emit(ChannelListState.initial());
     final result = await repo.getChannelList(code);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
 

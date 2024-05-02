@@ -419,12 +419,12 @@ class _PromotionMultibuyMainScreenState extends State<PromotionMultibuyMainScree
                       if (result.isNotEmpty) {
                         if (select) {
                           veritiaclid = result[result.length - 1].id;
-                          selectedVertical = result.length - 1;
+                          // selectedVertical = result.length - 1;
                           context.read<ReadMultibuyCubit>().getPromotionMultiBuyRead(veritiaclid!);;
                         }
                         else {
                           veritiaclid=result[0].id;
-                          selectedVertical=veritiaclid!;
+                          // selectedVertical=veritiaclid!;
 
                           context.read<ReadMultibuyCubit>().getPromotionMultiBuyRead(veritiaclid!);;
                         }

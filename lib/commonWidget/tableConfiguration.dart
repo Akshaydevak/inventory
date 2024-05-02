@@ -2054,121 +2054,128 @@ class _SegmentListTabalePopup extends State<SegmentListTabalePopup> {
                         height: h / 1.86,
                         // width: w/7,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
-                        child: SingleChildScrollView(
-                          child: customTable(
-                            // border: const TableBorder(
-                            //   verticalInside: BorderSide(
-                            //       width: .5,
-                            //       color: Colors.black45,
-                            //       style: BorderStyle.solid),
-                            //   horizontalInside: BorderSide(
-                            //       width: .3,
-                            //       color: Colors.black45,
-                            //       // color: Colors.blue,
-                            //       style: BorderStyle.solid),
-                            // ),
-                            tableWidth: .5,
-                            childrens: [
-                              TableRow(
-                                // decoration: BoxDecoration(
+                        child: BlocBuilder<ListSegmentsCubit, ListSegmentsState>(
+  builder: (context, state) {
+    return state.maybeWhen(orElse: (){return customCommonTAbleProgressIndiactor(); },success: (data){
+      return  SingleChildScrollView(
+        child: customTable(
+          // border: const TableBorder(
+          //   verticalInside: BorderSide(
+          //       width: .5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width: .3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),
+          // ),
+          tableWidth: .5,
+          childrens: [
+            TableRow(
+              // decoration: BoxDecoration(
 
-                                //     color: Colors.green.shade200,
+              //     color: Colors.green.shade200,
 
-                                //     shape: BoxShape.rectangle,
+              //     shape: BoxShape.rectangle,
 
-                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                                children: [
-                                  tableHeadtext(
-                                    'Sl No',
-                                    // padding: EdgeInsets.all(7),
-                                    //
-                                    // height: 44,
-                                    // textColor: Colors.black,
-                                    // color: Color(0xffE5E5E5),
-                                    size: 13,
-                                  ),
+              children: [
+                tableHeadtext(
+                  'Sl No',
+                  // padding: EdgeInsets.all(7),
+                  //
+                  // height: 44,
+                  // textColor: Colors.black,
+                  // color: Color(0xffE5E5E5),
+                  size: 13,
+                ),
 
-                                  tableHeadtext(
-                                    'Segment',
-                                    // textColor: Colors.black,
-                                    // padding: EdgeInsets.all(7),
-                                    // height: 44,
-                                    size: 13,
-                                    // color: Color(0xffE5E5E5),
-                                  ),
-                                  // tableHeadtext(
-                                  //   '',
-                                  //   textColor: Colors.black,
-                                  //   padding: EdgeInsets.all(7),
-                                  //   height: 46,
-                                  //   size: 13,
-                                  //   // color: Color(0xffE5E5E5),
-                                  // ),
-                                ],
-                              ),
-                              if (table?.isNotEmpty == true) ...[
-                                for (var i = 0; i < table.length; i++)
-                                  TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
-                                          shape: BoxShape.rectangle,
-                                          border:  Border(
-                                              left: BorderSide(
+                tableHeadtext(
+                  'Segment',
+                  // textColor: Colors.black,
+                  // padding: EdgeInsets.all(7),
+                  // height: 44,
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                // tableHeadtext(
+                //   '',
+                //   textColor: Colors.black,
+                //   padding: EdgeInsets.all(7),
+                //   height: 46,
+                //   size: 13,
+                //   // color: Color(0xffE5E5E5),
+                // ),
+              ],
+            ),
+            if (table?.isNotEmpty == true) ...[
+              for (var i = 0; i < table.length; i++)
+                TableRow(
+                    decoration: BoxDecoration(
+                        color: Pellet.tableRowColor,
+                        shape: BoxShape.rectangle,
+                        border:  Border(
+                            left: BorderSide(
 
-                                                  color: Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+                                style: BorderStyle.solid),
+                            bottom: BorderSide(
 
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                style: BorderStyle.solid),
+                            right: BorderSide(
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
 
-                                                  style: BorderStyle.solid))),
-                                      children: [
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child:
-                                                textPadding((i + 1).toString(),)
-                                            // Text(keys[i].key??"")
+                                style: BorderStyle.solid))),
+                    children: [
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child:
+                          textPadding((i + 1).toString(),)
+                        // Text(keys[i].key??"")
 
-                                            ),
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child: textOnclickPadding(
-                                              ontap: () {
-                                                salesOrderTypeModel model =
-                                                salesOrderTypeModel(
-                                                  id: table[i].id,
-                                                  name: table[i].name,
-                                                  code: table[i].code,
-                                                );
-                                                Navigator.pop(context);
+                      ),
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child: textOnclickPadding(
+                            ontap: () {
+                              salesOrderTypeModel model =
+                              salesOrderTypeModel(
+                                id: table[i].id,
+                                name: table[i].name,
+                                code: table[i].code,
+                              );
+                              Navigator.pop(context);
 
-                                                widget.valueSelect(model);
-                                              },
-                                              text: table[i].name ?? "",
-
-                                            )
-                                            // Text(keys[i].value??"",)
-
-                                            ),
-                                      ]),
-                              ],
-                            ],
-                            widths: {
-                              0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(5),
+                              widget.valueSelect(model);
                             },
-                          ),
-                        ),
+                            text: table[i].name ?? "",
+
+                          )
+                        // Text(keys[i].value??"",)
+
+                      ),
+                    ]),
+            ],
+          ],
+          widths: {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(5),
+          },
+        ),
+      );
+    });
+
+  },
+),
                       ),
                       SizedBox(
                         height: h * .004,
@@ -4242,125 +4249,134 @@ class _OfferPeriodPopup extends State<OfferPeriodPopup> {
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                        child: SingleChildScrollView(
-                          child: customTable(
-                            // border: const TableBorder(
-                            //   verticalInside: BorderSide(
-                            //       width: .5,
-                            //       color: Colors.black45,
-                            //       style: BorderStyle.solid),
-                            //   horizontalInside: BorderSide(
-                            //       width: .3,
-                            //       color: Colors.black45,
-                            //       // color: Colors.blue,
-                            //       style: BorderStyle.solid),
-                            // ),
-                            tableWidth: .5,
-                            childrens: [
-                              TableRow(
-                                // decoration: BoxDecoration(
+                        child: BlocBuilder<ListOfferPeriodCubit, ListOfferPeriodState>(
+  builder: (context, state) {
+    return state.maybeWhen(orElse: (){
+      return customCommonTAbleProgressIndiactor();
+    },success: (data){
+      return SingleChildScrollView(
+        child: customTable(
+          // border: const TableBorder(
+          //   verticalInside: BorderSide(
+          //       width: .5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width: .3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),
+          // ),
+          tableWidth: .5,
+          childrens: [
+            TableRow(
+              // decoration: BoxDecoration(
 
-                                //     color: Colors.green.shade200,
+              //     color: Colors.green.shade200,
 
-                                //     shape: BoxShape.rectangle,
+              //     shape: BoxShape.rectangle,
 
-                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                                children: [
-                                  tableHeadtext(
-                                    'Sl No',
+              children: [
+                tableHeadtext(
+                  'Sl No',
 
-                                    // padding: EdgeInsets.all(7),
-                                    //
-                                    // height: 44,
-                                    // textColor: Colors.black,
-                                    // color: Color(0xffE5E5E5),
+                  // padding: EdgeInsets.all(7),
+                  //
+                  // height: 44,
+                  // textColor: Colors.black,
+                  // color: Color(0xffE5E5E5),
 
-                                    size: 13,
-                                  ),
+                  size: 13,
+                ),
 
-                                  tableHeadtext(
-                                    'Offer Period',
-                                    // textColor: Colors.black,
-                                    // padding: EdgeInsets.all(7),
-                                    // height: 44,
-                                    size: 13,
-                                    // color: Color(0xffE5E5E5),
-                                  ),
-                                  // tableHeadtext(
-                                  //   '',
-                                  //   textColor: Colors.black,
-                                  //   padding: EdgeInsets.all(7),
-                                  //   height: 46,
-                                  //   size: 13,
-                                  //   // color: Color(0xffE5E5E5),
-                                  // ),
-                                ],
-                              ),
-                              if (table?.isNotEmpty == true) ...[
-                                for (var i = 0; i < table.length; i++)
-                                  TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
-                                          shape: BoxShape.rectangle,
-                                          border:  Border(
-                                              left: BorderSide(
+                tableHeadtext(
+                  'Offer Period',
+                  // textColor: Colors.black,
+                  // padding: EdgeInsets.all(7),
+                  // height: 44,
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                // tableHeadtext(
+                //   '',
+                //   textColor: Colors.black,
+                //   padding: EdgeInsets.all(7),
+                //   height: 46,
+                //   size: 13,
+                //   // color: Color(0xffE5E5E5),
+                // ),
+              ],
+            ),
+            if (table?.isNotEmpty == true) ...[
+              for (var i = 0; i < table.length; i++)
+                TableRow(
+                    decoration: BoxDecoration(
+                        color: Pellet.tableRowColor,
+                        shape: BoxShape.rectangle,
+                        border:  Border(
+                            left: BorderSide(
 
-                                                  color: Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+                                style: BorderStyle.solid),
+                            bottom: BorderSide(
 
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                style: BorderStyle.solid),
+                            right: BorderSide(
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
 
-                                                  style: BorderStyle.solid))),
-                                      children: [
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child:
-                                                textPadding((i + 1).toString())
-                                            // Text(keys[i].key??"")
+                                style: BorderStyle.solid))),
+                    children: [
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child:
+                          textPadding((i + 1).toString())
+                        // Text(keys[i].key??"")
 
-                                            ),
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child: textOnclickPadding(
-                                              ontap: () {
-                                                CostingCreatePostModel model =
-                                                    CostingCreatePostModel(
-                                                  id: table[i].id,
-                                                  methodName:
-                                                      table[i].title,
-                                                );
-                                                Navigator.pop(context);
+                      ),
+                      TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child: textOnclickPadding(
+                            ontap: () {
+                              CostingCreatePostModel model =
+                              CostingCreatePostModel(
+                                id: table[i].id,
+                                methodName:
+                                table[i].title,
+                              );
+                              Navigator.pop(context);
 
-                                                widget.valueSelect(model);
-                                              },
-                                              text:
-
-                                                      table[i].title ??
-                                                          ""),
-
-                                            // Text(keys[i].value??"",)
-
-                                            ),
-                                      ]),
-                              ],
-                            ],
-                            widths: {
-                              0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(5),
+                              widget.valueSelect(model);
                             },
-                          ),
-                        ),
+                            text:
+
+                            table[i].title ??
+                                ""),
+
+                        // Text(keys[i].value??"",)
+
+                      ),
+                    ]),
+            ],
+          ],
+          widths: {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(5),
+          },
+        ),
+      );
+    });
+
+  },
+),
                       ),
                       SizedBox(
                         height: h * .004,

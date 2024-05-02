@@ -423,7 +423,7 @@ class _PromotionCouponMainPAgeState extends State<PromotionCouponMainPAge> {
               context.read<ReadCouponPromotionCubit>().getPromotionCouponRead(veritiaclid!);
               }
               else{
-               // selectedVertical=veritiaclid;
+                veritiaclid=result[0].id;
                 context.read<ReadCouponPromotionCubit>().getPromotionCouponRead(veritiaclid!);
               }
 
