@@ -128,7 +128,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
     vatableAmountController.text="";
     focController.text="";
     discountController.text="";
-
+    lines.clear();
   }
   bool updateCheckFunc(){
     var isUpdate=lines.where((element) => element.upDateCheck==true);
@@ -501,7 +501,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                     select=false;
                                     clear();
                                     updateCheck=false;
-                                    lines.clear();
+
                                     veritiaclid = result[index].id;
                                     currentStock.clear();
                                     context.read<GeneralreadCubit>().getGeneralPurchaseReturnRead(veritiaclid!);
@@ -1137,6 +1137,11 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                             saveFunction: (){
                                               var upDate=updateCheckFunc();
                                               if( upDate)  context.showSnackBarError("Please click the update button");
+                                              else if(lines.isEmpty || lines.where((element) => element.isActive==true).isEmpty){
+
+                                                context.showSnackBarError(
+                                                    "Required at least one variant ");
+                                              }
                                               else{
                                                 commonProvider.setLoadingSaveUpdate(true);
                                                 if(lines.isNotEmpty){

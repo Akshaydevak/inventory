@@ -342,6 +342,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
             else {
               print("common");
               select=true;
+              clear();
 
             }
 

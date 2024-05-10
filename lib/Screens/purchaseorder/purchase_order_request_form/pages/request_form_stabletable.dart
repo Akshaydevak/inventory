@@ -32,12 +32,13 @@ class PurchaseOrderRequestFormTable extends StatefulWidget {
   final TextEditingController vat;
   final TextEditingController actualCost;
   final TextEditingController grandTotal;
+  final bool isSected;
 
 
 
 
 
-  PurchaseOrderRequestFormTable({ required this.orderType, required this.orderCode, required this.oderDate, required this.orderedPerson, required this.promisedReceiptDate, required this.plannedReceiptDate, required this.paymentCode, required this.paymentStatus, required this.orderStatus, required this.receivingStatus, required this.invoiceStatus, required this.note, required this.remarks, required this.discound, required this.foc, required this.unitCost, required this.vatableAmount, required this.exciseTax, required this.vat, required this.actualCost, required this.grandTotal, required this.promisedReceiptDate2, required this.plannedReceiptDate2});
+  PurchaseOrderRequestFormTable({ required this.orderType, required this.orderCode, required this.oderDate, required this.orderedPerson, required this.promisedReceiptDate, required this.plannedReceiptDate, required this.paymentCode, required this.paymentStatus, required this.orderStatus, required this.receivingStatus, required this.invoiceStatus, required this.note, required this.remarks, required this.discound, required this.foc, required this.unitCost, required this.vatableAmount, required this.exciseTax, required this.vat, required this.actualCost, required this.grandTotal, required this.promisedReceiptDate2, required this.plannedReceiptDate2, required this.isSected});
 
 
   @override
@@ -72,6 +73,7 @@ class _PurchaseOrderRequestFormTableState extends State<PurchaseOrderRequestForm
 
                         SelectableDropDownpopUp(
                           label: "Order Type",
+
                           type:"RequestFormType",
                           value:widget. orderType.text,
                           onSelection: (String? va) {
@@ -147,34 +149,35 @@ class _PurchaseOrderRequestFormTableState extends State<PurchaseOrderRequestForm
                         // ),
                         SizedBox(height: height*.030,),
                         PopUpDateFormField(
-
+                            isCreate: widget.isSected,
                             format:DateFormat('dd-MM-yyyy'),
-                            controller: widget.promisedReceiptDate2,
+                            controller: widget.promisedReceiptDate,
                             // initialValue:promisedRecieptDate.text!=null||promisedRecieptDate.text!=""||promisedRecieptDate.text!="null"?
                             //     DateTime.parse(promisedRecieptDate.text):DateTime.parse("2022-05-26"),
                             label: "Promised Reciept Date",
                             onSaved: (newValue) {
-                              widget.promisedReceiptDate2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
-                              widget.promisedReceiptDate.text = newValue
-                                  ?.toIso8601String()
-                                  .split("T")[0] ??
-                                  "";
+                              widget.promisedReceiptDate.text=   DateFormat('dd-MM-yyyy').format(newValue!);
+                              // widget.promisedReceiptDate.text = newValue
+                              //     ?.toIso8601String()
+                              //     .split("T")[0] ??
+                              //     "";
                             },
                             enable: true),
                         SizedBox(height: height*.030,),
                         PopUpDateFormField(
+                          isCreate: widget.isSected,
 
                             format:DateFormat('dd-MM-yyyy'),
-                            controller: widget.plannedReceiptDate2,
+                            controller: widget.plannedReceiptDate,
                             // initialValue:
                             //     DateTime.parse(fromDate!),
                             label: "Planned Reciept Date",
                             onSaved: (newValue) {
-                              widget.plannedReceiptDate2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
-                              widget.plannedReceiptDate.text = newValue
-                                  ?.toIso8601String()
-                                  .split("T")[0] ??
-                                  "";
+                              widget.plannedReceiptDate.text=   DateFormat('dd-MM-yyyy').format(newValue!);
+                              // widget.plannedReceiptDate.text = newValue
+                              //     ?.toIso8601String()
+                              //     .split("T")[0] ??
+                              //     "";
 
                             },
                             enable: true),

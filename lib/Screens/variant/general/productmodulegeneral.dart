@@ -520,7 +520,19 @@ print("the list is"+variantList.toString());
     //   }
     // }
   }
+clear(){
 
+  variantController.clear();
+  variantNameController.clear();
+  variantFrameWorkNameController.clear();
+  vals.clear();
+  attribute=[];
+
+  variantList.clear();
+  setState(() {
+
+  });
+}
   @override
   void initState() {
     context.read<ListvariantCubit>().getVariantCreationList();
@@ -640,8 +652,9 @@ print("the list is"+variantList.toString());
                               .getVariantCreationRead(veritiaclid!);
                         } else {
                           print("common");
+                          clear();
                           // select=true;
-                          setState(() {});
+                          // setState(() {});
                         }
 
                         setState(() {});

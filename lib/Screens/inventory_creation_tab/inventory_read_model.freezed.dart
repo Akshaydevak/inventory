@@ -2092,7 +2092,7 @@ mixin _$Lines {
   @JsonKey(name: "grand_total")
   double? get grandTotal => throw _privateConstructorUsedError;
   @JsonKey(name: "vatable_amount")
-  double? get variableAmount => throw _privateConstructorUsedError;
+  double? get vatableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "excess_tax")
   double? get excessTax => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
@@ -2134,7 +2134,7 @@ abstract class $LinesCopyWith<$Res> {
       @JsonKey(name: "total_qty") int? requestedQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "vatable_amount") double? variableAmount,
+      @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "is_invoiced") bool? isInvoiced,
@@ -2172,7 +2172,7 @@ class _$LinesCopyWithImpl<$Res, $Val extends Lines>
     Object? requestedQty = freezed,
     Object? unitCost = freezed,
     Object? grandTotal = freezed,
-    Object? variableAmount = freezed,
+    Object? vatableAmount = freezed,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
     Object? isInvoiced = freezed,
@@ -2242,9 +2242,9 @@ class _$LinesCopyWithImpl<$Res, $Val extends Lines>
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      variableAmount: freezed == variableAmount
-          ? _value.variableAmount
-          : variableAmount // ignore: cast_nullable_to_non_nullable
+      vatableAmount: freezed == vatableAmount
+          ? _value.vatableAmount
+          : vatableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
       excessTax: freezed == excessTax
           ? _value.excessTax
@@ -2300,7 +2300,7 @@ abstract class _$$_LinesCopyWith<$Res> implements $LinesCopyWith<$Res> {
       @JsonKey(name: "total_qty") int? requestedQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "vatable_amount") double? variableAmount,
+      @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "is_invoiced") bool? isInvoiced,
@@ -2334,7 +2334,7 @@ class __$$_LinesCopyWithImpl<$Res> extends _$LinesCopyWithImpl<$Res, _$_Lines>
     Object? requestedQty = freezed,
     Object? unitCost = freezed,
     Object? grandTotal = freezed,
-    Object? variableAmount = freezed,
+    Object? vatableAmount = freezed,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
     Object? isInvoiced = freezed,
@@ -2404,9 +2404,9 @@ class __$$_LinesCopyWithImpl<$Res> extends _$LinesCopyWithImpl<$Res, _$_Lines>
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      variableAmount: freezed == variableAmount
-          ? _value.variableAmount
-          : variableAmount // ignore: cast_nullable_to_non_nullable
+      vatableAmount: freezed == vatableAmount
+          ? _value.vatableAmount
+          : vatableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
       excessTax: freezed == excessTax
           ? _value.excessTax
@@ -2459,7 +2459,7 @@ class _$_Lines implements _Lines {
       @JsonKey(name: "total_qty") this.requestedQty,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "grand_total") this.grandTotal,
-      @JsonKey(name: "vatable_amount") this.variableAmount,
+      @JsonKey(name: "vatable_amount") this.vatableAmount,
       @JsonKey(name: "excess_tax") this.excessTax,
       @JsonKey(name: "actual_cost") this.actualCost,
       @JsonKey(name: "is_invoiced") this.isInvoiced,
@@ -2514,7 +2514,7 @@ class _$_Lines implements _Lines {
   final double? grandTotal;
   @override
   @JsonKey(name: "vatable_amount")
-  final double? variableAmount;
+  final double? vatableAmount;
   @override
   @JsonKey(name: "excess_tax")
   final double? excessTax;
@@ -2539,7 +2539,7 @@ class _$_Lines implements _Lines {
 
   @override
   String toString() {
-    return 'Lines(id: $id, foc: $foc, discount: $discount, vat: $vat, barcode: $barcode, receiveLineCode: $receiveLineCode, variantId: $variantId, receivedQty: $receivedQty, receiveLineId: $receiveLineId, purchaseOrderLineid: $purchaseOrderLineid, invoiceLineCode: $invoiceLineCode, variantName: $variantName, requestedQty: $requestedQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isReceived: $isReceived)';
+    return 'Lines(id: $id, foc: $foc, discount: $discount, vat: $vat, barcode: $barcode, receiveLineCode: $receiveLineCode, variantId: $variantId, receivedQty: $receivedQty, receiveLineId: $receiveLineId, purchaseOrderLineid: $purchaseOrderLineid, invoiceLineCode: $invoiceLineCode, variantName: $variantName, requestedQty: $requestedQty, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isReceived: $isReceived)';
   }
 
   @override
@@ -2573,8 +2573,8 @@ class _$_Lines implements _Lines {
                 other.unitCost == unitCost) &&
             (identical(other.grandTotal, grandTotal) ||
                 other.grandTotal == grandTotal) &&
-            (identical(other.variableAmount, variableAmount) ||
-                other.variableAmount == variableAmount) &&
+            (identical(other.vatableAmount, vatableAmount) ||
+                other.vatableAmount == vatableAmount) &&
             (identical(other.excessTax, excessTax) ||
                 other.excessTax == excessTax) &&
             (identical(other.actualCost, actualCost) ||
@@ -2609,7 +2609,7 @@ class _$_Lines implements _Lines {
         requestedQty,
         unitCost,
         grandTotal,
-        variableAmount,
+        vatableAmount,
         excessTax,
         actualCost,
         isInvoiced,
@@ -2650,7 +2650,7 @@ abstract class _Lines implements Lines {
       @JsonKey(name: "total_qty") final int? requestedQty,
       @JsonKey(name: "unit_cost") final double? unitCost,
       @JsonKey(name: "grand_total") final double? grandTotal,
-      @JsonKey(name: "vatable_amount") final double? variableAmount,
+      @JsonKey(name: "vatable_amount") final double? vatableAmount,
       @JsonKey(name: "excess_tax") final double? excessTax,
       @JsonKey(name: "actual_cost") final double? actualCost,
       @JsonKey(name: "is_invoiced") final bool? isInvoiced,
@@ -2703,7 +2703,7 @@ abstract class _Lines implements Lines {
   double? get grandTotal;
   @override
   @JsonKey(name: "vatable_amount")
-  double? get variableAmount;
+  double? get vatableAmount;
   @override
   @JsonKey(name: "excess_tax")
   double? get excessTax;

@@ -62,6 +62,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
   TextEditingController inventoryId=TextEditingController();
   String salesReturnOrderCode="";
   List<SalesReturnLinesOrderLines> table = [];
+  final GlobalKey< SalesReturnInvoiceGrowableTableState> growableKey = GlobalKey< SalesReturnInvoiceGrowableTableState>();
   bool updateCheck=false;
   tableAssign(List<SalesReturnLinesOrderLines> table1 ) {
     print("ethito");
@@ -114,6 +115,42 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
   updateCheckFucction(bool value) {
     updateCheck = value;
     setState(() {});
+  }
+
+
+  clear(){
+
+    object=null;
+    // data.invoicedData?.lines != null
+    //     ? table =  data.invoicedData?.lines ?? []
+    //     : table = [];
+    inventoryId.clear();;
+    salesReturnOrderCode="";
+    invoiceCodeController.text="";
+    invoicedDateController.text="";
+orderStatusController.clear();
+    invoicedDateController.clear();
+    paymentIdController.clear();
+    paymentStatusController.text="";
+    paymentMethodController.text="";
+    customerIdController.text="";
+    trnController.text="";
+    noteController.text="";
+    remarksController.text="";
+    invoiceStatusController.text="";
+    assignToController.text="";
+    discountController.text="";
+    unitCostController.text="";
+    exciseTaxController.text="";
+    taxableController.text="";
+    vatController.text="";
+    sellingPriceController.text="";
+    totalPriceController.text="";
+    growableKey.currentState?.table1=[];
+    setState(() {
+
+    });
+
   }
   @override
   void initState() {
@@ -303,6 +340,8 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                           .read<SalesreturninvoicereadCubit>().getSalesReturnInvoiceRead(veritiaclid!);
                     } else {
                       print("common");
+                      clear();
+
                       // select = true;
                       // setState(() {
                       // });
@@ -454,6 +493,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                 // Divider(color: Colors.grey,thickness: 1,),
                                 SizedBox(height: height*.01,),
                                 SalesReturnInvoiceGrowableTable(
+                                  key: growableKey,
                                   updation: tableAssign,
                                   updateCheck: updateCheckFucction,
                                 ),

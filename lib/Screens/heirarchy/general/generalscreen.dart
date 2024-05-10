@@ -410,7 +410,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                     list1 = list;
 
                     result = list.data;
-                    print("seee" + result.toString());
+                    print("error list" + result.toString());
                     setState(() {
                       if (result.isNotEmpty) {print("istCAse   enterd inthis case1");
                         if(select){
@@ -440,10 +440,10 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
 
                         select = true;
                         clear();
-                        setState(() {});
+
                       }
 
-                      setState(() {});
+
                     });
                   });
             },

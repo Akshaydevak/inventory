@@ -40,8 +40,8 @@ const salesReturnLiveBaseUrl = "https://st-inv-sales-return.hilalcart.com/";
 // const salesReturnLiveBaseUrl = "https://api-uat-inv-sales-return.sidrabusiness.com/";
 
 
-const payMentBaseUrl = "https://api-uat-payments.sidrabazar.com/";
-// const payMentBaseUrl = "https://api-rgc-payments.hilalcart.com/";
+// const payMentBaseUrl = "https://api-uat-payments.sidrabazar.com/";
+const payMentBaseUrl = "https://api-rgc-payments.hilalcart.com/";
 
 
 

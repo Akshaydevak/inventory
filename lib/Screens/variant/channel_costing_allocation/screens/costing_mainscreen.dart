@@ -330,7 +330,16 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                     else {
                       print("common");
                       select=true;
-                      setState(() {});
+                      checkBoxLis.clear();
+                      selection.clear();
+                      table.clear();
+                      group.clear();
+                      clear();
+                      channelNameController.clear();
+                      channelStockCodeController.clear();
+                      veritiaclid = -1;
+                      variantCode = "";
+                      // setState(() {});
                     }
 
 

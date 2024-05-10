@@ -160,7 +160,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                               label: "Sales Invoice Code",
                               type:"InvoiceCode-PopUpCall",
                               value: widget.salesInvoiceCode.text,
-                              enable: true,
+                              // enable: true,
                               onSelection: (SalesInvoiceCodeModel? va) {
                                 print(
                                     "+++++++++++++++++++++++");

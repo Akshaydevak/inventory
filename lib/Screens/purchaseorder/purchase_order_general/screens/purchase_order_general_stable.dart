@@ -38,7 +38,8 @@ class PurchaseOrderGeneralStableTable extends StatefulWidget {
   final TextEditingController grandTotal;
   final bool isVendorCheck;
   final Function tableDatasClear;
-  PurchaseOrderGeneralStableTable({ required this.orderType, required this.orderCode, required this.oderDate, required this.vendorCode, required this.vendorTrnNumber, required this.promisedReceiptDate, required this.promisedReceiptDate2, required this.plannedReceiptDate, required this.plannedReceiptDate2, required this.paymentCode, required this.paymentStatus, required this.orderStatus, required this.receivingStatus, required this.invoiceStatus, required this.note, required this.remarks, required this.discount, required this.foc, required this.unitCost, required this.vatableAmount, required this.excessTax, required this.vat, required this.actualCost, required this.grandTotal, required this.isVendorCheck, required this.vendorName, required this.vendorEmail, required this.tableDatasClear});
+  final bool isSelect;
+  PurchaseOrderGeneralStableTable({ required this.orderType, required this.orderCode, required this.oderDate, required this.vendorCode, required this.vendorTrnNumber, required this.promisedReceiptDate, required this.promisedReceiptDate2, required this.plannedReceiptDate, required this.plannedReceiptDate2, required this.paymentCode, required this.paymentStatus, required this.orderStatus, required this.receivingStatus, required this.invoiceStatus, required this.note, required this.remarks, required this.discount, required this.foc, required this.unitCost, required this.vatableAmount, required this.excessTax, required this.vat, required this.actualCost, required this.grandTotal, required this.isVendorCheck, required this.vendorName, required this.vendorEmail, required this.tableDatasClear, required this.isSelect});
 
 
   @override
@@ -163,27 +164,30 @@ class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSt
                                   height: height * .035,
                                 ),
                                 PopUpDateFormField(
+                                  isCreate: widget.isSelect,
                                     format:DateFormat('dd-MM-yyyy'),
-                                    controller:widget.promisedReceiptDate2,
+                                    controller:widget.promisedReceiptDate,
                                     // initialValue:
                                     //     DateTime.parse(fromDate!),
 
                                     label: "Promised Receipt Date",
                                     onSaved: (newValue) {
                                       widget.promisedReceiptDate2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
-                                      widget.promisedReceiptDate.text = newValue?.toIso8601String().split("T")[0] ?? "";
+                                      widget.promisedReceiptDate.text = DateFormat('dd-MM-yyyy').format(newValue!);;
                                     },
                                     enable: true),
                                 SizedBox(
                                   height: height * .035,
                                 ),
                                 PopUpDateFormField(
+                                    isCreate: widget.isSelect,
                                     format:DateFormat('dd-MM-yyyy'),
-                                    controller: widget.plannedReceiptDate2,
+                                    controller: widget.plannedReceiptDate,
                                     label: "Planned Receipt Date",
                                     onSaved: (newValue) {
+                                      widget.plannedReceiptDate.text=   DateFormat('dd-MM-yyyy').format(newValue!);
                                       widget.plannedReceiptDate2.text=   DateFormat('dd-MM-yyyy').format(newValue!);
-                                      widget.plannedReceiptDate.text = newValue?.toIso8601String().split("T")[0] ?? "";
+                                      // widget.plannedReceiptDate.text = newValue?.toIso8601String().split("T")[0] ?? "";
                                     },
                                     enable: true),
                                 SizedBox(

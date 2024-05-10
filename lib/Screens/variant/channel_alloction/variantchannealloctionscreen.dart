@@ -137,6 +137,9 @@ class _VariantChannelAllocationScreenState
       print("GAssali"+apiChecking.toString());
     });
   }
+  clear(){
+
+  }
   @override
   void initState() {
     context.read<StockverticalCubit>().getStockList(Variable.inventory_ID);

@@ -119,6 +119,7 @@ class PopUpDateFormField extends StatefulWidget {
   final bool enable;
   final bool required;
   final bool row;
+  final bool isCreate;
   final TextEditingController? controller;
   // final TextEditingController controller;
   final FormFieldSetter<DateTime>? onSaved;
@@ -128,6 +129,7 @@ class PopUpDateFormField extends StatefulWidget {
         required this.label,
         this.controller,
         this.row=false,
+        this.isCreate=false,
 
         this.enable = true,
         this.required = false,
@@ -205,10 +207,10 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
                     date = await showDatePicker(
                         context: context,
                         firstDate: DateTime(1900),
-                        initialDate: currentValue ?? DateTime.now(),
+                        initialDate: widget. isCreate?DateTime.now():currentValue ?? DateTime.now(),
                         lastDate: DateTime(2100));
 
-                  return date ?? currentValue;
+                  return date!=null?date: widget. isCreate?DateTime.now(): currentValue;
                 },
               )
           )
@@ -261,10 +263,10 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
                 date = await showDatePicker(
                     context: context,
                     firstDate: DateTime(1900),
-                    initialDate: currentValue ?? DateTime.now(),
+                    initialDate:widget. isCreate?DateTime.now():currentValue ?? DateTime.now(),
                     lastDate: DateTime(2100));
 
-              return date ?? currentValue;
+              return date!=null?date :widget. isCreate?DateTime.now(): currentValue;
             },
           )
 

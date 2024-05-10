@@ -13,7 +13,12 @@ class PurchaseOrderInvoiceGrowableTable extends StatefulWidget {
   final Function updation;
   final Function updateCheck;
   // final Function updation;
-  PurchaseOrderInvoiceGrowableTable({required Key key,required this.table,required this.updation,required this.updateCheck});
+  PurchaseOrderInvoiceGrowableTable({
+    Key? key,
+    required this.table,
+    required this.updation,
+    required this.updateCheck,
+  }) : super(key: key);
 
   @override
   PurchaseOrderInvoiceGrowableTableState createState() => PurchaseOrderInvoiceGrowableTableState();
@@ -23,9 +28,9 @@ class PurchaseOrderInvoiceGrowableTableState extends State<PurchaseOrderInvoiceG
   late AutoScrollController recieveController;
   bool editionchek=false;
   var unitcostListControllers = <TextEditingController>[];
-  List<Lines> additionalVariants = [];
+  List<Lines> additionalVariants = List.from([]);
   tableClear(){
-
+print("table clear");
     setState(() {
       additionalVariants.clear();
     });
@@ -414,7 +419,7 @@ class PurchaseOrderInvoiceGrowableTableState extends State<PurchaseOrderInvoiceG
                                                 ),
                                                 TableCell(
                                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                                                  child: textPadding(additionalVariants[i].variableAmount .toString()?? "", fontSize: 12,
+                                                  child: textPadding(additionalVariants[i].vatableAmount .toString()?? "", fontSize: 12,
                                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
                                                 ),

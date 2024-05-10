@@ -402,8 +402,10 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                           } else {
                             print("common");
                             select = true;
-                            setState(() {
-                            });
+                            clear();
+                            _myWidgetState.currentState?.table1=[];
+                            _myWidgetState.currentState?.currentStock=[];
+
 
                           }
 
@@ -484,6 +486,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                             onPress: () {
                                               setState(() {
                                                 select = true;
+                                                selectedVertical=-1;
                                                 table= [];
                                                 clear();
                                                 _myWidgetState.currentState?.table1=[];

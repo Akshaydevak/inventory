@@ -74,6 +74,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   var expirydateControllerList2 = <TextEditingController>[];
   late AutoScrollController recieveController;
   late AutoScrollController additionalController;
+  bool isSave=false;
+  bool isGenarate=false;
   int selectedVertical = 0;
   bool select = false;
   bool recievlinequantityCheck = false;
@@ -755,6 +757,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                     // context.
                     context.showSnackBarError("Loading");
                   }, error: () {
+                    setState(() {
+                      isGenarate=false;
+                    });
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
                     if (data.data1) {
@@ -769,6 +774,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                       context.showSnackBarError(data.data2);
                       print(data.data1);
                     }
+                    setState(() {
+                      isGenarate=false;
+                    });
                     ;
                   });
                 },
@@ -839,6 +847,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                     // context.
                     context.showSnackBarError("Loading");
                   }, error: () {
+                    setState(() {
+                      isSave=false;
+                    });
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
                     if (data.data1){
@@ -852,6 +863,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                       context.showSnackBarError(data.data2);
                       print(data.data1);
                     }
+                    setState(() {
+                      isSave=false;
+                    });
                     ;
                   });
                 },
@@ -6041,12 +6055,21 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               TextButtonLarge(
+
+                                isSingle: true,
+                                isLoading:isGenarate ,
+
                                 onPress: () {
                                   var isUpdate=additiionUpdateCheckFunc();
                                   if(isUpdate){
                                     context.showSnackBarError("Please press the update button");
                                   }
-                                  else{AdditionalGenerateModel model =
+                                  else{
+                                    setState(() {
+                                      isGenarate=true;
+                                    });
+
+                                    AdditionalGenerateModel model =
                                   AdditionalGenerateModel(
                                     receivingId: receivingId,
                                     createdBy: 12,
@@ -6068,6 +6091,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                             height: 20,
                           ),
                           SaveUpdateResponsiveButton(
+                            isSaveUpdateLoading:isSave ,
                             label: "SAVE",
                             isDelete: true,
                             saveFunction: () {
@@ -6090,6 +6114,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                 context
                                     .showSnackBarError("Please press update");
                               } else {
+                                setState(() {
+                                  isSave=true;
+                                });
                                 RequestReceivingPatch model =
                                     RequestReceivingPatch(
                                         note: noteController.text ?? "",

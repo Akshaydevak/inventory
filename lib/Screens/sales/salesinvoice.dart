@@ -396,6 +396,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                       context.read<InvoicereadCubit>().getSalesInvoiceRead(veritiaclid!);
                     }
                     else{
+                      clear();
                       print("common");
 
                     }

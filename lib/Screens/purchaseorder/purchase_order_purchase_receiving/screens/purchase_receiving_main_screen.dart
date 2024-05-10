@@ -851,6 +851,9 @@ class _PurchaseOrderRecievinScreenState extends State<PurchaseOrderRecievinScree
                           Variable.verticalid=result[0].id;
                           print("Variable.ak"+Variable.verticalid.toString());
                           }
+                          else{
+                            clear();
+                          }
 
                         });
                       });
@@ -2798,6 +2801,8 @@ class _PurchaseOrderRecievinScreenState extends State<PurchaseOrderRecievinScree
                                                             MainAxisAlignment.end,
                                                             children: [
                                                               TextButtonLarge(
+
+
                                                                 onPress: () {
 
                                                                   List<RecievingLines>additionalVariants1=[];

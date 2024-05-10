@@ -431,6 +431,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                       } else {
                         print("common");
                         select = true;
+                        clears();
                         // setState(() {
                         // });
 
@@ -632,6 +633,11 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                     if (updateCheck)
                                       context.showSnackBarError(
                                           "please click the update button ");
+                                    else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
+
+                                      context.showSnackBarError(
+                                          "Required at least one variant ");
+                                    }
                                     else {
                                       commonProvider.setLoadingSaveUpdate(true);
                                       var table1=[

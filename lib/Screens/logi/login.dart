@@ -11,6 +11,7 @@ import 'package:inventory/Screens/register/screens/registerscreen.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/loading_widgets.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
@@ -255,11 +256,13 @@ class _LoginButtonState extends State<LoginButton> {
         widget.onpress();
       },
       child: Container(
-        // width: 300,
+        // width: double.infinity,
         margin:  EdgeInsets.symmetric(horizontal: width*.019),
         color: Pellet.tableBlueHeaderPrint,
         height: widget.height,
-        child: Center(child: Text(widget.label,style: TextStyle(color: widget.labelColor),)),
+        child:
+        // customCommonButtonProgressIndiactor(false,scale: .1)
+        Center(child: Text(widget.label,style: TextStyle(color: widget.labelColor),)),
 
       ),
     );

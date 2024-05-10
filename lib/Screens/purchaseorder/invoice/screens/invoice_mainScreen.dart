@@ -17,6 +17,7 @@ import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment
 import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/sales/invoice/cubits/payment_suucess_post/payment_transaction_success_post_cubit.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -35,6 +36,7 @@ import 'package:inventory/widgets/Scrollabletable.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -63,6 +65,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
   TextEditingController actualCostController = TextEditingController();
   TextEditingController grandTotalController = TextEditingController();
   TextEditingController noteController = TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   TextEditingController remarksController = TextEditingController();
   final GlobalKey< PurchaseOrderInvoiceGrowableTableState> _myWidgetState = GlobalKey< PurchaseOrderInvoiceGrowableTableState>();
   List<PurchaseOrder>result=[];
@@ -75,7 +78,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
   int? veritiaclid=0;
   bool select=false;
   bool updateCheck=false;
-  List<Lines> additionalVariants = [];
+  List<Lines> additionalVariants = List.from([]);
   TextEditingController itemsearch=TextEditingController();
   late AutoScrollController recieveController;
   updateCheckFucction(bool value) {
@@ -107,7 +110,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
           var actualValue1= additionalVariants[i].actualCost??0;
           var discountValue1= additionalVariants[i].discount??0;
           var focValue1= additionalVariants[i].foc??0;
-          var VatableValue1= additionalVariants[i].variableAmount??0;
+          var VatableValue1= additionalVariants[i].vatableAmount??0;
           var excessTAxValue1= additionalVariants[i].excessTax??0;
           unitcost = unitcost +unicost1;
           grands = grands + grands1;
@@ -155,6 +158,12 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
    variableAmountController.clear();
  vatController.clear();
     additionalVariants.clear();
+    print("_myWidgetState.currentState?.additionalVariants${_myWidgetState.currentState?.additionalVariants}");
+    _myWidgetState.currentState?.tableClear();
+    print("_myWidgetState.currentState?.additionalVariants${_myWidgetState.currentState?.additionalVariants}");
+    setState(() {
+
+    });
   }
 
 
@@ -176,6 +185,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
   Widget build(BuildContext context) {
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
+    commonProvider = Provider.of<NavigationProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: MultiBlocProvider(
@@ -376,6 +386,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                 });
                               }
+                              else{
+                                clear();
+                              }
+
                             });
 
                           }
@@ -389,6 +403,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                         // context.
                         context.showSnackBarError("Loading");
                       }, error: () {
+                        commonProvider.setLoadingSaveUpdate(false);
                         context.showSnackBarError(Variable.errorMessege);
                       }, success: (data) {
                         if (data.data1) {
@@ -399,6 +414,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                           context.showSnackBarError(data.data2);
                           print(data.data1);
                         }
+                        commonProvider.setLoadingSaveUpdate(false);
                         ;
                       });
                     },
@@ -413,6 +429,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                         VerticalList(selectedVertical: selectedVertical,
                           tab:"II",
                           itemsearch: itemsearch,ontap: (int index){
+
                             setState(() {
                               print("taped");
                               select=false;
@@ -1033,6 +1050,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               // ScrollableTable(),
                               SizedBox(height: 20,),
                               SaveUpdateResponsiveButton(
+                                isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
                                   isDelete:true,
                                 saveFunction: (){bool confirmationCheck=false;
                                   for(var i=0;i<additionalVariants.length;i++){
@@ -1053,6 +1071,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                   // // clear:clear(),
                                   // verticalId:veritiaclid ,
                                   onPressed:(){
+                                    commonProvider.setLoadingSaveUpdate(true);
                                     InventoryPostModel model =
                                     InventoryPostModel(
                                       purchaseOrderCode: purchaseCodeController.text??"",
@@ -1085,6 +1104,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                   }
                                   else {
+                                    commonProvider.setLoadingSaveUpdate(true);
                                     print("additionalvariants" +
                                         additionalVariants.toString());
                                     InventoryPostModel model =

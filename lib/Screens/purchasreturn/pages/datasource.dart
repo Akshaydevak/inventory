@@ -3523,6 +3523,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<ItemReadModel> getItemRead(int? id) async {
     String path = readItemApi + id.toString();
+    print("SSSSSSSSSSSSSSSSSSSSpath$path");
     try {
       print("ppppath" + path.toString());
       print(path);

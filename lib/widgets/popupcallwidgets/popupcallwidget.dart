@@ -500,6 +500,8 @@ class _PopUpCallState extends State<PopUpCall> {
       case "InvoiceCode-PopUpCall":
         {
           data = InvoiceCodePopUpCall(
+
+
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -1011,10 +1013,10 @@ class _CustomMessureentPopUpCallState
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<MessurementCubit>(
-        create: (context) => MessurementCubit(),
+        create: (context) => MessurementCubit()..getMessurementRead(),
         child: Builder(
           builder: (context) {
-            context.read<MessurementCubit>().getMessurementRead();
+            // context.read<MessurementCubit>().getMessurementRead();
             return BlocBuilder<MessurementCubit,
                 MessurementState>(builder: (context, state) {
               print(state);
@@ -1155,10 +1157,10 @@ class _CustomHeightPopUpCallState
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<MessurementCubit>(
-        create: (context) => MessurementCubit(),
+        create: (context) => MessurementCubit()..getMessurementRead(),
         child: Builder(
           builder: (context) {
-            context.read<MessurementCubit>().getMessurementRead();
+            // context.read<MessurementCubit>().getMessurementRead();
             return BlocBuilder<MessurementCubit,
                 MessurementState>(builder: (context, state) {
               print(state);
@@ -1302,10 +1304,10 @@ class _CustomWeightPopUpCallState
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<MessurementCubit>(
-        create: (context) => MessurementCubit(),
+        create: (context) => MessurementCubit()..getMessurementRead(),
         child: Builder(
           builder: (context) {
-            context.read<MessurementCubit>().getMessurementRead();
+            // context.read<MessurementCubit>().getMessurementRead();
             return BlocBuilder<MessurementCubit,
                 MessurementState>(builder: (context, state) {
               print(state);
@@ -1444,10 +1446,10 @@ class _CustomWidthPopUpCallState
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<MessurementCubit>(
-        create: (context) => MessurementCubit(),
+        create: (context) => MessurementCubit()..getMessurementRead(),
         child: Builder(
           builder: (context) {
-            context.read<MessurementCubit>().getMessurementRead();
+            // context.read<MessurementCubit>().getMessurementRead();
             return BlocBuilder<MessurementCubit,
                 MessurementState>(builder: (context, state) {
               print(state);
@@ -2469,10 +2471,10 @@ class _CustomReturnTypePopupCallState extends State<CustomReturnTypePopupCall> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<ReadcustomCubit>(
-        create: (context) => ReadcustomCubit(),
+        create: (context) => ReadcustomCubit()..getReturnRead(),
         child: Builder(
           builder: (context) {
-            context.read<ReadcustomCubit>().getReturnRead();
+            // context.read<ReadcustomCubit>().getReturnRead();
             return BlocBuilder<ReadcustomCubit,
                 ReadcustomState>(builder: (context, state) {
               print(state);
@@ -5661,7 +5663,7 @@ class _PurchaseInvoiceState extends State<PurchaseInvoices> {
               success: (data) {
                 dataList=data.length;
                 print("data===sssssssss" + data.toString());
-                List<String?> list = [];
+                List<String> list = [];
                 int length = data.length;
                 if(length!=0){
                   for (var i = 0; i < length; i++) {
@@ -5759,14 +5761,14 @@ class _PurchaseInvoiceState extends State<PurchaseInvoices> {
   }
 
   List<String> search(
-      String value, List<String?> list, VoidCallback? onAddNew) {
+      String value, List<String> list, VoidCallback? onAddNew) {
     print("value" + value.toString());
     List<String> newList = [];
-    // list.forEach((element) {
-    //   if (element.toLowerCase().contains(value.toLowerCase()))
-    //     newList.add(element);
-    // });
-    // onAddNew != null ? newList.add("Add new") : null;
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
     return newList;
   }
 }
@@ -6578,10 +6580,10 @@ class _InvoiceCodePopUpCallState extends State<InvoiceCodePopUpCall> {
                 },
                 textFieldConfiguration: TextFieldConfiguration(
                     controller: _controller,
-                    keyboardType: TextInputType.phone,
-                    inputFormatters:  <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp(r" "))
-                    ],
+                    // keyboardType: TextInputType.phone,
+                    // inputFormatters:  <TextInputFormatter>[
+                    //   FilteringTextInputFormatter.allow(RegExp(r" "))
+                    // ],
                     decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.width*.0135,horizontal: 10),

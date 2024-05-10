@@ -10,6 +10,7 @@ import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/purchaseorder/purchase_order_request_form/pages/purchase_order_request_form_growable.dart';
 import 'package:inventory/Screens/purchaseorder/purchase_order_request_form/pages/request_form_stabletable.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -31,6 +32,7 @@ import 'package:inventory/requestformcubit/cubit/deleterequestform_cubit.dart';
 import 'package:inventory/requestformcubit/cubit/requestformpost_cubit.dart';
 import 'package:inventory/requestformcubit/cubit/requestformread_cubit.dart';
 import 'package:inventory/requestformcubit/cubit/requestpatch_cubit.dart';
+import 'package:provider/provider.dart';
 
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
@@ -66,6 +68,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   TextEditingController actualCostController = TextEditingController();
   TextEditingController grandTotalController = TextEditingController();
   TextEditingController orderType = TextEditingController();
+  NavigationProvider commonProvider = NavigationProvider();
   final GlobalKey<PurchaseOrderRequestFormGrowableTableState> _myWidgetState = GlobalKey<PurchaseOrderRequestFormGrowableTableState>();
   //
   late AutoScrollController scontroller;
@@ -214,7 +217,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
 
-
+    commonProvider = Provider.of<NavigationProvider>(context);
     return Scaffold(
         backgroundColor: Colors.white,
         body:
@@ -247,6 +250,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                         state.maybeWhen(orElse: () {
                           context.showSnackBarError("Loading");
                         }, error: () {
+                          commonProvider.setLoadingSaveUpdate(false);
                           context.showSnackBarError(Variable.errorMessege);
                         }, success: (data) {
                           if (data.data1) {
@@ -267,6 +271,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                             context.showSnackBarError(data.data2);
                             print(data.data1);
                           }
+                          commonProvider.setLoadingSaveUpdate(false);
                           ;
                         });
                       },
@@ -278,6 +283,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                           // context.
                           context.showSnackBarError("Loading");
                         }, error: () {
+                          commonProvider.setLoadingSaveUpdate(false);
                           context.showSnackBarError(Variable.errorMessege);
                         }, success: (data) {
                           if (data.data1){
@@ -290,6 +296,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                             context.showSnackBarError(data.data2);
                             print(data.data1);
                           }
+                          commonProvider.setLoadingSaveUpdate(false);
                           ;
                         });
                       },
@@ -311,10 +318,10 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                 orderType.text=data.data?.purchaseOrderType??"";
                                 orderDateController=TextEditingController(text:data.data?.orderDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.orderDate??"")));
                                 inventoryIdController.text=data.data?.iventoryId??"";
-                                promisedRecieptDate.text=data.data?.promisedReceiptdate??"";
-                                promisedRecieptDate2=TextEditingController(text: data.data?.promisedReceiptdate==null?"": DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??""!)));
-                                plannedRecieptDate2=TextEditingController(text:data.data?.plannedRecieptDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??""!)));
-                                plannedRecieptDate.text=data.data?.plannedRecieptDate??"";
+                                // promisedRecieptDate.text=data.data?.promisedReceiptdate??"";
+                                promisedRecieptDate=TextEditingController(text: data.data?.promisedReceiptdate==null?"": DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??""!)));
+                                plannedRecieptDate=TextEditingController(text:data.data?.plannedRecieptDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??""!)));
+                                // plannedRecieptDate.text=data.data?.plannedRecieptDate??"";
                                 orderedPersonController.text=data.data?.orderedPereson??"";
                                 paymentCodeController.text=data.data?.paymentcode??"";
                                 paymentStatusController.text=data.data?.paymentStatus??"";
@@ -344,7 +351,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                         state.maybeWhen(orElse: () {
                           // context.
                           context.showSnackBarError("Loading");
-                        }, error: () {
+                        }, error: () {  commonProvider.setLoadingDeleterClear(false);
                           context.showSnackBarError(Variable.errorMessege);
                         }, success: (data) {
                           print("checkingdata"+data.data1.toString());
@@ -359,6 +366,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                             context.showSnackBarError(data.data2);
                             print(data.data1);
                           }
+                          commonProvider.setLoadingDeleterClear(false);
 
                         });
                       },
@@ -559,6 +567,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                               ),
                                               SizedBox(height: 10,),
                                               PurchaseOrderRequestFormTable(
+                                                isSected: select,
                                                 plannedReceiptDate2: plannedRecieptDate2,
                                                 promisedReceiptDate2: promisedRecieptDate2,
                                                 plannedReceiptDate: plannedRecieptDate,
@@ -592,11 +601,18 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
 
                                               SizedBox(height: 30,),
                                               SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",
+                                                isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                                isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                                 saveFunction: (){
                                                   if(updateCheck==true){
                                                     context.showSnackBarError("please click the update button ");
                                                   }
+                                                  else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
+                                                    context.showSnackBarError(
+                                                        "Required at least one variant ");
+                                                  }
                                                   else{
+                                                    commonProvider.setLoadingSaveUpdate(true);
                                                     var table1=[
                                                       for(var em in table)
                                                         if(em.isActive==true)
@@ -610,8 +626,8 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                         address1: "akshay",
                                                         address2: "anmaika",
                                                         discount:double.tryParse( discountController.text),
-                                                        plannedRecieptDate: plannedRecieptDate.text??"",
-                                                        promisedReceiptdate:promisedRecieptDate.text??"",
+                                                        plannedRecieptDate: DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(plannedRecieptDate.text??"")),
+                                                        promisedReceiptdate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(promisedRecieptDate.text??"")),
                                                         note: noteController.text??"",
                                                         remarks: remarksController.text??"",
                                                         unitcost: double.tryParse(unitCostController.text),
@@ -647,7 +663,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                         LogoutPopup(
                                                           message: "Do you want to delete the order",
                                                           onPressed:(){
-                                                            print("akshay");
+                                                            commonProvider.setLoadingDeleterClear(true);
                                                             Navigator.pop(context);
                                                             context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);
 

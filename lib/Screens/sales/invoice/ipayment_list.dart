@@ -17,6 +17,8 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
 
+import '../../../commonWidget/loading_widgets.dart';
+
 class SalesPaymentListPActh extends StatefulWidget {
   const SalesPaymentListPActh({Key? key}) : super(key: key);
 
@@ -154,325 +156,334 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                     ),
 
 
-                    SingleChildScrollView(
-                      child: customTable(
+                    BlocBuilder<PayementVerticalListCubit, PayementVerticalListState>(
+  builder: (context, state) {
+    return state.maybeWhen(orElse: (){
+      return customCommonTAbleProgressIndiactor();
+    },success: (data){
+    return  SingleChildScrollView(
+        child: customTable(
 
-                        tableWidth: .5,
-                        childrens: [
-                          TableRow(
-                            children: [
-                              tableHeadtext(
-                                'Sl.No',
+          tableWidth: .5,
+          childrens: [
+            TableRow(
+              children: [
+                tableHeadtext(
+                  'Sl.No',
 
-                                size: 13,
-                              ),  tableHeadtext(
-                                'Order Id',
-                                size: 13,
-                              ),
+                  size: 13,
+                ),  tableHeadtext(
+                  'Order Id',
+                  size: 13,
+                ),
 
-                              tableHeadtext(
-                                'Transaction Code',
-                                size: 13,
+                tableHeadtext(
+                  'Transaction Code',
+                  size: 13,
 
-                              ),
-                              tableHeadtext(
-                                'Mobile Number',
-                                size: 13,
-                                // color: Color(0xffE5E5E5),
-                              ),
-                              tableHeadtext(
-                                'Total Amount',
-                                // textColor: Colors.black,
-                                // padding: EdgeInsets.all(7),
-                                // height: 46,
-                                size: 13,
-                                // color: Color(0xffE5E5E5),
-                              ),
-                              tableHeadtext(
-                                'Payment Status',
-                                // textColor: Colors.black,
-                                // padding: EdgeInsets.all(7),
-                                // height: 46,
-                                size: 13,
-                                // color: Color(0xffE5E5E5),
-                              ),
-                              tableHeadtext(
-                                '',
+                ),
+                tableHeadtext(
+                  'Mobile Number',
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                tableHeadtext(
+                  'Total Amount',
+                  // textColor: Colors.black,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                tableHeadtext(
+                  'Payment Status',
+                  // textColor: Colors.black,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                tableHeadtext(
+                  '',
 
-                                size: 13,
-                                // color: Color(0xffE5E5E5),
-                              ),
-                            ],
-                          ),
-                          if (table?.isNotEmpty == true) ...[
-                            for (var i = 0; i < table.length; i++)
-                              TableRow(
-                                  decoration: BoxDecoration(
-                                      color: Pellet.tableRowColor,
-                                      shape: BoxShape.rectangle,
-                                      border:  Border(
-                                          left: BorderSide(
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+              ],
+            ),
+            if (table?.isNotEmpty == true) ...[
+              for (var i = 0; i < table.length; i++)
+                TableRow(
+                    decoration: BoxDecoration(
+                        color: Pellet.tableRowColor,
+                        shape: BoxShape.rectangle,
+                        border:  Border(
+                            left: BorderSide(
 
-                                              color: Color(0xff3E4F5B).withOpacity(.1),
-                                              width: .4,
-                                              style: BorderStyle.solid),
-                                          bottom: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+                                style: BorderStyle.solid),
+                            bottom: BorderSide(
 
-                                              color:   Color(0xff3E4F5B).withOpacity(.1),
-                                              style: BorderStyle.solid),
-                                          right: BorderSide(
-                                              color:   Color(0xff3E4F5B).withOpacity(.1),
-                                              width: .4,
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                style: BorderStyle.solid),
+                            right: BorderSide(
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
 
-                                              style: BorderStyle.solid))),
-                                  children: [
-                                    TableCell(
-                                        verticalAlignment:
-                                        TableCellVerticalAlignment
-                                            .middle,
-                                        child:
-                                        textPadding((i + 1).toString(),alighnment: Alignment.center)
-                                      // Text(keys[i].key??"")
+                                style: BorderStyle.solid))),
+                    children: [
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child:
+                          textPadding((i + 1).toString(),alighnment: Alignment.center)
+                        // Text(keys[i].key??"")
 
-                                    ),
-                                    TableCell(
-                                        verticalAlignment:
-                                        TableCellVerticalAlignment
-                                            .middle,
-                                        child:textOnclickPadding(
-    ontap: () {
-    },
-    text: table[i].order ?? "",)
-                                      // Text(keys[i].key??"")
-
-                                    ),
-
-                                    TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment.middle,
-                                      child: UnderLinedInput(
-
-                                        formatter: false,
-                                        textAlighn: TextAlign.left,
-                                        alignment: Alignment.topLeft,
-                                        controller:transactionCodeControllers[i],
-                                        onChanged: (va) {
-                                          // widget.updateCheck(true);
-                                          table[i] = table[i].copyWith(transactionCode: va,updateCheck: true);
-                                                   setState(() {});
-                                        },
-                                      ),
-                                    ),
-                                    TableCell(
-                                        verticalAlignment:
-                                        TableCellVerticalAlignment
-                                            .middle,
-                                        child: textOnclickPadding(
-                                          ontap: () {
-                                          },
-                                          text: table[i].postResponse?.contact ?? "",),),
-
-                                    TableCell(
-                                        verticalAlignment:
-                                        TableCellVerticalAlignment
-                                            .middle,
-                                        child: textOnclickPadding(
-                                          ontap: () {
-                                          },
-                                          text: table[i].totalAmount.toString() ?? "",),),
-                                    TableCell(
-                                        verticalAlignment:
-                                        TableCellVerticalAlignment
-                                            .middle,
-                                        child:
-                                        CustomDropDown(
-                                          // border: true,
-                                          choosenValue: table[i].paymentStatus=="payment_completed"?"Payment Completed":table[i].paymentStatus=="payment_pending"?"Payment Pending":table[i].paymentStatus=="rejected"?"Rejected":table[i].paymentStatus??"",
-                                          onChange: (val) {
-                                            setState(() {
-                                              String status="";
-                                              if(val=="Payment Completed"){
-                                                status="payment_completed";
-                                              }
-                                              else if(val=="Payment Pending"){
-                                                status="payment_pending";
-
-                                              }
-                                              else if(val=="Rejected"){
-                                                status="rejected";
-
-                                              }
-
-
-                                              table[i]=table[i].copyWith(paymentStatus:status,updateCheck: true );
-                                            });
-
-                                            // choosenValue=val;
-                                          },
-                                          items: items,
-                                        ),
-
-
-                                        // DropdownButton(
-                                        //   // underline: Container(color: Colors.transparent),
-                                        //
-                                        //   // Initial Value
-                                        //   value: selectval,
-                                        //
-                                        //   // Down Arrow Icon
-                                        //   icon: const Icon(Icons.keyboard_arrow_down),
-                                        //
-                                        //   // Array list of items
-                                        //   items: items.map((String? items) {
-                                        //     return DropdownMenuItem(
-                                        //       value: items,
-                                        //       child: Text(items??""),
-                                        //     );
-                                        //   }).toList(),
-                                        //   // After selecting the desired option,it will
-                                        //   // change button value to selected value
-                                        //   onChanged: (String?  newValue) {
-                                        //     // setState(() {
-                                        //     //   table[i]=table[i].copyWith(paymentStatus:newValue,updateCheck: true );
-                                        //     // });
-                                        //   },
-                                        // ),
-                                    ),
-                                    TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment.middle,
-                                      child: TableTextButton(
-                                        onPress: () {
-                                          setState(() {
-                                            if(table[i].updateCheck==true){
-                                              table[i] = table[i].copyWith(
-                                                  updateCheck: false);
-                                              PurchasePaymentPostModel model=PurchasePaymentPostModel(
-                                                  processId: table[i].id,
-                                                  customerCode: table[i].customerCode,
-                                                  orderId: table[i].postResponse?.orderId,
-                                                  status: table[i].paymentStatus,
-                                                  tranSactionCode: table[i].transactionCode
-                                              );
-                                              context.read<PaymentPacthCubit>().patchPayment(model);
-                                              table[i] = table[i].copyWith(
-                                                  updateCheck: false);
-                                            }
-
-                                          });
-                                        },
-                                        textColor: table[i].updateCheck == true
-                                            ? Pellet.tableBlueHeaderPrint
-                                            : Colors.grey,
-                                        label:
-                                        table[i].updateCheck == true
-                                            ? "UPDATE"
-                                            : "",
-                                      ),
-                                    )
-                                  ]),
-                          ],
-                          if(table.isEmpty)
-                            TableRow(
-                                decoration: BoxDecoration(
-                                    color: Pellet.tableRowColor,
-                                    shape: BoxShape.rectangle,
-                                    border:  Border(
-                                        left: BorderSide(
-
-                                            color: Color(0xff3E4F5B).withOpacity(.1),
-                                            width: .4,
-                                            style: BorderStyle.solid),
-                                        bottom: BorderSide(
-
-                                            color:   Color(0xff3E4F5B).withOpacity(.1),
-                                            style: BorderStyle.solid),
-                                        right: BorderSide(
-                                            color:   Color(0xff3E4F5B).withOpacity(.1),
-                                            width: .4,
-
-                                            style: BorderStyle.solid))),
-                                children: [
-                                  TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment
-                                          .middle,
-                                      child:
-                                      textPadding("",alighnment: Alignment.center)
-                                    // Text(keys[i].key??"")
-
-                                  ),
-                                  TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment
-                                          .middle,
-                                      child:
-                                      textPadding("",alighnment: Alignment.center)
-                                    // Text(keys[i].key??"")
-
-                                  ),
-
-                                  TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment
-                                          .middle,
-                                      child:
-                                      textPadding("",alighnment: Alignment.center)
-                                    // Text(keys[i].key??"")
-
-                                  ),
-                                  TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment
-                                          .middle,
-                                      child:
-                                      textPadding("",alighnment: Alignment.center)
-                                    // Text(keys[i].key??"")
-
-                                  ),
-
-                                  TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment
-                                          .middle,
-                                      child:
-                                      textPadding("",alighnment: Alignment.center)
-                                    // Text(keys[i].key??"")
-
-                                  ),
-                                  TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment
-                                          .middle,
-                                      child:
-                                      textPadding("",alighnment: Alignment.center)
-                                    // Text(keys[i].key??"")
-
-                                  ),
-                                  TableCell(
-                                      verticalAlignment:
-                                      TableCellVerticalAlignment
-                                          .middle,
-                                      child:
-                                      textPadding("",alighnment: Alignment.center)
-                                    // Text(keys[i].key??"")
-
-                                  ),
-                                ]),
-
-
-                        ],
-                        widths: {
-                          0: FlexColumnWidth(1),
-                          1: FlexColumnWidth(3),
-                          2: FlexColumnWidth(3),
-                          3: FlexColumnWidth(2),
-                          4: FlexColumnWidth(2),
-                          5: FlexColumnWidth(2),
-
-                        },
                       ),
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child:textOnclickPadding(
+                            ontap: () {
+                            },
+                            text: table[i].order ?? "",)
+                        // Text(keys[i].key??"")
+
+                      ),
+
+                      TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment.middle,
+                        child: UnderLinedInput(
+
+                          formatter: false,
+                          textAlighn: TextAlign.left,
+                          alignment: Alignment.topLeft,
+                          controller:transactionCodeControllers[i],
+                          onChanged: (va) {
+                            // widget.updateCheck(true);
+                            table[i] = table[i].copyWith(transactionCode: va,updateCheck: true);
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                      TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child: textOnclickPadding(
+                          ontap: () {
+                          },
+                          text: table[i].postResponse?.contact ?? "",),),
+
+                      TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child: textOnclickPadding(
+                          ontap: () {
+                          },
+                          text: table[i].totalAmount.toString() ?? "",),),
+                      TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child:
+                        CustomDropDown(
+                          // border: true,
+                          choosenValue: table[i].paymentStatus=="payment_completed"?"Payment Completed":table[i].paymentStatus=="payment_pending"?"Payment Pending":table[i].paymentStatus=="rejected"?"Rejected":table[i].paymentStatus??"",
+                          onChange: (val) {
+                            setState(() {
+                              String status="";
+                              if(val=="Payment Completed"){
+                                status="payment_completed";
+                              }
+                              else if(val=="Payment Pending"){
+                                status="payment_pending";
+
+                              }
+                              else if(val=="Rejected"){
+                                status="rejected";
+
+                              }
+
+
+                              table[i]=table[i].copyWith(paymentStatus:status,updateCheck: true );
+                            });
+
+                            // choosenValue=val;
+                          },
+                          items: items,
+                        ),
+
+
+                        // DropdownButton(
+                        //   // underline: Container(color: Colors.transparent),
+                        //
+                        //   // Initial Value
+                        //   value: selectval,
+                        //
+                        //   // Down Arrow Icon
+                        //   icon: const Icon(Icons.keyboard_arrow_down),
+                        //
+                        //   // Array list of items
+                        //   items: items.map((String? items) {
+                        //     return DropdownMenuItem(
+                        //       value: items,
+                        //       child: Text(items??""),
+                        //     );
+                        //   }).toList(),
+                        //   // After selecting the desired option,it will
+                        //   // change button value to selected value
+                        //   onChanged: (String?  newValue) {
+                        //     // setState(() {
+                        //     //   table[i]=table[i].copyWith(paymentStatus:newValue,updateCheck: true );
+                        //     // });
+                        //   },
+                        // ),
+                      ),
+                      TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment.middle,
+                        child: TableTextButton(
+                          onPress: () {
+                            setState(() {
+                              if(table[i].updateCheck==true){
+                                table[i] = table[i].copyWith(
+                                    updateCheck: false);
+                                PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                                    processId: table[i].id,
+                                    customerCode: table[i].customerCode,
+                                    orderId: table[i].postResponse?.orderId,
+                                    status: table[i].paymentStatus,
+                                    tranSactionCode: table[i].transactionCode
+                                );
+                                context.read<PaymentPacthCubit>().patchPayment(model);
+                                table[i] = table[i].copyWith(
+                                    updateCheck: false);
+                              }
+
+                            });
+                          },
+                          textColor: table[i].updateCheck == true
+                              ? Pellet.tableBlueHeaderPrint
+                              : Colors.grey,
+                          label:
+                          table[i].updateCheck == true
+                              ? "UPDATE"
+                              : "",
+                        ),
+                      )
+                    ]),
+            ],
+            if(table.isEmpty)
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Pellet.tableRowColor,
+                      shape: BoxShape.rectangle,
+                      border:  Border(
+                          left: BorderSide(
+
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+                              width: .4,
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+
+                              color:   Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color:   Color(0xff3E4F5B).withOpacity(.1),
+                              width: .4,
+
+                              style: BorderStyle.solid))),
+                  children: [
+                    TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child:
+                        textPadding("",alighnment: Alignment.center)
+                      // Text(keys[i].key??"")
+
                     ),
+                    TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child:
+                        textPadding("",alighnment: Alignment.center)
+                      // Text(keys[i].key??"")
+
+                    ),
+
+                    TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child:
+                        textPadding("",alighnment: Alignment.center)
+                      // Text(keys[i].key??"")
+
+                    ),
+                    TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child:
+                        textPadding("",alighnment: Alignment.center)
+                      // Text(keys[i].key??"")
+
+                    ),
+
+                    TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child:
+                        textPadding("",alighnment: Alignment.center)
+                      // Text(keys[i].key??"")
+
+                    ),
+                    TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child:
+                        textPadding("",alighnment: Alignment.center)
+                      // Text(keys[i].key??"")
+
+                    ),
+                    TableCell(
+                        verticalAlignment:
+                        TableCellVerticalAlignment
+                            .middle,
+                        child:
+                        textPadding("",alighnment: Alignment.center)
+                      // Text(keys[i].key??"")
+
+                    ),
+                  ]),
+
+
+          ],
+          widths: {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(3),
+            2: FlexColumnWidth(3),
+            3: FlexColumnWidth(2),
+            4: FlexColumnWidth(2),
+            5: FlexColumnWidth(2),
+
+          },
+        ),
+      );
+    });
+
+  },
+),
                     list1!=null?    Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

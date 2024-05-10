@@ -20,24 +20,26 @@ class SalesReturnInvoiceGrowableTable extends StatefulWidget {
   final Function updateCheck;
   SalesReturnInvoiceGrowableTable(
       {
+
+        Key? key,
         // required this.table,
         required this.updation,
         // required this.select,
         required this.updateCheck,
         // required this.currenStock
-      });
+      }):super(key: key);
 
   @override
-  _SalesReturnInvoiceGrowableTableState createState() =>
-      _SalesReturnInvoiceGrowableTableState();
+  SalesReturnInvoiceGrowableTableState createState() =>
+      SalesReturnInvoiceGrowableTableState();
 }
 
-class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowableTable> {
+class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowableTable> {
   late AutoScrollController recieveController;
   bool assignCheck = false;
 
   // PurchaseOrderTableModel? purchaseTable;
-  List<SalesReturnLinesOrderLines> table1 = [];
+  List<SalesReturnLinesOrderLines> table1 =List.from( []);
   String? variantId = "";
   String? varinatname = "";
   String? returntype = "";

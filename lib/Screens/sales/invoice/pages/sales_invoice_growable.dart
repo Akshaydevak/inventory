@@ -15,7 +15,7 @@ class SalesInvoiceGrowableTable extends StatefulWidget {
   final Function updation;
   final Function updateCheck;
   // final Function updation;
-  SalesInvoiceGrowableTable({required Key key,required this.table,required this.updation,required this.updateCheck});
+  SalesInvoiceGrowableTable({ Key? key,required this.table,required this.updation,required this.updateCheck}):super(key: key);
 
   @override
   SalesInvoiceGrowableTableState createState() => SalesInvoiceGrowableTableState();

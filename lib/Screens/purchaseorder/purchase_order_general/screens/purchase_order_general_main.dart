@@ -91,6 +91,7 @@ class _PurchaseOrderGeneralScreenState extends State<PurchaseOrderGeneralScreen>
   TextEditingController vat = TextEditingController();
   TextEditingController actualcost = TextEditingController();
   TextEditingController grandtotal = TextEditingController();
+
   TextEditingController discount = TextEditingController();
 
   NavigationProvider vm = NavigationProvider();
@@ -438,10 +439,10 @@ orederDate2Controller.clear();
                           recievingstatus.text=data.data?.recievingStatus??"";
                           Paymentstatus.text=data.data?.paymentStatus??"";
                           Paymentcode.text=data.data?.paymentcode??"";
-                          promised_receipt_date=TextEditingController(text:data.data?.promisedReceiptdate??"");
-                          promised_receipt_date2=TextEditingController(text:data.data?.promisedReceiptdate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??"")));
-                          planned_receipt_date2=TextEditingController(text:data.data?.plannedRecieptDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??"")));
-                          planned_receipt_date=TextEditingController(text:data.data?.plannedRecieptDate??"");
+                          // promised_receipt_date=TextEditingController(text:data.data?.promisedReceiptdate??"");
+                          promised_receipt_date=TextEditingController(text:data.data?.promisedReceiptdate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.promisedReceiptdate??"")));
+                          planned_receipt_date=TextEditingController(text:data.data?.plannedRecieptDate==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.data?.plannedRecieptDate??"")));
+                          // planned_receipt_date=TextEditingController(text:data.data?.plannedRecieptDate??"");
                           address1=data.data?.address1??"";
                           address2=data.data?.address2??"";
 
@@ -547,6 +548,7 @@ orederDate2Controller.clear();
                         }
                         else{
                           select=true;
+                          clear();
                         }
                         setState(() {});
                       });
@@ -678,6 +680,7 @@ orederDate2Controller.clear();
                                 PurchaseOrderGeneralStableTable(
                                   discount: discount,
                                   orderCode: ordercode,
+                                  isSelect: select,
                                   oderDate: orederDate2Controller,
                                   isVendorCheck: isVendorCheck,
                                   vendorCode: vendorCode,
@@ -755,6 +758,11 @@ orederDate2Controller.clear();
                                     context.showSnackBarError(
                                         "please press update");
                                   }
+                                  else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
+                                    print(promised_receipt_date.text);
+                                    context.showSnackBarError(
+                                        "Required at least one variant ");
+                                  }
 
                                   else{
                                     context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: true));
@@ -774,8 +782,8 @@ orederDate2Controller.clear();
                                       vendorAddress:null,
                                       address1:"akkk",
                                       address2:"ass",
-                                      promisedReceiptdate: promised_receipt_date.text,
-                                      plannedRecieptDate:planned_receipt_date.text,
+                                      promisedReceiptdate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(promised_receipt_date.text)),
+                                      plannedRecieptDate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(planned_receipt_date.text)),
                                       note: note.text == "" ? "" : note.text,
                                       remarks: remarks.text == "" ? "" : remarks.text,
                                       discount: discount.text == "" ? 0 : double.parse(discount.text),

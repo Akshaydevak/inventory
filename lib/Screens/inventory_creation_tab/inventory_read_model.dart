@@ -126,7 +126,7 @@ class Lines with _$Lines {
     @JsonKey(name: "total_qty") final int? requestedQty,
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "grand_total") final double? grandTotal,
-    @JsonKey(name: "vatable_amount") final double? variableAmount,
+    @JsonKey(name: "vatable_amount") final double? vatableAmount,
     @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "actual_cost") final double? actualCost,
     @JsonKey(name: "is_invoiced") final bool? isInvoiced,

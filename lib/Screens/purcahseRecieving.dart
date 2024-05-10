@@ -93,7 +93,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController excessClearController = TextEditingController();
   TextEditingController discountClearController = TextEditingController();
   TextEditingController focClearController = TextEditingController();
-
+bool isSave=false;
+bool isGenarate=false;
   var expiryDate1Controllers = <TextEditingController>[];
   var expiryDate2tControllers = <TextEditingController>[];
   var expirydateControllerList = <TextEditingController>[];
@@ -281,6 +282,36 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
     else
       return false;
   }
+  allClear(){
+     recievingLisnes = [];
+     additionalVariants=[];
+    unitcostReceivingListControllers.clear();
+   expirydateControllerList2.clear();
+    // print("reading case"+expirydateControllerList2.length.toString());
+    orderCodeController.text ="";
+    focController.text = "";
+    recievingCodeController.text ="";
+    vendorCode =  "";
+    receivingId=null;
+    orederDateController.text = "";
+    orederDate2Controller.clear();
+    orderStatusController.text =  "";
+    invoiceStausController.text = "";
+    paymentStatusController.text =  "";
+    receivedController.text = "";
+    vendorCodeController.text =  "";
+    grandTotalController.text ='';
+    vatController.text ='';
+    vatableAmountController.text ='';
+    excessTaxController.text ='';
+    unitCostController.text ='';
+    actualCostController.text ='';
+    discountController.text =  "";
+    inventoryId =  "";
+    remarksController.text="";
+    noteController.text= "";
+     clear();
+  }
   clear(){
 
 
@@ -311,7 +342,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
       isFree1=false;
       isInvoiced1=false;
       stock=0;
+setState(() {
 
+});
 
 
 
@@ -536,6 +569,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                       // context.
                       context.showSnackBarError("Loading");
                     }, error: () {
+                      setState(() {
+                        isSave=false;
+                      });
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1) {
@@ -550,6 +586,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
+                      setState(() {
+                        isSave=false;
+                      });
                       ;
                     });
                   },
@@ -561,6 +600,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                       // context.
                       context.showSnackBarError("Loading");
                     }, error: () {
+                      isGenarate=false;setState(() {
+
+                      });
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
                       if (data.data1) {
@@ -574,7 +616,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
                       }
-                      ;
+                      ;  isGenarate=false;setState(() {
+
+                      });
                     });
                   },
                 ),
@@ -851,6 +895,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
                           Variable.verticalid=result[0].id;
                           print("Variable.ak"+Variable.verticalid.toString());
+                          }
+                          else{
+                            allClear();
                           }
 
                         });
@@ -4124,12 +4171,18 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             MainAxisAlignment.end,
                                                             children: [
                                                               TextButtonLarge(
+                                                                isSingle: true,
+                                                                isLoading:isGenarate ,
                                                                 onPress: () {
                                                                   var isUpdate=additiionUpdateCheckFunc();
                                                                   if(isUpdate==true){
                                                                     context.showSnackBarError("Please press update button");
                                                                   }
                                                                   else{
+
+                                                                    setState(() {
+                                                                      isGenarate=true;
+                                                                    });
                                                                     List<RecievingLines>additionalVariants1=[];
                                                                     for(var i=0;i<additionalVariants.length;i++){
                                                                       if(additionalVariants[i].isReceived==true &&additionalVariants[i].isActive==true){
@@ -4163,7 +4216,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                           ),
                                                         ),
                                                         SizedBox(height: height/30,),
-                                                        SaveUpdateResponsiveButton(label: "SAVE",
+                                                        SaveUpdateResponsiveButton(isSaveUpdateLoading:isSave ,
+                                                          label: "SAVE",
                                                           isDelete: true,
 
                                                           saveFunction: (){
@@ -4175,6 +4229,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             context.showSnackBarError("Please press the update button");
                                                           }
                                                           else{
+                                                            isSave=true;
+                                                            setState(() {
+
+                                                            });
                                                             if(recievingLisnes.isNotEmpty==true  && currentStock.isNotEmpty==true){
                                                               for(var i=0;i<recievingLisnes.length;i++){
 

@@ -334,8 +334,13 @@ class _ChannelTypeStockAllocationState
                             .getChannelAllocationList(veritiaclid!);
                       } else {
                         print("common");
-                        // select=true;
-                        setState(() {});
+                        selectedVertical = -1;
+                        group.clear();
+                        selection.clear();
+                        checkBoxLis.clear();
+                        clear();
+                        veritiaclid = -1;
+                        // setState(() {});
                       }
 
                       setState(() {});

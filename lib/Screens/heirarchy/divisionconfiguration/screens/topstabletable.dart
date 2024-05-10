@@ -100,6 +100,7 @@ class _DivisionStableTableState extends State<DivisionStableTable> {
                           ),
                           NewInputCard(
                               formatter: true,
+                              integerOnly: true,
                               controller: widget.priority, title: "Priority"),
 
 

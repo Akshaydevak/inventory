@@ -39,6 +39,7 @@ import '../Screens/heirarchy/general/model/listbrand.dart';
 import '../Screens/heirarchy/general/model/variantframeworkpost.dart';
 import '../Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import '../Screens/variant/stock/models/stockverticallist.dart';
+import 'no_result_widget.dart';
 
 class VerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
@@ -48,12 +49,11 @@ class VerticalList extends StatefulWidget {
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  VerticalList({ required this.itemsearch,this.select=false,required this.result, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox()});
-  @override
-  _VerticalListState createState() => _VerticalListState();
+  VerticalList({Key? key, required this.itemsearch,this.select=false,required this.result, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox()}):super(key: key);
+  @override VerticalListState createState() => VerticalListState();
 }
 
-class _VerticalListState extends State<VerticalList> {
+class VerticalListState extends State<VerticalList> {
   late AutoScrollController controller;
   int? veritiaclid=0;
   List<PurchaseOrder>result=[];
@@ -75,7 +75,15 @@ class _VerticalListState extends State<VerticalList> {
     //   print("ak test"+value.toString());
     // });
   }
-
+  int changeSelectedRow(int direction) {
+    print("sdfddddFFFFFFFFFFFFF");
+    setState(() {
+      // Adjust the selected row based on the arrow key direction
+      selectedVertical = (selectedVertical + direction).clamp(0, widget.result.length - 1);
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+    return selectedVertical;
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -158,9 +166,7 @@ class _VerticalListState extends State<VerticalList> {
                           Expanded(
                               child: Container(
                                   height: 0,
-                                  child:widget.result.isEmpty?Container(
-                                    margin: EdgeInsets.all(5),
-                                      child: Text("No Data Found",style: TextStyle(color: Colors.grey,fontSize: 18),)): ListView.separated(
+                                  child:widget.result.isEmpty?NoDataResult(): ListView.separated(
                                     separatorBuilder: (context, index) {
                                       return Divider(
                                         height: 0,
@@ -375,7 +381,7 @@ class _DivisionConfigVerticalListState extends State<DivisionConfigVerticalList>
                           Expanded(
                               child: Container(
                                   height: 0,
-                                  child: ListView.separated(
+                                  child:widget.result.isEmpty?NoDataResult(): ListView.separated(
                                     separatorBuilder: (context, index) {
                                       return Divider(
                                         height: 0,
@@ -581,7 +587,7 @@ class _PurchaseVerticalListState extends State<PurchaseVerticalList> {
                       Expanded(
                           child: Container(
                               height: 0,
-                              child: ListView.separated(
+                              child:widget.result.isEmpty?NoDataResult(): ListView.separated(
                                 separatorBuilder: (context, index) {
                                   return Divider(
                                     height: 0,
@@ -788,7 +794,7 @@ class _SalesGeneralVerticalListState extends State<SalesGeneralVerticalList> {
                           Expanded(
                               child: Container(
                                   height: 100,
-                                  child: ListView.separated(
+                                  child:widget.result.isEmpty?NoDataResult(): ListView.separated(
                                     separatorBuilder: (context, index) {
                                       return Divider(
                                         height: 0,
@@ -995,7 +1001,7 @@ class _SalesReturnGeneralVerticalListState extends State<SalesReturnGeneralVerti
                           Expanded(
                               child: Container(
                                   height: 100,
-                                  child: ListView.separated(
+                                  child: widget.result.isEmpty?NoDataResult():ListView.separated(
                                     separatorBuilder: (context, index) {
                                       return Divider(
                                         height: 0,
@@ -2420,7 +2426,7 @@ class _PromotionBuyMoreVerticalListState extends State<PromotionBuyMoreVerticalL
                                 child: Container(
                                     height: 0,
                                     child:
-                                    ListView.separated(
+                                    widget.result.isEmpty?NoDataResult():   ListView.separated(
 
 
 
@@ -4990,15 +4996,18 @@ class _ItemVerticalListState extends State<ItemVerticalList> {
                                 onChanged: (va) {
                                   setState(() {
 
-
-                                  context
-                                      .read<ItemcreationListCubit>()
-                                      .searchItemList(widget.itemsearch.text);
-                                  suffixIconCheck=true;
-                                  if(va==""){
+                                  if(va=="" ||va.isEmpty){
                                     context.read<ItemcreationListCubit>().getItemListList();
                                     suffixIconCheck=false;
 
+                                  }
+                                  else{
+
+
+                                    context
+                                        .read<ItemcreationListCubit>()
+                                        .searchItemList(widget.itemsearch.text);
+                                    suffixIconCheck=true;
                                   }
                                   });
 
@@ -5014,7 +5023,7 @@ class _ItemVerticalListState extends State<ItemVerticalList> {
                           Expanded(
                               child: Container(
                                   height: 0,
-                                  child: ListView.separated(
+                                  child: widget.result.isEmpty?NoDataResult():ListView.separated(
 
 
 
@@ -5189,7 +5198,7 @@ class _VariantVerticalListState extends State<VariantVerticalList> {
                           Expanded(
                               child: Container(
                                   height: 0,
-                                  child: ListView.separated(
+                                  child: widget.result.isEmpty?NoDataResult():ListView.separated(
 
 
 
@@ -5367,7 +5376,7 @@ class _CustomIseVerticalListState extends State<CustomIseVerticalList> {
                           Expanded(
                               child: Container(
                                   height: 0,
-                                  child: ListView.separated(
+                                  child: widget.result.isEmpty?NoDataResult():ListView.separated(
 
 
 
@@ -5562,7 +5571,7 @@ class _channelVerticalListtState extends State<channelVerticalList> {
                           Expanded(
                               child: Container(
                                   height: 0,
-                                  child: ListView.separated(
+                                  child: widget.result.isEmpty?NoDataResult():ListView.separated(
 
 
 

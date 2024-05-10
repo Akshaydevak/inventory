@@ -392,7 +392,10 @@ if(addVirtual==null){
                 }
                 else {
                   print("common");
-                  // select=true;
+                  clear();
+                  group.clear();
+                  check = false;
+                  addVirtualLimit=false;
                   setState(() {});
                 }
 

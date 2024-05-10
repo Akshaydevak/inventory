@@ -314,6 +314,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                       context.read<InvoiceReadCubit>().getInvoiceRead(veritiaclid!);
                     } else {
                       print("common");
+                      clear();
                       // select=true;
                       setState(() {});
                     }

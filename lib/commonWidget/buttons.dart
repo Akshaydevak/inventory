@@ -74,8 +74,9 @@ class TextButtonLarge extends StatelessWidget {
   final bool marginCheck;
   final bool marginAvoid;
   final bool isLoading;
+  final bool isSingle;
 
-   TextButtonLarge({Key? key,this.marginCheck=false,this.W=80,this.H=43,this.labelcolor=Colors.white,this.marginAvoid=false, this.clr=Pellet.tableBlueHeaderPrint, this.images, required this.text,this.icon,required this.onPress,  this.bdr=false,  this.border=Colors.red,this.isLoading=false}) : super(key: key);
+   TextButtonLarge({Key? key,this.marginCheck=false,this.isSingle=false,this.W=80,this.H=43,this.labelcolor=Colors.white,this.marginAvoid=false, this.clr=Pellet.tableBlueHeaderPrint, this.images, required this.text,this.icon,required this.onPress,  this.bdr=false,  this.border=Colors.red,this.isLoading=false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
  double h=MediaQuery.of(context).size.height;
@@ -87,7 +88,7 @@ class TextButtonLarge extends StatelessWidget {
          onPress();
        },
        child: Container(
-        width:marginAvoid?100:null ,
+        width:marginAvoid?100:isSingle?140:null ,
          // alignment: Alignment.center,
 
          margin: marginAvoid?null:marginCheck?EdgeInsets.only(top: h*.022,right:w *.0048):EdgeInsets.only(right:w *.018,top: h*.022),
@@ -146,7 +147,7 @@ class TableTextButton extends StatefulWidget {
   final Color textColor;
 
   TableTextButton({required this.label,required this.onPress,this.actionCheck=false,this.textColor=Pellet.tableBlueHeaderPrint,this.buttonBagroundColor=Colors.transparent,
-    this.designCheck=false,this.icon,this.bagroundColor= const Color(0xffEAEAEA)});
+    this.designCheck=false,this.icon,this.bagroundColor= Colors.green});
 
   @override
   _TableTextButtonState createState() => _TableTextButtonState();
