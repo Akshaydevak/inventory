@@ -106,6 +106,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
   TextEditingController excesstaxTestContoller = TextEditingController();
   TextEditingController vatTestContoller = TextEditingController();
   TextEditingController unitCostCheck = TextEditingController();
+  List<FocusNode>focusNodeList=List.generate(7, (index) => FocusNode());
 
 
   vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
@@ -1006,6 +1007,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                     print("idssss"+variantId.toString());
                                                     int? id = va!.id;
                                                     print("idssss"+id.toString());
+                                                    FocusScope.of(context).requestFocus(focusNodeList[0]);
                                                     Variable.tableedit=false;
                                                     context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
                                                     context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID,variantId);
@@ -1052,6 +1054,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                     ),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(controller:requestedtTestContoller ,
+                                        focusNode: focusNodeList[0],
                                         integerOnly: true,
                                         onChanged: (p0) {
                                           if (p0 == '') {
@@ -1086,27 +1089,30 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         },
                                         enable: true,
                                         onComplete: () {
-                                          setState(() {});
-
-                                          setState(() {});
+                                          FocusScope.of(context).requestFocus(focusNodeList[1]);
                                         },
                                       ),
                                     ),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(controller:minOrderTestContoller,
+                                        focusNode: focusNodeList[1],
                                         onChanged: (p0) {vminqty = int.tryParse(p0);
+
                                         },
                                         enable: true,
                                         onComplete: () {
+                                          FocusScope.of(context).requestFocus(focusNodeList[2]);
                                           setState(() {});
                                         },
                                       ),
                                     ),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(controller:maxOrderTestContoller,
+                                        focusNode: focusNodeList[2],
                                         onChanged: (p0) {vmaxnqty = int.tryParse(p0);},
                                         enable: true,
                                         onComplete: () {
+                                          FocusScope.of(context).requestFocus(focusNodeList[3]);
                                           setState(() {});
                                         },
                                       ),
@@ -1123,6 +1129,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(
                                         controller: unitCostCheck,
+                                        focusNode: focusNodeList[3],
                                         onChanged:
                                             (p0) {
                                           if (p0 == "") {
@@ -1148,12 +1155,15 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         },
                                         enable: true,
                                         onComplete:
-                                            () {},
+                                            () {
+                                              FocusScope.of(context).requestFocus(focusNodeList[4]);
+                                            },
                                       ),
                                     ),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(
                                         controller: excesstaxTestContoller,
+                                        focusNode: focusNodeList[4],
                                         onChanged:
                                             (p0) {
                                           if (p0 == "") {
@@ -1181,12 +1191,24 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         },
                                         enable: true,
                                         onComplete:
-                                            () {},
+                                            () {
+                                              FocusScope.of(context).requestFocus(focusNodeList[5]);
+                                            },
                                       ),
                                     ),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(
+                                        focusNode: focusNodeList[5],
                                         controller: discountTestContoller,
+                                        onComplete: (){
+                                          FocusScope.of(context).requestFocus(focusNodeList[6]);
+                                          setState(() {
+                                            isActive =
+                                            !isActive;
+
+
+                                          });
+                                        },
                                         onChanged: (p0) {
                                           if (p0 == '')
                                             setState(() {
@@ -1236,6 +1258,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                     TableCell(
                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: CheckedBoxs(
+
                                         valueChanger: isInvoiced,
                                         onSelection: (bool? value) {
                                           setState(() {
@@ -1245,15 +1268,18 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                     ),
                                     TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                       child: CheckedBoxs(
+                                        onCompleteFunc: (){
+                                          saveFunction();
+
+                                        },
+                                        focusNode: focusNodeList[6],
                                         valueChanger: isActive ,
 
                                         onSelection: (val) {
                                           setState(() {
                                             isActive =
                                             !isActive;
-                                            setState(() {
 
-                                            });
 
                                           });
                                         },
@@ -1265,65 +1291,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                           TableTextButton(
 
                                             onPress: () {
-                                              if (vminqty! >
-                                                  vmaxnqty!) {
-                                                print("enterd");
-                                                if(vminqty!=0 &&vmaxnqty!=0){
-                                                  context.showSnackBarError("the minimum order is always less than maximum order");}
-                                              }
-                                              else  if(  variantId=="null"||check==0||vvat==0)
-                                                context.showSnackBarError("please fill all the fields");
-                                              else if(Qty==0||Qty==""){
-                                                context.showSnackBarError("the requested quantity not be 0 or empty");
-                                              }
-                                              else if(vfoc!>Qty!){
-                                                context.showSnackBarError("foc is allways less than requested qty");
-                                              }
-                                              else{
-                                                table..add(
-                                                    OrderLines(
-                                                        vendorRefCode: vendorRefCode??"",
-                                                        isRecieved: isRecieved ?? false,
-                                                        isActive: isActive ?? false,
-                                                        supplierCode: vendorRefCode?? "",
-                                                        variantId: variantId ?? "",
-                                                        variantName: varinatname ?? "",
-                                                        barcode: Vbarcode ?? "",
-                                                        cvd: "sss",
-                                                        foc: vfoc ?? 0,
-                                                        maximumQty: vmaxnqty ?? 0,
-                                                        minimumQty: vminqty ?? 0,
-                                                        excessTax: eTax ?? 0,
-                                                        vat: vvat ?? 0,
-                                                        actualCost: vactualCost ?? 0,
-                                                        purchaseUom: check1 ?? "",
-                                                        discount: Vdiscount ?? 0,
-                                                        requestedQty: Qty ?? 0,
-                                                        unitCost: check! ?? 0,
-                                                        grandTotal: Vgrnadtotal ?? 0,
-                                                        vatableAmount: Vamount ?? 0,
-                                                        currentQty: stockQty ?? 0,
-                                                        updateCheck: false
-                                                    ));
-                                                // vendorCheckFunc();
-                                                currentStock.add(stockQty??0);
-                                                print("a"+currentStock.toString());
-                                                requestedListControllers.clear();
-                                                minListControllers.clear() ;
-                                                maxListControllers .clear();
-                                                unitcostListControllers.clear();
-                                                excesstListControllers.clear();
-                                                discounttListControllers.clear();
-                                                focListControllers.clear();
-                                                vatListControllers.clear();
-                                                setState(() {
-                                                  valueAddingTextEdingController();
-                                                });
-                                                widget.updation(table);
-                                                tableAddingValuesClear();
-                                                setState(() {});
-
-                                              }
+                                              saveFunction();
                                             },
                                             label:"SAVE",
                                           ),
@@ -1378,5 +1346,66 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
         );
       }),
     );
+  }
+  saveFunction(){
+    if (vminqty! >
+        vmaxnqty!) {
+      print("enterd");
+      if(vminqty!=0 &&vmaxnqty!=0){
+        context.showSnackBarError("the minimum order is always less than maximum order");}
+    }
+    else  if(  variantId=="null"||check==0||vvat==0)
+      context.showSnackBarError("please fill all the fields");
+    else if(Qty==0||Qty==""){
+      context.showSnackBarError("the requested quantity not be 0 or empty");
+    }
+    else if(vfoc!>Qty!){
+      context.showSnackBarError("foc is allways less than requested qty");
+    }
+    else{
+      table..add(
+          OrderLines(
+              vendorRefCode: vendorRefCode??"",
+              isRecieved: isRecieved ?? false,
+              isActive: isActive ?? false,
+              supplierCode: vendorRefCode?? "",
+              variantId: variantId ?? "",
+              variantName: varinatname ?? "",
+              barcode: Vbarcode ?? "",
+              cvd: "sss",
+              foc: vfoc ?? 0,
+              maximumQty: vmaxnqty ?? 0,
+              minimumQty: vminqty ?? 0,
+              excessTax: eTax ?? 0,
+              vat: vvat ?? 0,
+              actualCost: vactualCost ?? 0,
+              purchaseUom: check1 ?? "",
+              discount: Vdiscount ?? 0,
+              requestedQty: Qty ?? 0,
+              unitCost: check! ?? 0,
+              grandTotal: Vgrnadtotal ?? 0,
+              vatableAmount: Vamount ?? 0,
+              currentQty: stockQty ?? 0,
+              updateCheck: false
+          ));
+      // vendorCheckFunc();
+      currentStock.add(stockQty??0);
+      print("a"+currentStock.toString());
+      requestedListControllers.clear();
+      minListControllers.clear() ;
+      maxListControllers .clear();
+      unitcostListControllers.clear();
+      excesstListControllers.clear();
+      discounttListControllers.clear();
+      focListControllers.clear();
+      vatListControllers.clear();
+      setState(() {
+        valueAddingTextEdingController();
+      });
+      widget.updation(table);
+      tableAddingValuesClear();
+      setState(() {});
+
+    }
   }
 }

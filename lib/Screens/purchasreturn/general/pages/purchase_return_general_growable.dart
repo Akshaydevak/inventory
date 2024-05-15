@@ -45,6 +45,8 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
   List<Liness>lines=List.from([]);
   PurchaseCureentStockQty? purchaseCurrentStock;
   List<int?> currentStock = [];
+  int selctedraw=-1;
+  List<List<FocusNode>> listOfxfocusNodes = [];
   TextEditingController unicostController = TextEditingController();
   var unitcostListControllers = <TextEditingController>[];
   Future _getCurrentUser() async {
@@ -56,6 +58,31 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
         print("b" + b.toString());
       }
       setState(() {});
+    }
+  }
+  void changeSelectedRow(int direction) {
+    setState(() {
+
+
+      // Adjust the selected row based on the arrow key direction
+      selctedraw = (selctedraw + direction).clamp(0, lines.length - 1);
+      FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+  }
+  focusNodeAddingFunc(){
+
+
+    if(lines.isNotEmpty){
+      print("checking case");
+      for(var i=0;i<lines.length;i++){
+        listOfxfocusNodes.add(List.generate(2, (index) => FocusNode()));
+
+        setState(() {
+        });
+      }
     }
   }
   double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,double? discount){
@@ -128,6 +155,7 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                       print("data" + data.toString());
                       data.lines != null ? lines =List.from( data?.lines ?? []) : lines = [];
                       _getCurrentUser();
+                      focusNodeAddingFunc();
 
 
 
@@ -321,7 +349,7 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                 for (var i = 0; i < lines.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
+                                          color: selctedraw==1?Pellet.selectedTableColor:Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
                                           border:  Border(
                                               left: BorderSide(
@@ -370,6 +398,10 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             initialCheck:true,
+                                             focusNode: listOfxfocusNodes[i][0],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][1]);
+                                            },
                                             integerOnly: true,
                                             readOnly:lines[i].isInvoiced==true?true:false ,
 
@@ -486,6 +518,28 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: CheckedBoxs(
+                                            focusNode: listOfxfocusNodes[i][1],
+                                              onCompleteFunc: (){
+                                                if(lines[i].isInvoiced!=true){
+
+                                                  lines[i]=lines[i].copyWith(upDateCheck: true);
+                                                  bool? isActive = lines?[i].isActive??false;
+                                                  setState(() {
+
+                                                    isActive = !isActive!;
+                                                    print(isActive);
+                                                    // widget.updation(i,isActive);
+                                                    lines[i] = lines[i].copyWith(isActive: isActive);
+
+
+                                                    setState(() {});
+                                                  });
+                                                  upDateFunction(i);
+                                                  if(i!=lines.length-1){
+                                                    FocusScope.of(context).requestFocus(listOfxfocusNodes[i+1][0]);
+                                                  }
+                                                }
+                                              },
                                               valueChanger:lines?[i].isActive==null?false:lines?[i].isActive,
 
                                               onSelection:(bool ? value){
@@ -511,12 +565,7 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
                                           child: TableTextButton(
                                             label:lines[i].upDateCheck==true? "update":"",
                                             onPress: (){
-
-                                              lines[i]=lines[i].copyWith(upDateCheck: false);
-                                            widget.  updateCheck();
-                                              setState(() {
-
-                                              });
+                                              upDateFunction(i);
 
 
                                             },
@@ -545,5 +594,13 @@ class PurchasReturnGeneralGrowableTableState extends State<PurchasReturnGeneralG
         );
       }),
     );
+  }
+  upDateFunction(int i){
+    lines[i]=lines[i].copyWith(upDateCheck: false);
+    widget.  updateCheck();
+    setState(() {
+
+    });
+
   }
 }

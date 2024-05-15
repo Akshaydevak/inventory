@@ -49,6 +49,8 @@ class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowa
   int? stock = 0;
   int? stockId ;
   String? discountPrice = "price";
+  int selctedraw=-1;
+  List<List<FocusNode>> listOfxfocusNodes = [];
   // PurchaseCureentStockQty? purchaseCurrentStock;
 
 
@@ -57,6 +59,20 @@ class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowa
 
   double totalPrice = 0;
   TextEditingController unicostController = TextEditingController();
+
+
+  void changeSelectedRow(int direction) {
+    setState(() {
+
+
+      // Adjust the selected row based on the arrow key direction
+      selctedraw = (selctedraw + direction).clamp(0, table1.length - 1);
+      FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+  }
 
 
   double taxableUpdateMethod(
@@ -95,7 +111,19 @@ class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowa
     setState(() {});
     return totalPrice1;
   }
+  focusNodeAddingFunc(){
 
+
+    if(table1.isNotEmpty){
+      print("checking case");
+      for(var i=0;i<table1.length;i++){
+        listOfxfocusNodes.add(List.generate(1, (index) => FocusNode()));
+
+        setState(() {
+        });
+      }
+    }
+  }
   void initState() {
     recieveController = AutoScrollController(
         viewportBoundaryGetter: () =>
@@ -137,7 +165,7 @@ class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowa
                             ? table1 = List.from( data.invoicedData?.returnInvoicelines ?? [])
                             : table1 = [];
 
-
+                        focusNodeAddingFunc();
 
 
 
@@ -146,6 +174,7 @@ class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowa
                         data.returnOrrder != null
                             ? table1 =  List.from(data.returnOrrder ?? [])
                             : table1 = [];
+                        focusNodeAddingFunc();
 
 
 
@@ -374,7 +403,7 @@ class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowa
                                 for (var i = 0; i < table1!.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
+                                          color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
                                           border:  Border(
                                               left: BorderSide(
@@ -428,6 +457,29 @@ class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowa
                                           TableCellVerticalAlignment.middle,
                                           child:
                                           CheckedBoxs(
+                                            focusNode: listOfxfocusNodes[i][0],
+                                              onCompleteFunc: (){
+                                                if(table1[i].isInvoiced==false ||table1[i].isEdit==true){
+                                                  bool? isInvoiced =
+                                                      table1[i].isInvoiced;
+                                                  setState(() {
+                                                    widget.updateCheck(true);
+                                                    // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                    // table1[i] = table1[i].copyWith(updateCheck: true);
+                                                    setState(() {});
+                                                    isInvoiced = !isInvoiced!;
+                                                    table1[i] = table1[i]
+                                                        .copyWith(
+                                                        isInvoiced: isInvoiced,updateCheck: true,isEdit: true);
+                                                  });
+
+                                                  upDateFunction(i);
+                                                  if(i!=table1[table1.length-1]){
+                                                    FocusScope.of(context).requestFocus(listOfxfocusNodes[i][0]);
+                                                  }
+                                                }
+
+                                              },
                                               valueChanger:
                                               table1[i].isInvoiced == null
                                                   ? false
@@ -956,5 +1008,10 @@ class SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrowa
         );
       }),
     );
+  }
+  upDateFunction(int i){
+    widget.updateCheck(false);
+    table1[i]=table1[i].copyWith(updateCheck: false);
+    widget.updation(table1);
   }
 }

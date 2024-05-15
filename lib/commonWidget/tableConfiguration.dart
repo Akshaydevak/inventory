@@ -950,13 +950,16 @@ class _PaymentListByOrderIdPopup extends State<PaymentListByOrderIdPopup> {
           print("error");
         },
         success: (list) {
-          print("PAYMENYT STATUSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-          results=list.data;
-          if(results.isNotEmpty){
-            methodCode=results[0].code??"";
-            Variable.methodCode=results[0].code??"";
-          }
 
+setState(() {
+  print("PAYMENYT STATUSSSSSSSSSSSSSSSSSSSSSSSSSSSE");
+  results=list.data;
+  if(results.isNotEmpty){
+    print("PAYMENYT STATUSSSSSSSSSSSSSSSSSSSSSSSSSSSE$results");
+    methodCode=results[0].code??"";
+    Variable.methodCode=results[0].code??"";
+  }
+});
 
 
 
@@ -976,8 +979,9 @@ class _PaymentListByOrderIdPopup extends State<PaymentListByOrderIdPopup> {
               success: (list) {
                 print("Welcome" + list.toString());
                 table = list.data;if(table.isNotEmpty==true){
-                  transactionCodeContoller.text=table[1].transactionCode??"";
+                  transactionCodeContoller.text=table[0].transactionCode??"";
                 }
+                print("WelcomeTable" + table.toString());
                 list1 = list;
               });
         },
@@ -1211,7 +1215,7 @@ class _PaymentListByOrderIdPopup extends State<PaymentListByOrderIdPopup> {
                           ],
                           widths: {
                             0: FlexColumnWidth(1),
-                            1: FlexColumnWidth(5),
+                            1: FlexColumnWidth(3),
                           },
                         ),
                       ),
@@ -1297,28 +1301,8 @@ class _PaymentListByOrderIdPopup extends State<PaymentListByOrderIdPopup> {
                                             ),
                                             // Text(keys[i].value??"",)
 
-                                          ),           TableCell(
-                                            verticalAlignment:
-                                            TableCellVerticalAlignment
-                                                .middle,
-                                            child: textOnclickPadding(
-                                              ontap: () {
-                                                // BrandListModel model =
-                                                //     BrandListModel(
-                                                //   id: table[i].id,
-                                                //   name: table[i].name,
-                                                //   code: table[i].code,
-                                                // );
-                                                // Navigator.pop(context);
-                                                //
-                                                // widget.valueSelect(model);
-                                              },
-                                              text:  table[i].postResponse?.contact ?? "" ?? "",
-
-                                            ),
-                                            // Text(keys[i].value??"",)
-
                                           ),
+
                                         ]),
                                 ],
                               ]
@@ -1675,130 +1659,134 @@ class _variantTabalePopup extends State<variantTabalePopup> {
                       ),
                       SizedBox(height: 8,),
 
-
-                    table?.isEmpty==true?Container(
-                      child: Text("No Data  Found"),
-
-                ):
                       Container(
                         height: h / 1.86,
                         // width: w/7,
                         margin: EdgeInsets.symmetric(horizontal: w*.006),
-                        child: SingleChildScrollView(
-                          child: customTable(
-                            // border: const TableBorder(
-                            //   verticalInside: BorderSide(
-                            //       width: .5,
-                            //       color: Colors.black45,
-                            //       style: BorderStyle.solid),
-                            //   horizontalInside: BorderSide(
-                            //       width: .3,
-                            //       color: Colors.black45,
-                            //       // color: Colors.blue,
-                            //       style: BorderStyle.solid),
-                            // ),
-                            tableWidth: .5,
-                            childrens: [
-                              TableRow(
-                                // decoration: BoxDecoration(
+                        child: BlocBuilder<VariantIdCubitDartCubit, VariantIdCubitDartState>(
+  builder: (context, state) {
+    return state.maybeWhen(orElse: (){
+      return customCommonTAbleProgressIndiactor();
+    },success: (data){
+      return data.data.isEmpty?NoDataResult():  SingleChildScrollView(
+        child: customTable(
+          // border: const TableBorder(
+          //   verticalInside: BorderSide(
+          //       width: .5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width: .3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),
+          // ),
+          tableWidth: .5,
+          childrens: [
+            TableRow(
+              // decoration: BoxDecoration(
 
-                                //     color: Colors.green.shade200,
+              //     color: Colors.green.shade200,
 
-                                //     shape: BoxShape.rectangle,
+              //     shape: BoxShape.rectangle,
 
-                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                                children: [
-                                  tableHeadtext(
-                                    'Sl No',
-                                    // padding: EdgeInsets.all(7),
-                                    //
-                                    // height: 44,
-                                    // textColor: Colors.black,
-                                    // color: Color(0xffE5E5E5),
-                                    size: 13,
-                                  ),
+              children: [
+                tableHeadtext(
+                  'Sl No',
+                  // padding: EdgeInsets.all(7),
+                  //
+                  // height: 44,
+                  // textColor: Colors.black,
+                  // color: Color(0xffE5E5E5),
+                  size: 13,
+                ),
 
-                                  tableHeadtext(
-                                    'Variants',
-                                    // textColor: Colors.black,
-                                    // padding: EdgeInsets.all(7),
-                                    // height: 44,
-                                    size: 13,
-                                    // color: Color(0xffE5E5E5),
-                                  ),
-                                  // tableHeadtext(
-                                  //   '',
-                                  //   textColor: Colors.black,
-                                  //   padding: EdgeInsets.all(7),
-                                  //   height: 46,
-                                  //   size: 13,
-                                  //   // color: Color(0xffE5E5E5),
-                                  // ),
-                                ],
-                              ),
-                              if (table?.isNotEmpty == true) ...[
-                                for (var i = 0; i < table.length; i++)
-                                  TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
-                                          shape: BoxShape.rectangle,
-                                          border:  Border(
-                                              left: BorderSide(
+                tableHeadtext(
+                  'Variants',
+                  // textColor: Colors.black,
+                  // padding: EdgeInsets.all(7),
+                  // height: 44,
+                  size: 13,
+                  // color: Color(0xffE5E5E5),
+                ),
+                // tableHeadtext(
+                //   '',
+                //   textColor: Colors.black,
+                //   padding: EdgeInsets.all(7),
+                //   height: 46,
+                //   size: 13,
+                //   // color: Color(0xffE5E5E5),
+                // ),
+              ],
+            ),
+            if (table?.isNotEmpty == true) ...[
+              for (var i = 0; i < table.length; i++)
+                TableRow(
+                    decoration: BoxDecoration(
+                        color: Pellet.tableRowColor,
+                        shape: BoxShape.rectangle,
+                        border:  Border(
+                            left: BorderSide(
 
-                                                  color: Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+                                style: BorderStyle.solid),
+                            bottom: BorderSide(
 
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                                  width: .4,
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                style: BorderStyle.solid),
+                            right: BorderSide(
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
 
-                                                  style: BorderStyle.solid))),
-                                      children: [
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child:
-                                                textPadding((i + 1).toString(),)
-                                            // Text(keys[i].key??"")
+                                style: BorderStyle.solid))),
+                    children: [
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child:
+                          textPadding((i + 1).toString(),)
+                        // Text(keys[i].key??"")
 
-                                            ),
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child: textOnclickPadding(
-                                              ontap: () {
-                                                VariantId model =
-                                                VariantId(
-                                                  id: table[i].id,
-                                                  name: table[i].name,
-                                                  code: table[i].code,
-                                                );
-                                                Navigator.pop(context);
+                      ),
+                      TableCell(
+                          verticalAlignment:
+                          TableCellVerticalAlignment
+                              .middle,
+                          child: textOnclickPadding(
+                            ontap: () {
+                              VariantId model =
+                              VariantId(
+                                id: table[i].id,
+                                name: table[i].name,
+                                code: table[i].code,
+                              );
+                              Navigator.pop(context);
 
-                                                widget.valueSelect(model);
-                                              },
-                                              text: table[i].name ?? "",
-
-                                            )
-                                            // Text(keys[i].value??"",)
-
-                                            ),
-                                      ]),
-                              ],
-                            ],
-                            widths: {
-                              0: FlexColumnWidth(1),
-                              1: FlexColumnWidth(5),
+                              widget.valueSelect(model);
                             },
-                          ),
-                        ),
+                            text: table[i].name ?? "",
+
+                          )
+                        // Text(keys[i].value??"",)
+
+                      ),
+                    ]),
+            ],
+          ],
+          widths: {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(5),
+          },
+        ),
+      );
+    });
+
+  },
+),
                       ),
                       SizedBox(
                         height: h * .004,

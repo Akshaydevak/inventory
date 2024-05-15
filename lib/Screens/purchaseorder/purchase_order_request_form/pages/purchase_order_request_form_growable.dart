@@ -81,7 +81,7 @@ class PurchaseOrderRequestFormGrowableTableState extends State<PurchaseOrderRequ
   TextEditingController vatTestContoller = TextEditingController();
   TextEditingController unitCostCheck = TextEditingController();
   var unitcostListControllers = <TextEditingController>[];
-
+  List<FocusNode>focusNodeList=List.generate(7, (index) => FocusNode());
   vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
     vatableAmount1 =double.parse( (((unitCost! *
         qty!) +
@@ -1432,6 +1432,7 @@ unitcostListControllers.clear();
                                               setState(() {
 
                                               });
+                                              FocusScope.of(context).requestFocus(focusNodeList[0]);
                                               context
                                                   .read<PurchaseStockCubit>()
                                                   .getCurrentStock(Variable.inventory_ID,variantId);
@@ -1473,6 +1474,7 @@ unitcostListControllers.clear();
                                     child: UnderLinedInput(
                                       controller: receivedTestContoller,
                                       integerOnly: true,
+                                      focusNode: focusNodeList[0],
 
                                       onChanged: (p0) {
                                         if (p0 == '') {
@@ -1509,7 +1511,9 @@ unitcostListControllers.clear();
                                       },
                                       enable: true,
                                       onComplete: () {
-                                        setState(() {});
+                                        setState(() {
+                                          FocusScope.of(context).requestFocus(focusNodeList[1]);
+                                        });
 
 
                                       },
@@ -1519,6 +1523,7 @@ unitcostListControllers.clear();
                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                     child: UnderLinedInput(
                                       integerOnly: true,
+                                      focusNode: focusNodeList[1],
                                       controller: minOrderTestContoller,
 
                                       onChanged: (p0) {
@@ -1540,9 +1545,7 @@ unitcostListControllers.clear();
                                       },
                                       enable: true,
                                       onComplete: () {
-                                        setState(() {});
-
-                                        setState(() {});
+                                        FocusScope.of(context).requestFocus(focusNodeList[2]);
                                       },
                                     ),
                                   ),
@@ -1550,6 +1553,7 @@ unitcostListControllers.clear();
                                     child: UnderLinedInput(
                                       integerOnly: true,
                                       controller:maxOrderTestContoller,
+                                      focusNode: focusNodeList[2],
                                       onChanged: (p0) {
                                         if (p0 == '') {
                                           setState(() {
@@ -1569,9 +1573,7 @@ unitcostListControllers.clear();
                                       },
                                       enable: true,
                                       onComplete: () {
-                                        setState(() {});
-
-                                        setState(() {});
+                                        FocusScope.of(context).requestFocus(focusNodeList[3]);
                                       },
                                     ),
                                   ),
@@ -1592,6 +1594,7 @@ unitcostListControllers.clear();
                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                     child: UnderLinedInput(
                                       controller: unitCostCheck,
+                                      focusNode: focusNodeList[3],
 
                                       onChanged: (p0) {
                                         if (p0 == '')
@@ -1619,9 +1622,7 @@ unitcostListControllers.clear();
                                       },
                                       enable: true,
                                       onComplete: () {
-                                        setState(() {});
-
-                                        setState(() {});
+                                        FocusScope.of(context).requestFocus(focusNodeList[4]);
                                       },
                                     ),
                                   ),
@@ -1632,6 +1633,7 @@ unitcostListControllers.clear();
                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                     child: UnderLinedInput(
                                       controller: excesstaxTestContoller,
+                                      focusNode: focusNodeList[4],
                                       onChanged: (p0) {
                                         if (p0 == '')
                                           setState(() {
@@ -1672,9 +1674,7 @@ unitcostListControllers.clear();
                                       },
                                       enable: true,
                                       onComplete: () {
-                                        setState(() {});
-
-                                        setState(() {});
+                                        FocusScope.of(context).requestFocus(focusNodeList[5]);
                                       },
                                     ),
                                   ),
@@ -1682,6 +1682,7 @@ unitcostListControllers.clear();
                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                     child: UnderLinedInput(
                                       controller: discountTestContoller,
+                                      focusNode: focusNodeList[5],
                                       onChanged: (p0) {
                                         if (p0 == '')
                                           setState(() {
@@ -1730,9 +1731,10 @@ unitcostListControllers.clear();
                                       },
                                       enable: true,
                                       onComplete: () {
-                                        setState(() {});
-
-                                        setState(() {});
+                                        setState(() {
+                                          isActive1 = !isActive1!;
+                                        });
+                                        FocusScope.of(context).requestFocus(focusNodeList[6]);
                                       },
                                     ),
                                   ),
@@ -1857,8 +1859,12 @@ unitcostListControllers.clear();
                                   TableCell(
                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                     child: CheckedBoxs(
+                                      focusNode: focusNodeList[6],
                                       // color:Color(0xff3E4F5B) ,
                                       valueChanger:  isActive1,
+                                      onCompleteFunc: (){
+                                        saveFunction();
+                                      },
                                       onSelection: (bool? value ) {
                                         setState(() {
 
@@ -1909,87 +1915,9 @@ unitcostListControllers.clear();
 
 
                                         }),
-                                        TableTextButton(label: "Save", onPress: (){
-                                          foc1=foc1??0;
-                                          recievedQty=recievedQty??0;
-                                          if (minQty! >
-                                              maxQty!) {
-
-                                            context.showSnackBarError(
-                                                "the minimum order is always less than maximum order");
-                                          }
-                                          else  if(variantId=="null"||unitcost==0 ||unitcost==null){
-                                            context.showSnackBarError("please fill all the fields");
-                                          }
-                                          else if(recievedQty==0||recievedQty==""){
-                                            context.showSnackBarError(
-                                                "the requested quantity not be 0 or empty");
-                                          }
-                                          else if(recievedQty!<foc1!){
-                                            context.showSnackBarError("the received qty all ways greater than  foc");
-                                          }
-                                          else {
-                                            setState(() {
-                                              currentStock.add(stock??0);
-                                              table.add(
-                                                  OrderLines(
-                                                      variantId: variantId ?? "",
-                                                      currentQty: stock,
-                                                      supplierCode: supplierRefCode,
-                                                      variantName: varinatname ?? "",
-                                                      barcode: barcode ?? "",
-                                                      minimumQty: minQty,
-                                                      maximumQty: maxQty,
-                                                      purchaseUom: purchaseUomName ?? "",
-                                                      requestedQty: recievedQty,
-                                                      isRecieved: isReceived1,
-                                                      discount: discount,
-                                                      foc: foc1,
-                                                      unitCost: unitcost,
-                                                      vatableAmount: vatableAmount1,
-                                                      vat: vat1,
-                                                      excessTax: excess1,
-                                                      actualCost: actualCost1,
-                                                      grandTotal: grandTotal1,
-                                                      isInvoiced: isInvoiced1,
-                                                      isFree: isFree1,
-                                                      isActive: isActive1,
-                                                      updateCheck: false
-                                                  ));
-                                            });
-                                            widget.updation(table);
-                                            receivedTestContoller.clear();
-                                            excesstaxTestContoller.clear();
-                                            minOrderTestContoller.clear();
-                                            maxOrderTestContoller.clear();
-                                            discountTestContoller.clear();
-                                            vatTestContoller.clear();
-                                            focTestContoller.clear();
-                                            variantId = "";
-                                            varinatname = "";
-                                            barcode = "";
-                                            purchaseUomName = "";
-                                            recievedQty = 0;
-                                            excess1 = 0;
-                                            unitcostListControllers.clear();
-                                            valueAddingTextEdingController();
-                                            unitCostCheck.clear();
-                                            isReceived1 = false;
-                                            discount = 0;
-                                            foc1 = 0;
-                                            unitcost = 0;
-                                            vatableAmount1 =
-                                            0;
-                                            vat1 = 0;
-                                            grandTotal1 = 0;
-                                            actualCost1 = 0;
-                                            isActive1 =
-                                            false;
-                                            isFree1 = false;
-                                            isInvoiced1 =
-                                            false;
-                                            stock = 0;
-                                          } }),
+                                        TableTextButton(label: "Save",
+                                            onPress: (){
+                                              saveFunction(); }),
                                       ],
                                     ),
                                   ),
@@ -2047,5 +1975,87 @@ unitcostListControllers.clear();
         );
       }),
     );
+  }
+  saveFunction(){
+    foc1=foc1??0;
+    recievedQty=recievedQty??0;
+    if (minQty! >
+        maxQty!) {
+
+      context.showSnackBarError(
+          "the minimum order is always less than maximum order");
+    }
+    else  if(variantId=="null"||unitcost==0 ||unitcost==null){
+      context.showSnackBarError("please fill all the fields");
+    }
+    else if(recievedQty==0||recievedQty==""){
+      context.showSnackBarError(
+          "the requested quantity not be 0 or empty");
+    }
+    else if(recievedQty!<foc1!){
+      context.showSnackBarError("the received qty all ways greater than  foc");
+    }
+    else {
+      setState(() {
+        currentStock.add(stock??0);
+        table.add(
+            OrderLines(
+                variantId: variantId ?? "",
+                currentQty: stock,
+                supplierCode: supplierRefCode,
+                variantName: varinatname ?? "",
+                barcode: barcode ?? "",
+                minimumQty: minQty,
+                maximumQty: maxQty,
+                purchaseUom: purchaseUomName ?? "",
+                requestedQty: recievedQty,
+                isRecieved: isReceived1,
+                discount: discount,
+                foc: foc1,
+                unitCost: unitcost,
+                vatableAmount: vatableAmount1,
+                vat: vat1,
+                excessTax: excess1,
+                actualCost: actualCost1,
+                grandTotal: grandTotal1,
+                isInvoiced: isInvoiced1,
+                isFree: isFree1,
+                isActive: isActive1,
+                updateCheck: false
+            ));
+      });
+      widget.updation(table);
+      receivedTestContoller.clear();
+      excesstaxTestContoller.clear();
+      minOrderTestContoller.clear();
+      maxOrderTestContoller.clear();
+      discountTestContoller.clear();
+      vatTestContoller.clear();
+      focTestContoller.clear();
+      variantId = "";
+      varinatname = "";
+      barcode = "";
+      purchaseUomName = "";
+      recievedQty = 0;
+      excess1 = 0;
+      unitcostListControllers.clear();
+      valueAddingTextEdingController();
+      unitCostCheck.clear();
+      isReceived1 = false;
+      discount = 0;
+      foc1 = 0;
+      unitcost = 0;
+      vatableAmount1 =
+      0;
+      vat1 = 0;
+      grandTotal1 = 0;
+      actualCost1 = 0;
+      isActive1 =
+      false;
+      isFree1 = false;
+      isInvoiced1 =
+      false;
+      stock = 0;
+    }
   }
 }

@@ -83,6 +83,7 @@ class PopUpCall extends StatefulWidget {
   final String initialValue;
   final List<dynamic>? listOfList;
   final Function(String)? onchange;
+  final FocusNode? focusNode;
 
   final bool enable;
   final List<String>? list;
@@ -97,6 +98,7 @@ class PopUpCall extends StatefulWidget {
         this.contentPadding,
 
       this.value,
+        this.focusNode,
       this.vendorId,
       this.enable = false,
       this.onAddNew,
@@ -130,6 +132,7 @@ class _PopUpCallState extends State<PopUpCall> {
       case "sellingngPrice-basedOn":
         {
           data = SellingPriceBasedPopUpCall(
+            focusNode: widget.focusNode,
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -795,12 +798,14 @@ class SellingPriceBasedPopUpCall extends StatefulWidget {
   final String type;
   final bool enable;
   final List<String>? list;
+  final FocusNode? focusNode;
   const SellingPriceBasedPopUpCall(
       {Key? key,
       this.value,
       this.onAddNew,
       required this.onSelection,
       required this.type,
+        this.focusNode,
       required this.enable,
       this.list})
       : super(key: key);
@@ -903,6 +908,7 @@ class _SellingPriceBasedPopUpCallState
                     //   ),
                     // );
                     TypeAheadFormField(
+
                     enabled: widget.enable,
 
                     validator: (value) {
@@ -911,6 +917,8 @@ class _SellingPriceBasedPopUpCallState
                       }
                     },
                     textFieldConfiguration: TextFieldConfiguration(
+                      focusNode: widget.focusNode,
+                        autofocus: true,
                         keyboardType: TextInputType.phone,
                         inputFormatters:  <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(RegExp(r" "))

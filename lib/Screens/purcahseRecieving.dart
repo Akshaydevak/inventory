@@ -93,6 +93,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController excessClearController = TextEditingController();
   TextEditingController discountClearController = TextEditingController();
   TextEditingController focClearController = TextEditingController();
+
+  List<FocusNode>focusNodeList=List.generate(10, (index) => FocusNode());
 bool isSave=false;
 bool isGenarate=false;
   var expiryDate1Controllers = <TextEditingController>[];
@@ -3504,47 +3506,7 @@ setState(() {
                                                                                     VariantIdTAble(
                                                                                       text:variantId.toString(),
                                                                                       onTap: (){
-                                                                                        showDailogPopUp(
-                                                                                          context,
-                                                                                          TableConfigurePopup(
-                                                                                            vendorId: vendorCodeController.text,
-                                                                                            type: "variantTabalePopup",
-                                                                                            valueSelect: (VariantId? va) {
-                                                                                              print(va!.id
-                                                                                                  .toString());
-                                                                                              print("code" +
-                                                                                                  va!.code
-                                                                                                      .toString());
-
-                                                                                              setState(() {
-                                                                                                stockCheck=true;
-                                                                                                variantId =
-                                                                                                    va?.code;
-                                                                                                int? id = va!.id;
-                                                                                                print("is is"+id.toString());
-                                                                                                Variable.tableedit=false;
-                                                                                                variantIdcheck=false;
-                                                                                                recievlinequantityCheck=false;
-                                                                                                stockCheck=true;
-
-                                                                                                // onChange = true;
-                                                                                                context
-                                                                                                    .read<
-                                                                                                    TableDetailsCubitDartCubit>()
-                                                                                                    .getTableDetails(
-                                                                                                    id);
-                                                                                                setState(() {
-
-                                                                                                });
-                                                                                                context
-                                                                                                    .read<PurchaseStockCubit>()
-                                                                                                    .getCurrentStock(Variable.inventory_ID, variantId);
-
-                                                                                                // orderType = va!;
-                                                                                              });
-                                                                                            },
-                                                                                          ),
-                                                                                        );
+                                                                                        variantSelectionOnCreate();
                                                                                       },
                                                                                     ),
                                                                                     // PopUpCall(
@@ -3620,6 +3582,7 @@ setState(() {
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
                                                                                         controller:recievedClearController,
+                                                                                        focusNode: focusNodeList[0],
                                                                                         integerOnly: true,
 
                                                                                         // last:"",
@@ -3681,12 +3644,21 @@ setState(() {
                                                                                         },
                                                                                         enable: true,
                                                                                         onComplete: () {
+                                                                                          FocusScope.of(context).requestFocus(focusNodeList[1]);
                                                                                         },
                                                                                       ),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: CheckedBoxs(
+                                                                                        focusNode: focusNodeList[1],
+                                                                                        onCompleteFunc: (){
+                                                                                          setState(() {
+                                                                                            isReceived1 = !isReceived1!;
+                                                                                          });
+                                                                                          FocusScope.of(context).requestFocus(focusNodeList[2]);
+                                                                                        },
+
                                                                                         valueChanger: isReceived1,
                                                                                         onSelection: (bool? value) {
                                                                                           setState(() {
@@ -3699,6 +3671,7 @@ setState(() {
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
                                                                                         controller:unitCostCheck,
+                                                                                        focusNode: focusNodeList[2],
                                                                                         onChanged: (p0) {
                                                                                           if (p0 == '')
                                                                                             setState(() {
@@ -3730,15 +3703,14 @@ setState(() {
                                                                                         },
                                                                                         enable: true,
                                                                                         onComplete: () {
-                                                                                          setState(() {});
-
-                                                                                          setState(() {});
+                                                                                          FocusScope.of(context).requestFocus(focusNodeList[3]);
                                                                                         },
                                                                                       ),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
+                                                                                        focusNode: focusNodeList[3],
                                                                                           controller:excessClearController,
 
 
@@ -3780,9 +3752,7 @@ setState(() {
                                                                                         },
                                                                                         enable: true,
                                                                                         onComplete: () {
-                                                                                          setState(() {});
-
-                                                                                          setState(() {});
+                                                                                          FocusScope.of(context).requestFocus(focusNodeList[4]);
                                                                                         },
                                                                                       ),
                                                                                     ),
@@ -3791,6 +3761,7 @@ setState(() {
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
                                                                                           controller:discountClearController,
+                                                                                        focusNode: focusNodeList[4],
 
 
                                                                                         onChanged: (p0) {
@@ -3835,15 +3806,14 @@ setState(() {
                                                                                         },
                                                                                         enable: true,
                                                                                         onComplete: () {
-                                                                                          setState(() {});
-
-                                                                                          setState(() {});
+                                                                                          FocusScope.of(context).requestFocus(focusNodeList[5]);
                                                                                         },
                                                                                       ),
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
+                                                                                        focusNode:  focusNodeList[5],
                                                                                           controller:focClearController,
                                                                                         onChanged: (p0) {
                                                                                           if (p0 == '')
@@ -3876,6 +3846,7 @@ setState(() {
                                                                                         },
                                                                                         enable: true,
                                                                                         onComplete: () {
+                                                                                          FocusScope.of(context).requestFocus(focusNodeList[6]);
                                                                                         },
                                                                                       ),
                                                                                     ),
@@ -3978,6 +3949,10 @@ setState(() {
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: CheckedBoxs(
                                                                                        valueChanger : isInvoiced1,
+
+                                                                                        onCompleteFunc: (){
+
+                                                                                        },
                                                                                         onSelection: (bool? value) {
                                                                                           setState(() {
                                                                                            // isInvoiced1 = !isInvoiced1!;
@@ -3988,6 +3963,12 @@ setState(() {
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child:Tabledate(
+                                                                                          focusNode: focusNodeList[6],
+                                                                                          onEnterClick: (){
+                                                                                            FocusScope.of(context).requestFocus(focusNodeList[7]);
+
+                                                                                          },
+
                                                                                           format:DateFormat('dd-MM-yyyy'),
                                                                                           controller:expiryDate2,
                                                                                           // initialValue:
@@ -4018,8 +3999,18 @@ setState(() {
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: CheckedBoxs(
+                                                                                        focusNode: focusNodeList[7],
+                                                                                        onCompleteFunc: (){
+                                                                                          setState(() {
+                                                                                            isFree1 = !isFree1!;
 
+                                                                                          });
+
+                                                                                          FocusScope.of(context).requestFocus(focusNodeList[8]);
+
+                                                                                        },
                                                                                         valueChanger: isFree1,
+
                                                                                         onSelection: (bool? value) {
 
                                                                                           setState(() {
@@ -4032,6 +4023,15 @@ setState(() {
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: CheckedBoxs(
+                                                                                          focusNode: focusNodeList[8],
+                                                                                        onCompleteFunc: (){
+                                                                                          setState(() {
+                                                                                            isActive1 = !isActive1!;
+
+
+                                                                                          });
+                                                                                          onTableSaveFunction();
+                                                                                        },
                                                                                         // color:Color(0xff3E4F5B) ,
 
                                                                                         valueChanger:  isActive1,
@@ -4052,64 +4052,9 @@ setState(() {
                                                                                       TableTextButton(
 
                                                                                         onPress: () {
-                                                                                          setState(() {
-                                                                                            if(isReceived1==false||isActive1==false){
-                                                                                              context.showSnackBarError(
-                                                                                                  "isreceived and isActive always true in this");
-                                                                                            }
-                                                                                            else if(vat1==0||recievedQty==0||unitcost==0||variantId=="" ){
-                                                                                              context.showSnackBarError(
-                                                                                                  "please fill all the details");
-                                                                                            }
-                                                                                            else if(expiryDate.text==""||expiryDate.text==null){
-                                                                                              context.showSnackBarError(
-                                                                                                  "please select expiry text");
-                                                                                            }
-                                                                                            else if( foc1!>recievedQty!){
-                                                                                              context.showSnackBarError("foc always less than received qty");
-                                                                                            }
 
-                                                                                            else{
-                                                                                              additionalVariants.add(RecievingLines(
-                                                                                                variantId: variantId??"",
-                                                                                                currentStock: stock,
-                                                                                                supplierCode: supplierRefCode,
-                                                                                                variantName: varinatname??"",
-                                                                                                barcode: barcode??"",
-                                                                                                purchaseUom: purchaseUomName??"",
-                                                                                                requestedQty: recievedQty,
-                                                                                                isReceived: isReceived1,
-                                                                                                discount: discount,
-                                                                                                foc: foc1,
-                                                                                                unitCost: unitcost,
-                                                                                                vatableAmount: vatableAmount1,vat: vat1,
-                                                                                                excessTax: excess1,
-                                                                                                actualCost: actualCost1,
-                                                                                                grandTotal: grandTotal1,
-                                                                                                isInvoiced: isInvoiced1,
-                                                                                                isFree: isFree1,
-                                                                                                isActive:isActive1,
-                                                                                                expiryDate: expiryDate.text
-
-
-
-                                                                                            ));
-                                                                                            print("expiryDate.text"+expiryDate.text.toString());
-                                                                                            var expirydate1 = new TextEditingController(text: expiryDate2.text??"");
-                                                                                            expiryDate2tControllers.add(expirydate1);
-                                                                                            print("additionalVariants"+additionalVariants.toString());
-                                                                                              unitcostAdditionalListControllers.clear();
-                                                                                              valueAddingTextEdingController();
-
-
-
-                                                                                            clear();
-
-                                                                                            }
-
-
-                                                                                          });
-
+                                                                                          onTableSaveFunction();
+                                                                                          // variantSelectionOnCreate();
 
 
 
@@ -4192,7 +4137,7 @@ setState(() {
 
                                                                     AdditionalGenerateModel model=AdditionalGenerateModel(
                                                                       receivingId: receivingId,
-                                                                      createdBy: 12,
+                                                                      createdBy: Variable.created_by,
                                                                       purchaseOrderId:veritiaclid,
                                                                       orderLines: additionalVariants1,
                                                                     );
@@ -4366,6 +4311,104 @@ setState(() {
         }),
       ),
     );
+  }
+  variantSelectionOnCreate(){
+    showDailogPopUp(
+      context,
+      TableConfigurePopup(
+        vendorId: vendorCodeController.text,
+        type: "variantTabalePopup",
+        valueSelect: (VariantId? va) {
+
+
+          setState(() {
+            stockCheck=true;
+            variantId =
+                va?.code;
+            int? id = va!.id;
+            print("is is"+id.toString());
+            Variable.tableedit=false;
+            variantIdcheck=false;
+            recievlinequantityCheck=false;
+            stockCheck=true;
+            FocusScope.of(context).requestFocus(focusNodeList[0]);
+            // onChange = true;
+            context
+                .read<
+                TableDetailsCubitDartCubit>()
+                .getTableDetails(
+                id);
+            setState(() {
+
+            });
+            context
+                .read<PurchaseStockCubit>()
+                .getCurrentStock(Variable.inventory_ID, variantId);
+
+            // orderType = va!;
+          });
+        },
+      ),
+    );
+  }
+  onTableSaveFunction(){
+    setState(() {
+      if(isReceived1==false||isActive1==false){
+        context.showSnackBarError(
+            "isreceived and isActive always true in this");
+      }
+      else if(vat1==0||recievedQty==0||unitcost==0||variantId=="" ){
+        context.showSnackBarError(
+            "please fill all the details");
+      }
+      else if(expiryDate.text==""||expiryDate.text==null){
+        context.showSnackBarError(
+            "please select expiry text");
+      }
+      else if( foc1!>recievedQty!){
+        context.showSnackBarError("foc always less than received qty");
+      }
+
+      else{
+        additionalVariants.add(RecievingLines(
+            variantId: variantId??"",
+            currentStock: stock,
+            supplierCode: supplierRefCode,
+            variantName: varinatname??"",
+            barcode: barcode??"",
+            purchaseUom: purchaseUomName??"",
+            requestedQty: recievedQty,
+            isReceived: isReceived1,
+            discount: discount,
+            foc: foc1,
+            unitCost: unitcost,
+            vatableAmount: vatableAmount1,vat: vat1,
+            excessTax: excess1,
+            actualCost: actualCost1,
+            grandTotal: grandTotal1,
+            isInvoiced: isInvoiced1,
+            isFree: isFree1,
+            isActive:isActive1,
+            expiryDate: expiryDate.text
+
+
+
+        ));
+        print("expiryDate.text"+expiryDate.text.toString());
+        var expirydate1 = new TextEditingController(text: expiryDate2.text??"");
+        expiryDate2tControllers.add(expirydate1);
+        print("additionalVariants"+additionalVariants.toString());
+        unitcostAdditionalListControllers.clear();
+        valueAddingTextEdingController();
+
+
+
+        clear();
+
+      }
+
+
+    });
   }
 }
 class WarrantyDetailsPopUp extends StatefulWidget {

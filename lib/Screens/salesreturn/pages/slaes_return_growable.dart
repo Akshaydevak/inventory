@@ -56,6 +56,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
   var unitcostListControllers = <TextEditingController>[];
 
   bool? invoiced = false;
+  int selctedraw=-1;
   bool? isActive1 = false;
   List<int?> currentStock = [];
   bool? clear = true;
@@ -71,6 +72,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
   double sellingPrice = 0;
   double warrentyPrice = 5;
   double totalPrice = 0;
+  List<List<FocusNode>> listOfxfocusNodes = [];
   TextEditingController unicostController = TextEditingController();
   void taxableCalcutatingMethod(
       int reqQty, double unitCst, double exTaxx, double disct, String? type) {
@@ -139,6 +141,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
     if(table1.isNotEmpty){
       print("checking case");
       for(var i=0;i<table1.length;i++){
+        listOfxfocusNodes.add(List.generate(5, (index) => FocusNode()));
 
         var unitcost = new TextEditingController(text: table1[i].unitCost.toString()??"");
         unitcostListControllers.add(unitcost);
@@ -149,6 +152,18 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
 
       }
     }
+  }
+  void changeSelectedRow(int direction) {
+    setState(() {
+
+
+      // Adjust the selected row based on the arrow key direction
+      selctedraw = (selctedraw + direction).clamp(0, table1.length - 1);
+      FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
   }
 
   void initState() {
@@ -601,7 +616,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                 for (var i = 0; i < table1!.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
+                                          color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
                                           border:  Border(
                                               left: BorderSide(
@@ -652,7 +667,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                                         int? id = va!.id;
                                                         Variable.tableindex = i;
                                                         Variable.tableedit = true;
-
+                                                        FocusScope.of(context).requestFocus(listOfxfocusNodes[i][0]);
                                                         // onChange = true;
                                                         context
                                                             .read<
@@ -802,6 +817,10 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            focusNode: listOfxfocusNodes[i][0],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][1]);
+                                            },
                                             initialCheck: true,
                                             readOnly: table1[i].isInvoiced==true?true:false,
                                             // controller: requestedListControllers[i],
@@ -882,6 +901,10 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            focusNode: listOfxfocusNodes[i][1],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][2]);
+                                            },
                                             initialCheck: true,
                                             readOnly: table1[i].isInvoiced==true?true:false,
                                             //controller: unitcostListControllers[i],
@@ -964,6 +987,10 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             initialCheck: true,
+                                            focusNode: listOfxfocusNodes[i][2],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][3]);
+                                            },
                                             readOnly: table1[i].isInvoiced==true?true:false,
 
                                             // controller: excesstListControllers[i],
@@ -1111,6 +1138,10 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            focusNode: listOfxfocusNodes[i][3],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][4]);
+                                            },
                                             readOnly: table1[i].isInvoiced==true?true:false,
                                             initialCheck: true,
                                             last:
@@ -1237,6 +1268,28 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: CheckedBoxs(
+                                            focusNode: listOfxfocusNodes[i][4],
+                                              onCompleteFunc: (){
+                                                if( table1[i].isInvoiced!=true) {
+                                                  bool? isActive =
+                                                      table1[i].isActive;
+                                                  setState(() {
+                                                    // widget.updateCheck(true);
+                                                    table1[i] =
+                                                        table1[i].copyWith(
+                                                            updatecheck: true);
+                                                    // table1[i] = table1[i].copyWith(updateCheck: true);
+                                                    setState(() {});
+                                                    isActive = !isActive!;
+                                                    table1[i] = table1[i]
+                                                        .copyWith(
+                                                        isActive: isActive);
+                                                  });
+                                                  updateFunction(i);
+
+                                                }
+
+                                              },
                                               valueChanger:
                                               table1?[i].isActive == null
                                                   ? false
@@ -1266,8 +1319,7 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
                                             textColor:  table1?[i].updatecheck==true?Pellet.bagroundColor:Colors.black,
                                             bagroundColor: table1?[i].updatecheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
                                             onPress: () {
-                                              widget.updation(table1);
-                                              table1[i]=    table1[i].copyWith(updatecheck: false);
+                                              updateFunction(i);
                                             },
                                             label: table1[i]?.updatecheck==true?  "update":"",
                                           ),
@@ -1312,5 +1364,9 @@ class SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrowa
         );
       }),
     );
+  }
+  updateFunction(int i){
+    widget.updation(table1);
+    table1[i]=    table1[i].copyWith(updatecheck: false);
   }
 }

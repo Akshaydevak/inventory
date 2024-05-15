@@ -2814,7 +2814,7 @@ class _PurchaseOrderRecievinScreenState extends State<PurchaseOrderRecievinScree
 
                                                                   AdditionalGenerateModel model=AdditionalGenerateModel(
                                                                     receivingId: receivingId,
-                                                                    createdBy: 12,
+                                                                    createdBy: Variable.created_by,
                                                                     purchaseOrderId:Variable.verticalid,
                                                                     orderLines: additionalVariants1,
                                                                   );

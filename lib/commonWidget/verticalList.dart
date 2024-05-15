@@ -49,7 +49,9 @@ class VerticalList extends StatefulWidget {
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  VerticalList({Key? key, required this.itemsearch,this.select=false,required this.result, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox()}):super(key: key);
+  final Function? changeFocusToParent;
+
+  VerticalList({Key? key, required this.itemsearch,this.select=false,required this.result, required this.selectedVertical,required this.ontap,this.tab ,this.changeFocusToParent, this.child=const SizedBox()}):super(key: key);
   @override VerticalListState createState() => VerticalListState();
 }
 
@@ -60,6 +62,7 @@ class VerticalListState extends State<VerticalList> {
   bool select=false;
   bool suffixIconCheck=false;
   int selectedVertical=0;
+  FocusNode searchFocusNode=FocusNode();
   NavigationProvider vm = NavigationProvider();
   TextEditingController itemsearch=TextEditingController();
   @override
@@ -76,10 +79,18 @@ class VerticalListState extends State<VerticalList> {
     // });
   }
   int changeSelectedRow(int direction) {
-    print("sdfddddFFFFFFFFFFFFF");
+    print("sdfddddFFFFFFFFFFFFF${widget.result.length}${selectedVertical}");
     setState(() {
+      if((selectedVertical==0 && direction==-1)  ){
+        FocusScope.of(context).requestFocus(searchFocusNode);
+      }
+      if(selectedVertical==widget.result.length - 1 && direction==1){
+        selectedVertical=0;
+        FocusScope.of(context).requestFocus(searchFocusNode);
+      }
       // Adjust the selected row based on the arrow key direction
       selectedVertical = (selectedVertical + direction).clamp(0, widget.result.length - 1);
+      print("sdfddddFFFFFFFFFFFFF${widget.result.length}${selectedVertical}");
       // invoiceCheckBoxselectionFunc(invoiceselectedRow);
     });
     return selectedVertical;
@@ -133,6 +144,7 @@ class VerticalListState extends State<VerticalList> {
                               child: SearchTextfiled(
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
+                                focusnode: searchFocusNode,
                                 suffixIconCheck: suffixIconCheck,
                                 ctrlr:widget. itemsearch,
                                 onChanged: (va) {
@@ -193,6 +205,7 @@ class VerticalListState extends State<VerticalList> {
                                                 .id
                                                 .toString(),
                                             onClick: () {
+                                              selectedVertical=index;
                                               widget.ontap( index);
 
                                             },

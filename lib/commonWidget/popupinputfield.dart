@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/NewinputScreen.dart';
+
 class PopUpInputField extends StatefulWidget {
   final bool read;
   final String label;
@@ -304,33 +306,73 @@ class CheckedBoxs extends StatefulWidget {
   final bool? valueChanger;
   final Color color;
   final double hght;
+  final FocusNode? focusNode;
   final Function(bool?) onSelection;
-  CheckedBoxs({required this.onSelection,this.valueChanger=false,this.color=Colors.transparent,this.hght=50});
+  final Function? onCompleteFunc;
+  CheckedBoxs({required this.onSelection,this.onCompleteFunc,this.focusNode,this.valueChanger=false,this.color=Colors.transparent,this.hght=50});
 
   @override
   _CheckedBoxState createState() => _CheckedBoxState();
 }
 
 class _CheckedBoxState extends State<CheckedBoxs> {
+  bool isFocus=false;
+  TextEditingController controller=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: widget.color,
+      color:widget.color,
       height: widget.hght,
-      child: Checkbox(
-       side: BorderSide(
-         width: 1,
-         color:  Color(0xff3E4F5B).withOpacity(.5)
+
+      child:  Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 2,
+            child: TextField(
+              cursorColor: isFocus ? Colors.transparent : null,
+autofocus: false,
+onEditingComplete: (){
+  if(widget.onCompleteFunc!=null){
+    widget.onCompleteFunc!();
+  }
+},
+              focusNode: widget.focusNode,
+                controller: controller,
+              decoration: InputDecoration(
+                // filled: true,
+                // fillColor: Colors.grey.withOpacity(.5)
+              ),
+
+            ),
+          ),
+          Focus(
+            focusNode: widget.focusNode,
+            onFocusChange: (hasFocus) {
+              if (hasFocus) {
+                isFocus=true;
+                setState(() {
+
+                });
+              }
+            },
+            child: Checkbox(
+             side: BorderSide(
+               width: 1,
+               color:  Color(0xff3E4F5B).withOpacity(.5)
 
 
 
 
-       ),
+             ),
 
 
-        activeColor: Color(0xff3E4F5B),
-        value: widget.valueChanger,
-        onChanged: widget.onSelection,
+              activeColor: Color(0xff3E4F5B),
+              value: widget.valueChanger,
+              onChanged: widget.onSelection,
+            ),
+          ),
+        ],
       ),
     );
   }

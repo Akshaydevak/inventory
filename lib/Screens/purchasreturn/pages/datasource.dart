@@ -1631,7 +1631,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<List<SalesInvoiceCodeModel>> getInvoiceCode() async {
     String path = salesInvoiceCodeApi + Variable.inventory_ID;
-
+print("Pathssssa$path");
     final response = await client.get(
       path,
       options: Options(

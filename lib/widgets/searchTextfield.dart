@@ -9,6 +9,7 @@ class SearchTextfiled extends StatefulWidget {
    double w;
   final bool suffiXCheck;
   final bool  suffixIconCheck;
+  final FocusNode? focusnode;
 
   final Function(String )? onChanged;
 
@@ -16,7 +17,7 @@ class SearchTextfiled extends StatefulWidget {
   final VoidCallback? suffixOnComplete;
   final VoidCallback? onTap;
   final TextEditingController ctrlr;
-  SearchTextfiled({required this.color,this.onTap,this.suffixColor=Colors.black,this.suffixIconCheck=false,this.suffiXCheck=false,required this.hintText,required this.ctrlr,this.onComplete,this.suffixOnComplete, this.onChanged,this.h=32,this.w=625});
+  SearchTextfiled({required this.color,this.focusnode,this.onTap,this.suffixColor=Colors.black,this.suffixIconCheck=false,this.suffiXCheck=false,required this.hintText,required this.ctrlr,this.onComplete,this.suffixOnComplete, this.onChanged,this.h=32,this.w=625});
 
   @override
   State<SearchTextfiled> createState() => _SearchTextfiledState();
@@ -40,6 +41,8 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
           child: TextFormField(
             onEditingComplete:widget.onComplete,
             onChanged:widget.onChanged,
+
+            focusNode: widget.focusnode,
 
             style: TextStyle(color: Colors.black),
             controller: widget.ctrlr,

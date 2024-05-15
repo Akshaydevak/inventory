@@ -11,6 +11,7 @@ class PurchaserecievingpatchCubit extends Cubit<PurchaserecievingpatchState> {
   PurchaserecievingpatchCubit() : super(PurchaserecievingpatchState.initial());
   final InventoryRepository _repos = InventoryRepositoryImpl();
   Future getPurchaseRecievePatch(int? id,PurchaseRecievingRead model) async {
+    emit(PurchaserecievingpatchState.initial());
 
     final result = await _repos.getPurchaseRecievePatch(id,model);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

@@ -50,6 +50,8 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
   String? returntype = "";
   String? returntime = "";
   String? barcode = "";
+  List<FocusNode>focusNodeList=List.generate(5, (index) => FocusNode());
+  List<List<FocusNode>> listOfxfocusNodes = [];
   String? salesUom = "";
   int? stock = 0;
   int? stockId ;
@@ -59,6 +61,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
   List<int?> currentStock = [];
   bool? invoiced = false;
   bool? isActive1 = false;
+  int selctedraw=-1;
   bool? clear = false;
   String? supplierRefCode = "";
   double? unitcost1 = 0;
@@ -115,7 +118,9 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
     discountTestController.clear();
     excessTestController.clear();
     quanitityTestController.clear();
-    unitcostListControllers.clear();
+    // unitcostListControllers.clear();
+
+    // focusNodeList.clear();
     discountPrice = "price";
     varinatname = "";
     barcode = "";
@@ -134,6 +139,21 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
 
 
 
+  }
+
+  void changeSelectedRow(int direction) {
+    setState(() {
+      if(table1.isEmpty || selctedraw== table1.length - 1){
+        FocusScope.of(context).requestFocus(focusNodeList[0]);
+      }
+     else{
+        // Adjust the selected row based on the arrow key direction
+        selctedraw = (selctedraw + direction).clamp(0, table1.length - 1);
+        FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+      }
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
   }
   Future _getCurrentUser() async {
     if (table1.isNotEmpty) {
@@ -201,6 +221,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
       print("checking case");
       for(var i=0;i<table1.length;i++){
 
+        listOfxfocusNodes.add(List.generate(5, (index) => FocusNode()));
         var unitcost = new TextEditingController(text: table1[i].unitCost.toString()??"");
         unitcostListControllers.add(unitcost);
 
@@ -646,7 +667,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                 for (var i = 0; i < table1!.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
+                                          color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
                                           border:  Border(
                                               left: BorderSide(
@@ -697,7 +718,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                       int? id = va!.id;
                                                       Variable.tableindex = i;
                                                       Variable.tableedit = true;
-
+                                                      FocusScope.of(context).requestFocus(listOfxfocusNodes[i][0]);
                                                       // onChange = true;
                                                       context
                                                           .read<
@@ -777,8 +798,10 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           TableCellVerticalAlignment.middle,
                                           child:
                                           textPadding(
+
                                               table1?[i].variaNtname ?? "",
                                               fontSize: 12,
+
 
                                               fontWeight: FontWeight.w500),
                                         ),
@@ -870,6 +893,10 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           child:
                                           UnderLinedInput(
                                             initialCheck: true,
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][1]);
+                                            },
+                                            focusNode: listOfxfocusNodes[i][0],
                                             readOnly: table1[i].isInvoiced==true?true:false,
                                             // controller: requestedListControllers[i],
                                             last: table1?[i]
@@ -956,6 +983,10 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            focusNode: listOfxfocusNodes[i][1],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][2]);
+                                            },
                                             readOnly: table1[i].isInvoiced==true?true:false,
                                             // initialCheck: true,
                                             controller: unitcostListControllers[i],
@@ -1039,6 +1070,10 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             initialCheck: true,
+                                            focusNode: listOfxfocusNodes[i][2],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][3]);
+                                            },
                                             readOnly: table1[i].isInvoiced==true?true:false,
 
                                             // controller: excesstListControllers[i],
@@ -1186,6 +1221,10 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            focusNode: listOfxfocusNodes[i][3],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][4]);
+                                            },
                                             initialCheck: true,
                                             readOnly: table1[i].isInvoiced==true?true:false,
                                             last:
@@ -1311,6 +1350,35 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                           child: CheckedBoxs(
+                                            focusNode: listOfxfocusNodes[i][4],
+                                              onCompleteFunc: (){
+                                               setState(() {
+                                                 if( table1[i].isInvoiced!=true){
+                                                   clear=true;
+                                                   bool? isActive =
+                                                       table1[i].isActive;
+                                                   setState(() {
+                                                     widget.updateCheck(true);
+
+                                                     table1[i] = table1[i].copyWith(updatecheck: true);
+
+                                                     table1[i] = table1[i]
+                                                         .copyWith(
+                                                         isActive: !isActive!);
+                                                   });
+                                                   updateFuntion(i);
+                                                   if(i!=table1.length-1){
+                                                     FocusScope.of(context).requestFocus(listOfxfocusNodes[i+1][0]);
+                                                     selctedraw=i+1;
+
+                                                   }
+                                                   else{
+                                                     FocusScope.of(context).requestFocus(focusNodeList[0]);
+                                                   }
+                                                 }
+                                               });
+
+                                              },
                                               valueChanger:
                                               table1?[i].isActive == null
                                                   ? false
@@ -1322,15 +1390,13 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                       table1[i].isActive;
                                                   setState(() {
                                                     widget.updateCheck(true);
-                                                    print("aaaaaaaaaaa"+isActive.toString());
+
                                                     table1[i] = table1[i].copyWith(updatecheck: true);
-                                                    // table1[i] = table1[i].copyWith(updateCheck: true);
-                                                    setState(() {});
-                                                    isActive = !isActive!;
-                                                    print("aaaaaaaaaaa"+isActive.toString());
+
                                                     table1[i] = table1[i]
                                                         .copyWith(
-                                                        isActive: isActive);
+                                                        isActive: !isActive!);
+
                                                   });
 
                                                 }
@@ -1344,22 +1410,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                             textColor:  table1?[i].updatecheck==true?Pellet.bagroundColor:Colors.black,
                                             bagroundColor: table1?[i].updatecheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
                                             onPress: () {
-                                              setState(() {
-                                                if(table1[i].quantity==0||table1[i].quantity==""||table1[i].quantity==null)
-                                                  context.showSnackBarError("Please enter the quantity");
-                                                else if(table1[i].unitCost==0||table1[i].unitCost==""||table1[i].unitCost==null)
-                                                  context.showSnackBarError("Please enter the unitcost");
-
-                                                else{
-                                                  table1[i]=      table1[i].copyWith(updatecheck: false);
-                                             var update=     updateCheckFunc();
-                                                  widget.updateCheck(update);
-
-                                                  widget.updation(table1);
-                                                }
-
-
-                                              });
+                                              updateFuntion(i);
 
                                             },
                                             label:table1[i].updatecheck==true? "Update":"",
@@ -1393,6 +1444,10 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           VariantIdTAble(
                                             text:variantId.toString(),
                                             onTap: (){
+                                              selctedraw=-1;
+                                              setState(() {
+
+                                              });
                                               showDailogPopUp(
                                                 context,
                                                 TableConfigurePopup(
@@ -1412,7 +1467,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                       Variable.tableedit = false;
                                                       // stockCheck=true;
 
-                                                      // onChange = true;
+                                                      FocusScope.of(context).requestFocus(focusNodeList[0]); // onChange = true;
                                                       context
                                                           .read<
                                                           TableDetailsCubitDartCubit>()
@@ -1537,6 +1592,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
+                                          focusNode: focusNodeList[0],
                                           controller: quanitityTestController,
 
                                           onChanged: (p0) {
@@ -1581,7 +1637,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           },
                                           enable: true,
                                           onComplete: () {
-                                            setState(() {});
+                                            FocusScope.of(context).requestFocus(focusNodeList[1]);
                                           },
                                         ),
                                       ),
@@ -1589,6 +1645,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
+                                          focusNode: focusNodeList[1],
                                           controller: unicostController,
                                           onChanged: (p0) {
                                             clear=true;
@@ -1627,9 +1684,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           },
                                           enable: true,
                                           onComplete: () {
-                                            setState(() {});
-
-                                            setState(() {});
+                                            FocusScope.of(context).requestFocus(focusNodeList[2]);
                                           },
                                         ),
                                       ),
@@ -1637,6 +1692,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
+                                          focusNode: focusNodeList[2],
                                           controller: excessTestController,
                                           onChanged: (p0) {
                                             clear=true;
@@ -1673,9 +1729,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           },
                                           enable: true,
                                           onComplete: () {
-                                            setState(() {});
-
-                                            setState(() {});
+                                            FocusScope.of(context).requestFocus(focusNodeList[3]);
                                           },
                                         ),
                                       ),
@@ -1720,6 +1774,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
+                                          focusNode: focusNodeList[3],
                                           controller: discountTestController,
                                           onChanged: (p0) {
                                             clear=true;
@@ -1756,9 +1811,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           },
                                           enable: true,
                                           onComplete: () {
-                                            setState(() {});
-
-                                            setState(() {});
+                                            FocusScope.of(context).requestFocus(focusNodeList[4]);
                                           },
                                         ),
                                       ),
@@ -1812,14 +1865,34 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: CheckedBoxs(
+                                          focusNode: focusNodeList[4],
                                           // color: Color(0xff3E4F5B),
                                           valueChanger: isActive1,
+                                          onCompleteFunc: (){
+                                            setState(() {
+                                              if(stockId!=null){
+                                                isActive1 = !isActive1!;
+                                                saveFunction();
+
+                                                variantPoppFunc();
+                                              }
+
+
+                                              else{
+                                                context.showSnackBarError("The stock does not exist");
+
+                                              }
+                                            });
+                                          },
                                           onSelection: (bool? value) {
                                             clear=true;
                                             setState(() {
-                                              if(stockId!=null)
-
+                                              if(stockId!=null){
                                                 isActive1 = !isActive1!;
+
+                                              }
+
+
                                               else{
                                                 context.showSnackBarError("The stock does not exist");
 
@@ -1872,48 +1945,49 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                             TableTextButton(
                                                 label: "Save",
                                                 onPress: () {
-                                                  setState(() {
-                                                    if(quantity==0||quantity==""||quantity==null)
-                                                      context.showSnackBarError("Please enter the quantity");
-                                                    else if(unitcost1==0||unitcost1==""||unitcost1==null)
-                                                      context.showSnackBarError("Please enter the unitcost");
-                                                    else{
-                                                      table1.add(SalesOrderLines(
-                                                        variantId: variantId ?? "",
-                                                        stockId: stockId.toString(),
-                                                        returnType: returntype,
-                                                        returnTime: int.tryParse(returntime??""),
-                                                        salesUom: salesUom,
-                                                        warrentyId: "a",
-                                                        discountType: discountPrice,
-                                                        variaNtname: varinatname ?? "",
-                                                        barcode: barcode ?? "",
-                                                        discount: discount1??0,
-                                                        unitCost: unitcost1??0,
-                                                        taxableAmount: taxableAmount??0,
-                                                        quantity: quantity??0,
-                                                        vat: vat1??0,
-                                                        excessTax: etax1??0,
-                                                        sellingPrice: sellingPrice??0,
-                                                        totalPrice: totalPrice??0,
-                                                        qty: stock??0,
-                                                        warrentyPrice: warrentyPrice??0,
-                                                        isInvoiced: invoiced??false,
-                                                        isActive: isActive1??false,
-                                                        updatecheck: false,
-                                                      ));
-                                                      print("GAssaliiiiiiiiiiiis"+table1.toString());
-                                                      currentStock.add(stock??0);
-                                                      clearTableAddingVariables();
-                                                      unitcostListControllers.clear();
-                                                      valueAddingTextEdingController();
-                                                      widget.updation(table1);
-
-                                                    }
-
-
-
-                                                  });
+                                                  saveFunction();
+                                                  // setState(() {
+                                                  //   if(quantity==0||quantity==""||quantity==null)
+                                                  //     context.showSnackBarError("Please enter the quantity");
+                                                  //   else if(unitcost1==0||unitcost1==""||unitcost1==null)
+                                                  //     context.showSnackBarError("Please enter the unitcost");
+                                                  //   else{
+                                                  //     table1.add(SalesOrderLines(
+                                                  //       variantId: variantId ?? "",
+                                                  //       stockId: stockId.toString(),
+                                                  //       returnType: returntype,
+                                                  //       returnTime: int.tryParse(returntime??""),
+                                                  //       salesUom: salesUom,
+                                                  //       warrentyId: "a",
+                                                  //       discountType: discountPrice,
+                                                  //       variaNtname: varinatname ?? "",
+                                                  //       barcode: barcode ?? "",
+                                                  //       discount: discount1??0,
+                                                  //       unitCost: unitcost1??0,
+                                                  //       taxableAmount: taxableAmount??0,
+                                                  //       quantity: quantity??0,
+                                                  //       vat: vat1??0,
+                                                  //       excessTax: etax1??0,
+                                                  //       sellingPrice: sellingPrice??0,
+                                                  //       totalPrice: totalPrice??0,
+                                                  //       qty: stock??0,
+                                                  //       warrentyPrice: warrentyPrice??0,
+                                                  //       isInvoiced: invoiced??false,
+                                                  //       isActive: isActive1??false,
+                                                  //       updatecheck: false,
+                                                  //     ));
+                                                  //     print("GAssaliiiiiiiiiiiis"+table1.toString());
+                                                  //     currentStock.add(stock??0);
+                                                  //     clearTableAddingVariables();
+                                                  //     unitcostListControllers.clear();
+                                                  //     valueAddingTextEdingController();
+                                                  //     widget.updation(table1);
+                                                  //
+                                                  //   }
+                                                  //
+                                                  //
+                                                  //
+                                                  // });
                                                 }),
 
                                           ],
@@ -1957,7 +2031,115 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
             ),
           ),
         );
-      }),
+      }
+      ),
     );
+  }
+  updateFuntion(int i){
+    setState(() {
+      if(table1[i].quantity==0||table1[i].quantity==""||table1[i].quantity==null)
+        context.showSnackBarError("Please enter the quantity");
+      else if(table1[i].unitCost==0||table1[i].unitCost==""||table1[i].unitCost==null)
+        context.showSnackBarError("Please enter the unitcost");
+
+      else{
+        table1[i]=      table1[i].copyWith(updatecheck: false);
+        var update=     updateCheckFunc();
+        widget.updateCheck(update);
+
+        widget.updation(table1);
+      }
+
+
+    });
+  }
+  variantPoppFunc(){
+
+
+    selctedraw=-1;
+    setState(() {
+
+    });
+    showDailogPopUp(
+      context,
+      TableConfigurePopup(
+        inventory: Variable.inventory_ID,
+        type: "variantTabalePopup",
+        valueSelect: (VariantId? va) {
+          print("vaavvavvavavava"+va.toString());
+          print(va!.id.toString());
+          print("code" + va!.code.toString());
+
+          setState(() {
+            clear=true;
+            stockCheck=true;
+            variantId = va.code;
+            int? id = va!.id;
+            print("is is" + id.toString());
+            Variable.tableedit = false;
+            // stockCheck=true;
+
+            FocusScope.of(context).requestFocus(focusNodeList[0]); // onChange = true;
+            context
+                .read<
+                TableDetailsCubitDartCubit>()
+                .getTableDetails(id);
+            setState(() {});
+            context
+                .read<PurchaseStockCubit>()
+                .getCurrentStock(
+                Variable.inventory_ID,
+                variantId);
+
+            // orderType = va!;
+          });
+        },
+      ),
+    );
+  }
+  saveFunction(){
+    setState(() {
+      if(quantity==0||quantity==""||quantity==null)
+        context.showSnackBarError("Please enter the quantity");
+      else if(unitcost1==0||unitcost1==""||unitcost1==null)
+        context.showSnackBarError("Please enter the unitcost");
+      else{
+        table1.add(SalesOrderLines(
+          variantId: variantId ?? "",
+          stockId: stockId.toString(),
+          returnType: returntype,
+          returnTime: int.tryParse(returntime??""),
+          salesUom: salesUom,
+          warrentyId: "a",
+          discountType: discountPrice,
+          variaNtname: varinatname ?? "",
+          barcode: barcode ?? "",
+          discount: discount1??0,
+          unitCost: unitcost1??0,
+          taxableAmount: taxableAmount??0,
+          quantity: quantity??0,
+          vat: vat1??0,
+          excessTax: etax1??0,
+          sellingPrice: sellingPrice??0,
+          totalPrice: totalPrice??0,
+          qty: stock??0,
+          warrentyPrice: warrentyPrice??0,
+          isInvoiced: invoiced??false,
+          isActive: isActive1??false,
+          updatecheck: false,
+        ));
+        print("GAssaliiiiiiiiiiiis"+table1.toString());
+        currentStock.add(stock??0);
+        clearTableAddingVariables();
+        unitcostListControllers.clear();
+        listOfxfocusNodes.clear();
+        valueAddingTextEdingController();
+        widget.updation(table1);
+
+      }
+
+
+
+    });
   }
 }

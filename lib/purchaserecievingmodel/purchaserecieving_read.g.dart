@@ -152,7 +152,7 @@ _$_AdditionalGenerateModel _$$_AdditionalGenerateModelFromJson(
         Map<String, dynamic> json) =>
     _$_AdditionalGenerateModel(
       receivingId: json['receiving_id'] as int?,
-      createdBy: json['created_by'] as int?,
+      createdBy: json['created_by'] as String?,
       purchaseOrderId: json['purchase_order_id'] as int?,
       orderLines: (json['order_lines'] as List<dynamic>?)
           ?.map((e) => RecievingLines.fromJson(e as Map<String, dynamic>))

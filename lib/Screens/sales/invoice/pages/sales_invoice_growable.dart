@@ -24,20 +24,35 @@ class SalesInvoiceGrowableTable extends StatefulWidget {
 class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
   late AutoScrollController recieveController;
   bool editionchek=false;
+  int selctedraw=-1;
   var unitcostListControllers = <TextEditingController>[];
   List<OrderLinesInvoice> table1=List.from([]);
+  List<List<FocusNode>> listOfxfocusNodes = [];
   valueAddingTextEdingController(){
     unitcostListControllers.clear();
 
     if(table1.isNotEmpty){
       print("checking case");
       for(var i=0;i<table1.length;i++){
+        listOfxfocusNodes.add(List.generate(1, (index) => FocusNode()));
         var unitcost = new TextEditingController(text: table1[i].quantity.toString()??"");
         unitcostListControllers.add(unitcost);
         setState(() {
         });
       }
     }
+  }
+  void changeSelectedRow(int direction) {
+    setState(() {
+
+
+        // Adjust the selected row based on the arrow key direction
+        selctedraw = (selctedraw + direction).clamp(0, table1.length - 1);
+        FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
   }
   double taxableUpdateMethod(
       int reqQty, double unitCst, double exTaxx, double disct, String? type) {
@@ -313,7 +328,7 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                     for (var i = 0; i < table1!.length; i++)
                                       TableRow(
                                           decoration: BoxDecoration(
-                                              color: Pellet.tableRowColor,
+                                              color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                               shape: BoxShape.rectangle,
                                               border:  Border(
                                                   left: BorderSide(
@@ -359,6 +374,25 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                               child: CheckedBoxs(
                                                   valueChanger:table1[i].isInvoiced??false,
+                                                  focusNode: listOfxfocusNodes[i][0],
+                                                  onCompleteFunc: (){
+                                                    if(table1[i].isInvoiced==false ||table1[i].isEdit==true) {
+                                                      editionchek = true;
+                                                      widget.updateCheck(true);
+                                                      table1[i] = table1[i].copyWith(updatecheck: true,isEdit: true);
+                                                      bool isinvoiced = table1[i].isInvoiced ?? false;
+                                                      setState(() {
+                                                        isinvoiced = !isinvoiced!;
+                                                        table1[i] = table1[i].copyWith(isInvoiced: isinvoiced);
+                                                        setState(() {});
+                                                      });
+                                                      updationFunction(i);
+                                                      if(i!=table1[table1.length-1]){
+                                                        FocusScope.of(context).requestFocus(listOfxfocusNodes[i][0]);
+                                                      }
+                                                    }
+
+                                                  },
 
                                                   onSelection:(bool ? value){
     if(table1[i].isInvoiced==false ||table1[i].isEdit==true) {
@@ -950,5 +984,10 @@ class SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
             }
         ),
       );
+  }
+  updationFunction(i){
+    widget.updateCheck(false);
+    table1[i]= table1[i].copyWith(updatecheck: false);
+    widget.updation(table1);
   }
 }

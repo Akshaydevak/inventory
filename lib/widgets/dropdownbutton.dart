@@ -22,6 +22,7 @@ class SelectableDropDownpopUp extends StatefulWidget {
   final bool enable;
   final bool restricted;
   final Function(String)? onchange;
+  final FocusNode? focusNode;
   final int? id;
 
   const SelectableDropDownpopUp(
@@ -31,6 +32,7 @@ class SelectableDropDownpopUp extends StatefulWidget {
          this.bindType,
         this.type,
         this.apiType,
+        this.focusNode,
         this.id,
         required this.label,
         this.row=false,
@@ -95,6 +97,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
 
                   child: widget.type != null
                       ? PopUpCall(
+                    focusNode: widget.focusNode,
                     code: widget.code,
                       apiType:widget.apiType,
                     id:widget.id,
@@ -188,6 +191,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                     code: widget.code,
                     onchange:widget.onchange,
                     enable: widget.enable,
+                    focusNode: widget.focusNode,
 
                     type: widget.type!)
                     :

@@ -40,6 +40,7 @@ class NewInputCard extends StatefulWidget {
   final Function? onChange;
   final Function? ontap;
   final int? textLimit;
+  final FocusNode? focusNode;
   final EdgeInsetsGeometry? paddings;
 
   final String title;
@@ -55,6 +56,7 @@ class NewInputCard extends StatefulWidget {
     this.ontap,
     this.paddings,
     this.textLimit=100,
+    this.focusNode,
     this.integerOnly=false,
     required this.controller,
     this.label,
@@ -121,6 +123,7 @@ class _NewInputCardState extends State<NewInputCard> {
             // color: Colors.grey.shade200,
             child: TextFormField(
 
+
               textAlignVertical: TextAlignVertical.center,
               onChanged:(va){widget?.onChange!(va);} ,
 
@@ -130,11 +133,13 @@ class _NewInputCardState extends State<NewInputCard> {
               maxLines: widget.maxLines,
               controller: widget.controller,
               obscureText: show,
+              focusNode:widget.focusNode ,
 
               keyboardType:widget.formatter?TextInputType.numberWithOptions(decimal: true):null,
             inputFormatters:widget.formatter? <TextInputFormatter>[widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]:null,
               decoration: InputDecoration(
                 hintText:widget.icondrop?"-select-":"",
+
 
 
                 filled: true,
@@ -184,10 +189,14 @@ class _NewInputCardState extends State<NewInputCard> {
             // color: widget.colors,
             // color: Colors.grey.shade200,
             child: TextFormField(
-
+              focusNode:widget.focusNode ,
               textAlignVertical: TextAlignVertical.center,
               onTap: (){
                 print("www");
+                if(widget.controller.text.isEmpty)
+                  widget.ontap!=null?widget.ontap!():null;
+              },
+              onEditingComplete: (){
                 if(widget.controller.text.isEmpty)
                   widget.ontap!=null?widget.ontap!():null;
               },
@@ -313,6 +322,7 @@ class _NewInputCardState extends State<NewInputCard> {
     child: TextFormField(
       textAlignVertical: TextAlignVertical.center,
     maxLines: widget.maxLines,
+      focusNode:widget.focusNode ,
     controller: widget.controller.text=="null"?TextEditingController(text: ""):widget.controller,
     obscureText: show,
     decoration: InputDecoration(
@@ -884,6 +894,7 @@ class UnderLinedInput extends StatefulWidget {
   final TextAlign textAlighn;
   // final String? tileName;
   final int maxLines;
+  final FocusNode? focusNode;
   final TextEditingController? controller;
   final Function(String)? onChanged;
   final VoidCallback? onComplete;
@@ -895,10 +906,11 @@ class UnderLinedInput extends StatefulWidget {
         this.readOnly=false,
         this.integerOnly=false,
         this.alignment=Alignment.topRight,
-        this.filledColour=const Color(0xffF2F3F5),
+        this.filledColour= Colors.transparent,
         this.suffixIconEnable=false,
         this.enable = true,
         this.initial='',
+        this.focusNode,
         this.hintText = "Enter..",
         this.maxLines = 1,
         this.controller,
@@ -934,6 +946,8 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
             child: TextFormField(
               textAlign: widget.textAlighn,
               readOnly: widget.readOnly,
+              focusNode: widget.focusNode,
+
               style:CommonTextStyle.normalTableFieldStyle,
 
               initialValue:widget.last=="0"||widget.last==null||widget.last=="null"?"":widget.last,
@@ -968,6 +982,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
             child: Center(
               child: TextFormField(
                 textAlign: widget.textAlighn,
+                focusNode: widget.focusNode,
                 readOnly: widget.readOnly,
                 style: CommonTextStyle.normalTableFieldStyle,
                 // initialValue:widget.last=="0"?"":widget.last,

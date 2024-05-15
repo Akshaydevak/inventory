@@ -74,6 +74,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   var expirydateControllerList2 = <TextEditingController>[];
   late AutoScrollController recieveController;
   late AutoScrollController additionalController;
+  List<FocusNode>focusNodeList=List.generate(10, (index) => FocusNode());
   bool isSave=false;
   bool isGenarate=false;
   int selectedVertical = 0;
@@ -5126,6 +5127,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                               .inventory_ID,
                                                                           variantId);
                                                                 });
+
                                                               },
                                                             ),
                                                           );
@@ -5204,60 +5206,13 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                         child: VariantIdTAble(
 
 
+
                                                                   text:
                                                                       vendorCode,
                                                           onTap: () {
-                                                            showDailogPopUp(
-                                                              context,
-                                                              ConfigurePopup(listAssign:
-                                                                    (VendorDetailsModel
-                                                                        model) {
-                                                                  setState(() {
-                                                                    vendorCode = model?.manuFactureuserCode ?? "";
+                                                            vendorTablePopup();
+                                                            FocusScope.of(context).requestFocus(focusNodeList[0]);
 
-                                                                    // vendorAddress=address;
-
-                                                                    vendorTrn = model.trnNumber.toString();
-
-                                                                    Variable.tableedit =
-                                                                        false;
-                                                                  });
-
-                                                                  //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-
-                                                                  // setState(() {
-
-                                                                  // setState(() {
-
-                                                                  //   context
-
-                                                                  //       .read<
-
-                                                                  //       VendordetailsCubit>()
-
-                                                                  //       .getVendorDetails(
-
-                                                                  //       id);
-
-                                                                  //
-
-                                                                  // });
-
-                                                                  // showDailogPopUp(
-
-                                                                  //     context,
-
-                                                                  //     VendorPopup(
-
-                                                                  //       assign:  assigniningDetails,
-
-                                                                  //
-
-                                                                  //     ));
-                                                                },
-                                                                type: "vendorDetailList_popup",
-                                                              ),
-                                                            );
                                                           },
                                                         ),
                                                       ),
@@ -5341,6 +5296,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: UnderLinedInput(
+                                                          focusNode: focusNodeList[0],
                                                           integerOnly: true,
                                                           controller:
                                                               recievedClearController,
@@ -5437,9 +5393,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                           },
                                                           enable: true,
                                                           onComplete: () {
-                                                            setState(() {});
-
-                                                            setState(() {});
+                                                            FocusScope.of(context).requestFocus(focusNodeList[1]);
                                                           },
                                                         ),
                                                       ),
@@ -5449,14 +5403,19 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: CheckedBoxs(
+                                                          focusNode:  focusNodeList[1],
                                                           valueChanger:
                                                               isReceived1,
-                                                          onSelection:
-                                                              (bool? value) {
+                                                          onCompleteFunc: (){
                                                             setState(() {
                                                               isReceived1 =
-                                                                  !isReceived1!;
+                                                              !isReceived1!;
                                                             });
+                                                            FocusScope.of(context).requestFocus(focusNodeList[2]);
+                                                          },
+                                                          onSelection:
+                                                              (bool? value) {
+
                                                           },
                                                         ),
                                                       ),
@@ -5466,6 +5425,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: UnderLinedInput(
+                                                          focusNode: focusNodeList[2],
                                                           controller:
                                                               unitCostCheck, // ,
 
@@ -5525,9 +5485,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                           enable: true,
 
                                                           onComplete: () {
-                                                            setState(() {});
-
-                                                            setState(() {});
+                                                            FocusScope.of(context).requestFocus(focusNodeList[3]);
                                                           },
                                                         ),
                                                       ),
@@ -5537,6 +5495,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: UnderLinedInput(
+                                                          focusNode: focusNodeList[3],
+
                                                           controller:
                                                               excessClearController,
                                                           onChanged: (p0) {
@@ -5593,9 +5553,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                           },
                                                           enable: true,
                                                           onComplete: () {
-                                                            setState(() {});
-
-                                                            setState(() {});
+                                                            FocusScope.of(context).requestFocus(focusNodeList[4]);
                                                           },
                                                         ),
                                                       ),
@@ -5605,6 +5563,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: UnderLinedInput(
+                                                          focusNode: focusNodeList[4],
                                                           controller:
                                                               discountClearController,
                                                           onChanged: (p0) {
@@ -5661,9 +5620,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                           },
                                                           enable: true,
                                                           onComplete: () {
-                                                            setState(() {});
-
-                                                            setState(() {});
+                                                            FocusScope.of(context).requestFocus(focusNodeList[5]);
                                                           },
                                                         ),
                                                       ),
@@ -5673,8 +5630,11 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: UnderLinedInput(
-                                                          controller:
-                                                              focClearController,
+                                                          focusNode: focusNodeList[5],
+                                                          controller: focClearController,
+                                                          onComplete: (){
+                                                            FocusScope.of(context).requestFocus(focusNodeList[6]);
+                                                          },
                                                           onChanged: (p0) {
                                                             if (p0 == '')
                                                               setState(() {
@@ -5822,6 +5782,11 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: Tabledate(
+                                                            focusNode: focusNodeList[6],
+                                                            onEnterClick: (){
+                                                              FocusScope.of(context).requestFocus(focusNodeList[7]);
+
+                                                            },
                                                             format: DateFormat(
                                                                 'dd-MM-yyyy'),
                                                             controller:
@@ -5872,7 +5837,15 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: CheckedBoxs(
+                                                          focusNode: focusNodeList[7],
                                                           valueChanger: isFree1,
+                                                          onCompleteFunc: (){
+                                                            setState(() {
+                                                              isFree1 =
+                                                              !isFree1!;
+                                                            });
+                                                            FocusScope.of(context).requestFocus(focusNodeList[8]);
+                                                          },
                                                           onSelection:
                                                               (bool? value) {
                                                             setState(() {
@@ -5888,6 +5861,15 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             TableCellVerticalAlignment
                                                                 .middle,
                                                         child: CheckedBoxs(
+                                                          focusNode: focusNodeList[8],
+                                                          onCompleteFunc: (){
+                                                            setState(() {
+
+                                                              isActive1 =
+                                                              !isActive1!;
+                                                              saveFunction();
+                                                            });
+                                                          },
                                                           // color:Color(0xff3E4F5B) ,
 
                                                           valueChanger:
@@ -5910,104 +5892,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                         child: TableTextButton(
                                                           label: "Save",
                                                           onPress: () {
-                                                            foc1 = foc1 == null
-                                                                ? 0
-                                                                : foc1;
+                                                            saveFunction();
 
-                                                            recievedQty =
-                                                                recievedQty ==
-                                                                        null
-                                                                    ? 0
-                                                                    : recievedQty;
-
-                                                            setState(() {
-                                                              if (variantId ==
-                                                                      "null" ||
-                                                                  unitcost ==
-                                                                      0) {
-                                                                context.showSnackBarError(
-                                                                    "please fill all the fields");
-                                                              } else if (foc1! >
-                                                                  recievedQty!) {
-                                                                context.showSnackBarError(
-                                                                    "foc always less than received qty");
-                                                              } else if (isReceived1 ==
-                                                                      false ||
-                                                                  isActive1 ==
-                                                                      false) {
-                                                                context.showSnackBarError(
-                                                                    "is received and isActive always true in this");
-                                                              } else {
-                                                                var date = new TextEditingController(
-                                                                    text: expirydate2Controller
-                                                                            ?.text ??
-                                                                        "");
-
-                                                                expirydateControllerList
-                                                                    .add(date);
-
-                                                                additionalVariants
-                                                                    .add(
-                                                                        RecievingLines(
-                                                                  variantId:
-                                                                      variantId ??
-                                                                          "",
-                                                                  currentStock:
-                                                                      stock,
-                                                                  supplierCode:
-                                                                      supplierRefCode,
-                                                                  variantName:
-                                                                      varinatname ??
-                                                                          "",
-                                                                  barcode:
-                                                                      barcode ??
-                                                                          "",
-                                                                  purchaseUom:
-                                                                      purchaseUomName ??
-                                                                          "",
-                                                                  requestedQty:
-                                                                      recievedQty,
-                                                                  isReceived:
-                                                                      isReceived1,
-                                                                  discount:
-                                                                      discount,
-                                                                  foc: foc1,
-                                                                  unitCost:
-                                                                      unitcost,
-                                                                  vatableAmount:
-                                                                      vatableAmount1,
-                                                                  vat: vat1,
-                                                                  excessTax:
-                                                                      excess1,
-                                                                  actualCost:
-                                                                      actualCost1,
-                                                                  grandTotal:
-                                                                      grandTotal1,
-                                                                  isInvoiced:
-                                                                      isInvoiced1,
-                                                                  vendorId:
-                                                                      vendorCode,
-                                                                  vendorTrnNumber:
-                                                                      vendorTrn ??
-                                                                          "",
-                                                                  vendorAddress:
-                                                                      vendorAddress ??
-                                                                          "",
-                                                                  isFree:
-                                                                      isFree1,
-                                                                  isActive:
-                                                                      isActive1,
-                                                                  expiryDate:
-                                                                      expirydateController
-                                                                          .text,
-                                                                ));
-                                                                unitcostAdditionalListControllers
-                                                                    .clear();
-                                                                valueAddingTextEdingController();
-
-                                                                clear();
-                                                              }
-                                                            });
                                                           },
                                                         ),
                                                       )
@@ -6072,7 +5958,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                     AdditionalGenerateModel model =
                                   AdditionalGenerateModel(
                                     receivingId: receivingId,
-                                    createdBy: 12,
+                                    createdBy: Variable.created_by,
                                     purchaseOrderId: Variable.verticalid,
                                     orderLines: additionalVariants,
                                   );
@@ -6294,6 +6180,129 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
             ),
           );
         }),
+      ),
+    );
+  }
+  saveFunction(){
+    foc1 = foc1 == null
+        ? 0
+        : foc1;
+
+    recievedQty =
+    recievedQty ==
+        null
+        ? 0
+        : recievedQty;
+
+    setState(() {
+      if (variantId ==
+          "null" ||
+          unitcost ==
+              0) {
+        context.showSnackBarError(
+            "please fill all the fields");
+      } else if (foc1! >
+          recievedQty!) {
+        context.showSnackBarError(
+            "foc always less than received qty");
+      } else if (isReceived1 ==
+          false ||
+          isActive1 ==
+              false) {
+        context.showSnackBarError(
+            "is received and isActive always true in this");
+      } else {
+        var date = new TextEditingController(
+            text: expirydate2Controller
+                ?.text ??
+                "");
+
+        expirydateControllerList
+            .add(date);
+
+        additionalVariants
+            .add(
+            RecievingLines(
+              variantId:
+              variantId ??
+                  "",
+              currentStock:
+              stock,
+              supplierCode:
+              supplierRefCode,
+              variantName:
+              varinatname ??
+                  "",
+              barcode:
+              barcode ??
+                  "",
+              purchaseUom:
+              purchaseUomName ??
+                  "",
+              requestedQty:
+              recievedQty,
+              isReceived:
+              isReceived1,
+              discount:
+              discount,
+              foc: foc1,
+              unitCost:
+              unitcost,
+              vatableAmount:
+              vatableAmount1,
+              vat: vat1,
+              excessTax:
+              excess1,
+              actualCost:
+              actualCost1,
+              grandTotal:
+              grandTotal1,
+              isInvoiced:
+              isInvoiced1,
+              vendorId:
+              vendorCode,
+              vendorTrnNumber:
+              vendorTrn ??
+                  "",
+              vendorAddress:
+              vendorAddress ??
+                  "",
+              isFree:
+              isFree1,
+              isActive:
+              isActive1,
+              expiryDate:
+              expirydateController
+                  .text,
+            ));
+        unitcostAdditionalListControllers
+            .clear();
+        valueAddingTextEdingController();
+
+        clear();
+      }
+    });
+  }
+  vendorTablePopup(){
+    showDailogPopUp(
+      context,
+      ConfigurePopup(listAssign:
+          (VendorDetailsModel
+      model) {
+        setState(() {
+          vendorCode = model?.manuFactureuserCode ?? "";
+
+          // vendorAddress=address;
+
+          vendorTrn = model.trnNumber.toString();
+
+          Variable.tableedit =
+          false;
+        });
+
+
+      },
+        type: "vendorDetailList_popup",
       ),
     );
   }

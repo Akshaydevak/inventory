@@ -120,6 +120,7 @@ class PopUpDateFormField extends StatefulWidget {
   final bool required;
   final bool row;
   final bool isCreate;
+  final FocusNode? focusNode;
   final TextEditingController? controller;
   // final TextEditingController controller;
   final FormFieldSetter<DateTime>? onSaved;
@@ -135,7 +136,7 @@ class PopUpDateFormField extends StatefulWidget {
         this.required = false,
         this.onSaved,
         this.format,
-        this.initialValue})
+        this.initialValue, this.focusNode})
       : super(key: key);
 
   @override
@@ -234,6 +235,11 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
             // initialValue: widget.initialValue,
             enabled: widget.enable,
             validator: (value) => value == null ? "* required" : null,
+            focusNode: widget.focusNode,
+            onEditingComplete: () {
+              // Display calendar when Enter key is pressed
+              // showCalendar(context);
+            },
             decoration: InputDecoration(
               suffixIcon: Icon(Icons.calendar_today_outlined),
               contentPadding:  EdgeInsets.symmetric(horizontal: 10, vertical: 22),
@@ -283,11 +289,13 @@ class Tabledate extends StatefulWidget {
   final bool enable;
   final bool required;
   final bool row;
+  final FocusNode? focusNode;
   final TextEditingController? controller;
   // final TextEditingController controller;
   final FormFieldSetter<DateTime>? onSaved;
   final VoidCallback? onSuffixIconPressed;
   final DateFormat? format;
+  final VoidCallback? onEnterClick;
   const Tabledate(
       {Key? key,
         required this.label,
@@ -295,6 +303,8 @@ class Tabledate extends StatefulWidget {
         this.row=false,
         this.onSuffixIconPressed,
         this.initialCheck=false,
+        this.focusNode,
+        this.onEnterClick,
 
         this.enable = true,
         this.required = false,
@@ -331,6 +341,7 @@ class _Tabledate extends State<Tabledate> {
       initialValue: widget.initialValue,
       // controller: widget.controller,
       enabled: widget.enable,
+      focusNode: widget.focusNode,
 
       validator: (value) => value == null ? "* required" : null,
       decoration: InputDecoration(
@@ -379,8 +390,20 @@ class _Tabledate extends State<Tabledate> {
          // initialValue: widget.initialValue,
           controller: widget.controller,
           enabled: widget.enable,
+          onFieldSubmitted: (date)async{
+            print("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk0");
+            date = await showDatePicker(
+                context: context,
+                firstDate: DateTime(1900),
+                initialDate: DateTime.now(),
+                lastDate: DateTime(2100));
+            widget.controller?.text=date.toString()??"";
+            if(widget.onEnterClick!=null){
+              widget.onEnterClick!();
+            }
+          },
 
-
+          focusNode: widget.focusNode,
           validator: (value) => value == null ? "* required" : null,
           decoration: InputDecoration(
             isDense: true,
@@ -435,10 +458,12 @@ class _Tabledate extends State<Tabledate> {
 
           //  onFieldSubmitted: widget.onSaved,
           onShowPicker: (context, currentValue) async {
+            print("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk1");
             // DateTime? date;
             if (widget.enable)
               // calenderPopupFunc();
               date = await showDatePicker(
+                okButtonEvent: widget.onEnterClick,
                   context: context,
                   firstDate: DateTime(1900),
                   initialDate: currentValue ?? DateTime.now(),

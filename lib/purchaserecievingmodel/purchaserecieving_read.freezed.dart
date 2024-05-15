@@ -1836,7 +1836,7 @@ mixin _$AdditionalGenerateModel {
   @JsonKey(name: "receiving_id")
   int? get receivingId => throw _privateConstructorUsedError;
   @JsonKey(name: "created_by")
-  int? get createdBy => throw _privateConstructorUsedError;
+  String? get createdBy => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_order_id")
   int? get purchaseOrderId => throw _privateConstructorUsedError;
   @JsonKey(name: "order_lines")
@@ -1856,7 +1856,7 @@ abstract class $AdditionalGenerateModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: "receiving_id") int? receivingId,
-      @JsonKey(name: "created_by") int? createdBy,
+      @JsonKey(name: "created_by") String? createdBy,
       @JsonKey(name: "purchase_order_id") int? purchaseOrderId,
       @JsonKey(name: "order_lines") List<RecievingLines>? orderLines});
 }
@@ -1888,7 +1888,7 @@ class _$AdditionalGenerateModelCopyWithImpl<$Res,
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       purchaseOrderId: freezed == purchaseOrderId
           ? _value.purchaseOrderId
           : purchaseOrderId // ignore: cast_nullable_to_non_nullable
@@ -1911,7 +1911,7 @@ abstract class _$$_AdditionalGenerateModelCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: "receiving_id") int? receivingId,
-      @JsonKey(name: "created_by") int? createdBy,
+      @JsonKey(name: "created_by") String? createdBy,
       @JsonKey(name: "purchase_order_id") int? purchaseOrderId,
       @JsonKey(name: "order_lines") List<RecievingLines>? orderLines});
 }
@@ -1941,7 +1941,7 @@ class __$$_AdditionalGenerateModelCopyWithImpl<$Res>
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       purchaseOrderId: freezed == purchaseOrderId
           ? _value.purchaseOrderId
           : purchaseOrderId // ignore: cast_nullable_to_non_nullable
@@ -1975,7 +1975,7 @@ class _$_AdditionalGenerateModel implements _AdditionalGenerateModel {
   final int? receivingId;
   @override
   @JsonKey(name: "created_by")
-  final int? createdBy;
+  final String? createdBy;
   @override
   @JsonKey(name: "purchase_order_id")
   final int? purchaseOrderId;
@@ -2035,7 +2035,7 @@ abstract class _AdditionalGenerateModel implements AdditionalGenerateModel {
       {@JsonKey(name: "receiving_id")
           final int? receivingId,
       @JsonKey(name: "created_by")
-          final int? createdBy,
+          final String? createdBy,
       @JsonKey(name: "purchase_order_id")
           final int? purchaseOrderId,
       @JsonKey(name: "order_lines")
@@ -2051,7 +2051,7 @@ abstract class _AdditionalGenerateModel implements AdditionalGenerateModel {
   int? get receivingId;
   @override
   @JsonKey(name: "created_by")
-  int? get createdBy;
+  String? get createdBy;
   @override
   @JsonKey(name: "purchase_order_id")
   int? get purchaseOrderId;

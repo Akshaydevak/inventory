@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
@@ -30,6 +31,7 @@ import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
+import '../../../core/uttils/keyEvent.dart';
 import 'cubit/invoice_read/salesreturninvoiceread_cubit.dart';
 
 class SalesReturnGeneralInvoice extends StatefulWidget {
@@ -62,6 +64,9 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
   TextEditingController inventoryId=TextEditingController();
   String salesReturnOrderCode="";
   List<SalesReturnLinesOrderLines> table = [];
+  int tabCount=1;
+  FocusNode salesReturnInvoiceMainFocusnode=FocusNode();
+  bool isCountOrdecre=false;
   final GlobalKey< SalesReturnInvoiceGrowableTableState> growableKey = GlobalKey< SalesReturnInvoiceGrowableTableState>();
   bool updateCheck=false;
   tableAssign(List<SalesReturnLinesOrderLines> table1 ) {
@@ -71,6 +76,132 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
       addition();
     });
   }
+  rowKeyEventResetFunc(){
+    tabCount=1;
+    isCountOrdecre=false;
+    enableKeyEvent=true;
+    setState(() {
+
+    });
+  }
+  rowKeyPressEvent(RawKeyEvent event){
+    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
+    int limit=1;
+    int startLimit=1;
+
+    if (event is RawKeyDownEvent) {
+
+      if(event.logicalKey==LogicalKeyboardKey.keyA){
+        print("tabPressd");
+
+        FocusScope.of(context).requestFocus(salesReturnInvoiceMainFocusnode);
+        if(isCountOrdecre==false){
+
+          if(tabCount!=limit){
+            tabCount=++tabCount;
+
+            if(tabCount==limit){
+              isCountOrdecre=true;
+            }
+
+          }
+        }
+        else{
+          if(tabCount!=startLimit){
+            tabCount=--tabCount;
+            if(tabCount==startLimit){
+              isCountOrdecre=false;}
+          }
+
+
+
+        }
+
+
+
+        // tabCount= tabCount== limit?--tabCount:++tabCount;
+        setState(() {
+
+        });
+
+      }
+      // else  if(event.logicalKey==LogicalKeyboardKey.keyR){
+      //    remarksPopupCallFunc();
+      //
+      //  }
+      // else if(event.logicalKey==LogicalKeyboardKey.arrowLeft){
+      //   FocusNode? focusedNode = FocusScope.of(context).focusedChild;
+      //   if (focusedNode != null) {
+      //     print('Currently focused node: ${focusedNode}');
+      //   }
+      //
+      // }
+      else{
+
+        if (event.logicalKey == LogicalKeyboardKey.arrowDown ) {
+          switch (tabCount) {
+            case 1:
+              FocusScope.of(context).requestFocus(salesReturnInvoiceMainFocusnode);
+              growableKey.currentState?.   changeSelectedRow(1);
+              setState(() {
+
+              });
+              break;
+
+          };
+
+
+          // Handle arrow down key press
+          // _changeSelectedRow(1);
+        } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+          switch (tabCount) {
+            case 1:
+              FocusScope.of(context).requestFocus(salesReturnInvoiceMainFocusnode);
+              growableKey.currentState?.   changeSelectedRow(-1);
+              setState(() {
+
+              });
+              break;
+
+
+
+          // Handle arrow up key press
+          // _changeSelectedRow(-1);
+          }}
+        // else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+        //   switch (tabCount) {
+        //     case 1:
+        //       verticalOntapFunc(selectedVertical);
+        //       break;
+        //
+        //   }
+        //
+        //
+        //
+        // }
+
+
+
+
+
+
+      }
+      //invoice page keyPress Event
+
+
+      //
+
+
+
+
+
+    }
+
+  }
+
+
+
+
   addition() {
     print("enterd");
     print("+==" + table.toString());
@@ -355,304 +486,321 @@ orderStatusController.clear();
           builder: (context, state) {
             return Builder(
                 builder: (context) {
-                  return Scaffold(
-                    backgroundColor: Pellet.bagroundColor,
-                    body: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SalesReturnGeneralVerticalList(
-                            selectedVertical: selectedVertical,
-                            itemsearch: itemsearch,
-                            ontap: (int index) {
-                              setState(() {
-                                selectedVertical = index;
-                                // select = false;
+                  return RawKeyboardListener(
+                    autofocus: false,
+                    focusNode:salesReturnInvoiceMainFocusnode,
+                    onKey: (RawKeyEvent event) {
 
-                                veritiaclid = result[index].id;
-                                // context
-                                //     .read<SalesgeneralreadCubit>()
-                                //     .getSalesReturnGeneralRead(veritiaclid!);
-                                // currentStock.clear();
-                                //
-                                context
-                                    .read<SalesreturninvoicereadCubit>().getSalesReturnInvoiceRead(veritiaclid!);
+                      if(enableKeyEvent==true){
+                        rowKeyPressEvent(event);}else{
 
-                                setState(() {});
-                              });
-                            },
-                            result: result,
-                            child:     tablePagination(
-                                  () => context
-                                  .read<SalesreturnverticalCubit>()
-                                  .refresh(),
-                              back: paginatedList?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<SalesreturnverticalCubit>()
-                                    .previuosslotSectionPageList();
+                        rowKeyEventResetFunc();
+                      }
+
+
+
+
+
+                    },
+                    child: Scaffold(
+                      backgroundColor: Pellet.bagroundColor,
+                      body: IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SalesReturnGeneralVerticalList(
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  // select = false;
+
+                                  veritiaclid = result[index].id;
+                                  // context
+                                  //     .read<SalesgeneralreadCubit>()
+                                  //     .getSalesReturnGeneralRead(veritiaclid!);
+                                  // currentStock.clear();
+                                  //
+                                  context
+                                      .read<SalesreturninvoicereadCubit>().getSalesReturnInvoiceRead(veritiaclid!);
+
+                                  setState(() {});
+                                });
                               },
-                              next:paginatedList?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
+                              result: result,
+                              child:     tablePagination(
+                                    () => context
                                     .read<SalesreturnverticalCubit>()
-                                    .nextslotSectionPageList();
-                              },
+                                    .refresh(),
+                                back: paginatedList?.previousUrl == null
+                                    ? null
+                                    : () {
+                                  context
+                                      .read<SalesreturnverticalCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                                next:paginatedList?.nextPageUrl == null
+                                    ? null
+                                    : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<SalesreturnverticalCubit>()
+                                      .nextslotSectionPageList();
+                                },
+                              ),
                             ),
-                          ),
-                          Expanded(child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    TextButtonLarge(
-                                      text: "PREVIEW",
-                                      onPress: () async {
-                                        InventoryListModel model=InventoryListModel();
+                            Expanded(child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      TextButtonLarge(
+                                        text: "PREVIEW",
+                                        onPress: () async {
+                                          InventoryListModel model=InventoryListModel();
 
 
-                                        UserPreferences userPref = UserPreferences();
-                                        await userPref.getInventoryList().then((user) {
-                                          print("entereeeeeeeeeeeeeeeeeeed");
+                                          UserPreferences userPref = UserPreferences();
+                                          await userPref.getInventoryList().then((user) {
+                                            print("entereeeeeeeeeeeeeeeeeeed");
 
-                                          if (user.isInventoryExist == true) {
-                                            model=user;
-                                            print("existing");
-                                            print(model.email);
-                                            // prefs.setString('token', user?.token ?? "");
-
-
+                                            if (user.isInventoryExist == true) {
+                                              model=user;
+                                              print("existing");
+                                              print(model.email);
+                                              // prefs.setString('token', user?.token ?? "");
 
 
-                                          } else {
-
-                                          }
-                                        });
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>
-                                              SalePrintScreen(
-                                                note: noteController.text,
-                                                orderCode: invoiceCodeController.text,
-                                                orderDate: invoicedDateController.text,
-                                                // select: select,
-
-                                                table:table,
-                                                vat: double.tryParse( vatController.text),
-                                                sellingPrice:double.tryParse( sellingPriceController.text),
-                                                taxableAmount:double.tryParse( taxableController.text) ,
-                                                discount:double.tryParse( discountController.text) ,
-                                                unitCost:double.tryParse( unitCostController.text) ,
-                                                excisetax:double.tryParse( exciseTaxController.text) ,
-                                                remarks: remarksController.text ,
-                                                model: model,
-                                                pageName: "INVOICE",
-
-                                              )),
-                                        );
 
 
-                                      },
-                                    ),
-                                  ],
-                                ) ,
-                                SalesReturnInvoiceStableTable(
-                                  verticalId: object?.id,
-                                  invoicedDate: invoicedDateController,
-                                    discount: discountController,
-                                  remarks: remarksController,
-                                  vat: vatController,
-                                  invoiceCode: invoiceCodeController,
-                                  paymentMethod: paymentMethodController,
-                                  note: noteController,
-                                  orderStatus: orderStatusController,
-                                  customerId: customerIdController,
-                                  paymentId: paymentIdController,
-                                  unitCost: unitCostController,
-                                  invoiceStatus: invoiceStatusController,
-                                  paymentStatus: paymentStatusController,
-                                    totalPrice: totalPriceController,
-                                  sellingPriceTotal: sellingPriceController,
-                                  exciseTax: exciseTaxController,
-                                  trnNumber: trnController,
-                                  taxableAmount: taxableController,
-                                  assignto: assignToController,
+                                            } else {
 
-                                ),
-                                SizedBox(height: 35,),
-                                Row(mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    TextWidget(text: "Invoice Lines"),
-                                  ],
-                                ),
-                                // Divider(color: Colors.grey,thickness: 1,),
-                                SizedBox(height: height*.01,),
-                                SalesReturnInvoiceGrowableTable(
-                                  key: growableKey,
-                                  updation: tableAssign,
-                                  updateCheck: updateCheckFucction,
-                                ),
-                                SizedBox(height: 20,),
-                                SaveUpdateResponsiveButton(
-                                  isDelete:true ,
+                                            }
+                                          });
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) =>
+                                                SalePrintScreen(
+                                                  note: noteController.text,
+                                                  orderCode: invoiceCodeController.text,
+                                                  orderDate: invoicedDateController.text,
+                                                  // select: select,
+
+                                                  table:table,
+                                                  vat: double.tryParse( vatController.text),
+                                                  sellingPrice:double.tryParse( sellingPriceController.text),
+                                                  taxableAmount:double.tryParse( taxableController.text) ,
+                                                  discount:double.tryParse( discountController.text) ,
+                                                  unitCost:double.tryParse( unitCostController.text) ,
+                                                  excisetax:double.tryParse( exciseTaxController.text) ,
+                                                  remarks: remarksController.text ,
+                                                  model: model,
+                                                  pageName: "INVOICE",
+
+                                                )),
+                                          );
 
 
-                                  saveFunction: (){
-                  List<SalesReturnLinesOrderLines>? result;
-                  bool confirmationCheck=false;
-                  for(var i=0;i<table.length;i++) {
-                    if (table[i].isInvoiced == false) {
-                      confirmationCheck = true;
+                                        },
+                                      ),
+                                    ],
+                                  ) ,
+                                  SalesReturnInvoiceStableTable(
+                                    verticalId: object?.id,
+                                    invoicedDate: invoicedDateController,
+                                      discount: discountController,
+                                    remarks: remarksController,
+                                    vat: vatController,
+                                    invoiceCode: invoiceCodeController,
+                                    paymentMethod: paymentMethodController,
+                                    note: noteController,
+                                    orderStatus: orderStatusController,
+                                    customerId: customerIdController,
+                                    paymentId: paymentIdController,
+                                    unitCost: unitCostController,
+                                    invoiceStatus: invoiceStatusController,
+                                    paymentStatus: paymentStatusController,
+                                      totalPrice: totalPriceController,
+                                    sellingPriceTotal: sellingPriceController,
+                                    exciseTax: exciseTaxController,
+                                    trnNumber: trnController,
+                                    taxableAmount: taxableController,
+                                    assignto: assignToController,
+
+                                  ),
+                                  SizedBox(height: 35,),
+                                  Row(mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TextWidget(text: "Invoice Lines"),
+                                    ],
+                                  ),
+                                  // Divider(color: Colors.grey,thickness: 1,),
+                                  SizedBox(height: height*.01,),
+                                  SalesReturnInvoiceGrowableTable(
+                                    key: growableKey,
+                                    updation: tableAssign,
+                                    updateCheck: updateCheckFucction,
+                                  ),
+                                  SizedBox(height: 20,),
+                                  SaveUpdateResponsiveButton(
+                                    isDelete:true ,
+
+
+                                    saveFunction: (){
+                    List<SalesReturnLinesOrderLines>? result;
+                    bool confirmationCheck=false;
+                    for(var i=0;i<table.length;i++) {
+                      if (table[i].isInvoiced == false) {
+                        confirmationCheck = true;
+                      }
+                      result =
+                          table.where((o) => o.isInvoiced == true)
+                              .toList();
                     }
-                    result =
-                        table.where((o) => o.isInvoiced == true)
-                            .toList();
-                  }
-                  if(confirmationCheck){
-                    showDailogPopUp(
-                        context,
-                        LogoutPopup(
-                          message: "Some of lines are not confirmed. Do you want to continue?",
-                          // table:table,
-                          // // clear:clear(),
-                          // verticalId:veritiaclid ,
-                          onPressed:(){
-                            SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
-                              inventoryid: inventoryId?.text??"",
-                              salesReturnOrderCode: salesReturnOrderCode,
-                              customerId:customerIdController?.text??"",
-                              customerTrnNumber: trnController.text??"",
-                              inVoicedBy: Variable.created_by,
-                              notes: noteController.text??"",
-                              remarks: remarksController.text??"",
-                              discount: double.tryParse(discountController.text??""),
-                              unitCost: double.tryParse(unitCostController.text??""),
-                              excessTax: double.tryParse(exciseTaxController.text??""),
-                              taxableAmount: double.tryParse(taxableController.text??""),
-                              vat: double.tryParse(vatController.text??""),
-                              sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
-                              totalPrice: double.tryParse(totalPriceController.text??""),
-                              assignTo: assignToController.text??"",
-                              orderLines: table??[],
+                    if(confirmationCheck){
+                      showDailogPopUp(
+                          context,
+                          LogoutPopup(
+                            message: "Some of lines are not confirmed. Do you want to continue?",
+                            // table:table,
+                            // // clear:clear(),
+                            // verticalId:veritiaclid ,
+                            onPressed:(){
+                              SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
+                                inventoryid: inventoryId?.text??"",
+                                salesReturnOrderCode: salesReturnOrderCode,
+                                customerId:customerIdController?.text??"",
+                                customerTrnNumber: trnController.text??"",
+                                inVoicedBy: Variable.created_by,
+                                notes: noteController.text??"",
+                                remarks: remarksController.text??"",
+                                discount: double.tryParse(discountController.text??""),
+                                unitCost: double.tryParse(unitCostController.text??""),
+                                excessTax: double.tryParse(exciseTaxController.text??""),
+                                taxableAmount: double.tryParse(taxableController.text??""),
+                                vat: double.tryParse(vatController.text??""),
+                                sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
+                                totalPrice: double.tryParse(totalPriceController.text??""),
+                                assignTo: assignToController.text??"",
+                                orderLines: table??[],
 
 
 
 
 
-                            );
-                            print(model);
+                              );
+                              print(model);
 
 
-                            context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
-                            Navigator.pop(context);
+                              context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
+                              Navigator.pop(context);
 
-                          },
-
-
-                        ));
-
-                  }
-                  else {
-                    SalesReturnInvoicePostModel2 model = SalesReturnInvoicePostModel2(
-                      inventoryid: inventoryId?.text ?? "",
-                      salesReturnOrderCode: salesReturnOrderCode,
-                      customerId: customerIdController?.text ?? "",
-                      customerTrnNumber: trnController.text ?? "",
-                      inVoicedBy: Variable.created_by,
-                      notes: noteController.text ?? "",
-                      remarks: remarksController.text ?? "",
-                      discount: double.tryParse(discountController.text ?? ""),
-                      unitCost: double.tryParse(unitCostController.text ?? ""),
-                      excessTax: double.tryParse(
-                          exciseTaxController.text ?? ""),
-                      taxableAmount: double.tryParse(
-                          taxableController.text ?? ""),
-                      vat: double.tryParse(vatController.text ?? ""),
-                      sellingPriceTotal: double.tryParse(
-                          sellingPriceController.text ?? ""),
-                      totalPrice: double.tryParse(
-                          totalPriceController.text ?? ""),
-                      assignTo: assignToController.text ?? "",
-                      orderLines: table ?? [],
+                            },
 
 
-                    );
-                    print(model);
+                          ));
+
+                    }
+                    else {
+                      SalesReturnInvoicePostModel2 model = SalesReturnInvoicePostModel2(
+                        inventoryid: inventoryId?.text ?? "",
+                        salesReturnOrderCode: salesReturnOrderCode,
+                        customerId: customerIdController?.text ?? "",
+                        customerTrnNumber: trnController.text ?? "",
+                        inVoicedBy: Variable.created_by,
+                        notes: noteController.text ?? "",
+                        remarks: remarksController.text ?? "",
+                        discount: double.tryParse(discountController.text ?? ""),
+                        unitCost: double.tryParse(unitCostController.text ?? ""),
+                        excessTax: double.tryParse(
+                            exciseTaxController.text ?? ""),
+                        taxableAmount: double.tryParse(
+                            taxableController.text ?? ""),
+                        vat: double.tryParse(vatController.text ?? ""),
+                        sellingPriceTotal: double.tryParse(
+                            sellingPriceController.text ?? ""),
+                        totalPrice: double.tryParse(
+                            totalPriceController.text ?? ""),
+                        assignTo: assignToController.text ?? "",
+                        orderLines: table ?? [],
 
 
-                    context.read<SalesreturninvoicepostCubit>()
-                        .postSalesReturnInvoice(model);
-                  } },
-                                  discardFunction: (){
+                      );
+                      print(model);
 
 
-                                  },
-                                  label: "SAVE",
+                      context.read<SalesreturninvoicepostCubit>()
+                          .postSalesReturnInvoice(model);
+                    } },
+                                    discardFunction: (){
 
-                                ),
 
-                                // Container(
-                                //   margin: EdgeInsets.only(right:width*.015,),
-                                //   child: Row(
-                                //     children: [
-                                //       Spacer(),
-                                //       Button(Icons.delete, Colors.red,ctx: context,
-                                //           text: "DISCARD",height: 29,
-                                //           onApply: (){print("Akkk");},
-                                //           width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                                //       SizedBox(width: width*.008,),
-                                //
-                                //       Button(Icons.check, Colors.grey,ctx: context,
-                                //           bdr: true,
-                                //           onApply: (){
-                                //             SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
-                                //                 inventoryid: inventoryId?.text??"",
-                                //                 customerId:customerIdController?.text??"",
-                                //               customerTrnNumber: trnController.text??"",
-                                //               inVoicedBy: "baba",
-                                //               notes: noteController.text??"",
-                                //               remarks: remarksController.text??"",
-                                //               discount: double.tryParse(discountController.text??""),
-                                //               unitCost: double.tryParse(unitCostController.text??""),
-                                //               excessTax: double.tryParse(exciseTaxController.text??""),
-                                //               taxableAmount: double.tryParse(taxableController.text??""),
-                                //               vat: double.tryParse(vatController.text??""),
-                                //               sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
-                                //               totalPrice: double.tryParse(totalPriceController.text??""),
-                                //               assignTo: assignToController.text??"",
-                                //               orderLines: table??[],
-                                //
-                                //
-                                //
-                                //
-                                //
-                                //             );
-                                //
-                                //
-                                //             context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
-                                //
-                                //           },
-                                //           text: "SAVE",height: 29,
-                                //           width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
-                                //       SizedBox(width: width*.008,),
-                                //     ],
-                                //   ),
-                                // )
+                                    },
+                                    label: "SAVE",
 
-                              ],
+                                  ),
 
-                            ),
-                          ))
+                                  // Container(
+                                  //   margin: EdgeInsets.only(right:width*.015,),
+                                  //   child: Row(
+                                  //     children: [
+                                  //       Spacer(),
+                                  //       Button(Icons.delete, Colors.red,ctx: context,
+                                  //           text: "DISCARD",height: 29,
+                                  //           onApply: (){print("Akkk");},
+                                  //           width: 90,labelcolor: Colors.red,iconColor: Colors.red),
+                                  //       SizedBox(width: width*.008,),
+                                  //
+                                  //       Button(Icons.check, Colors.grey,ctx: context,
+                                  //           bdr: true,
+                                  //           onApply: (){
+                                  //             SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
+                                  //                 inventoryid: inventoryId?.text??"",
+                                  //                 customerId:customerIdController?.text??"",
+                                  //               customerTrnNumber: trnController.text??"",
+                                  //               inVoicedBy: "baba",
+                                  //               notes: noteController.text??"",
+                                  //               remarks: remarksController.text??"",
+                                  //               discount: double.tryParse(discountController.text??""),
+                                  //               unitCost: double.tryParse(unitCostController.text??""),
+                                  //               excessTax: double.tryParse(exciseTaxController.text??""),
+                                  //               taxableAmount: double.tryParse(taxableController.text??""),
+                                  //               vat: double.tryParse(vatController.text??""),
+                                  //               sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
+                                  //               totalPrice: double.tryParse(totalPriceController.text??""),
+                                  //               assignTo: assignToController.text??"",
+                                  //               orderLines: table??[],
+                                  //
+                                  //
+                                  //
+                                  //
+                                  //
+                                  //             );
+                                  //
+                                  //
+                                  //             context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
+                                  //
+                                  //           },
+                                  //           text: "SAVE",height: 29,
+                                  //           width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
+                                  //       SizedBox(width: width*.008,),
+                                  //     ],
+                                  //   ),
+                                  // )
 
-                        ],
+                                ],
+
+                              ),
+                            ))
+
+                          ],
+                        ),
                       ),
-                    ),
 
+                    ),
                   );
                 }
             );

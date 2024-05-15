@@ -100,7 +100,7 @@ class AdditionalGenerateModel with _$AdditionalGenerateModel {
 
 
     @JsonKey(name:"receiving_id") final int? receivingId,
-    @JsonKey(name:"created_by") final int? createdBy,
+    @JsonKey(name:"created_by") final String? createdBy,
     @JsonKey(name:"purchase_order_id") final int? purchaseOrderId,
     @JsonKey(name: "order_lines") final List<RecievingLines>? orderLines,
 

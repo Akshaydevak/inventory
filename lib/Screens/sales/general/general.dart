@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
@@ -24,6 +25,7 @@ import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
+import 'package:inventory/core/uttils/keyEvent.dart';
 import 'package:inventory/printScreen.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
@@ -98,7 +100,18 @@ class _SalesGeneralState extends State<SalesGeneral> {
   TextEditingController sellingPriceController = TextEditingController();
   TextEditingController toatalPriceController = TextEditingController();
   NavigationProvider commonProvider = NavigationProvider();
+  FocusNode salesMainFocusnode=FocusNode();
   List<SalesOrderLines> table  =[];
+  int tabCount=1;
+  bool isCountOrdecre=false;
+
+  Map keyEventFuctionCount={
+    "save":2,
+    "cancel":3,
+    "table":1
+
+  };
+
   tableAssign(List<SalesOrderLines> table1) {
     print("ethito");
     table = List.from(table1);
@@ -159,6 +172,129 @@ class _SalesGeneralState extends State<SalesGeneral> {
     setState(() {
 
     });
+
+  }
+  rowKeyEventResetFunc(){
+    tabCount=1;
+    isCountOrdecre=false;
+    enableKeyEvent=true;
+    setState(() {
+
+    });
+  }
+  rowKeyPressEvent(RawKeyEvent event){
+    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
+    int limit=3;
+    int startLimit=1;
+
+    if (event is RawKeyDownEvent) {
+
+      if(event.logicalKey==LogicalKeyboardKey.tab){
+
+        FocusScope.of(context).requestFocus(salesMainFocusnode);
+        if(isCountOrdecre==false){
+
+          if(tabCount!=limit){
+            tabCount=++tabCount;
+
+            if(tabCount==limit){
+              isCountOrdecre=true;
+            }
+
+
+          }
+        }
+        else{
+          if(tabCount!=startLimit){
+            tabCount=--tabCount;
+            if(tabCount==startLimit){
+              isCountOrdecre=false;}
+          }
+
+
+
+        }
+        if(tabCount==1)
+          FocusScope.of(context).requestFocus(_myWidgetState.currentState?.focusNodeList[0]);
+
+
+        // tabCount= tabCount== limit?--tabCount:++tabCount;
+        setState(() {
+
+        });
+
+      }
+      // else  if(event.logicalKey==LogicalKeyboardKey.keyR){
+      //    remarksPopupCallFunc();
+      //
+      //  }
+      // else if(event.logicalKey==LogicalKeyboardKey.arrowLeft){
+      //   FocusNode? focusedNode = FocusScope.of(context).focusedChild;
+      //   if (focusedNode != null) {
+      //     print('Currently focused node: ${focusedNode}');
+      //   }
+      //
+      // }
+      else{
+
+        if (event.logicalKey == LogicalKeyboardKey.arrowDown ) {
+          switch (tabCount) {
+            case 1:
+              FocusScope.of(context).requestFocus(salesMainFocusnode);
+               _myWidgetState.currentState?.   changeSelectedRow(1);
+              setState(() {
+
+              });
+              break;
+
+          };
+
+
+          // Handle arrow down key press
+          // _changeSelectedRow(1);
+        } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+          switch (tabCount) {
+            case 1:
+              FocusScope.of(context).requestFocus(salesMainFocusnode);
+                 _myWidgetState.currentState?.   changeSelectedRow(-1);
+              setState(() {
+
+              });
+              break;
+
+
+
+          // Handle arrow up key press
+          // _changeSelectedRow(-1);
+        }}
+        else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+          switch (tabCount) {
+            case 2:
+              verticalOntapFunc(selectedVertical);
+              break;
+
+          }
+
+
+
+        }
+
+
+
+
+
+
+      }
+      //invoice page keyPress Event
+
+
+      //
+
+
+
+
+
+    }
 
   }
 
@@ -443,266 +579,286 @@ class _SalesGeneralState extends State<SalesGeneral> {
             },
             builder: (context, state) {
               return Builder(builder: (context) {
-                return Scaffold(
-                  backgroundColor: Pellet.bagroundColor,
-                  body: IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SalesGeneralVerticalList(
-                          selectedVertical: selectedVertical,
-                          itemsearch: itemsearch,
-                          select: select,
-                          ontap: (int index) {
-                            setState(() {
-                              clears();
-                              selectedVertical = index;
-                              select = false;
+                return RawKeyboardListener(
+                  autofocus: false,
+                  focusNode:salesMainFocusnode,
+                  onKey: (RawKeyEvent event) {
 
-                              veritiaclid = result[index].id;
-                              _myWidgetState.currentState?.currentStock=[];
-                              //
-                              context
-                                  .read<SalesgeneralreadCubit>()
-                                  .getSalesGenralRead(veritiaclid!);
-                              setState(() {});
-                            });
-                          },
-                          result: result,
-                          child:     tablePagination(
-                                () => context
-                                .read<SalesgeneralverticalCubit>()
-                                .refresh(),
-                            back: paginatedList?.previousUrl == null
-                                ? null
-                                : () {
-                              context
-                                  .read<SalesgeneralverticalCubit>()
-                                  .previuosslotSectionPageList();
+                    if(enableKeyEvent==true){
+                      rowKeyPressEvent(event);}else{
+
+                      rowKeyEventResetFunc();
+                    }
+
+
+
+
+
+                  },
+                  child: Scaffold(
+                    backgroundColor: Pellet.bagroundColor,
+                    body: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SalesGeneralVerticalList(
+                            selectedVertical: selectedVertical,
+                            itemsearch: itemsearch,
+                            select: select,
+                            ontap: (int index) {
+                              setState(() {
+                                clears();
+                                selectedVertical = index;
+                                select = false;
+
+                                veritiaclid = result[index].id;
+                                _myWidgetState.currentState?.currentStock=[];
+                                _myWidgetState.currentState?.selctedraw=-1;
+                                //
+                                context
+                                    .read<SalesgeneralreadCubit>()
+                                    .getSalesGenralRead(veritiaclid!);
+                                setState(() {});
+                              });
                             },
-                            next:paginatedList?.nextPageUrl == null
-                                ? null
-                                : () {
-                              // print(data.nextPageUrl);
-                              context
+                            result: result,
+                            child:     tablePagination(
+                                  () => context
                                   .read<SalesgeneralverticalCubit>()
-                                  .nextslotSectionPageList();
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.end,
-                                  children: [
-                                    TextButtonLarge(
-                                      marginCheck: true,
-                                      onPress: () {
-                                        setState(() {
-                                          select = true;
-                                          clears();
-
-                                        });
-                                      },
-                                      // icon: Icon(Icons.refresh),
-                                      // label: Text("Clear")
-                                      text: "CREATE",
-                                    ),
-                                    TextButtonLarge(
-                                      text: "PREVIEW",
-                                      onPress: () async {
-                                        InventoryListModel model=InventoryListModel();
-                                        UserPreferences userPref = UserPreferences();
-                                        await userPref.getInventoryList().then((user) {
-                                          if (user.isInventoryExist == true) {model=user;
-                                          } else {
-                                          }
-                                        });
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>
-                                              SalePrintScreen(
-                                                note: noteController.text,
-                                                select: select,
-                                                orderCode: orderCodeController.text??"",
-                                                orderDate: orderDateController.text,
-                                                table:table,
-                                                vat: double.tryParse( vatController.text),
-                                                sellingPrice:double.tryParse( sellingPriceController.text),
-                                                taxableAmount:double.tryParse( taxableAmountController.text) ,
-                                                discount:double.tryParse( discountController.text) ,
-                                                unitCost:double.tryParse( unitCostController.text) ,
-                                                excisetax:double.tryParse( exciseTAxController.text) ,
-                                                remarks: remarksController.text ,
-                                                pageName: "GENERAL",
-                                                model: model,
-                                              )),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                StableTable(
-                                  taxableAmount: taxableAmountController,
-                                  vat: vatController,
-                                  discount: discountController,
-                                  note: noteController,
-                                  remarks: remarksController,
-                                  orderStatus: orderStatusController,
-                                  trnNumber: trnController,
-                                  customerId: cstomerIdController,
-                                  paymentId: paymentIdController,
-                                  unitCost: unitCostController,
-                                  orderType: orderTypeController,
-                                  invoiceStatus: invoiceStatusController,
-                                  paymentStatus: paymentStatusController,
-                                  orderDate: orderDateController,
-                                  orderCode: orderCodeController,
-                                  billingAddressId: billingAddressIdController,
-                                  exciseTax: exciseTAxController,
-                                  invenotryId: invemtoryIdController,
-                                  orderMode: orderModeController,
-                                  salesQuotesId: slaesQuotesController,
-                                  sellingPriceTotal: sellingPriceController,
-                                  shipping: shippingAddressIdController,
-                                  totalPrice: toatalPriceController,
-                                  customerName:cstomerIdNameController,
-                                  billingName:billingAddressIdNameController,
-                                  shippingName:shippingAddressIdNameController
-                                ),
-                                Container(
-                                  color: Colors.white,
-                                  height: 35,
-                                ),
-                                Row(
-                                  children: [
-                                    TextWidget(text: "Order Lines"),
-                                  ],
-                                ),
-                                SizedBox(height: height*.01,),
-
-                                SalesGeneralGrowableTable(
-                                    updateCheck: updateCheckFucction,
-                                    table: table,
-                                    select:select,
-                                    updation: tableAssign,
-                                    key:_myWidgetState,
-                                    currenStock: currentStock),
-                                // ScrollableTable(),
-
-
-                                Container(
-                                  color: Colors.white,
-                                  height: 55,
-                                ),
-                                SaveUpdateResponsiveButton(
-                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
-                                  isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
-                                  discardFunction: (){
-                                    if(updateCheck){
-                                      clears();
-
-
-                                    }
-                                    showDailogPopUp(
-                                        context,
-                                        LogoutPopup(
-                                          message: "Do you want to delete the order?",
-                                          // table:table,
-                                          // clear:clear(),
-                                          // verticalId: veritiaclid,
-                                          onPressed: () {
-                                            print("akshay");
-                                            commonProvider.setLoadingDeleterClear(true);
-                                            Navigator.pop(context);
-                                            context
-                                                .read<
-                                                SalesgeneraldeleteCubit>()
-                                                .salesGeneralDelete(
-                                                veritiaclid);
-                                          },
-                                        ));
-                                  },
-                                  saveFunction: (){
-                                    print("updateCheck" +
-                                        remarksController.text.toString());
-                                    if (updateCheck)
-                                      context.showSnackBarError(
-                                          "please click the update button ");
-                                    else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
-
-                                      context.showSnackBarError(
-                                          "Required at least one variant ");
-                                    }
-                                    else {
-                                      commonProvider.setLoadingSaveUpdate(true);
-                                      var table1=[
-                                        for(var em in table)
-                                          if(em.isActive==true)
-                                            em
-                                      ];
-                                      print("filter table"+table1.toString());
-                                      SalesGeneralPostModel model = SalesGeneralPostModel(
-                                          orderType:
-                                          orderTypeController?.text ?? "",
-                                          orderMode:
-                                          orderModeController?.text ?? "",
-                                          inventoryid:
-                                          Variable.inventory_ID ??
-                                              "",
-                                          customerId:
-                                          cstomerIdController?.text ?? "",
-                                          trnNumber:
-                                          trnController?.text ?? "",
-                                          shippingAddressId:
-                                          shippingAddressIdController?.text ??
-                                              "",
-                                          billingAddressId: billingAddressIdController?.text??"",
-                                          salesQuotesId:
-                                          slaesQuotesController?.text ??
-                                              "",
-                                          note: noteController?.text ?? "",
-                                          remarks:
-                                          remarksController?.text ?? "",
-                                          discount: double.tryParse(
-                                              discountController?.text ?? ""),
-                                          unitCost: double.tryParse(
-                                              unitCostController?.text ?? ""),
-                                          excessTax: double.tryParse(
-                                              exciseTAxController?.text ?? ""),
-                                          taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
-                                          vat: double.tryParse(vatController?.text ?? ""),
-                                          sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
-                                          totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
-                                          createdBy: Variable.created_by,
-                                          editedBy: Variable.created_by,
-                                          orderLines: table1);
-                                      print("modelllls" + model.toString());
-                                      select
-                                          ? context
-                                          .read<PostcubitCubit>()
-                                          .postSalesGeneral(model)
-                                          : context
-                                          .read<SalesgeneralpatcvhCubit>()
-                                          .getSalesGeneralPatch(
-                                          veritiaclid, model);
-                                    }
-
-                                  }
-                                  ,
-                                  label:  select ? "SAVE" : "UPDATE",
-                                )
-
-
-                              ],
+                                  .refresh(),
+                              back: paginatedList?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
+                                    .read<SalesgeneralverticalCubit>()
+                                    .previuosslotSectionPageList();
+                              },
+                              next:paginatedList?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<SalesgeneralverticalCubit>()
+                                    .nextslotSectionPageList();
+                              },
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.end,
+                                    children: [
+                                      TextButtonLarge(
+                                        marginCheck: true,
+                                        onPress: () {
+                                          setState(() {
+                                            select = true;
+                                            clears();
+
+                                          });
+                                        },
+                                        // icon: Icon(Icons.refresh),
+                                        // label: Text("Clear")
+                                        text: "CREATE",
+                                      ),
+                                      TextButtonLarge(
+                                        text: "PREVIEW",
+                                        onPress: () async {
+                                          InventoryListModel model=InventoryListModel();
+                                          UserPreferences userPref = UserPreferences();
+                                          await userPref.getInventoryList().then((user) {
+                                            if (user.isInventoryExist == true) {model=user;
+                                            } else {
+                                            }
+                                          });
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) =>
+                                                SalePrintScreen(
+                                                  note: noteController.text,
+                                                  select: select,
+                                                  orderCode: orderCodeController.text??"",
+                                                  orderDate: orderDateController.text,
+                                                  table:table,
+                                                  vat: double.tryParse( vatController.text),
+                                                  sellingPrice:double.tryParse( sellingPriceController.text),
+                                                  taxableAmount:double.tryParse( taxableAmountController.text) ,
+                                                  discount:double.tryParse( discountController.text) ,
+                                                  unitCost:double.tryParse( unitCostController.text) ,
+                                                  excisetax:double.tryParse( exciseTAxController.text) ,
+                                                  remarks: remarksController.text ,
+                                                  pageName: "GENERAL",
+                                                  model: model,
+                                                )),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  StableTable(
+                                    taxableAmount: taxableAmountController,
+                                    vat: vatController,
+                                    discount: discountController,
+                                    note: noteController,
+                                    remarks: remarksController,
+                                    orderStatus: orderStatusController,
+                                    trnNumber: trnController,
+                                    customerId: cstomerIdController,
+                                    paymentId: paymentIdController,
+                                    unitCost: unitCostController,
+                                    orderType: orderTypeController,
+                                    invoiceStatus: invoiceStatusController,
+                                    paymentStatus: paymentStatusController,
+                                    orderDate: orderDateController,
+                                    orderCode: orderCodeController,
+                                    billingAddressId: billingAddressIdController,
+                                    exciseTax: exciseTAxController,
+                                    invenotryId: invemtoryIdController,
+                                    orderMode: orderModeController,
+                                    salesQuotesId: slaesQuotesController,
+                                    sellingPriceTotal: sellingPriceController,
+                                    shipping: shippingAddressIdController,
+                                    totalPrice: toatalPriceController,
+                                    customerName:cstomerIdNameController,
+                                    billingName:billingAddressIdNameController,
+                                    shippingName:shippingAddressIdNameController
+                                  ),
+                                  Container(
+                                    color: Colors.white,
+                                    height: 35,
+                                  ),
+                                  Row(
+                                    children: [
+                                      TextWidget(text: "Order Lines"),
+                                    ],
+                                  ),
+                                  SizedBox(height: height*.01,),
+
+                                  SalesGeneralGrowableTable(
+                                      updateCheck: updateCheckFucction,
+                                      table: table,
+                                      select:select,
+                                      updation: tableAssign,
+                                      key:_myWidgetState,
+                                      currenStock: currentStock),
+                                  // ScrollableTable(),
+
+
+                                  Container(
+                                    color: Colors.white,
+                                    height: 55,
+                                  ),
+                                  SaveUpdateResponsiveButton(
+                                    isKeyFuctionLeft: keyEventFuctionCount["cancel"]==tabCount,
+                                    isKeyFuctionRight: keyEventFuctionCount["save"]==tabCount,
+                                    isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                    isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
+                                    discardFunction: (){
+                                      if(updateCheck){
+                                        clears();
+
+
+                                      }
+                                      showDailogPopUp(
+                                          context,
+                                          LogoutPopup(
+                                            message: "Do you want to delete the order?",
+                                            // table:table,
+                                            // clear:clear(),
+                                            // verticalId: veritiaclid,
+                                            onPressed: () {
+                                              print("akshay");
+                                              commonProvider.setLoadingDeleterClear(true);
+                                              Navigator.pop(context);
+                                              context
+                                                  .read<
+                                                  SalesgeneraldeleteCubit>()
+                                                  .salesGeneralDelete(
+                                                  veritiaclid);
+                                            },
+                                          ));
+                                    },
+                                    saveFunction: (){
+                                      print("updateCheck" +
+                                          remarksController.text.toString());
+                                      if (updateCheck)
+                                        context.showSnackBarError(
+                                            "please click the update button ");
+                                      else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
+
+                                        context.showSnackBarError(
+                                            "Required at least one variant ");
+                                      }
+                                      else {
+                                        commonProvider.setLoadingSaveUpdate(true);
+                                        var table1=[
+                                          for(var em in table)
+                                            if(em.isActive==true)
+                                              em
+                                        ];
+                                        print("filter table"+table1.toString());
+                                        SalesGeneralPostModel model = SalesGeneralPostModel(
+                                            orderType:
+                                            orderTypeController?.text ?? "",
+                                            orderMode:
+                                            orderModeController?.text ?? "",
+                                            inventoryid:
+                                            Variable.inventory_ID ??
+                                                "",
+                                            customerId:
+                                            cstomerIdController?.text ?? "",
+                                            trnNumber:
+                                            trnController?.text ?? "",
+                                            shippingAddressId:
+                                            shippingAddressIdController?.text ??
+                                                "",
+                                            billingAddressId: billingAddressIdController?.text??"",
+                                            salesQuotesId:
+                                            slaesQuotesController?.text ??
+                                                "",
+                                            note: noteController?.text ?? "",
+                                            remarks:
+                                            remarksController?.text ?? "",
+                                            discount: double.tryParse(
+                                                discountController?.text ?? ""),
+                                            unitCost: double.tryParse(
+                                                unitCostController?.text ?? ""),
+                                            excessTax: double.tryParse(
+                                                exciseTAxController?.text ?? ""),
+                                            taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
+                                            vat: double.tryParse(vatController?.text ?? ""),
+                                            sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
+                                            totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
+                                            createdBy: Variable.created_by,
+                                            editedBy: Variable.created_by,
+                                            orderLines: table1);
+                                        print("modelllls" + model.toString());
+                                        select
+                                            ? context
+                                            .read<PostcubitCubit>()
+                                            .postSalesGeneral(model)
+                                            : context
+                                            .read<SalesgeneralpatcvhCubit>()
+                                            .getSalesGeneralPatch(
+                                            veritiaclid, model);
+                                      }
+
+                                    }
+                                    ,
+                                    label:  select ? "SAVE" : "UPDATE",
+                                  )
+
+
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

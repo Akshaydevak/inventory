@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/vendormodel.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -39,15 +40,31 @@ class PurchaseOrderGeneralStableTable extends StatefulWidget {
   final bool isVendorCheck;
   final Function tableDatasClear;
   final bool isSelect;
-  PurchaseOrderGeneralStableTable({ required this.orderType, required this.orderCode, required this.oderDate, required this.vendorCode, required this.vendorTrnNumber, required this.promisedReceiptDate, required this.promisedReceiptDate2, required this.plannedReceiptDate, required this.plannedReceiptDate2, required this.paymentCode, required this.paymentStatus, required this.orderStatus, required this.receivingStatus, required this.invoiceStatus, required this.note, required this.remarks, required this.discount, required this.foc, required this.unitCost, required this.vatableAmount, required this.excessTax, required this.vat, required this.actualCost, required this.grandTotal, required this.isVendorCheck, required this.vendorName, required this.vendorEmail, required this.tableDatasClear, required this.isSelect});
+  PurchaseOrderGeneralStableTable({Key? key, required this.orderType, required this.orderCode, required this.oderDate, required this.vendorCode, required this.vendorTrnNumber, required this.promisedReceiptDate, required this.promisedReceiptDate2, required this.plannedReceiptDate, required this.plannedReceiptDate2, required this.paymentCode, required this.paymentStatus, required this.orderStatus, required this.receivingStatus, required this.invoiceStatus, required this.note, required this.remarks, required this.discount, required this.foc, required this.unitCost, required this.vatableAmount, required this.excessTax, required this.vat, required this.actualCost, required this.grandTotal,
+    required this.isVendorCheck, required this.vendorName, required this.vendorEmail, required this.tableDatasClear, required this.isSelect}):super(key: key);
 
 
   @override
-  State<PurchaseOrderGeneralStableTable> createState() => _PurchaseOrderGeneralStableTableState();
+  State<PurchaseOrderGeneralStableTable> createState() => PurchaseOrderGeneralStableTableState();
 }
 
-class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralStableTable> {
+class PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralStableTable> {
   String imageEncode="";
+  List<FocusNode> focusNodes = List.generate(6, (index) => FocusNode());
+  int selectPosition=-1;
+  void changeSelectedRow(int direction) {
+
+    setState(() {
+
+
+      // Adjust the selected row based on the arrow key direction
+      selectPosition = (selectPosition + direction).clamp(0,focusNodes.length - 1);
+
+      FocusScope.of(context).requestFocus(focusNodes[selectPosition]);
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -70,6 +87,7 @@ class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSt
                               children: [
 
                                 SelectableDropDownpopUp(
+                                  focusNode: focusNodes[5],
                                   label: "Order Type",
 
                                   type:"sellingngPrice-basedOn",
@@ -115,14 +133,16 @@ class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSt
                               widget.  isVendorCheck?       NewInputCard(
                                   controller: widget.vendorCode,
                                   title: "Vendor Code",
+                                  focusNode: focusNodes[0],
                                   //label: "Place in setting",
-                                  readOnly: true,
+                                  // readOnly: true,
                                 ):
                                 NewInputCard(
                                   controller:  widget.vendorCode,
                                   icondrop: true,
                                   title: "Vendor Code",
-                                  readOnly: true,
+                                  focusNode: focusNodes[0],
+                                  // readOnly: true,
                                   ontap: () {
                                     if(  widget.vendorCode.text.isNotEmpty){
                                       setState(() {
@@ -165,6 +185,7 @@ class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSt
                                 ),
                                 PopUpDateFormField(
                                   isCreate: widget.isSelect,
+                                    focusNode: focusNodes[2],
                                     format:DateFormat('dd-MM-yyyy'),
                                     controller:widget.promisedReceiptDate,
                                     // initialValue:
@@ -181,6 +202,7 @@ class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSt
                                 ),
                                 PopUpDateFormField(
                                     isCreate: widget.isSelect,
+                                    focusNode: focusNodes[3],
                                     format:DateFormat('dd-MM-yyyy'),
                                     controller: widget.plannedReceiptDate,
                                     label: "Planned Receipt Date",
@@ -241,6 +263,7 @@ class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSt
                                 NewInputCard(
                                   controller: widget.note,
                                   title: "Note",
+                                  focusNode: focusNodes[4],
                                   //label: "R/O",
                                   height: 90,
                                   maxLines: 3,
@@ -251,6 +274,7 @@ class _PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSt
                                 NewInputCard(
                                   controller: widget.remarks,
                                   title: "Remarks",
+                                  focusNode: focusNodes[5],
                                   height: 90,
                                   maxLines: 3,
                                 ),

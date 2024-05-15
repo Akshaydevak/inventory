@@ -62,15 +62,16 @@ Widget textPadding(String label,
     {double fontSize = 14,
       EdgeInsets? padding,
       double? height,
+      bool? isSelected,
     Alignment? alighnment,
-      Color color= const Color(0xffF2F3F5),
+      Color color=  Colors.transparent,
       FontWeight fontWeight = FontWeight.w100}) =>
     Container(
       margin: EdgeInsets.symmetric(horizontal: 12,vertical: 5),
       height: height,
       alignment:alighnment?? Alignment.topLeft,
 
-      color: color,
+      color: isSelected==true?Colors.grey.withOpacity(.5):color,
       padding: padding ?? EdgeInsets.fromLTRB(0, 3, 0, 0),
       child:label=="0"||label=="null"?Text(''):Text(
         label,
@@ -81,7 +82,8 @@ Widget textPadding(String label,
 class VariantIdTAble extends StatelessWidget {
   final String? text;
   final VoidCallback onTap;
-  VariantIdTAble({required this.text,required this.onTap});
+  final FocusNode? focusNode;
+  VariantIdTAble({required this.text,required this.onTap,this.focusNode});
 
 
   @override

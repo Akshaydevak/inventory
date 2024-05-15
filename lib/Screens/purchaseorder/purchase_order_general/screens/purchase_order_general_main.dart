@@ -17,6 +17,7 @@ import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
+import 'package:inventory/core/uttils/keyEvent.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/cubit/purchaseorderdelete_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
@@ -55,10 +56,13 @@ class PurchaseOrderGeneralScreen extends StatefulWidget {
 class _PurchaseOrderGeneralScreenState extends State<PurchaseOrderGeneralScreen> {
   List<OrderLines> table = List.from([]);
   final GlobalKey<PurchaseOrderGenearlFormGrowableTableState> _myWidgetState = GlobalKey<PurchaseOrderGenearlFormGrowableTableState>();
+  final GlobalKey<VerticalListState> _verticalWidgetState = GlobalKey<VerticalListState>();
+  final GlobalKey<PurchaseOrderGeneralStableTableState> _stableWidgetState = GlobalKey<PurchaseOrderGeneralStableTableState>();
   List<OrderLines>? order = [];
   List<PurchaseOrder> result = [];
   PurchaseOrderTableModel? purchaseTable;
   PurchaseCureentStockQty? purchaseCurrentStock;
+  FocusNode inventoryFocusNode=FocusNode();
   bool _value = false;
   bool select=false;
   TextEditingController itemsearch = TextEditingController();
@@ -285,6 +289,165 @@ orederDate2Controller.clear();
     Variableamount.text = VatableValue.toString();
     // _value=false;
   }
+  int tabCount=1;
+  bool isCountOrdecre=false;
+  rowKeyEventResetFunc(){
+    tabCount=1;
+    isCountOrdecre=false;
+    enableKeyEvent=true;
+    setState(() {
+
+    });
+  }
+
+  rowKeyPressEvent(RawKeyEvent event){
+    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
+    int limit=3;
+    int startLimit=1;
+
+    if (event is RawKeyDownEvent) {
+
+      if(event.logicalKey==LogicalKeyboardKey.keyA){
+        print("tabPressd");
+
+        FocusScope.of(context).requestFocus(inventoryFocusNode);
+        if(isCountOrdecre==false){
+
+          if(tabCount!=limit){
+            tabCount=++tabCount;
+
+            if(tabCount==limit){
+              isCountOrdecre=true;
+            }
+
+          }
+        }
+        else{
+          if(tabCount!=startLimit){
+            tabCount=--tabCount;
+            if(tabCount==startLimit){
+              isCountOrdecre=false;}
+          }
+
+
+
+        }
+
+
+
+        // tabCount= tabCount== limit?--tabCount:++tabCount;
+        setState(() {
+
+        });
+
+      }
+      // else  if(event.logicalKey==LogicalKeyboardKey.keyR){
+      //    remarksPopupCallFunc();
+      //
+      //  }
+      // else if(event.logicalKey==LogicalKeyboardKey.arrowLeft){
+      //   FocusNode? focusedNode = FocusScope.of(context).focusedChild;
+      //   if (focusedNode != null) {
+      //     print('Currently focused node: ${focusedNode}');
+      //   }
+      //
+      // }
+      else{
+
+          if (event.logicalKey == LogicalKeyboardKey.arrowDown ) {
+            switch (tabCount) {
+              case 1:
+                FocusScope.of(context).requestFocus(inventoryFocusNode);
+            selectedVertical=    _verticalWidgetState.currentState?.   changeSelectedRow(1)??0;
+            setState(() {
+
+            });
+                break;
+
+            };  switch (tabCount) {
+              case 2:
+                FocusScope.of(context).requestFocus(inventoryFocusNode);
+                _stableWidgetState.currentState?.   changeSelectedRow(1);
+            setState(() {
+
+            });
+                break;
+
+            };
+
+            // Handle arrow down key press
+            // _changeSelectedRow(1);
+          } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+            switch (tabCount) {
+              case 1:
+                FocusScope.of(context).requestFocus(inventoryFocusNode);
+                selectedVertical=       _verticalWidgetState.currentState?.   changeSelectedRow(-1)??0;
+                setState(() {
+
+                });
+                break;
+                case 2:
+                FocusScope.of(context).requestFocus(inventoryFocusNode);
+                   _stableWidgetState.currentState?.   changeSelectedRow(-1);
+                setState(() {
+
+                });
+                break;
+
+            }
+
+
+            // Handle arrow up key press
+            // _changeSelectedRow(-1);
+          }
+          else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+            switch (tabCount) {
+              case 1:
+                verticalOntapFunc(selectedVertical);
+                break;
+
+            }
+
+
+
+          }
+
+
+
+
+
+
+      }
+      //invoice page keyPress Event
+
+
+      //
+
+
+
+
+
+    }
+
+  }
+
+
+verticalOntapFunc(index){
+  setState(() {
+    print("taped");
+    select=false;
+    selectedVertical=index;
+    currentStock=[];
+    updateCheck=false;
+    clear();
+    table=[];
+    setState(() {});
+    veritiaclid = result[index].id;
+    context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -555,259 +718,265 @@ orederDate2Controller.clear();
                     });
               },
               builder: (context, state) {
-                return IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      VerticalList(selectedVertical: selectedVertical,
-                        select: select,
-                        itemsearch: itemsearch,ontap: (int index){
-                          setState(() {
-                            print("taped");
-                            select=false;
-                            selectedVertical=index;
-                            currentStock=[];
-                            updateCheck=false;
-                            clear();
-                            table=[];
-                            setState(() {});
-                            veritiaclid = result[index].id;
-                            context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+                return RawKeyboardListener(
+                  autofocus: false,
+                  focusNode:inventoryFocusNode,
+                  onKey: (RawKeyEvent event) {
 
-                          });
-                        },result: result,
-                        child:                    tablePagination(
-                              () => context
-                              .read<InventorysearchCubit>()
-                              .refresh(),
-                          back: paginatedList?.previousUrl == null
-                              ? null
-                              : () {
-                            context
+                    // if(enableKeyEvent==true){
+                    //   rowKeyPressEvent(event);}else{
+                    //
+                    //   rowKeyEventResetFunc();
+                    // }
+
+
+
+
+
+                  },
+                  child: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        VerticalList(selectedVertical: selectedVertical,
+                          select: select,
+                          key: _verticalWidgetState,
+                          itemsearch: itemsearch,ontap: (int index){
+                            verticalOntapFunc(index);
+                          },result: result,
+                          child:                    tablePagination(
+                                () => context
                                 .read<InventorysearchCubit>()
-                                .previuosslotSectionPageList();
-                          },
-                          next:paginatedList?.nextPageUrl == null
-                              ? null
-                              : () {
-                            // print(data.nextPageUrl);
-                            context
-                                .read<InventorysearchCubit>()
-                                .nextslotSectionPageList("");
-                          },
+                                .refresh(),
+                            back: paginatedList?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<InventorysearchCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next:paginatedList?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<InventorysearchCubit>()
+                                  .nextslotSectionPageList("");
+                            },
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Container(
-                                  color: Colors.white,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(height: 3,),
-                                      Row(
-                                        mainAxisAlignment:MainAxisAlignment.end,
-                                        children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    color: Colors.white,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: 3,),
+                                        Row(
+                                          mainAxisAlignment:MainAxisAlignment.end,
+                                          children: [
 
-                                          TextButtonLarge(
-                                            marginCheck: true,
-
-
-                                            onPress: () {
-                                              select=true;
-                                              isVendorCheck=
-
-                                                  updateCheck=false;//for table edit check when edtied the editing fields
-                                              currentStock.clear();
-                                              clear();
-                                              table.clear();
-                                              setState(() {
-                                              });
-                                              print("Variable.inventory_ID"+Variable.inventory_ID.toString());
-                                            },
-                                            text: "CREATE",
-                                          ),
-                                          TextButtonLarge(
-                                            text: "PREVIEW",
-                                            onPress: () async {
-                                              print("Akshay");
-                                              InventoryListModel model=InventoryListModel();
-                                              UserPreferences userPref = UserPreferences();
-                                              await userPref.getInventoryList().then((user) {
-                                                print(user.name);
-                                                if (user.isInventoryExist == true) {
-                                                  model=user;
-                                                  // prefs.setString('token', user?.token ?? "");
-                                                } else {
-                                                }
-                                              });
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) =>
-                                                    PrintScreen(
-                                                      note: note.text,
-                                                      select: select,
-                                                      model:model,
-                                                      vendorCode:vendorCode.text,
-                                                      orderCode:ordercode.text ,
-                                                      orderDate: orederDate2Controller.text,
-                                                      table:table.isEmpty?[]:table,
-                                                      vat: double.tryParse( vat.text),
-                                                      actualCost:double.tryParse( actualcost.text),
-                                                      variableAmount:double.tryParse( Variableamount.text) ,
-                                                      discount:double.tryParse( discount.text) ,
-                                                      unitCost:double.tryParse( unitcourse.text) ,
-                                                      excisetax:double.tryParse( excesstax.text) ,
-                                                      remarks: remarks.text ,
-                                                      pageName: "GENERAL",
-                                                    )),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
+                                            TextButtonLarge(
+                                              marginCheck: true,
 
 
+                                              onPress: () {
+                                                select=true;
+                                                isVendorCheck=
 
-                                    ],
+                                                    updateCheck=false;//for table edit check when edtied the editing fields
+                                                currentStock.clear();
+                                                clear();
+                                                table.clear();
+                                                setState(() {
+                                                });
+                                                print("Variable.inventory_ID"+Variable.inventory_ID.toString());
+                                              },
+                                              text: "CREATE",
+                                            ),
+                                            TextButtonLarge(
+                                              text: "PREVIEW",
+                                              onPress: () async {
+                                                print("Akshay");
+                                                InventoryListModel model=InventoryListModel();
+                                                UserPreferences userPref = UserPreferences();
+                                                await userPref.getInventoryList().then((user) {
+                                                  print(user.name);
+                                                  if (user.isInventoryExist == true) {
+                                                    model=user;
+                                                    // prefs.setString('token', user?.token ?? "");
+                                                  } else {
+                                                  }
+                                                });
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) =>
+                                                      PrintScreen(
+                                                        note: note.text,
+                                                        select: select,
+                                                        model:model,
+                                                        vendorCode:vendorCode.text,
+                                                        orderCode:ordercode.text ,
+                                                        orderDate: orederDate2Controller.text,
+                                                        table:table.isEmpty?[]:table,
+                                                        vat: double.tryParse( vat.text),
+                                                        actualCost:double.tryParse( actualcost.text),
+                                                        variableAmount:double.tryParse( Variableamount.text) ,
+                                                        discount:double.tryParse( discount.text) ,
+                                                        unitCost:double.tryParse( unitcourse.text) ,
+                                                        excisetax:double.tryParse( excesstax.text) ,
+                                                        remarks: remarks.text ,
+                                                        pageName: "GENERAL",
+                                                      )),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+
+
+
+                                      ],
+                                    ),
                                   ),
-                                ),
 
-                                PurchaseOrderGeneralStableTable(
-                                  discount: discount,
-                                  orderCode: ordercode,
-                                  isSelect: select,
-                                  oderDate: orederDate2Controller,
-                                  isVendorCheck: isVendorCheck,
-                                  vendorCode: vendorCode,
-                                  vendorName: vendorCodeName,
-                                  vendorTrnNumber: vendortrnnumber,
-                                  vendorEmail: vendor_email,
-                                  promisedReceiptDate: promised_receipt_date,
-                                  promisedReceiptDate2: promised_receipt_date2,
-                                  plannedReceiptDate: planned_receipt_date,
-                                  plannedReceiptDate2: planned_receipt_date2,
-                                  paymentCode:Paymentcode,
-                                  paymentStatus: Paymentstatus,
-                                  orderStatus: orderStatus,
-                                  receivingStatus: recievingstatus,
-                                  invoiceStatus: invoicestatus,
-                                  note: note,
-                                  remarks: remarks,
-                                  foc: foc,
-                                  unitCost: unitcourse,
-                                  vatableAmount: Variableamount,
-                                  excessTax: excesstax,
-                                  vat: vat,
-                                  actualCost: actualcost,
-                                  grandTotal: grandtotal,
-                                  orderType: orderType,
-                                  tableDatasClear:tableDatasClear,
-                                ),
-                                SizedBox(height: height*.10,),
-
-
-                                PurchaseOrderGenearlFormGrowableTable(
-                                  updateCheck: updateCheckFucction,
-                                  select:select,
-                                  updation: tableAssign,
-                                  key:_myWidgetState,
-                                  vendorCode: vendorCode,
-                                ),
+                                  PurchaseOrderGeneralStableTable(
+                                    discount: discount,
+                                    orderCode: ordercode,
+                                    isSelect: select,
+                                    key: _stableWidgetState,
+                                    oderDate: orederDate2Controller,
+                                    isVendorCheck: isVendorCheck,
+                                    vendorCode: vendorCode,
+                                    vendorName: vendorCodeName,
+                                    vendorTrnNumber: vendortrnnumber,
+                                    vendorEmail: vendor_email,
+                                    promisedReceiptDate: promised_receipt_date,
+                                    promisedReceiptDate2: promised_receipt_date2,
+                                    plannedReceiptDate: planned_receipt_date,
+                                    plannedReceiptDate2: planned_receipt_date2,
+                                    paymentCode:Paymentcode,
+                                    paymentStatus: Paymentstatus,
+                                    orderStatus: orderStatus,
+                                    receivingStatus: recievingstatus,
+                                    invoiceStatus: invoicestatus,
+                                    note: note,
+                                    remarks: remarks,
+                                    foc: foc,
+                                    unitCost: unitcourse,
+                                    vatableAmount: Variableamount,
+                                    excessTax: excesstax,
+                                    vat: vat,
+                                    actualCost: actualcost,
+                                    grandTotal: grandtotal,
+                                    orderType: orderType,
+                                    tableDatasClear:tableDatasClear,
+                                  ),
+                                  SizedBox(height: height*.10,),
 
 
+                                  PurchaseOrderGenearlFormGrowableTable(
+                                    updateCheck: updateCheckFucction,
+                                    select:select,
+                                    updation: tableAssign,
+                                    key:_myWidgetState,
+                                    vendorCode: vendorCode,
+                                  ),
 
 
-                                SizedBox(
-                                  height: height * .08,
-                                ),
-                                BlocBuilder<BottomButtonLoadingBloc, BottomButtonLoadingState>(
+
+
+                                  SizedBox(
+                                    height: height * .08,
+                                  ),
+                                  BlocBuilder<BottomButtonLoadingBloc, BottomButtonLoadingState>(
   builder: (context, state) {
     return SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",isSaveUpdateLoading: state.updateSave,isClearDeketeLoading:state.deleteClear,discardFunction: (){
-                                  setState(() {
-                                    if(select){
-                                      clear();
-                                      table.clear();
-                                      setState(() {});
+                                    setState(() {
+                                      if(select){
+                                        clear();
+                                        table.clear();
+                                        setState(() {});
+                                      }
+                                      else {
+                                        showDailogPopUp(
+                                            context,
+                                            LogoutPopup(
+                                              message: "Do you want to delete the order?",
+
+                                              onPressed:(){
+                                                print("akshay");
+                                                Navigator.pop(context);
+                                                context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+
+                                              },
+
+
+                                            ));
+                                        // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+                                      }
+                                    });
+
+                                  },saveFunction: (){
+                                    if(updateCheck==true){
+                                      context.showSnackBarError(
+                                          "please press update");
                                     }
-                                    else {
-                                      showDailogPopUp(
-                                          context,
-                                          LogoutPopup(
-                                            message: "Do you want to delete the order?",
-
-                                            onPressed:(){
-                                              print("akshay");
-                                              Navigator.pop(context);
-                                              context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
-
-                                            },
-
-
-                                          ));
-                                      // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+                                    else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
+                                      print(promised_receipt_date.text);
+                                      context.showSnackBarError(
+                                          "Required at least one variant ");
                                     }
-                                  });
 
-                                },saveFunction: (){
-                                  if(updateCheck==true){
-                                    context.showSnackBarError(
-                                        "please press update");
-                                  }
-                                  else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
-                                    print(promised_receipt_date.text);
-                                    context.showSnackBarError(
-                                        "Required at least one variant ");
-                                  }
+                                    else{
+                                      context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: true));
+                                      var table1=[
+                                        for(var em in table)
+                                          if(em.isActive==true)
+                                            em
+                                      ];
+                                      print("filter table"+table1.toString());
 
-                                  else{
-                                    context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: true));
-                                    var table1=[
-                                      for(var em in table)
-                                        if(em.isActive==true)
-                                          em
-                                    ];
-                                    print("filter table"+table1.toString());
-
-                                    PurchaseOrderPost model = PurchaseOrderPost(
-                                      purchaseOrderType: orderType.text == "" ? "" : orderType.text,
-                                      iventoryId: Variable.inventory_ID,
-                                      vendorId: vendorCode.text == "" ? "" : vendorCode.text,
-                                      vendorTrnNumber: vendortrnnumber.text == "" ? null : vendortrnnumber.text,
-                                      vendorMailId: vendor_email.text??null,
-                                      vendorAddress:null,
-                                      address1:"akkk",
-                                      address2:"ass",
-                                      promisedReceiptdate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(promised_receipt_date.text)),
-                                      plannedRecieptDate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(planned_receipt_date.text)),
-                                      note: note.text == "" ? "" : note.text,
-                                      remarks: remarks.text == "" ? "" : remarks.text,
-                                      discount: discount.text == "" ? 0 : double.parse(discount.text),
-                                      foc: foc.text == "" ? 0 : double.parse(foc.text),
-                                      unitcost: unitcourse.text == "" ? 0 : double.parse(unitcourse.text),
-                                      excessTax: excesstax.text == "" ? 0 : double.parse(excesstax.text),
-                                      actualCost: actualcost.text == "" ? 0 : double.parse(actualcost.text),
-                                      vat: vat.text == "" ? 0 : double.parse(vat.text),
-                                      grandTotal: grandtotal.text == "" ? 0 : double.parse(grandtotal.text),
-                                      variableAmount: Variableamount.text == "" ? 0 : double.parse(Variableamount.text),
-                                      createdBy: Variable.username,
-                                      orderLines:select? table1:table,
+                                      PurchaseOrderPost model = PurchaseOrderPost(
+                                        purchaseOrderType: orderType.text == "" ? "" : orderType.text,
+                                        iventoryId: Variable.inventory_ID,
+                                        vendorId: vendorCode.text == "" ? "" : vendorCode.text,
+                                        vendorTrnNumber: vendortrnnumber.text == "" ? null : vendortrnnumber.text,
+                                        vendorMailId: vendor_email.text??null,
+                                        vendorAddress:null,
+                                        address1:"akkk",
+                                        address2:"ass",
+                                        promisedReceiptdate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(promised_receipt_date.text)),
+                                        plannedRecieptDate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(planned_receipt_date.text)),
+                                        note: note.text == "" ? "" : note.text,
+                                        remarks: remarks.text == "" ? "" : remarks.text,
+                                        discount: discount.text == "" ? 0 : double.parse(discount.text),
+                                        foc: foc.text == "" ? 0 : double.parse(foc.text),
+                                        unitcost: unitcourse.text == "" ? 0 : double.parse(unitcourse.text),
+                                        excessTax: excesstax.text == "" ? 0 : double.parse(excesstax.text),
+                                        actualCost: actualcost.text == "" ? 0 : double.parse(actualcost.text),
+                                        vat: vat.text == "" ? 0 : double.parse(vat.text),
+                                        grandTotal: grandtotal.text == "" ? 0 : double.parse(grandtotal.text),
+                                        variableAmount: Variableamount.text == "" ? 0 : double.parse(Variableamount.text),
+                                        createdBy: Variable.username,
+                                        orderLines:select? table1:table,
 
 
-                                    );
-                                    print("selecting "+model.toString());
-                                    select? context.read<PurchaseorderpostCubit>().postPurchase(model):
-                                    context.read<PurchaseOrderPatchCubit>().getGeneralPurchasePatch(veritiaclid, model)
-                                    ;
-                                  }
+                                      );
+                                      print("selecting "+model.toString());
+                                      select? context.read<PurchaseorderpostCubit>().postPurchase(model):
+                                      context.read<PurchaseOrderPatchCubit>().getGeneralPurchasePatch(veritiaclid, model)
+                                      ;
+                                    }
 
-                                },
+                                  },
 
-                                );
+                                  );
   },
 ),
 //                                 Container(
@@ -924,12 +1093,13 @@ orederDate2Controller.clear();
 //                                     ],
 //                                   ),
 //                                 )
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

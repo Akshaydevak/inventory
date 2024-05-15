@@ -8,4 +8,5 @@ class Pellet{
   static const Color bagroundColor = Colors.white;
   static const Color tableRowColor =Color( 0xffF2F3F5);
   static const Color tablebuttonShadowColor =Color( 0xffEAEAEA);
+  static final Color selectedTableColor =Colors.grey.withOpacity(.5);
 }
