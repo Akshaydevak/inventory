@@ -29,6 +29,8 @@ class PurchaseOrderInvoiceGrowableTableState extends State<PurchaseOrderInvoiceG
   bool editionchek=false;
   var unitcostListControllers = <TextEditingController>[];
   List<Lines> additionalVariants = List.from([]);
+  List<List<FocusNode>> listOfxfocusNodes = [];
+  int selctedraw=-1;
   tableClear(){
 print("table clear");
     setState(() {
@@ -36,8 +38,31 @@ print("table clear");
     });
   }
 
+focuNodeAddingFunction(){
+
+  if(additionalVariants.isNotEmpty){
+    print("checking case");
+    for(var i=0;i<additionalVariants.length;i++){
+      listOfxfocusNodes.add(List.generate(1, (index) => FocusNode()));
+
+      setState(() {
+      });
+    }
+  }
+  listOfxfocusNodes.add(List.generate(1, (index) => FocusNode()));
+}
+  void changeSelectedRow(int direction) {
+    setState(() {
 
 
+      // Adjust the selected row based on the arrow key direction
+      selctedraw = (selctedraw + direction).clamp(0, additionalVariants.length - 1);
+      FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+  }
   void initState() {
 
     recieveController = AutoScrollController(
@@ -68,6 +93,7 @@ print("table clear");
                       data.invoicedata?.invoiceLines != null
                           ? additionalVariants = List.from(data.invoicedata?.invoiceLines ?? [])
                           : additionalVariants = [];
+                      focuNodeAddingFunction();
 
                     });
 
@@ -77,6 +103,7 @@ print("table clear");
                     data.lines != null
                         ? additionalVariants = List.from(data.lines ?? [])
                         : additionalVariants =List.from( []);
+                    focuNodeAddingFunction();
                     setState(() {
 
                     });
@@ -312,7 +339,7 @@ print("table clear");
                                         for(var i=0;i<additionalVariants.length;i++)
                                           TableRow(
                                               decoration: BoxDecoration(
-                                                  color: Pellet.tableRowColor,
+                                                  color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                                   shape: BoxShape.rectangle,
                                                   border:  Border(
                                                       left: BorderSide(
@@ -378,6 +405,7 @@ print("table clear");
                                                 TableCell(
                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                   child: CheckedBoxs(
+
                                                     valueChanger: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
                                                     onSelection: (bool? value) {
                                                       // bool? isRecieved = additionalVariants[i].isReceived;
@@ -453,6 +481,16 @@ print("table clear");
                                                 TableCell(
                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                   child: CheckedBoxs(
+                                                    focusNode: listOfxfocusNodes[i][0],
+                                                    onCompleteFunc: (){
+                                                      bool? isInvoiced = additionalVariants[i].isInvoiced??false;
+                                                      setState(() {
+                                                        isInvoiced = !isInvoiced!;
+                                                        additionalVariants[i] = additionalVariants[i].copyWith(isInvoiced: isInvoiced);
+                                                        widget.updation(additionalVariants);
+
+                                                      });
+                                                    },
                                                     valueChanger: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
                                                     onSelection: (bool? value) {
                                                       bool? isInvoiced = additionalVariants[i].isInvoiced??false;

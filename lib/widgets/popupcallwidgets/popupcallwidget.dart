@@ -918,7 +918,7 @@ class _SellingPriceBasedPopUpCallState
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                       focusNode: widget.focusNode,
-                        autofocus: true,
+                        autofocus: false,
                         keyboardType: TextInputType.phone,
                         inputFormatters:  <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(RegExp(r" "))

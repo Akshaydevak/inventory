@@ -18,6 +18,7 @@ import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
+import 'package:inventory/core/uttils/keyEvent.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
@@ -69,6 +70,8 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   TextEditingController grandTotalController = TextEditingController();
   TextEditingController orderType = TextEditingController();
   NavigationProvider commonProvider = NavigationProvider();
+  FocusNode requestFormFocusNode=FocusNode();
+  FocusNode saveUpadtebuttonFocusnOde=FocusNode();
   final GlobalKey<PurchaseOrderRequestFormGrowableTableState> _myWidgetState = GlobalKey<PurchaseOrderRequestFormGrowableTableState>();
   //
   late AutoScrollController scontroller;
@@ -94,7 +97,8 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   bool  stockCheck=false;
   var  paginatedList;
   bool updateCheck=false;
-
+  int tabCount=1;
+  bool isCountOrdecre=false;
 
   double VatableValue = 0;
   double excessTax = 0;
@@ -102,6 +106,165 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   updateCheckFucction(bool value) {
     updateCheck = value;
     setState(() {});
+  }
+  Map keyEventFuctionCount={
+    "save":2,
+    "cancel":3,
+    "table":1
+
+  };
+  rowKeyEventResetFunc(){
+    tabCount=1;
+    isCountOrdecre=false;
+    enableKeyEvent=true;
+    setState(() {
+
+    });
+  }
+
+  rowKeyPressEvent(RawKeyEvent event){
+    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
+    int limit=3;
+    int startLimit=1;
+
+    if (event is RawKeyDownEvent) {
+
+      if(event.logicalKey==LogicalKeyboardKey.escape){
+        print("tabPressd");
+
+        FocusScope.of(context).requestFocus(requestFormFocusNode);
+        if(isCountOrdecre==false){
+
+          if(tabCount!=limit){
+            tabCount=++tabCount;
+
+            if(tabCount==limit){
+              isCountOrdecre=true;
+            }
+
+          }
+        }
+        else{
+          if(tabCount!=startLimit){
+            tabCount=--tabCount;
+            if(tabCount==startLimit){
+              isCountOrdecre=false;}
+          }
+
+
+
+        }
+        if(tabCount!=1){
+          FocusScope.of(context).requestFocus(saveUpadtebuttonFocusnOde);
+        }else{
+          FocusScope.of(context).requestFocus(_myWidgetState.currentState?.focusNodeList[0]);
+        }
+
+
+        // tabCount= tabCount== limit?--tabCount:++tabCount;
+        setState(() {
+
+        });
+
+      }
+      // else  if(event.logicalKey==LogicalKeyboardKey.keyR){
+      //    remarksPopupCallFunc();
+      //
+      //  }
+      // else if(event.logicalKey==LogicalKeyboardKey.arrowLeft){
+      //   FocusNode? focusedNode = FocusScope.of(context).focusedChild;
+      //   if (focusedNode != null) {
+      //     print('Currently focused node: ${focusedNode}');
+      //   }
+      //
+      // }
+      else{
+
+        if (event.logicalKey == LogicalKeyboardKey.arrowDown ) {
+          switch (tabCount) {
+            case 1:
+            //     FocusScope.of(context).requestFocus(inventoryFocusNode);
+            // selectedVertical=    _verticalWidgetState.currentState?.   changeSelectedRow(1)??0;
+            // setState(() {
+            //
+            // });
+              FocusScope.of(context).requestFocus(requestFormFocusNode);
+              _myWidgetState.currentState?.   changeSelectedRow(1);
+              setState(() {
+
+              });
+              break;
+          // case 2:
+          //
+          //   break;
+
+          };
+
+
+
+
+          // Handle arrow down key press
+          // _changeSelectedRow(1);
+        } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+          switch (tabCount) {
+            case 1:
+            // FocusScope.of(context).requestFocus(inventoryFocusNode);
+            // selectedVertical=       _verticalWidgetState.currentState?.   changeSelectedRow(-1)??0;
+            // setState(() {
+            //
+            // });
+              FocusScope.of(context).requestFocus(requestFormFocusNode);
+              _myWidgetState.currentState?.   changeSelectedRow(-1);
+              break;
+          // case 2:
+          // // FocusScope.of(context).requestFocus(inventoryFocusNode);
+          // //    _stableWidgetState.currentState?.   changeSelectedRow(-1);
+          // // setState(() {
+          // //
+          // // });
+          // break;
+
+          }
+
+
+          // Handle arrow up key press
+          // _changeSelectedRow(-1);
+        }
+        else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+          switch (tabCount) {
+            case 1:
+            // verticalOntapFunc(selectedVertical);
+              break;
+            case 2:
+              saveUpdateFunc();
+              break;
+            case 3:
+              deleteOrClearFunction();
+              break;
+
+          }
+
+
+
+        }
+
+
+
+
+
+
+      }
+      //invoice page keyPress Event
+
+
+      //
+
+
+
+
+
+    }
+
   }
   tableAssign(List<OrderLines> table1) {
     print("ethito");
@@ -229,15 +392,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
             BlocProvider(
               create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF"),
             ),
-            BlocProvider(
-              create: (context) => RequestformpostCubit(),
-            ),
-            BlocProvider(
-              create: (context) => RequestpatchCubit(),
-            ),
-            BlocProvider(
-              create: (context) => DeleterequestformCubit(),
-            ),
+
 
           ],
           child: Builder(
@@ -417,270 +572,228 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                             );
                           },
                           builder: (context, state) {
-                            return Scaffold(
-                              backgroundColor:Pellet.bagroundColor ,
-                              body: IntrinsicHeight(
+                            return RawKeyboardListener(
+                              autofocus: false,
+                              focusNode:requestFormFocusNode,
+                              onKey: (RawKeyEvent event) {
 
-                                  child:Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      VerticalList(
-                                        tab:"RF",
-                                        select: select,
-                                        selectedVertical: selectedVertical,
-                                        itemsearch: itemsearch,ontap: (int index){
-                                        setState(() {
-                                          print("taped");
-                                          select=false;
-                                          clear();
-                                          selectedVertical=index;
-                                          updateCheck=false;
-                                          _myWidgetState.currentState?.clearTableAddingVariables();
-                                          table.clear();
-                                          // unitcostListControllers.clear();
+                                if(enableKeyEvent==true){
+                                  rowKeyPressEvent(event);}else{
 
-                                          veritiaclid =
-                                              result[index].id;
-                                          Variable.verticalid2=result[index].id;
-                                          context
-                                              .read<
-                                              RequestformreadCubit>()
-                                              .getRequestFormRead(
-                                              veritiaclid);
-                                        });
-                                      },result: result,
-                                        child:                    tablePagination(
-                                              () => context
-                                              .read<InventorysearchCubit>()
-                                              .refresh(),
-                                          back: paginatedList?.previousUrl == null
-                                              ? null
-                                              : () {
+                                  rowKeyEventResetFunc();
+                                }
+
+
+
+
+
+                              },
+                              child: Scaffold(
+                                backgroundColor:Pellet.bagroundColor ,
+                                body: IntrinsicHeight(
+
+                                    child:Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        VerticalList(
+                                          tab:"RF",
+                                          select: select,
+                                          selectedVertical: selectedVertical,
+                                          itemsearch: itemsearch,ontap: (int index){
+                                          setState(() {
+                                            print("taped");
+                                            select=false;
+                                            clear();
+                                            selectedVertical=index;
+                                            updateCheck=false;
+                                            _myWidgetState.currentState?.clearTableAddingVariables();
+                                            table.clear();
+                                            // unitcostListControllers.clear();
+
+                                            veritiaclid =
+                                                result[index].id;
+                                            Variable.verticalid2=result[index].id;
                                             context
+                                                .read<
+                                                RequestformreadCubit>()
+                                                .getRequestFormRead(
+                                                veritiaclid);
+                                          });
+                                        },result: result,
+                                          child:                    tablePagination(
+                                                () => context
                                                 .read<InventorysearchCubit>()
-                                                .previuosslotSectionPageList();
-                                          },
-                                          next:paginatedList?.nextPageUrl == null
-                                              ? null
-                                              : () {
-                                            // print(data.nextPageUrl);
-                                            context
-                                                .read<InventorysearchCubit>()
-                                                .nextslotSectionPageList("");
-                                          },
+                                                .refresh(),
+                                            back: paginatedList?.previousUrl == null
+                                                ? null
+                                                : () {
+                                              context
+                                                  .read<InventorysearchCubit>()
+                                                  .previuosslotSectionPageList();
+                                            },
+                                            next:paginatedList?.nextPageUrl == null
+                                                ? null
+                                                : () {
+                                              // print(data.nextPageUrl);
+                                              context
+                                                  .read<InventorysearchCubit>()
+                                                  .nextslotSectionPageList("");
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(child: SingleChildScrollView(
-                                        child: Container(
+                                        Expanded(child: SingleChildScrollView(
+                                          child: Container(
 
 
-                                          child: Column(
-                                            mainAxisAlignment:MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
+                                            child: Column(
+                                              mainAxisAlignment:MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
 
-                                              Container(
+                                                Container(
 
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: [
-                                                    TextButtonLarge(
-                                                        marginCheck: true,
-
-
-
-                                                        onPress: () {
-                                                          setState(() {
-
-                                                            select=true;
-                                                            updateCheck=false;
-                                                            _myWidgetState.currentState?.currentStock.clear();
-                                                            _myWidgetState.currentState?.clearTableAddingVariables();
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      TextButtonLarge(
+                                                          marginCheck: true,
 
 
-                                                            table.clear();
-                                                            clear();
+
+                                                          onPress: () {
+                                                            setState(() {
+
+                                                              select=true;
+                                                              updateCheck=false;
+                                                              _myWidgetState.currentState?.currentStock.clear();
+                                                              _myWidgetState.currentState?.clearTableAddingVariables();
 
 
+                                                              table.clear();
+                                                              clear();
+
+
+                                                            });
+
+
+                                                          },
+                                                          // icon: Icon(Icons.refresh),
+                                                          // label: Text("Clear")
+                                                          text: "CREATE"
+                                                      ),
+                                                      TextButtonLarge(
+                                                        text: "PREVIEW",
+                                                        onPress: () async {
+                                                          print("Akshay");
+                                                          print("Akshay");
+                                                          InventoryListModel model=InventoryListModel();
+
+
+                                                          UserPreferences userPref = UserPreferences();
+                                                          await userPref.getInventoryList().then((user) {
+                                                            print("entereeeeeeeeeeeeeeeeeeed");
+
+                                                            if (user.isInventoryExist == true) {
+                                                              model=user;
+                                                              print("existing");
+                                                              print(model.email);
+                                                              // prefs.setString('token', user?.token ?? "");
+
+
+
+
+                                                            } else {
+
+                                                            }
                                                           });
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(builder: (context) =>
+                                                                PrintScreen(
+                                                                  note: noteController.text,
+                                                                  select: select,
+                                                                  model: model,
+                                                                  orderCode:ordereCodeController.text ,
+                                                                  orderDate: orderDateController.text,
+                                                                  table:table,
+                                                                  vendorCode: "Not",
+                                                                  vat: double.tryParse( vatController.text),
+                                                                  actualCost:double.tryParse( actualCostController.text),
+                                                                  variableAmount:double.tryParse( vatableAmountController.text) ,
+                                                                  discount:double.tryParse( discountController.text) ,
+                                                                  unitCost:double.tryParse( unitCostController.text) ,
+                                                                  excisetax:double.tryParse( excessTaxController.text) ,
+                                                                  remarks: remarksController.text ,
+                                                                  pageName: "Purchase Order",
+
+                                                                )),
+                                                          );
 
 
                                                         },
-                                                        // icon: Icon(Icons.refresh),
-                                                        // label: Text("Clear")
-                                                        text: "CREATE"
-                                                    ),
-                                                    TextButtonLarge(
-                                                      text: "PREVIEW",
-                                                      onPress: () async {
-                                                        print("Akshay");
-                                                        print("Akshay");
-                                                        InventoryListModel model=InventoryListModel();
-
-
-                                                        UserPreferences userPref = UserPreferences();
-                                                        await userPref.getInventoryList().then((user) {
-                                                          print("entereeeeeeeeeeeeeeeeeeed");
-
-                                                          if (user.isInventoryExist == true) {
-                                                            model=user;
-                                                            print("existing");
-                                                            print(model.email);
-                                                            // prefs.setString('token', user?.token ?? "");
-
-
-
-
-                                                          } else {
-
-                                                          }
-                                                        });
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(builder: (context) =>
-                                                              PrintScreen(
-                                                                note: noteController.text,
-                                                                select: select,
-                                                                model: model,
-                                                                orderCode:ordereCodeController.text ,
-                                                                orderDate: orderDateController.text,
-                                                                table:table,
-                                                                vendorCode: "Not",
-                                                                vat: double.tryParse( vatController.text),
-                                                                actualCost:double.tryParse( actualCostController.text),
-                                                                variableAmount:double.tryParse( vatableAmountController.text) ,
-                                                                discount:double.tryParse( discountController.text) ,
-                                                                unitCost:double.tryParse( unitCostController.text) ,
-                                                                excisetax:double.tryParse( excessTaxController.text) ,
-                                                                remarks: remarksController.text ,
-                                                                pageName: "Purchase Order",
-
-                                                              )),
-                                                        );
-
-
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(height: 10,),
-                                              PurchaseOrderRequestFormTable(
-                                                isSected: select,
-                                                plannedReceiptDate2: plannedRecieptDate2,
-                                                promisedReceiptDate2: promisedRecieptDate2,
-                                                plannedReceiptDate: plannedRecieptDate,
-                                                promisedReceiptDate: promisedRecieptDate,
-                                                paymentStatus: paymentStatusController,
-                                                orderType: orderType,
-                                                orderStatus: orderStatusController,
-                                                orderedPerson: orderedPersonController,
-                                                oderDate: orderDateController,
-                                                invoiceStatus: invoiceStatusController,
-                                                grandTotal: grandTotalController,
-                                                foc: focController,
-                                                exciseTax: excessTaxController,
-                                                discound: discountController,
-                                                actualCost: actualCostController,
-                                                unitCost: unitCostController,
-                                                note: noteController,
-                                                paymentCode: paymentCodeController,
-                                                orderCode: ordereCodeController,
-                                                receivingStatus: receivingSattusController,
-                                                remarks: remarksController,
-                                                vat: vatController,
-                                                vatableAmount: vatableAmountController,
-                                              ),
-                                              PurchaseOrderRequestFormGrowableTable(
-                                                  updateCheck: updateCheckFucction,
-                                                  select:select,
-                                                  updation: tableAssign,
-                                                  key:_myWidgetState,
+                                                      ),
+                                                    ],
                                                   ),
+                                                ),
+                                                SizedBox(height: 10,),
+                                                PurchaseOrderRequestFormTable(
+                                                  isSected: select,
+                                                  plannedReceiptDate2: plannedRecieptDate2,
+                                                  promisedReceiptDate2: promisedRecieptDate2,
+                                                  plannedReceiptDate: plannedRecieptDate,
+                                                  promisedReceiptDate: promisedRecieptDate,
+                                                  paymentStatus: paymentStatusController,
+                                                  orderType: orderType,
+                                                  orderStatus: orderStatusController,
+                                                  orderedPerson: orderedPersonController,
+                                                  oderDate: orderDateController,
+                                                  invoiceStatus: invoiceStatusController,
+                                                  grandTotal: grandTotalController,
+                                                  foc: focController,
+                                                  exciseTax: excessTaxController,
+                                                  discound: discountController,
+                                                  actualCost: actualCostController,
+                                                  unitCost: unitCostController,
+                                                  note: noteController,
+                                                  paymentCode: paymentCodeController,
+                                                  orderCode: ordereCodeController,
+                                                  receivingStatus: receivingSattusController,
+                                                  remarks: remarksController,
+                                                  vat: vatController,
+                                                  vatableAmount: vatableAmountController,
+                                                ),
+                                                PurchaseOrderRequestFormGrowableTable(
+                                                    updateCheck: updateCheckFucction,
+                                                    select:select,
+                                                    updation: tableAssign,
+                                                    key:_myWidgetState,
+                                                    ),
 
-                                              SizedBox(height: 30,),
-                                              SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",
-                                                isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
-                                                isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
-                                                saveFunction: (){
-                                                  if(updateCheck==true){
-                                                    context.showSnackBarError("please click the update button ");
-                                                  }
-                                                  else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
-                                                    context.showSnackBarError(
-                                                        "Required at least one variant ");
-                                                  }
-                                                  else{
-                                                    commonProvider.setLoadingSaveUpdate(true);
-                                                    var table1=[
-                                                      for(var em in table)
-                                                        if(em.isActive==true)
-                                                          em
-                                                    ];
-                                                    PurchaseOrderPost model =
-                                                    PurchaseOrderPost(
-                                                        purchaseOrderType: orderType.text??"",
-                                                        orderedPerson:orderedPersonController.text??"",
-                                                        iventoryId: Variable.inventory_ID,
-                                                        address1: "akshay",
-                                                        address2: "anmaika",
-                                                        discount:double.tryParse( discountController.text),
-                                                        plannedRecieptDate: DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(plannedRecieptDate.text??"")),
-                                                        promisedReceiptdate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(promisedRecieptDate.text??"")),
-                                                        note: noteController.text??"",
-                                                        remarks: remarksController.text??"",
-                                                        unitcost: double.tryParse(unitCostController.text),
-                                                        excessTax: double.tryParse(excessTaxController.text),
-                                                        actualCost: double.tryParse(actualCostController.text),
-                                                        vat: double.tryParse(vatController.text),
-                                                        grandTotal: double.tryParse(grandTotalController.text),
-                                                        variableAmount: double.tryParse(vatableAmountController.text),
-                                                        foc: double.tryParse(focController.text),
-                                                        createdBy: Variable.created_by,
-                                                        edited_by: Variable.created_by,
-                                                        orderLines:select? table1:table
-                                                    );
+                                                SizedBox(height: 30,),
+                                                SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",
+                                                  focusNode: saveUpadtebuttonFocusnOde,
+                                                  isKeyFuctionLeft: keyEventFuctionCount["cancel"]==tabCount,
+                                                  isKeyFuctionRight: keyEventFuctionCount["save"]==tabCount,
+                                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                                  isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
+                                                  saveFunction: (){
+saveUpdateFunc();
 
-                                                    print(model);
-                                                    select? context.read<RequestformpostCubit>().postRequest(model):
-                                                    context.read<RequestpatchCubit>().getRequestFormPatch(veritiaclid,model);
-                                                  }
-
-                                                },
-                                                discardFunction: (){
-                                                  if(select){
-                                                    clear();
-                                                    updateCheck=false;
-                                                    table.clear();
-                                                    setState(() {
-
-                                                    });
-                                                  }
-                                                  else{
-                                                    showDailogPopUp(
-                                                        context,
-                                                        LogoutPopup(
-                                                          message: "Do you want to delete the order",
-                                                          onPressed:(){
-                                                            commonProvider.setLoadingDeleterClear(true);
-                                                            Navigator.pop(context);
-                                                            context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);
-
-                                                          },
-
-                                                        ));
-                                                  }
-                                                },
-                                              )
-                                            ],
+                                                  },
+                                                  discardFunction: (){
+                                                    deleteOrClearFunction();
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ))
-                                    ],
+                                        ))
+                                      ],
 
-                                  )
+                                    )
 
+                                ),
                               ),
                             );
                           },
@@ -692,6 +805,74 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
           ),
 
         ));
+  }
+  deleteOrClearFunction(){
+    if(select){
+      clear();
+      updateCheck=false;
+      table.clear();
+      setState(() {
+
+      });
+    }
+    else{
+      showDailogPopUp(
+          context,
+          LogoutPopup(
+            message: "Do you want to delete the order",
+            onPressed:(){
+              commonProvider.setLoadingDeleterClear(true);
+              Navigator.pop(context);
+              context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);
+
+            },
+
+          ));
+    }
+  }
+  saveUpdateFunc(){
+    if(updateCheck==true){
+      context.showSnackBarError("please click the update button ");
+    }
+    else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
+      context.showSnackBarError(
+          "Required at least one variant ");
+    }
+    else{
+      commonProvider.setLoadingSaveUpdate(true);
+      var table1=[
+        for(var em in table)
+          if(em.isActive==true)
+            em
+      ];
+      PurchaseOrderPost model =
+      PurchaseOrderPost(
+          purchaseOrderType: orderType.text??"",
+          orderedPerson:orderedPersonController.text??"",
+          iventoryId: Variable.inventory_ID,
+          address1: "akshay",
+          address2: "anmaika",
+          discount:double.tryParse( discountController.text),
+          plannedRecieptDate: DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(plannedRecieptDate.text??"")),
+          promisedReceiptdate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(promisedRecieptDate.text??"")),
+          note: noteController.text??"",
+          remarks: remarksController.text??"",
+          unitcost: double.tryParse(unitCostController.text),
+          excessTax: double.tryParse(excessTaxController.text),
+          actualCost: double.tryParse(actualCostController.text),
+          vat: double.tryParse(vatController.text),
+          grandTotal: double.tryParse(grandTotalController.text),
+          variableAmount: double.tryParse(vatableAmountController.text),
+          foc: double.tryParse(focController.text),
+          createdBy: Variable.created_by,
+          edited_by: Variable.created_by,
+          orderLines:select? table1:table
+      );
+
+      print(model);
+      select? context.read<RequestformpostCubit>().postRequest(model):
+      context.read<RequestpatchCubit>().getRequestFormPatch(veritiaclid,model);
+    }
   }
 }
 

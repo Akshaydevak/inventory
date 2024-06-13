@@ -166,7 +166,8 @@ List<  InventoryListModel> inventoryList=[];
   child: Scaffold(
           backgroundColor: Color(0xff687892),
           body: Center(
-            child: Container(
+            child:
+            Container(
               height:height/1.5,
               width:height/1.5,
 

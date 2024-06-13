@@ -49,11 +49,23 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
 
   PurchaseCureentStockQty? purchaseCurrentStock;
   List<int?> currentStock = [];
-
+  List<List<FocusNode>> listOfxfocusNodes = [];
   TextEditingController unicostController = TextEditingController();
   var unitcostListControllers = <TextEditingController>[];
+  int selctedraw=-1;
+
+  focusNodeAddingFunction(){
+    unitcostListControllers.clear();
+
+    if(lines.isNotEmpty){
+      print("checking case");
+      for(var i=0;i<lines.length;i++){
+        listOfxfocusNodes.add(List.generate(1, (index) => FocusNode()));
 
 
+      }
+    }
+  }
   Future _getCurrentUser() async {
     if (lines.isNotEmpty) {
       for (var i = 0; i < lines.length; i++) {
@@ -75,7 +87,19 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
 
 
   }
+  void changeSelectedRow(int direction) {
+    setState(() {
 
+
+      // Adjust the selected row based on the arrow key direction
+      selctedraw = (selctedraw + direction).clamp(0, lines.length - 1);
+      if(selctedraw!=-1)
+      FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+  }
 
   double actualAndgrandTotalUpdation(double? vatableAmount,double? vat){
     double actualCost=0;
@@ -161,12 +185,13 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                           data.invoicedata?.orderLiness != null
                               ? lines =List.from( data.invoicedata?.orderLiness ?? [])
                               : lines =List.from( []);
+                          focusNodeAddingFunction();
 
                         } else {
                           data?.orderLiness != null
                               ? lines =List.from( data?.orderLiness ?? [])
                               : lines = List.from([]);
-
+                          focusNodeAddingFunction();
                           setState(() {
 
                           });
@@ -394,7 +419,7 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                 i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
+                                          color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
                                           border:  Border(
                                               left: BorderSide(
@@ -646,7 +671,22 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: CheckedBoxs(
+                                          child: CheckedBoxs(focusNode: listOfxfocusNodes[i][0],
+                                              onCompleteFunc: (){
+                                                widget.updateCheck(true);
+                                                lines[i]=lines[i].copyWith(updateCheck: true);
+                                                bool? isInvoiced = lines?[i].isInvoiced??false;
+                                                setState(() {
+                                                  isInvoiced = !isInvoiced!;
+                                                  lines?[i] = lines![i].copyWith(isInvoiced: isInvoiced);
+                                                  upDateFunction(i);
+                                                  if(i!=lines.length-1){
+                                                    FocusScope.of(context).requestFocus(listOfxfocusNodes[i+1][0]);
+                                                  }
+
+                                                  setState(() {});
+                                                });
+                                              },
                                               valueChanger:lines![i]
                                                   .isInvoiced==null?false:lines![i]
                                                   .isInvoiced,
@@ -739,5 +779,14 @@ class PurchasReturnInvoiceGrowableTableState extends State<PurchasReturnInvoiceG
         );
       }),
     );
+  }
+  upDateFunction(int i){
+    lines[i]=lines[i].copyWith(updateCheck: false);
+    var update=updateCheckFunc();
+    widget.updateCheck(update);
+    widget.updation( lines);
+    setState(() {
+
+    });
   }
 }

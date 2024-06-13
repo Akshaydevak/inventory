@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dio/dio.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/common.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
+import 'package:inventory/core/uttils/size_config.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -214,8 +216,10 @@ class _NewInputCardState extends State<NewInputCard> {
 
 
 
+if(widget?.onChange!=null){
+  widget?.onChange!(va);
+}
 
-                widget?.onChange!(va);
 
 
 
@@ -363,7 +367,143 @@ class _NewInputCardState extends State<NewInputCard> {
       ));
   }
 }
+class captchaField extends StatefulWidget {
+  final String text;
+  final TextEditingController controller;
+  final Uint8List uintListt;
+  final bool password;
+  final Function onRefreshTap;
+  final FormFieldValidator? validator;
+  final bool isSuffixIcon;
+  final bool isCAptchFailed;
+  final bool readOnly;
+  const captchaField(
+      {Key? key, required this.text,required this.controller,this.readOnly=false,this.isCAptchFailed=false,this.isSuffixIcon=false,  this.password=false, this.validator, required this.uintListt, required this.onRefreshTap})
+      : super(key: key);
 
+  @override
+  State<captchaField> createState() => _captchaField();
+}
+
+class _captchaField extends State<captchaField> {
+  // Uint8List _uintListt=Base64Decoder().convert("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");
+
+  bool show = false;
+
+  void initState() {
+    super.initState();
+    show = widget.password;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("widget.capchalist${widget.uintListt}");
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 40),
+          child: Text(widget.text,
+              style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w400,
+                  fontSize: context.blockSizeHorizontal * 1,
+                  color: Colors.black)),
+        ),
+        SizedBox(
+          height: context.blockSizeVertical * 1,
+        ),
+        Container(
+          margin: EdgeInsets.only(left: context.blockSizeHorizontal*2.5),
+          height: context.blockSizeVertical*8.5,
+          width: context.blockSizeHorizontal * 25,
+
+          child: DottedBorder(
+              strokeWidth: .6,
+              color: Color(0xff3E4F5B).withOpacity(.2),
+              child:widget.uintListt.isEmpty?Text("") :Image.memory(
+                // height: 40,
+                // width: 89,
+
+                widget.uintListt,
+                // width: 200,
+                fit: BoxFit.fitWidth,
+              )
+          ),
+        ),
+        SizedBox(height: context.blockSizeVertical*.6,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              // height: context.blockSizeVertical * 6,
+              width: context.blockSizeHorizontal * 23,
+              // color: Colors.white,
+              // decoration: BoxDecoration(
+              //     border: Border.all(
+              //         width: context.blockSizeHorizontal * 0.02,
+              //         color: Colors.grey),
+              //     borderRadius: BorderRadius.all(Radius.circular(6))),
+              // color: Colors.grey.shade200,
+              child: Container(
+                // height: context.blockSizeVertical*4.2,
+
+                child: TextFormField(
+                  validator: widget.validator,
+                  controller: widget.controller,
+                  readOnly: widget.readOnly,
+                  obscureText: show,
+
+
+                  decoration: InputDecoration(
+                      suffixIconConstraints: BoxConstraints(
+                        minWidth: 55,
+                        minHeight: 55,
+                      ),
+
+                      suffixIcon:
+                      widget.  isSuffixIcon==true?Container(
+                        margin: EdgeInsets.symmetric(horizontal: context.blockSizeHorizontal*1),
+                        height:context.blockSizeHorizontal*1,
+                        width: context.blockSizeHorizontal*1,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.green,
+                        ),
+                        child: Icon(Icons.done,color: Colors.white,size:context.blockSizeHorizontal*1,),
+                      ):IconButton(
+                        onPressed: (){
+                          widget.onRefreshTap();
+
+                        }, icon: Icon(Icons.refresh,color: Color(0xff6F91CB).withOpacity(.7),),
+                      ),
+
+                      hintText: "Enter Captcha...",
+                      contentPadding:EdgeInsets.symmetric(
+                          horizontal:context.blockSizeHorizontal*1,vertical: context.blockSizeVertical*1 ),
+
+                      labelStyle: TextStyle(
+                          fontSize: 13,
+                          color: Palette.DARK),
+                      hintStyle:
+                      TextStyle(fontSize: context.blockSizeHorizontal*.86, color: Colors.black.withOpacity(.2),fontWeight: FontWeight.bold,),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 0.4, color: widget.isCAptchFailed?Colors.red: Colors.grey.withOpacity(0.4)),),
+                      enabledBorder: OutlineInputBorder( borderSide: BorderSide(
+                          color: widget.isCAptchFailed?Colors.red: Colors.grey.withOpacity(0.5),width: 0.5),
+                      ),
+                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(width: 1,color: widget.isCAptchFailed?Colors.red: Color(0xff687892)),
+                      )
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
 
 class NewInputPopupField extends StatefulWidget {
   final String label;

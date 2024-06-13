@@ -211,9 +211,10 @@ final bool  isSaveUpdateLoading;
 final bool  isClearDeketeLoading;
 final  bool? isKeyFuctionRight;
 final  bool? isKeyFuctionLeft;
-SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.dividercheck=true,this.isDelete=false,required this.saveFunction,required this.discardFunction,this.isClearDeketeLoading=false,this.isSaveUpdateLoading=false, this.isKeyFuctionRight, this.isKeyFuctionLeft});
+final  FocusNode? focusNode;
+SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.dividercheck=true,this.isDelete=false,required this.saveFunction,required this.discardFunction,this.isClearDeketeLoading=false,this.isSaveUpdateLoading=false, this.isKeyFuctionRight, this.isKeyFuctionLeft, this.focusNode});
 
-
+TextEditingController controller=TextEditingController();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -229,6 +230,24 @@ SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
 
+              Container(
+                width: 2,
+                child: TextField(
+
+                  // autofocus: true,
+                    controller: controller,
+                  onEditingComplete: (){
+
+                  },
+                  focusNode: focusNode,
+
+                  decoration: InputDecoration(
+                    // filled: true,
+                    // fillColor: Colors.grey.withOpacity(.5)
+                  ),
+
+                ),
+              ),
 
             if(isDelete==false)  TextButtonLarge(
               isLoading: isClearDeketeLoading,
@@ -239,7 +258,7 @@ SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.
                   },
                 marginAvoid: true,
                 labelcolor: Colors.red,
-                clr:isKeyFuctionLeft==true?Colors.blueAccent: Colors.white,
+                clr:isKeyFuctionLeft==true?Pellet.buttonActiveClr: Colors.white,
                   // height: 29,
                   // width: 90,
                   // labelcolor: Colors.red,
@@ -251,7 +270,7 @@ SaveUpdateResponsiveButton({required this.label,this.deleteLabel="Discard",this.
               TextButtonLarge(
                   isLoading:isSaveUpdateLoading ,
 
-                  text:label,clr:isKeyFuctionRight==true?Colors.blueAccent:Pellet.tableBlueHeaderPrint ,
+                  text:label,clr:isKeyFuctionRight==true?Pellet.buttonActiveClr:Pellet.tableBlueHeaderPrint ,
                   marginAvoid: true,
 
 

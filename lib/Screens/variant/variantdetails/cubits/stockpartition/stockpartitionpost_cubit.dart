@@ -12,7 +12,7 @@ class StockpartitionpostCubit extends Cubit<StockpartitionpostState> {
   StockpartitionpostCubit() : super(StockpartitionpostState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future postStockPartion(String? name,String? description) async {
-
+emit(StockpartitionpostState.initial());
     final result = await repo.postStockPartion(
      name,description
     );

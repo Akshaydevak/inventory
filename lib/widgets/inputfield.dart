@@ -463,7 +463,7 @@ class _Tabledate extends State<Tabledate> {
             if (widget.enable)
               // calenderPopupFunc();
               date = await showDatePicker(
-                okButtonEvent: widget.onEnterClick,
+
                   context: context,
                   firstDate: DateTime(1900),
                   initialDate: currentValue ?? DateTime.now(),

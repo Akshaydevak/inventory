@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory/Screens/logi/login.dart';
+import 'package:inventory/Screens/logi/login_with_api_bolck.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/widgets/MenuIcon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -109,7 +110,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                         sharedPreferences.clear();
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) =>   LoginScreen()),
+                          MaterialPageRoute(builder: (context) =>   LoginWithApiBlock()),
                         );
                         selected6=!selected6;
                         selected1=false;

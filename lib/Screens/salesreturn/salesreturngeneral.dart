@@ -84,6 +84,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
   List<SalesReturnOrderLines> table = List.from([]);
   int selectedVertical = 0;
   FocusNode salesReturnMainFocusnode=FocusNode();
+  FocusNode salesUpdateFocusnode=FocusNode();
   int tabCount=1;
   bool isCountOrdecre=false;
   tableAssign( List<SalesReturnOrderLines> table1) {
@@ -101,14 +102,21 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
 
     });
   }
+  Map keyEventFuctionCount={
+    "save":2,
+    "cancel":3,
+    "table":1
+
+  };
+
   rowKeyPressEvent(RawKeyEvent event){
     // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
-    int limit=1;
+    int limit=3;
     int startLimit=1;
 
     if (event is RawKeyDownEvent) {
 
-      if(event.logicalKey==LogicalKeyboardKey.keyA){
+      if(event.logicalKey==LogicalKeyboardKey.tab){
         print("tabPressd");
 
         FocusScope.of(context).requestFocus(salesReturnMainFocusnode);
@@ -133,7 +141,8 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
 
 
         }
-
+        if(tabCount==2 ||tabCount==3)
+          FocusScope.of(context).requestFocus(salesUpdateFocusnode);
 
 
         // tabCount= tabCount== limit?--tabCount:++tabCount;
@@ -185,17 +194,20 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
           // Handle arrow up key press
           // _changeSelectedRow(-1);
           }}
-        // else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
-        //   switch (tabCount) {
-        //     case 1:
-        //       verticalOntapFunc(selectedVertical);
-        //       break;
-        //
-        //   }
-        //
-        //
-        //
-        // }
+        else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+          switch (tabCount) {
+            case 2:
+              saveUpdateFunction();
+              break;
+              case 3:
+              discardClearFunc();
+              break;
+
+          }
+
+
+
+        }
 
 
 
@@ -337,21 +349,15 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => SalesreturnpostCubit(),
-        ),
+
         BlocProvider(
           create: (context) => GeneralinvoicereadCubit(),
         ),
         BlocProvider(
           create: (context) => SalesgeneralreadCubit(),
         ),
-        BlocProvider(
-          create: (context) => SalesreturngeneraldeleteCubit(),
-        ),
-        BlocProvider(
-          create: (context) => SalesreturngeneralpatchCubit(),
-        ),
+
+
 
 
 
@@ -728,60 +734,16 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                           height: 30,
                                         ),
                                         SaveUpdateResponsiveButton(
+                                          focusNode: salesUpdateFocusnode,
+                                          isKeyFuctionRight: keyEventFuctionCount['save']==tabCount,
+                                          isKeyFuctionLeft: keyEventFuctionCount['cancel']==tabCount,
                                           discardFunction: (){
-                                            showDailogPopUp(
-                                                context,
-                                                LogoutPopup(
-                                                  message: "Do you want to delete the order?",
-                                                  onPressed: () {
-                                                    print("akshay");
-                                                    Navigator.pop(context);
-                                                    context
-                                                        .read<
-                                                        SalesreturngeneraldeleteCubit>()
-                                                        .salesreturnGeneralDelete(
-                                                        veritiaclid);
-                                                  },
-                                                ));
+
 
                                           },
                                           saveFunction: (){
-                                            print("updateCheck" +
-                                                remarksController.text.toString());
-                                            if (updateCheck)
-                                              context.showSnackBarError(
-                                                  "please click the update button ");
-                                            else {
-                                              SalesReturnGeneralPostModel model = SalesReturnGeneralPostModel(
-                                                  orderType: orderTypeController?.text ?? "",
-                                                  orderMode: orderModeController?.text ?? "",
-                                                  inventoryid:Variable.inventory_ID,
-                                                  customerId: cstomerIdController?.text ?? "",
-                                                  trnNumber: trnController?.text ?? "",
-                                                  salesInvoiceId: salesInvoiceCodeController.text??"",
-                                                  shippingAddressId: shippingAddressIdController?.text ?? "",
-                                                  billingAddressId: billingAddressIdController?.text??"",
-                                                  reason: reasonController?.text ?? "",
-                                                  remarks: remarksController?.text ?? "",
-                                                  discount: double.tryParse(discountController?.text ?? ""),
-                                                  unitCost: double.tryParse(unitCostController?.text ?? ""),
-                                                  excessTax: double.tryParse(exciseTAxController?.text ?? ""),
-                                                  taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
-                                                  vat: double.tryParse(vatController?.text ?? ""),
-                                                  sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
-                                                  totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
-                                                  createdBy: Variable.created_by,
-                                                  editedBy: Variable.created_by,
-                                                  orderLines: table);
-                                              print("modelllls" + model.toString());
-                                              select
-                                                  ? context
-                                                  .read<SalesreturnpostCubit>()
-                                                  .postSalesReturnGeneral(model)
-                                                  :  context
-                                                  .read<SalesreturngeneralpatchCubit>().postSalesRequestGeneralPatch(veritiaclid,model);
-                                            }
 
+                                            saveUpdateFunction();
                                           },
                                           label:select ? "Save" : "update" ,
                                         ),
@@ -804,6 +766,59 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
           }
       ),
     );
+  }
+  discardClearFunc(){
+    showDailogPopUp(
+        context,
+        LogoutPopup(
+          message: "Do you want to delete the order?",
+          onPressed: () {
+            print("akshay");
+            Navigator.pop(context);
+            context
+                .read<
+                SalesreturngeneraldeleteCubit>()
+                .salesreturnGeneralDelete(
+                veritiaclid);
+          },
+        ));
+  }
+  saveUpdateFunction(){
+    print("updateCheck" +
+        remarksController.text.toString());
+    if (updateCheck)
+      context.showSnackBarError(
+          "please click the update button ");
+    else {
+      SalesReturnGeneralPostModel model = SalesReturnGeneralPostModel(
+          orderType: orderTypeController?.text ?? "",
+          orderMode: orderModeController?.text ?? "",
+          inventoryid:Variable.inventory_ID,
+          customerId: cstomerIdController?.text ?? "",
+          trnNumber: trnController?.text ?? "",
+          salesInvoiceId: salesInvoiceCodeController.text??"",
+          shippingAddressId: shippingAddressIdController?.text ?? "",
+          billingAddressId: billingAddressIdController?.text??"",
+          reason: reasonController?.text ?? "",
+          remarks: remarksController?.text ?? "",
+          discount: double.tryParse(discountController?.text ?? ""),
+          unitCost: double.tryParse(unitCostController?.text ?? ""),
+          excessTax: double.tryParse(exciseTAxController?.text ?? ""),
+          taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
+          vat: double.tryParse(vatController?.text ?? ""),
+          sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
+          totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
+          createdBy: Variable.created_by,
+          editedBy: Variable.created_by,
+          orderLines: table);
+      print("modelllls" + model.toString());
+      select
+          ? context
+          .read<SalesreturnpostCubit>()
+          .postSalesReturnGeneral(model)
+          :  context
+          .read<SalesreturngeneralpatchCubit>().postSalesRequestGeneralPatch(veritiaclid,model);
+    }
   }
 }
 

@@ -149,6 +149,7 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
      else{
         // Adjust the selected row based on the arrow key direction
         selctedraw = (selctedraw + direction).clamp(0, table1.length - 1);
+        if(selctedraw!=-1)
         FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
       }
 

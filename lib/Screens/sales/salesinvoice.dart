@@ -69,6 +69,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
   TextEditingController inventoryId=TextEditingController();
   NavigationProvider commonProvider = NavigationProvider();
   FocusNode salesInvoiceMainFocusnode=FocusNode();
+  FocusNode salesButtonFocusNode=FocusNode();
   int? veritiaclid=0;
   InvoicedData? object=InvoicedData();
   bool updateCheck=false;
@@ -123,15 +124,21 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
 
     });
   }
+  Map keyEventFuctionCount={
+    "save":2,
+
+    "table":1
+
+  };
   rowKeyPressEvent(RawKeyEvent event){
     // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
-    int limit=1;
+    int limit=2;
     int startLimit=1;
 
     if (event is RawKeyDownEvent) {
 
-      if(event.logicalKey==LogicalKeyboardKey.keyA){
-        print("tabPressd");
+      if(event.logicalKey==LogicalKeyboardKey.tab){
+
 
         FocusScope.of(context).requestFocus(salesInvoiceMainFocusnode);
         if(isCountOrdecre==false){
@@ -154,9 +161,12 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
 
 
 
+
         }
+        print("tabPressd$tabCount");
 
-
+        if(tabCount==2)
+          FocusScope.of(context).requestFocus(salesButtonFocusNode);
 
         // tabCount= tabCount== limit?--tabCount:++tabCount;
         setState(() {
@@ -207,17 +217,18 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
           // Handle arrow up key press
           // _changeSelectedRow(-1);
           }}
-        // else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
-        //   switch (tabCount) {
-        //     case 1:
-        //       verticalOntapFunc(selectedVertical);
-        //       break;
-        //
-        //   }
-        //
-        //
-        //
-        // }
+        else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+          print("tabPressd22$tabCount");
+          switch (tabCount) {
+            case 2:
+              invoicePostFunction();
+              break;
+
+          }
+
+
+
+        }
 
 
 
@@ -305,9 +316,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
         BlocProvider(
           create: (context) => InvoicereadCubit(),
         ),
-        BlocProvider(
-          create: (context) => InvoicepostCubit(),
-        ),
+
+
       ],
       child: MultiBlocListener(
         listeners: [
@@ -742,64 +752,13 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                     ),
                                     SizedBox(height: height*.04,),
                                     SaveUpdateResponsiveButton(
+                                      focusNode: salesButtonFocusNode,
                                       isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
                                       isDelete: true,
+                                      isKeyFuctionRight: keyEventFuctionCount["save"]==tabCount,
                                       label:"SAVE" ,
                                       saveFunction: (){
-                                        if (updateCheck)
-                                          context.showSnackBarError(
-                                              "please click the update button ");
-                                        else {
-                                          commonProvider.setLoadingSaveUpdate(true);
-                                          List<Postlines>  table1=[];
-                                          if(table.isNotEmpty){
-                                            for(var i=0;i<table.length;i++)
-                                                table1.add(Postlines(
-                                                  isInvoiced: table[i].isInvoiced??false,
-                                                  quantity: table[i].quantity ,
-                                                  isActive: table[i].isActive??false,
-                                                  totalPrice: table[i].totalPrice,
-                                                  warrentyPrice: table[i].warrentyPrice,
-                                                  sellingPrice: table[i].sellingPrice,
-                                                  vat: table[i].vat,
-                                                  taxableAmoubt: table[i].taxableAmount,
-                                                  unitCost: table[i].unitCost,
-                                                  excessTax: table[i].excessTax,
-                                                  discount: table[i].discount,
-                                                  salesOrderLineCode: table[i].salesOrderLineCode,
-                                                ));
-
-
-                                          }
-                                          else{
-                                            table1=[];
-                                          }
-                                          SalesReturnInvoicePostModel model = SalesReturnInvoicePostModel(
-                                              salesOrderId: veritiaclid,
-                                              inventoryId: inventoryId?.text??"",
-                                              invoicedBy: Variable.created_by,
-                                              notes: noteController?.text??'',
-                                              remarks: remarksController?.text??"",
-                                              assignedTo: assignToController?.text??"",
-                                              discount:double.tryParse( discountController?.text??""),
-                                              unitCost:double.tryParse( unitCostController?.text??""),
-                                              excessTax:double.tryParse( exciseTaxController?.text??""),
-                                              taxableAmount:double.tryParse( taxableController?.text??""),
-                                              vat:double.tryParse( vatController?.text??""),
-                                              sellingPriceTotal:double.tryParse( sellingPriceController?.text??""),
-                                              totalPrice:double.tryParse( totalPricePriceController?.text??""),
-
-
-                                              ivoiceLines:
-                                              table1??[]
-                                          );
-                                          print("modelllls" + model.toString());
-
-                                          context
-                                              .read<InvoicepostCubit>()
-                                              .postSalesInvoice(model);
-
-                                        }
+                                        invoicePostFunction();
                                       },
                                       discardFunction: (){
 
@@ -914,6 +873,62 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
         ),
       ),
     );
+  }
+  invoicePostFunction(){
+    if (updateCheck)
+      context.showSnackBarError(
+          "please click the update button ");
+    else {
+      commonProvider.setLoadingSaveUpdate(true);
+      List<Postlines>  table1=[];
+      if(table.isNotEmpty){
+        for(var i=0;i<table.length;i++)
+          table1.add(Postlines(
+            isInvoiced: table[i].isInvoiced??false,
+            quantity: table[i].quantity ,
+            isActive: table[i].isActive??false,
+            totalPrice: table[i].totalPrice,
+            warrentyPrice: table[i].warrentyPrice,
+            sellingPrice: table[i].sellingPrice,
+            vat: table[i].vat,
+            taxableAmoubt: table[i].taxableAmount,
+            unitCost: table[i].unitCost,
+            excessTax: table[i].excessTax,
+            discount: table[i].discount,
+            salesOrderLineCode: table[i].salesOrderLineCode,
+          ));
+
+
+      }
+      else{
+        table1=[];
+      }
+      SalesReturnInvoicePostModel model = SalesReturnInvoicePostModel(
+          salesOrderId: veritiaclid,
+          inventoryId: inventoryId?.text??"",
+          invoicedBy: Variable.created_by,
+          notes: noteController?.text??'',
+          remarks: remarksController?.text??"",
+          assignedTo: assignToController?.text??"",
+          discount:double.tryParse( discountController?.text??""),
+          unitCost:double.tryParse( unitCostController?.text??""),
+          excessTax:double.tryParse( exciseTaxController?.text??""),
+          taxableAmount:double.tryParse( taxableController?.text??""),
+          vat:double.tryParse( vatController?.text??""),
+          sellingPriceTotal:double.tryParse( sellingPriceController?.text??""),
+          totalPrice:double.tryParse( totalPricePriceController?.text??""),
+
+
+          ivoiceLines:
+          table1??[]
+      );
+      print("modelllls" + model.toString());
+
+      context
+          .read<InvoicepostCubit>()
+          .postSalesInvoice(model);
+
+    }
   }
 }
 

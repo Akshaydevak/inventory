@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
@@ -12,6 +13,7 @@ import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
+import 'package:inventory/core/uttils/keyEvent.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
@@ -72,6 +74,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   var unitcostReceivingListControllers = <TextEditingController>[];
   var expirydateControllerList = <TextEditingController>[];
   var expirydateControllerList2 = <TextEditingController>[];
+  FocusNode requestFormReceiveFocusNode=FocusNode();
+  FocusNode saveUpadtebuttonFocusnOde=FocusNode();
   late AutoScrollController recieveController;
   late AutoScrollController additionalController;
   List<FocusNode>focusNodeList=List.generate(10, (index) => FocusNode());
@@ -85,6 +89,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   List<PurchaseOrder> result = [];
   List<RecievingLines> recievingLisnes = [];
   List<RecievingLines> additionalVariants = [];
+  List<List<FocusNode>> listOfxfocusNodes = [];
+  List<List<FocusNode>> receivefocusNodes = [];
   String? inventoryId = "";
   bool stockCheck = false;
   int? receivingId;
@@ -117,10 +123,14 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   double VatableValue = 0;
   double excessTax = 0;
   bool updateCheck = false;
+  int receiveSelctedraw=-1;
+  int selctedraw=-1;
   var paginatedList;
   double vatValue = 0;
   double actualValue = 0;
   double excessTAxValue = 0;
+  int tabCount=1;
+  bool isCountOrdecre=false;
   double vatableValue = 0;
   String vendorAddress = "";
   bool? vendorcheck = false;
@@ -163,13 +173,41 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
       discountClearController.clear();
     });
   }
+  void changeSelectedRow(int direction) {
+    setState(() {
+      receiveSelctedraw=-1;
 
+      // Adjust the selected row based on the arrow key direction
+      selctedraw = (selctedraw + direction).clamp(0, additionalVariants.length - 1);
+      if(selctedraw!=-1)
+        FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+  }
+  void changeSelectedRecieveRow(int direction) {
+    setState(() {
+      selctedraw=-1;
+
+      // Adjust the selected row based on the arrow key direction
+      receiveSelctedraw = (receiveSelctedraw + direction).clamp(0, recievingLisnes.length - 1);
+      if(receiveSelctedraw!=-1)
+        FocusScope.of(context).requestFocus(receivefocusNodes[receiveSelctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+  }
   valueAddingTextEdingController() {
+    unitcostAdditionalListControllers.clear();
+    listOfxfocusNodes.clear();
     if (additionalVariants.isNotEmpty) {
       for (var i = 0; i < additionalVariants.length; i++) {
         var unitcost = new TextEditingController(
             text: additionalVariants[i].unitCost.toString() ?? "");
         unitcostAdditionalListControllers.add(unitcost);
+        listOfxfocusNodes.add(List.generate(10, (index) => FocusNode()));
         setState(() {});
       }
     }
@@ -182,6 +220,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
         var unitcost = new TextEditingController(
             text: recievingLisnes[i].unitCost.toString() ?? "");
         unitcostReceivingListControllers.add(unitcost);
+        receivefocusNodes.add(List.generate(9, (index) => FocusNode()));
         setState(() {});
       }
     }
@@ -361,1169 +400,1192 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
     setState(() {});
   }
 
+  rowKeyEventResetFunc(){
+    tabCount=1;
+    isCountOrdecre=false;
+    enableKeyEvent=true;
+    setState(() {
+
+    });
+  }
+
+  rowKeyPressEvent(RawKeyEvent event){
+    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
+    int limit=6   ;
+    int startLimit=1;
+
+    if (event is RawKeyDownEvent) {
+
+      if(event.logicalKey==LogicalKeyboardKey.escape){
+        print("tabPressd$tabCount");
+
+        FocusScope.of(context).requestFocus(requestFormReceiveFocusNode);
+        if(isCountOrdecre==false){
+
+          if(tabCount!=limit){
+            tabCount=++tabCount;
+
+            if(tabCount==limit){
+              isCountOrdecre=true;
+            }
+
+          }
+        }
+        else{
+          if(tabCount!=startLimit){
+            tabCount=--tabCount;
+            if(tabCount==startLimit){
+              isCountOrdecre=false;}
+          }
+
+
+
+        }
+        print("tabPressd$tabCount");
+        // if(tabCount!=1){
+        //   FocusScope.of(context).requestFocus(saveUpadtebuttonFocusnOde);
+        // }
+
+
+        // tabCount= tabCount== limit?--tabCount:++tabCount;
+        setState(() {
+
+        });
+
+      }
+      // else  if(event.logicalKey==LogicalKeyboardKey.keyR){
+      //    remarksPopupCallFunc();
+      //
+      //  }
+      // else if(event.logicalKey==LogicalKeyboardKey.arrowLeft){
+      //   FocusNode? focusedNode = FocusScope.of(context).focusedChild;
+      //   if (focusedNode != null) {
+      //     print('Currently focused node: ${focusedNode}');
+      //   }
+      //
+      // }
+      else{
+
+        if (event.logicalKey == LogicalKeyboardKey.arrowDown ) {
+          switch (tabCount) {
+            case 3:
+            // FocusScope.of(context).requestFocus(inventoryFocusNode);
+            // selectedVertical=       _verticalWidgetState.currentState?.   changeSelectedRow(-1)??0;
+            // setState(() {
+            //
+            // });
+
+              changeSelectedRecieveRow(1);
+
+              break;
+            case 4:
+            // FocusScope.of(context).requestFocus(inventoryFocusNode);
+            // selectedVertical=       _verticalWidgetState.currentState?.   changeSelectedRow(-1)??0;
+            // setState(() {
+            //
+            // });
+
+              changeSelectedRow(1);
+              break;
+
+
+
+
+          // Handle arrow down key press
+          // _changeSelectedRow(1);
+          } }else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+          switch (tabCount) {
+            case 3:
+            // FocusScope.of(context).requestFocus(inventoryFocusNode);
+            // selectedVertical=       _verticalWidgetState.currentState?.   changeSelectedRow(-1)??0;
+            // setState(() {
+            //
+            // });
+
+              changeSelectedRecieveRow(-1);
+
+              break;
+            case 4:
+            // FocusScope.of(context).requestFocus(inventoryFocusNode);
+            // selectedVertical=       _verticalWidgetState.currentState?.   changeSelectedRow(-1)??0;
+            // setState(() {
+            //
+            // });
+
+              changeSelectedRow(-1);
+
+              break;
+
+          // case 2:
+          // // FocusScope.of(context).requestFocus(inventoryFocusNode);
+          // //    _stableWidgetState.currentState?.   changeSelectedRow(-1);
+          // // setState(() {
+          // //
+          // // });
+          // break;
+
+          }
+
+
+          // Handle arrow up key press
+          // _changeSelectedRow(-1);
+        }
+        else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+          switch (tabCount) {
+            case 1:
+            // verticalOntapFunc(selectedVertical);
+              break;
+            case 2:
+              receiveLinePreview();
+              break;
+            case 3:
+
+              break;
+            case 5:
+              generateFunction();
+              break;
+            case 6:
+              saveUpdateFunction();
+              break;
+
+          }
+
+
+
+        }
+
+
+
+
+
+
+      }
+      //invoice page keyPress Event
+
+
+      //
+
+
+
+
+
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) =>
-                InventorysearchCubit()..getInventorySearch("code", tab: "RF"),
-          ),
-          BlocProvider(
-            create: (context) => ReadrequestrecievingCubit(),
-          ),
-          BlocProvider(
-            create: (context) => PatchreceiveCubit(),
-          ),
-          BlocProvider(
-            create: (context) => GeneraterequestformCubit(),
-          ),
-        ],
-        child: Builder(builder: (context) {
-          return MultiBlocListener(
-            listeners: [
-              BlocListener<InventorysearchCubit, InventorysearchState>(
-                listener: (context, state) {
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        paginatedList = list;
-                        print("listtt" + list.toString());
-                        result = list.data;
-                        setState(() {
-                          if (result.isNotEmpty) {
-                            Variable.verticalid = result[0].id;
-                            veritiaclid = result[0].id;
-                            context
-                                .read<ReadrequestrecievingCubit>()
-                                .getRequestFormReceivingRead(veritiaclid!);
+    return RawKeyboardListener(
+      autofocus: false,
+      focusNode:requestFormReceiveFocusNode,
+      onKey: (RawKeyEvent event) {
 
+        if(enableKeyEvent==true){
+          rowKeyPressEvent(event);}else{
+
+          rowKeyEventResetFunc();
+        }
+
+
+
+
+
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  InventorysearchCubit()..getInventorySearch("code", tab: "RF"),
+            ),
+            BlocProvider(
+              create: (context) => ReadrequestrecievingCubit(),
+            ),
+
+
+          ],
+          child: Builder(builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+                BlocListener<InventorysearchCubit, InventorysearchState>(
+                  listener: (context, state) {
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (list) {
+                          paginatedList = list;
+                          print("listtt" + list.toString());
+                          result = list.data;
+                          setState(() {
+                            if (result.isNotEmpty) {
+                              Variable.verticalid = result[0].id;
+                              veritiaclid = result[0].id;
+                              context
+                                  .read<ReadrequestrecievingCubit>()
+                                  .getRequestFormReceivingRead(veritiaclid!);
+
+                              setState(() {});
+                            }
+                          });
+                        });
+                  },
+                ),
+                BlocListener<VendordetailsCubit, VendordetailsState>(
+                  listener: (context, state) {
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (data) {
+                          vendorDetails = data;
+                          setState(() {
+                            print("vendorDetails" + vendorDetails.toString());
+                            partnerOrganizationData =
+                                vendorDetails?.partnerOrganizationdata;
+                            // email=vendorDetails.partnerOrganizationdata[1].
+                          });
+                        });
+                  },
+                ),
+                BlocListener<ReadrequestrecievingCubit,
+                    ReadrequestrecievingState>(
+                  listener: (context, state) {
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (data) {
+                          setState(() {
+                            print("searching" + data.toString());
+                            stockCheck == false;
+
+                            data?.receivingLines != null
+                                ? recievingLisnes =
+                                    List.from(data?.receivingLines ?? [])
+                                : recievingLisnes = [];
+                            print("tablsssssssssssssssssse" +
+                                recievingLisnes.toString());
+                            valueAddingRecievingTextEdingController();
                             setState(() {});
-                          }
-                        });
-                      });
-                },
-              ),
-              BlocListener<VendordetailsCubit, VendordetailsState>(
-                listener: (context, state) {
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (data) {
-                        vendorDetails = data;
-                        setState(() {
-                          print("vendorDetails" + vendorDetails.toString());
-                          partnerOrganizationData =
-                              vendorDetails?.partnerOrganizationdata;
-                          // email=vendorDetails.partnerOrganizationdata[1].
-                        });
-                      });
-                },
-              ),
-              BlocListener<ReadrequestrecievingCubit,
-                  ReadrequestrecievingState>(
-                listener: (context, state) {
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (data) {
-                        setState(() {
-                          print("searching" + data.toString());
-                          stockCheck == false;
+                            for (var i = 0; i < recievingLisnes.length; i++) {
+                              var date = new TextEditingController(
+                                  text: recievingLisnes[i]?.expiryDate == null
+                                      ? ""
+                                      : DateFormat('dd-MM-yyyy').format(
+                                          DateTime.parse(
+                                              recievingLisnes[i]?.expiryDate ??
+                                                  "")));
+                              ;
+                              expirydateControllerList2.add(date);
+                              print("expirydate" +
+                                  expirydateControllerList2.toString());
+                              print("length of  recievingLines" +
+                                  recievingLisnes.length.toString());
+                            }
+                            print("Anvar");
 
-                          data?.receivingLines != null
-                              ? recievingLisnes =
-                                  List.from(data?.receivingLines ?? [])
-                              : recievingLisnes = [];
-                          print("tablsssssssssssssssssse" +
-                              recievingLisnes.toString());
-                          valueAddingRecievingTextEdingController();
-                          setState(() {});
-                          for (var i = 0; i < recievingLisnes.length; i++) {
-                            var date = new TextEditingController(
-                                text: recievingLisnes[i]?.expiryDate == null
+                            orderCodeController.text = data?.orderCode ?? "";
+                            receivingcodeController.text =
+                                data?.receivingCode ?? "";
+                            orderDateController = TextEditingController(
+                                text: data.orderCreatedDate == null
                                     ? ""
                                     : DateFormat('dd-MM-yyyy').format(
                                         DateTime.parse(
-                                            recievingLisnes[i]?.expiryDate ??
-                                                "")));
-                            ;
-                            expirydateControllerList2.add(date);
-                            print("expirydate" +
-                                expirydateControllerList2.toString());
-                            print("length of  recievingLines" +
-                                recievingLisnes.length.toString());
-                          }
-                          print("Anvar");
+                                            data?.orderCreatedDate ?? "")));
+                            orderstatusController.text = data?.orderStatus ?? "";
+                            paymentstatusController.text =
+                                data?.paymentStatus ?? "";
+                            invoiceStatusController.text =
+                                data?.invoiceStatus ?? "";
+                            discountController.text =
+                                data?.discount.toString() ?? "";
+                            focController.text = data?.foc.toString() ?? "";
+                            unitCostController.text =
+                                data?.unitCost.toString() ?? "";
+                            variableAmountController.text =
+                                data?.vatableAmount.toString() ?? "";
+                            excessTaxController.text =
+                                data?.excessTax.toString() ?? "";
+                            vatController.text = data.vat.toString() ?? "";
+                            actualCostController.text =
+                                data?.actualCost.toString() ?? "";
+                            grandtotalCostController.text =
+                                data?.grandTotal.toString() ?? "";
+                            noteController.text = data?.note.toString() ?? "";
+                            remarksController.text =
+                                data?.remarks.toString() ?? "";
 
-                          orderCodeController.text = data?.orderCode ?? "";
-                          receivingcodeController.text =
-                              data?.receivingCode ?? "";
-                          orderDateController = TextEditingController(
-                              text: data.orderCreatedDate == null
-                                  ? ""
-                                  : DateFormat('dd-MM-yyyy').format(
-                                      DateTime.parse(
-                                          data?.orderCreatedDate ?? "")));
-                          orderstatusController.text = data?.orderStatus ?? "";
-                          paymentstatusController.text =
-                              data?.paymentStatus ?? "";
-                          invoiceStatusController.text =
-                              data?.invoiceStatus ?? "";
-                          discountController.text =
-                              data?.discount.toString() ?? "";
-                          focController.text = data?.foc.toString() ?? "";
-                          unitCostController.text =
-                              data?.unitCost.toString() ?? "";
-                          variableAmountController.text =
-                              data?.vatableAmount.toString() ?? "";
-                          excessTaxController.text =
-                              data?.excessTax.toString() ?? "";
-                          vatController.text = data.vat.toString() ?? "";
-                          actualCostController.text =
-                              data?.actualCost.toString() ?? "";
-                          grandtotalCostController.text =
-                              data?.grandTotal.toString() ?? "";
-                          noteController.text = data?.note.toString() ?? "";
-                          remarksController.text =
-                              data?.remarks.toString() ?? "";
-
-                          receivingId = data.id;
-                          _getCurrentUser();
+                            receivingId = data.id;
+                            _getCurrentUser();
+                          });
                         });
-                      });
-                },
-              ),
-              BlocListener<TableDetailsCubitDartCubit,
-                  TableDetailsCubitDartState>(
-                listener: (context, state) {
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (data) {
-                        purchaseTable = data;
-                        print("purchasetable" + purchaseTable.toString());
-                        setState(() {
-                          if (Variable.tableedit == true) {
-                            print("additional case");
-                            additionalVariants[Variable.tableindex] =
-                                additionalVariants[Variable.tableindex]
-                                    .copyWith(
-                              variantName: purchaseTable?.name ?? "",
-                              unitCost: purchaseTable?.unitCost,
-                              vat: purchaseTable?.vat,
-                              purchaseUom: purchaseTable?.purchaseUomName ?? "",
-                              barcode: purchaseTable?.barCode?.barcodeNumber
-                                      .toString() ??
-                                  "",
-                            );
-                            unitcostAdditionalListControllers[
-                                    Variable.tableindex] =
-                                TextEditingController(
-                                    text: purchaseTable?.unitCost.toString());
-
-                            var qty = additionalVariants[Variable.tableindex]
-                                .requestedQty;
-
-                            var vat =
-                                additionalVariants[Variable.tableindex].vat;
-
-                            var foc =
-                                additionalVariants[Variable.tableindex].foc;
-                            var excess = additionalVariants[Variable.tableindex]
-                                .excessTax;
-
-                            var unitcost =
-                                additionalVariants[Variable.tableindex]
-                                    .unitCost;
-
-                            print("unitcost" + unitcost.toString());
-                            print("unitcost" + qty.toString());
-
-                            var Vdiscount =
-                                additionalVariants[Variable.tableindex]
-                                    .discount;
-
-                            if (qty == 0 || unitcost == 0) {
+                  },
+                ),
+                BlocListener<TableDetailsCubitDartCubit,
+                    TableDetailsCubitDartState>(
+                  listener: (context, state) {
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (data) {
+                          purchaseTable = data;
+                          print("purchasetable" + purchaseTable.toString());
+                          setState(() {
+                            if (Variable.tableedit == true) {
+                              print("additional case");
                               additionalVariants[Variable.tableindex] =
                                   additionalVariants[Variable.tableindex]
                                       .copyWith(
-                                          actualCost: 0,
-                                          grandTotal: 0,
-                                          vatableAmount: 0,
-                                          excessTax: excess);
+                                variantName: purchaseTable?.name ?? "",
+                                unitCost: purchaseTable?.unitCost,
+                                vat: purchaseTable?.vat,
+                                purchaseUom: purchaseTable?.purchaseUomName ?? "",
+                                barcode: purchaseTable?.barCode?.barcodeNumber
+                                        .toString() ??
+                                    "",
+                              );
+                              unitcostAdditionalListControllers[
+                                      Variable.tableindex] =
+                                  TextEditingController(
+                                      text: purchaseTable?.unitCost.toString());
 
-                              setState(() {});
-                            } else {
-                              print("enterd in eldse case");
+                              var qty = additionalVariants[Variable.tableindex]
+                                  .requestedQty;
 
-                              var Vamount;
+                              var vat =
+                                  additionalVariants[Variable.tableindex].vat;
 
-                              if (foc == 0 || foc == "") {
-                                print("enterd in foc case");
+                              var foc =
+                                  additionalVariants[Variable.tableindex].foc;
+                              var excess = additionalVariants[Variable.tableindex]
+                                  .excessTax;
 
-                                Vamount = vatableAmountUpdation(
-                                    unitcost, qty, excess, Vdiscount);
-                                print("vamount$Vamount");
-                              } else {
-                                print("enterd in no foc case");
-
-                                Vamount = vatableAmountFocUpdation(
-                                    unitcost, qty, excess, Vdiscount, foc);
-                                print(Vamount);
-                              }
-                              print("vat$vat");
-
-                              var vactualCost =
-                                  actualAndgrandTotalUpdation(Vamount, vat);
-                              print("vatableAmount$Vamount");
-                              print("vatableAmount$vactualCost");
-                              print("vatableAmount${Variable.tableindex}");
-
-                              additionalVariants[Variable.tableindex] =
+                              var unitcost =
                                   additionalVariants[Variable.tableindex]
-                                      .copyWith(
-                                          actualCost: vactualCost,
-                                          grandTotal: vactualCost,
-                                          vatableAmount: Vamount,
-                                          excessTax: excess);
+                                      .unitCost;
 
+                              print("unitcost" + unitcost.toString());
+                              print("unitcost" + qty.toString());
+
+                              var Vdiscount =
+                                  additionalVariants[Variable.tableindex]
+                                      .discount;
+
+                              if (qty == 0 || unitcost == 0) {
+                                additionalVariants[Variable.tableindex] =
+                                    additionalVariants[Variable.tableindex]
+                                        .copyWith(
+                                            actualCost: 0,
+                                            grandTotal: 0,
+                                            vatableAmount: 0,
+                                            excessTax: excess);
+
+                                setState(() {});
+                              } else {
+                                print("enterd in eldse case");
+
+                                var Vamount;
+
+                                if (foc == 0 || foc == "") {
+                                  print("enterd in foc case");
+
+                                  Vamount = vatableAmountUpdation(
+                                      unitcost, qty, excess, Vdiscount);
+                                  print("vamount$Vamount");
+                                } else {
+                                  print("enterd in no foc case");
+
+                                  Vamount = vatableAmountFocUpdation(
+                                      unitcost, qty, excess, Vdiscount, foc);
+                                  print(Vamount);
+                                }
+                                print("vat$vat");
+
+                                var vactualCost =
+                                    actualAndgrandTotalUpdation(Vamount, vat);
+                                print("vatableAmount$Vamount");
+                                print("vatableAmount$vactualCost");
+                                print("vatableAmount${Variable.tableindex}");
+
+                                additionalVariants[Variable.tableindex] =
+                                    additionalVariants[Variable.tableindex]
+                                        .copyWith(
+                                            actualCost: vactualCost,
+                                            grandTotal: vactualCost,
+                                            vatableAmount: Vamount,
+                                            excessTax: excess);
+
+                                setState(() {});
+                              }
                               setState(() {});
-                            }
-                            setState(() {});
-                          } else if (variantIdcheck == true) {
-                            recievingLisnes[Variable.tableindex] =
-                                recievingLisnes[Variable.tableindex].copyWith(
-                              variantName: purchaseTable?.name ?? "",
-                              unitCost: purchaseTable?.unitCost,
-                              vat: purchaseTable?.vat,
-                              purchaseUom: purchaseTable?.purchaseUomName ?? "",
-                              barcode: purchaseTable?.barCode?.barcodeNumber
+                            } else if (variantIdcheck == true) {
+                              recievingLisnes[Variable.tableindex] =
+                                  recievingLisnes[Variable.tableindex].copyWith(
+                                variantName: purchaseTable?.name ?? "",
+                                unitCost: purchaseTable?.unitCost,
+                                vat: purchaseTable?.vat,
+                                purchaseUom: purchaseTable?.purchaseUomName ?? "",
+                                barcode: purchaseTable?.barCode?.barcodeNumber
+                                        .toString() ??
+                                    "",
+                              );
+                              unitcostReceivingListControllers[
+                                      Variable.tableindex] =
+                                  TextEditingController(
+                                      text: purchaseTable?.unitCost.toString());
+
+                              var qty = recievingLisnes[Variable.tableindex]
+                                  .requestedQty;
+
+                              var vat = recievingLisnes[Variable.tableindex].vat;
+
+                              var foc = recievingLisnes[Variable.tableindex].foc;
+
+                              var unitcost =
+                                  recievingLisnes[Variable.tableindex].unitCost;
+
+                              var Vdiscount =
+                                  recievingLisnes[Variable.tableindex].discount;
+                              var excess =
+                                  recievingLisnes[Variable.tableindex].excessTax;
+
+                              if (qty == 0 || unitcost == 0) {
+                                recievingLisnes[Variable.tableindex] =
+                                    recievingLisnes[Variable.tableindex].copyWith(
+                                  actualCost: 0,
+                                  grandTotal: 0,
+                                  vatableAmount: 0,
+                                );
+
+                                setState(() {});
+                              } else {
+                                var Vamount;
+
+                                if (foc == 0 || foc == "") {
+                                  Vamount = vatableAmountUpdation(
+                                      unitcost, qty, excess, Vdiscount);
+
+                                  // (((unitcost! *
+
+                                  //     qty!) +
+
+                                  //     excess!) -
+
+                                  //     Vdiscount!)
+
+                                  //     .toDouble();
+                                } else {
+                                  Vamount = vatableAmountFocUpdation(
+                                      unitcost, qty, excess, Vdiscount, foc);
+
+                                  // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
+                                }
+
+                                var vactualCost =
+                                    actualAndgrandTotalUpdation(Vamount, vat);
+
+                                // (Vamount! +
+
+                                //     ((Vamount! *
+
+                                //         vat!) /
+
+                                //         100));
+
+                                var Vgrnadtotal =
+                                    actualAndgrandTotalUpdation(Vamount, vat);
+
+                                // (Vamount! +
+
+                                //     ((Vamount! *
+
+                                //         vat!) /
+
+                                //         100));
+
+                                recievingLisnes[Variable.tableindex] =
+                                    recievingLisnes[Variable.tableindex].copyWith(
+                                  actualCost: vactualCost,
+                                  grandTotal: Vgrnadtotal,
+                                  vatableAmount: Vamount,
+                                );
+
+                                setState(() {});
+                              }
+                              setState(() {});
+                            } else {
+                              varinatname = purchaseTable?.name ?? "";
+                              unitcost = purchaseTable?.unitCost;
+                              vat1 = purchaseTable?.vat;
+                              unitCostCheck.text =
+                                  purchaseTable?.unitCost.toString() ?? "";
+                              // supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
+                              print(supplierRefCode);
+                              print("unitttt" + unitcost.toString());
+                              // unitcost1.text=purchaseTable?.unitCost.toString()??"";
+                              // // vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
+                              // print(
+                              //     "vm.totalUnitcost" + vm.totalUnitcost.toString());
+                              //
+                              purchaseUomName =
+                                  purchaseTable?.purchaseUomName ?? "";
+                              vrefcod = purchaseTable?.code ?? "";
+                              // vid = purchaseTable?.id;
+                              // purchaseTable?.excessTax != null
+                              //     ? eTax = purchasef?.excessTax
+                              //     : eTax = 0;
+                              //
+                              barcode = purchaseTable?.barCode?.barcodeNumber
                                       .toString() ??
-                                  "",
-                            );
-                            unitcostReceivingListControllers[
-                                    Variable.tableindex] =
-                                TextEditingController(
-                                    text: purchaseTable?.unitCost.toString());
+                                  "";
 
-                            var qty = recievingLisnes[Variable.tableindex]
-                                .requestedQty;
+                              if (unitcost == 0 || recievedQty == 0) {
+                                actualCost1 = 0;
 
-                            var vat = recievingLisnes[Variable.tableindex].vat;
+                                vatableAmount1 = 0;
 
-                            var foc = recievingLisnes[Variable.tableindex].foc;
-
-                            var unitcost =
-                                recievingLisnes[Variable.tableindex].unitCost;
-
-                            var Vdiscount =
-                                recievingLisnes[Variable.tableindex].discount;
-                            var excess =
-                                recievingLisnes[Variable.tableindex].excessTax;
-
-                            if (qty == 0 || unitcost == 0) {
-                              recievingLisnes[Variable.tableindex] =
-                                  recievingLisnes[Variable.tableindex].copyWith(
-                                actualCost: 0,
-                                grandTotal: 0,
-                                vatableAmount: 0,
-                              );
-
-                              setState(() {});
-                            } else {
-                              var Vamount;
-
-                              if (foc == 0 || foc == "") {
-                                Vamount = vatableAmountUpdation(
-                                    unitcost, qty, excess, Vdiscount);
-
-                                // (((unitcost! *
-
-                                //     qty!) +
-
-                                //     excess!) -
-
-                                //     Vdiscount!)
-
-                                //     .toDouble();
+                                grandTotal1 = 0;
                               } else {
-                                Vamount = vatableAmountFocUpdation(
-                                    unitcost, qty, excess, Vdiscount, foc);
+                                if (foc1 == 0 || foc1 == "") {
+                                  vatableAmountCalculation(
+                                      unitcost, recievedQty, excess1, discount);
 
-                                // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
-                              }
+                                  actualAndgrandTotal(vatableAmount1, vat1);
+                                } else {
+                                  vatableFocAmountCalculation(unitcost,
+                                      recievedQty, excess1, discount, foc1);
 
-                              var vactualCost =
-                                  actualAndgrandTotalUpdation(Vamount, vat);
-
-                              // (Vamount! +
-
-                              //     ((Vamount! *
-
-                              //         vat!) /
-
-                              //         100));
-
-                              var Vgrnadtotal =
-                                  actualAndgrandTotalUpdation(Vamount, vat);
-
-                              // (Vamount! +
-
-                              //     ((Vamount! *
-
-                              //         vat!) /
-
-                              //         100));
-
-                              recievingLisnes[Variable.tableindex] =
-                                  recievingLisnes[Variable.tableindex].copyWith(
-                                actualCost: vactualCost,
-                                grandTotal: Vgrnadtotal,
-                                vatableAmount: Vamount,
-                              );
-
-                              setState(() {});
-                            }
-                            setState(() {});
-                          } else {
-                            varinatname = purchaseTable?.name ?? "";
-                            unitcost = purchaseTable?.unitCost;
-                            vat1 = purchaseTable?.vat;
-                            unitCostCheck.text =
-                                purchaseTable?.unitCost.toString() ?? "";
-                            // supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
-                            print(supplierRefCode);
-                            print("unitttt" + unitcost.toString());
-                            // unitcost1.text=purchaseTable?.unitCost.toString()??"";
-                            // // vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
-                            // print(
-                            //     "vm.totalUnitcost" + vm.totalUnitcost.toString());
-                            //
-                            purchaseUomName =
-                                purchaseTable?.purchaseUomName ?? "";
-                            vrefcod = purchaseTable?.code ?? "";
-                            // vid = purchaseTable?.id;
-                            // purchaseTable?.excessTax != null
-                            //     ? eTax = purchasef?.excessTax
-                            //     : eTax = 0;
-                            //
-                            barcode = purchaseTable?.barCode?.barcodeNumber
-                                    .toString() ??
-                                "";
-
-                            if (unitcost == 0 || recievedQty == 0) {
-                              actualCost1 = 0;
-
-                              vatableAmount1 = 0;
-
-                              grandTotal1 = 0;
-                            } else {
-                              if (foc1 == 0 || foc1 == "") {
-                                vatableAmountCalculation(
-                                    unitcost, recievedQty, excess1, discount);
-
-                                actualAndgrandTotal(vatableAmount1, vat1);
-                              } else {
-                                vatableFocAmountCalculation(unitcost,
-                                    recievedQty, excess1, discount, foc1);
-
-                                actualAndgrandTotal(vatableAmount1, vat1);
+                                  actualAndgrandTotal(vatableAmount1, vat1);
+                                }
                               }
                             }
-                          }
 
-                          //
+                            //
+                          });
                         });
-                      });
-                },
-              ),
-              BlocListener<GeneraterequestformCubit, GeneraterequestformState>(
-                listener: (context, state) {
-                  print("postssssssss" + state.toString());
-                  state.maybeWhen(orElse: () {
-                    // context.
-                    context.showSnackBarError("Loading");
-                  }, error: () {
-                    setState(() {
-                      isGenarate=false;
-                    });
-                    context.showSnackBarError(Variable.errorMessege);
-                  }, success: (data) {
-                    if (data.data1) {
-                      context.showSnackBarSuccess(data.data2);
-                      context
-                          .read<InventorysearchCubit>()
-                          .getInventorySearch("code", tab: "RF");
-                      context
-                          .read<ReadrequestrecievingCubit>()
-                          .getRequestFormReceivingRead(veritiaclid!);
-                    } else {
-                      context.showSnackBarError(data.data2);
-                      print(data.data1);
-                    }
-                    setState(() {
-                      isGenarate=false;
-                    });
-                    ;
-                  });
-                },
-              ),
-              BlocListener<PurchaseStockCubit, PurchaseStockState>(
-                listener: (context, state) {
-                  print("state++++++++++++++++++++++++++++++++");
-
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        if (stockCheck == false) {
-
-                          currentStock.add(0);
-                          setState(() {});
-                        } else if (recievlinequantityCheck) {
-                          print("recievlinequantityCheck==true");
-                          currentStock[Variable.tableindex] = 0;
-                        } else {
-                          print("enterd in this..case ");
-                          if (Variable.tableedit == false) {
-                            print("Variable==false");
-                            print("findinf");
-                            stock = 0;
-                          } else if (Variable.tableedit == true) {
-                            print("Variable==true");
-                            additionalVariants[Variable.tableindex] =
-                                additionalVariants[Variable.tableindex]
-                                    .copyWith(currentStock: 0);
-                          }
-                        }
-                      },
-                      success: (data) {
-                        print("Akshayaaaaa" + data.toString());
-                        purchaseCurrentStock = data;
-                        var stockQty = purchaseCurrentStock?.StockQty;
-                        print("stockqty" + stockQty.toString());
-                        print("stockCheck" + stockCheck.toString());
-                        if (stockCheck == false) {
-                          print("Stockcheck==false");
-                          currentStock.add(stockQty ?? 0);
-                          setState(() {});
-                        } else if (recievlinequantityCheck) {
-                          print("recievlinequantityCheck==true");
-                          currentStock[Variable.tableindex] = stockQty;
-                        } else {
-                          print("enterd in this..case ");
-                          if (Variable.tableedit == false) {
-                            print("Variable==false");
-                            print("findinf");
-                            stock = stockQty;
-                            setState(() {});
-                          } else if (Variable.tableedit == true) {
-                            print("Variable==true");
-                            additionalVariants[Variable.tableindex] =
-                                additionalVariants[Variable.tableindex]
-                                    .copyWith(
-                                        currentStock:
-                                            purchaseCurrentStock?.StockQty);
-                          }
-                        }
-                      });
-                },
-              ),
-              BlocListener<PatchreceiveCubit, PatchreceiveState>(
-                listener: (context, state) {
-                  state.maybeWhen(orElse: () {
-                    // context.
-                    context.showSnackBarError("Loading");
-                  }, error: () {
-                    setState(() {
-                      isSave=false;
-                    });
-                    context.showSnackBarError(Variable.errorMessege);
-                  }, success: (data) {
-                    if (data.data1){
-                      clear();
-                      context.read<InventorysearchCubit>().getInventorySearch("code", tab: "RF");
-
-                      context.showSnackBarSuccess(data.data2);
-                    }
-
-                    else {
-                      context.showSnackBarError(data.data2);
-                      print(data.data1);
-                    }
-                    setState(() {
-                      isSave=false;
-                    });
-                    ;
-                  });
-                },
-              )
-            ],
-            child: IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  VerticalList(
-                    tab: "RF",
-                    selectedVertical: selectedVertical,
-                    itemsearch: itemsearch,
-                    ontap: (int index) {
+                  },
+                ),
+                BlocListener<GeneraterequestformCubit, GeneraterequestformState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
                       setState(() {
-                        print("taped");
-
-                        select = false;
-
-                        selectedVertical = index;
-
-                        stockCheck = false;
-
-                        clear();
-                        controllerClear();
-
-                        variantIdcheck = false;
-
-                        recievlinequantityCheck = false;
-
-                        updateCheck = false;
-
-                        veritiaclid = result[index].id;
-
+                        isGenarate=false;
+                      });
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        context
+                            .read<InventorysearchCubit>()
+                            .getInventorySearch("code", tab: "RF");
                         context
                             .read<ReadrequestrecievingCubit>()
                             .getRequestFormReceivingRead(veritiaclid!);
+                      } else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      setState(() {
+                        isGenarate=false;
                       });
-                    },
-                    result: result,
-                    child: tablePagination(
-                      () => context.read<InventorysearchCubit>().refresh(),
-                      back: paginatedList?.previousUrl == null
-                          ? null
-                          : () {
-                              context
-                                  .read<InventorysearchCubit>()
-                                  .previuosslotSectionPageList();
-                            },
-                      next: paginatedList?.nextPageUrl == null
-                          ? null
-                          : () {
-                              // print(data.nextPageUrl);
+                      ;
+                    });
+                  },
+                ),
+                BlocListener<PurchaseStockCubit, PurchaseStockState>(
+                  listener: (context, state) {
+                    print("state++++++++++++++++++++++++++++++++");
 
-                              context
-                                  .read<InventorysearchCubit>()
-                                  .nextslotSectionPageList("");
-                            },
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          if (stockCheck == false) {
+
+                            currentStock.add(0);
+                            setState(() {});
+                          } else if (recievlinequantityCheck) {
+                            print("recievlinequantityCheck==true");
+                            currentStock[Variable.tableindex] = 0;
+                          } else {
+                            print("enterd in this..case ");
+                            if (Variable.tableedit == false) {
+                              print("Variable==false");
+                              print("findinf");
+                              stock = 0;
+                            } else if (Variable.tableedit == true) {
+                              print("Variable==true");
+                              additionalVariants[Variable.tableindex] =
+                                  additionalVariants[Variable.tableindex]
+                                      .copyWith(currentStock: 0);
+                            }
+                          }
+                        },
+                        success: (data) {
+                          print("Akshayaaaaa" + data.toString());
+                          purchaseCurrentStock = data;
+                          var stockQty = purchaseCurrentStock?.StockQty;
+                          print("stockqty" + stockQty.toString());
+                          print("stockCheck" + stockCheck.toString());
+                          if (stockCheck == false) {
+                            print("Stockcheck==false");
+                            currentStock.add(stockQty ?? 0);
+                            setState(() {});
+                          } else if (recievlinequantityCheck) {
+                            print("recievlinequantityCheck==true");
+                            currentStock[Variable.tableindex] = stockQty;
+                          } else {
+                            print("enterd in this..case ");
+                            if (Variable.tableedit == false) {
+                              print("Variable==false");
+                              print("findinf");
+                              stock = stockQty;
+                              setState(() {});
+                            } else if (Variable.tableedit == true) {
+                              print("Variable==true");
+                              additionalVariants[Variable.tableindex] =
+                                  additionalVariants[Variable.tableindex]
+                                      .copyWith(
+                                          currentStock:
+                                              purchaseCurrentStock?.StockQty);
+                            }
+                          }
+                        });
+                  },
+                ),
+                BlocListener<PatchreceiveCubit, PatchreceiveState>(
+                  listener: (context, state) {
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      setState(() {
+                        isSave=false;
+                      });
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1){
+                        clear();
+                        context.read<InventorysearchCubit>().getInventorySearch("code", tab: "RF");
+
+                        context.showSnackBarSuccess(data.data2);
+                      }
+
+                      else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      setState(() {
+                        isSave=false;
+                      });
+                      ;
+                    });
+                  },
+                )
+              ],
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    VerticalList(
+                      tab: "RF",
+                      selectedVertical: selectedVertical,
+                      itemsearch: itemsearch,
+                      ontap: (int index) {
+                        setState(() {
+                          print("taped");
+
+                          select = false;
+
+                          selectedVertical = index;
+
+                          stockCheck = false;
+
+                          clear();
+                          controllerClear();
+
+                          variantIdcheck = false;
+                          listOfxfocusNodes.clear();
+                          recievingLisnes.clear();
+                          recievlinequantityCheck = false;
+
+                          updateCheck = false;
+
+                          veritiaclid = result[index].id;
+
+                          context
+                              .read<ReadrequestrecievingCubit>()
+                              .getRequestFormReceivingRead(veritiaclid!);
+                        });
+                      },
+                      result: result,
+                      child: tablePagination(
+                        () => context.read<InventorysearchCubit>().refresh(),
+                        back: paginatedList?.previousUrl == null
+                            ? null
+                            : () {
+                                context
+                                    .read<InventorysearchCubit>()
+                                    .previuosslotSectionPageList();
+                              },
+                        next: paginatedList?.nextPageUrl == null
+                            ? null
+                            : () {
+                                // print(data.nextPageUrl);
+
+                                context
+                                    .read<InventorysearchCubit>()
+                                    .nextslotSectionPageList("");
+                              },
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButtonLarge(
+                                    text: "PREVIEW",
+                                    onPress: () async {
+                                      print("Akshay");
+                                      InventoryListModel model=InventoryListModel();
+                                      UserPreferences userPref = UserPreferences();
+                                      await userPref.getInventoryList().then((user) {
+                                        print("entereeeeeeeeeeeeeeeeeeed");
+                                        print(user.name);
+                                        if (user.isInventoryExist == true) {
+                                          model=user;
+                                          print("existing");
+                                          print(model.email);
+                                          // prefs.setString('token', user?.token ?? "");
+                                        } else {
+                                        }
+                                      });
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PrintScreen(
+                                                  table: recievingLisnes,
+                                                  vendorCode: "Not",
+
+                                                  note: noteController.text,
+
+                                                  // select: select,
+
+                                                  // vendorCode:vendorCode.text,
+
+                                                  orderCode:
+                                                      orderCodeController.text,
+
+                                                  orderDate:
+                                                      orderDateController.text,
+
+                                                  // table:table,
+
+                                                  vat: double.tryParse(
+                                                      vatController.text),
+
+                                                  actualCost: double.tryParse(
+                                                      actualCostController.text),
+
+                                                  variableAmount: double.tryParse(
+                                                      variableAmountController
+                                                          .text),
+
+                                                  discount: double.tryParse(
+                                                      discountController.text),
+
+                                                  unitCost: double.tryParse(
+                                                      unitCostController.text),
+
+                                                  excisetax: double.tryParse(
+                                                      excessTaxController.text),
+
+                                                  remarks: remarksController.text,
+                                                  model: model,
+                                                  pageName: "REQUEST FORM RECEIVING",
+                                                )),
+                                      );
+                                    },
+                                  ),
+                                ]),
+
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Expanded(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: orderCodeController,
+                                        title: "Order Code"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: receivingcodeController,
+                                        title: "Receiving Code"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: orderDateController,
+                                        title: "Ordered Date"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: orderstatusController,
+                                        title: "Ordered Status"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: paymentstatusController,
+                                        title: "Payment Status"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: invoiceStatusController,
+                                        title: "Invoice Status"),
+                                    SizedBox(
+                                      height: height * .040,
+                                    ),
+                                  ],
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: discountController,
+                                        title: "Discount"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: focController,
+                                        title: "FOC"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: unitCostController,
+                                        title: "Unit cost"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: variableAmountController,
+                                        title: "Vatable Amount"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: excessTaxController,
+                                        title: "Excess Tax"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: vatController,
+                                        title: "VAT"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                  ],
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: actualCostController,
+                                        title: "Actual Cost"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: grandtotalCostController,
+                                        title: "Grand Total"),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                      controller: noteController,
+                                      title: "Note",
+                                      height: 90,
+                                      maxLines: 3,
+                                    ),
+                                    SizedBox(
+                                      height: height * .030,
+                                    ),
+                                    NewInputCard(
+                                      controller: remarksController,
+                                      title: "Remarks",
+                                      height: 90,
+                                      maxLines: 3,
+                                    ),
+                                    SizedBox(
+                                      height: height * .075,
+                                    ),
+                                    SizedBox(
+                                      height: height * .072,
+                                    ),
+                                  ],
+                                )),
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: 34,
+                            ),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.only(top: height * .026),
+                                    child: TextWidget(text: "Receiving Lines")),
+
+                                SizedBox(
+                                  width: 10,
+                                ),
+
+                                // TextButton.icon(onPressed: (){}, icon: Icon(Icons.visibility), label:Text( "Preview", style: TextStyle(
+
+                                //   // fontSize: 50,
+
+                                //   decoration: TextDecoration.underline, // <-- SEE HERE
+
+                                // ),),),
+
                                 TextButtonLarge(
                                   text: "PREVIEW",
+                                  clr: tabCount==2?Pellet.buttonActiveClr:Pellet.tableBlueHeaderPrint,
                                   onPress: () async {
-                                    print("Akshay");
-                                    InventoryListModel model=InventoryListModel();
-                                    UserPreferences userPref = UserPreferences();
-                                    await userPref.getInventoryList().then((user) {
-                                      print("entereeeeeeeeeeeeeeeeeeed");
-                                      print(user.name);
-                                      if (user.isInventoryExist == true) {
-                                        model=user;
-                                        print("existing");
-                                        print(model.email);
-                                        // prefs.setString('token', user?.token ?? "");
-                                      } else {
-                                      }
-                                    });
+                                    receiveLinePreview();
 
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PrintScreen(
-                                                table: recievingLisnes,
-                                                vendorCode: "Not",
-
-                                                note: noteController.text,
-
-                                                // select: select,
-
-                                                // vendorCode:vendorCode.text,
-
-                                                orderCode:
-                                                    orderCodeController.text,
-
-                                                orderDate:
-                                                    orderDateController.text,
-
-                                                // table:table,
-
-                                                vat: double.tryParse(
-                                                    vatController.text),
-
-                                                actualCost: double.tryParse(
-                                                    actualCostController.text),
-
-                                                variableAmount: double.tryParse(
-                                                    variableAmountController
-                                                        .text),
-
-                                                discount: double.tryParse(
-                                                    discountController.text),
-
-                                                unitCost: double.tryParse(
-                                                    unitCostController.text),
-
-                                                excisetax: double.tryParse(
-                                                    excessTaxController.text),
-
-                                                remarks: remarksController.text,
-                                                model: model,
-                                                pageName: "REQUEST FORM RECEIVING",
-                                              )),
-                                    );
                                   },
                                 ),
-                              ]),
-
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: orderCodeController,
-                                      title: "Order Code"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: receivingcodeController,
-                                      title: "Receiving Code"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: orderDateController,
-                                      title: "Ordered Date"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: orderstatusController,
-                                      title: "Ordered Status"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: paymentstatusController,
-                                      title: "Payment Status"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: invoiceStatusController,
-                                      title: "Invoice Status"),
-                                  SizedBox(
-                                    height: height * .040,
-                                  ),
-                                ],
-                              )),
-                              Expanded(
-                                  child: Column(
-                                children: [
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: discountController,
-                                      title: "Discount"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: focController,
-                                      title: "FOC"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: unitCostController,
-                                      title: "Unit cost"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: variableAmountController,
-                                      title: "Vatable Amount"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: excessTaxController,
-                                      title: "Excess Tax"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: vatController,
-                                      title: "VAT"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                ],
-                              )),
-                              Expanded(
-                                  child: Column(
-                                children: [
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: actualCostController,
-                                      title: "Actual Cost"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                      readOnly: true,
-                                      controller: grandtotalCostController,
-                                      title: "Grand Total"),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                    controller: noteController,
-                                    title: "Note",
-                                    height: 90,
-                                    maxLines: 3,
-                                  ),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  NewInputCard(
-                                    controller: remarksController,
-                                    title: "Remarks",
-                                    height: 90,
-                                    maxLines: 3,
-                                  ),
-                                  SizedBox(
-                                    height: height * .075,
-                                  ),
-                                  SizedBox(
-                                    height: height * .072,
-                                  ),
-                                ],
-                              )),
-                            ],
-                          ),
-
-                          SizedBox(
-                            height: 34,
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.only(top: height * .026),
-                                  child: TextWidget(text: "Receiving Lines")),
-
-                              SizedBox(
-                                width: 10,
-                              ),
-
-                              // TextButton.icon(onPressed: (){}, icon: Icon(Icons.visibility), label:Text( "Preview", style: TextStyle(
-
-                              //   // fontSize: 50,
-
-                              //   decoration: TextDecoration.underline, // <-- SEE HERE
-
-                              // ),),),
-
-                              TextButtonLarge(
-                                text: "PREVIEW",
-                                onPress: () async {
-                                  print("Akshay");
-
-                                  // List<RecievingLines> recievingLisnes1 = [];
-                                  //
-                                  // if (recievingLisnes.isNotEmpty) {
-                                  //   for (var i = 0;
-                                  //       i < recievingLisnes.length;
-                                  //       i++) {
-                                  //     if (recievingLisnes[i].isReceived ==
-                                  //         false) {
-                                  //       recievingLisnes1
-                                  //           .add(recievingLisnes[i]);
-                                  //     }
-                                  //   }
-                                  // }
-                                  InventoryListModel model=InventoryListModel();
-                                  UserPreferences userPref = UserPreferences();
-                                  await userPref.getInventoryList().then((user) {
-                                    print("entereeeeeeeeeeeeeeeeeeed");
-                                    print(user.name);
-                                    if (user.isInventoryExist == true) {
-                                      model=user;
-                                      print("existing");
-                                      print(model.email);
-                                      // prefs.setString('token', user?.token ?? "");
-                                    } else {
-                                    }
-                                  });
-                                  var recieveingList1=[];
-                                  double unitCostRecievde=0;
-                                  double vatRecievde=0;
-                                  double actualCostRecievde=0;
-                                  double variableAmountRecievde=0;
-                                  double discAmountRecievde=0;
-                                  double excessRecievde=0;
-                                  double focRecievde=0;
-                                  if(recievingLisnes.isNotEmpty) {
-                                    for (var i = 0; i <
-                                        recievingLisnes.length; i++) {
-                                      if (recievingLisnes[i].isReceived!=true) {
-                                        recieveingList1.add(recievingLisnes[i]);
-                                        var unicosts = recievingLisnes[i]
-                                            .unitCost ?? 0;
-                                        var vatValue1 = recievingLisnes[i]
-                                            .vat ?? 0;
-
-                                        var actualValue1 = recievingLisnes[i]
-                                            .actualCost ?? 0;
-                                        var discountValue1 = recievingLisnes[i]
-                                            .discount ?? 0;
-                                        var focValue1 = recievingLisnes[i]
-                                            .foc ?? 0;
-                                        var VatableValue1 = recievingLisnes[i]
-                                            .vatableAmount ?? 0;
-                                        var excessTAxValue1 = recievingLisnes[i]
-                                            .excessTax ?? 0;
-
-                                        unitCostRecievde = unitCostRecievde + unicosts;
-
-                                        actualCostRecievde =
-                                            actualCostRecievde + actualValue1;
-                                        vatRecievde = vatRecievde + vatValue1;
-                                        discAmountRecievde =
-                                            discAmountRecievde + discountValue1;
-                                        focRecievde = focRecievde + focValue1;
-                                        variableAmountRecievde =
-                                            variableAmountRecievde +
-                                                VatableValue1;
-                                        print("excessTaxvalue" +
-                                            excessTAxValue.toString());
-                                        excessRecievde =
-                                            excessRecievde + excessTAxValue1;
-                                      }
-                                    }
-                                  }
-
-
-
-
-
-
-
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PrintScreen(
-                                              table: recieveingList1,
-                                              isReceived: true,
-                                              note: noteController.text,
-                                              vendorCode: "Not",
-                                              orderCode: orderCodeController.text,
-                                              orderDate: orderDateController.text,
-                                              vat: vatRecievde,
-                                              actualCost: actualCostRecievde,
-                                              variableAmount: variableAmountRecievde,
-                                              discount: discAmountRecievde,
-                                              unitCost: unitCostRecievde,
-                                              excisetax:excessRecievde,
-                                              remarks: remarksController.text,
-                                              model: model,
-                                              pageName: "REQUEST FORM RECEIVING",
-                                            )),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(
-                            height: height * .01,
-                          ),
-
-                          CustomScrollBar(
-                              controller: recieveController,
-                              childs: Container(
-                                color: Colors.white,
-                                alignment: Alignment.topRight,
-                                child: SingleChildScrollView(
-                                    controller: recieveController,
-                                    physics: ScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                            width: 2200,
-                                            child: customTable(
-
-
-                                              tableWidth: .5,
-
-                                              childrens: [
-                                                TableRow(
-
-                                                    children: [
-                                                      tableHeadtext(
-                                                        'Sl.No',
-                                                        size: 13,
-                                                      ),
-                                                      tableHeadtext(
-                                                        'Order line Id',
-                                                        size: 13,
-                                                      ),
-                                                      tableHeadtext(
-                                                        'Variant Id',
-                                                      ),
-                                                      tableHeadtext(
-                                                        'Variant Name',
-                                                        size: 13,
-                                                      ),
-                                                      // tableHeadtext('description', size: 10, color: null),
-
-                                                      tableHeadtext(
-                                                        'Barcode',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Current Qty',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Purchase UOM',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Vendor  Id',
-                                                        size: 13,
-                                                      ),
-                                                      tableHeadtext(
-                                                        'Received Qty',
-                                                        size: 13,
-                                                        // color: Palette.containerDarknew,
-                                                        // textColor: Palette.white
-                                                      ),
-                                                      tableHeadtext(
-                                                        'Is Received',
-                                                        size: 13
-                                                        // color: Palette.containerDarknew,
-                                                        // textColor: Palette.white
-                                                      ),
-                                                      tableHeadtext(
-                                                        'Unit Cost',
-                                                        size: 13,
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Excise Tax',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Discount',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'FOC',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Vatable Amount',
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'VAT',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Actual Cost',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Grand Total',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Is Invoiced',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Expiry Date',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Is Free',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Is Active',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        '',
-                                                        size: 13,
-                                                      ),
-
-                                                      // if (widget.onAddNew) textPadding(''),
-                                                    ]),
-                                                if (recievingLisnes
-                                                    .isEmpty) ...[
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: height * .01,
+                            ),
+
+                            CustomScrollBar(
+                                controller: recieveController,
+                                childs: Container(
+                                  color: Colors.white,
+                                  alignment: Alignment.topRight,
+                                  child: SingleChildScrollView(
+                                      controller: recieveController,
+                                      physics: ScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                              width: 2200,
+                                              child: customTable(
+
+
+                                                tableWidth: .5,
+
+                                                childrens: [
                                                   TableRow(
-                                                    decoration: BoxDecoration(
-                                                        color: Pellet
-                                                            .tableRowColor,
-                                                        shape: BoxShape
-                                                            .rectangle,
-                                                        border: Border(
-                                                            left: BorderSide(
-                                                                color: Color(0xff3E4F5B)
-                                                                    .withOpacity(
-                                                                        .1),
-                                                                width: .4,
-                                                                style: BorderStyle
-                                                                    .solid),
-                                                            bottom: BorderSide(
-                                                                color: Color(0xff3E4F5B)
-                                                                    .withOpacity(
-                                                                        .1),
-                                                                style: BorderStyle
-                                                                    .solid),
-                                                            right: BorderSide(
-                                                                color:
-                                                                    Color(0xff3E4F5B).withOpacity(.1),
-                                                                width: .4,
-                                                                style: BorderStyle.solid))),
-                                                    children: [
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      textPadding(""),
-                                                      Container(
-                                                        height: 42,
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                                if (recievingLisnes !=
-                                                    null) ...[
-                                                  for (var i = 0;
-                                                      i <
-                                                          recievingLisnes
-                                                              .length;
-                                                      i++)
+
+                                                      children: [
+                                                        tableHeadtext(
+                                                          'Sl.No',
+                                                          size: 13,
+                                                        ),
+                                                        tableHeadtext(
+                                                          'Order line Id',
+                                                          size: 13,
+                                                        ),
+                                                        tableHeadtext(
+                                                          'Variant Id',
+                                                        ),
+                                                        tableHeadtext(
+                                                          'Variant Name',
+                                                          size: 13,
+                                                        ),
+                                                        // tableHeadtext('description', size: 10, color: null),
+
+                                                        tableHeadtext(
+                                                          'Barcode',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Current Qty',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Purchase UOM',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Vendor  Id',
+                                                          size: 13,
+                                                        ),
+                                                        tableHeadtext(
+                                                          'Received Qty',
+                                                          size: 13,
+                                                          // color: Palette.containerDarknew,
+                                                          // textColor: Palette.white
+                                                        ),
+                                                        tableHeadtext(
+                                                          'Is Received',
+                                                          size: 13
+                                                          // color: Palette.containerDarknew,
+                                                          // textColor: Palette.white
+                                                        ),
+                                                        tableHeadtext(
+                                                          'Unit Cost',
+                                                          size: 13,
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Excise Tax',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Discount',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'FOC',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Vatable Amount',
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'VAT',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Actual Cost',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Grand Total',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Is Invoiced',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Expiry Date',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Is Free',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Is Active',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          '',
+                                                          size: 13,
+                                                        ),
+
+                                                        // if (widget.onAddNew) textPadding(''),
+                                                      ]),
+                                                  if (recievingLisnes
+                                                      .isEmpty) ...[
                                                     TableRow(
                                                       decoration: BoxDecoration(
                                                           color: Pellet
@@ -1545,2041 +1607,49 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                   style: BorderStyle
                                                                       .solid),
                                                               right: BorderSide(
-                                                                  color: Color(0xff3E4F5B)
-                                                                      .withOpacity(.1),
+                                                                  color:
+                                                                      Color(0xff3E4F5B).withOpacity(.1),
                                                                   width: .4,
                                                                   style: BorderStyle.solid))),
                                                       children: [
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              (i + 1)
-                                                                  .toString(),
-                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        textPadding(""),
+                                                        Container(
+                                                          height: 42,
                                                         ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              recievingLisnes[
-                                                                      i]
-                                                                  .orderLineCode
-                                                                  .toString(),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        TableCell(
-                                                            verticalAlignment:
-                                                                TableCellVerticalAlignment
-                                                                    .middle,
-                                                            child:
-                                                                VariantIdTAble(
-                                                              text: recievingLisnes[
-                                                                      i]
-                                                                  .variantId
-                                                                  .toString(),
-                                                              onTap: () {
-                                                                showDailogPopUp(
-                                                                  context,
-                                                                  TableConfigurePopup(
-                                                                    inventory: Variable.inventory_ID,
-                                                                    type:"variantTabalePopup",
-                                                                    valueSelect:
-                                                                        (VariantId?
-                                                                            va) {
-                                                                      updateCheck =
-                                                                          true;
-                                                                      recievingLisnes[
-                                                                          i] = recievingLisnes[i]
-                                                                          .copyWith(updateCheck: true);
-                                                                      setState(
-                                                                          () {});
-                                                                      recievingLisnes[i] = recievingLisnes[i]
-                                                                          .copyWith(variantId: va?.code);
-
-                                                                      setState(
-                                                                          () {
-                                                                        var variant =
-                                                                            va?.code;
-
-                                                                        int? id = va!.id;
-                                                                        Variable.tableindex =
-                                                                            i;
-                                                                        recievlinequantityCheck =
-                                                                            true;
-
-                                                                        stockCheck =
-                                                                            true;
-
-                                                                        Variable.tableedit =
-                                                                            false;
-
-                                                                        variantIdcheck =
-                                                                            true;
-
-                                                                        context
-                                                                            .read<TableDetailsCubitDartCubit>()
-                                                                            .getTableDetails(id);
-
-                                                                        context.read<PurchaseStockCubit>().getCurrentStock(
-                                                                            Variable.inventory_ID,
-                                                                            variant);
-
-                                                                        // orderType = va!;
-                                                                      });
-                                                                    },
-                                                                  ),
-                                                                );
-                                                              },
-                                                            )
-                                                            // PopUpCall(
-                                                            //
-                                                            //   inventory: Variable.inventory_ID,
-                                                            //
-                                                            //
-                                                            //
-                                                            //   type:"cost-method-list",
-                                                            //
-                                                            //   value: recievingLisnes[i].variantId,
-                                                            //
-                                                            //   onSelection: (VariantId? va) {
-                                                            //
-                                                            //     updateCheck=true;
-                                                            //
-                                                            //     recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
-                                                            //
-                                                            //     setState(() {
-                                                            //
-                                                            //
-                                                            //
-                                                            //     });
-                                                            //
-                                                            //     recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
-                                                            //
-                                                            //     setState(() {
-                                                            //
-                                                            //       var  variant= va?.code;
-                                                            //
-                                                            //       int? id = va!.id;
-                                                            //
-                                                            //       Variable.tableindex =i;
-                                                            //
-                                                            //       recievlinequantityCheck=true;
-                                                            //
-                                                            //       stockCheck=true;
-                                                            //
-                                                            //       Variable.tableedit=false;
-                                                            //
-                                                            //
-                                                            //
-                                                            //       variantIdcheck=true;
-                                                            //
-                                                            //       context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
-                                                            //
-                                                            //       context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
-                                                            //
-                                                            //
-                                                            //
-                                                            //       // orderType = va!;
-                                                            //
-                                                            //     });
-                                                            //
-                                                            //   }, // restricted: true,
-                                                            //
-                                                            // ),
-
-                                                            ),
-
-                                                        // TableCell(
-
-                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                        //   child: textPadding(recievingLisnes[i].variantId ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
-
-                                                        // ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              recievingLisnes[
-                                                                          i]
-                                                                      .variantName ??
-                                                                  "",
-                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              recievingLisnes[
-                                                                          i]
-                                                                      .barcode ??
-                                                                  "",
-                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              currentStock.length !=
-                                                                      recievingLisnes
-                                                                          .length
-                                                                  ? ""
-                                                                  : currentStock[i]
-                                                                          ?.toString() ??
-                                                                      "",
-
-                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              recievingLisnes[
-                                                                          i]
-                                                                      .purchaseUom ??
-                                                                  "",
-                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child:
-                                                          VariantIdTAble(text: recievingLisnes[i].vendorId ?? "",
-                                                          onTap: () {
-                                                              showDailogPopUp(
-                                                                context,
-                                                                ConfigurePopup(
-                                                                  listAssign:
-                                                                      (VendorDetailsModel
-                                                                          model) {
-                                                                    setState(
-                                                                        () {
-                                                                      updateCheck = true;
-                                                                      recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
-                                                                      recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                          vendorId: model.manuFactureuserCode ?? "",
-                                                                          vendorTrnNumber: model.trnNumber.toString());
-
-                                                                      setState(
-                                                                          () {
-                                                                        Variable.tableindex =
-                                                                            i;
-
-                                                                        Variable.tableedit =
-                                                                            true;
-
-                                                                        vendorcheck =
-                                                                            true;
-
-                                                                        // context.read<
-
-                                                                        //     VendordetailsCubit>()
-
-                                                                        //     .getVendorDetails(
-
-                                                                        //     variant);
-
-                                                                        // showDailogPopUp(
-
-                                                                        //     context,
-
-                                                                        //     VendorPopup(
-
-                                                                        //       assign:  assigniningDetails,
-
-                                                                        //
-
-                                                                        //     ));
-
-                                                                        // context
-
-                                                                        //     .read<
-
-                                                                        //     TableDetailsCubitDartCubit>()
-
-                                                                        //     .getTableDetails(
-
-                                                                        //     id);
-
-                                                                        // context
-
-                                                                        //     .read<PurchaseStockCubit>()
-
-                                                                        //     .getCurrentStock(Variable.inventory_ID, variant);
-
-                                                                        // orderType = va!;
-                                                                      });
-                                                                    });
-                                                                  },
-                                                                  type:
-                                                                      "vendorDetailList_popup",
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                        ),
-
-
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child:
-                                                              UnderLinedInput(
-                                                            integerOnly: true,
-                                                            initialCheck:
-                                                                true,
-                                                            last: recievingLisnes[
-                                                                        i]
-                                                                    .requestedQty
-                                                                    .toString() ??
-                                                                "",
-                                                            onChanged: (va) {
-                                                              updateCheck =
-                                                                  true;
-
-                                                              recievingLisnes[
-                                                                  i] = recievingLisnes[
-                                                                      i]
-                                                                  .copyWith(
-                                                                      updateCheck:
-                                                                          true);
-
-                                                              setState(() {});
-
-                                                              print(va);
-
-                                                              if (va == "") {
-                                                                print(
-                                                                    "entered");
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        requestedQty:
-                                                                            0,
-                                                                        vatableAmount:
-                                                                            0,
-                                                                        actualCost:
-                                                                            0,
-                                                                        grandTotal:
-                                                                            0);
-                                                              } else {
-                                                                var qty = int
-                                                                    .tryParse(
-                                                                        va);
-
-                                                                var dis =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .discount;
-
-                                                                var excess =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .excessTax;
-
-                                                                var unitcost =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .unitCost;
-
-                                                                var vat =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .vat;
-
-                                                                var foc =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .foc;
-
-                                                                if (qty ==
-                                                                        0 ||
-                                                                    unitcost ==
-                                                                        0) {
-                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                      vatableAmount:
-                                                                          0,
-                                                                      actualCost:
-                                                                          0,
-                                                                      grandTotal:
-                                                                          0);
-                                                                } else {
-                                                                  var Vamount;
-
-                                                                  var vactualCost;
-
-                                                                  if (foc ==
-                                                                          0 ||
-                                                                      foc ==
-                                                                          "") {
-                                                                    Vamount = vatableAmountUpdation(
-                                                                        unitcost,
-                                                                        qty,
-                                                                        excess,
-                                                                        dis);
-
-                                                                    // (((unitcost! *
-
-                                                                    // qty!) +
-
-                                                                    // excess!) -
-
-                                                                    // dis!)
-
-                                                                    // .toDouble();
-
-                                                                    if (vat ==
-                                                                            0 ||
-                                                                        vat ==
-                                                                            "") {
-                                                                      vactualCost =
-                                                                          Vamount;
-                                                                    } else {
-                                                                      vactualCost = actualAndgrandTotalUpdation(
-                                                                          Vamount,
-                                                                          vat);
-
-                                                                      // (Vamount! +
-
-                                                                      //     ((Vamount! *
-
-                                                                      //         vat!) /
-
-                                                                      //         100));
-                                                                    }
-
-                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                        vatableAmount:
-                                                                            Vamount,
-                                                                        actualCost:
-                                                                            vactualCost,
-                                                                        grandTotal:
-                                                                            vactualCost,
-                                                                        requestedQty:
-                                                                            qty);
-                                                                  } else {
-                                                                    var Vamount = vatableAmountFocUpdation(
-                                                                        unitcost,
-                                                                        qty,
-                                                                        excess,
-                                                                        dis,
-                                                                        foc);
-
-                                                                    // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
-
-                                                                    var vactualCost = actualAndgrandTotalUpdation(
-                                                                        Vamount,
-                                                                        vat);
-
-                                                                    // (Vamount! +
-
-                                                                    //     ((Vamount! *
-
-                                                                    //         vat!) /
-
-                                                                    //         100));
-
-                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                        vatableAmount:
-                                                                            Vamount,
-                                                                        actualCost:
-                                                                            vactualCost,
-                                                                        grandTotal:
-                                                                            vactualCost,
-                                                                        requestedQty:
-                                                                            qty);
-                                                                  }
-                                                                }
-                                                              }
-
-                                                              setState(() {});
-                                                            },
-                                                          ),
-                                                        ),
-
-                                                        // textPadding(
-
-                                                        //     recievingLisnes[i]
-
-                                                        //         .receivedQty.toString()??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:
-
-                                                        // 1.5),
-
-                                                        //     fontWeight: FontWeight.w500),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-
-                                                          child: CheckedBoxs(
-                                                              valueChanger: recievingLisnes[i]
-                                                                          .isReceived ==
-                                                                      null
-                                                                  ? false
-                                                                  : recievingLisnes[
-                                                                          i]
-                                                                      .isReceived,
-                                                              onSelection:
-                                                                  (bool?
-                                                                      value) {
-                                                                updateCheck =
-                                                                    true;
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        updateCheck:
-                                                                            true);
-
-                                                                setState(
-                                                                    () {});
-
-                                                                bool?
-                                                                    isRecieved =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .isReceived;
-
-                                                                setState(() {
-                                                                  isRecieved =
-                                                                      !isRecieved!;
-
-                                                                  recievingLisnes[
-                                                                      i] = recievingLisnes[
-                                                                          i]
-                                                                      .copyWith(
-                                                                          isReceived:
-                                                                              isRecieved);
-
-                                                                  print(
-                                                                      recievingLisnes);
-                                                                });
-                                                              }),
-
-                                                          // Checkbox(
-
-                                                          //   value: recievingLisnes[i].isReceived == null ? false : recievingLisnes[i].isReceived,
-
-                                                          //   onChanged: (bool? value) {
-
-                                                          //     bool? isRecieved = recievingLisnes[i].isReceived;
-
-                                                          //     setState(() {
-
-                                                          //       isRecieved = !isRecieved!;
-
-                                                          //       recievingLisnes[i] = recievingLisnes[i].copyWith(isReceived: isRecieved);
-
-                                                          //       print(recievingLisnes);
-
-                                                          //     });
-
-                                                          //   },
-
-                                                          // ),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child:
-                                                              UnderLinedInput(
-                                                            controller:
-                                                                unitcostReceivingListControllers[
-                                                                    i],
-
-                                                            //   initialCheck: true,
-                                                            //
-                                                            // last: recievingLisnes[i].unitCost.toString() ?? "",
-
-                                                            onChanged: (va) {
-                                                              updateCheck =
-                                                                  true;
-
-                                                              recievingLisnes[
-                                                                  i] = recievingLisnes[
-                                                                      i]
-                                                                  .copyWith(
-                                                                      updateCheck:
-                                                                          true);
-
-                                                              setState(() {});
-
-                                                              double?
-                                                                  unitcost;
-
-                                                              if (va == "") {
-                                                                print(
-                                                                    "entered");
-
-                                                                unitcost = 0;
-
-                                                                print("disc" +
-                                                                    unitcost
-                                                                        .toString());
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        vatableAmount:
-                                                                            0,
-                                                                        actualCost:
-                                                                            0,
-                                                                        grandTotal:
-                                                                            0,
-                                                                        unitCost:
-                                                                            0);
-                                                              }
-
-                                                              unitcost = double
-                                                                  .tryParse(
-                                                                      va);
-
-                                                              print("unitcost" +
-                                                                  unitcost
-                                                                      .toString());
-
-                                                              var qty =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .requestedQty;
-
-                                                              print("qty" +
-                                                                  qty.toString());
-
-                                                              var excess =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .excessTax;
-
-                                                              print("excess" +
-                                                                  excess
-                                                                      .toString());
-
-                                                              var disc =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .discount;
-
-                                                              var foc =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .foc;
-
-                                                              var vat =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .vat;
-
-
-
-
-                                                              if (qty == 0 ||
-                                                                  qty ==
-                                                                      null) {
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        vatableAmount:
-                                                                            0,
-                                                                        actualCost:
-                                                                            0,
-                                                                        grandTotal:
-                                                                            0,
-                                                                        unitCost:
-                                                                            0);
-
-                                                                setState(
-                                                                    () {});
-                                                              } else {
-                                                                if (foc ==
-                                                                        0 ||
-                                                                    foc ==
-                                                                        "") {
-                                                                  var Vamount = vatableAmountUpdation(
-                                                                      unitcost,
-                                                                      qty,
-                                                                      excess,
-                                                                      disc);
-
-                                                                  var vactualCost =
-                                                                      actualAndgrandTotalUpdation(
-                                                                          Vamount,
-                                                                          vat);
-
-
-                                                                  print("vactualCost" +
-                                                                      vactualCost
-                                                                          .toString());
-
-                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                      vatableAmount:
-                                                                          Vamount,
-                                                                      actualCost:
-                                                                          vactualCost,
-                                                                      grandTotal:
-                                                                          vactualCost,
-                                                                      unitCost:
-                                                                          unitcost);
-
-                                                                  setState(
-                                                                      () {});
-                                                                } else {
-                                                                  var Vamount = vatableAmountFocUpdation(
-                                                                      unitcost,
-                                                                      qty,
-                                                                      excess,
-                                                                      disc,
-                                                                      foc);
-
-                                                                  // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-
-                                                                  var vactualCost =
-                                                                      actualAndgrandTotalUpdation(
-                                                                          Vamount,
-                                                                          vat);
-
-                                                                  // (Vamount! +
-
-                                                                  //     ((Vamount! *
-
-                                                                  //         vat!) /
-
-                                                                  //         100));
-
-                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                      vatableAmount:
-                                                                          Vamount,
-                                                                      actualCost:
-                                                                          vactualCost,
-                                                                      grandTotal:
-                                                                          vactualCost,
-                                                                      unitCost:
-                                                                          unitcost);
-
-                                                                  setState(
-                                                                      () {});
-                                                                }
-                                                              }
-                                                            },
-                                                          ),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child:
-                                                              UnderLinedInput(
-                                                            initialCheck:
-                                                                true,
-                                                            last: recievingLisnes[
-                                                                        i]
-                                                                    .excessTax
-                                                                    .toString() ??
-                                                                "",
-                                                            onChanged: (va) {
-                                                              updateCheck =
-                                                                  true;
-
-                                                              recievingLisnes[
-                                                                  i] = recievingLisnes[
-                                                                      i]
-                                                                  .copyWith(
-                                                                      updateCheck:
-                                                                          true);
-
-                                                              setState(() {});
-
-                                                              double? excess;
-
-                                                              if (va == "") {
-                                                                excess = 0;
-
-                                                                setState(
-                                                                    () {});
-                                                              } else {
-                                                                excess = double
-                                                                    .tryParse(
-                                                                        va);
-
-                                                                setState(
-                                                                    () {});
-                                                              }
-
-                                                              var qty =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .requestedQty;
-
-                                                              var vat =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .vat;
-
-                                                              var foc =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .foc;
-
-                                                              print("excess" +
-                                                                  excess
-                                                                      .toString());
-
-                                                              var unitcost =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .unitCost;
-
-                                                              print("unitcost" +
-                                                                  unitcost
-                                                                      .toString());
-
-                                                              var Vdiscount =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .discount;
-
-                                                              if (qty == 0 ||
-                                                                  unitcost ==
-                                                                      0) {
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        actualCost:
-                                                                            0,
-                                                                        grandTotal:
-                                                                            0,
-                                                                        vatableAmount:
-                                                                            0,
-                                                                        excessTax:
-                                                                            excess);
-
-                                                                setState(
-                                                                    () {});
-                                                              } else {
-                                                                var Vamount;
-
-                                                                if (foc ==
-                                                                        0 ||
-                                                                    foc ==
-                                                                        "") {
-                                                                  Vamount = vatableAmountUpdation(
-                                                                      unitcost,
-                                                                      qty,
-                                                                      excess,
-                                                                      Vdiscount);
-
-                                                                  // (((unitcost! *
-
-                                                                  //     qty!) +
-
-                                                                  //     excess!) -
-
-                                                                  //     Vdiscount!)
-
-                                                                  //     .toDouble();
-                                                                } else {
-                                                                  Vamount = vatableAmountFocUpdation(
-                                                                      unitcost,
-                                                                      qty,
-                                                                      excess,
-                                                                      Vdiscount,
-                                                                      foc);
-
-                                                                  // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
-                                                                }
-
-                                                                var vactualCost =
-                                                                    actualAndgrandTotalUpdation(
-                                                                        Vamount,
-                                                                        vat);
-
-                                                                // (Vamount! +
-
-                                                                //     ((Vamount! *
-
-                                                                //         vat!) /
-
-                                                                //         100));
-
-                                                                var Vgrnadtotal =
-                                                                    actualAndgrandTotalUpdation(
-                                                                        Vamount,
-                                                                        vat);
-
-                                                                // (Vamount! +
-
-                                                                //     ((Vamount! *
-
-                                                                //         vat!) /
-
-                                                                //         100));
-
-                                                                recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                    actualCost:
-                                                                        vactualCost,
-                                                                    grandTotal:
-                                                                        Vgrnadtotal,
-                                                                    vatableAmount:
-                                                                        Vamount,
-                                                                    excessTax:
-                                                                        excess);
-
-                                                                setState(
-                                                                    () {});
-                                                              }
-                                                            },
-                                                          ),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child:
-                                                              UnderLinedInput(
-                                                            initialCheck:
-                                                                true,
-                                                            last: recievingLisnes[
-                                                                        i]
-                                                                    .discount
-                                                                    .toString() ??
-                                                                "",
-                                                            onChanged: (va) {
-                                                              updateCheck =
-                                                                  true;
-
-                                                              recievingLisnes[
-                                                                  i] = recievingLisnes[
-                                                                      i]
-                                                                  .copyWith(
-                                                                      updateCheck:
-                                                                          true);
-
-                                                              setState(() {});
-
-                                                              double? disc;
-
-                                                              if (va == "") {
-                                                                print(
-                                                                    "entered");
-
-                                                                disc = 0;
-                                                              } else {
-                                                                disc = double
-                                                                    .tryParse(
-                                                                        va);
-                                                              }
-
-                                                              var qty =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .requestedQty;
-
-                                                              var excess =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .excessTax;
-
-                                                              var unitcost =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .unitCost;
-
-                                                              var vat =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .vat;
-
-                                                              var foc =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .foc;
-
-                                                              if (unitcost ==
-                                                                      0 ||
-                                                                  qty == 0) {
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        vatableAmount:
-                                                                            0,
-                                                                        actualCost:
-                                                                            0,
-                                                                        grandTotal:
-                                                                            0,
-                                                                        discount:
-                                                                            disc);
-                                                              } else {
-                                                                if (foc ==
-                                                                        0 ||
-                                                                    foc ==
-                                                                        "") {
-                                                                  var Vamount = vatableAmountUpdation(
-                                                                      unitcost,
-                                                                      qty,
-                                                                      excess,
-                                                                      disc);
-
-                                                                  // (((unitcost! *
-
-                                                                  //     qty!) +
-
-                                                                  //     excess!) -
-
-                                                                  //     disc!)
-
-                                                                  //     .toDouble();
-
-                                                                  var vactualCost =
-                                                                      actualAndgrandTotalUpdation(
-                                                                          Vamount,
-                                                                          vat);
-
-                                                                  // (Vamount! +
-
-                                                                  //     ((Vamount! *
-
-                                                                  //         vat!) /
-
-                                                                  //         100));
-
-                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                      vatableAmount:
-                                                                          Vamount,
-                                                                      actualCost:
-                                                                          vactualCost,
-                                                                      grandTotal:
-                                                                          vactualCost,
-                                                                      discount:
-                                                                          disc);
-
-                                                                  setState(
-                                                                      () {});
-                                                                } else {
-                                                                  var Vamount = vatableFocAmountCalculation(
-                                                                      unitcost,
-                                                                      qty,
-                                                                      excess,
-                                                                      disc,
-                                                                      foc);
-
-                                                                  // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-
-                                                                  var vactualCost =
-                                                                      actualAndgrandTotalUpdation(
-                                                                          Vamount,
-                                                                          vat);
-
-                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(
-                                                                      vatableAmount:
-                                                                          Vamount,
-                                                                      actualCost:
-                                                                          vactualCost,
-                                                                      grandTotal:
-                                                                          vactualCost,
-                                                                      discount:
-                                                                          disc);
-
-                                                                  setState(
-                                                                      () {});
-                                                                }
-                                                              }
-                                                            },
-                                                          ),
-                                                        ),
-
-                                                        // textPadding(
-
-                                                        //     recievingLisnes[i]
-
-                                                        //         .discount.toString()??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:
-
-                                                        // 1.5),
-
-                                                        //     fontWeight: FontWeight.w500),
-
-                                                        // textPadding(
-
-                                                        //     recievingLisnes[i]
-
-                                                        //         .foc.toString()??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:
-
-                                                        // 1.5),
-
-                                                        //     fontWeight: FontWeight.w500),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child:
-                                                              UnderLinedInput(
-                                                            initialCheck:
-                                                                true,
-                                                            last: recievingLisnes[
-                                                                        i]
-                                                                    .foc
-                                                                    .toString() ??
-                                                                "",
-                                                            onChanged: (va) {
-                                                              updateCheck =
-                                                                  true;
-
-                                                              recievingLisnes[
-                                                                  i] = recievingLisnes[
-                                                                      i]
-                                                                  .copyWith(
-                                                                      updateCheck:
-                                                                          true);
-
-                                                              setState(() {});
-
-                                                              double? foc;
-
-                                                              if (va == "") {
-                                                                foc = 0;
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        foc:
-                                                                            0);
-                                                              } else {
-                                                                foc = double
-                                                                    .tryParse(
-                                                                        va);
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        foc:
-                                                                            foc);
-                                                              }
-
-                                                              var qty =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .requestedQty;
-
-                                                              var vat =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .vat;
-
-                                                              print("qty" +
-                                                                  qty.toString());
-
-                                                              var excess =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .excessTax;
-
-                                                              print("excess" +
-                                                                  excess
-                                                                      .toString());
-
-                                                              var disc =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .discount;
-
-                                                              var unitcost =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .unitCost;
-
-                                                              if (qty == 0 ||
-                                                                  unitcost ==
-                                                                      0) {
-                                                                print(
-                                                                    "checking case");
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        vatableAmount:
-                                                                            0,
-                                                                        actualCost:
-                                                                            0,
-                                                                        grandTotal:
-                                                                            0,
-                                                                        foc:
-                                                                            foc);
-
-                                                                setState(
-                                                                    () {});
-                                                              } else {
-                                                                var Vamount;
-
-                                                                if (foc ==
-                                                                        0 ||
-                                                                    foc ==
-                                                                        "") {
-                                                                  Vamount = vatableAmountUpdation(
-                                                                      unitcost,
-                                                                      qty,
-                                                                      excess,
-                                                                      disc);
-
-                                                                  // (((unitcost! *
-
-                                                                  // qty!) +
-
-                                                                  // excess!) -
-
-                                                                  // disc!)
-
-                                                                  // .toDouble();
-
-                                                                  setState(
-                                                                      () {});
-                                                                } else {
-                                                                  Vamount = vatableFocAmountCalculation(
-                                                                      unitcost,
-                                                                      qty,
-                                                                      excess,
-                                                                      disc,
-                                                                      foc);
-
-                                                                  setState(
-                                                                      () {});
-                                                                }
-
-                                                                var vactualCost =
-                                                                    actualAndgrandTotalUpdation(
-                                                                        Vamount,
-                                                                        vat);
-
-                                                                // (Vamount! +
-
-                                                                //     ((Vamount! *
-
-                                                                //         vat!) /
-
-                                                                //         100));
-
-                                                                recievingLisnes[
-                                                                        i] =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .copyWith(
-                                                                  vatableAmount:
-                                                                      Vamount,
-                                                                  actualCost:
-                                                                      vactualCost,
-                                                                  grandTotal:
-                                                                      vactualCost,
-                                                                );
-
-                                                                setState(
-                                                                    () {});
-                                                              }
-
-                                                              print(
-                                                                  recievingLisnes);
-                                                            },
-                                                          ),
-                                                        ),
-
-                                                        // textPadding(
-
-                                                        //     recievingLisnes[i]
-
-                                                        //         .unitCost.toString()??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:
-
-                                                        // 1.5),
-
-                                                        //     fontWeight: FontWeight.w500),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              recievingLisnes[
-                                                                          i]
-                                                                      .vatableAmount
-                                                                      .toString() ??
-                                                                  "",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              recievingLisnes[
-                                                                          i]
-                                                                      .vat
-                                                                      .toString() ??
-                                                                  "",
-                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        // TableCell(
-
-                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                        //   child: UnderLinedInput(
-
-                                                        //       initialCheck: true,
-
-                                                        //     last: recievingLisnes[i].vat.toString() ?? "",
-
-                                                        //     onChanged: (va) {
-
-                                                        //       updateCheck=true;
-
-                                                        //       recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
-
-                                                        //       setState(() {
-
-                                                        //
-
-                                                        //       });
-
-                                                        //       if (va == "") {
-
-                                                        //         print("sss");
-
-                                                        //         var vatableAmount = recievingLisnes[i].vatableAmount;
-
-                                                        //         recievingLisnes[i] = recievingLisnes[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
-
-                                                        //         setState(() {});
-
-                                                        //       } else {
-
-                                                        //         var vat = double.tryParse(va);
-
-                                                        //         var Vamount = recievingLisnes[i].vatableAmount;
-
-                                                        //         print("qty" + Vamount.toString());
-
-                                                        //         var excess = recievingLisnes[i].excessTax;
-
-                                                        //         print("excess" + excess.toString());
-
-                                                        //         var unitcost = recievingLisnes[i].unitCost;
-
-                                                        //         var qty = recievingLisnes[i].receivedQty;
-
-                                                        //         var foc = recievingLisnes[i].foc;
-
-                                                        //         var dis = recievingLisnes[i].discount;
-
-                                                        //         print("unitcost" + unitcost.toString());
-
-                                                        //         if(unitcost==0 || qty==0){
-
-                                                        //           recievingLisnes[i] = recievingLisnes[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
-
-                                                        //
-
-                                                        //         }else{
-
-                                                        //           if(foc==0 || foc=="") {
-
-                                                        //             var Vamount = (((unitcost! *
-
-                                                        //                 qty!) +
-
-                                                        //                 excess!) -
-
-                                                        //                 dis!)
-
-                                                        //                 .toDouble();
-
-                                                        //             var vactualCost = (Vamount! +
-
-                                                        //                 ((Vamount! *
-
-                                                        //                     vat!) /
-
-                                                        //                     100));
-
-                                                        //             var Vgrnadtotal = (Vamount! +
-
-                                                        //                 ((Vamount! *
-
-                                                        //                     vat!) /
-
-                                                        //                     100));
-
-                                                        //             recievingLisnes[i] =
-
-                                                        //                 recievingLisnes[i]
-
-                                                        //                     .copyWith(
-
-                                                        //                     vatableAmount: Vamount,
-
-                                                        //                     actualCost: vactualCost,
-
-                                                        //                     grandTotal: Vgrnadtotal,
-
-                                                        //                     vat: vat);
-
-                                                        //             setState(() {});
-
-                                                        //           }
-
-                                                        //           else{
-
-                                                        //             var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
-
-                                                        //
-
-                                                        //             var vactualCost = (Vamount! +
-
-                                                        //                 ((Vamount! *
-
-                                                        //                     vat!) /
-
-                                                        //                     100));
-
-                                                        //             var Vgrnadtotal = (Vamount! +
-
-                                                        //                 ((Vamount! *
-
-                                                        //                     vat!) /
-
-                                                        //                     100));
-
-                                                        //             recievingLisnes[i] =
-
-                                                        //                 recievingLisnes[i]
-
-                                                        //                     .copyWith(
-
-                                                        //                     vatableAmount: Vamount,
-
-                                                        //                     actualCost: vactualCost,
-
-                                                        //                     grandTotal: Vgrnadtotal,
-
-                                                        //                     vat: vat);
-
-                                                        //             setState(() {
-
-                                                        //
-
-                                                        //             });
-
-                                                        //           }
-
-                                                        //         }}
-
-                                                        //     },
-
-                                                        //   ),
-
-                                                        // ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              recievingLisnes[
-                                                                          i]
-                                                                      .actualCost
-                                                                      .toString() ??
-                                                                  "",
-                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: textPadding(
-                                                              recievingLisnes[
-                                                                          i]
-                                                                      .grandTotal
-                                                                      .toString() ??
-                                                                  "",
-                                                              // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: CheckedBoxs(
-                                                              valueChanger: recievingLisnes[i]
-                                                                          .isInvoiced ==
-                                                                      null
-                                                                  ? false
-                                                                  : recievingLisnes[
-                                                                          i]
-                                                                      .isInvoiced,
-                                                              onSelection:
-                                                                  (bool?
-                                                                      value) {
-                                                                bool?
-                                                                    isInvoiced =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .isInvoiced;
-
-                                                                setState(() {
-                                                                  // isInvoiced = !isInvoiced!;
-
-                                                                  // recievingLisnes[i] = recievingLisnes[i].copyWith(isInvoiced: isInvoiced);
-
-                                                                  // print(isInvoiced);
-                                                                });
-                                                              }),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: Tabledate(
-                                                              format: DateFormat(
-                                                                  'dd-MM-yyyy'),
-                                                              onSuffixIconPressed: (){
-                                                                setState(() {
-
-                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck:recievingLisnes[i].expiryDate!=null||recievingLisnes[i].updateCheck==true? true:false,expiryDate: null);
-                                                                  expirydateControllerList2[i]=TextEditingController(text: "");
-                                                                });
-
-
-                                                              },
-                                                              controller: recievingLisnes
-                                                                          .length !=
-                                                                      expirydateControllerList2
-                                                                          .length
-                                                                  ? TextEditingController(
-                                                                      text:
-                                                                          "")
-                                                                  : expirydateControllerList2[
-                                                                      i],
-                                                              label:
-                                                                  "Promised receipt date",
-                                                              onSaved:
-                                                                  (newValue) {
-                                                                updateCheck =
-                                                                    true;
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        updateCheck:
-                                                                            true);
-
-                                                                expirydateControllerList2[i] = TextEditingController(
-                                                                    text: newValue ==
-                                                                            null
-                                                                        ? ""
-                                                                        : DateFormat('dd-MM-yyyy')
-                                                                            .format(newValue!));
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        expiryDate:
-                                                                            newValue?.toIso8601String().split("T")[0] ?? "");
-
-                                                                setState(
-                                                                    () {});
-                                                              },
-                                                              enable: true),
-                                                        ),
-
-                                                        // Checkbox(
-
-                                                        //   value: recievingLisnes[i].isInvoiced == null ? false : recievingLisnes[i].isInvoiced,
-
-                                                        //   onChanged: (bool? value) {
-
-                                                        //     setState(() {});
-
-                                                        //   },
-
-                                                        // ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-
-                                                          child: CheckedBoxs(
-                                                              valueChanger: recievingLisnes[i]
-                                                                          .isFree ==
-                                                                      null
-                                                                  ? false
-                                                                  : recievingLisnes[
-                                                                          i]
-                                                                      .isFree,
-                                                              onSelection:
-                                                                  (bool?
-                                                                      value) {
-                                                                bool?
-                                                                    isInvoiced =
-                                                                    recievingLisnes[
-                                                                            i]
-                                                                        .isFree;
-
-                                                                setState(() {
-                                                                  // isInvoiced = !isInvoiced!;
-
-                                                                  // recievingLisnes[i] = recievingLisnes[i].copyWith(isFree: isInvoiced);
-
-                                                                  // print(isInvoiced);
-                                                                });
-                                                              }),
-
-                                                          // Checkbox(
-
-                                                          //   value: recievingLisnes[i].isFree == null ? false : recievingLisnes[i].isFree,
-
-                                                          //   onChanged: (bool? value) {
-
-                                                          //     setState(() {});
-
-                                                          //   },vis
-
-                                                          // ),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child: CheckedBoxs(
-                                                            valueChanger: recievingLisnes[
-                                                                            i]
-                                                                        .isActive ==
-                                                                    null
-                                                                ? false
-                                                                : recievingLisnes[
-                                                                        i]
-                                                                    .isActive,
-                                                            onSelection:
-                                                                (bool?
-                                                                    value) {
-                                                              updateCheck =
-                                                                  true;
-
-
-                                                              bool? isActive =
-                                                                  recievingLisnes[
-                                                                          i]
-                                                                      .isActive;
-
-                                                              setState(() {
-                                                                isActive =
-                                                                    !isActive!;
-
-                                                                recievingLisnes[
-                                                                    i] = recievingLisnes[
-                                                                        i]
-                                                                    .copyWith(
-                                                                        isActive:
-                                                                            isActive,updateCheck: true);
-
-                                                                setState(
-                                                                    () {});
-                                                              });
-                                                            },
-                                                          ),
-                                                        ),
-
-                                                        TableCell(
-                                                          verticalAlignment:
-                                                              TableCellVerticalAlignment
-                                                                  .middle,
-                                                          child:
-                                                              TableTextButton(
-                                                                textColor:  recievingLisnes?[i].updateCheck==true?Pellet.bagroundColor:Colors.black,
-                                                                bagroundColor: recievingLisnes?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
-                                                            label: recievingLisnes[
-                                                                            i]
-                                                                        .updateCheck ==
-                                                                    true
-                                                                ? 'UPDATE'
-                                                                : "",
-
-                                                            onPress: () {
-                                                              var variant =
-                                                                  recievingLisnes[i]
-                                                                          .variantId ??
-                                                                      0;
-
-                                                              var excess =
-                                                                  recievingLisnes[i]
-                                                                          .excessTax ??
-                                                                      0;
-
-                                                              print("excess" +
-                                                                  excess
-                                                                      .toString());
-
-                                                              var unitcosts =
-                                                                  recievingLisnes[i]
-                                                                          .unitCost ??
-                                                                      0;
-
-                                                              var qty =
-                                                                  recievingLisnes[i]
-                                                                          .requestedQty ??
-                                                                      0;
-
-                                                              var foc =
-                                                                  recievingLisnes[i]
-                                                                          .foc ??
-                                                                      0;
-
-                                                              var dis =
-                                                                  recievingLisnes[i]
-                                                                          .discount ??
-                                                                      0;
-
-                                                              var exp =
-                                                                  recievingLisnes[i]
-                                                                          .expiryDate ??
-                                                                      "";
-
-                                                              if (variant ==
-                                                                      "null" ||
-                                                                  unitcosts ==
-                                                                      0) {
-                                                                context.showSnackBarError(
-                                                                    "please fill all the fields");
-                                                              } else if (qty ==
-                                                                      0 ||
-                                                                  qty == "") {
-                                                                context.showSnackBarError(
-                                                                    "the requested quantity not be 0 or empty");
-                                                              } else if (qty! <
-                                                                  foc!) {
-                                                                context.showSnackBarError(
-                                                                    "the received qty all ways greater than  foc");
-                                                              } else {
-                                                                updateCheck =
-                                                                    false;
-                                                                recievingLisnes[
-                                                                i] = recievingLisnes[
-                                                                i]
-                                                                    .copyWith(
-                                                                    updateCheck:
-                                                                    false);
-
-                                                                addition();
-
-                                                                unitcost1 = 0;
-
-
-
-                                                                setState(
-                                                                    () {});
-
-                                                                grands = 0;
-
-                                                                actualValue = 0;
-
-                                                                vatValue = 0;
-
-                                                                discountValue =
-                                                                    0;
-
-                                                                focValue = 0;
-
-                                                                VatableValue =
-                                                                    0;
-
-                                                                excessTAxValue =
-                                                                    0;
-
-                                                                setState(
-                                                                    () {});
-                                                              }
-                                                            },
-                                                          ),
-                                                        )
                                                       ],
-                                                    ),
-                                                ]
-                                              ],
-
-                                              widths: {
-                                                0: FlexColumnWidth(2),
-                                                1: FlexColumnWidth(3),
-                                                2: FlexColumnWidth(4),
-                                                3: FlexColumnWidth(5),
-                                                4: FlexColumnWidth(4),
-                                                5: FlexColumnWidth(3),
-                                                6: FlexColumnWidth(3),
-                                                7: FlexColumnWidth(4),
-                                                8: FlexColumnWidth(3),
-                                                9: FlexColumnWidth(2.4),
-                                                10: FlexColumnWidth(3),
-                                                11: FlexColumnWidth(3),
-                                                12: FlexColumnWidth(3),
-                                                13: FlexColumnWidth(3),
-                                                14: FlexColumnWidth(3),
-                                                15: FlexColumnWidth(3),
-                                                16: FlexColumnWidth(3),
-                                                17: FlexColumnWidth(3),
-                                                18: FlexColumnWidth(2),
-                                                19: FlexColumnWidth(4),
-                                                20: FlexColumnWidth(2.4),
-                                                21: FlexColumnWidth(2.4),
-                                                22: FlexColumnWidth(3),
-                                              },
-                                            )),
-                                        SizedBox(
-                                          height: 10,
-                                        )
-                                      ],
-                                    )),
-                              )),
-
-                          SizedBox(
-                            height: 33,
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextWidget(text: "Additional Variants"),
-                            ],
-                          ),
-
-                          SizedBox(
-                            height: height * .01,
-                          ),
-
-                          CustomScrollBar(
-                              controller: additionalController,
-                              childs: Container(
-                                color: Colors.white,
-                                alignment: Alignment.topRight,
-                                child: SingleChildScrollView(
-                                    controller: additionalController,
-                                    physics: ScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SingleChildScrollView(
-                                          child: Container(
-                                            width: 2200,
-                                            // padding: EdgeInsets.all(10),
-                                            child: customTable(
-                                              tableWidth: .5,
-                                              childrens: [
-                                                TableRow(
-                                                    children: [
-                                                      tableHeadtext(
-                                                        'Sl.No',
-                                                        size: 13,
-
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Variant Id',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Variant Name',
-                                                        size: 13,
-                                                      ),
-                                                      tableHeadtext(
-                                                        'Barcode',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Current Qty',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Purchase UOM',
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Vendor Id',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Received Qty',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Is Received',
-
-                                                        size: 13,
-
-                                                        // color: Palette.containerDarknew,
-
-                                                        // textColor: Palette.white
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Unit Cost',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Excise Tax',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Discount',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'FOC',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Vatable Amount',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'VAT',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Actual cost',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Grand Total',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Is Invoiced',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Expiry Date',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Is Free',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        'Is Active',
-                                                        size: 13,
-                                                      ),
-
-                                                      tableHeadtext(
-                                                        '',
-                                                        size: 13,
-                                                      ),
-
-                                                      // if (widget.onAddNew) textPadding(''),
-                                                    ]),
-                                                if (additionalVariants !=
-                                                    null) ...[
-                                                  for (var i = 0;
-                                                      i <
-                                                          additionalVariants
-                                                              .length;
-                                                      i++)
-                                                    TableRow(
+                                                    )
+                                                  ],
+                                                  if (recievingLisnes !=
+                                                      null) ...[
+                                                    for (var i = 0;
+                                                        i <
+                                                            recievingLisnes
+                                                                .length;
+                                                        i++)
+                                                      TableRow(
                                                         decoration: BoxDecoration(
-                                                            color: Pellet
-                                                                .tableRowColor,
+                    color:receiveSelctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                                             shape: BoxShape
                                                                 .rectangle,
                                                             border: Border(
@@ -3597,7 +1667,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     style: BorderStyle
                                                                         .solid),
                                                                 right: BorderSide(
-                                                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                    color: Color(0xff3E4F5B)
+                                                                        .withOpacity(.1),
                                                                     width: .4,
                                                                     style: BorderStyle.solid))),
                                                         children: [
@@ -3606,9 +1677,26 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                (i + 1).toString(),
+                                                                (i + 1)
+                                                                    .toString(),
                                                                 // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                fontWeight: FontWeight.w500),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+
+                                                          TableCell(
+                                                            verticalAlignment:
+                                                                TableCellVerticalAlignment
+                                                                    .middle,
+                                                            child: textPadding(
+                                                                recievingLisnes[
+                                                                        i]
+                                                                    .orderLineCode
+                                                                    .toString(),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
                                                           ),
 
                                                           TableCell(
@@ -3617,24 +1705,27 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                       .middle,
                                                               child:
                                                                   VariantIdTAble(
-                                                                text: additionalVariants[i]
+                                                                text: recievingLisnes[
+                                                                        i]
                                                                     .variantId
                                                                     .toString(),
                                                                 onTap: () {
                                                                   showDailogPopUp(
                                                                     context,
                                                                     TableConfigurePopup(
-                                                                      inventory:
-                                                                          Variable
-                                                                              .inventory_ID,
-                                                                      type:
-                                                                          "variantTabalePopup",
+                                                                      inventory: Variable.inventory_ID,
+                                                                      type:"variantTabalePopup",
                                                                       valueSelect:
                                                                           (VariantId?
                                                                               va) {
-                                                                        additionalVariants[
-                                                                            i] = additionalVariants[
-                                                                                i]
+                                                                        updateCheck =
+                                                                            true;
+                                                                        recievingLisnes[
+                                                                            i] = recievingLisnes[i]
+                                                                            .copyWith(updateCheck: true);
+                                                                        setState(
+                                                                            () {});
+                                                                        recievingLisnes[i] = recievingLisnes[i]
                                                                             .copyWith(variantId: va?.code);
 
                                                                         setState(
@@ -3642,19 +1733,21 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                           var variant =
                                                                               va?.code;
 
-                                                                          int?
-                                                                              id =
-                                                                              va!.id;
-
+                                                                          int? id = va!.id;
                                                                           Variable.tableindex =
                                                                               i;
-
-                                                                          Variable.tableedit =
+                                                                          recievlinequantityCheck =
                                                                               true;
 
-                                                                          variantIdcheck =
+                                                                          stockCheck =
+                                                                              true;
+
+                                                                          Variable.tableedit =
                                                                               false;
 
+                                                                          variantIdcheck =
+                                                                              true;
+                                                                          FocusScope.of(context).requestFocus(receivefocusNodes[i][0]);
                                                                           context
                                                                               .read<TableDetailsCubitDartCubit>()
                                                                               .getTableDetails(id);
@@ -3676,51 +1769,45 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                               //
                                                               //
                                                               //
-                                                              //
-                                                              //
                                                               //   type:"cost-method-list",
                                                               //
-                                                              //   value: additionalVariants[i].variantId,
+                                                              //   value: recievingLisnes[i].variantId,
                                                               //
                                                               //   onSelection: (VariantId? va) {
                                                               //
-                                                              //     additionalVariants[i] = additionalVariants[i].copyWith(variantId:va?.code );
+                                                              //     updateCheck=true;
+                                                              //
+                                                              //     recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
                                                               //
                                                               //     setState(() {
                                                               //
-                                                              //       var  variant=
                                                               //
-                                                              //           va?.code;
+                                                              //
+                                                              //     });
+                                                              //
+                                                              //     recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
+                                                              //
+                                                              //     setState(() {
+                                                              //
+                                                              //       var  variant= va?.code;
                                                               //
                                                               //       int? id = va!.id;
                                                               //
                                                               //       Variable.tableindex =i;
                                                               //
-                                                              //       Variable.tableedit=true;
+                                                              //       recievlinequantityCheck=true;
                                                               //
-                                                              //       variantIdcheck=false;
+                                                              //       stockCheck=true;
                                                               //
-                                                              //
-                                                              //
-                                                              //
+                                                              //       Variable.tableedit=false;
                                                               //
                                                               //
                                                               //
-                                                              //       context
+                                                              //       variantIdcheck=true;
                                                               //
-                                                              //           .read<
+                                                              //       context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
                                                               //
-                                                              //           TableDetailsCubitDartCubit>()
-                                                              //
-                                                              //           .getTableDetails(
-                                                              //
-                                                              //           id);
-                                                              //
-                                                              //       context
-                                                              //
-                                                              //           .read<PurchaseStockCubit>()
-                                                              //
-                                                              //           .getCurrentStock(Variable.inventory_ID, variant);
+                                                              //       context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
                                                               //
                                                               //
                                                               //
@@ -3734,12 +1821,20 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                               ),
 
+                                                          // TableCell(
+
+                                                          //   verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                                          //   child: textPadding(recievingLisnes[i].variantId ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+
+                                                          // ),
+
                                                           TableCell(
                                                             verticalAlignment:
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                additionalVariants[
+                                                                recievingLisnes[
                                                                             i]
                                                                         .variantName ??
                                                                     "",
@@ -3754,31 +1849,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                additionalVariants[
+                                                                recievingLisnes[
                                                                             i]
                                                                         .barcode ??
-                                                                    "",
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            1.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-
-                                                          TableCell(
-                                                            verticalAlignment:
-                                                                TableCellVerticalAlignment
-                                                                    .middle,
-                                                            child: textPadding(
-                                                                additionalVariants[
-                                                                            i]
-                                                                        .currentStock
-                                                                        ?.toString() ??
                                                                     "",
                                                                 // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                 fontWeight:
@@ -3791,10 +1864,28 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                additionalVariants[
+                                                                currentStock.length !=
+                                                                        recievingLisnes
+                                                                            .length
+                                                                    ? ""
+                                                                    : currentStock[i]
+                                                                            ?.toString() ??
+                                                                        "",
+
+                                                                // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+
+                                                          TableCell(
+                                                            verticalAlignment:
+                                                                TableCellVerticalAlignment
+                                                                    .middle,
+                                                            child: textPadding(
+                                                                recievingLisnes[
                                                                             i]
-                                                                        .purchaseUom
-                                                                        .toString() ??
+                                                                        .purchaseUom ??
                                                                     "",
                                                                 // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                 fontWeight:
@@ -3807,55 +1898,52 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child:
-                                                            VariantIdTAble(
-                                                                  text: additionalVariants[i].vendorId ?? "",
-                                                              onTap: () {
+                                                            VariantIdTAble(text: recievingLisnes[i].vendorId ?? "",
+                                                            onTap: () {
                                                                 showDailogPopUp(
                                                                   context,
                                                                   ConfigurePopup(
                                                                     listAssign:
                                                                         (VendorDetailsModel
                                                                             model) {
-                                                                      print(
-                                                                          "akkk");
-
-                                                                      print(model
-                                                                          .toString());
-
                                                                       setState(
                                                                           () {
-                                                                        additionalVariants[i] = additionalVariants[i].copyWith(
-                                                                            vendorId: model?.manuFactureuserCode ??
-                                                                                "",
-                                                                            vendorTrnNumber:
-                                                                                model?.trnNumber.toString() ?? "");
+                                                                        updateCheck = true;
+                                                                        recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                        recievingLisnes[i] = recievingLisnes[i].copyWith(
+                                                                            vendorId: model.manuFactureuserCode ?? "",
+                                                                            vendorTrnNumber: model.trnNumber.toString());
 
                                                                         setState(
                                                                             () {
-                                                                          // var  variant=
-
-                                                                          //     va?.partnerCode;
-
-                                                                          // int? id = model!.id;
-
                                                                           Variable.tableindex =
                                                                               i;
-
-                                                                          recievlinequantityCheck =
-                                                                              false;
-
-                                                                          stockCheck =
-                                                                              true;
 
                                                                           Variable.tableedit =
                                                                               true;
 
                                                                           vendorcheck =
-                                                                              false;
+                                                                              true;
+                                                                          FocusScope.of(context).requestFocus(receivefocusNodes[i][0]);
+                                                                          // context.read<
 
-                                                                          // context.read<VendordetailsCubit>().getVendorDetails(variant);
+                                                                          //     VendordetailsCubit>()
 
-                                                                          // showDailogPopUp(context, VendorPopup(assign:  assigniningDetails,));
+                                                                          //     .getVendorDetails(
+
+                                                                          //     variant);
+
+                                                                          // showDailogPopUp(
+
+                                                                          //     context,
+
+                                                                          //     VendorPopup(
+
+                                                                          //       assign:  assigniningDetails,
+
+                                                                          //
+
+                                                                          //     ));
 
                                                                           // context
 
@@ -3885,79 +1973,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             ),
                                                           ),
 
-                                                          // TableCell(
 
-                                                          //   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                          //   child: PopUpCall(
-
-                                                          //
-
-                                                          //     type:
-
-                                                          //     "VendorCodeGeneral",
-
-                                                          //     value: additionalVariants[i].vendorId ??"",
-
-                                                          //     onSelection:
-
-                                                          //         (Result? va) {
-
-                                                          //
-
-                                                          //       additionalVariants[i] = additionalVariants[i].copyWith(vendorId:va?.partnerCode??"" );
-
-                                                          //       setState(() {
-
-                                                          //         var  variant=
-
-                                                          //             va?.partnerCode;
-
-                                                          //         int? id = va!.id;
-
-                                                          //         Variable.tableindex =i;
-
-                                                          //         recievlinequantityCheck=false;
-
-                                                          //         stockCheck=true;
-
-                                                          //         Variable.tableedit=true;
-
-                                                          //         vendorcheck=false;
-
-                                                          //         context.read<VendordetailsCubit>().getVendorDetails(variant);
-
-                                                          //         showDailogPopUp(context, VendorPopup(assign:  assigniningDetails,));
-
-                                                          //
-
-                                                          //         // context
-
-                                                          //         //     .read<
-
-                                                          //         //     TableDetailsCubitDartCubit>()
-
-                                                          //         //     .getTableDetails(
-
-                                                          //         //     id);
-
-                                                          //         // context
-
-                                                          //         //     .read<PurchaseStockCubit>()
-
-                                                          //         //     .getCurrentStock(Variable.inventory_ID, variant);
-
-                                                          //
-
-                                                          //         // orderType = va!;
-
-                                                          //       });
-
-                                                          //     }, // restricted: true,
-
-                                                          //   ),
-
-                                                          // ),
 
                                                           TableCell(
                                                             verticalAlignment:
@@ -3965,23 +1981,40 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     .middle,
                                                             child:
                                                                 UnderLinedInput(
+                                                              integerOnly: true,
+                                                                  onComplete: (){
+                                                                tabCount=-1;
+                                                                    FocusScope.of(context).requestFocus(receivefocusNodes[i][1]);
+                                                                  },
+                                                                  focusNode: receivefocusNodes[i][0],
                                                               initialCheck:
                                                                   true,
-                                                              integerOnly: true,
-                                                              last: additionalVariants[
+                                                              last: recievingLisnes[
                                                                           i]
                                                                       .requestedQty
                                                                       .toString() ??
                                                                   "",
                                                               onChanged: (va) {
+                                                                updateCheck =
+                                                                    true;
+
+                                                                recievingLisnes[
+                                                                    i] = recievingLisnes[
+                                                                        i]
+                                                                    .copyWith(
+                                                                        updateCheck:
+                                                                            true);
+
+                                                                setState(() {});
+
                                                                 print(va);
 
                                                                 if (va == "") {
                                                                   print(
                                                                       "entered");
 
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
                                                                           requestedQty:
@@ -3998,27 +2031,27 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                           va);
 
                                                                   var dis =
-                                                                      additionalVariants[
+                                                                      recievingLisnes[
                                                                               i]
                                                                           .discount;
 
                                                                   var excess =
-                                                                      additionalVariants[
+                                                                      recievingLisnes[
                                                                               i]
                                                                           .excessTax;
 
                                                                   var unitcost =
-                                                                      additionalVariants[
+                                                                      recievingLisnes[
                                                                               i]
                                                                           .unitCost;
 
                                                                   var vat =
-                                                                      additionalVariants[
+                                                                      recievingLisnes[
                                                                               i]
                                                                           .vat;
 
                                                                   var foc =
-                                                                      additionalVariants[
+                                                                      recievingLisnes[
                                                                               i]
                                                                           .foc;
 
@@ -4026,7 +2059,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                           0 ||
                                                                       unitcost ==
                                                                           0) {
-                                                                    additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(
                                                                         vatableAmount:
                                                                             0,
                                                                         actualCost:
@@ -4048,6 +2081,16 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                           excess,
                                                                           dis);
 
+                                                                      // (((unitcost! *
+
+                                                                      // qty!) +
+
+                                                                      // excess!) -
+
+                                                                      // dis!)
+
+                                                                      // .toDouble();
+
                                                                       if (vat ==
                                                                               0 ||
                                                                           vat ==
@@ -4068,7 +2111,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         //         100));
                                                                       }
 
-                                                                      additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                      recievingLisnes[i] = recievingLisnes[i].copyWith(
                                                                           vatableAmount:
                                                                               Vamount,
                                                                           actualCost:
@@ -4085,6 +2128,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                           dis,
                                                                           foc);
 
+                                                                      // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
+
                                                                       var vactualCost = actualAndgrandTotalUpdation(
                                                                           Vamount,
                                                                           vat);
@@ -4097,7 +2142,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                                       //         100));
 
-                                                                      additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                      recievingLisnes[i] = recievingLisnes[i].copyWith(
                                                                           vatableAmount:
                                                                               Vamount,
                                                                           actualCost:
@@ -4115,44 +2160,124 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             ),
                                                           ),
 
+                                                          // textPadding(
+
+                                                          //     recievingLisnes[i]
+
+                                                          //         .receivedQty.toString()??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:
+
+                                                          // 1.5),
+
+                                                          //     fontWeight: FontWeight.w500),
+
                                                           TableCell(
                                                             verticalAlignment:
                                                                 TableCellVerticalAlignment
                                                                     .middle,
+
                                                             child: CheckedBoxs(
-                                                              valueChanger: additionalVariants[
-                                                                              i]
-                                                                          .isReceived ==
-                                                                      null
-                                                                  ? false
-                                                                  : additionalVariants[
-                                                                          i]
-                                                                      .isReceived,
-                                                              onSelection:
-                                                                  (bool?
-                                                                      value) {
-                                                                bool?
-                                                                    isRecieved =
-                                                                    additionalVariants[
-                                                                            i]
-                                                                        .isReceived;
+                                                                onCompleteFunc: (){
+                                                                  updateCheck =
+                                                                  true;
 
-                                                                setState(() {
+                                                                  recievingLisnes[
+                                                                  i] = recievingLisnes[
+                                                                  i]
+                                                                      .copyWith(
+                                                                      updateCheck:
+                                                                      true);
+
+                                                                  setState(
+                                                                          () {});
+
+                                                                  bool?
                                                                   isRecieved =
-                                                                      !isRecieved!;
+                                                                      recievingLisnes[
+                                                                      i]
+                                                                          .isReceived;
 
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  setState(() {
+                                                                    isRecieved =
+                                                                    !isRecieved!;
+
+                                                                    recievingLisnes[
+                                                                    i] = recievingLisnes[
+                                                                    i]
+                                                                        .copyWith(
+                                                                        isReceived:
+                                                                        isRecieved);
+
+
+                                                                  });
+                                                                  tabCount=-1;
+                                                                  FocusScope.of(context).requestFocus(receivefocusNodes[i][2]);
+                                                                },
+                                                                focusNode: receivefocusNodes[i][1],
+                                                                valueChanger: recievingLisnes[i]
+                                                                            .isReceived ==
+                                                                        null
+                                                                    ? false
+                                                                    : recievingLisnes[
+                                                                            i]
+                                                                        .isReceived,
+                                                                onSelection:
+                                                                    (bool?
+                                                                        value) {
+                                                                  updateCheck =
+                                                                      true;
+
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
-                                                                          isReceived:
-                                                                              isRecieved);
+                                                                          updateCheck:
+                                                                              true);
 
-                                                                  print(
-                                                                      additionalVariants);
-                                                                });
-                                                              },
-                                                            ),
+                                                                  setState(
+                                                                      () {});
+
+                                                                  bool?
+                                                                      isRecieved =
+                                                                      recievingLisnes[
+                                                                              i]
+                                                                          .isReceived;
+
+                                                                  setState(() {
+                                                                    isRecieved =
+                                                                        !isRecieved!;
+
+                                                                    recievingLisnes[
+                                                                        i] = recievingLisnes[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            isReceived:
+                                                                                isRecieved);
+
+
+                                                                  });
+                                                                }),
+
+                                                            // Checkbox(
+
+                                                            //   value: recievingLisnes[i].isReceived == null ? false : recievingLisnes[i].isReceived,
+
+                                                            //   onChanged: (bool? value) {
+
+                                                            //     bool? isRecieved = recievingLisnes[i].isReceived;
+
+                                                            //     setState(() {
+
+                                                            //       isRecieved = !isRecieved!;
+
+                                                            //       recievingLisnes[i] = recievingLisnes[i].copyWith(isReceived: isRecieved);
+
+                                                            //       print(recievingLisnes);
+
+                                                            //     });
+
+                                                            //   },
+
+                                                            // ),
                                                           ),
 
                                                           TableCell(
@@ -4161,15 +2286,32 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     .middle,
                                                             child:
                                                                 UnderLinedInput(
+                                                                  focusNode: receivefocusNodes[i][2],
+                                                                  onComplete: (){
+                                                                    tabCount=-1;
+                                                                    FocusScope.of(context).requestFocus(receivefocusNodes[i][3]);
+                                                                  },
                                                               controller:
-                                                                  unitcostAdditionalListControllers[
+                                                                  unitcostReceivingListControllers[
                                                                       i],
 
                                                               //   initialCheck: true,
                                                               //
-                                                              // last: additionalVariants[i].unitCost.toString() ?? "",
+                                                              // last: recievingLisnes[i].unitCost.toString() ?? "",
 
                                                               onChanged: (va) {
+                                                                updateCheck =
+                                                                    true;
+
+                                                                recievingLisnes[
+                                                                    i] = recievingLisnes[
+                                                                        i]
+                                                                    .copyWith(
+                                                                        updateCheck:
+                                                                            true);
+
+                                                                setState(() {});
+
                                                                 double?
                                                                     unitcost;
 
@@ -4183,8 +2325,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                       unitcost
                                                                           .toString());
 
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
                                                                           vatableAmount:
@@ -4195,143 +2337,137 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                               0,
                                                                           unitCost:
                                                                               0);
+                                                                }
+
+                                                                unitcost = double
+                                                                    .tryParse(
+                                                                        va);
+
+                                                                print("unitcost" +
+                                                                    unitcost
+                                                                        .toString());
+
+                                                                var qty =
+                                                                    recievingLisnes[
+                                                                            i]
+                                                                        .requestedQty;
+
+                                                                print("qty" +
+                                                                    qty.toString());
+
+                                                                var excess =
+                                                                    recievingLisnes[
+                                                                            i]
+                                                                        .excessTax;
+
+                                                                print("excess" +
+                                                                    excess
+                                                                        .toString());
+
+                                                                var disc =
+                                                                    recievingLisnes[
+                                                                            i]
+                                                                        .discount;
+
+                                                                var foc =
+                                                                    recievingLisnes[
+                                                                            i]
+                                                                        .foc;
+
+                                                                var vat =
+                                                                    recievingLisnes[
+                                                                            i]
+                                                                        .vat;
+
+
+
+
+                                                                if (qty == 0 ||
+                                                                    qty ==
+                                                                        null) {
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
+                                                                          i]
+                                                                      .copyWith(
+                                                                          vatableAmount:
+                                                                              0,
+                                                                          actualCost:
+                                                                              0,
+                                                                          grandTotal:
+                                                                              0,
+                                                                          unitCost:
+                                                                              0);
+
                                                                   setState(
                                                                       () {});
                                                                 } else {
-                                                                  unitcost = double
-                                                                      .tryParse(
-                                                                          va);
-
-                                                                  print("unitcost" +
-                                                                      unitcost
-                                                                          .toString());
-
-                                                                  var qty =
-                                                                      additionalVariants[
-                                                                              i]
-                                                                          .requestedQty;
-
-                                                                  print("qty" +
-                                                                      qty.toString());
-
-                                                                  var excess =
-                                                                      additionalVariants[
-                                                                              i]
-                                                                          .excessTax;
-
-                                                                  print("excess" +
-                                                                      excess
-                                                                          .toString());
-
-                                                                  var disc =
-                                                                      additionalVariants[
-                                                                              i]
-                                                                          .discount;
-
-                                                                  var foc =
-                                                                      additionalVariants[
-                                                                              i]
-                                                                          .foc;
-
-                                                                  var vat =
-                                                                      additionalVariants[
-                                                                              i]
-                                                                          .vat;
-
-                                                                  print("vat" +
-                                                                      vat.toString());
-
-                                                                  print("qty" +
-                                                                      qty.toString());
-
-                                                                  if (qty ==
+                                                                  if (foc ==
                                                                           0 ||
-                                                                      qty ==
-                                                                          null) {
-                                                                    additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                      foc ==
+                                                                          "") {
+                                                                    var Vamount = vatableAmountUpdation(
+                                                                        unitcost,
+                                                                        qty,
+                                                                        excess,
+                                                                        disc);
+
+                                                                    var vactualCost =
+                                                                        actualAndgrandTotalUpdation(
+                                                                            Vamount,
+                                                                            vat);
+
+
+                                                                    print("vactualCost" +
+                                                                        vactualCost
+                                                                            .toString());
+
+                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(
                                                                         vatableAmount:
-                                                                            0,
+                                                                            Vamount,
                                                                         actualCost:
-                                                                            0,
+                                                                            vactualCost,
                                                                         grandTotal:
-                                                                            0,
+                                                                            vactualCost,
                                                                         unitCost:
-                                                                            0);
+                                                                            unitcost);
 
                                                                     setState(
                                                                         () {});
                                                                   } else {
-                                                                    if (foc ==
-                                                                            0 ||
-                                                                        foc ==
-                                                                            "") {
-                                                                      var Vamount = vatableAmountUpdation(
-                                                                          unitcost,
-                                                                          qty,
-                                                                          excess,
-                                                                          disc);
+                                                                    var Vamount = vatableAmountFocUpdation(
+                                                                        unitcost,
+                                                                        qty,
+                                                                        excess,
+                                                                        disc,
+                                                                        foc);
 
-                                                                      // (((unitcost! *
+                                                                    // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
 
-                                                                      //     qty!) +
+                                                                    var vactualCost =
+                                                                        actualAndgrandTotalUpdation(
+                                                                            Vamount,
+                                                                            vat);
 
-                                                                      //     excess!) -
+                                                                    // (Vamount! +
 
-                                                                      //     disc!)
+                                                                    //     ((Vamount! *
 
-                                                                      //     .toDouble();
+                                                                    //         vat!) /
 
-                                                                      var vactualCost = actualAndgrandTotalUpdation(
-                                                                          Vamount,
-                                                                          vat);
+                                                                    //         100));
 
-                                                                      // (Vamount! +
+                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(
+                                                                        vatableAmount:
+                                                                            Vamount,
+                                                                        actualCost:
+                                                                            vactualCost,
+                                                                        grandTotal:
+                                                                            vactualCost,
+                                                                        unitCost:
+                                                                            unitcost);
 
-                                                                      //     ((Vamount! *
-
-                                                                      //         vat!) /
-
-                                                                      //         100));
-
-                                                                      additionalVariants[i] = additionalVariants[i].copyWith(
-                                                                          vatableAmount:
-                                                                              Vamount,
-                                                                          actualCost:
-                                                                              vactualCost,
-                                                                          grandTotal:
-                                                                              vactualCost,
-                                                                          unitCost:
-                                                                              unitcost);
-
-                                                                      setState(
-                                                                          () {});
-                                                                    } else {
-                                                                      var Vamount = vatableAmountFocUpdation(
-                                                                          unitcost,
-                                                                          qty,
-                                                                          excess,
-                                                                          disc,
-                                                                          foc);
-
-                                                                      // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-
-                                                                      var vactualCost = actualAndgrandTotalUpdation(
-                                                                          Vamount,
-                                                                          vat);
-
-                                                                      additionalVariants[i] = additionalVariants[i].copyWith(
-                                                                          vatableAmount:
-                                                                              Vamount,
-                                                                          actualCost:
-                                                                              vactualCost,
-                                                                          grandTotal:
-                                                                              vactualCost,
-                                                                          unitCost:
-                                                                              unitcost);
-
-                                                                      setState(
-                                                                          () {});
-                                                                    }
+                                                                    setState(
+                                                                        () {});
                                                                   }
                                                                 }
                                                               },
@@ -4344,14 +2480,31 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     .middle,
                                                             child:
                                                                 UnderLinedInput(
+                                                                  onComplete: (){
+                                                                    tabCount=-1;
+                                                                    FocusScope.of(context).requestFocus(receivefocusNodes[i][4]);
+                                                                  },
+                                                                  focusNode: receivefocusNodes[i][3],
                                                               initialCheck:
                                                                   true,
-                                                              last: additionalVariants[
+                                                              last: recievingLisnes[
                                                                           i]
                                                                       .excessTax
                                                                       .toString() ??
                                                                   "",
                                                               onChanged: (va) {
+                                                                updateCheck =
+                                                                    true;
+
+                                                                recievingLisnes[
+                                                                    i] = recievingLisnes[
+                                                                        i]
+                                                                    .copyWith(
+                                                                        updateCheck:
+                                                                            true);
+
+                                                                setState(() {});
+
                                                                 double? excess;
 
                                                                 if (va == "") {
@@ -4369,17 +2522,17 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 }
 
                                                                 var qty =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .requestedQty;
 
                                                                 var vat =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .vat;
 
                                                                 var foc =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .foc;
 
@@ -4388,7 +2541,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         .toString());
 
                                                                 var unitcost =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .unitCost;
 
@@ -4397,15 +2550,15 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         .toString());
 
                                                                 var Vdiscount =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .discount;
 
                                                                 if (qty == 0 ||
                                                                     unitcost ==
                                                                         0) {
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
                                                                           actualCost:
@@ -4431,6 +2584,16 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         qty,
                                                                         excess,
                                                                         Vdiscount);
+
+                                                                    // (((unitcost! *
+
+                                                                    //     qty!) +
+
+                                                                    //     excess!) -
+
+                                                                    //     Vdiscount!)
+
+                                                                    //     .toDouble();
                                                                   } else {
                                                                     Vamount = vatableAmountFocUpdation(
                                                                         unitcost,
@@ -4438,6 +2601,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         excess,
                                                                         Vdiscount,
                                                                         foc);
+
+                                                                    // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
                                                                   }
 
                                                                   var vactualCost =
@@ -4445,11 +2610,32 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                           Vamount,
                                                                           vat);
 
-                                                                  additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                  // (Vamount! +
+
+                                                                  //     ((Vamount! *
+
+                                                                  //         vat!) /
+
+                                                                  //         100));
+
+                                                                  var Vgrnadtotal =
+                                                                      actualAndgrandTotalUpdation(
+                                                                          Vamount,
+                                                                          vat);
+
+                                                                  // (Vamount! +
+
+                                                                  //     ((Vamount! *
+
+                                                                  //         vat!) /
+
+                                                                  //         100));
+
+                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(
                                                                       actualCost:
                                                                           vactualCost,
                                                                       grandTotal:
-                                                                          vactualCost,
+                                                                          Vgrnadtotal,
                                                                       vatableAmount:
                                                                           Vamount,
                                                                       excessTax:
@@ -4468,17 +2654,37 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     .middle,
                                                             child:
                                                                 UnderLinedInput(
+                                                                  onComplete: (){
+                                                                    tabCount=-1;
+                                                                    FocusScope.of(context).requestFocus(receivefocusNodes[i][5]);
+                                                                  },
+                                                                  focusNode: receivefocusNodes[i][4],
                                                               initialCheck:
                                                                   true,
-                                                              last: additionalVariants[
+                                                              last: recievingLisnes[
                                                                           i]
                                                                       .discount
                                                                       .toString() ??
                                                                   "",
                                                               onChanged: (va) {
+                                                                updateCheck =
+                                                                    true;
+
+                                                                recievingLisnes[
+                                                                    i] = recievingLisnes[
+                                                                        i]
+                                                                    .copyWith(
+                                                                        updateCheck:
+                                                                            true);
+
+                                                                setState(() {});
+
                                                                 double? disc;
 
                                                                 if (va == "") {
+                                                                  print(
+                                                                      "entered");
+
                                                                   disc = 0;
                                                                 } else {
                                                                   disc = double
@@ -4487,35 +2693,35 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 }
 
                                                                 var qty =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .requestedQty;
 
                                                                 var excess =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .excessTax;
 
                                                                 var unitcost =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .unitCost;
 
                                                                 var vat =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .vat;
 
                                                                 var foc =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .foc;
 
                                                                 if (unitcost ==
                                                                         0 ||
                                                                     qty == 0) {
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
                                                                           vatableAmount:
@@ -4537,12 +2743,30 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         excess,
                                                                         disc);
 
+                                                                    // (((unitcost! *
+
+                                                                    //     qty!) +
+
+                                                                    //     excess!) -
+
+                                                                    //     disc!)
+
+                                                                    //     .toDouble();
+
                                                                     var vactualCost =
                                                                         actualAndgrandTotalUpdation(
                                                                             Vamount,
                                                                             vat);
 
-                                                                    additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                    // (Vamount! +
+
+                                                                    //     ((Vamount! *
+
+                                                                    //         vat!) /
+
+                                                                    //         100));
+
+                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(
                                                                         vatableAmount:
                                                                             Vamount,
                                                                         actualCost:
@@ -4555,19 +2779,21 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     setState(
                                                                         () {});
                                                                   } else {
-                                                                    var Vamount = vatableAmountFocUpdation(
+                                                                    var Vamount = vatableFocAmountCalculation(
                                                                         unitcost,
                                                                         qty,
                                                                         excess,
                                                                         disc,
                                                                         foc);
 
+                                                                    // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+
                                                                     var vactualCost =
                                                                         actualAndgrandTotalUpdation(
                                                                             Vamount,
                                                                             vat);
 
-                                                                    additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(
                                                                         vatableAmount:
                                                                             Vamount,
                                                                         actualCost:
@@ -4585,27 +2811,64 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                             ),
                                                           ),
 
+                                                          // textPadding(
+
+                                                          //     recievingLisnes[i]
+
+                                                          //         .discount.toString()??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:
+
+                                                          // 1.5),
+
+                                                          //     fontWeight: FontWeight.w500),
+
+                                                          // textPadding(
+
+                                                          //     recievingLisnes[i]
+
+                                                          //         .foc.toString()??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:
+
+                                                          // 1.5),
+
+                                                          //     fontWeight: FontWeight.w500),
+
                                                           TableCell(
                                                             verticalAlignment:
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child:
                                                                 UnderLinedInput(
+                                                                    onComplete: (){
+                                                                      tabCount=-1;
+                                                                    FocusScope.of(context).requestFocus(receivefocusNodes[i][6]);
+                                                                  },
+                                                                  focusNode: receivefocusNodes[i][5],
                                                               initialCheck:
                                                                   true,
-                                                              last: additionalVariants[
+                                                              last: recievingLisnes[
                                                                           i]
                                                                       .foc
                                                                       .toString() ??
                                                                   "",
                                                               onChanged: (va) {
+                                                                updateCheck =
+                                                                    true;
+
+                                                                recievingLisnes[
+                                                                    i] = recievingLisnes[
+                                                                        i]
+                                                                    .copyWith(
+                                                                        updateCheck:
+                                                                            true);
+
+                                                                setState(() {});
+
                                                                 double? foc;
 
                                                                 if (va == "") {
                                                                   foc = 0;
 
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
                                                                           foc:
@@ -4615,8 +2878,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                       .tryParse(
                                                                           va);
 
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
                                                                           foc:
@@ -4624,12 +2887,12 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 }
 
                                                                 var qty =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .requestedQty;
 
                                                                 var vat =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .vat;
 
@@ -4637,7 +2900,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     qty.toString());
 
                                                                 var excess =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .excessTax;
 
@@ -4646,12 +2909,12 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         .toString());
 
                                                                 var disc =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .discount;
 
                                                                 var unitcost =
-                                                                    additionalVariants[
+                                                                    recievingLisnes[
                                                                             i]
                                                                         .unitCost;
 
@@ -4661,8 +2924,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                   print(
                                                                       "checking case");
 
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
                                                                           vatableAmount:
@@ -4689,26 +2952,46 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         excess,
                                                                         disc);
 
+                                                                    // (((unitcost! *
+
+                                                                    // qty!) +
+
+                                                                    // excess!) -
+
+                                                                    // disc!)
+
+                                                                    // .toDouble();
+
                                                                     setState(
                                                                         () {});
                                                                   } else {
-                                                                    Vamount = ((((qty! * unitcost!) -
-                                                                                (foc! * unitcost!)) +
-                                                                            excess!) -
-                                                                        disc!);
+                                                                    Vamount = vatableFocAmountCalculation(
+                                                                        unitcost,
+                                                                        qty,
+                                                                        excess,
+                                                                        disc,
+                                                                        foc);
 
                                                                     setState(
                                                                         () {});
                                                                   }
 
                                                                   var vactualCost =
-                                                                      (Vamount! +
-                                                                          ((Vamount! * vat!) /
-                                                                              100));
+                                                                      actualAndgrandTotalUpdation(
+                                                                          Vamount,
+                                                                          vat);
 
-                                                                  additionalVariants[
+                                                                  // (Vamount! +
+
+                                                                  //     ((Vamount! *
+
+                                                                  //         vat!) /
+
+                                                                  //         100));
+
+                                                                  recievingLisnes[
                                                                           i] =
-                                                                      additionalVariants[
+                                                                      recievingLisnes[
                                                                               i]
                                                                           .copyWith(
                                                                     vatableAmount:
@@ -4724,22 +3007,31 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 }
 
                                                                 print(
-                                                                    additionalVariants);
+                                                                    recievingLisnes);
                                                               },
                                                             ),
                                                           ),
+
+                                                          // textPadding(
+
+                                                          //     recievingLisnes[i]
+
+                                                          //         .unitCost.toString()??"", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:
+
+                                                          // 1.5),
+
+                                                          //     fontWeight: FontWeight.w500),
 
                                                           TableCell(
                                                             verticalAlignment:
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                additionalVariants[
+                                                                recievingLisnes[
                                                                             i]
                                                                         .vatableAmount
                                                                         .toString() ??
                                                                     "",
-                                                                // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500),
@@ -4750,7 +3042,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                additionalVariants[
+                                                                recievingLisnes[
                                                                             i]
                                                                         .vat
                                                                         .toString() ??
@@ -4769,17 +3061,27 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                           //       initialCheck: true,
 
-                                                          //     last: additionalVariants[i].vat.toString() ?? "",
+                                                          //     last: recievingLisnes[i].vat.toString() ?? "",
 
                                                           //     onChanged: (va) {
+
+                                                          //       updateCheck=true;
+
+                                                          //       recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+
+                                                          //       setState(() {
+
+                                                          //
+
+                                                          //       });
 
                                                           //       if (va == "") {
 
                                                           //         print("sss");
 
-                                                          //         var vatableAmount = additionalVariants[i].vatableAmount;
+                                                          //         var vatableAmount = recievingLisnes[i].vatableAmount;
 
-                                                          //         additionalVariants[i] = additionalVariants[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
+                                                          //         recievingLisnes[i] = recievingLisnes[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
 
                                                           //         setState(() {});
 
@@ -4787,27 +3089,27 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                           //         var vat = double.tryParse(va);
 
-                                                          //         var Vamount = additionalVariants[i].vatableAmount;
+                                                          //         var Vamount = recievingLisnes[i].vatableAmount;
 
                                                           //         print("qty" + Vamount.toString());
 
-                                                          //         var excess = additionalVariants[i].excessTax;
+                                                          //         var excess = recievingLisnes[i].excessTax;
 
                                                           //         print("excess" + excess.toString());
 
-                                                          //         var unitcost = additionalVariants[i].unitCost;
+                                                          //         var unitcost = recievingLisnes[i].unitCost;
 
-                                                          //         var qty = additionalVariants[i].receivedQty;
+                                                          //         var qty = recievingLisnes[i].receivedQty;
 
-                                                          //         var foc = additionalVariants[i].foc;
+                                                          //         var foc = recievingLisnes[i].foc;
 
-                                                          //         var dis = additionalVariants[i].discount;
+                                                          //         var dis = recievingLisnes[i].discount;
 
                                                           //         print("unitcost" + unitcost.toString());
 
                                                           //         if(unitcost==0 || qty==0){
 
-                                                          //           additionalVariants[i] = additionalVariants[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
+                                                          //           recievingLisnes[i] = recievingLisnes[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
 
                                                           //
 
@@ -4841,9 +3143,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                           //                     100));
 
-                                                          //             additionalVariants[i] =
+                                                          //             recievingLisnes[i] =
 
-                                                          //                 additionalVariants[i]
+                                                          //                 recievingLisnes[i]
 
                                                           //                     .copyWith(
 
@@ -4881,9 +3183,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                                                           //                     100));
 
-                                                          //             additionalVariants[i] =
+                                                          //             recievingLisnes[i] =
 
-                                                          //                 additionalVariants[i]
+                                                          //                 recievingLisnes[i]
 
                                                           //                     .copyWith(
 
@@ -4916,7 +3218,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                additionalVariants[
+                                                                recievingLisnes[
                                                                             i]
                                                                         .actualCost
                                                                         .toString() ??
@@ -4932,7 +3234,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: textPadding(
-                                                                additionalVariants[
+                                                                recievingLisnes[
                                                                             i]
                                                                         .grandTotal
                                                                         .toString() ??
@@ -4943,19 +3245,36 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                         .w500),
                                                           ),
 
-                                                          CheckedBoxs(
-                                                            valueChanger: additionalVariants[
+                                                          TableCell(
+                                                            verticalAlignment:
+                                                                TableCellVerticalAlignment
+                                                                    .middle,
+                                                            child: CheckedBoxs(
+
+                                                                valueChanger: recievingLisnes[i]
+                                                                            .isInvoiced ==
+                                                                        null
+                                                                    ? false
+                                                                    : recievingLisnes[
                                                                             i]
-                                                                        .isInvoiced ==
-                                                                    null
-                                                                ? false
-                                                                : additionalVariants[
-                                                                        i]
-                                                                    .isInvoiced,
-                                                            onSelection:
-                                                                (bool? value) {
-                                                              setState(() {});
-                                                            },
+                                                                        .isInvoiced,
+                                                                onSelection:
+                                                                    (bool?
+                                                                        value) {
+                                                                  bool?
+                                                                      isInvoiced =
+                                                                      recievingLisnes[
+                                                                              i]
+                                                                          .isInvoiced;
+
+                                                                  setState(() {
+                                                                    // isInvoiced = !isInvoiced!;
+
+                                                                    // recievingLisnes[i] = recievingLisnes[i].copyWith(isInvoiced: isInvoiced);
+
+                                                                    // print(isInvoiced);
+                                                                  });
+                                                                }),
                                                           ),
 
                                                           TableCell(
@@ -4963,31 +3282,54 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: Tabledate(
+                                                                onEnterClick: (){
+                                                                  tabCount=-1;
+                                                                  FocusScope.of(context).requestFocus(receivefocusNodes[i][7]);
+                                                                },
+                                                                focusNode: receivefocusNodes[i][6],
                                                                 format: DateFormat(
                                                                     'dd-MM-yyyy'),
-                                                                controller:
-                                                                    expirydateControllerList[
-                                                                        i],
-                                                                label: "Promised Receipt Date",
                                                                 onSuffixIconPressed: (){
                                                                   setState(() {
-                                                                    additionalVariants[i] = additionalVariants[i].copyWith(updateCheck:additionalVariants[i].expiryDate!=null ||additionalVariants[i].updateCheck==true? true:false,expiryDate: null);
-                                                                    expirydateControllerList[i]=TextEditingController(text: "");
+
+                                                                    recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck:recievingLisnes[i].expiryDate!=null||recievingLisnes[i].updateCheck==true? true:false,expiryDate: null);
+                                                                    expirydateControllerList2[i]=TextEditingController(text: "");
                                                                   });
 
 
                                                                 },
+                                                                controller: recievingLisnes
+                                                                            .length !=
+                                                                        expirydateControllerList2
+                                                                            .length
+                                                                    ? TextEditingController(
+                                                                        text:
+                                                                            "")
+                                                                    : expirydateControllerList2[
+                                                                        i],
+                                                                label:
+                                                                    "Promised receipt date",
                                                                 onSaved:
                                                                     (newValue) {
-                                                                  expirydateControllerList[i] = TextEditingController(
+                                                                  updateCheck =
+                                                                      true;
+
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
+                                                                          i]
+                                                                      .copyWith(
+                                                                          updateCheck:
+                                                                              true);
+
+                                                                  expirydateControllerList2[i] = TextEditingController(
                                                                       text: newValue ==
                                                                               null
                                                                           ? ""
                                                                           : DateFormat('dd-MM-yyyy')
                                                                               .format(newValue!));
 
-                                                                  additionalVariants[
-                                                                      i] = additionalVariants[
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
                                                                           i]
                                                                       .copyWith(
                                                                           expiryDate:
@@ -4999,22 +3341,60 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 enable: true),
                                                           ),
 
+                                                          // Checkbox(
+
+                                                          //   value: recievingLisnes[i].isInvoiced == null ? false : recievingLisnes[i].isInvoiced,
+
+                                                          //   onChanged: (bool? value) {
+
+                                                          //     setState(() {});
+
+                                                          //   },
+
+                                                          // ),
+
                                                           TableCell(
+                                                            verticalAlignment:
+                                                                TableCellVerticalAlignment
+                                                                    .middle,
+
                                                             child: CheckedBoxs(
-                                                              valueChanger: additionalVariants[
+                                                                valueChanger: recievingLisnes[i]
+                                                                            .isFree ==
+                                                                        null
+                                                                    ? false
+                                                                    : recievingLisnes[
+                                                                            i]
+                                                                        .isFree,
+                                                                onSelection:
+                                                                    (bool?
+                                                                        value) {
+                                                                  bool?
+                                                                      isInvoiced =
+                                                                      recievingLisnes[
                                                                               i]
-                                                                          .isFree ==
-                                                                      null
-                                                                  ? false
-                                                                  : additionalVariants[
-                                                                          i]
-                                                                      .isFree,
-                                                              onSelection:
-                                                                  (bool?
-                                                                      value) {
-                                                                setState(() {});
-                                                              },
-                                                            ),
+                                                                          .isFree;
+
+                                                                  setState(() {
+                                                                    // isInvoiced = !isInvoiced!;
+
+                                                                    // recievingLisnes[i] = recievingLisnes[i].copyWith(isFree: isInvoiced);
+
+                                                                    // print(isInvoiced);
+                                                                  });
+                                                                }),
+
+                                                            // Checkbox(
+
+                                                            //   value: recievingLisnes[i].isFree == null ? false : recievingLisnes[i].isFree,
+
+                                                            //   onChanged: (bool? value) {
+
+                                                            //     setState(() {});
+
+                                                            //   },vis
+
+                                                            // ),
                                                           ),
 
                                                           TableCell(
@@ -5022,18 +3402,75 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                 TableCellVerticalAlignment
                                                                     .middle,
                                                             child: CheckedBoxs(
-                                                              valueChanger: additionalVariants[
+                                                              onCompleteFunc: (){
+                                                                tabCount=-1;
+                                                                updateCheck =
+                                                                true;
+
+
+                                                                bool? isActive =
+                                                                    recievingLisnes[
+                                                                    i]
+                                                                        .isActive;
+
+                                                                setState(() {
+                                                                  isActive =
+                                                                  !isActive!;
+
+                                                                  recievingLisnes[
+                                                                  i] = recievingLisnes[
+                                                                  i]
+                                                                      .copyWith(
+                                                                      isActive:
+                                                                      isActive,updateCheck: true);
+
+                                                                  setState(
+                                                                          () {});
+                                                                });
+                                                                updateReceveTableFunc(i);
+                                                                if(i!=recievingLisnes.length-1){
+                                                                  FocusScope.of(context).requestFocus(receivefocusNodes[i+1][0]);
+                                                                }
+                                                                else{
+                                                                  FocusScope.of(context).requestFocus(receivefocusNodes[i][0]);
+                                                                }
+
+                                                              },
+                                                              focusNode: receivefocusNodes[i][7],
+                                                              valueChanger: recievingLisnes[
                                                                               i]
                                                                           .isActive ==
                                                                       null
                                                                   ? false
-                                                                  : additionalVariants[
+                                                                  : recievingLisnes[
                                                                           i]
                                                                       .isActive,
                                                               onSelection:
                                                                   (bool?
                                                                       value) {
-                                                                setState(() {});
+                                                                updateCheck =
+                                                                    true;
+
+
+                                                                bool? isActive =
+                                                                    recievingLisnes[
+                                                                            i]
+                                                                        .isActive;
+
+                                                                setState(() {
+                                                                  isActive =
+                                                                      !isActive!;
+
+                                                                  recievingLisnes[
+                                                                      i] = recievingLisnes[
+                                                                          i]
+                                                                      .copyWith(
+                                                                          isActive:
+                                                                              isActive,updateCheck: true);
+
+                                                                  setState(
+                                                                      () {});
+                                                                });
                                                               },
                                                             ),
                                                           ),
@@ -5044,1144 +3481,3014 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                                                     .middle,
                                                             child:
                                                                 TableTextButton(
-                                                              label: "",
-                                                              onPress: () {},
-                                                            ),
-                                                          )
-                                                        ]),
-                                                ],
-                                                TableRow(
-                                                    decoration: BoxDecoration(
-                                                        color: Pellet
-                                                            .tableRowColor,
-                                                        shape:
-                                                            BoxShape.rectangle,
-                                                        border: Border(
-                                                            left: BorderSide(
-                                                                color: Color(0xff3E4F5B)
-                                                                    .withOpacity(
-                                                                        .1),
-                                                                width: .4,
-                                                                style: BorderStyle
-                                                                    .solid),
-                                                            bottom: BorderSide(
-                                                                color: Color(0xff3E4F5B)
-                                                                    .withOpacity(
-                                                                        .1),
-                                                                style: BorderStyle
-                                                                    .solid),
-                                                            right: BorderSide(
-                                                                color: Color(0xff3E4F5B)
-                                                                    .withOpacity(.1),
-                                                                width: .4,
-                                                                style: BorderStyle.solid))),
-                                                    children: [
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            (1).toString(),
-                                                            fontSize: 12,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 1.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                      VariantIdTAble(
-                                                        text: variantId.toString(),
-                                                        onTap: () {
-                                                          showDailogPopUp(context,
-                                                            TableConfigurePopup(
-                                                              inventory: Variable.inventory_ID,
-                                                              type: "variantTabalePopup",
-                                                              valueSelect:
-                                                                  (VariantId?
-                                                                      va) {
-                                                                setState(() {
-                                                                  stockCheck = true;
-                                                                  variantId = va?.code;
-                                                                  int? id = va!.id;
-                                                                  Variable.tableedit = false;
-                                                                  recievlinequantityCheck = false;
-                                                                  stockCheck =
-                                                                      true;
-                                                                  variantIdcheck =
-                                                                      false;
+                                                                  textColor:  recievingLisnes?[i].updateCheck==true?Pellet.bagroundColor:Colors.black,
+                                                                  bagroundColor: recievingLisnes?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
+                                                              label: recievingLisnes[
+                                                                              i]
+                                                                          .updateCheck ==
+                                                                      true
+                                                                  ? 'UPDATE'
+                                                                  : "",
 
-                                                                  context
-                                                                      .read<
-                                                                          TableDetailsCubitDartCubit>()
-                                                                      .getTableDetails(
-                                                                          id);
-                                                                  setState(
-                                                                      () {});
-                                                                  context
-                                                                      .read<
-                                                                          PurchaseStockCubit>()
-                                                                      .getCurrentStock(
-                                                                          Variable
-                                                                              .inventory_ID,
-                                                                          variantId);
-                                                                });
-
+                                                              onPress: () {
+                                                                tabCount=-1;
+                                                                updateReceveTableFunc(i);
                                                               },
                                                             ),
-                                                          );
-                                                        },
+                                                          )
+                                                        ],
                                                       ),
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            varinatname ?? "",
-                                                            // fontSize: 12, padding: EdgeInsets.only(
+                                                  ]
+                                                ],
+
+                                                widths: {
+                                                  0: FlexColumnWidth(2),
+                                                  1: FlexColumnWidth(3),
+                                                  2: FlexColumnWidth(4),
+                                                  3: FlexColumnWidth(5),
+                                                  4: FlexColumnWidth(4),
+                                                  5: FlexColumnWidth(3),
+                                                  6: FlexColumnWidth(3),
+                                                  7: FlexColumnWidth(4),
+                                                  8: FlexColumnWidth(3),
+                                                  9: FlexColumnWidth(2.4),
+                                                  10: FlexColumnWidth(3),
+                                                  11: FlexColumnWidth(3),
+                                                  12: FlexColumnWidth(3),
+                                                  13: FlexColumnWidth(3),
+                                                  14: FlexColumnWidth(3),
+                                                  15: FlexColumnWidth(3),
+                                                  16: FlexColumnWidth(3),
+                                                  17: FlexColumnWidth(3),
+                                                  18: FlexColumnWidth(2),
+                                                  19: FlexColumnWidth(4),
+                                                  20: FlexColumnWidth(2.4),
+                                                  21: FlexColumnWidth(2.4),
+                                                  22: FlexColumnWidth(3),
+                                                },
+                                              )),
+                                          SizedBox(
+                                            height: 10,
+                                          )
+                                        ],
+                                      )),
+                                )),
+
+                            SizedBox(
+                              height: 33,
+                            ),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextWidget(text: "Additional Variants"),
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: height * .01,
+                            ),
+
+                            CustomScrollBar(
+                                controller: additionalController,
+                                childs: Container(
+                                  color: Colors.white,
+                                  alignment: Alignment.topRight,
+                                  child: SingleChildScrollView(
+                                      controller: additionalController,
+                                      physics: ScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SingleChildScrollView(
+                                            child: Container(
+                                              width: 2200,
+                                              // padding: EdgeInsets.all(10),
+                                              child: customTable(
+                                                tableWidth: .5,
+                                                childrens: [
+                                                  TableRow(
+                                                      children: [
+                                                        tableHeadtext(
+                                                          'Sl.No',
+                                                          size: 13,
+
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Variant Id',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Variant Name',
+                                                          size: 13,
+                                                        ),
+                                                        tableHeadtext(
+                                                          'Barcode',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Current Qty',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Purchase UOM',
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Vendor Id',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Received Qty',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Is Received',
+
+                                                          size: 13,
+
+                                                          // color: Palette.containerDarknew,
+
+                                                          // textColor: Palette.white
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Unit Cost',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Excise Tax',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Discount',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'FOC',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Vatable Amount',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'VAT',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Actual cost',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Grand Total',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Is Invoiced',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Expiry Date',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Is Free',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          'Is Active',
+                                                          size: 13,
+                                                        ),
+
+                                                        tableHeadtext(
+                                                          '',
+                                                          size: 13,
+                                                        ),
+
+                                                        // if (widget.onAddNew) textPadding(''),
+                                                      ]),
+                                                  if (additionalVariants !=
+                                                      null) ...[
+                                                    for (var i = 0;
+                                                        i <
+                                                            additionalVariants
+                                                                .length;
+                                                        i++)
+                                                      TableRow(
+                                                          decoration: BoxDecoration(
+                                                              color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
+                                                              shape: BoxShape
+                                                                  .rectangle,
+                                                              border: Border(
+                                                                  left: BorderSide(
+                                                                      color: Color(0xff3E4F5B)
+                                                                          .withOpacity(
+                                                                              .1),
+                                                                      width: .4,
+                                                                      style: BorderStyle
+                                                                          .solid),
+                                                                  bottom: BorderSide(
+                                                                      color: Color(0xff3E4F5B)
+                                                                          .withOpacity(
+                                                                              .1),
+                                                                      style: BorderStyle
+                                                                          .solid),
+                                                                  right: BorderSide(
+                                                                      color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                      width: .4,
+                                                                      style: BorderStyle.solid))),
+                                                          children: [
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  (i + 1).toString(),
+                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+
+                                                            TableCell(
+                                                                verticalAlignment:
+                                                                    TableCellVerticalAlignment
+                                                                        .middle,
+                                                                child:
+                                                                    VariantIdTAble(
+                                                                  text: additionalVariants[i]
+                                                                      .variantId
+                                                                      .toString(),
+                                                                  onTap: () {
+                                                                    showDailogPopUp(
+                                                                      context,
+                                                                      TableConfigurePopup(
+                                                                        inventory:
+                                                                            Variable
+                                                                                .inventory_ID,
+                                                                        type:
+                                                                            "variantTabalePopup",
+                                                                        valueSelect:
+                                                                            (VariantId?
+                                                                                va) {
+                                                                          additionalVariants[
+                                                                              i] = additionalVariants[
+                                                                                  i]
+                                                                              .copyWith(variantId: va?.code);
+
+                                                                          setState(
+                                                                              () {
+                                                                            var variant =
+                                                                                va?.code;
+
+                                                                            int?
+                                                                                id =
+                                                                                va!.id;
+
+                                                                            Variable.tableindex =
+                                                                                i;
+
+                                                                            Variable.tableedit =
+                                                                                true;
+
+                                                                            variantIdcheck =
+                                                                                false;
+
+                                                                            FocusScope.of(context).requestFocus(listOfxfocusNodes[i][0]);
+
+                                                                            context
+                                                                                .read<TableDetailsCubitDartCubit>()
+                                                                                .getTableDetails(id);
+
+                                                                            context.read<PurchaseStockCubit>().getCurrentStock(
+                                                                                Variable.inventory_ID,
+                                                                                variant);
+
+                                                                            // orderType = va!;
+                                                                          });
+                                                                        },
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                )
+                                                                // PopUpCall(
+                                                                //
+                                                                //   inventory: Variable.inventory_ID,
+                                                                //
+                                                                //
+                                                                //
+                                                                //
+                                                                //
+                                                                //   type:"cost-method-list",
+                                                                //
+                                                                //   value: additionalVariants[i].variantId,
+                                                                //
+                                                                //   onSelection: (VariantId? va) {
+                                                                //
+                                                                //     additionalVariants[i] = additionalVariants[i].copyWith(variantId:va?.code );
+                                                                //
+                                                                //     setState(() {
+                                                                //
+                                                                //       var  variant=
+                                                                //
+                                                                //           va?.code;
+                                                                //
+                                                                //       int? id = va!.id;
+                                                                //
+                                                                //       Variable.tableindex =i;
+                                                                //
+                                                                //       Variable.tableedit=true;
+                                                                //
+                                                                //       variantIdcheck=false;
+                                                                //
+                                                                //
+                                                                //
+                                                                //
+                                                                //
+                                                                //
+                                                                //
+                                                                //       context
+                                                                //
+                                                                //           .read<
+                                                                //
+                                                                //           TableDetailsCubitDartCubit>()
+                                                                //
+                                                                //           .getTableDetails(
+                                                                //
+                                                                //           id);
+                                                                //
+                                                                //       context
+                                                                //
+                                                                //           .read<PurchaseStockCubit>()
+                                                                //
+                                                                //           .getCurrentStock(Variable.inventory_ID, variant);
+                                                                //
+                                                                //
+                                                                //
+                                                                //       // orderType = va!;
+                                                                //
+                                                                //     });
+                                                                //
+                                                                //   }, // restricted: true,
+                                                                //
+                                                                // ),
+
+                                                                ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  additionalVariants[
+                                                                              i]
+                                                                          .variantName ??
+                                                                      "",
+                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  additionalVariants[
+                                                                              i]
+                                                                          .barcode ??
+                                                                      "",
+                                                                  fontSize: 12,
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  additionalVariants[
+                                                                              i]
+                                                                          .currentStock
+                                                                          ?.toString() ??
+                                                                      "",
+                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  additionalVariants[
+                                                                              i]
+                                                                          .purchaseUom
+                                                                          .toString() ??
+                                                                      "",
+                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child:
+                                                              VariantIdTAble(
+                                                                    text: additionalVariants[i].vendorId ?? "",
+                                                                onTap: () {
+                                                                  showDailogPopUp(
+                                                                    context,
+                                                                    ConfigurePopup(
+                                                                      listAssign:
+                                                                          (VendorDetailsModel
+                                                                              model) {
+
+
+                                                                        setState(
+                                                                            () {
+                                                                          additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                              vendorId: model?.manuFactureuserCode ??
+                                                                                  "",
+                                                                              vendorTrnNumber:
+                                                                                  model?.trnNumber.toString() ?? "");
+
+                                                                          setState(
+                                                                              () {
+                                                                            // var  variant=
+
+                                                                            //     va?.partnerCode;
+
+                                                                            // int? id = model!.id;
+                                                                                FocusScope.of(context).requestFocus(listOfxfocusNodes[i][0]);
+
+                                                                            Variable.tableindex =
+                                                                                i;
+
+                                                                            recievlinequantityCheck =
+                                                                                false;
+
+                                                                            stockCheck =
+                                                                                true;
+
+                                                                            Variable.tableedit =
+                                                                                true;
+
+                                                                            vendorcheck =
+                                                                                false;
+
+                                                                            // context.read<VendordetailsCubit>().getVendorDetails(variant);
+
+                                                                            // showDailogPopUp(context, VendorPopup(assign:  assigniningDetails,));
+
+                                                                            // context
+
+                                                                            //     .read<
+
+                                                                            //     TableDetailsCubitDartCubit>()
+
+                                                                            //     .getTableDetails(
+
+                                                                            //     id);
+
+                                                                            // context
+
+                                                                            //     .read<PurchaseStockCubit>()
+
+                                                                            //     .getCurrentStock(Variable.inventory_ID, variant);
+
+                                                                            // orderType = va!;
+                                                                          });
+                                                                        });
+                                                                      },
+                                                                      type:
+                                                                          "vendorDetailList_popup",
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            // TableCell(
+
+                                                            //   verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                                            //   child: PopUpCall(
+
                                                             //
-                                                            // left: 11.5,
+
+                                                            //     type:
+
+                                                            //     "VendorCodeGeneral",
+
+                                                            //     value: additionalVariants[i].vendorId ??"",
+
+                                                            //     onSelection:
+
+                                                            //         (Result? va) {
+
                                                             //
-                                                            // top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
 
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            barcode ?? "",
+                                                            //       additionalVariants[i] = additionalVariants[i].copyWith(vendorId:va?.partnerCode??"" );
 
-                                                            // fontSize: 12,
+                                                            //       setState(() {
+
+                                                            //         var  variant=
+
+                                                            //             va?.partnerCode;
+
+                                                            //         int? id = va!.id;
+
+                                                            //         Variable.tableindex =i;
+
+                                                            //         recievlinequantityCheck=false;
+
+                                                            //         stockCheck=true;
+
+                                                            //         Variable.tableedit=true;
+
+                                                            //         vendorcheck=false;
+
+                                                            //         context.read<VendordetailsCubit>().getVendorDetails(variant);
+
+                                                            //         showDailogPopUp(context, VendorPopup(assign:  assigniningDetails,));
+
                                                             //
-                                                            // padding: EdgeInsets.only(left: 11.5, top: 1.5),
 
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
+                                                            //         // context
 
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            stock.toString() ??
-                                                                "",
+                                                            //         //     .read<
 
-                                                            // fontSize: 12,
+                                                            //         //     TableDetailsCubitDartCubit>()
+
+                                                            //         //     .getTableDetails(
+
+                                                            //         //     id);
+
+                                                            //         // context
+
+                                                            //         //     .read<PurchaseStockCubit>()
+
+                                                            //         //     .getCurrentStock(Variable.inventory_ID, variant);
+
                                                             //
-                                                            // padding: EdgeInsets.only(left: 11.5, top: 1.5),
 
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
+                                                            //         // orderType = va!;
 
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            purchaseUomName ??
-                                                                "",
+                                                            //       });
 
-                                                            // fontSize: 12,
+                                                            //     }, // restricted: true,
+
+                                                            //   ),
+
+                                                            // ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child:
+                                                                  UnderLinedInput(
+                                                                initialCheck:
+                                                                    true,
+                                                                integerOnly: true,
+                                                                    onComplete: (){
+                                                                      tabCount=-1;
+                                                                      FocusScope.of(context).requestFocus(listOfxfocusNodes[i][1]);
+                                                                    },
+                                                                    focusNode: listOfxfocusNodes[i][0],
+                                                                last: additionalVariants[
+                                                                            i]
+                                                                        .requestedQty
+                                                                        .toString() ??
+                                                                    "",
+                                                                onChanged: (va) {
+                                                                  print(va);
+
+                                                                  if (va == "") {
+                                                                    print(
+                                                                        "entered");
+
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            requestedQty:
+                                                                                0,
+                                                                            vatableAmount:
+                                                                                0,
+                                                                            actualCost:
+                                                                                0,
+                                                                            grandTotal:
+                                                                                0);
+                                                                  } else {
+                                                                    var qty = int
+                                                                        .tryParse(
+                                                                            va);
+
+                                                                    var dis =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .discount;
+
+                                                                    var excess =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .excessTax;
+
+                                                                    var unitcost =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .unitCost;
+
+                                                                    var vat =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .vat;
+
+                                                                    var foc =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .foc;
+
+                                                                    if (qty ==
+                                                                            0 ||
+                                                                        unitcost ==
+                                                                            0) {
+                                                                      additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                          vatableAmount:
+                                                                              0,
+                                                                          actualCost:
+                                                                              0,
+                                                                          grandTotal:
+                                                                              0);
+                                                                    } else {
+                                                                      var Vamount;
+
+                                                                      var vactualCost;
+
+                                                                      if (foc ==
+                                                                              0 ||
+                                                                          foc ==
+                                                                              "") {
+                                                                        Vamount = vatableAmountUpdation(
+                                                                            unitcost,
+                                                                            qty,
+                                                                            excess,
+                                                                            dis);
+
+                                                                        if (vat ==
+                                                                                0 ||
+                                                                            vat ==
+                                                                                "") {
+                                                                          vactualCost =
+                                                                              Vamount;
+                                                                        } else {
+                                                                          vactualCost = actualAndgrandTotalUpdation(
+                                                                              Vamount,
+                                                                              vat);
+
+                                                                          // (Vamount! +
+
+                                                                          //     ((Vamount! *
+
+                                                                          //         vat!) /
+
+                                                                          //         100));
+                                                                        }
+
+                                                                        additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                            vatableAmount:
+                                                                                Vamount,
+                                                                            actualCost:
+                                                                                vactualCost,
+                                                                            grandTotal:
+                                                                                vactualCost,
+                                                                            requestedQty:
+                                                                                qty);
+                                                                      } else {
+                                                                        var Vamount = vatableAmountFocUpdation(
+                                                                            unitcost,
+                                                                            qty,
+                                                                            excess,
+                                                                            dis,
+                                                                            foc);
+
+                                                                        var vactualCost = actualAndgrandTotalUpdation(
+                                                                            Vamount,
+                                                                            vat);
+
+                                                                        // (Vamount! +
+
+                                                                        //     ((Vamount! *
+
+                                                                        //         vat!) /
+
+                                                                        //         100));
+
+                                                                        additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                            vatableAmount:
+                                                                                Vamount,
+                                                                            actualCost:
+                                                                                vactualCost,
+                                                                            grandTotal:
+                                                                                vactualCost,
+                                                                            requestedQty:
+                                                                                qty);
+                                                                      }
+                                                                    }
+                                                                  }
+
+                                                                  setState(() {});
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: CheckedBoxs(
+                                                                focusNode: listOfxfocusNodes[i][1],
+                                                                valueChanger: additionalVariants[
+                                                                                i]
+                                                                            .isReceived ==
+                                                                        null
+                                                                    ? false
+                                                                    : additionalVariants[
+                                                                            i]
+                                                                        .isReceived,
+                                                                onCompleteFunc: (){
+                                                                  tabCount=-1;
+                                                                  bool?
+                                                                  isRecieved =
+                                                                      additionalVariants[
+                                                                      i]
+                                                                          .isReceived;
+
+                                                                  setState(() {
+                                                                    isRecieved =
+                                                                    !isRecieved!;
+
+                                                                    additionalVariants[
+                                                                    i] = additionalVariants[
+                                                                    i]
+                                                                        .copyWith(
+                                                                        isReceived:
+                                                                        isRecieved);
+                                                                    FocusScope.of(context).requestFocus(listOfxfocusNodes[i][2]);
+
+
+                                                                  });
+                                                                },
+                                                                onSelection:
+                                                                    (bool?
+                                                                        value) {
+                                                                  bool?
+                                                                      isRecieved =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .isReceived;
+
+                                                                  setState(() {
+                                                                    isRecieved =
+                                                                        !isRecieved!;
+
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            isReceived:
+                                                                                isRecieved);
+
+
+                                                                  });
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child:
+                                                                  UnderLinedInput(
+                                                                    onComplete: (){
+                                                                      tabCount=-1;
+                                                                      FocusScope.of(context).requestFocus(listOfxfocusNodes[i][3]);
+                                                                    },
+                                                                    focusNode: listOfxfocusNodes[i][2],
+                                                                controller:
+                                                                    unitcostAdditionalListControllers[
+                                                                        i],
+
+                                                                //   initialCheck: true,
+                                                                //
+                                                                // last: additionalVariants[i].unitCost.toString() ?? "",
+
+                                                                onChanged: (va) {
+                                                                  double?
+                                                                      unitcost;
+
+                                                                  if (va == "") {
+                                                                    print(
+                                                                        "entered");
+
+                                                                    unitcost = 0;
+
+                                                                    print("disc" +
+                                                                        unitcost
+                                                                            .toString());
+
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            vatableAmount:
+                                                                                0,
+                                                                            actualCost:
+                                                                                0,
+                                                                            grandTotal:
+                                                                                0,
+                                                                            unitCost:
+                                                                                0);
+                                                                    setState(
+                                                                        () {});
+                                                                  } else {
+                                                                    unitcost = double
+                                                                        .tryParse(
+                                                                            va);
+
+                                                                    print("unitcost" +
+                                                                        unitcost
+                                                                            .toString());
+
+                                                                    var qty =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .requestedQty;
+
+                                                                    print("qty" +
+                                                                        qty.toString());
+
+                                                                    var excess =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .excessTax;
+
+                                                                    print("excess" +
+                                                                        excess
+                                                                            .toString());
+
+                                                                    var disc =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .discount;
+
+                                                                    var foc =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .foc;
+
+                                                                    var vat =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .vat;
+
+                                                                    print("vat" +
+                                                                        vat.toString());
+
+                                                                    print("qty" +
+                                                                        qty.toString());
+
+                                                                    if (qty ==
+                                                                            0 ||
+                                                                        qty ==
+                                                                            null) {
+                                                                      additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                          vatableAmount:
+                                                                              0,
+                                                                          actualCost:
+                                                                              0,
+                                                                          grandTotal:
+                                                                              0,
+                                                                          unitCost:
+                                                                              0);
+
+                                                                      setState(
+                                                                          () {});
+                                                                    } else {
+                                                                      if (foc ==
+                                                                              0 ||
+                                                                          foc ==
+                                                                              "") {
+                                                                        var Vamount = vatableAmountUpdation(
+                                                                            unitcost,
+                                                                            qty,
+                                                                            excess,
+                                                                            disc);
+
+                                                                        // (((unitcost! *
+
+                                                                        //     qty!) +
+
+                                                                        //     excess!) -
+
+                                                                        //     disc!)
+
+                                                                        //     .toDouble();
+
+                                                                        var vactualCost = actualAndgrandTotalUpdation(
+                                                                            Vamount,
+                                                                            vat);
+
+                                                                        // (Vamount! +
+
+                                                                        //     ((Vamount! *
+
+                                                                        //         vat!) /
+
+                                                                        //         100));
+
+                                                                        additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                            vatableAmount:
+                                                                                Vamount,
+                                                                            actualCost:
+                                                                                vactualCost,
+                                                                            grandTotal:
+                                                                                vactualCost,
+                                                                            unitCost:
+                                                                                unitcost);
+
+                                                                        setState(
+                                                                            () {});
+                                                                      } else {
+                                                                        var Vamount = vatableAmountFocUpdation(
+                                                                            unitcost,
+                                                                            qty,
+                                                                            excess,
+                                                                            disc,
+                                                                            foc);
+
+                                                                        // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+
+                                                                        var vactualCost = actualAndgrandTotalUpdation(
+                                                                            Vamount,
+                                                                            vat);
+
+                                                                        additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                            vatableAmount:
+                                                                                Vamount,
+                                                                            actualCost:
+                                                                                vactualCost,
+                                                                            grandTotal:
+                                                                                vactualCost,
+                                                                            unitCost:
+                                                                                unitcost);
+
+                                                                        setState(
+                                                                            () {});
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child:
+                                                                  UnderLinedInput(
+                                                                    onComplete: (){
+                                                                      FocusScope.of(context).requestFocus(listOfxfocusNodes[i][4]);
+                                                                    },
+                                                                    focusNode: listOfxfocusNodes[i][3],
+                                                                initialCheck:
+                                                                    true,
+                                                                last: additionalVariants[
+                                                                            i]
+                                                                        .excessTax
+                                                                        .toString() ??
+                                                                    "",
+                                                                onChanged: (va) {
+                                                                  double? excess;
+
+                                                                  if (va == "") {
+                                                                    excess = 0;
+
+                                                                    setState(
+                                                                        () {});
+                                                                  } else {
+                                                                    excess = double
+                                                                        .tryParse(
+                                                                            va);
+
+                                                                    setState(
+                                                                        () {});
+                                                                  }
+
+                                                                  var qty =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .requestedQty;
+
+                                                                  var vat =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .vat;
+
+                                                                  var foc =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .foc;
+
+                                                                  print("excess" +
+                                                                      excess
+                                                                          .toString());
+
+                                                                  var unitcost =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .unitCost;
+
+                                                                  print("unitcost" +
+                                                                      unitcost
+                                                                          .toString());
+
+                                                                  var Vdiscount =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .discount;
+
+                                                                  if (qty == 0 ||
+                                                                      unitcost ==
+                                                                          0) {
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            actualCost:
+                                                                                0,
+                                                                            grandTotal:
+                                                                                0,
+                                                                            vatableAmount:
+                                                                                0,
+                                                                            excessTax:
+                                                                                excess);
+
+                                                                    setState(
+                                                                        () {});
+                                                                  } else {
+                                                                    var Vamount;
+
+                                                                    if (foc ==
+                                                                            0 ||
+                                                                        foc ==
+                                                                            "") {
+                                                                      Vamount = vatableAmountUpdation(
+                                                                          unitcost,
+                                                                          qty,
+                                                                          excess,
+                                                                          Vdiscount);
+                                                                    } else {
+                                                                      Vamount = vatableAmountFocUpdation(
+                                                                          unitcost,
+                                                                          qty,
+                                                                          excess,
+                                                                          Vdiscount,
+                                                                          foc);
+                                                                    }
+
+                                                                    var vactualCost =
+                                                                        actualAndgrandTotalUpdation(
+                                                                            Vamount,
+                                                                            vat);
+
+                                                                    additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                        actualCost:
+                                                                            vactualCost,
+                                                                        grandTotal:
+                                                                            vactualCost,
+                                                                        vatableAmount:
+                                                                            Vamount,
+                                                                        excessTax:
+                                                                            excess);
+
+                                                                    setState(
+                                                                        () {});
+                                                                  }
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child:
+                                                                  UnderLinedInput(
+                                                                    onComplete: (){
+                                                                      tabCount=-1;
+                                                                      FocusScope.of(context).requestFocus(listOfxfocusNodes[i][5]);
+                                                                    },
+                                                                    focusNode: listOfxfocusNodes[i][4],
+                                                                initialCheck:
+                                                                    true,
+                                                                last: additionalVariants[
+                                                                            i]
+                                                                        .discount
+                                                                        .toString() ??
+                                                                    "",
+                                                                onChanged: (va) {
+                                                                  double? disc;
+
+                                                                  if (va == "") {
+                                                                    disc = 0;
+                                                                  } else {
+                                                                    disc = double
+                                                                        .tryParse(
+                                                                            va);
+                                                                  }
+
+                                                                  var qty =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .requestedQty;
+
+                                                                  var excess =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .excessTax;
+
+                                                                  var unitcost =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .unitCost;
+
+                                                                  var vat =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .vat;
+
+                                                                  var foc =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .foc;
+
+                                                                  if (unitcost ==
+                                                                          0 ||
+                                                                      qty == 0) {
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            vatableAmount:
+                                                                                0,
+                                                                            actualCost:
+                                                                                0,
+                                                                            grandTotal:
+                                                                                0,
+                                                                            discount:
+                                                                                disc);
+                                                                  } else {
+                                                                    if (foc ==
+                                                                            0 ||
+                                                                        foc ==
+                                                                            "") {
+                                                                      var Vamount = vatableAmountUpdation(
+                                                                          unitcost,
+                                                                          qty,
+                                                                          excess,
+                                                                          disc);
+
+                                                                      var vactualCost =
+                                                                          actualAndgrandTotalUpdation(
+                                                                              Vamount,
+                                                                              vat);
+
+                                                                      additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                          vatableAmount:
+                                                                              Vamount,
+                                                                          actualCost:
+                                                                              vactualCost,
+                                                                          grandTotal:
+                                                                              vactualCost,
+                                                                          discount:
+                                                                              disc);
+
+                                                                      setState(
+                                                                          () {});
+                                                                    } else {
+                                                                      var Vamount = vatableAmountFocUpdation(
+                                                                          unitcost,
+                                                                          qty,
+                                                                          excess,
+                                                                          disc,
+                                                                          foc);
+
+                                                                      var vactualCost =
+                                                                          actualAndgrandTotalUpdation(
+                                                                              Vamount,
+                                                                              vat);
+
+                                                                      additionalVariants[i] = additionalVariants[i].copyWith(
+                                                                          vatableAmount:
+                                                                              Vamount,
+                                                                          actualCost:
+                                                                              vactualCost,
+                                                                          grandTotal:
+                                                                              vactualCost,
+                                                                          discount:
+                                                                              disc);
+
+                                                                      setState(
+                                                                          () {});
+                                                                    }
+                                                                  }
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child:
+                                                                  UnderLinedInput(
+                                                                    onComplete: (){
+                                                                      FocusScope.of(context).requestFocus(listOfxfocusNodes[i][6]);
+                                                                    },
+                                                                    focusNode: listOfxfocusNodes[i][5],
+                                                                initialCheck:
+                                                                    true,
+                                                                last: additionalVariants[
+                                                                            i]
+                                                                        .foc
+                                                                        .toString() ??
+                                                                    "",
+                                                                onChanged: (va) {
+                                                                  double? foc;
+
+                                                                  if (va == "") {
+                                                                    foc = 0;
+
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            foc:
+                                                                                0);
+                                                                  } else {
+                                                                    foc = double
+                                                                        .tryParse(
+                                                                            va);
+
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            foc:
+                                                                                foc);
+                                                                  }
+
+                                                                  var qty =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .requestedQty;
+
+                                                                  var vat =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .vat;
+
+                                                                  print("qty" +
+                                                                      qty.toString());
+
+                                                                  var excess =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .excessTax;
+
+                                                                  print("excess" +
+                                                                      excess
+                                                                          .toString());
+
+                                                                  var disc =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .discount;
+
+                                                                  var unitcost =
+                                                                      additionalVariants[
+                                                                              i]
+                                                                          .unitCost;
+
+                                                                  if (qty == 0 ||
+                                                                      unitcost ==
+                                                                          0) {
+                                                                    print(
+                                                                        "checking case");
+
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            vatableAmount:
+                                                                                0,
+                                                                            actualCost:
+                                                                                0,
+                                                                            grandTotal:
+                                                                                0,
+                                                                            foc:
+                                                                                foc);
+
+                                                                    setState(
+                                                                        () {});
+                                                                  } else {
+                                                                    var Vamount;
+
+                                                                    if (foc ==
+                                                                            0 ||
+                                                                        foc ==
+                                                                            "") {
+                                                                      Vamount = vatableAmountUpdation(
+                                                                          unitcost,
+                                                                          qty,
+                                                                          excess,
+                                                                          disc);
+
+                                                                      setState(
+                                                                          () {});
+                                                                    } else {
+                                                                      Vamount = ((((qty! * unitcost!) -
+                                                                                  (foc! * unitcost!)) +
+                                                                              excess!) -
+                                                                          disc!);
+
+                                                                      setState(
+                                                                          () {});
+                                                                    }
+
+                                                                    var vactualCost =
+                                                                        (Vamount! +
+                                                                            ((Vamount! * vat!) /
+                                                                                100));
+
+                                                                    additionalVariants[
+                                                                            i] =
+                                                                        additionalVariants[
+                                                                                i]
+                                                                            .copyWith(
+                                                                      vatableAmount:
+                                                                          Vamount,
+                                                                      actualCost:
+                                                                          vactualCost,
+                                                                      grandTotal:
+                                                                          vactualCost,
+                                                                    );
+
+                                                                    setState(
+                                                                        () {});
+                                                                  }
+
+                                                                  print(
+                                                                      additionalVariants);
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  additionalVariants[
+                                                                              i]
+                                                                          .vatableAmount
+                                                                          .toString() ??
+                                                                      "",
+                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  additionalVariants[
+                                                                              i]
+                                                                          .vat
+                                                                          .toString() ??
+                                                                      "",
+                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+
+                                                            // TableCell(
+
+                                                            //   verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                                            //   child: UnderLinedInput(
+
+                                                            //       initialCheck: true,
+
+                                                            //     last: additionalVariants[i].vat.toString() ?? "",
+
+                                                            //     onChanged: (va) {
+
+                                                            //       if (va == "") {
+
+                                                            //         print("sss");
+
+                                                            //         var vatableAmount = additionalVariants[i].vatableAmount;
+
+                                                            //         additionalVariants[i] = additionalVariants[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
+
+                                                            //         setState(() {});
+
+                                                            //       } else {
+
+                                                            //         var vat = double.tryParse(va);
+
+                                                            //         var Vamount = additionalVariants[i].vatableAmount;
+
+                                                            //         print("qty" + Vamount.toString());
+
+                                                            //         var excess = additionalVariants[i].excessTax;
+
+                                                            //         print("excess" + excess.toString());
+
+                                                            //         var unitcost = additionalVariants[i].unitCost;
+
+                                                            //         var qty = additionalVariants[i].receivedQty;
+
+                                                            //         var foc = additionalVariants[i].foc;
+
+                                                            //         var dis = additionalVariants[i].discount;
+
+                                                            //         print("unitcost" + unitcost.toString());
+
+                                                            //         if(unitcost==0 || qty==0){
+
+                                                            //           additionalVariants[i] = additionalVariants[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
+
                                                             //
-                                                            // padding: EdgeInsets.only(left: 11.5, top: 1.5),
 
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
+                                                            //         }else{
 
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: VariantIdTAble(
+                                                            //           if(foc==0 || foc=="") {
+
+                                                            //             var Vamount = (((unitcost! *
+
+                                                            //                 qty!) +
+
+                                                            //                 excess!) -
+
+                                                            //                 dis!)
+
+                                                            //                 .toDouble();
+
+                                                            //             var vactualCost = (Vamount! +
+
+                                                            //                 ((Vamount! *
+
+                                                            //                     vat!) /
+
+                                                            //                     100));
+
+                                                            //             var Vgrnadtotal = (Vamount! +
+
+                                                            //                 ((Vamount! *
+
+                                                            //                     vat!) /
+
+                                                            //                     100));
+
+                                                            //             additionalVariants[i] =
+
+                                                            //                 additionalVariants[i]
+
+                                                            //                     .copyWith(
+
+                                                            //                     vatableAmount: Vamount,
+
+                                                            //                     actualCost: vactualCost,
+
+                                                            //                     grandTotal: Vgrnadtotal,
+
+                                                            //                     vat: vat);
+
+                                                            //             setState(() {});
+
+                                                            //           }
+
+                                                            //           else{
+
+                                                            //             var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
+
+                                                            //
+
+                                                            //             var vactualCost = (Vamount! +
+
+                                                            //                 ((Vamount! *
+
+                                                            //                     vat!) /
+
+                                                            //                     100));
+
+                                                            //             var Vgrnadtotal = (Vamount! +
+
+                                                            //                 ((Vamount! *
+
+                                                            //                     vat!) /
+
+                                                            //                     100));
+
+                                                            //             additionalVariants[i] =
+
+                                                            //                 additionalVariants[i]
+
+                                                            //                     .copyWith(
+
+                                                            //                     vatableAmount: Vamount,
+
+                                                            //                     actualCost: vactualCost,
+
+                                                            //                     grandTotal: Vgrnadtotal,
+
+                                                            //                     vat: vat);
+
+                                                            //             setState(() {
+
+                                                            //
+
+                                                            //             });
+
+                                                            //           }
+
+                                                            //         }}
+
+                                                            //     },
+
+                                                            //   ),
+
+                                                            // ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  additionalVariants[
+                                                                              i]
+                                                                          .actualCost
+                                                                          .toString() ??
+                                                                      "",
+                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: textPadding(
+                                                                  additionalVariants[
+                                                                              i]
+                                                                          .grandTotal
+                                                                          .toString() ??
+                                                                      "",
+                                                                  // fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+
+                                                            CheckedBoxs(
+                                                              valueChanger: additionalVariants[
+                                                                              i]
+                                                                          .isInvoiced ==
+                                                                      null
+                                                                  ? false
+                                                                  : additionalVariants[
+                                                                          i]
+                                                                      .isInvoiced,
+                                                              onSelection:
+                                                                  (bool? value) {
+                                                                setState(() {});
+                                                              },
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: Tabledate(
+                                                                  focusNode: listOfxfocusNodes[i][6],
+                                                                  onEnterClick: (){
+                                                                    tabCount=-1;
+                                                                    FocusScope.of(context).requestFocus(listOfxfocusNodes[i][7]);
+                                                                  },
+                                                                  format: DateFormat(
+                                                                      'dd-MM-yyyy'),
+                                                                  controller:
+                                                                      expirydateControllerList[
+                                                                          i],
+                                                                  label: "Promised Receipt Date",
+                                                                  onSuffixIconPressed: (){
+                                                                    setState(() {
+                                                                      additionalVariants[i] = additionalVariants[i].copyWith(updateCheck:additionalVariants[i].expiryDate!=null ||additionalVariants[i].updateCheck==true? true:false,expiryDate: null);
+                                                                      expirydateControllerList[i]=TextEditingController(text: "");
+                                                                    });
 
 
+                                                                  },
+                                                                  onSaved:
+                                                                      (newValue) {
+                                                                    expirydateControllerList[i] = TextEditingController(
+                                                                        text: newValue ==
+                                                                                null
+                                                                            ? ""
+                                                                            : DateFormat('dd-MM-yyyy')
+                                                                                .format(newValue!));
 
-                                                                  text:
-                                                                      vendorCode,
+                                                                    additionalVariants[
+                                                                        i] = additionalVariants[
+                                                                            i]
+                                                                        .copyWith(
+                                                                            expiryDate:
+                                                                                newValue?.toIso8601String().split("T")[0] ?? "");
+
+                                                                    setState(
+                                                                        () {});
+                                                                  },
+                                                                  enable: true),
+                                                            ),
+
+                                                            TableCell(
+                                                              child: CheckedBoxs(
+                                                                valueChanger: additionalVariants[
+                                                                                i]
+                                                                            .isFree ==
+                                                                        null
+                                                                    ? false
+                                                                    : additionalVariants[
+                                                                            i]
+                                                                        .isFree,
+                                                                onSelection:
+                                                                    (bool?
+                                                                        value) {
+                                                                  setState(() {});
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child: CheckedBoxs(
+                                                                focusNode: listOfxfocusNodes[i][7],
+                                                                onCompleteFunc: (){
+                                                                  tabCount=-1;
+                                                                 if(i!=additionalVariants.length-1){
+                                                                   FocusScope.of(context).requestFocus(listOfxfocusNodes[i+1][0]);
+                                                                 }
+                                                                 else{
+                                                                   FocusScope.of(context).requestFocus(focusNodeList[0]);
+                                                                 }
+                                                                },
+                                                                valueChanger: additionalVariants[
+                                                                                i]
+                                                                            .isActive ==
+                                                                        null
+                                                                    ? false
+                                                                    : additionalVariants[
+                                                                            i]
+                                                                        .isActive,
+                                                                onSelection:
+                                                                    (bool?
+                                                                        value) {
+                                                                  setState(() {});
+                                                                },
+                                                              ),
+                                                            ),
+
+                                                            TableCell(
+                                                              verticalAlignment:
+                                                                  TableCellVerticalAlignment
+                                                                      .middle,
+                                                              child:
+                                                                  TableTextButton(
+                                                                label: "",
+                                                                onPress: () {},
+                                                              ),
+                                                            )
+                                                          ]),
+                                                  ],
+                                                  TableRow(
+                                                      decoration: BoxDecoration(
+                                                          color: Pellet
+                                                              .tableRowColor,
+                                                          shape:
+                                                              BoxShape.rectangle,
+                                                          border: Border(
+                                                              left: BorderSide(
+                                                                  color: Color(0xff3E4F5B)
+                                                                      .withOpacity(
+                                                                          .1),
+                                                                  width: .4,
+                                                                  style: BorderStyle
+                                                                      .solid),
+                                                              bottom: BorderSide(
+                                                                  color: Color(0xff3E4F5B)
+                                                                      .withOpacity(
+                                                                          .1),
+                                                                  style: BorderStyle
+                                                                      .solid),
+                                                              right: BorderSide(
+                                                                  color: Color(0xff3E4F5B)
+                                                                      .withOpacity(.1),
+                                                                  width: .4,
+                                                                  style: BorderStyle.solid))),
+                                                      children: [
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              (1).toString(),
+                                                              fontSize: 12,
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 1.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        VariantIdTAble(
+                                                          text: variantId.toString(),
                                                           onTap: () {
-                                                            vendorTablePopup();
-                                                            FocusScope.of(context).requestFocus(focusNodeList[0]);
+                                                            showDailogPopUp(context,
+                                                              TableConfigurePopup(
+                                                                inventory: Variable.inventory_ID,
+                                                                type: "variantTabalePopup",
+                                                                valueSelect:
+                                                                    (VariantId?
+                                                                        va) {
+                                                                  setState(() {
+                                                                    stockCheck = true;
+                                                                    variantId = va?.code;
+                                                                    int? id = va!.id;
+                                                                    Variable.tableedit = false;
+                                                                    recievlinequantityCheck = false;
+                                                                    stockCheck =
+                                                                        true;
+                                                                    variantIdcheck =
+                                                                        false;
 
+                                                                    context
+                                                                        .read<
+                                                                            TableDetailsCubitDartCubit>()
+                                                                        .getTableDetails(
+                                                                            id);
+                                                                    setState(
+                                                                        () {});
+                                                                    context
+                                                                        .read<
+                                                                            PurchaseStockCubit>()
+                                                                        .getCurrentStock(
+                                                                            Variable
+                                                                                .inventory_ID,
+                                                                            variantId);
+                                                                  });
+
+                                                                },
+                                                              ),
+                                                            );
                                                           },
                                                         ),
-                                                      ),
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              varinatname ?? "",
+                                                              // fontSize: 12, padding: EdgeInsets.only(
+                                                              //
+                                                              // left: 11.5,
+                                                              //
+                                                              // top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
 
-                                                      // PopUpCall(
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              barcode ?? "",
 
-                                                      //
+                                                              // fontSize: 12,
+                                                              //
+                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
 
-                                                      //   type:"VendorCodeGeneral",
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
 
-                                                      //   value: vendorCode,
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              stock.toString() ??
+                                                                  "",
 
-                                                      //   onSelection: (Result? va) {
+                                                              // fontSize: 12,
+                                                              //
+                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
 
-                                                      //
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
 
-                                                      //     print(
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              purchaseUomName ??
+                                                                  "",
 
-                                                      //         "+++++++++++++++++++++++"+va.toString());
+                                                              // fontSize: 12,
+                                                              //
+                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
 
-                                                      //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
 
-                                                      //     // setState(() {
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: VariantIdTAble(
 
-                                                      //     vendorCode=va?.partnerCode??"";
 
-                                                      //     var id=va?.partnerCode;
 
-                                                      //     print(vendorCode);
+                                                                    text:
+                                                                        vendorCode,
+                                                            onTap: () {
+                                                              vendorTablePopup();
+                                                              tabCount=-1;
+                                                              FocusScope.of(context).requestFocus(focusNodeList[0]);
 
-                                                      //     Variable.tableedit=false;
+                                                            },
+                                                          ),
+                                                        ),
 
-                                                      //     setState(() {
+                                                        // PopUpCall(
 
-                                                      //       context
+                                                        //
 
-                                                      //           .read<
+                                                        //   type:"VendorCodeGeneral",
 
-                                                      //           VendordetailsCubit>()
+                                                        //   value: vendorCode,
 
-                                                      //           .getVendorDetails(
+                                                        //   onSelection: (Result? va) {
 
-                                                      //           id);
+                                                        //
 
-                                                      //
+                                                        //     print(
 
-                                                      //     });
+                                                        //         "+++++++++++++++++++++++"+va.toString());
 
-                                                      //     showDailogPopUp(
+                                                        //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
 
-                                                      //         context,
+                                                        //     // setState(() {
 
-                                                      //         VendorPopup(
+                                                        //     vendorCode=va?.partnerCode??"";
 
-                                                      //           assign:  assigniningDetails,
+                                                        //     var id=va?.partnerCode;
 
-                                                      //
+                                                        //     print(vendorCode);
 
-                                                      //         ));
+                                                        //     Variable.tableedit=false;
 
-                                                      //
+                                                        //     setState(() {
 
-                                                      //
+                                                        //       context
 
-                                                      //
+                                                        //           .read<
 
-                                                      //
+                                                        //           VendordetailsCubit>()
 
-                                                      //
+                                                        //           .getVendorDetails(
 
-                                                      //
+                                                        //           id);
 
-                                                      //   },
+                                                        //
 
-                                                      //
+                                                        //     });
 
-                                                      // ),
+                                                        //     showDailogPopUp(
 
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: UnderLinedInput(
-                                                          focusNode: focusNodeList[0],
-                                                          integerOnly: true,
-                                                          controller:
-                                                              recievedClearController,
-                                                          last: "",
-                                                          onChanged: (p0) {
-                                                            if (p0 == '') {
+                                                        //         context,
+
+                                                        //         VendorPopup(
+
+                                                        //           assign:  assigniningDetails,
+
+                                                        //
+
+                                                        //         ));
+
+                                                        //
+
+                                                        //
+
+                                                        //
+
+                                                        //
+
+                                                        //
+
+                                                        //
+
+                                                        //   },
+
+                                                        //
+
+                                                        // ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: UnderLinedInput(
+                                                            focusNode: focusNodeList[0],
+                                                            integerOnly: true,
+                                                            controller:
+                                                                recievedClearController,
+                                                            last: "",
+                                                            onChanged: (p0) {
+                                                              if (p0 == '') {
+                                                                setState(() {
+                                                                  recievedQty = 0;
+
+                                                                  vatableAmount1 =
+                                                                      0;
+
+                                                                  grandTotal1 = 0;
+
+                                                                  actualCost1 = 0;
+                                                                });
+                                                              } else {
+                                                                setState(() {
+                                                                  recievedQty =
+                                                                      int.tryParse(
+                                                                          p0);
+                                                                });
+
+                                                                setState(() {
+                                                                  if (unitcost ==
+                                                                      0) {
+                                                                    vatableAmount1 =
+                                                                        0;
+
+                                                                    grandTotal1 =
+                                                                        0;
+
+                                                                    actualCost1 =
+                                                                        0;
+                                                                  } else {
+                                                                    if (foc1 ==
+                                                                            0 ||
+                                                                        foc1 ==
+                                                                            "") {
+                                                                      vatableAmountCalculation(
+                                                                          unitcost,
+                                                                          recievedQty,
+                                                                          excess1,
+                                                                          discount);
+
+                                                                      actualAndgrandTotal(
+                                                                          vatableAmount1,
+                                                                          vat1);
+
+                                                                      // vatableAmount1 = (((unitcost! *
+
+                                                                      //     recievedQty!) +
+
+                                                                      //     excess1!) -
+
+                                                                      //     discount!)
+
+                                                                      //     .toDouble();
+
+                                                                      // actualCost1 = (vatableAmount1! +
+
+                                                                      //     ((vatableAmount1! *
+
+                                                                      //         vat1!) /
+
+                                                                      //         100));
+
+                                                                      // grandTotal1 = (vatableAmount1! +
+
+                                                                      //     ((vatableAmount1! *
+
+                                                                      //         vat1!) /
+
+                                                                      //         100));
+                                                                    } else {
+                                                                      vatableFocAmountCalculation(
+                                                                          unitcost,
+                                                                          recievedQty,
+                                                                          excess1,
+                                                                          discount,
+                                                                          foc1);
+
+                                                                      // vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
+
+                                                                      actualAndgrandTotal(
+                                                                          vatableAmount1,
+                                                                          vat1);
+                                                                    }
+                                                                  }
+                                                                });
+                                                              }
+
+                                                              // print(Qty);
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {
+                                                              tabCount=-1;
+                                                              FocusScope.of(context).requestFocus(focusNodeList[1]);
+                                                            },
+                                                          ),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: CheckedBoxs(
+                                                            focusNode:  focusNodeList[1],
+                                                            valueChanger:
+                                                                isReceived1,
+                                                            onCompleteFunc: (){
+                                                              tabCount=-1;
                                                               setState(() {
-                                                                recievedQty = 0;
+                                                                isReceived1 =
+                                                                !isReceived1!;
+                                                              });
+                                                              FocusScope.of(context).requestFocus(focusNodeList[2]);
+
+                                                            },
+                                                            onSelection:
+                                                                (bool? value) {
+
+                                                            },
+                                                          ),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: UnderLinedInput(
+                                                            focusNode: focusNodeList[2],
+                                                            controller:
+                                                                unitCostCheck, // ,
+
+                                                            onChanged: (p0) {
+                                                              if (p0 == '')
+                                                                setState(() {
+                                                                  unitcost = 0;
+                                                                });
+                                                              else {
+                                                                setState(() {
+                                                                  unitcost = double
+                                                                      .tryParse(
+                                                                          p0);
+                                                                });
+                                                              }
+
+                                                              if (unitcost == 0 ||
+                                                                  recievedQty ==
+                                                                      0) {
+                                                                actualCost1 = 0;
 
                                                                 vatableAmount1 =
                                                                     0;
 
                                                                 grandTotal1 = 0;
+                                                              } else {
+                                                                if (foc1 == 0 ||
+                                                                    foc1 == "") {
+                                                                  vatableAmountCalculation(
+                                                                      unitcost,
+                                                                      recievedQty,
+                                                                      excess1,
+                                                                      discount);
 
-                                                                actualCost1 = 0;
-                                                              });
-                                                            } else {
-                                                              setState(() {
-                                                                recievedQty =
-                                                                    int.tryParse(
-                                                                        p0);
-                                                              });
-
-                                                              setState(() {
-                                                                if (unitcost ==
-                                                                    0) {
-                                                                  vatableAmount1 =
-                                                                      0;
-
-                                                                  grandTotal1 =
-                                                                      0;
-
-                                                                  actualCost1 =
-                                                                      0;
+                                                                  actualAndgrandTotal(
+                                                                      vatableAmount1,
+                                                                      vat1);
                                                                 } else {
-                                                                  if (foc1 ==
-                                                                          0 ||
-                                                                      foc1 ==
-                                                                          "") {
-                                                                    vatableAmountCalculation(
-                                                                        unitcost,
-                                                                        recievedQty,
-                                                                        excess1,
-                                                                        discount);
+                                                                  vatableFocAmountCalculation(
+                                                                      unitcost,
+                                                                      recievedQty,
+                                                                      excess1,
+                                                                      discount,
+                                                                      foc1);
 
-                                                                    actualAndgrandTotal(
-                                                                        vatableAmount1,
-                                                                        vat1);
-
-                                                                    // vatableAmount1 = (((unitcost! *
-
-                                                                    //     recievedQty!) +
-
-                                                                    //     excess1!) -
-
-                                                                    //     discount!)
-
-                                                                    //     .toDouble();
-
-                                                                    // actualCost1 = (vatableAmount1! +
-
-                                                                    //     ((vatableAmount1! *
-
-                                                                    //         vat1!) /
-
-                                                                    //         100));
-
-                                                                    // grandTotal1 = (vatableAmount1! +
-
-                                                                    //     ((vatableAmount1! *
-
-                                                                    //         vat1!) /
-
-                                                                    //         100));
-                                                                  } else {
-                                                                    vatableFocAmountCalculation(
-                                                                        unitcost,
-                                                                        recievedQty,
-                                                                        excess1,
-                                                                        discount,
-                                                                        foc1);
-
-                                                                    // vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-
-                                                                    actualAndgrandTotal(
-                                                                        vatableAmount1,
-                                                                        vat1);
-                                                                  }
+                                                                  actualAndgrandTotal(
+                                                                      vatableAmount1,
+                                                                      vat1);
                                                                 }
-                                                              });
-                                                            }
-
-                                                            // print(Qty);
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {
-                                                            FocusScope.of(context).requestFocus(focusNodeList[1]);
-                                                          },
-                                                        ),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: CheckedBoxs(
-                                                          focusNode:  focusNodeList[1],
-                                                          valueChanger:
-                                                              isReceived1,
-                                                          onCompleteFunc: (){
-                                                            setState(() {
-                                                              isReceived1 =
-                                                              !isReceived1!;
-                                                            });
-                                                            FocusScope.of(context).requestFocus(focusNodeList[2]);
-                                                          },
-                                                          onSelection:
-                                                              (bool? value) {
-
-                                                          },
-                                                        ),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: UnderLinedInput(
-                                                          focusNode: focusNodeList[2],
-                                                          controller:
-                                                              unitCostCheck, // ,
-
-                                                          onChanged: (p0) {
-                                                            if (p0 == '')
-                                                              setState(() {
-                                                                unitcost = 0;
-                                                              });
-                                                            else {
-                                                              setState(() {
-                                                                unitcost = double
-                                                                    .tryParse(
-                                                                        p0);
-                                                              });
-                                                            }
-
-                                                            if (unitcost == 0 ||
-                                                                recievedQty ==
-                                                                    0) {
-                                                              actualCost1 = 0;
-
-                                                              vatableAmount1 =
-                                                                  0;
-
-                                                              grandTotal1 = 0;
-                                                            } else {
-                                                              if (foc1 == 0 ||
-                                                                  foc1 == "") {
-                                                                vatableAmountCalculation(
-                                                                    unitcost,
-                                                                    recievedQty,
-                                                                    excess1,
-                                                                    discount);
-
-                                                                actualAndgrandTotal(
-                                                                    vatableAmount1,
-                                                                    vat1);
-                                                              } else {
-                                                                vatableFocAmountCalculation(
-                                                                    unitcost,
-                                                                    recievedQty,
-                                                                    excess1,
-                                                                    discount,
-                                                                    foc1);
-
-                                                                actualAndgrandTotal(
-                                                                    vatableAmount1,
-                                                                    vat1);
                                                               }
-                                                            }
-
-                                                            setState(() {});
-
-                                                            // print(Qty);
-                                                          },
-
-                                                          enable: true,
-
-                                                          onComplete: () {
-                                                            FocusScope.of(context).requestFocus(focusNodeList[3]);
-                                                          },
-                                                        ),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: UnderLinedInput(
-                                                          focusNode: focusNodeList[3],
-
-                                                          controller:
-                                                              excessClearController,
-                                                          onChanged: (p0) {
-                                                            if (p0 == '')
-                                                              setState(() {
-                                                                excess1 = 0;
-                                                              });
-                                                            else {
-                                                              setState(() {
-                                                                excess1 = double
-                                                                    .tryParse(
-                                                                        p0);
-                                                              });
-                                                            }
-
-                                                            if (unitcost == 0 ||
-                                                                recievedQty ==
-                                                                    0) {
-                                                              actualCost1 = 0;
-
-                                                              vatableAmount1 =
-                                                                  0;
-
-                                                              grandTotal1 = 0;
-                                                            } else {
-                                                              if (foc1 == 0 ||
-                                                                  foc1 == "") {
-                                                                vatableAmountCalculation(
-                                                                    unitcost,
-                                                                    recievedQty,
-                                                                    excess1,
-                                                                    discount);
-
-                                                                actualAndgrandTotal(
-                                                                    vatableAmount1,
-                                                                    vat1);
-                                                              } else {
-                                                                vatableFocAmountCalculation(
-                                                                    unitcost,
-                                                                    recievedQty,
-                                                                    excess1,
-                                                                    discount,
-                                                                    foc1);
-
-                                                                actualAndgrandTotal(
-                                                                    vatableAmount1,
-                                                                    vat1);
-                                                              }
-                                                            }
-
-                                                            setState(() {});
-
-                                                            // print(Qty);
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {
-                                                            FocusScope.of(context).requestFocus(focusNodeList[4]);
-                                                          },
-                                                        ),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: UnderLinedInput(
-                                                          focusNode: focusNodeList[4],
-                                                          controller:
-                                                              discountClearController,
-                                                          onChanged: (p0) {
-                                                            if (p0 == '')
-                                                              setState(() {
-                                                                discount = 0;
-                                                              });
-                                                            else {
-                                                              setState(() {
-                                                                discount = double
-                                                                    .tryParse(
-                                                                        p0);
-                                                              });
-                                                            }
-
-                                                            if (unitcost == 0 ||
-                                                                recievedQty ==
-                                                                    0) {
-                                                              actualCost1 = 0;
-
-                                                              vatableAmount1 =
-                                                                  0;
-
-                                                              grandTotal1 = 0;
-                                                            } else {
-                                                              if (foc1 == 0 ||
-                                                                  foc1 == "") {
-                                                                vatableAmountCalculation(
-                                                                    unitcost,
-                                                                    recievedQty,
-                                                                    excess1,
-                                                                    discount);
-
-                                                                actualAndgrandTotal(
-                                                                    vatableAmount1,
-                                                                    vat1);
-                                                              } else {
-                                                                vatableFocAmountCalculation(
-                                                                    unitcost,
-                                                                    recievedQty,
-                                                                    excess1,
-                                                                    discount,
-                                                                    foc1);
-
-                                                                actualAndgrandTotal(
-                                                                    vatableAmount1,
-                                                                    vat1);
-                                                              }
-                                                            }
-
-                                                            setState(() {});
-
-                                                            // print(Qty);
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {
-                                                            FocusScope.of(context).requestFocus(focusNodeList[5]);
-                                                          },
-                                                        ),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: UnderLinedInput(
-                                                          focusNode: focusNodeList[5],
-                                                          controller: focClearController,
-                                                          onComplete: (){
-                                                            FocusScope.of(context).requestFocus(focusNodeList[6]);
-                                                          },
-                                                          onChanged: (p0) {
-                                                            if (p0 == '')
-                                                              setState(() {
-                                                                foc1 = 0;
-                                                              });
-                                                            else {
-                                                              setState(() {
-                                                                foc1 = double
-                                                                    .tryParse(
-                                                                        p0);
-                                                              });
-                                                            }
-
-                                                            if (unitcost == 0 ||
-                                                                recievedQty ==
-                                                                    0) {
-                                                              actualCost1 = 0;
-
-                                                              vatableAmount1 =
-                                                                  0;
-
-                                                              grandTotal1 = 0;
-                                                            } else {
-                                                              if (foc1 == 0 ||
-                                                                  foc1 == "") {
-                                                                vatableAmountCalculation(
-                                                                    unitcost,
-                                                                    recievedQty,
-                                                                    excess1,
-                                                                    discount);
-
-                                                                actualAndgrandTotal(
-                                                                    vatableAmount1,
-                                                                    vat1);
-                                                              } else {
-                                                                vatableFocAmountCalculation(
-                                                                    unitcost,
-                                                                    recievedQty,
-                                                                    excess1,
-                                                                    discount,
-                                                                    foc1);
-
-                                                                actualAndgrandTotal(
-                                                                    vatableAmount1,
-                                                                    vat1);
-                                                              }
-                                                            }
-
-                                                            setState(() {});
-
-                                                            // print(Qty);
-                                                          },
-                                                        ),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            vatableAmount1
-                                                                    .toString() ??
-                                                                "",
-                                                            fontSize: 12,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 1.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            vat1.toString() ??
-                                                                "",
-                                                            fontSize: 12,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 1.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            actualCost1
-                                                                    .toString() ??
-                                                                "",
-
-                                                            // fontSize: 12,
-                                                            //
-                                                            // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: textPadding(
-                                                            grandTotal1
-                                                                    .toString() ??
-                                                                "",
-
-                                                            // fontSize: 12,
-                                                            //
-                                                            // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: CheckedBoxs(
-                                                          valueChanger:
-                                                              isInvoiced1,
-                                                          onSelection:
-                                                              (bool? value) {
-                                                            setState(() {
-                                                              // isInvoiced1 = !isInvoiced1!;
-                                                            });
-                                                          },
-                                                        ),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: Tabledate(
-                                                            focusNode: focusNodeList[6],
-                                                            onEnterClick: (){
-                                                              FocusScope.of(context).requestFocus(focusNodeList[7]);
-
-                                                            },
-                                                            format: DateFormat(
-                                                                'dd-MM-yyyy'),
-                                                            controller:
-                                                                expirydate2Controller,
-
-                                                            // initialValue:
-
-                                                            //     DateTime.parse(fromDate!),
-
-                                                            label: "Promised Receipt Date",
-                                                            onSuffixIconPressed: (){
-                                                              setState(() {
-                                                                expirydate2Controller.clear();
-                                                              });
-
-
-                                                            },
-                                                            onSaved:
-                                                                (newValue) {
-                                                              expirydate2Controller
-                                                                  .text = newValue ==
-                                                                      null
-                                                                  ? ""
-                                                                  : DateFormat(
-                                                                          'dd-MM-yyyy')
-                                                                      .format(
-                                                                          newValue!);
-
-                                                              expirydateController
-                                                                  .text = newValue
-                                                                      ?.toIso8601String()
-                                                                      .split(
-                                                                          "T")[0] ??
-                                                                  "";
-
-                                                              print("promised_receipt_date.text" +
-                                                                  expirydateController
-                                                                      .text
-                                                                      .toString());
 
                                                               setState(() {});
+
+                                                              // print(Qty);
                                                             },
-                                                            enable: true),
-                                                      ),
 
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: CheckedBoxs(
-                                                          focusNode: focusNodeList[7],
-                                                          valueChanger: isFree1,
-                                                          onCompleteFunc: (){
-                                                            setState(() {
-                                                              isFree1 =
-                                                              !isFree1!;
-                                                            });
-                                                            FocusScope.of(context).requestFocus(focusNodeList[8]);
-                                                          },
-                                                          onSelection:
-                                                              (bool? value) {
-                                                            setState(() {
-                                                              isFree1 =
-                                                                  !isFree1!;
-                                                            });
-                                                          },
+                                                            enable: true,
+
+                                                            onComplete: () {
+                                                              tabCount=-1;
+                                                              FocusScope.of(context).requestFocus(focusNodeList[3]);
+                                                            },
+                                                          ),
                                                         ),
-                                                      ),
 
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: CheckedBoxs(
-                                                          focusNode: focusNodeList[8],
-                                                          onCompleteFunc: (){
-                                                            setState(() {
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: UnderLinedInput(
+                                                            focusNode: focusNodeList[3],
 
-                                                              isActive1 =
-                                                              !isActive1!;
+                                                            controller:
+                                                                excessClearController,
+                                                            onChanged: (p0) {
+                                                              if (p0 == '')
+                                                                setState(() {
+                                                                  excess1 = 0;
+                                                                });
+                                                              else {
+                                                                setState(() {
+                                                                  excess1 = double
+                                                                      .tryParse(
+                                                                          p0);
+                                                                });
+                                                              }
+
+                                                              if (unitcost == 0 ||
+                                                                  recievedQty ==
+                                                                      0) {
+                                                                actualCost1 = 0;
+
+                                                                vatableAmount1 =
+                                                                    0;
+
+                                                                grandTotal1 = 0;
+                                                              } else {
+                                                                if (foc1 == 0 ||
+                                                                    foc1 == "") {
+                                                                  vatableAmountCalculation(
+                                                                      unitcost,
+                                                                      recievedQty,
+                                                                      excess1,
+                                                                      discount);
+
+                                                                  actualAndgrandTotal(
+                                                                      vatableAmount1,
+                                                                      vat1);
+                                                                } else {
+                                                                  vatableFocAmountCalculation(
+                                                                      unitcost,
+                                                                      recievedQty,
+                                                                      excess1,
+                                                                      discount,
+                                                                      foc1);
+
+                                                                  actualAndgrandTotal(
+                                                                      vatableAmount1,
+                                                                      vat1);
+                                                                }
+                                                              }
+
+                                                              setState(() {});
+
+                                                              // print(Qty);
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {
+                                                              tabCount=-1;
+                                                              FocusScope.of(context).requestFocus(focusNodeList[4]);
+                                                            },
+                                                          ),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: UnderLinedInput(
+                                                            focusNode: focusNodeList[4],
+                                                            controller:
+                                                                discountClearController,
+                                                            onChanged: (p0) {
+                                                              if (p0 == '')
+                                                                setState(() {
+                                                                  discount = 0;
+                                                                });
+                                                              else {
+                                                                setState(() {
+                                                                  discount = double
+                                                                      .tryParse(
+                                                                          p0);
+                                                                });
+                                                              }
+
+                                                              if (unitcost == 0 ||
+                                                                  recievedQty ==
+                                                                      0) {
+                                                                actualCost1 = 0;
+
+                                                                vatableAmount1 =
+                                                                    0;
+
+                                                                grandTotal1 = 0;
+                                                              } else {
+                                                                if (foc1 == 0 ||
+                                                                    foc1 == "") {
+                                                                  vatableAmountCalculation(
+                                                                      unitcost,
+                                                                      recievedQty,
+                                                                      excess1,
+                                                                      discount);
+
+                                                                  actualAndgrandTotal(
+                                                                      vatableAmount1,
+                                                                      vat1);
+                                                                } else {
+                                                                  vatableFocAmountCalculation(
+                                                                      unitcost,
+                                                                      recievedQty,
+                                                                      excess1,
+                                                                      discount,
+                                                                      foc1);
+
+                                                                  actualAndgrandTotal(
+                                                                      vatableAmount1,
+                                                                      vat1);
+                                                                }
+                                                              }
+
+                                                              setState(() {});
+
+                                                              // print(Qty);
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {
+                                                              tabCount=-1;
+                                                              FocusScope.of(context).requestFocus(focusNodeList[5]);
+                                                            },
+                                                          ),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: UnderLinedInput(
+                                                            focusNode: focusNodeList[5],
+                                                            controller: focClearController,
+                                                            onComplete: (){
+                                                              tabCount=-1;
+                                                              FocusScope.of(context).requestFocus(focusNodeList[6]);
+                                                            },
+                                                            onChanged: (p0) {
+                                                              if (p0 == '')
+                                                                setState(() {
+                                                                  foc1 = 0;
+                                                                });
+                                                              else {
+                                                                setState(() {
+                                                                  foc1 = double
+                                                                      .tryParse(
+                                                                          p0);
+                                                                });
+                                                              }
+
+                                                              if (unitcost == 0 ||
+                                                                  recievedQty ==
+                                                                      0) {
+                                                                actualCost1 = 0;
+
+                                                                vatableAmount1 =
+                                                                    0;
+
+                                                                grandTotal1 = 0;
+                                                              } else {
+                                                                if (foc1 == 0 ||
+                                                                    foc1 == "") {
+                                                                  vatableAmountCalculation(
+                                                                      unitcost,
+                                                                      recievedQty,
+                                                                      excess1,
+                                                                      discount);
+
+                                                                  actualAndgrandTotal(
+                                                                      vatableAmount1,
+                                                                      vat1);
+                                                                } else {
+                                                                  vatableFocAmountCalculation(
+                                                                      unitcost,
+                                                                      recievedQty,
+                                                                      excess1,
+                                                                      discount,
+                                                                      foc1);
+
+                                                                  actualAndgrandTotal(
+                                                                      vatableAmount1,
+                                                                      vat1);
+                                                                }
+                                                              }
+
+                                                              setState(() {});
+
+                                                              // print(Qty);
+                                                            },
+                                                          ),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              vatableAmount1
+                                                                      .toString() ??
+                                                                  "",
+                                                              fontSize: 12,
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 1.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              vat1.toString() ??
+                                                                  "",
+                                                              fontSize: 12,
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 1.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              actualCost1
+                                                                      .toString() ??
+                                                                  "",
+
+                                                              // fontSize: 12,
+                                                              //
+                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              grandTotal1
+                                                                      .toString() ??
+                                                                  "",
+
+                                                              // fontSize: 12,
+                                                              //
+                                                              // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: CheckedBoxs(
+                                                            valueChanger:
+                                                                isInvoiced1,
+                                                            onSelection:
+                                                                (bool? value) {
+                                                              setState(() {
+                                                                // isInvoiced1 = !isInvoiced1!;
+                                                              });
+                                                            },
+                                                          ),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: Tabledate(
+                                                              focusNode: focusNodeList[6],
+                                                              onEnterClick: (){
+                                                                tabCount=-1;
+                                                                FocusScope.of(context).requestFocus(focusNodeList[7]);
+
+                                                              },
+                                                              format: DateFormat(
+                                                                  'dd-MM-yyyy'),
+                                                              controller:
+                                                                  expirydate2Controller,
+
+                                                              // initialValue:
+
+                                                              //     DateTime.parse(fromDate!),
+
+                                                              label: "Promised Receipt Date",
+                                                              onSuffixIconPressed: (){
+                                                                setState(() {
+                                                                  expirydate2Controller.clear();
+                                                                });
+
+
+                                                              },
+                                                              onSaved:
+                                                                  (newValue) {
+                                                                expirydate2Controller
+                                                                    .text = newValue ==
+                                                                        null
+                                                                    ? ""
+                                                                    : DateFormat(
+                                                                            'dd-MM-yyyy')
+                                                                        .format(
+                                                                            newValue!);
+
+                                                                expirydateController
+                                                                    .text = newValue
+                                                                        ?.toIso8601String()
+                                                                        .split(
+                                                                            "T")[0] ??
+                                                                    "";
+
+                                                                print("promised_receipt_date.text" +
+                                                                    expirydateController
+                                                                        .text
+                                                                        .toString());
+
+                                                                setState(() {});
+                                                              },
+                                                              enable: true),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: CheckedBoxs(
+                                                            focusNode: focusNodeList[7],
+                                                            valueChanger: isFree1,
+                                                            onCompleteFunc: (){
+                                                              setState(() {
+                                                                isFree1 =
+                                                                !isFree1!;
+                                                              });
+                                                              FocusScope.of(context).requestFocus(focusNodeList[8]);
+                                                            },
+                                                            onSelection:
+                                                                (bool? value) {
+                                                              setState(() {
+                                                                isFree1 =
+                                                                    !isFree1!;
+                                                              });
+                                                            },
+                                                          ),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: CheckedBoxs(
+                                                            focusNode: focusNodeList[8],
+                                                            onCompleteFunc: (){
+                                                              setState(() {
+                                                                tabCount=-1;
+                                                                isActive1 =
+                                                                !isActive1!;
+                                                                saveFunction();
+                                                              });
+                                                            },
+                                                            // color:Color(0xff3E4F5B) ,
+
+                                                            valueChanger:
+                                                                isActive1,
+
+                                                            onSelection:
+                                                                (bool? value) {
+                                                              setState(() {
+                                                                isActive1 =
+                                                                    !isActive1!;
+                                                              });
+                                                            },
+                                                          ),
+                                                        ),
+
+                                                        TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: TableTextButton(
+                                                            label: "Save",
+                                                            onPress: () { tabCount=-1;
+
                                                               saveFunction();
-                                                            });
-                                                          },
-                                                          // color:Color(0xff3E4F5B) ,
 
-                                                          valueChanger:
-                                                              isActive1,
-
-                                                          onSelection:
-                                                              (bool? value) {
-                                                            setState(() {
-                                                              isActive1 =
-                                                                  !isActive1!;
-                                                            });
-                                                          },
-                                                        ),
-                                                      ),
-
-                                                      TableCell(
-                                                        verticalAlignment:
-                                                            TableCellVerticalAlignment
-                                                                .middle,
-                                                        child: TableTextButton(
-                                                          label: "Save",
-                                                          onPress: () {
-                                                            saveFunction();
-
-                                                          },
-                                                        ),
-                                                      )
-                                                    ])
-                                              ],
-                                              widths: {
-                                                0: FlexColumnWidth(2),
-                                                1: FlexColumnWidth(4),
-                                                2: FlexColumnWidth(6),
-                                                3: FlexColumnWidth(3),
-                                                4: FlexColumnWidth(3),
-                                                5: FlexColumnWidth(3),
-                                                6: FlexColumnWidth(4),
-                                                7: FlexColumnWidth(3),
-                                                8: FlexColumnWidth(3),
-                                                9: FlexColumnWidth(3),
-                                                10: FlexColumnWidth(3),
-                                                11: FlexColumnWidth(3),
-                                                12: FlexColumnWidth(3),
-                                                13: FlexColumnWidth(3),
-                                                14: FlexColumnWidth(3),
-                                                15: FlexColumnWidth(3),
-                                                16: FlexColumnWidth(3),
-                                                17: FlexColumnWidth(2),
-                                                18: FlexColumnWidth(4),
-                                                19: FlexColumnWidth(2),
-                                                20: FlexColumnWidth(2),
-                                                21: FlexColumnWidth(3),
-                                              },
+                                                            },
+                                                          ),
+                                                        )
+                                                      ])
+                                                ],
+                                                widths: {
+                                                  0: FlexColumnWidth(2),
+                                                  1: FlexColumnWidth(4),
+                                                  2: FlexColumnWidth(6),
+                                                  3: FlexColumnWidth(3),
+                                                  4: FlexColumnWidth(3),
+                                                  5: FlexColumnWidth(3),
+                                                  6: FlexColumnWidth(4),
+                                                  7: FlexColumnWidth(3),
+                                                  8: FlexColumnWidth(3),
+                                                  9: FlexColumnWidth(3),
+                                                  10: FlexColumnWidth(3),
+                                                  11: FlexColumnWidth(3),
+                                                  12: FlexColumnWidth(3),
+                                                  13: FlexColumnWidth(3),
+                                                  14: FlexColumnWidth(3),
+                                                  15: FlexColumnWidth(3),
+                                                  16: FlexColumnWidth(3),
+                                                  17: FlexColumnWidth(2),
+                                                  18: FlexColumnWidth(4),
+                                                  19: FlexColumnWidth(2),
+                                                  20: FlexColumnWidth(2),
+                                                  21: FlexColumnWidth(3),
+                                                },
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        )
-                                      ],
-                                    )),
-                              )),
+                                          SizedBox(
+                                            height: 10,
+                                          )
+                                        ],
+                                      )),
+                                )),
 
-                          SizedBox(
-                            height: 1,
-                          ),
+                            SizedBox(
+                              height: 1,
+                            ),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButtonLarge(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButtonLarge(
+                                  clr: tabCount==5?Pellet.buttonActiveClr:Pellet.tableBlueHeaderPrint,
+                                  isSingle: true,
+                                  isLoading:isGenarate ,
 
-                                isSingle: true,
-                                isLoading:isGenarate ,
+                                  onPress: () {
+                                    tabCount=-1;
+                                    generateFunction();
+                                  },
+                                  text: "GENERATE ORDER",
+                                ),
+                              ],
+                            ),
 
-                                onPress: () {
-                                  var isUpdate=additiionUpdateCheckFunc();
-                                  if(isUpdate){
-                                    context.showSnackBarError("Please press the update button");
-                                  }
-                                  else{
-                                    setState(() {
-                                      isGenarate=true;
-                                    });
+                            SizedBox(
+                              height: 20,
+                            ),
+                            SaveUpdateResponsiveButton(
 
-                                    AdditionalGenerateModel model =
-                                  AdditionalGenerateModel(
-                                    receivingId: receivingId,
-                                    createdBy: Variable.created_by,
-                                    purchaseOrderId: Variable.verticalid,
-                                    orderLines: additionalVariants,
-                                  );
+                              isSaveUpdateLoading:isSave ,
+                              label: "SAVE",
+                              isDelete: true,
+                              isKeyFuctionRight:     tabCount==6,
+                              saveFunction: () {
+                                // List<RecievingLines> recieve = [];
+                                //
+                                // if (recievingLisnes.isNotEmpty) {
+                                //   for (var i = 0;
+                                //       i < recievingLisnes.length;
+                                //       i++) {
+                                //     if (recievingLisnes[i].isReceived == true) {
+                                //       recieve.add(recievingLisnes[i]);
+                                //
+                                //       setState(() {});
+                                //     }
+                                //   }
+                                // }
+                                saveUpdateFunction();
 
-                                  context
-                                      .read<GeneraterequestformCubit>()
-                                      .additionlGenerateRequest(model!);}
+                              },
+                              discardFunction: () {},
+                            ),
 
-                                },
-                                text: "GENERATE ORDER",
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SaveUpdateResponsiveButton(
-                            isSaveUpdateLoading:isSave ,
-                            label: "SAVE",
-                            isDelete: true,
-                            saveFunction: () {
-                              // List<RecievingLines> recieve = [];
-                              //
-                              // if (recievingLisnes.isNotEmpty) {
-                              //   for (var i = 0;
-                              //       i < recievingLisnes.length;
-                              //       i++) {
-                              //     if (recievingLisnes[i].isReceived == true) {
-                              //       recieve.add(recievingLisnes[i]);
-                              //
-                              //       setState(() {});
-                              //     }
-                              //   }
-                              // }
-
-                              var isUpdate=receiveLineUpdateCheckFunc();
-                              if (isUpdate == true) {
-                                context
-                                    .showSnackBarError("Please press update");
-                              } else {
-                                setState(() {
-                                  isSave=true;
-                                });
-                                RequestReceivingPatch model =
-                                    RequestReceivingPatch(
-                                        note: noteController.text ?? "",
-                                        id: veritiaclid,
-                                        receivedBy: "",
-                                        unitCost: double.tryParse(
-                                            unitCostController.text),
-                                        foc:
-                                            double.tryParse(focController.text),
-                                        discount: double.tryParse(
-                                            discountController.text),
-                                        grandTotal: double.tryParse(
-                                            grandtotalCostController.text),
-                                        vatableAmount:
-                                            double.tryParse(vatController.text),
-                                        excessTax: double.tryParse(
-                                            excessTaxController.text),
-                                        actualCost: double.tryParse(
-                                            actualCostController.text),
-                                        vat:
-                                            double.tryParse(vatController.text),
-                                        remarks: remarksController.text ?? "",
-                                        receivingLines: recievingLisnes ?? []);
-
-                                print(model);
-
-                                context
-                                    .read<PatchreceiveCubit>()
-                                    .requestFormReceivingPatch(
-                                        receivingId, model);
-                              }
-                            },
-                            discardFunction: () {},
-                          ),
-
-                          // Row(
-                          //
-                          //
-                          //
-                          //   mainAxisAlignment: MainAxisAlignment.end,
-                          //
-                          //
-                          //
-                          //   children: [
-                          //
-                          //
-                          //
-                          //     Buttons(
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //       onApply: (){
-                          //
-                          //         List<RecievingLines>recieve=[];
-                          //
-                          //         if(recievingLisnes.isNotEmpty){           for(var i=0;i<recievingLisnes.length;i++){
-                          //
-                          //           if(recievingLisnes[i].isReceived==true){
-                          //
-                          //             recieve.add(recievingLisnes[i]);
-                          //
-                          //             setState(() {
-                          //
-                          //
-                          //
-                          //             });
-                          //
-                          //           }
-                          //
-                          //         }}
-                          //
-                          //         if(updateCheck==true){
-                          //
-                          //           context.showSnackBarError(
-                          //
-                          //               "please press update");
-                          //
-                          //         }
-                          //
-                          //         else{
-                          //
-                          //
-                          //
-                          //           RequestReceivingPatch model = RequestReceivingPatch(
-                          //
-                          //               note: noteController.text??"",
-                          //
-                          //               id:veritiaclid,
-                          //
-                          //               receivedBy: "",
-                          //
-                          //               unitCost:double.tryParse( unitCostController.text),
-                          //
-                          //               foc:double.tryParse( focController.text),
-                          //
-                          //               discount:double.tryParse( discountController.text),
-                          //
-                          //               grandTotal:double.tryParse( grandtotalCostController.text) ,
-                          //
-                          //               vatableAmount: double.tryParse( vatController.text) ,
-                          //
-                          //               excessTax:double.tryParse( excessTaxController.text) ,
-                          //
-                          //               actualCost:double.tryParse( actualCostController.text) ,
-                          //
-                          //               vat:double.tryParse( vatController.text) ,
-                          //
-                          //
-                          //
-                          //               remarks: remarksController.text ?? "",
-                          //
-                          //               receivingLines: recieve??[]);
-                          //
-                          //           print(model);
-                          //
-                          //           context
-                          //
-                          //               .read<PatchreceiveCubit>()
-                          //
-                          //               .requestFormReceivingPatch(
-                          //
-                          //               receivingId,
-                          //
-                          //               model);
-                          //
-                          //         }
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //       },
-                          //
-                          //
-                          //
-                          //       icon: Icons.check,iconColor: Colors.white,
-                          //
-                          //
-                          //
-                          //       text: "SAVE",
-                          //
-                          //      height: 32,width: 90,labelcolor: Colors.white,),
-                          //
-                          //
-                          //
-                          //   ],
-                          //
-                          //
-                          //
-                          // )
-                        ],
+                            // Row(
+                            //
+                            //
+                            //
+                            //   mainAxisAlignment: MainAxisAlignment.end,
+                            //
+                            //
+                            //
+                            //   children: [
+                            //
+                            //
+                            //
+                            //     Buttons(
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //       onApply: (){
+                            //
+                            //         List<RecievingLines>recieve=[];
+                            //
+                            //         if(recievingLisnes.isNotEmpty){           for(var i=0;i<recievingLisnes.length;i++){
+                            //
+                            //           if(recievingLisnes[i].isReceived==true){
+                            //
+                            //             recieve.add(recievingLisnes[i]);
+                            //
+                            //             setState(() {
+                            //
+                            //
+                            //
+                            //             });
+                            //
+                            //           }
+                            //
+                            //         }}
+                            //
+                            //         if(updateCheck==true){
+                            //
+                            //           context.showSnackBarError(
+                            //
+                            //               "please press update");
+                            //
+                            //         }
+                            //
+                            //         else{
+                            //
+                            //
+                            //
+                            //           RequestReceivingPatch model = RequestReceivingPatch(
+                            //
+                            //               note: noteController.text??"",
+                            //
+                            //               id:veritiaclid,
+                            //
+                            //               receivedBy: "",
+                            //
+                            //               unitCost:double.tryParse( unitCostController.text),
+                            //
+                            //               foc:double.tryParse( focController.text),
+                            //
+                            //               discount:double.tryParse( discountController.text),
+                            //
+                            //               grandTotal:double.tryParse( grandtotalCostController.text) ,
+                            //
+                            //               vatableAmount: double.tryParse( vatController.text) ,
+                            //
+                            //               excessTax:double.tryParse( excessTaxController.text) ,
+                            //
+                            //               actualCost:double.tryParse( actualCostController.text) ,
+                            //
+                            //               vat:double.tryParse( vatController.text) ,
+                            //
+                            //
+                            //
+                            //               remarks: remarksController.text ?? "",
+                            //
+                            //               receivingLines: recieve??[]);
+                            //
+                            //           print(model);
+                            //
+                            //           context
+                            //
+                            //               .read<PatchreceiveCubit>()
+                            //
+                            //               .requestFormReceivingPatch(
+                            //
+                            //               receivingId,
+                            //
+                            //               model);
+                            //
+                            //         }
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //       },
+                            //
+                            //
+                            //
+                            //       icon: Icons.check,iconColor: Colors.white,
+                            //
+                            //
+                            //
+                            //       text: "SAVE",
+                            //
+                            //      height: 32,width: 90,labelcolor: Colors.white,),
+                            //
+                            //
+                            //
+                            //   ],
+                            //
+                            //
+                            //
+                            // )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
+  }
+  saveUpdateFunction()
+  {
+
+    var isUpdate=receiveLineUpdateCheckFunc();
+    if (isUpdate == true) {
+      context
+          .showSnackBarError("Please press update");
+    } else {
+      setState(() {
+        isSave=true;
+      });
+      RequestReceivingPatch model =
+      RequestReceivingPatch(
+          note: noteController.text ?? "",
+          id: veritiaclid,
+          receivedBy: "",
+          unitCost: double.tryParse(
+              unitCostController.text),
+          foc:
+          double.tryParse(focController.text),
+          discount: double.tryParse(
+              discountController.text),
+          grandTotal: double.tryParse(
+              grandtotalCostController.text),
+          vatableAmount:
+          double.tryParse(vatController.text),
+          excessTax: double.tryParse(
+              excessTaxController.text),
+          actualCost: double.tryParse(
+              actualCostController.text),
+          vat:
+          double.tryParse(vatController.text),
+          remarks: remarksController.text ?? "",
+          receivingLines: recievingLisnes ?? []);
+
+      print(model);
+
+      context
+          .read<PatchreceiveCubit>()
+          .requestFormReceivingPatch(
+          receivingId, model);
+    }
+  }  updateReceveTableFunc(int i){
+    var variant =
+        recievingLisnes[i]
+            .variantId ??
+            0;
+
+    var excess =
+        recievingLisnes[i]
+            .excessTax ??
+            0;
+
+    print("excess" +
+        excess
+            .toString());
+
+    var unitcosts =
+        recievingLisnes[i]
+            .unitCost ??
+            0;
+
+    var qty =
+        recievingLisnes[i]
+            .requestedQty ??
+            0;
+
+    var foc =
+        recievingLisnes[i]
+            .foc ??
+            0;
+
+    var dis =
+        recievingLisnes[i]
+            .discount ??
+            0;
+
+    var exp =
+        recievingLisnes[i]
+            .expiryDate ??
+            "";
+
+    if (variant ==
+        "null" ||
+        unitcosts ==
+            0) {
+      context.showSnackBarError(
+          "please fill all the fields");
+    } else if (qty ==
+        0 ||
+        qty == "") {
+      context.showSnackBarError(
+          "the requested quantity not be 0 or empty");
+    } else if (qty! <
+        foc!) {
+      context.showSnackBarError(
+          "the received qty all ways greater than  foc");
+    } else {
+      updateCheck =
+      false;
+      recievingLisnes[
+      i] = recievingLisnes[
+      i]
+          .copyWith(
+          updateCheck:
+          false);
+
+      addition();
+
+      unitcost1 = 0;
+
+
+
+      setState(
+              () {});
+
+      grands = 0;
+
+      actualValue = 0;
+
+      vatValue = 0;
+
+      discountValue =
+      0;
+
+      focValue = 0;
+
+      VatableValue =
+      0;
+
+      excessTAxValue =
+      0;
+
+      setState(
+              () {});
+    }
+  }
+  generateFunction(){
+    var isUpdate=additiionUpdateCheckFunc();
+    if(isUpdate){
+      context.showSnackBarError("Please press the update button");
+    }
+    else{
+      setState(() {
+        isGenarate=true;
+      });
+
+      AdditionalGenerateModel model =
+      AdditionalGenerateModel(
+        receivingId: receivingId,
+        createdBy: Variable.created_by,
+        purchaseOrderId: Variable.verticalid,
+        orderLines: additionalVariants,
+      );
+
+      context
+          .read<GeneraterequestformCubit>()
+          .additionlGenerateRequest(model!);}
   }
   saveFunction(){
     foc1 = foc1 == null
@@ -6275,8 +6582,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
               expirydateController
                   .text,
             ));
-        unitcostAdditionalListControllers
-            .clear();
+
         valueAddingTextEdingController();
 
         clear();
@@ -6304,6 +6610,99 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
       },
         type: "vendorDetailList_popup",
       ),
+    );
+  }
+  receiveLinePreview() async {
+
+    InventoryListModel model=InventoryListModel();
+    UserPreferences userPref = UserPreferences();
+    await userPref.getInventoryList().then((user) {
+      print("entereeeeeeeeeeeeeeeeeeed");
+      print(user.name);
+      if (user.isInventoryExist == true) {
+        model=user;
+        print("existing");
+        print(model.email);
+        // prefs.setString('token', user?.token ?? "");
+      } else {
+      }
+    });
+    var recieveingList1=[];
+    double unitCostRecievde=0;
+    double vatRecievde=0;
+    double actualCostRecievde=0;
+    double variableAmountRecievde=0;
+    double discAmountRecievde=0;
+    double excessRecievde=0;
+    double focRecievde=0;
+    if(recievingLisnes.isNotEmpty) {
+      for (var i = 0; i <
+          recievingLisnes.length; i++) {
+        if (recievingLisnes[i].isReceived!=true) {
+          recieveingList1.add(recievingLisnes[i]);
+          var unicosts = recievingLisnes[i]
+              .unitCost ?? 0;
+          var vatValue1 = recievingLisnes[i]
+              .vat ?? 0;
+
+          var actualValue1 = recievingLisnes[i]
+              .actualCost ?? 0;
+          var discountValue1 = recievingLisnes[i]
+              .discount ?? 0;
+          var focValue1 = recievingLisnes[i]
+              .foc ?? 0;
+          var VatableValue1 = recievingLisnes[i]
+              .vatableAmount ?? 0;
+          var excessTAxValue1 = recievingLisnes[i]
+              .excessTax ?? 0;
+
+          unitCostRecievde = unitCostRecievde + unicosts;
+
+          actualCostRecievde =
+              actualCostRecievde + actualValue1;
+          vatRecievde = vatRecievde + vatValue1;
+          discAmountRecievde =
+              discAmountRecievde + discountValue1;
+          focRecievde = focRecievde + focValue1;
+          variableAmountRecievde =
+              variableAmountRecievde +
+                  VatableValue1;
+          print("excessTaxvalue" +
+              excessTAxValue.toString());
+          excessRecievde =
+              excessRecievde + excessTAxValue1;
+        }
+      }
+    }
+
+
+
+
+
+
+
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              PrintScreen(
+                table: recieveingList1,
+                isReceived: true,
+                note: noteController.text,
+                vendorCode: "Not",
+                orderCode: orderCodeController.text,
+                orderDate: orderDateController.text,
+                vat: vatRecievde,
+                actualCost: actualCostRecievde,
+                variableAmount: variableAmountRecievde,
+                discount: discAmountRecievde,
+                unitCost: unitCostRecievde,
+                excisetax:excessRecievde,
+                remarks: remarksController.text,
+                model: model,
+                pageName: "REQUEST FORM RECEIVING",
+              )),
     );
   }
 }

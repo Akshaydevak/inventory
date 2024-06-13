@@ -63,6 +63,7 @@ class _PurchaseOrderGeneralScreenState extends State<PurchaseOrderGeneralScreen>
   PurchaseOrderTableModel? purchaseTable;
   PurchaseCureentStockQty? purchaseCurrentStock;
   FocusNode inventoryFocusNode=FocusNode();
+  FocusNode saveUpadtebuttonFocusnOde=FocusNode();
   bool _value = false;
   bool select=false;
   TextEditingController itemsearch = TextEditingController();
@@ -150,9 +151,9 @@ class _PurchaseOrderGeneralScreenState extends State<PurchaseOrderGeneralScreen>
 
   @override
   void initState() {
-    context
-        .read<InventorysearchCubit>()
-        .getInventorySearch("code");
+      context
+          .read<InventorysearchCubit>()
+          .getInventorySearch("code");
     int verticalScrollIndex = 0;
     controller = AutoScrollController(
         viewportBoundaryGetter: () =>
@@ -180,7 +181,13 @@ class _PurchaseOrderGeneralScreenState extends State<PurchaseOrderGeneralScreen>
   updateCheckFucction(bool value) {
     updateCheck = value;
     setState(() {});
-  }
+  }  Map keyEventFuctionCount={
+    "save":2,
+    "cancel":3,
+    "table":1
+
+  };
+
   tableAssign(List<OrderLines> table1) {
     table = List.from(table1);
 
@@ -307,7 +314,7 @@ orederDate2Controller.clear();
 
     if (event is RawKeyDownEvent) {
 
-      if(event.logicalKey==LogicalKeyboardKey.keyA){
+      if(event.logicalKey==LogicalKeyboardKey.escape){
         print("tabPressd");
 
         FocusScope.of(context).requestFocus(inventoryFocusNode);
@@ -332,7 +339,11 @@ orederDate2Controller.clear();
 
 
         }
-
+if(tabCount!=1){
+  FocusScope.of(context).requestFocus(saveUpadtebuttonFocusnOde);
+}else{
+  FocusScope.of(context).requestFocus(_myWidgetState.currentState?.focusNodeList[0]);
+}
 
 
         // tabCount= tabCount== limit?--tabCount:++tabCount;
@@ -357,42 +368,46 @@ orederDate2Controller.clear();
           if (event.logicalKey == LogicalKeyboardKey.arrowDown ) {
             switch (tabCount) {
               case 1:
+            //     FocusScope.of(context).requestFocus(inventoryFocusNode);
+            // selectedVertical=    _verticalWidgetState.currentState?.   changeSelectedRow(1)??0;
+            // setState(() {
+            //
+            // });
                 FocusScope.of(context).requestFocus(inventoryFocusNode);
-            selectedVertical=    _verticalWidgetState.currentState?.   changeSelectedRow(1)??0;
-            setState(() {
+                _myWidgetState.currentState?.   changeSelectedRow(1);
+                setState(() {
 
-            });
+                });
                 break;
-
-            };  switch (tabCount) {
-              case 2:
-                FocusScope.of(context).requestFocus(inventoryFocusNode);
-                _stableWidgetState.currentState?.   changeSelectedRow(1);
-            setState(() {
-
-            });
-                break;
+              // case 2:
+              //
+              //   break;
 
             };
+
+
+
 
             // Handle arrow down key press
             // _changeSelectedRow(1);
           } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
             switch (tabCount) {
               case 1:
+                // FocusScope.of(context).requestFocus(inventoryFocusNode);
+                // selectedVertical=       _verticalWidgetState.currentState?.   changeSelectedRow(-1)??0;
+                // setState(() {
+                //
+                // });
                 FocusScope.of(context).requestFocus(inventoryFocusNode);
-                selectedVertical=       _verticalWidgetState.currentState?.   changeSelectedRow(-1)??0;
-                setState(() {
-
-                });
+                _myWidgetState.currentState?.   changeSelectedRow(-1);
                 break;
-                case 2:
-                FocusScope.of(context).requestFocus(inventoryFocusNode);
-                   _stableWidgetState.currentState?.   changeSelectedRow(-1);
-                setState(() {
-
-                });
-                break;
+                // case 2:
+                // // FocusScope.of(context).requestFocus(inventoryFocusNode);
+                // //    _stableWidgetState.currentState?.   changeSelectedRow(-1);
+                // // setState(() {
+                // //
+                // // });
+                // break;
 
             }
 
@@ -403,7 +418,13 @@ orederDate2Controller.clear();
           else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
             switch (tabCount) {
               case 1:
-                verticalOntapFunc(selectedVertical);
+                // verticalOntapFunc(selectedVertical);
+                break;
+                case 2:
+                saveUpadateFunction();
+                break;
+                case 3:
+                deleteOrClearFunction();
                 break;
 
             }
@@ -460,16 +481,9 @@ verticalOntapFunc(index){
       backgroundColor: Pellet.bagroundColor,
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => PurchaseorderpostCubit(),
-          ),
-          BlocProvider(
-            create: (context) => PurchaseOrderPatchCubit(),
-          ),
 
-          BlocProvider(
-            create: (context) => PurchaseorderdeleteCubit(),
-          ),
+
+
           BlocProvider(
               create: (context) => VariantIdCubitDartCubit()),
         ],
@@ -896,83 +910,16 @@ verticalOntapFunc(index){
                                   ),
                                   BlocBuilder<BottomButtonLoadingBloc, BottomButtonLoadingState>(
   builder: (context, state) {
-    return SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",isSaveUpdateLoading: state.updateSave,isClearDeketeLoading:state.deleteClear,discardFunction: (){
-                                    setState(() {
-                                      if(select){
-                                        clear();
-                                        table.clear();
-                                        setState(() {});
-                                      }
-                                      else {
-                                        showDailogPopUp(
-                                            context,
-                                            LogoutPopup(
-                                              message: "Do you want to delete the order?",
+    return SaveUpdateResponsiveButton(
+      focusNode: saveUpadtebuttonFocusnOde,
+         isKeyFuctionRight: keyEventFuctionCount['save']==tabCount,
+      isKeyFuctionLeft: keyEventFuctionCount['cancel']==tabCount,
+      label: select?"SAVE":"UPDATE",isSaveUpdateLoading: state.updateSave,isClearDeketeLoading:state.deleteClear,discardFunction: (){
+      deleteOrClearFunction();
 
-                                              onPressed:(){
-                                                print("akshay");
-                                                Navigator.pop(context);
-                                                context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
-
-                                              },
-
-
-                                            ));
-                                        // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
-                                      }
-                                    });
 
                                   },saveFunction: (){
-                                    if(updateCheck==true){
-                                      context.showSnackBarError(
-                                          "please press update");
-                                    }
-                                    else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
-                                      print(promised_receipt_date.text);
-                                      context.showSnackBarError(
-                                          "Required at least one variant ");
-                                    }
-
-                                    else{
-                                      context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: true));
-                                      var table1=[
-                                        for(var em in table)
-                                          if(em.isActive==true)
-                                            em
-                                      ];
-                                      print("filter table"+table1.toString());
-
-                                      PurchaseOrderPost model = PurchaseOrderPost(
-                                        purchaseOrderType: orderType.text == "" ? "" : orderType.text,
-                                        iventoryId: Variable.inventory_ID,
-                                        vendorId: vendorCode.text == "" ? "" : vendorCode.text,
-                                        vendorTrnNumber: vendortrnnumber.text == "" ? null : vendortrnnumber.text,
-                                        vendorMailId: vendor_email.text??null,
-                                        vendorAddress:null,
-                                        address1:"akkk",
-                                        address2:"ass",
-                                        promisedReceiptdate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(promised_receipt_date.text)),
-                                        plannedRecieptDate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(planned_receipt_date.text)),
-                                        note: note.text == "" ? "" : note.text,
-                                        remarks: remarks.text == "" ? "" : remarks.text,
-                                        discount: discount.text == "" ? 0 : double.parse(discount.text),
-                                        foc: foc.text == "" ? 0 : double.parse(foc.text),
-                                        unitcost: unitcourse.text == "" ? 0 : double.parse(unitcourse.text),
-                                        excessTax: excesstax.text == "" ? 0 : double.parse(excesstax.text),
-                                        actualCost: actualcost.text == "" ? 0 : double.parse(actualcost.text),
-                                        vat: vat.text == "" ? 0 : double.parse(vat.text),
-                                        grandTotal: grandtotal.text == "" ? 0 : double.parse(grandtotal.text),
-                                        variableAmount: Variableamount.text == "" ? 0 : double.parse(Variableamount.text),
-                                        createdBy: Variable.username,
-                                        orderLines:select? table1:table,
-
-
-                                      );
-                                      print("selecting "+model.toString());
-                                      select? context.read<PurchaseorderpostCubit>().postPurchase(model):
-                                      context.read<PurchaseOrderPatchCubit>().getGeneralPurchasePatch(veritiaclid, model)
-                                      ;
-                                    }
+      saveUpadateFunction();
 
                                   },
 
@@ -1108,6 +1055,84 @@ verticalOntapFunc(index){
         }),
       ),
     );
+  }
+  deleteOrClearFunction(){
+    setState(() {
+      if(select){
+        clear();
+        table.clear();
+        setState(() {});
+      }
+      else {
+        showDailogPopUp(
+            context,
+            LogoutPopup(
+              message: "Do you want to delete the order?",
+
+              onPressed:(){
+                print("akshay");
+                Navigator.pop(context);
+                context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+
+              },
+
+
+            ));
+        // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+      }
+    });
+  }
+  saveUpadateFunction(){
+    if(updateCheck==true){
+      context.showSnackBarError(
+          "please press update");
+    }
+    else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
+      print(promised_receipt_date.text);
+      context.showSnackBarError(
+          "Required at least one variant ");
+    }
+
+    else{
+      context.read<BottomButtonLoadingBloc>().add(SaveupdateButtonEvent(val: true));
+      var table1=[
+        for(var em in table)
+          if(em.isActive==true)
+            em
+      ];
+      print("filter table"+table1.toString());
+
+      PurchaseOrderPost model = PurchaseOrderPost(
+        purchaseOrderType: orderType.text == "" ? "" : orderType.text,
+        iventoryId: Variable.inventory_ID,
+        vendorId: vendorCode.text == "" ? "" : vendorCode.text,
+        vendorTrnNumber: vendortrnnumber.text == "" ? null : vendortrnnumber.text,
+        vendorMailId: vendor_email.text??null,
+        vendorAddress:null,
+        address1:"akkk",
+        address2:"ass",
+        promisedReceiptdate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(promised_receipt_date.text)),
+        plannedRecieptDate:DateFormat("yyyy-MM-dd").format(DateFormat("dd-MM-yyyy").parse(planned_receipt_date.text)),
+        note: note.text == "" ? "" : note.text,
+        remarks: remarks.text == "" ? "" : remarks.text,
+        discount: discount.text == "" ? 0 : double.parse(discount.text),
+        foc: foc.text == "" ? 0 : double.parse(foc.text),
+        unitcost: unitcourse.text == "" ? 0 : double.parse(unitcourse.text),
+        excessTax: excesstax.text == "" ? 0 : double.parse(excesstax.text),
+        actualCost: actualcost.text == "" ? 0 : double.parse(actualcost.text),
+        vat: vat.text == "" ? 0 : double.parse(vat.text),
+        grandTotal: grandtotal.text == "" ? 0 : double.parse(grandtotal.text),
+        variableAmount: Variableamount.text == "" ? 0 : double.parse(Variableamount.text),
+        createdBy: Variable.username,
+        orderLines:select? table1:table,
+
+
+      );
+      print("selecting "+model.toString());
+      select? context.read<PurchaseorderpostCubit>().postPurchase(model):
+      context.read<PurchaseOrderPatchCubit>().getGeneralPurchasePatch(veritiaclid, model)
+      ;
+    }
   }
 }
 

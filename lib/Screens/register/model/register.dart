@@ -31,3 +31,33 @@ final String? token,
   factory RegisterModel.fromJson(Map<String, dynamic> json) =>
       _$RegisterModelFromJson(json);
 }
+
+@freezed
+class ipBlockModel with _$ipBlockModel{
+  const factory ipBlockModel({
+    final String? username,
+    final String? password,
+    final String? code,
+    final String? email,
+    final CaptchaReadModel? captcha,
+
+
+
+  })=_ipBlockModel;
+  factory ipBlockModel.fromJson(Map<String,dynamic>json)=>
+      _$ipBlockModelFromJson(json);
+}
+@freezed
+class CaptchaReadModel with _$CaptchaReadModel {
+  const factory CaptchaReadModel({
+    final int? id,
+
+    @JsonKey(name: "captcha_id") final String? captchaId,
+    @JsonKey(name: "captcha_image_base64") final String? captchaImageBase64,
+    @JsonKey(name: "captcha_text") final String? captchaText,
+
+  })=_CaptchaReadModel;
+
+  factory CaptchaReadModel.fromJson(Map<String, dynamic>json)=>
+      _$CaptchaReadModelFromJson(json);
+}

@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$InvoicepostState {
+mixin _$InvoicepostPurchaseCubitState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -69,16 +69,19 @@ mixin _$InvoicepostState {
 }
 
 /// @nodoc
-abstract class $InvoicepostStateCopyWith<$Res> {
-  factory $InvoicepostStateCopyWith(
-          InvoicepostState value, $Res Function(InvoicepostState) then) =
-      _$InvoicepostStateCopyWithImpl<$Res, InvoicepostState>;
+abstract class $InvoicepostPurchaseCubitStateCopyWith<$Res> {
+  factory $InvoicepostPurchaseCubitStateCopyWith(
+          InvoicepostPurchaseCubitState value,
+          $Res Function(InvoicepostPurchaseCubitState) then) =
+      _$InvoicepostPurchaseCubitStateCopyWithImpl<$Res,
+          InvoicepostPurchaseCubitState>;
 }
 
 /// @nodoc
-class _$InvoicepostStateCopyWithImpl<$Res, $Val extends InvoicepostState>
-    implements $InvoicepostStateCopyWith<$Res> {
-  _$InvoicepostStateCopyWithImpl(this._value, this._then);
+class _$InvoicepostPurchaseCubitStateCopyWithImpl<$Res,
+        $Val extends InvoicepostPurchaseCubitState>
+    implements $InvoicepostPurchaseCubitStateCopyWith<$Res> {
+  _$InvoicepostPurchaseCubitStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +98,7 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$InvoicepostStateCopyWithImpl<$Res, _$_Initial>
+    extends _$InvoicepostPurchaseCubitStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
@@ -108,7 +111,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'InvoicepostState.initial()';
+    return 'InvoicepostPurchaseCubitState.initial()';
   }
 
   @override
@@ -195,7 +198,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements InvoicepostState {
+abstract class _Initial implements InvoicepostPurchaseCubitState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -208,7 +211,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$InvoicepostStateCopyWithImpl<$Res, _$_Loading>
+    extends _$InvoicepostPurchaseCubitStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -221,7 +224,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'InvoicepostState.loading()';
+    return 'InvoicepostPurchaseCubitState.loading()';
   }
 
   @override
@@ -308,7 +311,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements InvoicepostState {
+abstract class _Loading implements InvoicepostPurchaseCubitState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -320,7 +323,7 @@ abstract class _$$_Error1CopyWith<$Res> {
 
 /// @nodoc
 class __$$_Error1CopyWithImpl<$Res>
-    extends _$InvoicepostStateCopyWithImpl<$Res, _$_Error1>
+    extends _$InvoicepostPurchaseCubitStateCopyWithImpl<$Res, _$_Error1>
     implements _$$_Error1CopyWith<$Res> {
   __$$_Error1CopyWithImpl(_$_Error1 _value, $Res Function(_$_Error1) _then)
       : super(_value, _then);
@@ -333,7 +336,7 @@ class _$_Error1 implements _Error1 {
 
   @override
   String toString() {
-    return 'InvoicepostState.error()';
+    return 'InvoicepostPurchaseCubitState.error()';
   }
 
   @override
@@ -420,7 +423,7 @@ class _$_Error1 implements _Error1 {
   }
 }
 
-abstract class _Error1 implements InvoicepostState {
+abstract class _Error1 implements InvoicepostPurchaseCubitState {
   const factory _Error1() = _$_Error1;
 }
 
@@ -435,7 +438,7 @@ abstract class _$$_SuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SuccessCopyWithImpl<$Res>
-    extends _$InvoicepostStateCopyWithImpl<$Res, _$_Success>
+    extends _$InvoicepostPurchaseCubitStateCopyWithImpl<$Res, _$_Success>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
       : super(_value, _then);
@@ -464,7 +467,7 @@ class _$_Success implements _Success {
 
   @override
   String toString() {
-    return 'InvoicepostState.success(data: $data)';
+    return 'InvoicepostPurchaseCubitState.success(data: $data)';
   }
 
   @override
@@ -559,7 +562,7 @@ class _$_Success implements _Success {
   }
 }
 
-abstract class _Success implements InvoicepostState {
+abstract class _Success implements InvoicepostPurchaseCubitState {
   const factory _Success(final DoubleResponse<dynamic, dynamic> data) =
       _$_Success;
 

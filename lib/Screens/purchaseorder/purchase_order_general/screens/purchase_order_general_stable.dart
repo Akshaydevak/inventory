@@ -87,7 +87,7 @@ class PurchaseOrderGeneralStableTableState extends State<PurchaseOrderGeneralSta
                               children: [
 
                                 SelectableDropDownpopUp(
-                                  focusNode: focusNodes[5],
+                                  // focusNode: focusNodes[5],
                                   label: "Order Type",
 
                                   type:"sellingngPrice-basedOn",

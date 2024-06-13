@@ -60,6 +60,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> signUp(RegisterModel model);
   Future<Either<Failure, DoubleResponse>> getLogin(
       String username, String password, String empCode);
+  Future<Either<Failure, DoubleResponse>> postIpBlock(ipBlockModel model);
   Future<Either<Failure, DoubleResponse>> otpReg(
       String email, String mobile, String key, String cratedCode);
   Future<Either<Failure, List<PurchaseInvoice>>> getPurchaseInvoice();
@@ -1750,5 +1751,10 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
     return repoExecute<DoubleResponse>(
             () async =>
             remoteDataSource.postImage2(bytes, type: type));
+  }
+  @override
+  Future<Either<Failure, DoubleResponse>> postIpBlock(ipBlockModel model) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.postIpBlock(model));
   }
 }

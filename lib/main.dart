@@ -4,21 +4,38 @@ import 'package:desktop_window/desktop_window.dart' as window_size;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/grouplist/grouplist_cubit.dart';
+import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventorypost_cubit.dart';
 import 'package:inventory/Screens/promotiontab/bogo_tab/cubit/bogo_verticallist/bogo_vertical_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/coupon/cubit/verticallist/promotion_coupon_vertical_list_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/Deacivate/promotion_sale_deactivate_cubit.dart';
 import 'package:inventory/Screens/promotiontab/sale/cubits/readOfferGroup/read_offer_group_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/generalpost_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/payment_list/payment_list_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/paymentpost/payment_sale_post_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/purchasereturngeneralpatch_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/returdelete_cubit.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
 import 'package:inventory/Screens/sales/general/cubit/payment_verticallist/payement_vertical_list_cubit.dart';
 import 'package:inventory/Screens/sales/invoice/cubits/payment_suucess_post/payment_transaction_success_post_cubit.dart';
+import 'package:inventory/Screens/salesreturn/cubit/cubit/patch/salesreturngeneralpatch_cubit.dart';
+import 'package:inventory/Screens/salesreturn/cubit/cubit/salesreturngeneraldelete_cubit.dart';
+import 'package:inventory/Screens/salesreturn/cubit/salesreturn/salesreturnpost_cubit.dart';
+import 'package:inventory/Screens/salesreturn/invoice/cubit/invoicepost/salesreturninvoicepost_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtypelist/costingtypelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/linkedlistvertica/linkedlistverticallist_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/cubits/cubit/cubit/cubit/purchase_order_patch_cubit.dart';
+import 'package:inventory/purchaseRecieving_cubits/cubit/additionalgenerate_cubit.dart';
 import 'package:inventory/purchaseRecieving_cubits/cubit/purchasegenerating_cubit.dart';
+import 'package:inventory/purchaseRecieving_cubits/cubit/purchaserecievingpatch_cubit.dart';
+import 'package:inventory/purchaseorderpostcubit/cubit/purchaseorderpost_cubit.dart';
+import 'package:inventory/requestformcubit/cubit/deleterequestform_cubit.dart';
+import 'package:inventory/requestformcubit/cubit/requestformpost_cubit.dart';
+import 'package:inventory/requestformcubit/cubit/requestpatch_cubit.dart';
+import 'package:inventory/requestformrecieving/cubit/generaterequestform_cubit.dart';
+import 'package:inventory/requestformrecieving/cubit/patchreceive_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,8 +58,9 @@ import 'Screens/heirarchy/general/cubits/listbrand2/listbrand2_cubit.dart';
 import 'Screens/heirarchy/general/cubits/material/material_list_cubit.dart';
 import 'Screens/heirarchy/general/cubits/subcategorylist/subcategory_cubit.dart';
 import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
-
+import 'package:inventory/Screens/sales/invoice/cubits/invoicepost/invoicepost_cubit.dart';
 import 'Screens/logi/login.dart';
+import 'Screens/logi/login_with_api_bolck.dart';
 import 'Screens/promotiontab/buy_more/cubit/buy_more_verticalList/buy_more_vertical_list_cubit.dart';
 import 'Screens/promotiontab/discount/cubit/PromotionDiscountVerticalList/promotion_discount_vertical_list_cubit.dart';
 import 'Screens/promotiontab/muttibuy/cubit/multibuyverticallist_cubit.dart';
@@ -53,7 +71,13 @@ import 'Screens/promotiontab/sale/cubits/offergroup/list_offer_group_cubit.dart'
 import 'Screens/promotiontab/sale/cubits/promotionimage/promotion_image_cubit.dart';
 import 'Screens/promotiontab/sale/cubits/salevertical_list/promotionsale_vertical_list_cubit.dart';
 import 'Screens/purchaseorder/purchase_order_general/blocs/bottom_button_loading_bloc.dart';
+
+import 'Screens/purchasreturn/cubits/cubit/invoicepost_cubit.dart';
+import 'Screens/sales/general/cubit/generalread/salesgeneralread_cubit.dart';
+import 'Screens/sales/general/cubit/postcubit/postcubit_cubit.dart';
+import 'Screens/sales/general/cubit/sales_general_patch/salesgeneralpatcvh_cubit.dart';
 import 'Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
+import 'Screens/sales/general/cubit/salesgeneraldelete/salesgeneraldelete_cubit.dart';
 import 'Screens/sales/general/cubit/shippingaddress/shippingadrees_cubit.dart';
 import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import 'Screens/variant/channel_alloction/cubit/channelread/channelread_cubit.dart';
@@ -72,8 +96,10 @@ import 'Screens/variant/variantdetails/cubits/producedcountry/producedcountry_cu
 import 'commonWidget/Navigationprovider.dart';
 import 'commonWidget/sharedpreference.dart';
 import 'core/env.dart';
+import 'cubits/cubit/cubit/cubit/cubit/purchaseorderdelete_cubit.dart';
 import 'cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
 import 'cubits/cubit/cubit/general_purchase_read_cubit.dart';
+import 'cubits/cubit/cubit/purchase_stock_cubit.dart';
 
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
@@ -168,6 +194,21 @@ class _MyAppState extends State<MyApp> {
           create: (context) => CategorylistCubit(),
         ),
         BlocProvider(
+          create: (context) => PostcubitCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SalesgeneralreadCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SalesgeneraldeleteCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SalesgeneralpatcvhCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PurchaseStockCubit(),
+        ),
+        BlocProvider(
           create: (context) => GrouplistCubit(),
         ),    BlocProvider(
           create: (context) => ListOfferGroupCubit(),
@@ -194,6 +235,26 @@ class _MyAppState extends State<MyApp> {
           create: (context) => CostingtypelistCubit(),
         ),
         BlocProvider(
+          create: (context) => PurchaseorderdeleteCubit(),
+        ),
+        BlocProvider(
+          create: (context) => RequestformpostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => RequestpatchCubit(),
+        ),
+        BlocProvider(
+          create: (context) => DeleterequestformCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PurchaseorderpostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PurchaseOrderPatchCubit(),
+        ),
+        BlocProvider(
+            create: (context) => InvoicepostPurchaseCubit()),
+        BlocProvider(
           create: (context) => ListstockpartitionCubit(),
         ),
         BlocProvider(
@@ -209,7 +270,31 @@ class _MyAppState extends State<MyApp> {
           create: (context) => FrameworklistCubit(),
         ),
         BlocProvider(
+          create: (context) => ReturdeleteCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GeneralpostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PurchasereturngeneralpatchCubit(),
+        ),
+        BlocProvider(
+          create: (context) => InvoicepostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SalesreturnpostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SalesreturninvoicepostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SalesreturngeneralpatchCubit(),
+        ),
+        BlocProvider(
           create: (context) => LinkedlistverticallistCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SalesreturngeneraldeleteCubit(),
         ),
         BlocProvider(
           create: (context) => AllocationdataAssignCubit(),
@@ -222,6 +307,7 @@ class _MyAppState extends State<MyApp> {
         ),    BlocProvider(
           create: (context) => PromotionsaleVerticalListCubit(),
         ),
+
     BlocProvider(
     create: (context) => ProducedcountryCubit()),
         BlocProvider(
@@ -257,12 +343,27 @@ class _MyAppState extends State<MyApp> {
           create: (context) => PromotionSaleDeactivateCubit(),
         ),
         BlocProvider(
+          create: (context) => InventorypostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AdditionalgenerateCubit(),
+        ),
+        BlocProvider(
           create: (context) => PaymentListCubit(),
         ),  BlocProvider(
           create: (context) => BottomButtonLoadingBloc(),
         ),
         BlocProvider(
+          create: (context) => PurchaserecievingpatchCubit(),
+        ),
+        BlocProvider(
           create: (context) => PaymentSalePostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PatchreceiveCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GeneraterequestformCubit(),
         ),
         BlocProvider(
           create: (context) => BogoVerticalListCubit(),
@@ -342,7 +443,7 @@ class _MyHomeState extends State<MyHome> {
       } else {
         print(" not already ");
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+            context, MaterialPageRoute(builder: (context) => LoginWithApiBlock()));
       }
     });
   }

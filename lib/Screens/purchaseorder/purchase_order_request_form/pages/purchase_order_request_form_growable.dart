@@ -80,6 +80,8 @@ class PurchaseOrderRequestFormGrowableTableState extends State<PurchaseOrderRequ
   TextEditingController excesstaxTestContoller = TextEditingController();
   TextEditingController vatTestContoller = TextEditingController();
   TextEditingController unitCostCheck = TextEditingController();
+  List<List<FocusNode>> listOfxfocusNodes = [];
+  int selctedraw=-1;
   var unitcostListControllers = <TextEditingController>[];
   List<FocusNode>focusNodeList=List.generate(7, (index) => FocusNode());
   vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
@@ -89,6 +91,19 @@ class PurchaseOrderRequestFormGrowableTableState extends State<PurchaseOrderRequ
         discount!).toStringAsFixed(2));
   }
 
+  void changeSelectedRow(int direction) {
+    print("woooooooooooooooo");
+    setState(() {
+
+
+        // Adjust the selected row based on the arrow key direction
+        selctedraw = (selctedraw + direction).clamp(0, table.length - 1);
+        if(selctedraw!=-1)
+          FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+  // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+  }
   double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,double? discount){
     print("vatable updationsssssssssss");
     print(unitCost);
@@ -202,7 +217,7 @@ unitcostListControllers.clear();
     if(table.isNotEmpty){
       print("checking case");
       for(var i=0;i<table.length;i++){
-
+        listOfxfocusNodes.add(List.generate(7, (index) => FocusNode()));
         var unitcost = new TextEditingController(text: table[i].unitCost.toString()??"");
         unitcostListControllers.add(unitcost);
 
@@ -540,7 +555,7 @@ unitcostListControllers.clear();
                               i++)
                                 TableRow(
                                     decoration: BoxDecoration(
-                                        color: Pellet.tableRowColor,
+                                        color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                         shape: BoxShape.rectangle,
                                         border:  Border(
                                             left: BorderSide(
@@ -637,6 +652,7 @@ unitcostListControllers.clear();
                                                                 actualCost: vactualCost,
                                                                 grandTotal: vactualCost,
                                                                 discount: disc);
+                                                        FocusScope.of(context).requestFocus(listOfxfocusNodes[i][0]);
                                                         setState(() {});
 
                                                       }
@@ -774,7 +790,10 @@ unitcostListControllers.clear();
                                         child: UnderLinedInput(
                                           initialCheck:true,
                                           integerOnly: true,
-
+                                          onComplete: (){
+                                            FocusScope.of(context).requestFocus(listOfxfocusNodes[i][1]);
+                                          },
+                                          focusNode: listOfxfocusNodes[i][0],
                                           // controller: requestedListControllers[i],
                                           last: table[i].requestedQty.toString() ?? "",
                                           onChanged: (va) {
@@ -835,6 +854,10 @@ unitcostListControllers.clear();
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
                                           integerOnly: true,
+                                          onComplete: (){
+                                            FocusScope.of(context).requestFocus(listOfxfocusNodes[i][2]);
+                                          },
+                                          focusNode: listOfxfocusNodes[i][1],
 
                                           initialCheck:true,
                                           last:table[i].minimumQty.toString(),
@@ -868,10 +891,7 @@ unitcostListControllers.clear();
 
                                           },
                                           enable: true,
-                                          onComplete: () {
 
-                                            setState(() {  print("maxxxx"+table.toString());});
-                                          },
                                         ),
                                       ),
 
@@ -880,6 +900,10 @@ unitcostListControllers.clear();
                                         child: UnderLinedInput(
                                           integerOnly: true,
                                           initialCheck:true,
+                                          onComplete: (){
+                                            FocusScope.of(context).requestFocus(listOfxfocusNodes[i][3]);
+                                          },
+                                          focusNode: listOfxfocusNodes[i][2],
                                           //controller: maxListControllers[i],
                                           last:table[i].maximumQty.toString(),
                                           onChanged: (p0) {
@@ -906,11 +930,7 @@ unitcostListControllers.clear();
 
                                           },
                                           enable: true,
-                                          onComplete: () {
-
-                                            setState(() {  print("maxxxx"+table.toString());});
-                                          },
-                                        ),
+                                                                               ),
                                       ),
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
@@ -930,6 +950,10 @@ unitcostListControllers.clear();
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
+                                          onComplete: (){
+                                            FocusScope.of(context).requestFocus(listOfxfocusNodes[i][4]);
+                                          },
+                                          focusNode: listOfxfocusNodes[i][3],
                                           // initialCheck:true,
                                           controller: unitcostListControllers[i],
                                           // last: table[i].unitCost.toString() ?? "",
@@ -988,6 +1012,10 @@ unitcostListControllers.clear();
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
                                           initialCheck:true,
+                                          onComplete: (){
+                                            FocusScope.of(context).requestFocus(listOfxfocusNodes[i][5]);
+                                          },
+                                          focusNode: listOfxfocusNodes[i][4],
                                           // controller: excesstListControllers[i],
                                           last: table[i].excessTax.toString() ?? "",
                                           onChanged: (va) {
@@ -1033,6 +1061,10 @@ unitcostListControllers.clear();
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: UnderLinedInput(
                                           initialCheck:true,
+                                          onComplete: (){
+                                            FocusScope.of(context).requestFocus(listOfxfocusNodes[i][6]);
+                                          },
+                                          focusNode: listOfxfocusNodes[i][5],
                                           last: table[i].discount.toString() ?? "",
                                           onChanged: (va) {
                                             widget.updateCheck(true);
@@ -1305,6 +1337,25 @@ unitcostListControllers.clear();
                                       TableCell(
                                         verticalAlignment: TableCellVerticalAlignment.middle,
                                         child: CheckedBoxs(
+                                          focusNode: listOfxfocusNodes[i][6],
+                                          onCompleteFunc: (){
+
+                                            bool? isActive = table[i].isActive;
+                                            setState(() {
+                                              widget.updateCheck(true);
+                                              table[i] = table[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
+                                              isActive = !isActive!;
+                                              table[i] = table[i].copyWith(isActive: isActive);
+
+                                              upDateFunction(i);  if(i!=table.length-1){
+                                                FocusScope.of(context).requestFocus(listOfxfocusNodes[i][6]);
+                                              }
+
+                                            });
+                                          },
                                           valueChanger: table[i]
                                               .isActive==null?false:table[i]
                                               .isActive,
@@ -1333,43 +1384,7 @@ unitcostListControllers.clear();
                                           bagroundColor: table?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
                                           label:table[i].updateCheck==true?'Update':"",
                                           onPress: (){
-                                            var Vamount = table[i].vatableAmount??0;
-                                            var variant = table[i].variantId??0;
-                                            var mins = table[i].minimumQty??0;
-                                            var maxs = table[i].maximumQty??0;
-                                            var vat = table[i].vat??0;
-
-                                            var excess = table[i].excessTax??0;
-                                            print("excess" + excess.toString());
-                                            var unitcosts = table[i].unitCost??0;
-                                            var qty = table[i].requestedQty??0;
-                                            var foc = table[i].foc??0;
-                                            var dis = table[i].discount??0;
-                                            if(variant=="null"||unitcosts==0){
-                                              context.showSnackBarError("please fill all the fields");
-                                            }
-                                            else if(qty==0||qty==""){
-                                              context.showSnackBarError(
-                                                  "The requested quantity not be 0 or empty");
-
-                                            }
-                                            else if(qty!<foc!){
-                                              context.showSnackBarError("the received qty all ways greater than  foc");
-                                            }
-                                            else if(mins>maxs){
-                                              context.showSnackBarError("the minimum qty  all ways less than than  maximum qty");
-                                            }
-                                            else{
-
-                                              table[i] = table[i].copyWith(updateCheck: false);
-                                              var isUpdate=updateCheckFunc();
-                                              widget.updateCheck(isUpdate);
-                                            widget.updation(table)  ;
-                                            }
-
-                                            setState(() {
-
-                                            });
+                                        upDateFunction(i);
                                           },),
                                       )
 
@@ -1975,6 +1990,45 @@ unitcostListControllers.clear();
         );
       }),
     );
+  }
+  upDateFunction(int i){
+    var Vamount = table[i].vatableAmount??0;
+    var variant = table[i].variantId??0;
+    var mins = table[i].minimumQty??0;
+    var maxs = table[i].maximumQty??0;
+    var vat = table[i].vat??0;
+
+    var excess = table[i].excessTax??0;
+    print("excess" + excess.toString());
+    var unitcosts = table[i].unitCost??0;
+    var qty = table[i].requestedQty??0;
+    var foc = table[i].foc??0;
+    var dis = table[i].discount??0;
+    if(variant=="null"||unitcosts==0){
+      context.showSnackBarError("please fill all the fields");
+    }
+    else if(qty==0||qty==""){
+      context.showSnackBarError(
+          "The requested quantity not be 0 or empty");
+
+    }
+    else if(qty!<foc!){
+      context.showSnackBarError("the received qty all ways greater than  foc");
+    }
+    else if(mins>maxs){
+      context.showSnackBarError("the minimum qty  all ways less than than  maximum qty");
+    }
+    else{
+
+      table[i] = table[i].copyWith(updateCheck: false);
+      var isUpdate=updateCheckFunc();
+      widget.updateCheck(isUpdate);
+      widget.updation(table)  ;
+    }
+
+    setState(() {
+
+    });
   }
   saveFunction(){
     foc1=foc1??0;

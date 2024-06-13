@@ -94,6 +94,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
   String? check1 = "";
   String? email = "";
   int? stockQty = 0;
+  int selctedraw=-1;
 
   int? maxQty=0;
   TextEditingController requestedtTestContoller = TextEditingController();
@@ -107,7 +108,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
   TextEditingController vatTestContoller = TextEditingController();
   TextEditingController unitCostCheck = TextEditingController();
   List<FocusNode>focusNodeList=List.generate(7, (index) => FocusNode());
-
+  List<List<FocusNode>> listOfxfocusNodes = [];
 
   vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
     print(unitCost);
@@ -189,6 +190,19 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
     });
   }
 
+  void changeSelectedRow(int direction) {
+    setState(() {
+
+
+        // Adjust the selected row based on the arrow key direction
+        selctedraw = (selctedraw + direction).clamp(0, table.length - 1);
+        if(selctedraw!=-1)
+          FocusScope.of(context).requestFocus(listOfxfocusNodes[selctedraw][0]);
+
+
+      // invoiceCheckBoxselectionFunc(invoiceselectedRow);
+    });
+  }
   bool updateCheckFunc(){
     var isUpdate=table.where((element) => element.updateCheck==true);
     if(isUpdate.isNotEmpty){
@@ -277,6 +291,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
         focListControllers.add(foc);
         var vat = new TextEditingController(text: table[i].vat.toString()??"");
         vatListControllers.add(vat);
+        listOfxfocusNodes.add(List.generate(7, (index) => FocusNode()));
         setState(() {
 
         });
@@ -570,7 +585,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Pellet.tableRowColor,
+                                          color:selctedraw==i?Pellet.selectedTableColor: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
                                           border:  Border(
                                               left: BorderSide(
@@ -658,7 +673,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                         Variable.tableindex =i;
                                                         stockCheck=true;
                                                         Variable.tableedit=true;
-
+                                                        FocusScope.of(context).requestFocus(listOfxfocusNodes[i][0]);
                                                         context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
                                                         context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID,variantId1);
 
@@ -680,6 +695,10 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         //88888888888888888888                                   //**********************************************
                                         TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(controller:requestedListControllers[i],
+                                              onComplete: (){
+                                                FocusScope.of(context).requestFocus(listOfxfocusNodes[i][1]);
+                                              },
+                                              focusNode: listOfxfocusNodes[i][0],
                                               integerOnly: true, onChanged: (va) {print(va);widget.  updateCheck(true);
                                               table[i] = table[i].copyWith(updateCheck: true,requestedQty: va==""?0:int.tryParse(va));
                                               setState(() {
@@ -696,7 +715,12 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             integerOnly: true,
+
                                             controller:minListControllers[i],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][2]);
+                                            },
+                                            focusNode: listOfxfocusNodes[i][1],
                                             onChanged: (p0) {
                                               widget.  updateCheck(true);
                                                 setState(() {
@@ -704,13 +728,16 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                 });
                                             },
                                             enable: true,
-                                            onComplete: () {
-                                            },
+
                                           ),
                                         ),
                                         TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
                                             integerOnly: true,
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][3]);
+                                            },
+                                            focusNode: listOfxfocusNodes[i][2],
                                             controller:maxListControllers[i],
                                             onChanged: (p0) {
                                               widget.  updateCheck(true);
@@ -721,10 +748,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
 
                                             },
                                             enable: true,
-                                            onComplete: () {
 
-                                              setState(() {  print("maxxxx"+table.toString());});
-                                            },
                                           ),
                                         ),
                                         TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: CheckedBoxs(valueChanger:table[i].isRecieved==null?false: table[i].isRecieved, onSelection: (bool? value) {  },),),
@@ -734,6 +758,10 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                           child: UnderLinedInput(
                                             // integerOnly: true,
                                             controller:unitcostListControllers[i],
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][4]);
+                                            },
+                                            focusNode: listOfxfocusNodes[i][3],
                                             onChanged: (va) {
                                               widget.  updateCheck(true);
                                               table[i] = table[i].copyWith(updateCheck: true,unitCost:va ==""?0:double.tryParse(va) );
@@ -751,7 +779,10 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
-
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][5]);
+                                            },
+                                            focusNode: listOfxfocusNodes[i][4],
                                             controller:excesstListControllers[i],
                                             onChanged: (va) {
                                               widget.  updateCheck(true);
@@ -767,6 +798,10 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
 
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            onComplete: (){
+                                              FocusScope.of(context).requestFocus(listOfxfocusNodes[i][5]);
+                                            },
+                                            focusNode: listOfxfocusNodes[i][4],
                                             onChanged: (va) {
                                               widget.  updateCheck(true);
                                               table[i] = table[i].copyWith(updateCheck: true,excessTax:va == ""?0: double.tryParse(va));
@@ -782,6 +817,10 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                              onComplete: (){
+                                                FocusScope.of(context).requestFocus(listOfxfocusNodes[i][6]);
+                                              },
+                                              focusNode: listOfxfocusNodes[i][5],
                                             controller:discounttListControllers[i],
                                             onChanged: (va) {
                                               widget.  updateCheck(true);
@@ -890,6 +929,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: CheckedBoxs(
+
                                               valueChanger:table[i]
                                                   .isRecieved==null?false:table[i].isRecieved,
 
@@ -900,6 +940,26 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: CheckedBoxs(
+
+                                              focusNode: listOfxfocusNodes[i][6],
+                                              onCompleteFunc: (){
+                                                bool? isActive = table[i].isActive;
+                                                setState(() {
+                                                  widget.  updateCheck(true);
+                                                  table[i] = table[i].copyWith(updateCheck: true);
+                                                  setState(() {
+
+                                                  });
+                                                  isActive = !isActive!;
+                                                  table[i] = table[i].copyWith(isActive: isActive);
+
+                                                  upDateFunction(i);
+                                                  if(i!=table.length-1){
+                                                    FocusScope.of(context).requestFocus(listOfxfocusNodes[i][6]);
+                                                  }
+
+                                                });
+                                              },
                                               valueChanger:table[i]
                                                   .isActive==null?false:table[i].isActive,
 
@@ -914,7 +974,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                                   isActive = !isActive!;
                                                   table[i] = table[i].copyWith(isActive: isActive);
 
-                                                  setState(() {});
+
                                                 });
                                               }),
                                         ),
@@ -925,41 +985,7 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
                                             bagroundColor: table?[i].updateCheck==true?Pellet.tableBlueHeaderPrint:Colors.transparent,
 
                                             onPress: () {
-                                              var variant = table[i].variantId??0;
-                                              var mins = table[i].minimumQty??0;
-                                              var maxs = table[i].maximumQty??0;
-
-                                              var excess = table[i].excessTax??0;
-                                              print("excess" + excess.toString());
-                                              var unitcosts = table[i].unitCost??0;
-                                              var qty = table[i].requestedQty??0;
-                                              var foc = table[i].foc??0;
-                                              if(variant=="null"||unitcosts==0){
-                                                context.showSnackBarError("please fill all the fields");
-                                              }
-                                              else if(qty==0||qty==""){
-                                                context.showSnackBarError(
-                                                    "the requested quantity not be 0 or empty");
-                                              }
-                                              else if(qty!<foc!){
-                                                context.showSnackBarError("the received qty allways greater than  foc");
-
-                                              }
-                                              else if(mins>maxs){
-                                                context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
-                                              }
-                                              else{
-
-                                                table[i] = table[i].copyWith(updateCheck: false);
-                                                // vendorCheckFunc();
-                                               widget.updation(table);
-                                                setState(() {
-
-                                                });
-                                                var isUpdate=updateCheckFunc();
-                                                widget.  updateCheck(isUpdate);
-                                                setState(() {});
-                                              }
+                                              upDateFunction(i);
                                             },
                                             label:table?[i].updateCheck==true?"update":"",
                                           ),
@@ -1346,6 +1372,43 @@ class PurchaseOrderGenearlFormGrowableTableState extends State<PurchaseOrderGene
         );
       }),
     );
+  }
+  upDateFunction(int i){
+    var variant = table[i].variantId??0;
+    var mins = table[i].minimumQty??0;
+    var maxs = table[i].maximumQty??0;
+
+    var excess = table[i].excessTax??0;
+    print("excess" + excess.toString());
+    var unitcosts = table[i].unitCost??0;
+    var qty = table[i].requestedQty??0;
+    var foc = table[i].foc??0;
+    if(variant=="null"||unitcosts==0){
+      context.showSnackBarError("please fill all the fields");
+    }
+    else if(qty==0||qty==""){
+      context.showSnackBarError(
+          "the requested quantity not be 0 or empty");
+    }
+    else if(qty!<foc!){
+      context.showSnackBarError("the received qty allways greater than  foc");
+
+    }
+    else if(mins>maxs){
+      context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
+    }
+    else{
+
+      table[i] = table[i].copyWith(updateCheck: false);
+      // vendorCheckFunc();
+      widget.updation(table);
+      setState(() {
+
+      });
+      var isUpdate=updateCheckFunc();
+      widget.  updateCheck(isUpdate);
+      setState(() {});
+    }
   }
   saveFunction(){
     if (vminqty! >

@@ -1,9 +1,9 @@
 part of 'invoicepost_cubit.dart';
 
 @freezed
-class InvoicepostState with _$InvoicepostState {
-  const factory InvoicepostState.initial() = _Initial;
-  const factory InvoicepostState.loading() = _Loading;
-  const factory InvoicepostState.error() = _Error1;
-  const factory InvoicepostState.success(DoubleResponse data) = _Success;
+class InvoicepostPurchaseCubitState with _$InvoicepostPurchaseCubitState {
+  const factory InvoicepostPurchaseCubitState.initial() = _Initial;
+  const factory InvoicepostPurchaseCubitState.loading() = _Loading;
+  const factory InvoicepostPurchaseCubitState.error() = _Error1;
+  const factory InvoicepostPurchaseCubitState.success(DoubleResponse data) = _Success;
 }

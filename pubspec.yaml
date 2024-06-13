@@ -46,6 +46,7 @@ dependencies:
   url_launcher: 6.0.7
   http: ^0.13.5
   google_fonts: ^3.0.1
+  dotted_border: ^2.0.0+3
   freezed_annotation:
   pdf: ^3.10.1
   bloc: ^7.1.0

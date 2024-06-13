@@ -7,8 +7,8 @@ import 'package:inventory/widgets/responseutils.dart';
 part 'invoicepost_state.dart';
 part 'invoicepost_cubit.freezed.dart';
 
-class InvoicepostCubit extends Cubit<InvoicepostState> {
-  InvoicepostCubit() : super(InvoicepostState.initial());
+class InvoicepostPurchaseCubit extends Cubit<InvoicepostPurchaseCubitState> {
+  InvoicepostPurchaseCubit() : super(InvoicepostPurchaseCubitState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future invoicePost(PurchaseReturnInvoicePostModel model) async {
     emit(_Loading());

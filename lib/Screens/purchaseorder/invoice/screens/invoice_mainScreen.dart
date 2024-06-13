@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
@@ -39,6 +40,8 @@ import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:pdf/widgets.dart' as pw;
+
+import '../../../../core/uttils/keyEvent.dart';
 
 
 class InventoryInvoiceScreen extends StatefulWidget {
@@ -81,6 +84,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
   List<Lines> additionalVariants = List.from([]);
   TextEditingController itemsearch=TextEditingController();
   late AutoScrollController recieveController;
+  FocusNode purchaseInvoiceMainFocusnode=FocusNode();
+  FocusNode salesButtonFocusNode=FocusNode();
+  int tabCount=1;
+  bool isCountOrdecre=false;
   updateCheckFucction(bool value) {
     updateCheck = value;
     setState(() {});
@@ -91,6 +98,141 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
     setState(() {
       addition();
     });
+  }
+  rowKeyEventResetFunc(){
+    tabCount=1;
+    isCountOrdecre=false;
+    enableKeyEvent=true;
+    setState(() {
+
+    });
+  }
+  Map keyEventFuctionCount={
+    "save":2,
+
+    "table":1
+
+  };
+  rowKeyPressEvent(RawKeyEvent event){
+    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
+    int limit=2;
+    int startLimit=1;
+
+    if (event is RawKeyDownEvent) {
+
+      if(event.logicalKey==LogicalKeyboardKey.tab){
+
+
+        FocusScope.of(context).requestFocus(purchaseInvoiceMainFocusnode);
+        if(isCountOrdecre==false){
+
+          if(tabCount!=limit){
+            tabCount=++tabCount;
+
+            if(tabCount==limit){
+              isCountOrdecre=true;
+            }
+
+          }
+        }
+        else{
+          if(tabCount!=startLimit){
+            tabCount=--tabCount;
+            if(tabCount==startLimit){
+              isCountOrdecre=false;}
+          }
+
+
+
+
+        }
+        print("tabPressd$tabCount");
+
+        if(tabCount==2)
+          FocusScope.of(context).requestFocus(salesButtonFocusNode);
+        if(tabCount==1 && _myWidgetState.currentState?.additionalVariants.isNotEmpty==true){
+          FocusScope.of(context).requestFocus(_myWidgetState.currentState?.listOfxfocusNodes[(_myWidgetState.currentState?.additionalVariants.length)!-1][0]);
+        }
+
+        // tabCount= tabCount== limit?--tabCount:++tabCount;
+        setState(() {
+
+        });
+
+      }
+      // else  if(event.logicalKey==LogicalKeyboardKey.keyR){
+      //    remarksPopupCallFunc();
+      //
+      //  }
+      // else if(event.logicalKey==LogicalKeyboardKey.arrowLeft){
+      //   FocusNode? focusedNode = FocusScope.of(context).focusedChild;
+      //   if (focusedNode != null) {
+      //     print('Currently focused node: ${focusedNode}');
+      //   }
+      //
+      // }
+      else{
+
+        if (event.logicalKey == LogicalKeyboardKey.arrowDown ) {
+          switch (tabCount) {
+            case 1:
+              FocusScope.of(context).requestFocus(purchaseInvoiceMainFocusnode);
+              _myWidgetState.currentState?.   changeSelectedRow(1);
+              setState(() {
+
+              });
+              break;
+
+          };
+
+
+          // Handle arrow down key press
+          // _changeSelectedRow(1);
+        } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+          switch (tabCount) {
+            case 1:
+              FocusScope.of(context).requestFocus(purchaseInvoiceMainFocusnode);
+              _myWidgetState.currentState?.   changeSelectedRow(-1);
+              setState(() {
+
+              });
+              break;
+
+
+
+          // Handle arrow up key press
+          // _changeSelectedRow(-1);
+          }}
+        else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+          print("tabPressd22$tabCount");
+          switch (tabCount) {
+            case 2:
+              invoiceFunction();
+              break;
+
+          }
+
+
+
+        }
+
+
+
+
+
+
+      }
+      //invoice page keyPress Event
+
+
+      //
+
+
+
+
+
+    }
+
   }
   addition() {
     double  unitcost=0;
@@ -197,9 +339,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
             create: (context) => InventoryReadCubit(),
 
           ),
-          BlocProvider(
-            create: (context) => InventorypostCubit(),
-          ),
+
 
 
 
@@ -421,742 +561,767 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                   ),
 
                 ],
-                child: IntrinsicHeight(
-                    child:Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        VerticalList(selectedVertical: selectedVertical,
-                          tab:"II",
-                          itemsearch: itemsearch,ontap: (int index){
+                child: RawKeyboardListener(
+                  autofocus: false,
+                  focusNode:purchaseInvoiceMainFocusnode,
+                  onKey: (RawKeyEvent event) {
 
-                            setState(() {
-                              print("taped");
-                              select=false;
-                              clear();
-                              _myWidgetState.currentState?.tableClear();
-                              selectedVertical=index;
+                    if(enableKeyEvent==true){
+                      rowKeyPressEvent(event);}else{
 
-                              veritiaclid = result[index].id;
-                              context
-                                  .read<InventoryReadCubit>().getInventoryRead(veritiaclid!);
-                            });
-                          },result: result,
-                          child:     tablePagination(() => context.read<InventorysearchCubit>().refresh(),
-                            back: paginatedList?.previousUrl == null
-                                ? null
-                                : () {context.read<InventorysearchCubit>().previuosslotSectionPageList();
-                            },
-                            next:paginatedList?.nextPageUrl == null
-                                ? null
-                                : () {
-                              // print(data.nextPageUrl);
-                              context.read<InventorysearchCubit>().nextslotSectionPageList("");
-                            },
+                      rowKeyEventResetFunc();
+                    }
+
+
+
+
+
+                  },
+                  child: IntrinsicHeight(
+                      child:Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          VerticalList(selectedVertical: selectedVertical,
+                            tab:"II",
+                            itemsearch: itemsearch,ontap: (int index){
+
+                              setState(() {
+                                print("taped");
+                                select=false;
+                                clear();
+                                _myWidgetState.currentState?.tableClear();
+                                selectedVertical=index;
+
+                                veritiaclid = result[index].id;
+                                context
+                                    .read<InventoryReadCubit>().getInventoryRead(veritiaclid!);
+                              });
+                            },result: result,
+                            child:     tablePagination(() => context.read<InventorysearchCubit>().refresh(),
+                              back: paginatedList?.previousUrl == null
+                                  ? null
+                                  : () {context.read<InventorysearchCubit>().previuosslotSectionPageList();
+                              },
+                              next:paginatedList?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context.read<InventorysearchCubit>().nextslotSectionPageList("");
+                              },
+                            ),
                           ),
-                        ),
-                        Expanded(child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:MainAxisAlignment.end,
-                                children: [
-                                  TextButtonLarge(
-                                    marginCheck: true,
-                                    clr: Colors.green,
-                                    onPress: () {
-                                      if(readObject.invoicedata!=null){
-                                        showDailogPopUp(
-                                          context,
-                                          PurchaseReturnInvoicePaymentPopUp(type: '"',
-                                            customerCode: Variable.created_by,
-                                            customerName: Variable.username,
-                                            orderId: veritiaclid.toString(),
-                                            status: paymentStatusController.text,
-                                            totalPrice: double.tryParse(grandTotalController.text)??0,
-                                            transactionCode: "",
-                                            paymentCompletedFunc:(){
-                                              setState(() {
+                          Expanded(child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:MainAxisAlignment.end,
+                                  children: [
+                                    TextButtonLarge(
+                                      marginCheck: true,
+                                      clr: Colors.green,
+                                      onPress: () {
+                                        if(readObject.invoicedata!=null){
+                                          showDailogPopUp(
+                                            context,
+                                            PurchaseReturnInvoicePaymentPopUp(type: '"',
+                                              customerCode: Variable.created_by,
+                                              customerName: Variable.username,
+                                              orderId: veritiaclid.toString(),
+                                              status: paymentStatusController.text,
+                                              totalPrice: double.tryParse(grandTotalController.text)??0,
+                                              transactionCode: "",
+                                              paymentCompletedFunc:(){
+                                                setState(() {
 
-                                                isPaymentStatusSuccessCall=true;
-                                              });
-                                              PurchasePaymentPostModel model=PurchasePaymentPostModel(
-                                                  contact: Variable.mobileNumber,
-                                                  customerCode: Variable.created_by,
-                                                  customerName: Variable.username,
-                                                  methodCode: Variable.methodCode,
-                                                  orderId:  veritiaclid.toString(),
-                                                  status: "payment_completed",
-                                                  totalAmount: double.tryParse(grandTotalController.text)??0,
-                                                  tranSactionCode: "");
+                                                  isPaymentStatusSuccessCall=true;
+                                                });
+                                                PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                                                    contact: Variable.mobileNumber,
+                                                    customerCode: Variable.created_by,
+                                                    customerName: Variable.username,
+                                                    methodCode: Variable.methodCode,
+                                                    orderId:  veritiaclid.toString(),
+                                                    status: "payment_completed",
+                                                    totalAmount: double.tryParse(grandTotalController.text)??0,
+                                                    tranSactionCode: "");
 
-                                              print(model);
-                                              context
-                                                  .read<PaymentSalePostCubit>()
-                                                  .postSaleOrderPaymentPost(model);
-                                            } ,
-                                            transactionPendingFunc: (){
-                                              setState(() {
+                                                print(model);
+                                                context
+                                                    .read<PaymentSalePostCubit>()
+                                                    .postSaleOrderPaymentPost(model);
+                                              } ,
+                                              transactionPendingFunc: (){
+                                                setState(() {
 
-                                                isPaymentStatusSuccessCall=false;
-                                              });
-                                              PurchasePaymentPostModel model=PurchasePaymentPostModel(
-                                                  contact: Variable.mobileNumber,
-                                                  customerCode: Variable.created_by,
-                                                  customerName: Variable.username,
-                                                  methodCode: Variable.methodCode,
-                                                  orderId:  veritiaclid.toString(),
-                                                  status: "payment_pending",
-                                                  totalAmount: double.tryParse(grandTotalController.text)??0,
-                                                  tranSactionCode: "");
-                                              print(model);
-                                              context
-                                                  .read<PaymentSalePostCubit>()
-                                                  .postSaleOrderPaymentPost(model);
-                                            },
+                                                  isPaymentStatusSuccessCall=false;
+                                                });
+                                                PurchasePaymentPostModel model=PurchasePaymentPostModel(
+                                                    contact: Variable.mobileNumber,
+                                                    customerCode: Variable.created_by,
+                                                    customerName: Variable.username,
+                                                    methodCode: Variable.methodCode,
+                                                    orderId:  veritiaclid.toString(),
+                                                    status: "payment_pending",
+                                                    totalAmount: double.tryParse(grandTotalController.text)??0,
+                                                    tranSactionCode: "");
+                                                print(model);
+                                                context
+                                                    .read<PaymentSalePostCubit>()
+                                                    .postSaleOrderPaymentPost(model);
+                                              },
 
-                                          ),
-                                        );
-                                      }
-                                      else{
-                                        context.showSnackBarError("The Order Does Not Invoiced");
-                                      }
-
-                                    },
-                                    text: "PAYMENT",                                  ),
-
-
-                                  TextButtonLarge(
-                                    text: "PREVIEW",
-                                    onPress: () async {
-                                      InventoryListModel model=InventoryListModel();
-                                      UserPreferences userPref = UserPreferences();
-                                      await userPref.getInventoryList().then((user) {
-                                        print("entereeeeeeeeeeeeeeeeeeed");
-
-                                        if (user.isInventoryExist == true) {
-                                          model=user;
-                                          print("existing");
-                                          print(model.email);
-
-                                        } else {
-
+                                            ),
+                                          );
                                         }
-                                      });
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) =>
-                                            PrintScreen(
-                                              note: noteController.text,
-                                              select: select,
-                                              orderDate: orderedDateController.text,
-                                              table:additionalVariants,
-                                              orderCode: purchaseCodeController.text,
-                                              vat: double.tryParse( vatController.text),
-                                              actualCost:double.tryParse( actualCostController.text),
-                                              variableAmount:double.tryParse( variableAmountController.text) ,
-                                              discount:double.tryParse( discountController.text) ,
-                                              unitCost:double.tryParse( unitCostController.text) ,
-                                              excisetax:double.tryParse( exciseTaxController.text) ,
-                                              remarks: remarksController.text ,
-                                              model: model,
-                                              pageName: "INVOICE",
-                                            )),
-                                      );
+                                        else{
+                                          context.showSnackBarError("The Order Does Not Invoiced");
+                                        }
+
+                                      },
+                                      text: "PAYMENT",                                  ),
 
 
+                                    TextButtonLarge(
+                                      text: "PREVIEW",
+                                      onPress: () async {
+                                        InventoryListModel model=InventoryListModel();
+                                        UserPreferences userPref = UserPreferences();
+                                        await userPref.getInventoryList().then((user) {
+                                          print("entereeeeeeeeeeeeeeeeeeed");
+
+                                          if (user.isInventoryExist == true) {
+                                            model=user;
+                                            print("existing");
+                                            print(model.email);
+
+                                          } else {
+
+                                          }
+                                        });
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>
+                                              PrintScreen(
+                                                note: noteController.text,
+                                                select: select,
+                                                orderDate: orderedDateController.text,
+                                                table:additionalVariants,
+                                                orderCode: purchaseCodeController.text,
+                                                vat: double.tryParse( vatController.text),
+                                                actualCost:double.tryParse( actualCostController.text),
+                                                variableAmount:double.tryParse( variableAmountController.text) ,
+                                                discount:double.tryParse( discountController.text) ,
+                                                unitCost:double.tryParse( unitCostController.text) ,
+                                                excisetax:double.tryParse( exciseTaxController.text) ,
+                                                remarks: remarksController.text ,
+                                                model: model,
+                                                pageName: "INVOICE",
+                                              )),
+                                        );
+
+
+                                      },
+                                    ),
+                                  ],
+                                ),
+
+                                PurchaseOrderStabletable(
+                                  actualCostController: actualCostController,
+                                  discountController: discountController,
+                                  exciseTaxController: exciseTaxController,
+                                  focController: focController,
+                                  grandTotalController: grandTotalController,
+                                  invoiceCodeController: invoiceCodeController,
+                                  invoiceStatusController: invoiceStatusController,
+                                  noteController: noteController,
+                                  orderedDateController: orderedDateController,
+                                  orderStatusController: orderStatusController,
+                                  paymentCodeController: paymentCodeController,
+                                  paymentMethodController: paymentMethodController,
+                                  paymentStatusController: paymentStatusController,
+                                  purchaseCodeController: purchaseCodeController,
+                                  remarksController: remarksController,
+                                  unitCostController: unitCostController,
+                                  variableAmountController: variableAmountController,
+                                  vatController: vatController,
+                                ),
+                                SizedBox(height: height*.1,),
+                                Row(mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    TextWidget(text: "Receiving lines"),
+                                  ],
+                                ),
+                                // Divider(color: Colors.grey,thickness: 1,),
+                                SizedBox(height: height*.01,),
+                                // Divider(color: Colors.grey,thickness: 1,),
+                                PurchaseOrderInvoiceGrowableTable(
+                                  table:additionalVariants,
+                                  updateCheck: updateCheckFucction,
+                                  key: _myWidgetState,
+                                  updation: tableAssign,
+                                ),
+                                // CustomScrollBar(
+                                //     controller: recieveController,
+                                //
+                                //     childs:Container(
+                                //         color: Colors.white,
+                                //         alignment: Alignment.topRight,
+                                //
+                                //         child:SingleChildScrollView(
+                                //           controller: recieveController,
+                                //           physics: ScrollPhysics(),
+                                //           scrollDirection: Axis.horizontal,
+                                //
+                                //           child:
+                                //           Column(
+                                //             crossAxisAlignment: CrossAxisAlignment.start,
+                                //             children: [
+                                //               SingleChildScrollView(
+                                //                 child: Container(
+                                //                   width: 2200,
+                                //                   // padding: EdgeInsets.all(10),
+                                //                   child:customTable(
+                                //
+                                //                     tableWidth: .5,
+                                //                     childrens: [
+                                //                       TableRow(
+                                //
+                                //                           children: [
+                                //                             tableHeadtext(
+                                //                               'Sl.No',
+                                //                               size: 13,
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Receiving Line Id',
+                                //                               size: 13,
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Variant Id',
+                                //                               size: 13,
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Variant Name',
+                                //
+                                //                               size: 13,
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //
+                                //                             // tableHeadtext('description', size: 10, color: null),
+                                //                             tableHeadtext(
+                                //                               'Barcode',
+                                //
+                                //                               size: 13,
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //
+                                //
+                                //                             tableHeadtext(
+                                //                               'Purchase UOM',
+                                //
+                                //                               size: 13,
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Requested Qty',
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //
+                                //                               size: 13,
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //
+                                //
+                                //                             tableHeadtext(
+                                //                               'Is Received',
+                                //
+                                //                               size: 13,
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Unit Cost',
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //
+                                //                               size: 13,
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Exccess Tax',
+                                //                               size: 13,
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Discount',
+                                //                               size: 13,
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'FOC',
+                                //                               size: 13,
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Vatable Amount',
+                                //                               size: 13,
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //
+                                //                             tableHeadtext(
+                                //                               'VAT',
+                                //                               size: 13,
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Actual Cost',
+                                //                               size: 13,
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Grand Total',
+                                //                               size: 13,
+                                //                               center: true,
+                                //                               padding: EdgeInsets.only(bottom:height*.0198),
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Is Invoiced',
+                                //                               size: 13,
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //                             tableHeadtext(
+                                //                               'Is Free',
+                                //                               size: 13,
+                                //                               // color: Palette.containerDarknew,
+                                //                               // textColor: Palette.white
+                                //                             ),
+                                //
+                                //                             // if (widget.onAddNew) textPadding(''),
+                                //                           ]),
+                                //
+                                //                       if(additionalVariants.isEmpty)...[
+                                //                         TableRow(
+                                //                           decoration: BoxDecoration(
+                                //                               color: Pellet.tableRowColor,
+                                //                               shape: BoxShape.rectangle,
+                                //                               border:  Border(
+                                //                                   left: BorderSide(
+                                //
+                                //                                       color: Color(0xff3E4F5B).withOpacity(.1),
+                                //                                       width: .4,
+                                //                                       style: BorderStyle.solid),
+                                //                                   bottom: BorderSide(
+                                //
+                                //                                       color:   Color(0xff3E4F5B).withOpacity(.1),
+                                //                                       style: BorderStyle.solid),
+                                //                                   right: BorderSide(
+                                //                                       color:   Color(0xff3E4F5B).withOpacity(.1),
+                                //                                       width: .4,
+                                //
+                                //                                       style: BorderStyle.solid))),
+                                //
+                                //                           children: [
+                                //
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             Container(height: 48,),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                             textPadding(""),
+                                //                           ],
+                                //                         )
+                                //
+                                //
+                                //                       ],
+                                //                       if (additionalVariants != null)...[
+                                //                         for(var i=0;i<additionalVariants.length;i++)
+                                //                           TableRow(
+                                //                               decoration: BoxDecoration(
+                                //                                   color: Pellet.tableRowColor,
+                                //                                   shape: BoxShape.rectangle,
+                                //                                   border:  Border(
+                                //                                       left: BorderSide(
+                                //
+                                //                                           color: Color(0xff3E4F5B).withOpacity(.1),
+                                //                                           width: .4,
+                                //                                           style: BorderStyle.solid),
+                                //                                       bottom: BorderSide(
+                                //
+                                //                                           color:   Color(0xff3E4F5B).withOpacity(.1),
+                                //                                           style: BorderStyle.solid),
+                                //                                       right: BorderSide(
+                                //                                           color:   Color(0xff3E4F5B).withOpacity(.1),
+                                //                                           width: .4,
+                                //
+                                //                                           style: BorderStyle.solid))),
+                                //                               children: [
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding((i + 1).toString(),
+                                //                                       fontSize: 12,
+                                //                                       padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500),
+                                //
+                                //                                 ),
+                                //
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].receiveLineCode .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].variantId ?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500),
+                                //                                 ),
+                                //
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].barcode ?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500),
+                                //                                 ),
+                                //
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].totalQty.toString() ?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: CheckedBoxs(
+                                //                                     valueChanger: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
+                                //                                     onSelection: (bool? value) {
+                                //                                       // bool? isRecieved = additionalVariants[i].isReceived;
+                                //                                       // setState(() {
+                                //                                       //   isRecieved = !isRecieved!;
+                                //                                       //   additionalVariants[i] = additionalVariants[i].copyWith(isReceived: isRecieved);
+                                //                                       //   print(additionalVariants);
+                                //                                       // });
+                                //                                     },
+                                //                                   ),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].unitCost .toString()?? "", fontSize: 12,
+                                //
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].excessTax .toString()?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,
+                                //                                       alighnment: Alignment.topRight),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].discount .toString()?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,
+                                //                                       alighnment: Alignment.topRight),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].foc .toString()?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,
+                                //                                       alighnment: Alignment.topRight),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].variableAmount .toString()?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                                //                                 ),
+                                //
+                                //
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].vat.toString() ?? "",
+                                //                                       fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
+                                //                                 ),
+                                //
+                                //
+                                //
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(
+                                //                                       additionalVariants[i].actualCost.toString() ?? "",fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,
+                                //                                       alighnment: Alignment.topRight),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12,
+                                //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                //                                       fontWeight: FontWeight.w500,
+                                //                                       alighnment: Alignment.topRight),
+                                //                                 ),
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: CheckedBoxs(
+                                //                                     valueChanger: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
+                                //                                     onSelection: (bool? value) {
+                                //                                       bool? isInvoiced = additionalVariants[i].isInvoiced??false;
+                                //                                       setState(() {
+                                //                                         isInvoiced = !isInvoiced!;
+                                //                                         additionalVariants[i] = additionalVariants[i].copyWith(isInvoiced: isInvoiced);
+                                //                                         addition();
+                                //
+                                //                                       });
+                                //                                     },
+                                //                                   ),
+                                //                                 ),
+                                //
+                                //
+                                //                                 TableCell(
+                                //                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                //                                   child: CheckedBoxs(
+                                //                                     valueChanger: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
+                                //                                     onSelection: (bool? value) {
+                                //                                       setState(() {});
+                                //                                     },
+                                //                                   ),
+                                //                                 ),
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //                               ]
+                                //                           ),
+                                //                       ]
+                                //
+                                //
+                                //                     ],
+                                //                     widths: {
+                                //                       0: FlexColumnWidth(2),
+                                //                       1: FlexColumnWidth(4),
+                                //                       2: FlexColumnWidth(4),
+                                //                       3: FlexColumnWidth(5),
+                                //                       4: FlexColumnWidth(3),
+                                //                       5: FlexColumnWidth(3),
+                                //                       6: FlexColumnWidth(3),
+                                //                       7: FlexColumnWidth(3),
+                                //                       8: FlexColumnWidth(3),
+                                //                       9: FlexColumnWidth(3),
+                                //                       10: FlexColumnWidth(3),
+                                //                       11: FlexColumnWidth(3),
+                                //                       12: FlexColumnWidth(3),
+                                //                       13: FlexColumnWidth(3),
+                                //                       14: FlexColumnWidth(3),
+                                //                       15: FlexColumnWidth(3),
+                                //                       16: FlexColumnWidth(3),
+                                //                       17: FlexColumnWidth(3),
+                                //                       18: FlexColumnWidth(2),
+                                //                       19: FlexColumnWidth(2),
+                                //                       20: FlexColumnWidth(2),
+                                //                       21: FlexColumnWidth(2.4),
+                                //
+                                //                     },
+                                //
+                                //                   ) ,
+                                //                 ),
+                                //               ),
+                                //               SizedBox(height: 20,)
+                                //               ,
+                                //
+                                //             ],
+                                //           )
+                                //           ,
+                                //
+                                //         )
+                                //     )
+                                // ),
+                                // ScrollableTable(),
+                                SizedBox(height: 20,),
+                                SaveUpdateResponsiveButton(
+                                  focusNode: salesButtonFocusNode,
+                                  isKeyFuctionRight: keyEventFuctionCount["save"]==tabCount,
+                                  isKeyFuctionLeft: keyEventFuctionCount["cancel"]==tabCount,
+                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                    isDelete:true,
+                                  saveFunction: (){
+                                    invoiceFunction();
                                     },
-                                  ),
-                                ],
-                              ),
-
-                              PurchaseOrderStabletable(
-                                actualCostController: actualCostController,
-                                discountController: discountController,
-                                exciseTaxController: exciseTaxController,
-                                focController: focController,
-                                grandTotalController: grandTotalController,
-                                invoiceCodeController: invoiceCodeController,
-                                invoiceStatusController: invoiceStatusController,
-                                noteController: noteController,
-                                orderedDateController: orderedDateController,
-                                orderStatusController: orderStatusController,
-                                paymentCodeController: paymentCodeController,
-                                paymentMethodController: paymentMethodController,
-                                paymentStatusController: paymentStatusController,
-                                purchaseCodeController: purchaseCodeController,
-                                remarksController: remarksController,
-                                unitCostController: unitCostController,
-                                variableAmountController: variableAmountController,
-                                vatController: vatController,
-                              ),
-                              SizedBox(height: height*.1,),
-                              Row(mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  TextWidget(text: "Receiving lines"),
-                                ],
-                              ),
-                              // Divider(color: Colors.grey,thickness: 1,),
-                              SizedBox(height: height*.01,),
-                              // Divider(color: Colors.grey,thickness: 1,),
-                              PurchaseOrderInvoiceGrowableTable(
-                                table:additionalVariants,
-                                updateCheck: updateCheckFucction,
-                                key: _myWidgetState,
-                                updation: tableAssign,
-                              ),
-                              // CustomScrollBar(
-                              //     controller: recieveController,
-                              //
-                              //     childs:Container(
-                              //         color: Colors.white,
-                              //         alignment: Alignment.topRight,
-                              //
-                              //         child:SingleChildScrollView(
-                              //           controller: recieveController,
-                              //           physics: ScrollPhysics(),
-                              //           scrollDirection: Axis.horizontal,
-                              //
-                              //           child:
-                              //           Column(
-                              //             crossAxisAlignment: CrossAxisAlignment.start,
-                              //             children: [
-                              //               SingleChildScrollView(
-                              //                 child: Container(
-                              //                   width: 2200,
-                              //                   // padding: EdgeInsets.all(10),
-                              //                   child:customTable(
-                              //
-                              //                     tableWidth: .5,
-                              //                     childrens: [
-                              //                       TableRow(
-                              //
-                              //                           children: [
-                              //                             tableHeadtext(
-                              //                               'Sl.No',
-                              //                               size: 13,
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Receiving Line Id',
-                              //                               size: 13,
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Variant Id',
-                              //                               size: 13,
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Variant Name',
-                              //
-                              //                               size: 13,
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //
-                              //                             // tableHeadtext('description', size: 10, color: null),
-                              //                             tableHeadtext(
-                              //                               'Barcode',
-                              //
-                              //                               size: 13,
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //
-                              //
-                              //                             tableHeadtext(
-                              //                               'Purchase UOM',
-                              //
-                              //                               size: 13,
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Requested Qty',
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //
-                              //                               size: 13,
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //
-                              //
-                              //                             tableHeadtext(
-                              //                               'Is Received',
-                              //
-                              //                               size: 13,
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Unit Cost',
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //
-                              //                               size: 13,
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Exccess Tax',
-                              //                               size: 13,
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Discount',
-                              //                               size: 13,
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'FOC',
-                              //                               size: 13,
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Vatable Amount',
-                              //                               size: 13,
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //
-                              //                             tableHeadtext(
-                              //                               'VAT',
-                              //                               size: 13,
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Actual Cost',
-                              //                               size: 13,
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Grand Total',
-                              //                               size: 13,
-                              //                               center: true,
-                              //                               padding: EdgeInsets.only(bottom:height*.0198),
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Is Invoiced',
-                              //                               size: 13,
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //                             tableHeadtext(
-                              //                               'Is Free',
-                              //                               size: 13,
-                              //                               // color: Palette.containerDarknew,
-                              //                               // textColor: Palette.white
-                              //                             ),
-                              //
-                              //                             // if (widget.onAddNew) textPadding(''),
-                              //                           ]),
-                              //
-                              //                       if(additionalVariants.isEmpty)...[
-                              //                         TableRow(
-                              //                           decoration: BoxDecoration(
-                              //                               color: Pellet.tableRowColor,
-                              //                               shape: BoxShape.rectangle,
-                              //                               border:  Border(
-                              //                                   left: BorderSide(
-                              //
-                              //                                       color: Color(0xff3E4F5B).withOpacity(.1),
-                              //                                       width: .4,
-                              //                                       style: BorderStyle.solid),
-                              //                                   bottom: BorderSide(
-                              //
-                              //                                       color:   Color(0xff3E4F5B).withOpacity(.1),
-                              //                                       style: BorderStyle.solid),
-                              //                                   right: BorderSide(
-                              //                                       color:   Color(0xff3E4F5B).withOpacity(.1),
-                              //                                       width: .4,
-                              //
-                              //                                       style: BorderStyle.solid))),
-                              //
-                              //                           children: [
-                              //
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             Container(height: 48,),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                             textPadding(""),
-                              //                           ],
-                              //                         )
-                              //
-                              //
-                              //                       ],
-                              //                       if (additionalVariants != null)...[
-                              //                         for(var i=0;i<additionalVariants.length;i++)
-                              //                           TableRow(
-                              //                               decoration: BoxDecoration(
-                              //                                   color: Pellet.tableRowColor,
-                              //                                   shape: BoxShape.rectangle,
-                              //                                   border:  Border(
-                              //                                       left: BorderSide(
-                              //
-                              //                                           color: Color(0xff3E4F5B).withOpacity(.1),
-                              //                                           width: .4,
-                              //                                           style: BorderStyle.solid),
-                              //                                       bottom: BorderSide(
-                              //
-                              //                                           color:   Color(0xff3E4F5B).withOpacity(.1),
-                              //                                           style: BorderStyle.solid),
-                              //                                       right: BorderSide(
-                              //                                           color:   Color(0xff3E4F5B).withOpacity(.1),
-                              //                                           width: .4,
-                              //
-                              //                                           style: BorderStyle.solid))),
-                              //                               children: [
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding((i + 1).toString(),
-                              //                                       fontSize: 12,
-                              //                                       padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500),
-                              //
-                              //                                 ),
-                              //
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].receiveLineCode .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].variantId ?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500),
-                              //                                 ),
-                              //
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].barcode ?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500),
-                              //                                 ),
-                              //
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].purchaseUom.toString() ?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].totalQty.toString() ?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: CheckedBoxs(
-                              //                                     valueChanger: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
-                              //                                     onSelection: (bool? value) {
-                              //                                       // bool? isRecieved = additionalVariants[i].isReceived;
-                              //                                       // setState(() {
-                              //                                       //   isRecieved = !isRecieved!;
-                              //                                       //   additionalVariants[i] = additionalVariants[i].copyWith(isReceived: isRecieved);
-                              //                                       //   print(additionalVariants);
-                              //                                       // });
-                              //                                     },
-                              //                                   ),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].unitCost .toString()?? "", fontSize: 12,
-                              //
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].excessTax .toString()?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,
-                              //                                       alighnment: Alignment.topRight),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].discount .toString()?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,
-                              //                                       alighnment: Alignment.topRight),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].foc .toString()?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,
-                              //                                       alighnment: Alignment.topRight),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].variableAmount .toString()?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                              //                                 ),
-                              //
-                              //
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].vat.toString() ?? "",
-                              //                                       fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,alighnment: Alignment.topRight),
-                              //                                 ),
-                              //
-                              //
-                              //
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(
-                              //                                       additionalVariants[i].actualCost.toString() ?? "",fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,
-                              //                                       alighnment: Alignment.topRight),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12,
-                              //                                       // padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                              //                                       fontWeight: FontWeight.w500,
-                              //                                       alighnment: Alignment.topRight),
-                              //                                 ),
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: CheckedBoxs(
-                              //                                     valueChanger: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
-                              //                                     onSelection: (bool? value) {
-                              //                                       bool? isInvoiced = additionalVariants[i].isInvoiced??false;
-                              //                                       setState(() {
-                              //                                         isInvoiced = !isInvoiced!;
-                              //                                         additionalVariants[i] = additionalVariants[i].copyWith(isInvoiced: isInvoiced);
-                              //                                         addition();
-                              //
-                              //                                       });
-                              //                                     },
-                              //                                   ),
-                              //                                 ),
-                              //
-                              //
-                              //                                 TableCell(
-                              //                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                              //                                   child: CheckedBoxs(
-                              //                                     valueChanger: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
-                              //                                     onSelection: (bool? value) {
-                              //                                       setState(() {});
-                              //                                     },
-                              //                                   ),
-                              //                                 ),
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //
-                              //                               ]
-                              //                           ),
-                              //                       ]
-                              //
-                              //
-                              //                     ],
-                              //                     widths: {
-                              //                       0: FlexColumnWidth(2),
-                              //                       1: FlexColumnWidth(4),
-                              //                       2: FlexColumnWidth(4),
-                              //                       3: FlexColumnWidth(5),
-                              //                       4: FlexColumnWidth(3),
-                              //                       5: FlexColumnWidth(3),
-                              //                       6: FlexColumnWidth(3),
-                              //                       7: FlexColumnWidth(3),
-                              //                       8: FlexColumnWidth(3),
-                              //                       9: FlexColumnWidth(3),
-                              //                       10: FlexColumnWidth(3),
-                              //                       11: FlexColumnWidth(3),
-                              //                       12: FlexColumnWidth(3),
-                              //                       13: FlexColumnWidth(3),
-                              //                       14: FlexColumnWidth(3),
-                              //                       15: FlexColumnWidth(3),
-                              //                       16: FlexColumnWidth(3),
-                              //                       17: FlexColumnWidth(3),
-                              //                       18: FlexColumnWidth(2),
-                              //                       19: FlexColumnWidth(2),
-                              //                       20: FlexColumnWidth(2),
-                              //                       21: FlexColumnWidth(2.4),
-                              //
-                              //                     },
-                              //
-                              //                   ) ,
-                              //                 ),
-                              //               ),
-                              //               SizedBox(height: 20,)
-                              //               ,
-                              //
-                              //             ],
-                              //           )
-                              //           ,
-                              //
-                              //         )
-                              //     )
-                              // ),
-                              // ScrollableTable(),
-                              SizedBox(height: 20,),
-                              SaveUpdateResponsiveButton(
-                                isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
-                                  isDelete:true,
-                                saveFunction: (){bool confirmationCheck=false;
-                                  for(var i=0;i<additionalVariants.length;i++){
-                                    if(additionalVariants[i].isInvoiced==false){
-                                      confirmationCheck=true;
-                                    }
-
-
-
-                                  }
-                                  // result = additionalVariants.where((o) => o.isInvoiced == true).toList();
-                                  if(confirmationCheck){
-                                  showDailogPopUp(
-                                  context,
-                                  LogoutPopup(
-                                  message: "Some of lines are not confirmed. Do you want to continue?",
-                                  // table:table,
-                                  // // clear:clear(),
-                                  // verticalId:veritiaclid ,
-                                  onPressed:(){
-                                    commonProvider.setLoadingSaveUpdate(true);
-                                    InventoryPostModel model =
-                                    InventoryPostModel(
-                                      purchaseOrderCode: purchaseCodeController.text??"",
-                                      inventoryId: inventoryId??"",
-                                      // invoicedBy: ,
-                                      notes: noteController.text,
-                                      remarks: remarksController.text,
-                                      unitCost:double.tryParse( unitCostController.text),
-                                      foc:double.tryParse( focController.text),
-                                      discount:double.tryParse( discountController.text),
-                                      grandtotal:double.tryParse( grandTotalController.text),
-                                      vatableAmount:double.tryParse( variableAmountController.text),
-                                      excessTax:double.tryParse( exciseTaxController.text),
-                                      actualCost:double.tryParse( actualCostController.text),
-                                      vat:double.tryParse( vatController.text),
-                                      invoicedBy: Variable.created_by,
-                                      invoiceLines: additionalVariants??[],
- // orderLines: table,
-                                    );
-
-
-                                    print("sssssssssssssssssss"+model.toString());
-                                    context.read<InventorypostCubit>().postInventory(model);
-                                    Navigator.pop(context);
-
+                                  discardFunction: (){
                                   },
+                                  label: "SAVE",
+                                ),
+                              ],
+                            ),
+                          )),
+                        ],
+                      )
 
-
-                                  ));
-
-                                  }
-                                  else {
-                                    commonProvider.setLoadingSaveUpdate(true);
-                                    print("additionalvariants" +
-                                        additionalVariants.toString());
-                                    InventoryPostModel model =
-                                    InventoryPostModel(
-                                      purchaseOrderCode: purchaseCodeController
-                                          .text ?? "",
-                                      inventoryId: inventoryId ?? "",
-                                      // invoicedBy: ,
-                                      notes: noteController.text,
-                                      remarks: remarksController.text,
-                                      unitCost: double.tryParse(
-                                          unitCostController.text),
-                                      foc: double.tryParse(focController.text),
-                                      discount: double.tryParse(
-                                          discountController.text),
-                                      grandtotal: double.tryParse(
-                                          grandTotalController.text),
-                                      vatableAmount: double.tryParse(
-                                          variableAmountController.text),
-                                      excessTax: double.tryParse(
-                                          exciseTaxController.text),
-                                      actualCost: double.tryParse(
-                                          actualCostController.text),
-                                      vat: double.tryParse(vatController.text),
-                                      invoicedBy: Variable.created_by,
-                                      invoiceLines: additionalVariants ?? [],
-
-
-                                      // orderLines: table,
-                                    );
-
-
-                                    print("sssssssssssssssssss" +
-                                        model.toString());
-                                    context.read<InventorypostCubit>()
-                                        .postInventory(model);
-                                  }  },
-                                discardFunction: (){
-                                },
-                                label: "SAVE",
-                              ),
-                            ],
-                          ),
-                        )),
-                      ],
-                    )
-
+                  ),
                 ),
               );
             }
         ),
       ),
     );
+  }
+  invoiceFunction(){
+    bool confirmationCheck=false;
+    for(var i=0;i<additionalVariants.length;i++){
+      if(additionalVariants[i].isInvoiced==false){
+        confirmationCheck=true;
+      }
+
+
+
+    }
+    // result = additionalVariants.where((o) => o.isInvoiced == true).toList();
+    if(confirmationCheck){
+      showDailogPopUp(
+          context,
+          LogoutPopup(
+            message: "Some of lines are not confirmed. Do you want to continue?",
+            // table:table,
+            // // clear:clear(),
+            // verticalId:veritiaclid ,
+            onPressed:(){
+              commonProvider.setLoadingSaveUpdate(true);
+              InventoryPostModel model =
+              InventoryPostModel(
+                purchaseOrderCode: purchaseCodeController.text??"",
+                inventoryId: inventoryId??"",
+                // invoicedBy: ,
+                notes: noteController.text,
+                remarks: remarksController.text,
+                unitCost:double.tryParse( unitCostController.text),
+                foc:double.tryParse( focController.text),
+                discount:double.tryParse( discountController.text),
+                grandtotal:double.tryParse( grandTotalController.text),
+                vatableAmount:double.tryParse( variableAmountController.text),
+                excessTax:double.tryParse( exciseTaxController.text),
+                actualCost:double.tryParse( actualCostController.text),
+                vat:double.tryParse( vatController.text),
+                invoicedBy: Variable.created_by,
+                invoiceLines: additionalVariants??[],
+                // orderLines: table,
+              );
+
+
+              print("sssssssssssssssssss"+model.toString());
+              context.read<InventorypostCubit>().postInventory(model);
+              Navigator.pop(context);
+
+            },
+
+
+          ));
+
+    }
+    else {
+      commonProvider.setLoadingSaveUpdate(true);
+      print("additionalvariants" +
+          additionalVariants.toString());
+      InventoryPostModel model =
+      InventoryPostModel(
+        purchaseOrderCode: purchaseCodeController
+            .text ?? "",
+        inventoryId: inventoryId ?? "",
+        // invoicedBy: ,
+        notes: noteController.text,
+        remarks: remarksController.text,
+        unitCost: double.tryParse(
+            unitCostController.text),
+        foc: double.tryParse(focController.text),
+        discount: double.tryParse(
+            discountController.text),
+        grandtotal: double.tryParse(
+            grandTotalController.text),
+        vatableAmount: double.tryParse(
+            variableAmountController.text),
+        excessTax: double.tryParse(
+            exciseTaxController.text),
+        actualCost: double.tryParse(
+            actualCostController.text),
+        vat: double.tryParse(vatController.text),
+        invoicedBy: Variable.created_by,
+        invoiceLines: additionalVariants ?? [],
+
+
+        // orderLines: table,
+      );
+
+
+      print("sssssssssssssssssss" +
+          model.toString());
+      context.read<InventorypostCubit>()
+          .postInventory(model);
+    }
   }
 }

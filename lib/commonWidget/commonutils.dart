@@ -14299,7 +14299,7 @@ class _StockPartitionPopUp extends State<StockPartitionPopUp> {
                     addNew: addNew,
                     // isDirectCreate:changer,
 
-                    label: "Stock  Partition Group Idf",
+                    label: "Stock  Partition Group Id",
                     onApply: () {
                       print("save");
 

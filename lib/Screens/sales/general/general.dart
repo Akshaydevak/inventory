@@ -101,6 +101,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
   TextEditingController toatalPriceController = TextEditingController();
   NavigationProvider commonProvider = NavigationProvider();
   FocusNode salesMainFocusnode=FocusNode();
+  FocusNode saveUpdateButtonFocusnode=FocusNode();
   List<SalesOrderLines> table  =[];
   int tabCount=1;
   bool isCountOrdecre=false;
@@ -183,15 +184,16 @@ class _SalesGeneralState extends State<SalesGeneral> {
     });
   }
   rowKeyPressEvent(RawKeyEvent event){
-    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
+    print(event.logicalKey)
+;    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
     int limit=3;
     int startLimit=1;
 
     if (event is RawKeyDownEvent) {
 
-      if(event.logicalKey==LogicalKeyboardKey.tab){
+      if(event.logicalKey==LogicalKeyboardKey.escape){
 
-        FocusScope.of(context).requestFocus(salesMainFocusnode);
+        FocusScope.of(context).requestFocus(_myWidgetState.currentState?.focusNodeList[0]);
         if(isCountOrdecre==false){
 
           if(tabCount!=limit){
@@ -216,7 +218,8 @@ class _SalesGeneralState extends State<SalesGeneral> {
         }
         if(tabCount==1)
           FocusScope.of(context).requestFocus(_myWidgetState.currentState?.focusNodeList[0]);
-
+        if(tabCount==2 ||tabCount==3)
+          FocusScope.of(context).requestFocus(saveUpdateButtonFocusnode);
 
         // tabCount= tabCount== limit?--tabCount:++tabCount;
         setState(() {
@@ -270,7 +273,10 @@ class _SalesGeneralState extends State<SalesGeneral> {
         else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
           switch (tabCount) {
             case 2:
-              verticalOntapFunc(selectedVertical);
+              saveUpdateFunction();
+              break;
+            case 3:
+              discardCancelFunction();
               break;
 
           }
@@ -355,519 +361,507 @@ class _SalesGeneralState extends State<SalesGeneral> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     commonProvider = Provider.of<NavigationProvider>(context);
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => PostcubitCubit(),
-        ),
-        BlocProvider(
-          create: (context) => SalesgeneralreadCubit(),
-        ),
-        BlocProvider(
-          create: (context) => SalesgeneraldeleteCubit(),
-        ),
-        BlocProvider(
-          create: (context) => SalesgeneralpatcvhCubit(),
-        ),
-        BlocProvider(
-          create: (context) => PurchaseStockCubit(),
-        ),
-      ],
-      child: Builder(builder: (context) {
-        return MultiBlocListener(
-          listeners: [
-            BlocListener<PostcubitCubit, PostcubitState>(
-              listener: (context, state) {
-                print("postssssssss" + state.toString());
-                state.maybeWhen(orElse: () {
-                  // context.
-                  context.showSnackBarError("Loading");
-                }, error: () {
-                  commonProvider.setLoadingSaveUpdate(false);
-                  context.showSnackBarError(Variable.errorMessege);
-                }, success: (data) {
-                  if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    Timer(Duration(seconds: 5), () {
-                      setState(() {
-                        context.read<SalesgeneralverticalCubit>().getSalesGeneralVertical();
-                        // select=false;
-                      });
-                    });
-                  } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
-                  }
-                  ;    commonProvider.setLoadingSaveUpdate(false);
-                });
-              },
-            ),
-            BlocListener<PurchaseStockCubit, PurchaseStockState>(
-              listener: (context, state) {
-                print("state++++++++++++++++++++++++++++++++");
-
-                state.maybeWhen(
-                    orElse: () {},
-                    error: () {
-                      print("error");
-                    },
-                    success: (data) {
-                      print("Akshayaaaaa" + data.toString());
-                      purchaseCurrentStock = data;
-                      var stockQty = purchaseCurrentStock?.StockId??0;
-                      print("stockqty" + stockQty.toString());
-
-
-                      print("AKSKKSKSKSK");
-                      currentStock.add(stockQty);
-                      for(var i=0;i<table.length;i++){
-                        table[i]=table[i].copyWith(stockId:currentStock[i].toString()??"");
-                      }
-                      setState(() {});
-                    });
-              },
-            ),
-            BlocListener<SalesgeneralreadCubit, SalesgeneralreadState>(
-              listener: (context, state) {
-                print("state++++++++++++++++++++++++++++++++");
-                state.maybeWhen(
-                    orElse: () {},
-                    error: () {
-                      print("error");
-                    },
-                    success: (data) {
-                      print("data" + data.toString());
-                      // setState(() {
-                      //   print("taskssss");
-                      data?.salesOrderData?.orderLines != null
-                          ? table = List.from(data?.salesOrderData?.orderLines ?? [])
-                          : table = [];
-                      //   print("lll"+lines.toString());
-                      //
-                      orderTypeController.text = data.salesOrderData?.orderType ?? "";
-                      orderModeController.text = data.salesOrderData?.orderMode ?? "";
-                      orderCodeController.text = data.salesOrderData?.salesOrderCode ?? "";
-                      // orderDateController.text = data.salesOrderData?.orderedDate ?? "";
-
-                      orderDateController=TextEditingController(text:data.salesOrderData?.orderedDate ==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.salesOrderData?.orderedDate??"")));
-                      invemtoryIdController.text = data.salesOrderData?.inventoryid ?? "";
-                      cstomerIdController.text = data.salesOrderData?.customerId ?? "";
-                      trnController.text = data.salesOrderData?.trnNumber ?? "";
-                      shippingAddressIdController.text = data.salesOrderData?.shippingAddressId ?? "";
-                      billingAddressIdController.text = data.salesOrderData?.billingAddressId ?? "";
-                      slaesQuotesController.text = data.salesOrderData?.salesQuotesId ?? "";
-                      paymentIdController.text = data.salesOrderData?.paymentId ?? "";
-                      paymentStatusController.text = data.salesOrderData?.paymentStatus ?? "";
-                      orderStatusController.text = data.salesOrderData?.orderStatus ?? "";
-                      remarksController.text = data.salesOrderData?.remarks ?? "";
-                      noteController.text = data.salesOrderData?.note ?? "";
-                      invoiceStatusController.text = data.salesOrderData?.invoiceStatus ?? "";
-                      unitCostController.text = data.salesOrderData?.unitCost.toString() ?? "";
-                      discountController.text = data.salesOrderData?.discount.toString() ?? "";
-                      exciseTAxController.text = data.salesOrderData?.excessTax.toString() ?? "";
-                      taxableAmountController.text = data.salesOrderData?.taxableAmount.toString() ?? "";
-                      vatController.text = data.salesOrderData?.vat.toString() ?? "";
-                      sellingPriceController.text = data.salesOrderData?.sellingPriceTotal.toString() ??
-                              "";
-                      toatalPriceController.text = data.salesOrderData?.totalPrice.toString() ?? "";
-                      _getCurrentUser();
-                      setState(() {});
-                    });
-              },
-            ),
-            BlocListener<SalesgeneralpatcvhCubit, SalesgeneralpatcvhState>(
-              listener: (context, state) {
-                print("patch" + state.toString());
-                state.maybeWhen(orElse: () {
-                  // context.
-                  context.showSnackBarError("Loading");
-                }, error: () {
-                  commonProvider.setLoadingSaveUpdate(true);
-                  context.showSnackBarError(Variable.errorMessege);
-                }, success: (data) {
-                  if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    // currentStock.clear();
-                    context
-                        .read<SalesgeneralreadCubit>()
-                        .getSalesGenralRead(veritiaclid!);
-                  } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
-                  }
-                  commonProvider.setLoadingSaveUpdate(false);
-                  ;
-                });
-              },
-            ),
-            BlocListener<SalesgeneraldeleteCubit, SalesgeneraldeleteState>(
-              listener: (context, state) {
-                state.maybeWhen(orElse: () {
-                  // context.
-                  context.showSnackBarError("Loading");
-                }, error: () {
-                  commonProvider.setLoadingDeleterClear(false);
-                  context.showSnackBarError(Variable.errorMessege);
-                }, success: (data) {
-                  print("checkingdata" + data.data1.toString());
-                  if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    // clear();
-
-                    context
-                        .read<SalesgeneralverticalCubit>()
-                        .getSalesGeneralVertical();
-                    _myWidgetState.currentState?.table1=[];
-                  } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
-                  }
-                  commonProvider.setLoadingDeleterClear(false);
-                  ;
-                });
-              },
-            ),
-          ],
-          child: BlocConsumer<SalesgeneralverticalCubit,
-              SalesgeneralverticalState>(
+    return Builder(builder: (context) {
+      return MultiBlocListener(
+        listeners: [
+          BlocListener<PostcubitCubit, PostcubitState>(
             listener: (context, state) {
-              print("aaaa" + state.toString());
+              print("postssssssss" + state.toString());
+              state.maybeWhen(orElse: () {
+                // context.
+                context.showSnackBarError("Loading");
+              }, error: () {
+                commonProvider.setLoadingSaveUpdate(false);
+                context.showSnackBarError(Variable.errorMessege);
+              }, success: (data) {
+                if (data.data1) {
+                  context.showSnackBarSuccess(data.data2);
+                  Timer(Duration(seconds: 5), () {
+                    setState(() {
+                      context.read<SalesgeneralverticalCubit>().getSalesGeneralVertical();
+                      // select=false;
+                    });
+                  });
+                } else {
+                  context.showSnackBarError(data.data2);
+                  print(data.data1);
+                }
+                ;    commonProvider.setLoadingSaveUpdate(false);
+              });
+            },
+          ),
+          BlocListener<PurchaseStockCubit, PurchaseStockState>(
+            listener: (context, state) {
+              print("state++++++++++++++++++++++++++++++++");
+
               state.maybeWhen(
                   orElse: () {},
                   error: () {
                     print("error");
                   },
-                  success: (list) {
-                    paginatedList=list;
-                    print("appuram" + list.data.toString());
+                  success: (data) {
+                    print("Akshayaaaaa" + data.toString());
+                    purchaseCurrentStock = data;
+                    var stockQty = purchaseCurrentStock?.StockId??0;
+                    print("stockqty" + stockQty.toString());
 
-                    result = list.data;
-                    print("appuram" + result.toString());
-                    setState(() {
-                      if (result.isNotEmpty) {
-                        if(select){
-                          veritiaclid = result[result.length-1].id;
-                          selectedVertical=result.length-1;
 
-                          context
-                              .read<SalesgeneralreadCubit>()
-                              .getSalesGenralRead(veritiaclid!);
-
-                        }
-                        else{
-                          veritiaclid = result[0].id;
-                          selectedVertical=0;
-
-                          context
-                              .read<SalesgeneralreadCubit>()
-                              .getSalesGenralRead(veritiaclid!);
-                        }
-
-                        select = false;
-                      } else {
-                        print("common");
-                        select = true;
-                        clears();
-                        // setState(() {
-                        // });
-
-                      }
-
-                      setState(() {});
-                    });
+                    print("AKSKKSKSKSK");
+                    currentStock.add(stockQty);
+                    for(var i=0;i<table.length;i++){
+                      table[i]=table[i].copyWith(stockId:currentStock[i].toString()??"");
+                    }
+                    setState(() {});
                   });
             },
-            builder: (context, state) {
-              return Builder(builder: (context) {
-                return RawKeyboardListener(
-                  autofocus: false,
-                  focusNode:salesMainFocusnode,
-                  onKey: (RawKeyEvent event) {
-
-                    if(enableKeyEvent==true){
-                      rowKeyPressEvent(event);}else{
-
-                      rowKeyEventResetFunc();
-                    }
-
-
-
-
-
+          ),
+          BlocListener<SalesgeneralreadCubit, SalesgeneralreadState>(
+            listener: (context, state) {
+              print("state++++++++++++++++++++++++++++++++");
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                  child: Scaffold(
-                    backgroundColor: Pellet.bagroundColor,
-                    body: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SalesGeneralVerticalList(
-                            selectedVertical: selectedVertical,
-                            itemsearch: itemsearch,
-                            select: select,
-                            ontap: (int index) {
-                              setState(() {
-                                clears();
-                                selectedVertical = index;
-                                select = false;
+                  success: (data) {
+                    print("data" + data.toString());
+                    // setState(() {
+                    //   print("taskssss");
+                    data?.salesOrderData?.orderLines != null
+                        ? table = List.from(data?.salesOrderData?.orderLines ?? [])
+                        : table = [];
+                    //   print("lll"+lines.toString());
+                    //
+                    orderTypeController.text = data.salesOrderData?.orderType ?? "";
+                    orderModeController.text = data.salesOrderData?.orderMode ?? "";
+                    orderCodeController.text = data.salesOrderData?.salesOrderCode ?? "";
+                    // orderDateController.text = data.salesOrderData?.orderedDate ?? "";
 
-                                veritiaclid = result[index].id;
-                                _myWidgetState.currentState?.currentStock=[];
-                                _myWidgetState.currentState?.selctedraw=-1;
-                                //
-                                context
-                                    .read<SalesgeneralreadCubit>()
-                                    .getSalesGenralRead(veritiaclid!);
-                                setState(() {});
-                              });
-                            },
-                            result: result,
-                            child:     tablePagination(
-                                  () => context
-                                  .read<SalesgeneralverticalCubit>()
-                                  .refresh(),
-                              back: paginatedList?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<SalesgeneralverticalCubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next:paginatedList?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<SalesgeneralverticalCubit>()
-                                    .nextslotSectionPageList();
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.end,
-                                    children: [
-                                      TextButtonLarge(
-                                        marginCheck: true,
-                                        onPress: () {
-                                          setState(() {
-                                            select = true;
-                                            clears();
-
-                                          });
-                                        },
-                                        // icon: Icon(Icons.refresh),
-                                        // label: Text("Clear")
-                                        text: "CREATE",
-                                      ),
-                                      TextButtonLarge(
-                                        text: "PREVIEW",
-                                        onPress: () async {
-                                          InventoryListModel model=InventoryListModel();
-                                          UserPreferences userPref = UserPreferences();
-                                          await userPref.getInventoryList().then((user) {
-                                            if (user.isInventoryExist == true) {model=user;
-                                            } else {
-                                            }
-                                          });
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) =>
-                                                SalePrintScreen(
-                                                  note: noteController.text,
-                                                  select: select,
-                                                  orderCode: orderCodeController.text??"",
-                                                  orderDate: orderDateController.text,
-                                                  table:table,
-                                                  vat: double.tryParse( vatController.text),
-                                                  sellingPrice:double.tryParse( sellingPriceController.text),
-                                                  taxableAmount:double.tryParse( taxableAmountController.text) ,
-                                                  discount:double.tryParse( discountController.text) ,
-                                                  unitCost:double.tryParse( unitCostController.text) ,
-                                                  excisetax:double.tryParse( exciseTAxController.text) ,
-                                                  remarks: remarksController.text ,
-                                                  pageName: "GENERAL",
-                                                  model: model,
-                                                )),
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  StableTable(
-                                    taxableAmount: taxableAmountController,
-                                    vat: vatController,
-                                    discount: discountController,
-                                    note: noteController,
-                                    remarks: remarksController,
-                                    orderStatus: orderStatusController,
-                                    trnNumber: trnController,
-                                    customerId: cstomerIdController,
-                                    paymentId: paymentIdController,
-                                    unitCost: unitCostController,
-                                    orderType: orderTypeController,
-                                    invoiceStatus: invoiceStatusController,
-                                    paymentStatus: paymentStatusController,
-                                    orderDate: orderDateController,
-                                    orderCode: orderCodeController,
-                                    billingAddressId: billingAddressIdController,
-                                    exciseTax: exciseTAxController,
-                                    invenotryId: invemtoryIdController,
-                                    orderMode: orderModeController,
-                                    salesQuotesId: slaesQuotesController,
-                                    sellingPriceTotal: sellingPriceController,
-                                    shipping: shippingAddressIdController,
-                                    totalPrice: toatalPriceController,
-                                    customerName:cstomerIdNameController,
-                                    billingName:billingAddressIdNameController,
-                                    shippingName:shippingAddressIdNameController
-                                  ),
-                                  Container(
-                                    color: Colors.white,
-                                    height: 35,
-                                  ),
-                                  Row(
-                                    children: [
-                                      TextWidget(text: "Order Lines"),
-                                    ],
-                                  ),
-                                  SizedBox(height: height*.01,),
-
-                                  SalesGeneralGrowableTable(
-                                      updateCheck: updateCheckFucction,
-                                      table: table,
-                                      select:select,
-                                      updation: tableAssign,
-                                      key:_myWidgetState,
-                                      currenStock: currentStock),
-                                  // ScrollableTable(),
-
-
-                                  Container(
-                                    color: Colors.white,
-                                    height: 55,
-                                  ),
-                                  SaveUpdateResponsiveButton(
-                                    isKeyFuctionLeft: keyEventFuctionCount["cancel"]==tabCount,
-                                    isKeyFuctionRight: keyEventFuctionCount["save"]==tabCount,
-                                    isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
-                                    isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
-                                    discardFunction: (){
-                                      if(updateCheck){
-                                        clears();
-
-
-                                      }
-                                      showDailogPopUp(
-                                          context,
-                                          LogoutPopup(
-                                            message: "Do you want to delete the order?",
-                                            // table:table,
-                                            // clear:clear(),
-                                            // verticalId: veritiaclid,
-                                            onPressed: () {
-                                              print("akshay");
-                                              commonProvider.setLoadingDeleterClear(true);
-                                              Navigator.pop(context);
-                                              context
-                                                  .read<
-                                                  SalesgeneraldeleteCubit>()
-                                                  .salesGeneralDelete(
-                                                  veritiaclid);
-                                            },
-                                          ));
-                                    },
-                                    saveFunction: (){
-                                      print("updateCheck" +
-                                          remarksController.text.toString());
-                                      if (updateCheck)
-                                        context.showSnackBarError(
-                                            "please click the update button ");
-                                      else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
-
-                                        context.showSnackBarError(
-                                            "Required at least one variant ");
-                                      }
-                                      else {
-                                        commonProvider.setLoadingSaveUpdate(true);
-                                        var table1=[
-                                          for(var em in table)
-                                            if(em.isActive==true)
-                                              em
-                                        ];
-                                        print("filter table"+table1.toString());
-                                        SalesGeneralPostModel model = SalesGeneralPostModel(
-                                            orderType:
-                                            orderTypeController?.text ?? "",
-                                            orderMode:
-                                            orderModeController?.text ?? "",
-                                            inventoryid:
-                                            Variable.inventory_ID ??
-                                                "",
-                                            customerId:
-                                            cstomerIdController?.text ?? "",
-                                            trnNumber:
-                                            trnController?.text ?? "",
-                                            shippingAddressId:
-                                            shippingAddressIdController?.text ??
-                                                "",
-                                            billingAddressId: billingAddressIdController?.text??"",
-                                            salesQuotesId:
-                                            slaesQuotesController?.text ??
-                                                "",
-                                            note: noteController?.text ?? "",
-                                            remarks:
-                                            remarksController?.text ?? "",
-                                            discount: double.tryParse(
-                                                discountController?.text ?? ""),
-                                            unitCost: double.tryParse(
-                                                unitCostController?.text ?? ""),
-                                            excessTax: double.tryParse(
-                                                exciseTAxController?.text ?? ""),
-                                            taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
-                                            vat: double.tryParse(vatController?.text ?? ""),
-                                            sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
-                                            totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
-                                            createdBy: Variable.created_by,
-                                            editedBy: Variable.created_by,
-                                            orderLines: table1);
-                                        print("modelllls" + model.toString());
-                                        select
-                                            ? context
-                                            .read<PostcubitCubit>()
-                                            .postSalesGeneral(model)
-                                            : context
-                                            .read<SalesgeneralpatcvhCubit>()
-                                            .getSalesGeneralPatch(
-                                            veritiaclid, model);
-                                      }
-
-                                    }
-                                    ,
-                                    label:  select ? "SAVE" : "UPDATE",
-                                  )
-
-
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                    orderDateController=TextEditingController(text:data.salesOrderData?.orderedDate ==null?"":  DateFormat('dd-MM-yyyy').format(DateTime.parse(data.salesOrderData?.orderedDate??"")));
+                    invemtoryIdController.text = data.salesOrderData?.inventoryid ?? "";
+                    cstomerIdController.text = data.salesOrderData?.customerId ?? "";
+                    trnController.text = data.salesOrderData?.trnNumber ?? "";
+                    shippingAddressIdController.text = data.salesOrderData?.shippingAddressId ?? "";
+                    billingAddressIdController.text = data.salesOrderData?.billingAddressId ?? "";
+                    slaesQuotesController.text = data.salesOrderData?.salesQuotesId ?? "";
+                    paymentIdController.text = data.salesOrderData?.paymentId ?? "";
+                    paymentStatusController.text = data.salesOrderData?.paymentStatus ?? "";
+                    orderStatusController.text = data.salesOrderData?.orderStatus ?? "";
+                    remarksController.text = data.salesOrderData?.remarks ?? "";
+                    noteController.text = data.salesOrderData?.note ?? "";
+                    invoiceStatusController.text = data.salesOrderData?.invoiceStatus ?? "";
+                    unitCostController.text = data.salesOrderData?.unitCost.toString() ?? "";
+                    discountController.text = data.salesOrderData?.discount.toString() ?? "";
+                    exciseTAxController.text = data.salesOrderData?.excessTax.toString() ?? "";
+                    taxableAmountController.text = data.salesOrderData?.taxableAmount.toString() ?? "";
+                    vatController.text = data.salesOrderData?.vat.toString() ?? "";
+                    sellingPriceController.text = data.salesOrderData?.sellingPriceTotal.toString() ??
+                            "";
+                    toatalPriceController.text = data.salesOrderData?.totalPrice.toString() ?? "";
+                    _getCurrentUser();
+                    setState(() {});
+                  });
+            },
+          ),
+          BlocListener<SalesgeneralpatcvhCubit, SalesgeneralpatcvhState>(
+            listener: (context, state) {
+              print("patch" + state.toString());
+              state.maybeWhen(orElse: () {
+                // context.
+                context.showSnackBarError("Loading");
+              }, error: () {
+                commonProvider.setLoadingSaveUpdate(true);
+                context.showSnackBarError(Variable.errorMessege);
+              }, success: (data) {
+                if (data.data1) {
+                  context.showSnackBarSuccess(data.data2);
+                  // currentStock.clear();
+                  context
+                      .read<SalesgeneralreadCubit>()
+                      .getSalesGenralRead(veritiaclid!);
+                } else {
+                  context.showSnackBarError(data.data2);
+                  print(data.data1);
+                }
+                commonProvider.setLoadingSaveUpdate(false);
+                ;
               });
             },
           ),
-        );
-      }),
-    );
+          BlocListener<SalesgeneraldeleteCubit, SalesgeneraldeleteState>(
+            listener: (context, state) {
+              state.maybeWhen(orElse: () {
+                // context.
+                context.showSnackBarError("Loading");
+              }, error: () {
+                commonProvider.setLoadingDeleterClear(false);
+                context.showSnackBarError(Variable.errorMessege);
+              }, success: (data) {
+                print("checkingdata" + data.data1.toString());
+                if (data.data1) {
+                  context.showSnackBarSuccess(data.data2);
+                  // clear();
+clears();
+                  context
+                      .read<SalesgeneralverticalCubit>()
+                      .getSalesGeneralVertical();
+
+                } else {
+                  context.showSnackBarError(data.data2);
+                  print(data.data1);
+                }
+                commonProvider.setLoadingDeleterClear(false);
+                ;
+              });
+            },
+          ),
+        ],
+        child: BlocConsumer<SalesgeneralverticalCubit,
+            SalesgeneralverticalState>(
+          listener: (context, state) {
+            print("aaaa" + state.toString());
+            state.maybeWhen(
+                orElse: () {},
+                error: () {
+                  print("error");
+                },
+                success: (list) {
+                  paginatedList=list;
+                  print("appuram" + list.data.toString());
+
+                  result = list.data;
+                  print("appuram" + result.toString());
+                  setState(() {
+                    if (result.isNotEmpty) {
+                      if(select){
+                        veritiaclid = result[result.length-1].id;
+                        selectedVertical=result.length-1;
+
+                        context
+                            .read<SalesgeneralreadCubit>()
+                            .getSalesGenralRead(veritiaclid!);
+
+                      }
+                      else{
+                        veritiaclid = result[0].id;
+                        selectedVertical=0;
+
+                        context
+                            .read<SalesgeneralreadCubit>()
+                            .getSalesGenralRead(veritiaclid!);
+                      }
+
+                      select = false;
+                    } else {
+                      print("common");
+                      select = true;
+                      clears();
+                      // setState(() {
+                      // });
+
+                    }
+
+                    setState(() {});
+                  });
+                });
+          },
+          builder: (context, state) {
+            return Builder(builder: (context) {
+              return RawKeyboardListener(
+                autofocus: false,
+                focusNode:salesMainFocusnode,
+                onKey: (RawKeyEvent event) {
+
+                  if(enableKeyEvent==true){
+                    rowKeyPressEvent(event);}else{
+
+                    rowKeyEventResetFunc();
+                  }
+
+
+
+
+
+                },
+                child: Scaffold(
+                  backgroundColor: Pellet.bagroundColor,
+                  body: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SalesGeneralVerticalList(
+                          selectedVertical: selectedVertical,
+                          itemsearch: itemsearch,
+                          select: select,
+                          ontap: (int index) {
+                            setState(() {
+                              clears();
+                              selectedVertical = index;
+                              select = false;
+
+                              veritiaclid = result[index].id;
+                              _myWidgetState.currentState?.currentStock=[];
+                              _myWidgetState.currentState?.selctedraw=-1;
+                              //
+                              context
+                                  .read<SalesgeneralreadCubit>()
+                                  .getSalesGenralRead(veritiaclid!);
+                              setState(() {});
+                            });
+                          },
+                          result: result,
+                          child:     tablePagination(
+                                () => context
+                                .read<SalesgeneralverticalCubit>()
+                                .refresh(),
+                            back: paginatedList?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<SalesgeneralverticalCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next:paginatedList?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<SalesgeneralverticalCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.end,
+                                  children: [
+                                    TextButtonLarge(
+                                      marginCheck: true,
+                                      onPress: () {
+                                        setState(() {
+                                          select = true;
+                                          clears();
+
+                                        });
+                                      },
+                                      // icon: Icon(Icons.refresh),
+                                      // label: Text("Clear")
+                                      text: "CREATE",
+                                    ),
+                                    TextButtonLarge(
+                                      text: "PREVIEW",
+                                      onPress: () async {
+                                        InventoryListModel model=InventoryListModel();
+                                        UserPreferences userPref = UserPreferences();
+                                        await userPref.getInventoryList().then((user) {
+                                          if (user.isInventoryExist == true) {model=user;
+                                          } else {
+                                          }
+                                        });
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>
+                                              SalePrintScreen(
+                                                note: noteController.text,
+                                                select: select,
+                                                orderCode: orderCodeController.text??"",
+                                                orderDate: orderDateController.text,
+                                                table:table,
+                                                vat: double.tryParse( vatController.text),
+                                                sellingPrice:double.tryParse( sellingPriceController.text),
+                                                taxableAmount:double.tryParse( taxableAmountController.text) ,
+                                                discount:double.tryParse( discountController.text) ,
+                                                unitCost:double.tryParse( unitCostController.text) ,
+                                                excisetax:double.tryParse( exciseTAxController.text) ,
+                                                remarks: remarksController.text ,
+                                                pageName: "GENERAL",
+                                                model: model,
+                                              )),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                StableTable(
+                                  taxableAmount: taxableAmountController,
+                                  vat: vatController,
+                                  discount: discountController,
+                                  note: noteController,
+                                  remarks: remarksController,
+                                  orderStatus: orderStatusController,
+                                  trnNumber: trnController,
+                                  customerId: cstomerIdController,
+                                  paymentId: paymentIdController,
+                                  unitCost: unitCostController,
+                                  orderType: orderTypeController,
+                                  invoiceStatus: invoiceStatusController,
+                                  paymentStatus: paymentStatusController,
+                                  orderDate: orderDateController,
+                                  orderCode: orderCodeController,
+                                  billingAddressId: billingAddressIdController,
+                                  exciseTax: exciseTAxController,
+                                  invenotryId: invemtoryIdController,
+                                  orderMode: orderModeController,
+                                  salesQuotesId: slaesQuotesController,
+                                  sellingPriceTotal: sellingPriceController,
+                                  shipping: shippingAddressIdController,
+                                  totalPrice: toatalPriceController,
+                                  customerName:cstomerIdNameController,
+                                  billingName:billingAddressIdNameController,
+                                  shippingName:shippingAddressIdNameController
+                                ),
+                                Container(
+                                  color: Colors.white,
+                                  height: 35,
+                                ),
+                                Row(
+                                  children: [
+                                    TextWidget(text: "Order Lines"),
+                                  ],
+                                ),
+                                SizedBox(height: height*.01,),
+
+                                SalesGeneralGrowableTable(
+                                    updateCheck: updateCheckFucction,
+                                    table: table,
+                                    select:select,
+                                    updation: tableAssign,
+                                    key:_myWidgetState,
+                                    currenStock: currentStock),
+                                // ScrollableTable(),
+
+
+                                Container(
+                                  color: Colors.white,
+                                  height: 55,
+                                ),
+                                SaveUpdateResponsiveButton(
+                                  focusNode: saveUpdateButtonFocusnode,
+                                  isKeyFuctionLeft: keyEventFuctionCount["cancel"]==tabCount,
+                                  isKeyFuctionRight: keyEventFuctionCount["save"]==tabCount,
+                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
+                                  isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
+                                  discardFunction: (){
+                                    discardCancelFunction();
+                                  },
+                                  saveFunction: (){
+
+                                    saveUpdateFunction();
+                                  }
+                                  ,
+                                  label:  select ? "SAVE" : "UPDATE",
+                                )
+
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            });
+          },
+        ),
+      );
+    });
+  }
+  saveUpdateFunction(){
+    print("updateCheck" +
+        remarksController.text.toString());
+    if (updateCheck)
+      context.showSnackBarError(
+          "please click the update button ");
+    else if(table.isEmpty || table.where((element) => element.isActive==true).isEmpty){
+
+      context.showSnackBarError(
+          "Required at least one variant ");
+    }
+    else {
+      commonProvider.setLoadingSaveUpdate(true);
+      var table1=[
+        for(var em in table)
+          if(em.isActive==true)
+            em
+      ];
+      print("filter table"+table1.toString());
+      SalesGeneralPostModel model = SalesGeneralPostModel(
+          orderType:
+          orderTypeController?.text ?? "",
+          orderMode:
+          orderModeController?.text ?? "",
+          inventoryid:
+          Variable.inventory_ID ??
+              "",
+          customerId:
+          cstomerIdController?.text ?? "",
+          trnNumber:
+          trnController?.text ?? "",
+          shippingAddressId:
+          shippingAddressIdController?.text ??
+              "",
+          billingAddressId: billingAddressIdController?.text??"",
+          salesQuotesId:
+          slaesQuotesController?.text ??
+              "",
+          note: noteController?.text ?? "",
+          remarks:
+          remarksController?.text ?? "",
+          discount: double.tryParse(
+              discountController?.text ?? ""),
+          unitCost: double.tryParse(
+              unitCostController?.text ?? ""),
+          excessTax: double.tryParse(
+              exciseTAxController?.text ?? ""),
+          taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
+          vat: double.tryParse(vatController?.text ?? ""),
+          sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
+          totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
+          createdBy: Variable.created_by,
+          editedBy: Variable.created_by,
+          orderLines: table1);
+      print("modelllls" + model.toString());
+      select
+          ? context
+          .read<PostcubitCubit>()
+          .postSalesGeneral(model)
+          : context
+          .read<SalesgeneralpatcvhCubit>()
+          .getSalesGeneralPatch(
+          veritiaclid, model);
+    }
+  }
+  discardCancelFunction(){
+    if(updateCheck){
+      clears();
+
+
+    }
+    showDailogPopUp(
+        context,
+        LogoutPopup(
+          message: "Do you want to delete the order?",
+          // table:table,
+          // clear:clear(),
+          // verticalId: veritiaclid,
+          onPressed: () {
+            print("akshay");
+            commonProvider.setLoadingDeleterClear(true);
+            Navigator.pop(context);
+            context
+                .read<
+                SalesgeneraldeleteCubit>()
+                .salesGeneralDelete(
+                veritiaclid);
+          },
+        ));
   }
 }
 

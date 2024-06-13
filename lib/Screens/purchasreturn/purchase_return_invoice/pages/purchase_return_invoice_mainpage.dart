@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
@@ -23,6 +24,7 @@ import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
+import 'package:inventory/core/uttils/keyEvent.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/printScreen.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
@@ -65,12 +67,16 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
   NavigationProvider commonProvider = NavigationProvider();
   TextEditingController noteController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
+  FocusNode prurchaseReturnInvoiveFocusNode=FocusNode();
+  FocusNode saveUpdateFocusNode=FocusNode();
   List<PurchaseOrder> result = [];
   int selectedVertical = 0;
   TextEditingController itemsearch = TextEditingController();
   int? veritiaclid = 0;
   bool updateCheck = false;
   List<Order> lines = [];
+  int tabCount=1;
+  bool isCountOrdecre=false;
 
   late AutoScrollController recieveController;
   void initState() {
@@ -172,6 +178,138 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
       orderStatusController.clear();
     });
   }
+  Map keyEventFuctionCount={
+    "save":2,
+
+    "table":1
+
+  };
+  rowKeyEventResetFunc(){
+    tabCount=1;
+    isCountOrdecre=false;
+    enableKeyEvent=true;
+    setState(() {
+
+    });
+  }
+  rowKeyPressEvent(RawKeyEvent event){
+    // FocusNode? currentfocusedNode = FocusManager.instance.primaryFocus;
+    int limit=2;
+    int startLimit=1;
+
+    if (event is RawKeyDownEvent) {
+
+      if(event.logicalKey==LogicalKeyboardKey.escape){
+
+
+        FocusScope.of(context).requestFocus(prurchaseReturnInvoiveFocusNode);
+        if(isCountOrdecre==false){
+
+          if(tabCount!=limit){
+            tabCount=++tabCount;
+
+            if(tabCount==limit){
+              isCountOrdecre=true;
+            }
+
+          }
+        }
+        else{
+          if(tabCount!=startLimit){
+            tabCount=--tabCount;
+            if(tabCount==startLimit){
+              isCountOrdecre=false;}
+          }
+
+
+
+
+        }
+        print("tabPressd$tabCount");
+
+        if(tabCount==2)
+          FocusScope.of(context).requestFocus(saveUpdateFocusNode);
+
+        // tabCount= tabCount== limit?--tabCount:++tabCount;
+        setState(() {
+
+        });
+
+      }
+      // else  if(event.logicalKey==LogicalKeyboardKey.keyR){
+      //    remarksPopupCallFunc();
+      //
+      //  }
+      // else if(event.logicalKey==LogicalKeyboardKey.arrowLeft){
+      //   FocusNode? focusedNode = FocusScope.of(context).focusedChild;
+      //   if (focusedNode != null) {
+      //     print('Currently focused node: ${focusedNode}');
+      //   }
+      //
+      // }
+      else{
+
+        if (event.logicalKey == LogicalKeyboardKey.arrowDown ) {
+          switch (tabCount) {
+            case 1:
+              FocusScope.of(context).requestFocus(prurchaseReturnInvoiveFocusNode);
+              _myWidgetState.currentState?.   changeSelectedRow(1);
+              setState(() {
+
+              });
+              break;
+
+          };
+
+
+          // Handle arrow down key press
+          // _changeSelectedRow(1);
+        } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+          switch (tabCount) {
+            case 1:
+              FocusScope.of(context).requestFocus(prurchaseReturnInvoiveFocusNode);
+              _myWidgetState.currentState?.   changeSelectedRow(-1);
+              setState(() {
+
+              });
+              break;
+
+
+
+          // Handle arrow up key press
+          // _changeSelectedRow(-1);
+          }}
+        else if(event.logicalKey==LogicalKeyboardKey.enter || event.logicalKey==LogicalKeyboardKey.numpadEnter){
+          print("tabPressd22$tabCount");
+          switch (tabCount) {
+            case 2:
+              saveUpadteFunction();
+              break;
+
+          }
+
+
+
+        }
+
+
+
+
+
+
+      }
+      //invoice page keyPress Event
+
+
+      //
+
+
+
+
+
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -183,8 +321,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
         BlocProvider(
           create: (context) => InvoiceReadCubit(),
         ),
-        BlocProvider(
-          create: (context) => InvoicepostCubit(),),
+
       ],
       child: MultiBlocListener(
         listeners: [
@@ -225,7 +362,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                         purchaseInvoiceidController.text = data.invoicedata?.purchaseInvoiceId.toString() ?? "";
                         returnInvoiceCodeController.text = data.invoicedata?.returnOrderCode.toString() ?? "";
                         orderStatusController.text=data.invoicedata?.returnOrderStatus??"";
-                      } else {
+                      }
+                      else {
                         data?.orderLiness != null
                             ? lines =List.from( data?.orderLiness ?? [])
                             : lines = List.from([]);
@@ -260,7 +398,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                   });
             },
           ),
-          BlocListener<InvoicepostCubit, InvoicepostState>(
+          BlocListener<InvoicepostPurchaseCubit, InvoicepostPurchaseCubitState>(
             listener: (context, state) {
               print("postssssssss" + state.toString());
               state.maybeWhen(orElse: () {
@@ -325,257 +463,169 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
           },
           builder: (context, state) {
             return Builder(builder: (context) {
-              return Scaffold(
-                backgroundColor: Pellet.bagroundColor,
-                body: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      PurchaseVerticalList(
-                        selectedVertical: selectedVertical,
-                        itemsearch: itemsearch,
-                        ontap: (int index) {
-                          setState(() {
-                            updateCheck=false;
-                            selectedVertical = index;
-                            clear();
-                            veritiaclid = result[index].id;
-                            context.read<InvoiceReadCubit>().getInvoiceRead(veritiaclid!);
-                            setState(() {});
-                          });
-                        },
-                        result: result,
-                        child:     tablePagination(() => context.read<VertiacalCubit>().refresh(),
-                          back: paginatedList?.previousUrl == null
-                              ? null
-                              : () {
-                            context.read<VertiacalCubit>().previuosslotSectionPageList();
+              return RawKeyboardListener(
+              autofocus: false,
+              focusNode:prurchaseReturnInvoiveFocusNode,
+    onKey: (RawKeyEvent event) {
+
+    if(enableKeyEvent==true){
+    rowKeyPressEvent(event);}else{
+
+    rowKeyEventResetFunc();
+    }},
+
+
+
+
+
+    child: Scaffold(
+                  backgroundColor: Pellet.bagroundColor,
+                  body: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        PurchaseVerticalList(
+                          selectedVertical: selectedVertical,
+                          itemsearch: itemsearch,
+                          ontap: (int index) {
+                            setState(() {
+                              updateCheck=false;
+                              selectedVertical = index;
+                              clear();
+                              veritiaclid = result[index].id;
+                              context.read<InvoiceReadCubit>().getInvoiceRead(veritiaclid!);
+                              setState(() {});
+                            });
                           },
-                          next:paginatedList?.nextPageUrl == null
-                              ? null
-                              : () {
-                            context.read<VertiacalCubit>().nextslotSectionPageList();
-                          },
+                          result: result,
+                          child:     tablePagination(() => context.read<VertiacalCubit>().refresh(),
+                            back: paginatedList?.previousUrl == null
+                                ? null
+                                : () {
+                              context.read<VertiacalCubit>().previuosslotSectionPageList();
+                            },
+                            next:paginatedList?.nextPageUrl == null
+                                ? null
+                                : () {
+                              context.read<VertiacalCubit>().nextslotSectionPageList();
+                            },
+                          ),
                         ),
-                      ),
 
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Container(
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
 
-                                    TextButtonLarge(
-                                      text: "PREVIEW",
-                                      onPress: () async {
-                                        InventoryListModel model=InventoryListModel();
-                                        UserPreferences userPref = UserPreferences();
-                                        await userPref.getInventoryList().then((user) {
-                                          if (user.isInventoryExist == true) {
-                                            model=user;
-                                          } else {
+                                      TextButtonLarge(
+                                        text: "PREVIEW",
+                                        onPress: () async {
+                                          InventoryListModel model=InventoryListModel();
+                                          UserPreferences userPref = UserPreferences();
+                                          await userPref.getInventoryList().then((user) {
+                                            if (user.isInventoryExist == true) {
+                                              model=user;
+                                            } else {
 
-                                          }
-                                        });
+                                            }
+                                          });
 
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>
-                                              PrintScreen(
-                                                table:lines,
-                                                pageName: "INVOICE SCREEN",
-                                                orderCode: purchaseInvoiceidController.text??"",
-                                                vat: double.tryParse( vatController.text),
-                                                actualCost:double.tryParse( actualCostController.text),
-                                                variableAmount:double.tryParse( vatableAmountController.text) ,
-                                                discount:double.tryParse( discountController.text) ,
-                                                unitCost:double.tryParse( unitCostController.text) ,
-                                                excisetax:double.tryParse( excessTaxController.text) ,
-                                                model:model,
-                                                note: noteController.text,
-                                                remarks: remarksController.text,
-                                              )
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                InvoiceStableTable(
-                                  returnInvoiceCode:
-                                  returnInvoiceCodeController,
-                                  excessTax: excessTaxController,
-                                  orderDate: orderDateController,
-                                  vat: vatController,
-                                  paymentCode: paymentCodeController,
-                                  actualCost: actualCostController,
-                                  paymentStatus: paymentStatusController,
-                                  grandToatl: grandTotalCostController,
-                                  paymentMethod: paymentmethodController,
-                                  note: noteController,
-                                  orderStatus: orderStatusController,
-                                  remarks: remarksController,
-                                  invoiceStatus: invoiceStatusController,
-                                  discount: discountController,
-                                  foc: focController,
-                                  unitCost: unitCostController,
-                                  vatableAmount: vatableAmountController,
-                                  purchaseReturnOrderCode:
-                                  purchaseReturnOrderCodeController,
-                                ),
-                                Container(
-                                  color: Colors.white,
-                                  height: 35,
-                                ),
-                                Row(
-                                  children: [
-                                    TextWidget(text: "Order Lines"),
-                                  ],
-                                ),
-                                SizedBox(height: height*.01,),
-                                PurchasReturnInvoiceGrowableTable(
-                                    updateCheck: updateCheckFucction,
-                                    updation: tableAssign,
-                                    key:_myWidgetState,
-                                ),
-
-                                Container(
-                                  color: Colors.white,
-                                  height: 55,
-                                ),
-                                SaveUpdateResponsiveButton(
-                                  isDelete: true,
-                                  isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
-
-                                  label:"SAVE" ,
-                                  saveFunction: (){
-                                    print("apppa"+lines.toString());
-                                    if(updateCheck)  context.showSnackBarError("please click the update button");
-                                    else{
-
-                                      List<Order>? result;
-                                      bool confirmationCheck=false;
-                                      for(var i=0;i<lines.length;i++){
-                                        if(lines[i].isInvoiced==false){
-                                          confirmationCheck=true;
-                                        }
-                                        result = lines.where((o) => o.isInvoiced == true).toList();
-
-
-                                      }
-                                      if(confirmationCheck){
-                                        showDailogPopUp(
+                                          Navigator.push(
                                             context,
-                                            LogoutPopup(
-                                              message: "Some of lines are not confirmed. Do you want to continue?",
-                                              // table:table,
-                                              // // clear:clear(),
-                                              // verticalId:veritiaclid ,
-                                              onPressed:(){
-                                                commonProvider.setLoadingSaveUpdate(true);
-                                                PurchaseReturnInvoicePostModel model =
-                                                PurchaseReturnInvoicePostModel(
-                                                    purchaseInvoiceId:purchaseInvoiceidController?.text??null,
-                                                    returnOrderCode:purchaseReturnOrderCodeController?.text??null,
-                                                    inventoryId: inventoryContoller?.text??null,
-                                                    invoicedBy: Variable.created_by,
-                                                    venderId: vendoridContoller?.text??null,
-                                                    notes:noteController?.text??null,
+                                            MaterialPageRoute(builder: (context) =>
+                                                PrintScreen(
+                                                  table:lines,
+                                                  pageName: "INVOICE SCREEN",
+                                                  orderCode: purchaseInvoiceidController.text??"",
+                                                  vat: double.tryParse( vatController.text),
+                                                  actualCost:double.tryParse( actualCostController.text),
+                                                  variableAmount:double.tryParse( vatableAmountController.text) ,
+                                                  discount:double.tryParse( discountController.text) ,
+                                                  unitCost:double.tryParse( unitCostController.text) ,
+                                                  excisetax:double.tryParse( excessTaxController.text) ,
+                                                  model:model,
+                                                  note: noteController.text,
+                                                  remarks: remarksController.text,
+                                                )
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  InvoiceStableTable(
+                                    returnInvoiceCode:
+                                    returnInvoiceCodeController,
+                                    excessTax: excessTaxController,
+                                    orderDate: orderDateController,
+                                    vat: vatController,
+                                    paymentCode: paymentCodeController,
+                                    actualCost: actualCostController,
+                                    paymentStatus: paymentStatusController,
+                                    grandToatl: grandTotalCostController,
+                                    paymentMethod: paymentmethodController,
+                                    note: noteController,
+                                    orderStatus: orderStatusController,
+                                    remarks: remarksController,
+                                    invoiceStatus: invoiceStatusController,
+                                    discount: discountController,
+                                    foc: focController,
+                                    unitCost: unitCostController,
+                                    vatableAmount: vatableAmountController,
+                                    purchaseReturnOrderCode:
+                                    purchaseReturnOrderCodeController,
+                                  ),
+                                  Container(
+                                    color: Colors.white,
+                                    height: 35,
+                                  ),
+                                  Row(
+                                    children: [
+                                      TextWidget(text: "Order Lines"),
+                                    ],
+                                  ),
+                                  SizedBox(height: height*.01,),
+                                  PurchasReturnInvoiceGrowableTable(
+                                      updateCheck: updateCheckFucction,
+                                      updation: tableAssign,
+                                      key:_myWidgetState,
+                                  ),
 
-                                                    remarks: remarksController?.text??"",
-                                                    unitCost: double.tryParse( unitCostController?.text??""),
-                                                    foc: double.tryParse( focController?.text??""),
-                                                    discount: double.tryParse( discountController?.text??""),
-                                                    grandTotal: double.tryParse( grandTotalCostController?.text??""),
-                                                    vatableAmount: double.tryParse( vatableAmountController?.text??""),
-                                                    excessTax: double.tryParse( excessTaxController?.text??""),
-                                                    actualCost:  double.tryParse( actualCostController?.text??""),
-                                                    vat:  double.tryParse( vatController?.text??""),
-                                                    vendorTrnNumber: vendorTrnnumberController?.text??null,
-                                                    paymentCode: paymentCodeController?.text??null,
-                                                    paymentMethod: paymentmethodController?.text??null,
-                                                    paymentStatus:paymentStatusController?.text??null ,
+                                  Container(
+                                    color: Colors.white,
+                                    height: 55,
+                                  ),
+                                  SaveUpdateResponsiveButton(
+                                    isKeyFuctionRight: keyEventFuctionCount['save']==tabCount,
+                                    focusNode: saveUpdateFocusNode,
+                                    isDelete: true,
+                                    isSaveUpdateLoading: commonProvider.isLoadingSaveupdate,
 
-                                                    lines: lines
+                                    label:"SAVE" ,
+                                    saveFunction: (){
+                                      saveUpadteFunction();
 
-                                                );
-                                                print("model"+model.toString());
-                                                context.read<InvoicepostCubit>().invoicePost(model);
-                                                Navigator.pop(context);
+                                    },
+                                    discardFunction: (){
 
-                                              },
+                                    },
 
+                                  )
+                                  ,
 
-                                            ));
-                                      }
-                                      else {
-                                        commonProvider.setLoadingSaveUpdate(true);
-                                        PurchaseReturnInvoicePostModel model =
-                                        PurchaseReturnInvoicePostModel(
-                                            purchaseInvoiceId: purchaseInvoiceidController
-                                                .text ?? "",
-                                            returnOrderCode: purchaseReturnOrderCodeController
-                                                ?.text ?? "",
-                                            inventoryId: inventoryContoller
-                                                ?.text ?? "",
-                                            invoicedBy: Variable.created_by,
-                                            venderId: vendoridContoller?.text ??
-                                                "",
-                                            notes: noteController?.text ?? "",
-                                            remarks: remarksController?.text ??
-                                                "",
-                                            unitCost: double.tryParse(
-                                                unitCostController?.text ?? ""),
-                                            foc: double.tryParse(
-                                                focController?.text ?? ""),
-                                            discount: double.tryParse(
-                                                discountController?.text ?? ""),
-                                            grandTotal: double.tryParse(
-                                                grandTotalCostController
-                                                    ?.text ?? ""),
-                                            vatableAmount: double.tryParse(
-                                                vatableAmountController?.text ??
-                                                    ""),
-                                            excessTax: double.tryParse(
-                                                excessTaxController?.text ??
-                                                    ""),
-                                            actualCost: double.tryParse(
-                                                actualCostController?.text ??
-                                                    ""),
-                                            vat: double.tryParse(
-                                                vatController?.text ?? ""),
-                                            vendorTrnNumber: vendorTrnnumberController
-                                                ?.text ?? "",
-                                            paymentCode: paymentCodeController?.text??null,
-                                            paymentMethod: paymentmethodController?.text??null,
-                                            paymentStatus:paymentStatusController?.text??null ,
-                                            lines: lines
-
-                                        );
-                                        print("model"+model.toString());
-                                        context.read<InvoicepostCubit>()
-                                            .invoicePost(model);
-                                      } }
-
-                                  },
-                                  discardFunction: (){
-
-                                  },
-
-                                )
-                                ,
-
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -584,6 +634,115 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
         ),
       ),
     );
+  }
+  saveUpadteFunction(){
+    print("apppa"+lines.toString());
+    if(updateCheck)  context.showSnackBarError("please click the update button");
+    else{
+
+      List<Order>? result;
+      bool confirmationCheck=false;
+      for(var i=0;i<lines.length;i++){
+        if(lines[i].isInvoiced==false){
+          confirmationCheck=true;
+        }
+        result = lines.where((o) => o.isInvoiced == true).toList();
+
+
+      }
+      if(confirmationCheck){
+        showDailogPopUp(
+            context,
+            LogoutPopup(
+              message: "Some of lines are not confirmed. Do you want to continue?",
+              // table:table,
+              // // clear:clear(),
+              // verticalId:veritiaclid ,
+              onPressed:(){
+                commonProvider.setLoadingSaveUpdate(true);
+                PurchaseReturnInvoicePostModel model =
+                PurchaseReturnInvoicePostModel(
+                    purchaseInvoiceId:purchaseInvoiceidController?.text??null,
+                    returnOrderCode:purchaseReturnOrderCodeController?.text??null,
+                    inventoryId: inventoryContoller?.text??null,
+                    invoicedBy: Variable.created_by,
+                    venderId: vendoridContoller?.text??null,
+                    notes:noteController?.text??null,
+
+                    remarks: remarksController?.text??"",
+                    unitCost: double.tryParse( unitCostController?.text??""),
+                    foc: double.tryParse( focController?.text??""),
+                    discount: double.tryParse( discountController?.text??""),
+                    grandTotal: double.tryParse( grandTotalCostController?.text??""),
+                    vatableAmount: double.tryParse( vatableAmountController?.text??""),
+                    excessTax: double.tryParse( excessTaxController?.text??""),
+                    actualCost:  double.tryParse( actualCostController?.text??""),
+                    vat:  double.tryParse( vatController?.text??""),
+                    vendorTrnNumber: vendorTrnnumberController?.text??null,
+                    paymentCode: paymentCodeController?.text??null,
+                    paymentMethod: paymentmethodController?.text??null,
+                    paymentStatus:paymentStatusController?.text??null ,
+
+                    lines: lines
+
+                );
+                print("model"+model.toString());
+                context.read<InvoicepostPurchaseCubit>().invoicePost(model);
+                Navigator.pop(context);
+
+              },
+
+
+            ));
+      }
+      else {
+        commonProvider.setLoadingSaveUpdate(true);
+        PurchaseReturnInvoicePostModel model =
+        PurchaseReturnInvoicePostModel(
+            purchaseInvoiceId: purchaseInvoiceidController
+                .text ?? "",
+            returnOrderCode: purchaseReturnOrderCodeController
+                ?.text ?? "",
+            inventoryId: inventoryContoller
+                ?.text ?? "",
+            invoicedBy: Variable.created_by,
+            venderId: vendoridContoller?.text ??
+                "",
+            notes: noteController?.text ?? "",
+            remarks: remarksController?.text ??
+                "",
+            unitCost: double.tryParse(
+                unitCostController?.text ?? ""),
+            foc: double.tryParse(
+                focController?.text ?? ""),
+            discount: double.tryParse(
+                discountController?.text ?? ""),
+            grandTotal: double.tryParse(
+                grandTotalCostController
+                    ?.text ?? ""),
+            vatableAmount: double.tryParse(
+                vatableAmountController?.text ??
+                    ""),
+            excessTax: double.tryParse(
+                excessTaxController?.text ??
+                    ""),
+            actualCost: double.tryParse(
+                actualCostController?.text ??
+                    ""),
+            vat: double.tryParse(
+                vatController?.text ?? ""),
+            vendorTrnNumber: vendorTrnnumberController
+                ?.text ?? "",
+            paymentCode: paymentCodeController?.text??null,
+            paymentMethod: paymentmethodController?.text??null,
+            paymentStatus:paymentStatusController?.text??null ,
+            lines: lines
+
+        );
+        print("model"+model.toString());
+        context.read<InvoicepostPurchaseCubit>()
+            .invoicePost(model);
+      } }
   }
 }
 

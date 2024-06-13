@@ -69,6 +69,7 @@ abstract class PurchaseSourceAbstract {
       String email, String mobile, String key, String cratedCode);
   Future<DoubleResponse> getLogin(
       String username, String password, String empCode);
+  Future<DoubleResponse> postIpBlock(ipBlockModel model);
   Future<List<PurchaseInvoice>> getPurchaseInvoice();
   Future<PurchaseReturnGeneralRead> getGeneralInvoiceRead(int? id);
   Future<DoubleResponse> postGeneral(PurchaseReturnGeneralPost model);
@@ -7490,7 +7491,7 @@ print("Pathssssa$path");
   @override
   Future<AttributeListModel> getAttributeTypeList() async {
     String path = attributePostApi;
-    print("the searching aaaaappppppppppppppppppppppppppp${attributePostApi}");
+    print("the${attributePostApi}");
     try {
       print("ppppath" + path.toString());
       print(path);
@@ -8189,5 +8190,58 @@ print("Pathssssa$path");
 
     return DoubleResponse(
         valueMap['status'] == 'success', valueMap["data"]);
+  }
+
+  @override
+  Future<DoubleResponse> postIpBlock(ipBlockModel model) async {
+
+        String path="https://api-staging-user-security.hilalcart.com/user-employee_employeeuserorglogin/starworld";;
+    print(path);
+    try{
+      final response = await client.post(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+print("response$response");
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      CaptchaReadModel model1 =CaptchaReadModel();
+      Variable.errorMessege = response.data['message'];
+      if (response.data.containsKey('data') && response.data['data'] != null) {
+
+
+        model1 =
+            CaptchaReadModel.fromJson(response.data['data']);}
+      RegisterModel dataa=RegisterModel();
+      if (response.data['status'] != 'failed')    dataa = RegisterModel.fromJson(response.data['data']);
+
+      return DoubleResponse(response.data['status'] == 'success',response.data['status'] == 'failed'? model1:dataa);
+    }catch(e){
+      print("the error is here"+e.toString());
+    }
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    CaptchaReadModel model1 =CaptchaReadModel();
+    Variable.errorMessege = response.data['message'];
+    if (response.data.containsKey('data') && response.data['data'] != null) {
+
+
+      model1 =
+          CaptchaReadModel.fromJson(response.data['data']);}
+    RegisterModel dataa=RegisterModel();
+    if (response.data['status'] != 'failed')    dataa = RegisterModel.fromJson(response.data['data']);
+
+    return DoubleResponse(response.data['status'] == 'success',response.data['status'] == 'failed'? model1:dataa);
   }
 }
