@@ -183,41 +183,47 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               icondrop:true,
                               readOnly: true,
                               title: "Base UOM",ontap: (){
-                              if(widget.baseuomNameController.text.isNotEmpty){
-                                widget.baseuomNameController.text="";
-                                widget.uomController.text="";
+                           if(widget.uomGroupid!=0){
+                             if(widget.baseuomNameController.text.isNotEmpty){
+                               widget.baseuomNameController.text="";
+                               widget.uomController.text="";
 
-                              }
-                              else{
-                                showDailogPopUp(
-                                  context,
-                                  TableConfigurePopup(
-                                    id: widget.uomGroupid,
-                                    type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
+                             }
+                             else{
+                               showDailogPopUp(
+                                 context,
+                                 TableConfigurePopup(
+                                   id: widget.uomGroupid,
+                                   type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
 
-                                    setState(() {
-                                      print(va?.uomCode);
-                                      print(va);
-
-
-
-                                        widget.uomController.text=va?.uomCode??"";
-                                      widget.baseuomNameController.text=va?.name??"";
-                                      setState(() {
-
-                                      });
+                                   setState(() {
+                                     print(va?.uomCode);
+                                     print(va);
 
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
 
-                                  },
-                                  ),
+                                     widget.uomController.text=va?.uomCode??"";
+                                     widget.baseuomNameController.text=va?.name??"";
+                                     setState(() {
+
+                                     });
 
 
-                                );
-                              }
+                                     // onChange = true;
+                                     // orderType.text = va!;
+                                   });
+
+                                 },
+                                 ),
+
+
+                               );
+                             }
+                           }else{
+                             context.showSnackBarError("please select UOM Croup");
+                           }
+
+                        
 
 
                               },),
@@ -481,7 +487,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           //     });
                           //   },
                           //   onAddNew: () {
-                          //
+                          //f
                           //     showDailogPopUp(
                           //       context,
                           //       ConfigurePopup(

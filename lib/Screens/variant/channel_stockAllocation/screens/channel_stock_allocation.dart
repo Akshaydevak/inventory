@@ -138,6 +138,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
 
 
       sum = sum + double.parse(a.isEmpty?"0":a);
+
     }
     if(sum!=10) {
     type=="1"?  context.showSnackBarError("the channel Allocation Ratio is in 10"): context.showSnackBarError("the Min Max Ratio is in 10");

@@ -645,16 +645,14 @@ clear(){
                           Variable.variantSearchId = result[0].id;
                           itemCode = result[0].code?.toString()??"";
                           uomCode = result[0].uomCode?.toString()??"";
-                          // Variable.verticalid=result[0].id;
-                          // print("Variable.ak"+Variable.verticalid.toString());
+
                           context
                               .read<VariantCreationReadCubit>()
                               .getVariantCreationRead(veritiaclid!);
                         } else {
-                          print("common");
+
                           clear();
-                          // select=true;
-                          // setState(() {});
+
                         }
 
                         setState(() {});

@@ -502,7 +502,6 @@ class SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
 
                                       size: 13,
                                     ),
-
                                     tableHeadtext(
                                       'Variant Name',
                                       size: 13,

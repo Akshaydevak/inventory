@@ -287,35 +287,35 @@ class _StockScreenState extends State<StockScreen> {
                           setState(() {
                             print("data.stockData${data.stockData}");
                             stockData=data.stockData;
-                            variantCodeController.text=data.stockData?.variantCode??"";
-                            variantId=data.stockData?.variantId;
-                            stockCodeController.text=data.stockData?.stockCode??"";
-                            salesUomController.text=data.stockData?.salesUOM.toString()??"";
-                            salesUomNameController.text=data.stockData?.salesUomName.toString()??"";
-                            baseUomController.text=data.stockData?.baseUom.toString()??"";
-                            baseUomName.text=data.stockData?.baseUomName.toString()??"";
-                            purchaseUomController.text=data.stockData?.purchaseUom.toString()??"";
-                            purchaseUomNameController.text=data.stockData?.purchaseUomName??"";
-                            salesStockQuantityController.text=data.stockData?.salesBlockQuantity.toString()??"";
-                            channelTypeController.text=data.stockData?.channelTypeAllocationRatio.toString()??"";
-                            salesBlockQuantityController.text=data.stockData?.salesBlockQuantity.toString()??"";
-                            purchaseBlockController.text=data.stockData?.purchaseBlockQuantity.toString()??"";
-                            cancelledQuantityController.text=data.stockData?.availablcancelledQuantityeQuantity.toString()??"";
-                            reservedQuantityController.text=data.stockData?.reservedQuantity.toString()??"";
-                            reorderPointQuantityController.text=data.stockData?.reOrderPoint.toString()??"";
-                            reorderQuantityController.text=data.stockData?.reOrderQuantity.toString()??"";
-                            damagedQuantityController.text=data.stockData?.damagedQuantity.toString()??"";
-                            returnedQuantityController.text=data.stockData?.returnQuantity.toString()??"";
-                            minimumQuantityController.text=data.stockData?.minimumQuantity.toString()??"";
-                            maximumQuantityController.text=data.stockData?.maximumQuantity.toString()??"";
-                            minMaxRatioController.text=data.stockData?.minMaxRatio.toString()??"";
-                            totalQuantityController.text=data.stockData?.availableQuantity.toString()??"";
-                            stockwarning=data.stockData?.stockWarning??false;
-                            salesBlock=data.stockData?.salesBlocked??false;
-                            purchaseBlock=data.stockData?.purchaseBlocked??false;
-                            virtualStockTypeController.text=data?.stockData?.virtualType.toString()??"";
-                            virtualStockController.text=data.stockData?.virtualStock.toString()??"";
-                            addVirtualStockController.text=data.stockData?.addVirtualStock.toString()??"";
+                            variantCodeController.text=stockData?.variantCode??"";
+                            variantId=stockData?.variantId;
+                            stockCodeController.text=stockData?.stockCode??"";
+                            salesUomController.text=stockData?.salesUOM.toString()??"";
+                            salesUomNameController.text=stockData?.salesUomName.toString()??"";
+                            baseUomController.text=stockData?.baseUom.toString()??"";
+                            baseUomName.text=stockData?.baseUomName.toString()??"";
+                            purchaseUomController.text=stockData?.purchaseUom.toString()??"";
+                            purchaseUomNameController.text=stockData?.purchaseUomName??"";
+                            salesStockQuantityController.text=stockData?.salesBlockQuantity.toString()??"";
+                            channelTypeController.text=stockData?.channelTypeAllocationRatio.toString()??"";
+                            salesBlockQuantityController.text=stockData?.salesBlockQuantity.toString()??"";
+                            purchaseBlockController.text=stockData?.purchaseBlockQuantity.toString()??"";
+                            cancelledQuantityController.text=stockData?.availablcancelledQuantityeQuantity.toString()??"";
+                            reservedQuantityController.text=stockData?.reservedQuantity.toString()??"";
+                            reorderPointQuantityController.text=stockData?.reOrderPoint.toString()??"";
+                            reorderQuantityController.text=stockData?.reOrderQuantity.toString()??"";
+                            damagedQuantityController.text=stockData?.damagedQuantity.toString()??"";
+                            returnedQuantityController.text=stockData?.returnQuantity.toString()??"";
+                            minimumQuantityController.text=stockData?.minimumQuantity.toString()??"";
+                            maximumQuantityController.text=stockData?.maximumQuantity.toString()??"";
+                            minMaxRatioController.text=stockData?.minMaxRatio.toString()??"";
+                            totalQuantityController.text=stockData?.availableQuantity.toString()??"";
+                            stockwarning=stockData?.stockWarning??false;
+                            salesBlock=stockData?.salesBlocked??false;
+                            purchaseBlock=stockData?.purchaseBlocked??false;
+                            virtualStockTypeController.text=stockData?.virtualType.toString()??"";
+                            virtualStockController.text=stockData?.virtualStock.toString()??"";
+                            addVirtualStockController.text=stockData?.addVirtualStock.toString()??"";
 
                           });
                         });
@@ -455,7 +455,8 @@ class _StockScreenState extends State<StockScreen> {
                                 // addNew=true;
 
                                 setState(() {
-                                  context.read<StocktablereadCubit>().getStockTableRead(result[index].code);
+                                  veritiaclid=result[index].id;
+                                  // context.read<StocktablereadCubit>().getStockTableRead(result[index].code);
                                   context.read<StockreadCubit>().getStockRead(veritiaclid!);
 
                                 });

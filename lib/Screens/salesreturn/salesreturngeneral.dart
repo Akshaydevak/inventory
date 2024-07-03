@@ -556,11 +556,11 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                           focusNode:salesReturnMainFocusnode,
                           onKey: (RawKeyEvent event) {
 
-                            if(enableKeyEvent==true){
-                              rowKeyPressEvent(event);}else{
-
-                              rowKeyEventResetFunc();
-                            }
+                            // if(enableKeyEvent==true){
+                            //   rowKeyPressEvent(event);}else{
+                            //
+                            //   rowKeyEventResetFunc();
+                            // }
 
 
 
@@ -655,7 +655,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
 
                                                 UserPreferences userPref = UserPreferences();
                                                 await userPref.getInventoryList().then((user) {
-                                                  print("entereeeeeeeeeeeeeeeeeeed");
+                                                  // print("entereeeeeeeeeeeeeeeeeeed");
 
                                                   if (user.isInventoryExist == true) {
                                                     model=user;

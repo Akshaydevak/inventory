@@ -632,11 +632,11 @@ setState(() {
       focusNode:purchaseReceiveFocusNode,
       onKey: (RawKeyEvent event) {
 
-        if(enableKeyEvent==true){
-          rowKeyPressEvent(event);}else{
-
-          rowKeyEventResetFunc();
-        }
+        // if(enableKeyEvent==true){
+        //   rowKeyPressEvent(event);}else{
+        //
+        //   rowKeyEventResetFunc();
+        // }
 
 
 

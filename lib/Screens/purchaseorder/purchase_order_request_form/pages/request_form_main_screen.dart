@@ -538,10 +538,10 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                 },
                                 success: (list){
                                   paginatedList=list;
-                                  print("listtt"+list.toString());
+
                                   result=list.data;setState(() {
-                                    print("Here is the result");
-                                    print(result);
+
+
                                     if(result.isNotEmpty){
                                       if(select){
                                         veritiaclid=result[result.length-1].id;
@@ -577,11 +577,11 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                               focusNode:requestFormFocusNode,
                               onKey: (RawKeyEvent event) {
 
-                                if(enableKeyEvent==true){
-                                  rowKeyPressEvent(event);}else{
-
-                                  rowKeyEventResetFunc();
-                                }
+                                // if(enableKeyEvent==true){
+                                //   rowKeyPressEvent(event);}else{
+                                //
+                                //   rowKeyEventResetFunc();
+                                // }
 
 
 
@@ -685,8 +685,6 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                                       TextButtonLarge(
                                                         text: "PREVIEW",
                                                         onPress: () async {
-                                                          print("Akshay");
-                                                          print("Akshay");
                                                           InventoryListModel model=InventoryListModel();
 
 

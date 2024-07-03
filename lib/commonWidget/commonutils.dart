@@ -19568,7 +19568,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  print(data.data1);
+                  print("data.data1${data.data1}");
 
                   if (data.data1) {
                     Navigator.pop(context);

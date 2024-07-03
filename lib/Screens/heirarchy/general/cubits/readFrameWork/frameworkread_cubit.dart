@@ -12,6 +12,7 @@ class FrameworkreadCubit extends Cubit<FrameworkreadState> {
   Future getFrameWorkRead(
     int? id,
   ) async {
+    emit(FrameworkreadState.initial());
     final result = await repo.getFrameWorkRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

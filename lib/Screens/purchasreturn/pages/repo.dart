@@ -709,7 +709,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, DoubleResponse>> postSalesReturnInvoice(
       SalesReturnInvoicePostModel2 model) {
-    // TODO: implement postSalesReturnInvoice
+
     return repoExecute<DoubleResponse>(
             () async => remoteDataSource.postSalesReturnInvoice(model));
   }

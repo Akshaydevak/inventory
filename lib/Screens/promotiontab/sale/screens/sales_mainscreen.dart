@@ -287,35 +287,7 @@ class _SalesMainScreenState extends State< SalesMainScreen> {
             });
       },
     ),
-    BlocListener<CreatePromotionSaleCubit, CreatePromotionSaleState>(
-      listener: (context, state) {
-        state.maybeWhen(orElse: () {
-          // context.
-          context.showSnackBarError("Loading");
-        }, error: () {
-          context.showSnackBarError(Variable.errorMessege);
-        }, success: (data) {
-          if (data.data1) {
-            context.showSnackBarSuccess(data.data2);
-            Timer(Duration(seconds: 5), () {
-              setState(() {
-                // context
-                //     .read<VertiacalCubit>()
-                //     .getGeneralVertical();
-                // currentStock.clear();
-                context.read<PromotionsaleVerticalListCubit>().getPromotionSaleVerticalListt();
-              });
-            });
 
-          }
-          else {
-            context.showSnackBarError(data.data2);
-            print(data.data1);
-          }
-          ;
-        });
-      },
-    ),
 
 
     BlocListener<CreatePromotionSaleCubit, CreatePromotionSaleState>(

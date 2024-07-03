@@ -1101,7 +1101,10 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                 keyboardType:widget.formatter?TextInputType.numberWithOptions(decimal: true):null,
                 inputFormatters:widget.formatter? <TextInputFormatter>[widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]:null,
               onEditingComplete: widget.onComplete,
-              onChanged: widget.onChanged,
+              onChanged:(va){
+                if(widget.onChanged!=null)
+                widget.onChanged!(va);
+              } ,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: widget.filledColour,
@@ -1135,7 +1138,10 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                 keyboardType:widget.formatter?TextInputType.numberWithOptions(decimal: true):null,
                 inputFormatters:widget.formatter? <TextInputFormatter>[widget.integerOnly?FilteringTextInputFormatter.allow(RegExp(r"[0-9:]")):  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))]:null,
                 onEditingComplete: widget.onComplete,
-                onChanged: widget.onChanged,
+                onChanged:(va){
+                  if(widget.onChanged!=null)
+                    widget.onChanged!(va);
+                } ,
                 decoration: InputDecoration(
                   isCollapsed: true,
                   filled: true,

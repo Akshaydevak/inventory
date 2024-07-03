@@ -650,11 +650,11 @@ if(tabCount==2 ||tabCount==3 ||tabCount==1)
                           focusNode:purchaseReturnFocusnode,
                           onKey: (RawKeyEvent event) {
 
-                            if(enableKeyEvent==true){
-                              rowKeyPressEvent(event);}else{
-
-                              rowKeyEventResetFunc();
-                            }
+                            // if(enableKeyEvent==true){
+                            //   rowKeyPressEvent(event);}else{
+                            //
+                            //   rowKeyEventResetFunc();
+                            // }
 
 
 
@@ -1307,11 +1307,11 @@ if(tabCount==2 ||tabCount==3 ||tabCount==1)
                                               isClearDeketeLoading:commonProvider.isLoadingDeleteClear ,
                                               label:select?"SAVE":"UPDATE",
                                               discardFunction: (){
-
+                                                discardFunction();
 
                                               },
                                               saveFunction: (){
-
+                                                saveupdateFunction();
 
                                               },
                                             )

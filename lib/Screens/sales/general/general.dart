@@ -572,11 +572,11 @@ clears();
                 focusNode:salesMainFocusnode,
                 onKey: (RawKeyEvent event) {
 
-                  if(enableKeyEvent==true){
-                    rowKeyPressEvent(event);}else{
-
-                    rowKeyEventResetFunc();
-                  }
+                  // if(enableKeyEvent==true){
+                  //   rowKeyPressEvent(event);}else{
+                  //
+                  //   rowKeyEventResetFunc();
+                  // }
 
 
 

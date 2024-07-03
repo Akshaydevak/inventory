@@ -7473,7 +7473,7 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                             hintText: "Search...",
                             ctrlr: searchContoller,
                             onChanged: (va) {
-                              print("searching case" + va.toString());
+
                               context
                                   .read<VariantselectionCubit>()
                                   .searchDevisionList(
@@ -7499,7 +7499,11 @@ class _varientTabalePopup extends State<varientTabalePopup> {
   builder: (context, state) {
     return state.maybeWhen(orElse: (){
       return customCommonTAbleProgressIndiactor();
-    },success: (data) {return data.data.isEmpty?NoDataResult(): SingleChildScrollView(
+    },
+        loading: (){
+          return customCommonTAbleProgressIndiactor();
+        },
+        success: (data) {return data.data.isEmpty?NoDataResult(): SingleChildScrollView(
       child: customTable(
         // border: const TableBorder(
         //   verticalInside: BorderSide(
@@ -10627,6 +10631,7 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                   // height: 500,
                   child: Column(
                     children: [
+                      SizedBox(height: 5,),
                       Container(
                           // margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
@@ -10659,8 +10664,8 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: BlocBuilder<UomgruoplistCubit, UomgruoplistState>(
   builder: (context, state) {
-    return state.maybeWhen(orElse: (){return NoDataResult();},success: (data){
-      return data.data.isEmpty?customCommonTAbleProgressIndiactor():SingleChildScrollView(
+    return state.maybeWhen(orElse: (){return customCommonTAbleProgressIndiactor();},success: (data){
+      return data.data.isEmpty?NoDataResult():SingleChildScrollView(
         child: customTable(
           // border: const TableBorder(
           //   verticalInside: BorderSide(
@@ -12902,9 +12907,7 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
   }
 
   void initState() {
-    // context
-    //     .read<MaterialListCubit>()
-    //     .getMaterialList();
+    context.read<GrouplistCubit>().getGroupListList(id:widget.id);
     super.initState();
   }
 
@@ -12918,279 +12921,276 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
     //     text: widget.warranty?[widget.indexValue!].duration == null
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
-    return BlocProvider(
-  create: (context) => GrouplistCubit()..getGroupListList(id:widget.id),
-  child: Builder(builder: (context) {
-      // context.read<GrouplistCubit>().getGroupListList(id:widget.id);
-      return BlocConsumer<GrouplistCubit, GrouplistState>(
-        listener: (context, state) {
-          print("state" + state.toString());
-          state.maybeWhen(
-              orElse: () {},
-              error: () {
-                print("error");
+    return Builder(builder: (context) {
+        // context.read<GrouplistCubit>().getGroupListList(id:widget.id);
+        return BlocConsumer<GrouplistCubit, GrouplistState>(
+          listener: (context, state) {
+            print("state" + state.toString());
+            state.maybeWhen(
+                orElse: () {},
+                error: () {
+                  print("error");
+                },
+                success: (list) {
+                  print("Welcome" + list.toString());
+                  table = list.data;
+                  list1 = list;
+                });
+          },
+          builder: (context, state) {
+            return Builder(builder: (context) {
+              double h = MediaQuery.of(context).size.height;
+              double w = MediaQuery.of(context).size.width;
+              return AlertDialog(
+                content: PopUpHeader(
+                  functionChane: true,
+                  buttonCheck: true,
+                  buttonName: "Add New",
+                  onTap: () {},
+                  isDirectCreate: true,
+                  addNew: false,
+                  label: "Group Popup",
+                  onApply: () {
+                    showDailogPopUp(
+                      context,
+                      ConfigurePopup(
+                        veritiaclid: widget.id,
+                        type: "Group_PopUp",
+                      ),
+                    );
+                    // widget.onTap();
+                    setState(() {});
+                  },
+                  onEdit: () {},
+                  onCancel: () {
+                    // context
+                    //     .read<MaterialdeleteCubit>()
+                    //     .materialDelete(veritiaclid,"material");
+                  },
+                  onAddNew: (v) {
+                    print("Akshay" + v.toString());
+                    // changeAddNew(v);
+                    // setState(() {});
+                    //
+                    // setState(() {});
+                  },
+                  paginated: list1 != null?
+                  tablePagination(
+                  () => context.read<GrouplistCubit>().refresh(),
+              back: list1?.previousUrl == null
+              ? null
+                  : () {
+              context
+                  .read<GrouplistCubit>()
+                  .previuosslotSectionPageList(id:widget.id);
               },
-              success: (list) {
-                print("Welcome" + list.toString());
-                table = list.data;
-                list1 = list;
-              });
-        },
-        builder: (context, state) {
-          return Builder(builder: (context) {
-            double h = MediaQuery.of(context).size.height;
-            double w = MediaQuery.of(context).size.width;
-            return AlertDialog(
-              content: PopUpHeader(
-                functionChane: true,
-                buttonCheck: true,
-                buttonName: "Add New",
-                onTap: () {},
-                isDirectCreate: true,
-                addNew: false,
-                label: "Group Popup",
-                onApply: () {
-                  showDailogPopUp(
-                    context,
-                    ConfigurePopup(
-                      veritiaclid: widget.id,
-                      type: "Group_PopUp",
-                    ),
-                  );
-                  // widget.onTap();
-                  setState(() {});
-                },
-                onEdit: () {},
-                onCancel: () {
-                  // context
-                  //     .read<MaterialdeleteCubit>()
-                  //     .materialDelete(veritiaclid,"material");
-                },
-                onAddNew: (v) {
-                  print("Akshay" + v.toString());
-                  // changeAddNew(v);
-                  // setState(() {});
-                  //
-                  // setState(() {});
-                },
-                paginated: list1 != null?
-                tablePagination(
-                () => context.read<GrouplistCubit>().refresh(),
-            back: list1?.previousUrl == null
-            ? null
-                : () {
-            context
-                .read<GrouplistCubit>()
-                .previuosslotSectionPageList(id:widget.id);
-            },
-            next: list1.nextPageUrl == null
-            ? null
-                : () {
-            // print(data.nextPageUrl);
-            context
-                .read<GrouplistCubit>()
-                .nextslotSectionPageList(id:widget.id);
-            },
-            ):Container(),
-                dataField: Container(
-                  // height: 500,
-                  child: Column(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.all(5),
-                          child: SearchTextfiled(
-                            color: Color(0xffFAFAFA),
-                            h: 40,
-                            hintText: "Search...",
-                            suffixIconCheck: suffixIconCheck,
-                            ctrlr: searchContoller,
-                            onChanged: (va) {
-                              setState(() {
+              next: list1.nextPageUrl == null
+              ? null
+                  : () {
+              // print(data.nextPageUrl);
+              context
+                  .read<GrouplistCubit>()
+                  .nextslotSectionPageList(id:widget.id);
+              },
+              ):Container(),
+                  dataField: Container(
+                    // height: 500,
+                    child: Column(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.all(5),
+                            child: SearchTextfiled(
+                              color: Color(0xffFAFAFA),
+                              h: 40,
+                              hintText: "Search...",
+                              suffixIconCheck: suffixIconCheck,
+                              ctrlr: searchContoller,
+                              onChanged: (va) {
+                                setState(() {
 
 
-                              print("searching case" + va.toString());
-                              context
-                                  .read<GrouplistCubit>()
-                                  .searchGroupList(searchContoller.text,id:widget.id);
-                              suffixIconCheck=true;
-                              suffixIconCheck=true;
-                              if (va == "") {
+                                print("searching case" + va.toString());
                                 context
                                     .read<GrouplistCubit>()
-                                    .getGroupListList(id:widget.id);
-                                suffixIconCheck=false;
-                                suffixIconCheck=false;
-                              }
-                              });
-                            },
-                          )),
-                      SizedBox(
-                        height: h * .004,
-                      ),
-                      Container(
-                        height: h / 2,
-                        margin: EdgeInsets.symmetric(horizontal: w*.006),
-                        // width: w/7,
-                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
-                        child: BlocBuilder<GrouplistCubit, GrouplistState>(
-  builder: (context, state) {
-    return state.maybeWhen(orElse: (){
-      return customCommonTAbleProgressIndiactor();
-    },success: (data){
-      return data.data.isEmpty?NoDataResult():  SingleChildScrollView(
-        child: customTable(
-          // border: const TableBorder(
-          //   verticalInside: BorderSide(
-          //       width: .5,
-          //       color: Colors.black45,
-          //       style: BorderStyle.solid),
-          //   horizontalInside: BorderSide(
-          //       width: .3,
-          //       color: Colors.black45,
-          //       // color: Colors.blue,
-          //       style: BorderStyle.solid),
-          // ),
-          tableWidth: .5,
-          childrens: [
-            TableRow(
-              // decoration: BoxDecoration(
+                                    .searchGroupList(searchContoller.text,id:widget.id);
+                                suffixIconCheck=true;
+                                suffixIconCheck=true;
+                                if (va == "") {
+                                  context
+                                      .read<GrouplistCubit>()
+                                      .getGroupListList(id:widget.id);
+                                  suffixIconCheck=false;
+                                  suffixIconCheck=false;
+                                }
+                                });
+                              },
+                            )),
+                        SizedBox(
+                          height: h * .004,
+                        ),
+                        Container(
+                          height: h / 2,
+                          margin: EdgeInsets.symmetric(horizontal: w*.006),
+                          // width: w/7,
+                          // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                          child: BlocBuilder<GrouplistCubit, GrouplistState>(
+    builder: (context, state) {
+      return state.maybeWhen(orElse: (){
+        return customCommonTAbleProgressIndiactor();
+      },success: (data){
+        return data.data.isEmpty?NoDataResult():  SingleChildScrollView(
+          child: customTable(
+            // border: const TableBorder(
+            //   verticalInside: BorderSide(
+            //       width: .5,
+            //       color: Colors.black45,
+            //       style: BorderStyle.solid),
+            //   horizontalInside: BorderSide(
+            //       width: .3,
+            //       color: Colors.black45,
+            //       // color: Colors.blue,
+            //       style: BorderStyle.solid),
+            // ),
+            tableWidth: .5,
+            childrens: [
+              TableRow(
+                // decoration: BoxDecoration(
 
-              //     color: Colors.green.shade200,
+                //     color: Colors.green.shade200,
 
-              //     shape: BoxShape.rectangle,
+                //     shape: BoxShape.rectangle,
 
-              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-              children: [
-                tableHeadtext(
-                  'Sl No',
+                children: [
+                  tableHeadtext(
+                    'Sl No',
 
-                  // padding: EdgeInsets.all(7),
-                  //
-                  // height: 46,
-                  // textColor: Colors.black,
-                  // color: Color(0xffE5E5E5),
+                    // padding: EdgeInsets.all(7),
+                    //
+                    // height: 46,
+                    // textColor: Colors.black,
+                    // color: Color(0xffE5E5E5),
 
-                  size: 13,
-                ),
+                    size: 13,
+                  ),
 
-                tableHeadtext(
-                  'Group',
-                  // textColor: Colors.black,
-                  // padding: EdgeInsets.all(7),
-                  // height: 46,
-                  size: 13,
-                  // color: Color(0xffE5E5E5),
-                ),
-                // tableHeadtext(
-                //   '',
-                //   textColor: Colors.black,
-                //   padding: EdgeInsets.all(7),
-                //   height: 46,
-                //   size: 13,
-                //   // color: Color(0xffE5E5E5),
-                // ),
+                  tableHeadtext(
+                    'Group',
+                    // textColor: Colors.black,
+                    // padding: EdgeInsets.all(7),
+                    // height: 46,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
+                  // tableHeadtext(
+                  //   '',
+                  //   textColor: Colors.black,
+                  //   padding: EdgeInsets.all(7),
+                  //   height: 46,
+                  //   size: 13,
+                  //   // color: Color(0xffE5E5E5),
+                  // ),
+                ],
+              ),
+              if (table?.isNotEmpty == true) ...[
+                for (var i = 0; i < table.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Pellet.tableRowColor,
+                          shape: BoxShape.rectangle,
+                          border:  Border(
+                              left: BorderSide(
+
+                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                  width: .4,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+
+                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                  width: .4,
+
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
+                            verticalAlignment:
+                            TableCellVerticalAlignment
+                                .middle,
+                            child:
+                            textPadding((i + 1).toString())
+                          // Text(keys[i].key??"")
+
+                        ),
+                        TableCell(
+                            verticalAlignment:
+                            TableCellVerticalAlignment
+                                .middle,
+                            child: textOnclickPadding(
+                              ontap: () {
+                                BrandListModel model =
+                                BrandListModel(
+                                  id: table[i].id,
+                                  name: table[i].name,
+                                  code: table[i].code,
+                                );
+                                Navigator.pop(context);
+
+                                widget.valueSelect(model);
+                              },
+                              text: table[i].name ?? "",
+
+                            )
+                          // Text(keys[i].value??"",)
+
+                        ),
+                      ]),
               ],
-            ),
-            if (table?.isNotEmpty == true) ...[
-              for (var i = 0; i < table.length; i++)
-                TableRow(
-                    decoration: BoxDecoration(
-                        color: Pellet.tableRowColor,
-                        shape: BoxShape.rectangle,
-                        border:  Border(
-                            left: BorderSide(
-
-                                color: Color(0xff3E4F5B).withOpacity(.1),
-                                width: .4,
-                                style: BorderStyle.solid),
-                            bottom: BorderSide(
-
-                                color:   Color(0xff3E4F5B).withOpacity(.1),
-                                style: BorderStyle.solid),
-                            right: BorderSide(
-                                color:   Color(0xff3E4F5B).withOpacity(.1),
-                                width: .4,
-
-                                style: BorderStyle.solid))),
-                    children: [
-                      TableCell(
-                          verticalAlignment:
-                          TableCellVerticalAlignment
-                              .middle,
-                          child:
-                          textPadding((i + 1).toString())
-                        // Text(keys[i].key??"")
-
-                      ),
-                      TableCell(
-                          verticalAlignment:
-                          TableCellVerticalAlignment
-                              .middle,
-                          child: textOnclickPadding(
-                            ontap: () {
-                              BrandListModel model =
-                              BrandListModel(
-                                id: table[i].id,
-                                name: table[i].name,
-                                code: table[i].code,
-                              );
-                              Navigator.pop(context);
-
-                              widget.valueSelect(model);
-                            },
-                            text: table[i].name ?? "",
-
-                          )
-                        // Text(keys[i].value??"",)
-
-                      ),
-                    ]),
             ],
-          ],
-          widths: {
-            0: FlexColumnWidth(2),
-            1: FlexColumnWidth(5),
-          },
-        ),
-      );
-    });
+            widths: {
+              0: FlexColumnWidth(2),
+              1: FlexColumnWidth(5),
+            },
+          ),
+        );
+      });
 
-  },
+    },
 ),
-                      ),
-                      SizedBox(
-                        height: h * .004,
-                      ),
-                      // if (list1 != null)
-                      //   tablePagination(
-                      //     () => context.read<GrouplistCubit>().refresh(),
-                      //     back: list1?.previousUrl == null
-                      //         ? null
-                      //         : () {
-                      //             context
-                      //                 .read<GrouplistCubit>()
-                      //                 .previuosslotSectionPageList(id:widget.id);
-                      //           },
-                      //     next: list1.nextPageUrl == null
-                      //         ? null
-                      //         : () {
-                      //             // print(data.nextPageUrl);
-                      //             context
-                      //                 .read<GrouplistCubit>()
-                      //                 .nextslotSectionPageList(id:widget.id);
-                      //           },
-                      //   )
-                    ],
+                        ),
+                        SizedBox(
+                          height: h * .004,
+                        ),
+                        // if (list1 != null)
+                        //   tablePagination(
+                        //     () => context.read<GrouplistCubit>().refresh(),
+                        //     back: list1?.previousUrl == null
+                        //         ? null
+                        //         : () {
+                        //             context
+                        //                 .read<GrouplistCubit>()
+                        //                 .previuosslotSectionPageList(id:widget.id);
+                        //           },
+                        //     next: list1.nextPageUrl == null
+                        //         ? null
+                        //         : () {
+                        //             // print(data.nextPageUrl);
+                        //             context
+                        //                 .read<GrouplistCubit>()
+                        //                 .nextslotSectionPageList(id:widget.id);
+                        //           },
+                        //   )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          });
-        },
-      );
-    }),
-);
+              );
+            });
+          },
+        );
+      });
   }
 }
 

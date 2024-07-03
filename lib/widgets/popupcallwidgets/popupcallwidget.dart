@@ -3248,6 +3248,7 @@ class _AttributeListPopUpCallState extends State<AttributeListPopUpCall> {
   @override
   void initState() {
     label = widget.value;
+    context.read<AttributelistCubit>().getAttributeList();
     super.initState();
   }
 
@@ -3257,7 +3258,7 @@ class _AttributeListPopUpCallState extends State<AttributeListPopUpCall> {
     return Builder(
       builder: (context) {
 
-        context.read<AttributelistCubit>().getAttributeList();
+
         return BlocBuilder<AttributelistCubit, AttributelistState>(
             builder: (context, state) {
           print("akkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkksjaaaaaaaaaaaaaaaa");
@@ -3958,9 +3959,7 @@ class _CouponApplyingToPopupState extends State<CouponApplyingToPopup> {
                       //     title: Text(suggestion.toString()),
                       //   );
                       return ListTile(
-                        onTap: (){
-                          print("ontaping");
-                        },
+
                         ////leading: Icon(Icons.shopping_cart_outlined),
                         title: Text(suggestion.toString()),
                       );
@@ -5817,10 +5816,10 @@ class _SalesOrderTypePopUpCallState extends State<SalesOrderTypePopUpCall> {
     print("selection  happens");
     label = widget.value;
     return BlocProvider<SalesCubit>(
-        create: (context) => SalesCubit(),
+        create: (context) => SalesCubit()..getSalesOrdertype(),
         child: Builder(
           builder: (context) {
-            context.read<SalesCubit>().getSalesOrdertype();
+            // context.read<SalesCubit>().getSalesOrdertype();
             return BlocBuilder<SalesCubit, SalesState>(
                 builder: (context, state) {
               print(state);
@@ -5961,10 +5960,10 @@ class _SalesOrderModePopUpCallState extends State<SalesOrderModePopUpCall> {
     label = widget.value;
     print("wigeeee" + widget.apiType.toString());
     return BlocProvider<SalesCubit>(
-        create: (context) => SalesCubit(),
+        create: (context) => SalesCubit()..getSalesOrdertype(type: widget.apiType),
         child: Builder(
           builder: (context) {
-            context.read<SalesCubit>().getSalesOrdertype(type: widget.apiType);
+            // context.read<SalesCubit>().getSalesOrdertype(type: widget.apiType);
             return BlocBuilder<SalesCubit, SalesState>(
                 builder: (context, state) {
               print(state);
@@ -6103,10 +6102,10 @@ class _PriceTypePopUpCallState extends State<PriceTypePopUpCall> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<SalesCubit>(
-        create: (context) => SalesCubit(),
+        create: (context) => SalesCubit()..getSalesOrdertype(type: widget.apiType),
         child: Builder(
           builder: (context) {
-            context.read<SalesCubit>().getSalesOrdertype(type: widget.apiType);
+            // context.read<SalesCubit>().getSalesOrdertype(type: widget.apiType);
             return BlocBuilder<SalesCubit, SalesState>(
                 builder: (context, state) {
               print(state);
@@ -6536,9 +6535,9 @@ class _InvoiceCodePopUpCallState extends State<InvoiceCodePopUpCall> {
   Widget build(BuildContext context) {
     label = widget.value;
     return BlocProvider<SalesinvoicecodeCubit>(
-      create: (context) => SalesinvoicecodeCubit(),
+      create: (context) => SalesinvoicecodeCubit()..getInvoiceCode(),
       child: Builder(builder: (context) {
-        context.read<SalesinvoicecodeCubit>().getInvoiceCode();
+        // context.read<SalesinvoicecodeCubit>().getInvoiceCode();
 
         return BlocBuilder<SalesinvoicecodeCubit, SalesinvoicecodeState>(
             builder: (context, state) {

@@ -72,13 +72,13 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
-          print("the payment success method");
+
           if (data.data1) {
             context.showSnackBarSuccess(data.data2);
 
           } else {
             context.showSnackBarError(data.data2);
-            print(data.data1);
+
           }
           ;
         });
@@ -95,23 +95,16 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
           print("error");
         },
         success: (list) {
-          print("Welcome" + list.data.toString());
-
-
-
             table = list.data;
             if(table.isNotEmpty){
               transactionCodeControllers.clear();
               for(var i=0;i<table.length;i++) {
-
                 var requsted = new TextEditingController(text: table[i]
                     .transactionCode.toString() ?? "");
                 transactionCodeControllers.add(requsted);
                 list1 = list;
               }
             }
-
-
         });
   },
   builder: (context, state) {
@@ -138,10 +131,7 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                           hintText: "Search...",
                           ctrlr: searchContoller,
                           onChanged: (va) {
-                            print("searching case" + va.toString());
-                            context
-                                .read<PayementVerticalListCubit>()
-                                .getSearchCustomerList(searchContoller.text);
+                            context.read<PayementVerticalListCubit>().getSearchCustomerList(searchContoller.text);
                             suffixIconCheck=true;
                             if (va == "") {
                               context
@@ -320,30 +310,6 @@ class _SalesPaymentListPActhState extends State<SalesPaymentListPActh> {
                         ),
 
 
-                        // DropdownButton(
-                        //   // underline: Container(color: Colors.transparent),
-                        //
-                        //   // Initial Value
-                        //   value: selectval,
-                        //
-                        //   // Down Arrow Icon
-                        //   icon: const Icon(Icons.keyboard_arrow_down),
-                        //
-                        //   // Array list of items
-                        //   items: items.map((String? items) {
-                        //     return DropdownMenuItem(
-                        //       value: items,
-                        //       child: Text(items??""),
-                        //     );
-                        //   }).toList(),
-                        //   // After selecting the desired option,it will
-                        //   // change button value to selected value
-                        //   onChanged: (String?  newValue) {
-                        //     // setState(() {
-                        //     //   table[i]=table[i].copyWith(paymentStatus:newValue,updateCheck: true );
-                        //     // });
-                        //   },
-                        // ),
                       ),
                       TableCell(
                         verticalAlignment:

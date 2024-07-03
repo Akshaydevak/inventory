@@ -313,7 +313,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                   print("error");
                 },
                 success: (list) {
-                  print("aaaaayyyiram" + list.data.toString());
+
                   list1 = list;
 
                   result = list.data;
@@ -366,8 +366,6 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                   children: [
                     VariantVerticalList(
                       list: list1,
-
-
                       selectedVertical: selectedVertical,
                       itemsearch: itemsearch,
                       suffixIconCheck: suffixIconCheck,

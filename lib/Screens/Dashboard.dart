@@ -116,26 +116,17 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                   print("error");
                 },
                 success: (list) {
-                  print("listtt" + list.toString());
                   result = list.data;
                   setState(() {
-                    print("Here is the result");
-                    print(result);
-                    print(result[0].id);
                     if (result.isNotEmpty) Variable.verticalid = result[0].id;
                     context
                         .read<GeneralPurchaseReadCubit>()
                         .getGeneralPurchaseRead(result[0].id!);
-                    print("Variable.ak" + Variable.verticalid.toString());
-                    setState(() {});
-
-                    print(Variable.verticalid);
-                    print("idssss" + result[0].id.toString());
                   });
                 });
           },
           builder: (context, state) {
-            print("current index${_tabController.index}");
+
             return Scaffold(
                 body: Stack(
               children: [
@@ -318,7 +309,7 @@ class _TitleScreenState extends State<TitleScreen> {
                       BlocProvider(
                         create: (context) => InventorylistCubit()
                           ..getInventoryListRead(Variable.loginLeage),
-                        child: OpenSettings(),
+                        child:const  OpenSettings(),
                       ));
                 },
               ),
